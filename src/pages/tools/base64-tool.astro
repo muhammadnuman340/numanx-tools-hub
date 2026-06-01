@@ -1,0 +1,62 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "What is Base64?", answer: "Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format. It's commonly used for embedding images in HTML/CSS, transmitting data in APIs, and storing binary data in text-based formats like JSON." },
+  { question: "Is my data uploaded to a server?", answer: "No. All encoding and decoding happens entirely in your browser. Your data never leaves your device." },
+  { question: "Can I encode files?", answer: "Yes, you can upload a file and the tool will encode its contents to Base64. This is useful for creating data URIs." },
+];
+const b64Schema = { name: "Base64 Encoder/Decoder", applicationCategory: "Utilities", description: "Encode and decode Base64 strings instantly in your browser.", featureList: ["Encode text to Base64", "Decode Base64 to text", "File upload support", "Copy results instantly"] };
+---
+<MainLayout title="Base64 Encoder/Decoder - Encode & Decode Base64 Online" description="Encode text or files to Base64 and decode Base64 back to text. Free online Base64 encoder/decoder." keywords="base64 encoder, base64 decoder, base64, encode, decode, developer tools" toolSchema={b64Schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Base64 Tool",url:"/tools/base64-tool/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="Base64" gradient="Encoder/Decoder" desc="Encode and decode Base64 strings instantly. Supports text input and file upload." badge="✦ New Tool" slug="base64-tool" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6">
+        <div class="flex gap-2 mb-4">
+          <button id="encode-btn" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-green-600 text-white">Encode</button>
+          <button id="decode-btn" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200">Decode</button>
+          <button id="clear-btn" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200 ml-auto">Clear</button>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-zinc-400 mb-1.5">Input</label>
+          <textarea id="input-area" class="w-full h-28 px-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm font-mono focus:border-green-500/50 focus:outline-none transition-all resize-none" placeholder="Type or paste text here..."></textarea>
+          <div class="mt-2"><input id="file-input" type="file" class="text-xs text-zinc-400 file:mr-2 file:px-2 file:py-1 file:rounded-lg file:border-0 file:bg-white/[0.04] file:text-zinc-300 file:text-xs file:cursor-pointer" /></div>
+        </div>
+        <div class="mt-4">
+          <label class="block text-xs font-medium text-zinc-400 mb-1.5">Result</label>
+          <textarea id="output-area" class="w-full h-28 px-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm font-mono focus:outline-none resize-none" readonly placeholder="Result will appear here..."></textarea>
+        </div>
+        <button id="b64-copy-btn" class="mt-3 bg-white/[0.04] hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 text-xs font-medium px-3 py-1.5 rounded-lg border border-white/[0.1] transition-all">Copy Result</button>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Why Use <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">Base64 Encoding?</span></h2></div><div class="space-y-4 text-sm text-zinc-400 leading-relaxed"><p>Base64 encoding is essential for embedding binary data (images, files) in text-based formats like HTML, CSS, and JSON. It's also widely used in email attachments (MIME), data URIs, and API payloads where binary data needs to be transmitted as text.</p></div></section>
+    <RelatedTools current="base64-tool" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  let mode = "encode";
+  const inputArea = document.getElementById("input-area") as HTMLTextAreaElement;
+  const outputArea = document.getElementById("output-area") as HTMLTextAreaElement;
+  const fileInput = document.getElementById("file-input") as HTMLInputElement;
+  document.getElementById("encode-btn")!.addEventListener("click", () => { mode="encode"; document.getElementById("encode-btn")!.className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-green-600 text-white"; document.getElementById("decode-btn")!.className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200"; process(); });
+  document.getElementById("decode-btn")!.addEventListener("click", () => { mode="decode"; document.getElementById("decode-btn")!.className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-green-600 text-white"; document.getElementById("encode-btn")!.className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200"; process(); });
+  document.getElementById("clear-btn")!.addEventListener("click", () => { inputArea.value = ""; outputArea.value = ""; fileInput.value = ""; });
+  document.getElementById("b64-copy-btn")!.addEventListener("click", async () => { if (!outputArea.value) return; await navigator.clipboard.writeText(outputArea.value); if ((window as any).__showToast) (window as any).__showToast({message:"Copied!",variant:"success"}); });
+  fileInput.addEventListener("change", () => { const f = fileInput.files?.[0]; if (!f) return; const r = new FileReader(); r.onload = () => { inputArea.value = r.result as string; if (mode==="encode") { outputArea.value = btoa(unescape(encodeURIComponent(inputArea.value))); } }; r.readAsText(f); });
+  function process() {
+    const text = inputArea.value;
+    if (!text) { outputArea.value = ""; return; }
+    try {
+      if (mode === "encode") { outputArea.value = btoa(unescape(encodeURIComponent(text))); }
+      else { outputArea.value = decodeURIComponent(escape(atob(text.replace(/\s/g,'')))); }
+    } catch { outputArea.value = "Error: Invalid input for " + (mode==="encode"?"encoding":"decoding"); }
+  }
+  inputArea.addEventListener("input", process);
+</script>

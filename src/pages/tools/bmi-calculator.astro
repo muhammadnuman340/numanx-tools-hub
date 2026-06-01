@@ -1,0 +1,249 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "What is BMI?", answer: "BMI (Body Mass Index) is a measure of body fat based on height and weight. It is calculated by dividing weight in kilograms by the square of height in meters. While not a direct measure of body fat, it's a useful screening tool for weight categories." },
+  { question: "How is BMI calculated?", answer: "BMI = weight (kg) / height² (m²). For imperial units: BMI = (weight in lbs / height² in inches) × 703. This tool handles both unit systems for you." },
+  { question: "What is a healthy BMI range?", answer: "A healthy BMI range is 18.5 to 24.9. Below 18.5 is underweight, 25.0–29.9 is overweight, and 30.0 or above is obese. These ranges apply to most adults 18–65 years old." },
+  { question: "Is BMI accurate for everyone?", answer: "BMI is a screening tool, not a diagnostic one. It may not be accurate for athletes with high muscle mass, pregnant women, the elderly, or children. For these groups, additional measurements may be needed." },
+  { question: "Is my health data stored?", answer: "No. All calculations happen locally in your browser. Your height, weight, and BMI information never leaves your device." },
+];
+
+const bmiSchema = {
+  name: "BMI Calculator Pro",
+  applicationCategory: "Utilities",
+  description: "Calculate your Body Mass Index with metric or imperial units. See BMI category, healthy weight range, and health insights.",
+  featureList: [
+    "Metric (kg/cm) and imperial (lbs/ft/in) unit support",
+    "Instant BMI calculation with color-coded category",
+    "Healthy weight range display",
+    "Visual BMI scale indicator",
+    "100% private — data never leaves your browser"
+  ],
+};
+---
+
+<MainLayout
+  title="BMI Calculator - Free Online Body Mass Index Calculator"
+  description="Calculate your BMI (Body Mass Index) instantly with metric or imperial units. See your BMI category, healthy weight range, and health insights."
+  keywords="bmi calculator, body mass index, bmi, health calculator, weight calculator, bmi chart"
+  toolSchema={bmiSchema}
+  faq={faqItems}
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Tools", url: "/tools/" },
+    { name: "BMI Calculator", url: "/tools/bmi-calculator/" },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="BMI"
+        gradient="Calculator Pro"
+        desc="Calculate your Body Mass Index using metric or imperial units. See your BMI category, healthy weight range, and personalized health insights."
+        badge="✦ New Tool"
+        slug="bmi-calculator"
+      />
+
+      <ShareBar />
+
+      <div class="max-w-xl mx-auto mt-10">
+        <div class="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6">
+
+          <div class="flex gap-2 mb-6">
+            <button id="unit-metric" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-green-600 text-white" data-unit="metric">Metric (kg/cm)</button>
+            <button id="unit-imperial" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200" data-unit="imperial">Imperial (lbs/ft)</button>
+          </div>
+
+          <div id="metric-inputs">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-medium text-zinc-400 mb-1.5">Weight (kg)</label>
+                <input id="weight-metric" type="number" value="70" class="w-full px-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm focus:border-green-500/50 focus:outline-none transition-all" />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-zinc-400 mb-1.5">Height (cm)</label>
+                <input id="height-metric" type="number" value="175" class="w-full px-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm focus:border-green-500/50 focus:outline-none transition-all" />
+              </div>
+            </div>
+          </div>
+
+          <div id="imperial-inputs" class="hidden">
+            <div class="grid grid-cols-3 gap-4">
+              <div>
+                <label class="block text-xs font-medium text-zinc-400 mb-1.5">Weight (lbs)</label>
+                <input id="weight-imp" type="number" value="154" class="w-full px-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm focus:border-green-500/50 focus:outline-none transition-all" />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-zinc-400 mb-1.5">Feet</label>
+                <input id="height-ft" type="number" value="5" class="w-full px-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm focus:border-green-500/50 focus:outline-none transition-all" />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-zinc-400 mb-1.5">Inches</label>
+                <input id="height-in" type="number" value="9" class="w-full px-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm focus:border-green-500/50 focus:outline-none transition-all" />
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-6 border-t border-white/[0.06]">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Your BMI</span>
+                <p id="bmi-value" class="text-3xl font-black bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent mt-1">22.9</p>
+              </div>
+              <div class="text-right">
+                <span class="text-xs font-medium text-zinc-500 uppercase tracking-wider">Category</span>
+                <p id="bmi-category" class="text-sm font-semibold text-green-400 mt-1">Normal weight</p>
+              </div>
+            </div>
+
+            <div class="w-full bg-white/[0.06] rounded-full h-2.5 mb-4 overflow-hidden" role="progressbar" aria-valuenow="22.9" aria-valuemin="10" aria-valuemax="40" aria-label="BMI scale">
+              <div id="bmi-bar" class="h-full rounded-full bg-gradient-to-r from-blue-500 via-green-400 via-yellow-400 to-red-500" style="width: 42.9%"></div>
+            </div>
+
+            <div class="grid grid-cols-4 text-[10px] text-zinc-500 mb-4">
+              <span>Underweight<br/>&lt; 18.5</span>
+              <span>Normal<br/>18.5–24.9</span>
+              <span>Overweight<br/>25–29.9</span>
+              <span class="text-right">Obese<br/>≥ 30</span>
+            </div>
+
+            <div class="bg-white/[0.03] rounded-xl p-4">
+              <p class="text-xs text-zinc-400">Healthy weight range for your height:</p>
+              <p id="healthy-range" class="text-sm font-semibold text-zinc-200 mt-1">56.7 kg – 76.6 kg</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <section class="mt-20 max-w-3xl mx-auto">
+        <div class="text-center mb-8">
+          <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Learn</span>
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">
+            Understanding Your
+            <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">BMI Score</span>
+          </h2>
+        </div>
+        <div class="space-y-4 text-sm text-zinc-400 leading-relaxed">
+          <p>Body Mass Index (BMI) is a widely used screening tool that estimates body fat based on your height and weight. While it doesn't directly measure body fat, it provides a useful indicator for most adults to assess whether they're in a healthy weight range.</p>
+          <p>Your BMI falls into one of four categories: underweight (&lt;18.5), normal weight (18.5–24.9), overweight (25–29.9), or obese (≥30). Keep in mind that factors like muscle mass, age, sex, and ethnicity can affect the interpretation of BMI results.</p>
+        </div>
+      </section>
+
+      <RelatedTools current="bmi-calculator" />
+
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked
+          <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">Questions</span>
+        </h2>
+        <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
+      </div>
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  const unitMetric = document.getElementById("unit-metric");
+  const unitImperial = document.getElementById("unit-imperial");
+  const metricInputs = document.getElementById("metric-inputs");
+  const imperialInputs = document.getElementById("imperial-inputs");
+
+  const weightMetric = document.getElementById("weight-metric");
+  const heightMetric = document.getElementById("height-metric");
+  const weightImp = document.getElementById("weight-imp");
+  const heightFt = document.getElementById("height-ft");
+  const heightIn = document.getElementById("height-in");
+  const bmiValue = document.getElementById("bmi-value");
+  const bmiCategory = document.getElementById("bmi-category");
+  const bmiBar = document.getElementById("bmi-bar");
+  const healthyRange = document.getElementById("healthy-range");
+
+  let useMetric = true;
+
+  function bmiCategoryClass(cat) {
+    if (cat === "Underweight") return "text-blue-400";
+    if (cat === "Normal weight") return "text-green-400";
+    if (cat === "Overweight") return "text-yellow-400";
+    return "text-red-400";
+  }
+
+  function computeBMI() {
+    let bmi, weight, heightCm;
+    if (useMetric) {
+      weight = parseFloat(weightMetric.value) || 0;
+      heightCm = parseFloat(heightMetric.value) || 1;
+      const heightM = heightCm / 100;
+      bmi = weight / (heightM * heightM);
+    } else {
+      weight = parseFloat(weightImp.value) || 0;
+      const ft = parseFloat(heightFt.value) || 0;
+      const inc = parseFloat(heightIn.value) || 0;
+      const heightTotalIn = ft * 12 + inc;
+      heightCm = heightTotalIn * 2.54;
+      bmi = (weight / (heightTotalIn * heightTotalIn)) * 703;
+    }
+
+    bmi = Math.round(bmi * 10) / 10;
+    if (!isFinite(bmi) || bmi <= 0) bmi = 0;
+
+    let cat = "Underweight";
+    if (bmi >= 30) cat = "Obese";
+    else if (bmi >= 25) cat = "Overweight";
+    else if (bmi >= 18.5) cat = "Normal weight";
+
+    bmiValue.textContent = bmi.toFixed(1);
+    bmiCategory.textContent = cat;
+    bmiCategory.className = `text-sm font-semibold mt-1 ${bmiCategoryClass(cat)}`;
+
+    const pct = Math.min(Math.max(((bmi - 10) / 30) * 100, 0), 100);
+    bmiBar.style.width = `${pct}%`;
+    bmiBar.setAttribute("aria-valuenow", bmi.toFixed(1));
+
+    if (heightCm > 0) {
+      const lower = Math.round(18.5 * (heightCm / 100) * (heightCm / 100) * 10) / 10;
+      const upper = Math.round(24.9 * (heightCm / 100) * (heightCm / 100) * 10) / 10;
+      if (useMetric) {
+        healthyRange.textContent = `${lower} kg – ${upper} kg`;
+      } else {
+        const lowerLbs = Math.round(lower * 2.20462 * 10) / 10;
+        const upperLbs = Math.round(upper * 2.20462 * 10) / 10;
+        healthyRange.textContent = `${lowerLbs} lbs – ${upperLbs} lbs`;
+      }
+    }
+  }
+
+  function setUnit(metric) {
+    useMetric = metric;
+    if (metric) {
+      unitMetric.classList.remove("bg-white/[0.04]", "text-zinc-400", "hover:text-zinc-200");
+      unitMetric.classList.add("bg-green-600", "text-white");
+      unitImperial.classList.remove("bg-green-600", "text-white");
+      unitImperial.classList.add("bg-white/[0.04]", "text-zinc-400", "hover:text-zinc-200");
+      metricInputs.classList.remove("hidden");
+      imperialInputs.classList.add("hidden");
+    } else {
+      unitImperial.classList.remove("bg-white/[0.04]", "text-zinc-400", "hover:text-zinc-200");
+      unitImperial.classList.add("bg-green-600", "text-white");
+      unitMetric.classList.remove("bg-green-600", "text-white");
+      unitMetric.classList.add("bg-white/[0.04]", "text-zinc-400", "hover:text-zinc-200");
+      imperialInputs.classList.remove("hidden");
+      metricInputs.classList.add("hidden");
+    }
+    computeBMI();
+  }
+
+  unitMetric.addEventListener("click", () => setUnit(true));
+  unitImperial.addEventListener("click", () => setUnit(false));
+
+  [weightMetric, heightMetric, weightImp, heightFt, heightIn].forEach(el => {
+    el.addEventListener("input", computeBMI);
+  });
+
+  computeBMI();
+</script>

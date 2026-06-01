@@ -66,11 +66,7 @@ main {
 
 /* ─── High Contrast ─── */
 @media (prefers-contrast: high) {
-html {
-  scroll-behavior: smooth;
-}
-
-body {
+  body {
     background: black;
   }
   .glass, .glass-strong, .glass-card {
@@ -244,7 +240,7 @@ kbd, .key-hint {
   font-size: 10px;
   font-family: var(--font-mono);
   font-weight: 600;
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   background: rgba(255,255,255,0.04);
   border: 1px solid var(--border-subtle);
   border-radius: 5px;

@@ -1,0 +1,76 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "What case types are supported?", answer: "Uppercase (ALL CAPS), lowercase (no caps), title case (Each Word Capitalized), sentence case (First word capitalized), alternating case (aLtErNaTiNg), inverse case (OPPOSITE CASE), and camelCase (camelCaseFormatting)." },
+  { question: "Is my text stored or uploaded?", answer: "No. All text processing happens entirely in your browser. Your text never leaves your device." },
+  { question: "Does this work with non-English text?", answer: "Yes, it works with any Unicode text including accented characters, Cyrillic, Arabic, Chinese, and more." },
+];
+const ccSchema = { name: "Case Converter", applicationCategory: "Utilities", description: "Convert text between uppercase, lowercase, title case, sentence case, and more instantly.", featureList: ["7 case conversion modes", "Instant real-time results", "Copy to clipboard", "100% client-side"] };
+---
+<MainLayout title="Case Converter - Convert Text Case Online Free" description="Convert text between uppercase, lowercase, title case, sentence case, alternating case, and more. Free online case converter." keywords="case converter, uppercase, lowercase, title case, sentence case, text converter" toolSchema={ccSchema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Case Converter",url:"/tools/case-converter/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="Case" gradient="Converter Pro" desc="Convert text between uppercase, lowercase, title case, sentence case, alternating case, and more." badge="✦ New Tool" slug="case-converter" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6">
+        <textarea id="input-text" class="w-full h-32 px-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm focus:border-green-500/50 focus:outline-none transition-all resize-none font-mono" placeholder="Type or paste your text here..."></textarea>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-green-600 text-white" data-mode="upper">UPPERCASE</button>
+          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200" data-mode="lower">lowercase</button>
+          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200" data-mode="title">Title Case</button>
+          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200" data-mode="sentence">Sentence case</button>
+          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200" data-mode="alternating">aLtErNaTiNg</button>
+          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200" data-mode="inverse">INVERSE</button>
+          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200" data-mode="camel">camelCase</button>
+        </div>
+        <div class="mt-6 pt-6 border-t border-white/[0.06]">
+          <label class="block text-xs font-medium text-zinc-400 mb-1.5">Result</label>
+          <textarea id="output-text" class="w-full h-24 px-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm focus:outline-none resize-none font-mono" readonly placeholder="Result will appear here..."></textarea>
+          <button id="copy-btn" class="mt-2 bg-white/[0.04] hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 text-xs font-medium px-3 py-1.5 rounded-lg border border-white/[0.1] transition-all">Copy Result</button>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Why Use a <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">Case Converter?</span></h2></div><div class="space-y-4 text-sm text-zinc-400 leading-relaxed"><p>Text case conversion is essential for formatting content consistently. Whether you're writing code (camelCase), formatting titles (Title Case), or normalizing user input (lowercase), a case converter saves time and eliminates manual reformatting errors.</p></div></section>
+    <RelatedTools current="case-converter" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  const input = document.getElementById("input-text");
+  const output = document.getElementById("output-text");
+  const copyBtn = document.getElementById("copy-btn");
+  document.querySelectorAll(".case-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".case-btn").forEach(b => { b.classList.remove("bg-green-600","text-white"); b.classList.add("bg-white/[0.04]","text-zinc-400","hover:text-zinc-200"); });
+      btn.classList.remove("bg-white/[0.04]","text-zinc-400","hover:text-zinc-200");
+      btn.classList.add("bg-green-600","text-white");
+      convert(btn.dataset.mode);
+    });
+  });
+  input.addEventListener("input", () => { const active = document.querySelector(".case-btn.bg-green-600"); if (active) convert(active.dataset.mode); });
+  function convert(mode) {
+    const t = input.value;
+    if (!t) { output.value = ""; return; }
+    let r;
+    switch (mode) {
+      case "upper": r = t.toUpperCase(); break;
+      case "lower": r = t.toLowerCase(); break;
+      case "title": r = t.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()); break;
+      case "sentence": r = t.charAt(0).toUpperCase() + t.slice(1).toLowerCase(); break;
+      case "alternating": r = t.split('').map((c,i) => i%2===0?c.toLowerCase():c.toUpperCase()).join(''); break;
+      case "inverse": r = t.split('').map(c => c===c.toUpperCase()?c.toLowerCase():c.toUpperCase()).join(''); break;
+      case "camel": r = t.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (_,c) => c.toUpperCase()); break;
+    }
+    output.value = r;
+  }
+  copyBtn.addEventListener("click", async () => {
+    if (!output.value) return;
+    await navigator.clipboard.writeText(output.value);
+    if ((window as any).__showToast) (window as any).__showToast({ message: "Copied!", variant: "success" });
+  });
+</script>

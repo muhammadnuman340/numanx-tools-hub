@@ -1,0 +1,81 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "What is Lorem Ipsum?", answer: "Lorem Ipsum is placeholder text commonly used in graphic design, publishing, and web development to demonstrate visual form before final content is ready." },
+  { question: "What generation modes are available?", answer: "You can generate by paragraphs (each ~100 words), sentences, words, or bytes. Choose what suits your mockup needs." },
+  { question: "Can I copy or download the generated text?", answer: "Yes, you can copy the generated text to clipboard with one click or download it as a .txt file." },
+];
+const liSchema = { name: "Lorem Ipsum Generator", applicationCategory: "Creator Tools", description: "Generate Lorem Ipsum placeholder text in paragraphs, sentences, words, or bytes.", featureList: ["Paragraph, sentence, word, and byte modes", "Customizable count", "Copy and download"] };
+---
+<MainLayout title="Lorem Ipsum Generator - Free Placeholder Text" description="Generate Lorem Ipsum placeholder text as paragraphs, sentences, words, or bytes. Free online generator for mockups." keywords="lorem ipsum, placeholder text, dummy text, generator" toolSchema={liSchema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Lorem Ipsum",url:"/tools/lorem-ipsum/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="Lorem Ipsum" gradient="Generator" desc="Generate Lorem Ipsum placeholder text in paragraphs, sentences, words, or bytes." badge="✦ New Tool" slug="lorem-ipsum" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="flex gap-2">
+            <button class="li-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-blue-600 text-white" data-unit="paragraphs" data-label="Paragraphs">Paragraphs</button>
+            <button class="li-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200" data-unit="sentences" data-label="Sentences">Sentences</button>
+            <button class="li-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200" data-unit="words" data-label="Words">Words</button>
+          </div>
+          <div class="flex items-center gap-2 ml-auto">
+            <label class="text-xs text-zinc-400">Count:</label>
+            <input id="li-count" type="number" value="3" min="1" max="100" class="w-16 px-2 py-1.5 rounded-lg border border-white/[0.08] bg-white/[0.03] text-white text-xs text-center focus:border-blue-500/50 focus:outline-none" />
+          </div>
+        </div>
+        <button id="li-generate" class="w-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold py-2.5 rounded-xl transition-all mb-4">Generate</button>
+        <textarea id="li-output" class="w-full h-48 px-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm leading-relaxed focus:outline-none resize-none" readonly placeholder="Generated text will appear here..."></textarea>
+        <div class="flex gap-2 mt-3">
+          <button id="li-copy" class="flex-1 bg-white/[0.04] hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 text-xs font-medium px-3 py-1.5 rounded-lg border border-white/[0.1] transition-all">Copy</button>
+          <button id="li-download" class="flex-1 bg-white/[0.04] hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 text-xs font-medium px-3 py-1.5 rounded-lg border border-white/[0.1] transition-all">Download .txt</button>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-blue-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Why <span class="bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent">Lorem Ipsum?</span></h2></div><div class="space-y-4 text-sm text-zinc-400 leading-relaxed"><p>Lorem Ipsum has been the standard placeholder text in the printing and typesetting industry since the 1500s. It provides a realistic text distribution that helps designers and developers visualize layouts, typography, and spacing before actual content is ready.</p></div></section>
+    <RelatedTools current="lorem-ipsum" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  const loremWords = ["lorem","ipsum","dolor","sit","amet","consectetur","adipiscing","elit","sed","do","eiusmod","tempor","incididunt","ut","labore","et","dolore","magna","aliqua","ut","enim","ad","minim","veniam","quis","nostrud","exercitation","ullamco","laboris","nisi","ut","aliquip","ex","ea","commodo","consequat","duis","aute","irure","dolor","in","reprehenderit","in","voluptate","velit","esse","cillum","dolore","eu","fugiat","nulla","pariatur","excepteur","sint","occaecat","cupidatat","non","proident","sunt","in","culpa","qui","officia","deserunt","mollit","anim","id","est","laborum"];
+  function capitalize(w) { return w.charAt(0).toUpperCase() + w.slice(1); }
+  function rand(n) { return Math.floor(Math.random() * n); }
+  function makeSentence() { const len = rand(8)+5; let s = ''; for(let i=0;i<len;i++) { s += (i===0?capitalize(loremWords[rand(loremWords.length)]):loremWords[rand(loremWords.length)]) + ' '; } return s.trim() + '. '; }
+  function makeParagraph() { let p = ''; for(let i=0;i<rand(4)+4;i++) p += makeSentence(); return p.trim(); }
+  function generate(unit, count) {
+    let result = '';
+    switch(unit) {
+      case 'paragraphs': for(let i=0;i<count;i++) result += makeParagraph() + '\n\n'; break;
+      case 'sentences': for(let i=0;i<count;i++) result += makeSentence(); break;
+      case 'words': for(let i=0;i<count;i++) result += loremWords[rand(loremWords.length)] + ' '; break;
+    }
+    return result.trim();
+  }
+  let currentUnit = "paragraphs";
+  document.querySelectorAll(".li-mode").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".li-mode").forEach(b => { b.classList.remove("bg-blue-600","text-white"); b.classList.add("bg-white/[0.04]","text-zinc-400","hover:text-zinc-200"); });
+      btn.classList.remove("bg-white/[0.04]","text-zinc-400","hover:text-zinc-200");
+      btn.classList.add("bg-blue-600","text-white");
+      currentUnit = btn.dataset.unit;
+    });
+  });
+  document.getElementById("li-generate")!.addEventListener("click", () => {
+    const count = Math.min(Math.max(parseInt((document.getElementById("li-count") as HTMLInputElement).value) || 3, 1), 100);
+    (document.getElementById("li-output") as HTMLTextAreaElement).value = generate(currentUnit, count);
+  });
+  document.getElementById("li-copy")!.addEventListener("click", async () => {
+    const text = (document.getElementById("li-output") as HTMLTextAreaElement).value;
+    if (!text) return; await navigator.clipboard.writeText(text); if ((window as any).__showToast) (window as any).__showToast({message:"Copied!",variant:"success"});
+  });
+  document.getElementById("li-download")!.addEventListener("click", () => {
+    const text = (document.getElementById("li-output") as HTMLTextAreaElement).value;
+    if (!text) return; const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([text], {type:'text/plain'})); a.download = `lorem-ipsum.txt`; a.click(); URL.revokeObjectURL(a.href);
+  });
+</script>

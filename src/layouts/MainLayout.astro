@@ -7,6 +7,7 @@ import SearchBar from "../components/SearchBar.astro";
 import BackToTop from "../components/BackToTop.astro";
 import Analytics from "../components/Analytics.astro";
 import Toast from "../components/ui/Toast.astro";
+import ClientRouter from 'astro/components/ClientRouter.astro';
 
 const GA_ID = import.meta.env.PUBLIC_GA_ID || '';
 
@@ -28,8 +29,9 @@ const {
 } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
+    <script>!function(){var t=localStorage.getItem("theme")||"dark";document.documentElement.setAttribute("data-theme",t)}()</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: dark)" />
@@ -47,18 +49,19 @@ const {
 
     {GA_ID && <Analytics id={GA_ID} />}
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-TBXFNLDB');</script>
-    <!-- End Google Tag Manager -->
+    <!-- Google Tag Manager (lazy) -->
+    <script>window.addEventListener('load',function(){setTimeout(function(){var w=window,d=document,s='script',l='dataLayer',i='GTM-TBXFNLDB';w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);},1000)});</script>
+    <!-- End Google Tag Manager (lazy) -->
 
+    <ClientRouter fallback="animate" />
     <slot name="head" />
   </head>
 
   <body class="bg-[#0a0a0b] text-zinc-100 antialiased selection:bg-purple-500/30 selection:text-white">
+    <!-- Skip to main content -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[999] focus:px-4 focus:py-2 focus:bg-purple-600 focus:text-white focus:rounded-xl focus:text-sm focus:font-semibold focus:outline-none">
+      Skip to main content
+    </a>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TBXFNLDB"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -81,9 +84,9 @@ const {
     </div>
 
     <Navbar />
-    <main>
+    <div id="main-content">
       <slot />
-    </main>
+    </div>
     <Footer />
     <BackToTop />
     <SearchBar />
@@ -133,6 +136,13 @@ const {
           window.addEventListener("mousemove", onMouseMove, { passive: true });
           tick();
         }
+      }
+
+      // ─── Service Worker Registration ───
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
       }
     </script>
   </body>

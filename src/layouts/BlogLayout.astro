@@ -5,6 +5,7 @@ import Footer from "../components/Footer.astro";
 import TableOfContents from "../components/TableOfContents.astro";
 import RelatedPosts from "../components/RelatedPosts.astro";
 import PopularPosts from "../components/PopularPosts.astro";
+import ClientRouter from 'astro/components/ClientRouter.astro';
 
 const { frontmatter } = Astro.props;
 const { title, description, date, author, category, tags, readingTime, slug } = frontmatter;
@@ -19,8 +20,9 @@ const articleSchema = {
 };
 ---
 
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
+    <script>!function(){var t=localStorage.getItem("theme")||"dark";document.documentElement.setAttribute("data-theme",t)}()</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{title} - NumanX Tools Blog</title>
@@ -31,6 +33,7 @@ const articleSchema = {
     <meta property="article:published_time" content={date} />
     {tags && tags.map((tag: string) => <meta property="article:tag" content={tag} />)}
     <script type="application/ld+json" set:html={JSON.stringify({ "@context": "https://schema.org", ...articleSchema })} />
+    <ClientRouter fallback="animate" />
   </head>
   <body class="bg-[linear-gradient(135deg,#0b0b0c_60%,#2e1065_100%)] text-zinc-100 antialiased">
     <div class="pointer-events-none fixed inset-0 -z-10">

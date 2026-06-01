@@ -1,0 +1,98 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "What color formats are supported?", answer: "HEX (with and without #), RGB (rgb(r,g,b)), HSL (hsl(h,s%,l%)), and HEX with alpha (RGBA equivalent)." },
+  { question: "Can I pick a color visually?", answer: "Yes, use the color picker input to select a color visually. The equivalent values in all formats update instantly." },
+  { question: "Why do HSL values differ between tools?", answer: "HSL is a cylindrical representation of RGB. All conversions follow the standard CSS specification for consistency." },
+];
+const cSchema = { name: "Color Converter", applicationCategory: "Utilities", description: "Convert colors between HEX, RGB, and HSL formats with live preview.", featureList: ["HEX, RGB, HSL conversion", "Live color preview", "Visual color picker", "Copy values instantly"] };
+---
+<MainLayout title="Color Converter - HEX to RGB to HSL Converter Online" description="Convert colors between HEX, RGB, and HSL formats with a live color preview. Free online color converter." keywords="color converter, hex to rgb, rgb to hex, color picker, hsl" toolSchema={cSchema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Color Converter",url:"/tools/color-converter/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="Color" gradient="Converter Pro" desc="Convert colors between HEX, RGB, and HSL formats with a live color preview and visual picker." badge="✦ New Tool" slug="color-converter" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6">
+        <div class="flex items-center gap-4 mb-6">
+          <input id="color-picker" type="color" value="#7c3aed" class="w-16 h-16 rounded-xl border border-white/[0.08] cursor-pointer bg-transparent" />
+          <div class="flex-1">
+            <label class="block text-xs font-medium text-zinc-400 mb-1.5">HEX</label>
+            <input id="hex-input" type="text" value="#7c3aed" class="w-full px-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm font-mono focus:border-purple-500/50 focus:outline-none transition-all" />
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-medium text-zinc-400 mb-1.5">RGB</label>
+            <div class="flex gap-2"><input id="r-input" type="number" min="0" max="255" value="124" class="flex-1 px-3 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" /><span class="text-zinc-500 self-center">,</span><input id="g-input" type="number" min="0" max="255" value="58" class="flex-1 px-3 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" /><span class="text-zinc-500 self-center">,</span><input id="b-input" type="number" min="0" max="255" value="237" class="flex-1 px-3 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" /></div>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-zinc-400 mb-1.5">HSL</label>
+            <div class="flex gap-2"><input id="h-input" type="number" min="0" max="360" value="263" class="flex-1 px-3 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" /><span class="text-zinc-500 self-center text-xs">H</span><input id="s-input" type="number" min="0" max="100" value="83" class="flex-1 px-3 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" /><span class="text-zinc-500 self-center text-xs">%</span><input id="l-input" type="number" min="0" max="100" value="58" class="flex-1 px-3 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" /><span class="text-zinc-500 self-center text-xs">%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Why Use a <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Color Converter?</span></h2></div><div class="space-y-4 text-sm text-zinc-400 leading-relaxed"><p>Color conversion is essential for web development, graphic design, and UI work. Different tools and frameworks expect different color formats. Converting between HEX, RGB, and HSL ensures your colors work everywhere — from CSS to Sketch to Figma.</p></div></section>
+    <RelatedTools current="color-converter" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  const picker = document.getElementById("color-picker") as HTMLInputElement;
+  const hexInput = document.getElementById("hex-input") as HTMLInputElement;
+  const rInput = document.getElementById("r-input") as HTMLInputElement;
+  const gInput = document.getElementById("g-input") as HTMLInputElement;
+  const bInput = document.getElementById("b-input") as HTMLInputElement;
+  const hInput = document.getElementById("h-input") as HTMLInputElement;
+  const sInput = document.getElementById("s-input") as HTMLInputElement;
+  const lInput = document.getElementById("l-input") as HTMLInputElement;
+  let updating = false;
+  function hexToRgb(hex: string) { const m = hex.replace('#','').match(/^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i); return m ? {r:parseInt(m[1],16),g:parseInt(m[2],16),b:parseInt(m[3],16)} : null; }
+  function rgbToHsl(r:number,g:number,b:number) { r/=255;g/=255;b/=255; const mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn; let h=0,s=0,l=(mx+mn)/2; if(d){s=l>0.5?d/(2-mx-mn):d/(mx+mn); switch(mx){case r:h=((g-b)/d+(g<b?6:0))/6;break;case g:h=((b-r)/d+2)/6;break;case b:h=((r-g)/d+4)/6;break}} return {h:Math.round(h*360),s:Math.round(s*100),l:Math.round(l*100)}; }
+  function hslToRgb(h:number,s:number,l:number) { s/=100;l/=100; const a=s*Math.min(l,1-l); const f=(n:number)=>{const k=(n+h/30)%12;return l-a*Math.max(Math.min(k-3,9-k,1),-1)}; return {r:Math.round(f(0)*255),g:Math.round(f(8)*255),b:Math.round(f(4)*255)}; }
+  function rgbToHex(r:number,g:number,b:number) { return '#'+[r,g,b].map(x=>x.toString(16).padStart(2,'0')).join(''); }
+  function updateFromHex() {
+    if (updating) return; updating = true;
+    let hex = hexInput.value.trim();
+    if (!hex.startsWith('#')) hex = '#' + hex;
+    if (/^#[a-f\d]{6}$/i.test(hex)) {
+      const rgb = hexToRgb(hex); if (!rgb) return;
+      picker.value = hex;
+      rInput.value = String(rgb.r); gInput.value = String(rgb.g); bInput.value = String(rgb.b);
+      const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+      hInput.value = String(hsl.h); sInput.value = String(hsl.s); lInput.value = String(hsl.l);
+    }
+    updating = false;
+  }
+  function updateFromRgb() {
+    if (updating) return; updating = true;
+    const r=parseInt(rInput.value)||0,g=parseInt(gInput.value)||0,b=parseInt(bInput.value)||0;
+    const hex = rgbToHex(Math.min(r,255),Math.min(g,255),Math.min(b,255));
+    hexInput.value = hex; picker.value = hex;
+    const hsl = rgbToHsl(Math.min(r,255),Math.min(g,255),Math.min(b,255));
+    hInput.value = String(hsl.h); sInput.value = String(hsl.s); lInput.value = String(hsl.l);
+    updating = false;
+  }
+  function updateFromHsl() {
+    if (updating) return; updating = true;
+    const h=parseInt(hInput.value)||0,s=parseInt(sInput.value)||0,l=parseInt(lInput.value)||0;
+    const rgb = hslToRgb(Math.min(h,360),Math.min(s,100),Math.min(l,100));
+    rInput.value = String(rgb.r); gInput.value = String(rgb.g); bInput.value = String(rgb.b);
+    const hex = rgbToHex(rgb.r,rgb.g,rgb.b);
+    hexInput.value = hex; picker.value = hex;
+    updating = false;
+  }
+  picker.addEventListener("input", () => { hexInput.value = picker.value; updateFromHex(); });
+  hexInput.addEventListener("input", updateFromHex);
+  rInput.addEventListener("input", updateFromRgb);
+  gInput.addEventListener("input", updateFromRgb);
+  bInput.addEventListener("input", updateFromRgb);
+  hInput.addEventListener("input", updateFromHsl);
+  sInput.addEventListener("input", updateFromHsl);
+  lInput.addEventListener("input", updateFromHsl);
+</script>
