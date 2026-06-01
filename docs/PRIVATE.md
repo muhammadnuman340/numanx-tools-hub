@@ -55,12 +55,18 @@
 
 - **Production:** https://numanxtools.site
 
-## Analytics
+## Analytics & Monetization
 
 - **Provider:** Google Tag Manager
 - **GTM ID:** `GTM-TBXFNLDB`
 - **Component:** `src/components/Analytics.astro` (GA fallback via `PUBLIC_GA_ID` env var)
 - **Integration:** GTM script + noscript in `MainLayout.astro` head/body
+
+### AdSense
+- **Component:** `src/components/AdSense.astro` — auto-ads script in head (conditional on `PUBLIC_ADSENSE_ID` env var)
+- **Component:** `src/components/AdUnit.astro` — manual ad unit placement (display, in-feed, in-article)
+- **Env var:** `PUBLIC_ADSENSE_ID` = `ca-pub-XXXXXXXXXXXXXXXX`
+- **Placement:** Auto-ads active across all pages; manual ad slots added on homepage, tool pages, blog pages
 
 ## Carbon Ads
 

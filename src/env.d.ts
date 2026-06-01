@@ -1,0 +1,10 @@
+/// <reference path="../.astro/types.d.ts" />
+
+interface ImportMetaEnv {
+  readonly PUBLIC_GA_ID: string;
+  readonly PUBLIC_ADSENSE_ID: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}

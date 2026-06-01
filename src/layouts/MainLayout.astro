@@ -6,6 +6,7 @@ import SEO from "../components/SEO.astro";
 import SearchBar from "../components/SearchBar.astro";
 import BackToTop from "../components/BackToTop.astro";
 import Analytics from "../components/Analytics.astro";
+import AdSense from "../components/AdSense.astro";
 import Toast from "../components/ui/Toast.astro";
 import ClientRouter from 'astro/components/ClientRouter.astro';
 
@@ -48,6 +49,7 @@ const {
     <SEO {title} {description} {keywords} {canonical} {image} {noindex} {faq} {breadcrumbs} {toolSchema} {articleSchema} {publishedTime} {modifiedTime} {tags} type={type} />
 
     {GA_ID && <Analytics id={GA_ID} />}
+    <AdSense />
 
     <!-- Google Tag Manager (lazy) -->
     <script>window.addEventListener('load',function(){setTimeout(function(){var w=window,d=document,s='script',l='dataLayer',i='GTM-TBXFNLDB';w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);},1000)});</script>
