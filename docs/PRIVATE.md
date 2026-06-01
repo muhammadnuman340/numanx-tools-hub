@@ -25,10 +25,18 @@
 - **Repo:** https://github.com/muhammadnuman340/numanx-tools-hub (private)
 - **Branch:** master
 
+## Search Console & SEO
+
+- **Google Search Console:** https://search.google.com/search-console?resource_id=https://numanx-tools.pages.dev
+- **Verification method:** HTML file (`public/google56b08745d0fdbc9e.html`)
+- **Verification meta tag:** `<meta name="google-site-verification" content="google56b08745d0fdbc9e.html" />` (in `src/components/SEO.astro:185`)
+- **Sitemap URL:** https://numanx-tools.pages.dev/sitemap.xml — 43 URLs (static pages, 14 tools, 4 categories, 13 blog posts)
+- **robots.txt:** https://numanx-tools.pages.dev/robots.txt — allows all crawlers, disallows `/favorites/` and `/search/`, references sitemap
+
 ## Deploy (Cloudflare Pages)
 
 - **Project:** numanx-tools
-- **Preview URL:** https://8fa5285a.numanx-tools.pages.dev
+- **Preview URL:** https://numanx-tools.pages.dev
 - **Production URL:** https://numanx-tools.pages.dev
 - **Custom domain:** https://numanxtools.site (configure DNS at registrar)
 - **CI/CD:** Auto-deploys on git push (set up via Cloudflare dashboard Git integration)
