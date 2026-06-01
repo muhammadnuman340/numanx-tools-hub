@@ -47,10 +47,22 @@ const {
 
     {GA_ID && <Analytics id={GA_ID} />}
 
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TBXFNLDB');</script>
+    <!-- End Google Tag Manager -->
+
     <slot name="head" />
   </head>
 
   <body class="bg-[#0a0a0b] text-zinc-100 antialiased selection:bg-purple-500/30 selection:text-white">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TBXFNLDB"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <!-- Top Scroll Progress Bar -->
     <div id="scroll-progress" class="fixed top-0 left-0 h-[2.5px] bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 z-[300] w-0 transition-all duration-75 pointer-events-none" aria-hidden="true"></div>
 

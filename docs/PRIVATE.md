@@ -57,10 +57,10 @@
 
 ## Analytics
 
-- **Provider:** Google Analytics (GA4)
-- **Measurement ID:** Set via `PUBLIC_GA_ID` environment variable (default placeholder: `G-XXXXXXXXXX`)
-- **Component:** `src/components/Analytics.astro`
-- **Integration:** `MainLayout.astro` conditionally renders `<Analytics id={GA_ID} />` when non-empty
+- **Provider:** Google Tag Manager
+- **GTM ID:** `GTM-TBXFNLDB`
+- **Component:** `src/components/Analytics.astro` (GA fallback via `PUBLIC_GA_ID` env var)
+- **Integration:** GTM script + noscript in `MainLayout.astro` head/body
 
 ## Carbon Ads
 
