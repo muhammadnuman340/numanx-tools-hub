@@ -1,0 +1,61 @@
+---
+interface Props {
+  id?: string;
+  position?: "left" | "right";
+}
+
+const { id = "drawer", position = "right" } = Astro.props;
+---
+
+<div
+  id={id}
+  class="drawer fixed inset-0 z-[150] hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Navigation drawer"
+>
+  <div class="drawer-backdrop absolute inset-0 bg-black/60 backdrop-blur-sm" />
+  <div class={`drawer-panel absolute top-0 ${position === "right" ? "right-0" : "left-0"} h-full w-72 max-w-[85vw] bg-[#0a0a0b] border-l border-white/[0.06] shadow-2xl overflow-y-auto`}>
+    <div class="p-4">
+      <div class="flex items-center justify-between mb-6">
+        <span class="text-lg font-extrabold text-purple-400">NumanX</span>
+        <button class="drawer-close p-2 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.06] transition-colors cursor-pointer" aria-label="Close drawer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <slot />
+    </div>
+  </div>
+</div>
+
+<script>
+  const drawers = document.querySelectorAll<HTMLElement>(".drawer");
+  drawers.forEach((drawer) => {
+    const backdrop = drawer.querySelector(".drawer-backdrop");
+    const closeBtn = drawer.querySelector(".drawer-close");
+    const panel = drawer.querySelector(".drawer-panel") as HTMLElement;
+
+    function open() {
+      drawer.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+      if (panel) {
+        panel.style.transform = "translateX(0)";
+        panel.style.transition = "transform 0.3s ease";
+      }
+    }
+
+    function close() {
+      if (panel) {
+        panel.style.transform = "";
+      }
+      drawer.classList.add("hidden");
+      document.body.style.overflow = "";
+    }
+
+    backdrop?.addEventListener("click", close);
+    closeBtn?.addEventListener("click", close);
+
+    const openTriggers = document.querySelectorAll(`[data-drawer="${drawer.id}"]`);
+    openTriggers.forEach((trigger) => trigger.addEventListener("click", open));
+  });
+</script>

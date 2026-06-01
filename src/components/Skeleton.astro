@@ -1,0 +1,50 @@
+---
+type SkeletonVariant = "card" | "text" | "circle" | "rect" | "image";
+
+interface Props {
+  variant?: SkeletonVariant;
+  width?: string;
+  height?: string;
+  class?: string;
+  lines?: number;
+}
+
+const { variant = "text", width, height, class: className, lines = 3 } = Astro.props;
+
+const baseClass = "animate-pulse bg-white/[0.04] rounded-lg";
+
+const variants: Record<SkeletonVariant, string> = {
+  card: `${baseClass} rounded-2xl`,
+  text: `${baseClass} h-4`,
+  circle: `${baseClass} rounded-full`,
+  rect: `${baseClass} rounded-xl`,
+  image: `${baseClass} aspect-video rounded-xl`,
+};
+---
+
+{
+  variant === "text" ? (
+    <div class={`space-y-2 ${className || ""}`}>
+      {Array.from({ length: lines }).map((_, i) => (
+        <div class={`${baseClass} h-3`} style={{ width: i === lines - 1 ? "60%" : "100%" }} />
+      ))}
+    </div>
+  ) : variant === "card" ? (
+    <div class={`${variants.card} p-5 ${className || ""}`} style={{ width: width || "100%", height: height || "200px" }}>
+      <div class="flex items-center gap-3 mb-4">
+        <div class={`${baseClass} w-10 h-10 rounded-xl shrink-0`} />
+        <div class="flex-1 space-y-2">
+          <div class={`${baseClass} h-4 w-3/4`} />
+          <div class={`${baseClass} h-3 w-1/2`} />
+        </div>
+      </div>
+      <div class="space-y-2">
+        <div class={`${baseClass} h-3 w-full`} />
+        <div class={`${baseClass} h-3 w-5/6`} />
+      </div>
+    </div>
+  ) : (
+    <div class={`${variants[variant]} ${className || ""}`} style={{ width: width || "100%", height: height || (variant === "circle" ? "48px" : "100%") }} />
+  )
+}
+

@@ -1,0 +1,65 @@
+---
+interface Props {
+  slug: string;
+  class?: string;
+}
+
+const { slug, class: className } = Astro.props;
+---
+
+<button
+  class="favorite-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/[0.06] text-xs font-medium transition-all duration-200 hover:border-purple-500/40 cursor-pointer {className || ''}"
+  data-slug={slug}
+  aria-label="Toggle favorite"
+>
+  <svg class="favorite-icon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+  </svg>
+  <span class="favorite-text">Save</span>
+</button>
+
+<script>
+  document.querySelectorAll(".favorite-btn").forEach((btn) => {
+    const slug = btn.dataset.slug;
+    const icon = btn.querySelector(".favorite-icon");
+    const text = btn.querySelector(".favorite-text");
+
+    function updateState(isFav: boolean) {
+      if (isFav) {
+        icon.setAttribute("fill", "currentColor");
+        btn.classList.add("text-amber-400", "border-amber-500/30", "bg-amber-500/10");
+        btn.classList.remove("text-zinc-400", "border-white/[0.06]");
+        if (text) text.textContent = "Saved";
+      } else {
+        icon.setAttribute("fill", "none");
+        btn.classList.remove("text-amber-400", "border-amber-500/30", "bg-amber-500/10");
+        btn.classList.add("text-zinc-400", "border-white/[0.06]");
+        if (text) text.textContent = "Save";
+      }
+    }
+
+    try {
+      const favorites: string[] = JSON.parse(localStorage.getItem("nt_favorites") || "[]");
+      updateState(favorites.includes(slug));
+    } catch {
+      updateState(false);
+    }
+
+    btn.addEventListener("click", () => {
+      try {
+        let favorites: string[] = JSON.parse(localStorage.getItem("nt_favorites") || "[]");
+        const idx = favorites.indexOf(slug);
+        if (idx >= 0) {
+          favorites.splice(idx, 1);
+          updateState(false);
+        } else {
+          favorites.push(slug);
+          updateState(true);
+        }
+        localStorage.setItem("nt_favorites", JSON.stringify(favorites));
+      } catch {}
+    });
+  });
+</script>
+
+

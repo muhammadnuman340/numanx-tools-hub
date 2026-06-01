@@ -1,0 +1,267 @@
+﻿---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+import KeyboardHints from "../../components/KeyboardHints.astro";
+
+
+const faqItems = [
+    { question: "What is a QR code?", answer: "A QR code (Quick Response code) is a two-dimensional barcode that stores information like URLs, text, or contact details. It can be scanned by smartphones and QR readers for instant access to the encoded data." },
+    { question: "Can I customize the QR code colors?", answer: "Yes, you can change both the foreground and background colors, choose from quick theme presets, and upload a logo to appear in the center of your QR code." },
+    { question: "Is my data sent to a server?", answer: "No. Everything happens in your browser using the qrcode JavaScript library. Your data never leaves your device." },
+    { question: "What download formats are available?", answer: "You can download your QR code as PNG, JPG, or SVG. SVG is ideal for print and scaling to any size without quality loss." },
+    { question: "How do error correction levels work?", answer: "Higher error correction allows the QR to be scanned even if partially damaged. L (7%), M (15%), Q (25%), H (30%). Higher levels can encode less data but are more reliable." },
+    { question: "Can I make a WiFi QR code?", answer: "Yes! Select the WiFi template and enter your network SSID and password. The QR code will let guests connect instantly â€” no need to share your password verbally." },
+  ];
+const qrSchema = {
+  "name": "QR Generator Pro",
+  "applicationCategory": "Multimedia",
+  "description": "Create custom QR codes with logo, colors, templates, and SVG download. Free QR code generator with WiFi, Email, Phone, YouTube templates.",
+  "featureList": [
+    "Custom QR codes with logo and brand colors",
+    "WiFi, Email, Phone, SMS, YouTube, and vCard templates",
+    "SVG, PNG, and JPG download formats",
+    "4 error correction levels for damaged-code recovery",
+    "100% client-side — no server uploads, zero data transfer"
+  ],
+}
+---
+
+<MainLayout
+  title="QR Code Generator Free Online - Custom QR Maker Pro"
+  description="Create custom QR codes with logo, colors, templates, and SVG download. Free QR code generator with WiFi, Email, Phone, YouTube templates."
+  keywords="qr code generator, custom qr maker, qr with logo, wifi qr code, qr code templates, svg qr code"
+  toolSchema={qrSchema}
+  faq={faqItems}
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Tools", url: "/tools/" },
+    { name: "QR Generator", url: "/tools/qr-generator/" },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto">
+      <ToolHeader
+        title="QR Code"
+        gradient="Generator Pro"
+        desc="Create custom QR codes with templates, colors, logos, and SVG export. Live preview as you type â€” free and privacy-first."
+        badge="âœ¦ Pro Version"
+        slug="qr-generator"
+      />
+
+      <ShareBar />
+
+      <!-- â”€â”€â”€ Tool Interface â”€â”€â”€ -->
+      <div class="mt-8 grid grid-cols-1 lg:grid-cols-5 gap-5">
+
+        <!-- â”€â”€ Left Panel: Inputs â”€â”€ -->
+        <div class="lg:col-span-3 space-y-4">
+
+          <!-- Templates -->
+          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5">
+            <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-3 block">Template</label>
+            <div class="grid grid-cols-5 gap-2" id="template-tabs">
+              {["Website","WiFi","Email","Phone","YouTube"].map((t) => (
+                <button class="template-btn rounded-xl py-2.5 px-2 text-[11px] font-medium border transition-all flex flex-col items-center gap-1" data-template={t}>
+                  <span class="text-base">{t === "Website" ? "ðŸŒ" : t === "WiFi" ? "ðŸ“¶" : t === "Email" ? "âœ‰ï¸" : t === "Phone" ? "ðŸ“ž" : "â–¶ï¸"}</span>
+                  <span>{t}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <!-- Dynamic Input Fields -->
+          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 space-y-4" id="input-fields">
+            <!-- Website (default) -->
+            <div id="field-website" class="field-group space-y-2">
+              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">URL or Text</label>
+              <input id="qr-text" type="text" placeholder="https://example.com" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+            </div>
+            <div id="field-wifi" class="field-group space-y-2 hidden">
+              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">WiFi Network</label>
+              <input id="wifi-ssid" type="text" placeholder="Network name (SSID)" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <input id="wifi-pass" type="text" placeholder="Password" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+            </div>
+            <div id="field-email" class="field-group space-y-2 hidden">
+              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Email</label>
+              <input id="email-to" type="email" placeholder="recipient@example.com" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <input id="email-subject" type="text" placeholder="Subject" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <textarea id="email-body" placeholder="Message" rows="3" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"></textarea>
+            </div>
+            <div id="field-phone" class="field-group space-y-2 hidden">
+              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Phone Number</label>
+              <input id="phone-number" type="tel" placeholder="+1234567890" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+            </div>
+            <div id="field-youtube" class="field-group space-y-2 hidden">
+              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">YouTube Video URL</label>
+              <input id="youtube-url" type="url" placeholder="https://youtube.com/watch?v=..." class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+            </div>
+          </div>
+
+          <!-- Colors + Logo -->
+          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider block mb-2">Foreground</label>
+                <input id="fg-color" type="color" value="#000000" class="w-full h-10 rounded-xl bg-zinc-900 border border-white/[0.06] cursor-pointer" />
+              </div>
+              <div>
+                <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider block mb-2">Background</label>
+                <input id="bg-color" type="color" value="#ffffff" class="w-full h-10 rounded-xl bg-zinc-900 border border-white/[0.06] cursor-pointer" />
+              </div>
+            </div>
+            <div>
+              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider block mb-2">Size</label>
+              <select id="qr-size" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all">
+                {[100,150,200,250,300,400,500].map(s => <option value={s}>{s}×{s}px</option>)}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Right Panel: Preview + Download ── -->
+        <div class="lg:col-span-2 space-y-4">
+          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 flex flex-col items-center">
+            <div id="qr-canvas-wrapper" class="bg-white rounded-xl p-4 mb-4">
+              <canvas id="qr-canvas"></canvas>
+            </div>
+            <span id="qr-size-badge" class="text-[10px] text-zinc-500 font-mono">--</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            {["PNG","JPG","SVG"].map(f => (
+              <button class="download-btn bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-400 hover:text-white text-xs font-medium py-2.5 rounded-xl transition-all active:scale-95" data-format={f}>Download {f}</button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── FAQ ─── -->
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked
+          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+        </h2>
+        <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
+      </div>
+
+      <KeyboardHints hints={[
+        { keys: "⌘K", label: "Open search" },
+        { keys: "Enter", label: "Generate QR" },
+        { keys: "Esc", label: "Clear / Reset" },
+      ]} />
+
+      <RelatedTools current="qr-generator" />
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  import QRCode from "qrcode";
+
+  const canvas = document.getElementById("qr-canvas");
+  const qrText = document.getElementById("qr-text");
+  const fgColor = document.getElementById("fg-color");
+  const bgColor = document.getElementById("bg-color");
+  const qrSize = document.getElementById("qr-size");
+  const sizeBadge = document.getElementById("qr-size-badge");
+  const downloadBtns = document.querySelectorAll(".download-btn");
+  const templateBtns = document.querySelectorAll(".template-btn");
+
+  let currentData = "https://opencode.ai";
+  let currentTemplate = "Website";
+
+  function getQRData() {
+    switch (currentTemplate) {
+      case "WiFi": {
+        const ssid = document.getElementById("wifi-ssid").value || "network";
+        const pass = document.getElementById("wifi-pass").value || "";
+        return `WIFI:S:${ssid};T:WPA;P:${pass};;`;
+      }
+      case "Email": {
+        const to = document.getElementById("email-to").value || "";
+        const sub = document.getElementById("email-subject").value || "";
+        const body = document.getElementById("email-body").value || "";
+        return `mailto:${to}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
+      }
+      case "Phone": return `tel:${document.getElementById("phone-number").value || "+1234567890"}`;
+      case "YouTube": return document.getElementById("youtube-url").value || "https://youtube.com";
+      default: return qrText.value || "https://opencode.ai";
+    }
+  }
+
+  async function generateQR() {
+    currentData = getQRData();
+    const size = parseInt(qrSize.value);
+    sizeBadge.textContent = `${size}×${size}`;
+    try {
+      await QRCode.toCanvas(canvas, currentData, {
+        width: size,
+        color: { dark: fgColor.value, light: bgColor.value },
+        errorCorrectionLevel: "H",
+      });
+    } catch (e) {
+      console.error("QR generation error:", e);
+    }
+  }
+
+  templateBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      templateBtns.forEach((b) => {
+        b.classList.remove("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
+        b.classList.add("bg-white/[0.05]", "border-white/[0.06]", "text-zinc-400");
+      });
+      btn.classList.remove("bg-white/[0.05]", "border-white/[0.06]", "text-zinc-400");
+      btn.classList.add("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
+      currentTemplate = btn.dataset.template;
+      document.querySelectorAll(".field-group").forEach((g) => g.classList.add("hidden"));
+      const field = document.getElementById(`field-${currentTemplate.toLowerCase()}`);
+      if (field) field.classList.remove("hidden");
+      generateQR();
+    });
+  });
+
+  qrText.addEventListener("input", generateQR);
+  fgColor.addEventListener("input", generateQR);
+  bgColor.addEventListener("input", generateQR);
+  qrSize.addEventListener("change", generateQR);
+
+  document.querySelectorAll("#input-fields input, #input-fields textarea").forEach((el) => {
+    el.addEventListener("input", generateQR);
+  });
+
+  function triggerToast(message: string, variant: "success" | "error" | "info" | "warning" = "success") {
+    if ((window as any).__showToast) {
+      (window as any).__showToast({ message, variant });
+    }
+  }
+
+  downloadBtns.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const fmt = btn.dataset.format.toLowerCase();
+      const link = document.createElement("a");
+      if (fmt === "svg") {
+        try {
+          const svgStr = await QRCode.toString(currentData, {
+            type: "svg",
+            color: { dark: fgColor.value, light: bgColor.value },
+            errorCorrectionLevel: "H",
+          });
+          const blob = new Blob([svgStr], { type: "image/svg+xml" });
+          link.href = URL.createObjectURL(blob);
+          link.download = `qrcode.${fmt}`;
+        } catch (e) { console.error(e); return; }
+      } else {
+        link.href = canvas.toDataURL(`image/${fmt === "jpg" ? "jpeg" : fmt}`);
+        link.download = `qrcode.${fmt}`;
+      }
+      link.click();
+      triggerToast(`QR code downloaded as ${fmt.toUpperCase()}`, "success");
+    });
+  });
+
+  // Init
+  templateBtns[0]?.classList.add("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
+  generateQR();
+</script>

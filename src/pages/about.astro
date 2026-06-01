@@ -1,0 +1,340 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Accordion from "../components/ui/Accordion.astro";
+
+const faqItems = [
+  { title: "What is NumanX Studio?", content: "NumanX Studio is a digital innovation company founded by Muhammad Numan Usmani. We build NumanX Tools (free online utilities), NumanX Creator Hub (community platform), MatchPulse Cricket Analytics, Cricket Glory Game Universe, NumanX AI Platform, and the Future Operating Brain System." },
+  { title: "What is the NumanX tagline?", content: "Our official tagline is \"Build. Create. Analyze.\" — reflecting our mission to provide tools for creators, students, and businesses to build projects, create content, and analyze data." },
+  { title: "Is NumanX really free?", content: "Yes, completely free. No watermarks, no file limits, no daily caps, and no sign-up required. All tools run entirely in your browser — nothing is uploaded to any server." },
+  { title: "What tools are coming next?", content: "The roadmap includes NumanX Creator Hub (Phase 2), MatchPulse Cricket Analytics (Phase 3), NumanX AI Platform (Phase 4), and the NumanX Operating Brain (Phase 5)." },
+];
+---
+
+<MainLayout
+  title="About NumanX Studio — Build. Create. Analyze."
+  description="NumanX Studio is a digital innovation company building NumanX Tools, Creator Hub, MatchPulse Cricket, and AI platforms for creators and businesses."
+  keywords="numanx studio, numanx tools, muhammad numan usmani, free online tools, creator tools, cricket analytics"
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+
+    <div class="max-w-5xl mx-auto">
+
+      <!-- Hero -->
+      <section class="text-center mb-24 pt-8 animate-[fadeInUp_0.6s_ease-out]">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm text-zinc-400 text-xs font-semibold tracking-wider uppercase mb-8">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500" />
+          </span>
+          NumanX Studio
+        </div>
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-none">
+          Build. Create.
+          <span class="block mt-2 bg-gradient-to-r from-purple-300 via-purple-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(168,85,247,0.15)]">
+            Analyze.
+          </span>
+        </h1>
+        <p class="mt-6 text-zinc-400 text-lg md:text-xl max-w-3xl mx-auto leading-[1.75]">
+          NumanX Studio is a digital innovation company building powerful tools, AI platforms, cricket analytics, and creator ecosystems for the next generation.
+        </p>
+        <div class="mt-8 flex items-center justify-center gap-4">
+          <a href="/tools/" class="group inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm px-6 py-3 rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.97] shadow-lg shadow-purple-900/30">
+            Explore Tools
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="/blog/" class="group inline-flex items-center gap-2 border border-white/[0.08] hover:border-purple-500/40 text-zinc-300 hover:text-white font-semibold text-sm px-6 py-3 rounded-xl bg-white/[0.03] backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.97]">
+            Read Blog
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- Founder -->
+      <section class="mb-24 animate-[fadeInUp_0.6s_ease-out_0.15s_both]">
+        <div class="relative rounded-2xl md:rounded-3xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-2xl p-6 md:p-10 shadow-2xl">
+          <div class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
+          <div class="relative flex flex-col md:flex-row items-center gap-8">
+            <div class="w-32 h-32 md:w-44 md:h-44 rounded-2xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center shrink-0 border border-white/[0.06]">
+              <span class="text-5xl md:text-7xl font-black text-purple-400">NU</span>
+            </div>
+            <div class="text-center md:text-left">
+              <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Founder &amp; Creator</span>
+              <h2 class="text-3xl md:text-4xl font-black text-white mt-2">Muhammad Numan Usmani</h2>
+              <p class="text-zinc-400 mt-2 max-w-xl leading-relaxed">
+                IT Student, Creator, and System Architect building the NumanX ecosystem — a unified platform of tools, analytics, AI, and operating intelligence for creators and businesses worldwide.
+              </p>
+              <p class="text-zinc-500 text-sm mt-3 leading-relaxed">
+                <span class="text-purple-400 font-semibold">NumanX Studio</span> is the parent organization behind NumanX Tools, NumanX Creator Hub, MatchPulse Cricket Analytics, Cricket Glory Game Universe, NumanX AI Platform, and the Future Operating Brain System.
+              </p>
+              <div class="flex flex-wrap justify-center md:justify-start gap-3 mt-5">
+                <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs font-medium text-zinc-300">IT Student</span>
+                <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs font-medium text-zinc-300">Creator</span>
+                <span class="px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs font-medium text-zinc-300">System Architect</span>
+              </div>
+            </div>
+          </div>
+          <div class="relative mt-10 pt-8 border-t border-white/[0.06]">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="text-center">
+                <div class="text-2xl font-black text-purple-400">2024</div>
+                <div class="text-xs text-zinc-500 mt-1">NumanX Studio Founded</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-black text-purple-400">2025</div>
+                <div class="text-xs text-zinc-500 mt-1">Tool Ecosystem Launched</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-black text-purple-400">2026</div>
+                <div class="text-xs text-zinc-500 mt-1">Creator Hub &amp; Cricket Analytics</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-black text-purple-400">2027+</div>
+                <div class="text-xs text-zinc-500 mt-1">AI Platform &amp; Operating Brain</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vision -->
+      <section class="mb-24 text-center animate-[fadeInUp_0.6s_ease-out_0.3s_both]">
+        <h2 class="text-3xl md:text-4xl font-black tracking-tight">
+          The NumanX
+          <span class="bg-gradient-to-r from-purple-300 to-blue-400 bg-clip-text text-transparent">Vision</span>
+        </h2>
+        <p class="mt-4 text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+          Empower creators, students, developers, and businesses with powerful digital tools and AI-driven solutions — all free, private, and accessible everywhere.
+        </p>
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.03] p-6 text-left hover:border-purple-500/30 hover:bg-white/[0.05] transition-all duration-300 group">
+            <div class="w-10 h-10 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <h3 class="text-base font-semibold text-zinc-200 group-hover:text-white transition-colors">Free Tools for All</h3>
+            <p class="text-sm text-zinc-500 mt-2 leading-relaxed group-hover:text-zinc-300 transition-colors">Building useful browser-based tools that anyone can use without cost, accounts, or data leaving their device.</p>
+          </div>
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.03] p-6 text-left hover:border-purple-500/30 hover:bg-white/[0.05] transition-all duration-300 group">
+            <div class="w-10 h-10 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3 class="text-base font-semibold text-zinc-200 group-hover:text-white transition-colors">Empowering Creators</h3>
+            <p class="text-sm text-zinc-500 mt-2 leading-relaxed group-hover:text-zinc-300 transition-colors">Giving content creators, students, and developers the tools they need to work faster without expensive subscriptions.</p>
+          </div>
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.03] p-6 text-left hover:border-purple-500/30 hover:bg-white/[0.05] transition-all duration-300 group">
+            <div class="w-10 h-10 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3 class="text-base font-semibold text-zinc-200 group-hover:text-white transition-colors">Cricket Analytics</h3>
+            <p class="text-sm text-zinc-500 mt-2 leading-relaxed group-hover:text-zinc-300 transition-colors">Building specialised cricket analytics tools for fans, players, and analysts to measure performance like a pro.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats -->
+      <section class="mb-24 animate-[fadeInUp_0.6s_ease-out_0.45s_both]">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.03] p-6 text-center hover:border-purple-500/30 hover:-translate-y-0.5 transition-all duration-300">
+            <div class="text-3xl md:text-4xl font-black bg-gradient-to-r from-purple-300 to-blue-400 bg-clip-text text-transparent">
+              <span class="stat-counter" data-target="11">0</span>
+            </div>
+            <p class="text-sm text-zinc-400 mt-1">Tools Built</p>
+          </div>
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.03] p-6 text-center hover:border-purple-500/30 hover:-translate-y-0.5 transition-all duration-300">
+            <div class="text-3xl md:text-4xl font-black bg-gradient-to-r from-purple-300 to-blue-400 bg-clip-text text-transparent">
+              <span class="stat-counter" data-target="4">0</span>
+            </div>
+            <p class="text-sm text-zinc-400 mt-1">Core Categories</p>
+          </div>
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.03] p-6 text-center hover:border-purple-500/30 hover:-translate-y-0.5 transition-all duration-300">
+            <div class="text-3xl md:text-4xl font-black bg-gradient-to-r from-purple-300 to-blue-400 bg-clip-text text-transparent">
+              <span class="stat-counter" data-target="6">0</span>
+            </div>
+            <p class="text-sm text-zinc-400 mt-1">Ecosystem Products</p>
+          </div>
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.03] p-6 text-center hover:border-purple-500/30 hover:-translate-y-0.5 transition-all duration-300">
+            <div class="text-3xl md:text-4xl font-black bg-gradient-to-r from-purple-300 to-blue-400 bg-clip-text text-transparent">
+              <span class="stat-counter" data-target="100">0</span><span class="bg-gradient-to-r from-purple-300 to-blue-400 bg-clip-text text-transparent">K+</span>
+            </div>
+            <p class="text-sm text-zinc-400 mt-1">Growth Goal</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ecosystem Roadmap -->
+      <section class="mb-24 animate-[fadeInUp_0.6s_ease-out_0.6s_both]">
+        <div class="relative rounded-2xl md:rounded-3xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-2xl p-6 md:p-10 shadow-2xl">
+          <div class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
+          <div class="relative">
+            <div class="text-center mb-10">
+              <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider font-mono">NumanX Ecosystem</span>
+              <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-2">
+                Product
+                <span class="bg-gradient-to-r from-purple-300 to-blue-400 bg-clip-text text-transparent">Roadmap</span>
+              </h2>
+            </div>
+            <div class="space-y-0">
+              <div class="flex items-start gap-5 group">
+                <div class="flex flex-col items-center">
+                  <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white text-xs font-bold shrink-0">1</div>
+                  <div class="w-px flex-1 bg-gradient-to-b from-purple-500/50 to-transparent min-h-[60px]" />
+                </div>
+                <div class="pb-8 pt-1">
+                  <h3 class="text-lg font-semibold text-white">NumanX Tools</h3>
+                  <p class="text-sm text-zinc-400 mt-1">Free online utilities for image processing, text analysis, QR codes, cricket calculators, and more. Phase 1 — live now.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-5 group">
+                <div class="flex flex-col items-center">
+                  <div class="w-8 h-8 rounded-full bg-purple-600/80 flex items-center justify-center text-white text-xs font-bold shrink-0">2</div>
+                  <div class="w-px flex-1 bg-gradient-to-b from-purple-500/30 to-transparent min-h-[60px]" />
+                </div>
+                <div class="pb-8 pt-1">
+                  <h3 class="text-lg font-semibold text-zinc-200">NumanX Creator Hub</h3>
+                  <p class="text-sm text-zinc-500 mt-1">A community platform where creators share resources, templates, and tools. Coming next.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-5 group">
+                <div class="flex flex-col items-center">
+                  <div class="w-8 h-8 rounded-full bg-purple-600/60 flex items-center justify-center text-white text-xs font-bold shrink-0">3</div>
+                  <div class="w-px flex-1 bg-gradient-to-b from-purple-500/20 to-transparent min-h-[60px]" />
+                </div>
+                <div class="pb-8 pt-1">
+                  <h3 class="text-lg font-semibold text-zinc-200">MatchPulse Cricket Analytics</h3>
+                  <p class="text-sm text-zinc-500 mt-1">Deep cricket data analysis — player comparisons, form trackers, match insights for fans and analysts.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-5 group">
+                <div class="flex flex-col items-center">
+                  <div class="w-8 h-8 rounded-full bg-purple-600/40 flex items-center justify-center text-white text-xs font-bold shrink-0">4</div>
+                  <div class="w-px flex-1 bg-gradient-to-b from-purple-500/10 to-transparent min-h-[60px]" />
+                </div>
+                <div class="pb-8 pt-1">
+                  <h3 class="text-lg font-semibold text-zinc-200">NumanX AI Platform</h3>
+                  <p class="text-sm text-zinc-500 mt-1">Browser-based AI tools for content generation, image creation, and intelligent automation — powered by open models.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-5 group">
+                <div class="flex flex-col items-center">
+                  <div class="w-8 h-8 rounded-full bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-300 text-xs font-bold shrink-0">5</div>
+                </div>
+                <div class="pt-1">
+                  <h3 class="text-lg font-semibold text-zinc-200">NumanX Operating Brain</h3>
+                  <p class="text-sm text-zinc-500 mt-1">The long-term vision — an intelligent operating layer that connects all NumanX tools into a seamless productivity ecosystem.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Values -->
+      <section class="mb-24 text-center animate-[fadeInUp_0.6s_ease-out_0.75s_both]">
+        <div class="text-center max-w-3xl mx-auto mb-10">
+          <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">What We Stand For</span>
+          <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white mt-1">
+            Built by
+            <span class="bg-gradient-to-r from-purple-300 to-blue-400 bg-clip-text text-transparent">NumanX Studio</span>
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.03] p-5 hover:border-purple-500/30 hover:bg-white/[0.05] transition-all duration-300 group">
+            <div class="w-10 h-10 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 mx-auto mb-3 group-hover:scale-110 transition-transform duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </div>
+            <h3 class="text-sm font-semibold text-zinc-200 group-hover:text-white transition-colors">Simplicity</h3>
+            <p class="text-xs text-zinc-500 mt-1 leading-relaxed">Clean, intuitive tools that just work.</p>
+          </div>
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.03] p-5 hover:border-purple-500/30 hover:bg-white/[0.05] transition-all duration-300 group">
+            <div class="w-10 h-10 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 mx-auto mb-3 group-hover:scale-110 transition-transform duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3 class="text-sm font-semibold text-zinc-200 group-hover:text-white transition-colors">Innovation</h3>
+            <p class="text-xs text-zinc-500 mt-1 leading-relaxed">Modern solutions for modern problems.</p>
+          </div>
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.03] p-5 hover:border-purple-500/30 hover:bg-white/[0.05] transition-all duration-300 group">
+            <div class="w-10 h-10 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 mx-auto mb-3 group-hover:scale-110 transition-transform duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h3 class="text-sm font-semibold text-zinc-200 group-hover:text-white transition-colors">Accessibility</h3>
+            <p class="text-xs text-zinc-500 mt-1 leading-relaxed">Free for everyone, everywhere.</p>
+          </div>
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.03] p-5 hover:border-purple-500/30 hover:bg-white/[0.05] transition-all duration-300 group">
+            <div class="w-10 h-10 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 mx-auto mb-3 group-hover:scale-110 transition-transform duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <h3 class="text-sm font-semibold text-zinc-200 group-hover:text-white transition-colors">Learning</h3>
+            <p class="text-xs text-zinc-500 mt-1 leading-relaxed">Built while learning, shared while growing.</p>
+          </div>
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.03] p-5 hover:border-purple-500/30 hover:bg-white/[0.05] transition-all duration-300 group">
+            <div class="w-10 h-10 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 mx-auto mb-3 group-hover:scale-110 transition-transform duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3 class="text-sm font-semibold text-zinc-200 group-hover:text-white transition-colors">Community</h3>
+            <p class="text-xs text-zinc-500 mt-1 leading-relaxed">Built for creators, by a creator.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="mb-24 animate-[fadeInUp_0.6s_ease-out_0.9s_both]">
+        <h2 class="text-3xl md:text-4xl font-black tracking-tight text-center mb-10">
+          Frequently Asked
+          <span class="bg-gradient-to-r from-purple-300 to-blue-400 bg-clip-text text-transparent">Questions</span>
+        </h2>
+        <div class="max-w-3xl mx-auto">
+          <Accordion items={faqItems} />
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="text-center animate-[fadeInUp_0.6s_ease-out_1.05s_both]">
+        <div class="relative rounded-2xl md:rounded-3xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-2xl p-10 md:p-14 shadow-2xl">
+          <div class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
+          <div class="relative">
+            <h2 class="text-3xl md:text-4xl font-black tracking-tight">
+              Join the NumanX
+              <span class="block mt-2 bg-gradient-to-r from-purple-300 via-purple-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(168,85,247,0.15)]">
+                Journey
+              </span>
+            </h2>
+            <p class="mt-4 text-zinc-400 max-w-xl mx-auto leading-relaxed">
+              Start using free tools today and be part of a growing ecosystem built for creators, by a creator. <span class="text-purple-400 font-semibold">Build. Create. Analyze.</span>
+            </p>
+            <div class="mt-8 flex items-center justify-center gap-4">
+              <a href="/tools/" class="group inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm px-6 py-3 rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.97] shadow-lg shadow-purple-900/30">
+                Explore Tools
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+              <a href="/blog/" class="group inline-flex items-center gap-2 border border-white/[0.08] hover:border-purple-500/40 text-zinc-300 hover:text-white font-semibold text-sm px-6 py-3 rounded-xl bg-white/[0.03] backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.97]">
+                Read Blog
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  const counters = document.querySelectorAll(".stat-counter");
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        let current = 0;
+        const step = Math.ceil(target / 40);
+        const interval = setInterval(() => {
+          current += step;
+          if (current >= target) { current = target; clearInterval(interval); }
+          el.textContent = current;
+        }, 40);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach((c) => observer.observe(c));
+</script>

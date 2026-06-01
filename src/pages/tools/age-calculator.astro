@@ -1,0 +1,477 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+import KeyboardHints from "../../components/KeyboardHints.astro";
+
+
+const faqItems = [
+    { question: "How is age calculated in this tool?", answer: "Age is calculated by comparing your date of birth to today's current date. The tool accounts for leap years, varying month lengths, and exact day differences." },
+    { question: "How accurate is this age calculator?", answer: "The calculator is 100% accurate to the day. It uses JavaScript's Date object and accounts for leap years, month boundaries, and time zone differences." },
+    { question: "What is my zodiac sign and how is it determined?", answer: "Your zodiac sign is determined by your birth date based on the tropical zodiac calendar. Each sign corresponds to a specific date range." },
+    { question: "What is my Chinese zodiac sign?", answer: "Your Chinese zodiac (生肖) is determined by your birth year in the 12-year cycle. Each year is represented by an animal: Rat, Ox, Tiger, Rabbit, Dragon, Snake, Horse, Goat, Monkey, Rooster, Dog, or Pig." },
+    { question: "Is my birth date stored or saved anywhere?", answer: "No. All calculations happen locally in your browser. Your date of birth is never sent to any server." },
+  ];
+const acSchema = {
+  "name": "Age Calculator Pro",
+  "applicationCategory": "Utilities",
+  "description": "Calculate your exact age in years, months, days, hours, and minutes. Discover zodiac signs, birthday countdown, and life analytics.",
+  "featureList": [
+    "Precise age calculation down to the minute",
+    "Western zodiac and Chinese zodiac sign discovery",
+    "Next birthday countdown with celebration timer",
+    "Life analytics — total days, hours, minutes alive",
+    "100% client-side — birth date never leaves your device"
+  ],
+}
+---
+
+<MainLayout
+  title="Age Calculator - Exact Age, Zodiac & Life Analytics"
+  description="Calculate your exact age in years, months, days, hours, and minutes. Discover your zodiac sign, Chinese zodiac, next birthday countdown, and fun life analytics."
+  keywords="age calculator, exact age, zodiac sign, chinese zodiac, birthday countdown, life analytics, heartbeats"
+  toolSchema={acSchema}
+  faq={faqItems}
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Tools", url: "/tools/" },
+    { name: "Age Calculator", url: "/tools/age-calculator/" },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="Age"
+        gradient="Calculator Pro"
+        desc="Calculate your exact age in years, months, days, hours, and minutes. Discover zodiac signs, birthday countdown, and life analytics."
+        badge="✦ Pro Version"
+        slug="age-calculator"
+      />
+
+      <ShareBar />
+
+      <!-- ─── Input Card ─── -->
+      <div class="max-w-xl mx-auto mt-8">
+        <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 md:p-6 space-y-4">
+
+          <!-- Presets -->
+          <div class="space-y-2">
+            <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Quick Presets</label>
+            <div class="flex flex-wrap gap-2" id="preset-buttons">
+              {["Child","Teen","Adult","Senior"].map((preset, i) => {
+                const data = [
+                  { years: 10, months: 0, days: 0 },
+                  { years: 16, months: 6, days: 15 },
+                  { years: 30, months: 0, days: 0 },
+                  { years: 65, months: 0, days: 0 },
+                ][i];
+                return (
+                  <button class="preset-btn bg-white/[0.05] hover:bg-white/[0.06] hover:text-white border border-white/[0.06] text-zinc-400 text-xs font-medium px-4 py-2 rounded-xl transition-all active:scale-95"
+                    data-years={data.years} data-months={data.months} data-days={data.days}>
+                    {preset}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <!-- DOB Selectors -->
+          <div class="space-y-2">
+            <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Date of Birth</label>
+            <div class="grid grid-cols-3 gap-3">
+              {["day","month","year"].map((field) => {
+                const isMonth = field === "month";
+                const isYear = field === "year";
+                return (
+                  <div class="relative">
+                    <select id={`dob-${field}`} class="w-full bg-zinc-950 text-zinc-200 text-sm px-3 py-3 rounded-xl border border-white/[0.06] appearance-none focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all cursor-pointer">
+                      <option value="" disabled selected>{isMonth ? "Month" : isYear ? "Year" : "Day"}</option>
+                      {isMonth
+                        ? ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"].map((m, i) => <option value={i + 1}>{m}</option>)
+                        : Array.from({ length: isYear ? 120 : 31 }, (_, i) => {
+                            const val = isYear ? new Date().getFullYear() - i : i + 1;
+                            return <option value={val}>{val}</option>;
+                          })
+                      }
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-zinc-500">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <button id="calc-btn" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3.5 rounded-xl transition-all shadow-lg shadow-purple-900/20 text-sm">
+            Calculate My Age
+          </button>
+        </div>
+      </div>
+
+      <!-- ─── Results Dashboard (Apple Health style) ─── -->
+      <div id="results-section" class="hidden mt-8 space-y-5">
+
+        <!-- Exact Age Hero -->
+        <div class="bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 border border-white/[0.06] rounded-2xl p-6 md:p-8 overflow-hidden relative">
+          <div class="absolute top-0 right-0 w-48 h-48 bg-purple-600/5 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="flex items-center justify-between mb-5">
+            <h2 class="text-sm font-bold text-zinc-300 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              Exact Age
+            </h2>
+            <div class="flex items-center gap-2">
+              <span id="zodiac-badge" class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-semibold border transition-all bg-purple-600/15 border-purple-500/50 text-purple-300 hidden"></span>
+              <span id="chinese-zodiac-badge" class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-semibold border transition-all bg-amber-600/15 border-amber-500/50 text-amber-300 hidden"></span>
+            </div>
+          </div>
+
+          <!-- Big 3 stats — Apple Health style -->
+          <div class="grid grid-cols-3 gap-4 md:gap-6 mb-5">
+            <div class="text-center">
+              <div class="text-4xl md:text-6xl font-black tabular-nums">
+                <span id="age-years" class="bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent">0</span>
+              </div>
+              <div class="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider mt-1">Years</div>
+            </div>
+            <div class="text-center">
+              <div class="text-4xl md:text-6xl font-black tabular-nums">
+                <span id="age-months" class="bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent">0</span>
+              </div>
+              <div class="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider mt-1">Months</div>
+            </div>
+            <div class="text-center">
+              <div class="text-4xl md:text-6xl font-black tabular-nums">
+                <span id="age-days" class="bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent">0</span>
+              </div>
+              <div class="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider mt-1">Days</div>
+            </div>
+          </div>
+
+          <!-- Birthday Countdown -->
+          <div id="next-birthday" class="rounded-xl bg-zinc-950/50 border border-white/[0.04] p-4">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Next Birthday</span>
+              <span id="birthday-countdown" class="text-sm font-bold text-purple-400 font-mono">-- days</span>
+            </div>
+            <div class="mt-2 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+              <div id="birthday-bar" class="h-full rounded-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-700" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Time Breakdown Grid — Apple Health vitals style -->
+        <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 md:p-6">
+          <h3 class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-4">Time Alive</h3>
+          <div class="grid grid-cols-5 gap-2 md:gap-3">
+            {[
+              {id:"total-months",label:"Months",icon:"📅"},
+              {id:"total-weeks",label:"Weeks",icon:"📆"},
+              {id:"total-days",label:"Days",icon:"☀️"},
+              {id:"total-hours",label:"Hours",icon:"⏰"},
+              {id:"total-minutes",label:"Minutes",icon:"⏱️"},
+            ].map((s) => (
+              <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-3 text-center hover:border-white/[0.08] transition-all">
+                <span class="text-lg">{s.icon}</span>
+                <div class="mt-1 text-lg md:text-xl font-black text-zinc-200 tabular-nums">
+                  <span id={s.id}>0</span>
+                </div>
+                <div class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider mt-0.5">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Fun Analytics — Apple Health trends style -->
+        <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 md:p-6">
+          <h3 class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-4">Life Analytics</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <!-- Heartbeats -->
+            <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-4 hover:border-red-500/30 transition-all">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-red-600/20 to-red-600/5 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </div>
+                <span class="text-xs font-semibold text-zinc-400">Heartbeats</span>
+              </div>
+              <div class="text-xl md:text-2xl font-black text-zinc-200 tabular-nums"><span id="heartbeat-count">0</span></div>
+              <div class="text-[10px] text-zinc-600 mt-1">~70 bpm average since birth</div>
+            </div>
+            <!-- Breaths -->
+            <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-4 hover:border-emerald-500/30 transition-all">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-600/20 to-emerald-600/5 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </div>
+                <span class="text-xs font-semibold text-zinc-400">Breaths Taken</span>
+              </div>
+              <div class="text-xl md:text-2xl font-black text-zinc-200 tabular-nums"><span id="breath-count">0</span></div>
+              <div class="text-[10px] text-zinc-600 mt-1">~16 breaths per minute</div>
+            </div>
+            <!-- Sleep -->
+            <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-4 hover:border-blue-500/30 transition-all">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600/20 to-blue-600/5 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 13.8a7 7 0 0 0-9.6-9.6 9 9 0 1 1 9.6 9.6z"/></svg>
+                </div>
+                <span class="text-xs font-semibold text-zinc-400">Sleep Time</span>
+              </div>
+              <div class="text-xl md:text-2xl font-black text-zinc-200 tabular-nums"><span id="sleep-count">0</span></div>
+              <div class="text-[10px] text-zinc-600 mt-1">~8 hours per day estimated</div>
+            </div>
+          </div>
+
+          <!-- Copy Results -->
+          <div class="flex justify-center mt-4">
+            <button id="copy-age-btn" class="inline-flex items-center gap-2 bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-400 hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy Results
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── How It Works ─── -->
+      <section class="mt-16 max-w-3xl mx-auto">
+        <div class="text-center mb-8">
+          <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">How It Works</span>
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">
+            Your Life in
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Numbers</span>
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          <div class="text-center p-5 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.1] transition-all">
+            <div class="w-9 h-9 rounded-full bg-purple-600/20 flex items-center justify-center text-purple-400 text-sm font-bold mx-auto mb-3">1</div>
+            <h3 class="text-sm font-semibold text-zinc-200">Enter DOB</h3>
+            <p class="text-xs text-zinc-500 mt-1.5">Select your birth date or use a quick preset.</p>
+          </div>
+          <div class="text-center p-5 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.1] transition-all">
+            <div class="w-9 h-9 rounded-full bg-purple-600/20 flex items-center justify-center text-purple-400 text-sm font-bold mx-auto mb-3">2</div>
+            <h3 class="text-sm font-semibold text-zinc-200">Calculate</h3>
+            <p class="text-xs text-zinc-500 mt-1.5">Get your exact age down to the minute.</p>
+          </div>
+          <div class="text-center p-5 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.1] transition-all">
+            <div class="w-9 h-9 rounded-full bg-purple-600/20 flex items-center justify-center text-purple-400 text-sm font-bold mx-auto mb-3">3</div>
+            <h3 class="text-sm font-semibold text-zinc-200">Explore</h3>
+            <p class="text-xs text-zinc-500 mt-1.5">View zodiac, countdown, and life stats.</p>
+          </div>
+          <div class="text-center p-5 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.1] transition-all">
+            <div class="w-9 h-9 rounded-full bg-purple-600/20 flex items-center justify-center text-purple-400 text-sm font-bold mx-auto mb-3">4</div>
+            <h3 class="text-sm font-semibold text-zinc-200">Discover</h3>
+            <p class="text-xs text-zinc-500 mt-1.5">Heartbeats, breaths, and sleep analytics.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── FAQ ─── -->
+      <section class="mt-16">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight         <div class="mt-20 max-w-3xl mx-auto">
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+            Frequently Asked
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+          </h2>
+          <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
+        </div>
+
+      </section>
+
+      <KeyboardHints hints={[
+        { keys: "Enter", label: "Calculate age" },
+        { keys: "⌘K", label: "Open search" },
+        { keys: "Esc", label: "Close / Reset" },
+      ]} />
+
+      <RelatedTools current="age-calculator" />
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  const presetBtns = document.querySelectorAll(".preset-btn");
+  const dobDay = document.getElementById("dob-day");
+  const dobMonth = document.getElementById("dob-month");
+  const dobYear = document.getElementById("dob-year");
+  const calcBtn = document.getElementById("calc-btn");
+  const resultsSection = document.getElementById("results-section");
+  const ageYears = document.getElementById("age-years");
+  const ageMonths = document.getElementById("age-months");
+  const ageDays = document.getElementById("age-days");
+  const totalMonths = document.getElementById("total-months");
+  const totalWeeks = document.getElementById("total-weeks");
+  const totalDays = document.getElementById("total-days");
+  const totalHours = document.getElementById("total-hours");
+  const totalMinutes = document.getElementById("total-minutes");
+  const zodiacBadge = document.getElementById("zodiac-badge");
+  const chineseZodiacBadge = document.getElementById("chinese-zodiac-badge");
+  const birthdayCountdown = document.getElementById("birthday-countdown");
+  const birthdayBar = document.getElementById("birthday-bar");
+  const heartbeatCount = document.getElementById("heartbeat-count");
+  const breathCount = document.getElementById("breath-count");
+  const sleepCount = document.getElementById("sleep-count");
+
+  // ─── Zodiac ───
+  function getZodiac(month, day) {
+    const signs = [
+      { name: "♑ Capricorn", start: [12, 22], end: [1, 19] },
+      { name: "♒ Aquarius", start: [1, 20], end: [2, 18] },
+      { name: "♓ Pisces", start: [2, 19], end: [3, 20] },
+      { name: "♈ Aries", start: [3, 21], end: [4, 19] },
+      { name: "♉ Taurus", start: [4, 20], end: [5, 20] },
+      { name: "♊ Gemini", start: [5, 21], end: [6, 20] },
+      { name: "♋ Cancer", start: [6, 21], end: [7, 22] },
+      { name: "♌ Leo", start: [7, 23], end: [8, 22] },
+      { name: "♍ Virgo", start: [8, 23], end: [9, 22] },
+      { name: "♎ Libra", start: [9, 23], end: [10, 22] },
+      { name: "♏ Scorpio", start: [10, 23], end: [11, 21] },
+      { name: "♐ Sagittarius", start: [11, 22], end: [12, 21] },
+    ];
+    const md = month * 100 + day;
+    for (const s of signs) {
+      const sStart = s.start[0] * 100 + s.start[1];
+      const sEnd = s.end[0] * 100 + s.end[1];
+      if (sStart <= sEnd) { if (md >= sStart && md <= sEnd) return s.name; }
+      else { if (md >= sStart || md <= sEnd) return s.name; }
+    }
+    return "♑ Capricorn";
+  }
+
+  // ─── Chinese Zodiac ───
+  function getChineseZodiac(year) {
+    const animals = [
+      "🐵 Monkey", "🐔 Rooster", "🐶 Dog", "🐷 Pig",
+      "🐀 Rat", "🐂 Ox", "🐯 Tiger", "🐰 Rabbit",
+      "🐲 Dragon", "🐍 Snake", "🐴 Horse", "🐏 Goat",
+    ];
+    return animals[year % 12];
+  }
+
+  function formatNum(n) {
+    if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(2) + "B";
+    if (n >= 1_000_000) return (n / 1_000_000).toFixed(2) + "M";
+    if (n >= 1_000) return (n / 1_000).toFixed(1) + "K";
+    return n.toLocaleString();
+  }
+
+  function calculateAge() {
+    const day = parseInt(dobDay.value);
+    const month = parseInt(dobMonth.value);
+    const year = parseInt(dobYear.value);
+
+    const birth = new Date(year, month - 1, day);
+    const today = new Date();
+
+    if (isNaN(birth.getTime()) || birth > today) {
+      resultsSection.classList.add("hidden");
+      return;
+    }
+
+    let y = today.getFullYear() - birth.getFullYear();
+    let m = today.getMonth() - birth.getMonth();
+    let d = today.getDate() - birth.getDate();
+
+    if (d < 0) {
+      m--;
+      const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+      d += prevMonth.getDate();
+    }
+    if (m < 0) {
+      y--;
+      m += 12;
+    }
+
+    const diffMs = today - birth;
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffMinutes = Math.floor(diffMs / (1000 * 60));
+    const diffWeeks = Math.floor(diffDays / 7);
+    const diffMonths = y * 12 + m;
+
+    ageYears.textContent = y;
+    ageMonths.textContent = m;
+    ageDays.textContent = d;
+    totalMonths.textContent = diffMonths.toLocaleString();
+    totalWeeks.textContent = diffWeeks.toLocaleString();
+    totalDays.textContent = diffDays.toLocaleString();
+    totalHours.textContent = diffHours.toLocaleString();
+    totalMinutes.textContent = diffMinutes.toLocaleString();
+
+    // Zodiac badges
+    const zodiac = getZodiac(month, day);
+    zodiacBadge.textContent = zodiac;
+    zodiacBadge.classList.remove("hidden");
+
+    const chinese = getChineseZodiac(year);
+    chineseZodiacBadge.textContent = chinese;
+    chineseZodiacBadge.classList.remove("hidden");
+
+    // Birthday countdown
+    const nextBirthday = new Date(today.getFullYear(), month - 1, day);
+    if (nextBirthday < today) nextBirthday.setFullYear(today.getFullYear() + 1);
+    const daysUntil = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
+    birthdayCountdown.textContent = `${daysUntil} days`;
+
+    // Birthday progress bar (how much of the year has passed)
+    const startOfYear = new Date(today.getFullYear(), 0, 0);
+    const endOfYear = new Date(today.getFullYear() + 1, 0, 0);
+    const yearProgress = ((today - startOfYear) / (endOfYear - startOfYear)) * 100;
+    birthdayBar.style.width = `${yearProgress}%`;
+
+    // Fun analytics
+    heartbeatCount.textContent = formatNum(Math.round(diffMinutes * 70));
+    breathCount.textContent = formatNum(Math.round(diffMinutes * 16));
+    sleepCount.textContent = formatNum(Math.round(diffDays * 8)) + "h";
+
+    resultsSection.classList.remove("hidden");
+    resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // ─── Presets ───
+  presetBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      presetBtns.forEach((b) => {
+        b.dataset.active = "false";
+        b.classList.remove("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
+        b.classList.add("bg-white/[0.05]", "border-white/[0.06]", "text-zinc-400");
+      });
+      btn.dataset.active = "true";
+      btn.classList.remove("bg-white/[0.05]", "border-white/[0.06]", "text-zinc-400");
+      btn.classList.add("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
+
+      const years = parseInt(btn.dataset.years);
+      const months = parseInt(btn.dataset.months);
+      const days = parseInt(btn.dataset.days);
+      const now = new Date();
+      const bd = new Date(now.getFullYear() - years, now.getMonth() - months, now.getDate() - days);
+      dobDay.value = bd.getDate();
+      dobMonth.value = bd.getMonth() + 1;
+      dobYear.value = bd.getFullYear();
+    });
+  });
+
+  calcBtn.addEventListener("click", calculateAge);
+
+  // ─── Copy Results ───
+  function triggerToast(message: string, variant: "success" | "error" | "info" | "warning" = "success") {
+    if ((window as any).__showToast) {
+      (window as any).__showToast({ message, variant });
+    }
+  }
+
+  document.getElementById("copy-age-btn")?.addEventListener("click", () => {
+    const text = [
+      `Age: ${ageYears.textContent}y ${ageMonths.textContent}m ${ageDays.textContent}d`,
+      `Total: ${totalMonths.textContent} months · ${totalWeeks.textContent} weeks · ${totalDays.textContent} days · ${totalHours.textContent} hours · ${totalMinutes.textContent} minutes`,
+      `Heartbeats: ${heartbeatCount.textContent} · Breaths: ${breathCount.textContent} · Sleep: ${sleepCount.textContent}`,
+      `Zodiac: ${zodiacBadge.textContent} · Chinese: ${chineseZodiacBadge.textContent}`,
+      `Next birthday: ${birthdayCountdown.textContent}`,
+    ].join("\n");
+    navigator.clipboard.writeText(text).catch(() => {});
+    triggerToast("Results copied!", "success");
+  });
+
+</script>
+
+

@@ -1,0 +1,527 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+import KeyboardHints from "../../components/KeyboardHints.astro";
+
+const faqItems = [
+  { question: "How is run rate calculated in cricket?", answer: "Run rate is total runs scored divided by overs faced. E.g., 150 runs in 20 overs = 150 ÷ 20 = 7.50 runs per over." },
+  { question: "What is a good run rate in T20 cricket?", answer: "A run rate of 8–9 is competitive, 10+ is excellent, and above 12 is explosive in T20 cricket." },
+  { question: "What is the difference between RR and NRR?", answer: "RR measures a single innings. NRR (Net Run Rate) is the difference between runs scored for and against across a tournament." },
+  { question: "How does the chase difficulty meter work?", answer: "It compares current RR to required RR. Easy = current RR > required. Moderate = within 1 RPO. Hard = 1–2 RPO behind. Very Hard = 2–4 RPO behind. Extreme = 4+ RPO behind." },
+  { question: "What is a good run rate in ODI cricket?", answer: "A run rate of 5.0–5.5 is par, 6.0–6.5 is strong, and 7+ is dominant in ODI cricket." },
+];
+
+const rrSchema = {
+  "name": "Run Rate Calculator Pro",
+  "applicationCategory": "Sports",
+  "description": "Calculate current and required run rates for T20, ODI, and Test matches. Chase difficulty, match pressure, and over-by-over projections.",
+  "featureList": [
+    "Current run rate and required run rate calculator",
+    "T20, ODI, and Test match format presets",
+    "Chase difficulty meter with 5-level indicator",
+    "Over-by-over run projection and winning pace",
+    "Net Run Rate (NRR) calculation for tournament analysis"
+  ],
+}
+---
+
+<MainLayout
+  title="Cricket Run Rate Calculator - T20, ODI & Test Match Analytics"
+  description="Calculate current and required run rates for T20, ODI, and Test matches. Chase difficulty meter, match pressure indicator, over-by-over projection and winning pace analysis."
+  keywords="run rate calculator, cricket run rate, required run rate, chase difficulty, match pressure, over by over projection, t20, odi, test"
+  toolSchema={rrSchema}
+  faq={faqItems}
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Tools", url: "/tools/" },
+    { name: "Run Rate Calculator", url: "/tools/run-rate-calculator/" },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto">
+      <ToolHeader
+        title="Run Rate"
+        gradient="Calculator Pro"
+        desc="Calculate current and required run rates for T20, ODI, and Test matches. Chase difficulty, match pressure, and over-by-over projections included."
+        badge="✦ Pro Version"
+        slug="run-rate-calculator"
+      />
+
+      <ShareBar />
+
+      <!-- ─── Format Selector (Cricbuzz-style) ─── -->
+      <div class="max-w-xl mx-auto mt-8 space-y-4">
+        <div id="preset-buttons" class="flex gap-2.5 flex-wrap justify-center">
+          {[
+            { overs: 20, label: "T20", icon: "🏏", def: true },
+            { overs: 50, label: "ODI", icon: "🏏", def: false },
+            { overs: 90, label: "Test", icon: "🏏", def: false },
+          ].map((p) => (
+            <button class="preset-btn rounded-xl border px-5 py-2.5 text-sm font-medium transition-all" data-overs={p.overs} data-active={p.def}>
+              <div class="flex items-center gap-2"><span class="text-lg leading-none">{p.icon}</span>{p.label}</div>
+            </button>
+          ))}
+        </div>
+
+        <!-- Tab Switcher -->
+        <div class="bg-zinc-950 p-1.5 rounded-xl border border-white/[0.06] flex gap-2">
+          <button id="tab-current" class="flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all">Current RR</button>
+          <button id="tab-required" class="flex-1 text-zinc-400 hover:text-zinc-200 text-xs font-semibold py-2.5 rounded-lg transition-all">Required RR</button>
+        </div>
+
+        <!-- Forms -->
+        <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 md:p-6">
+          <div id="form-current" class="space-y-4">
+            <div class="space-y-2">
+              <label for="crr-runs" class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Runs Scored</label>
+              <input id="crr-runs" type="number" min="0" step="1" placeholder="e.g. 145" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-white/[0.06] focus:outline-none focus:border-purple-500 transition-all text-sm" />
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between items-center">
+                <label for="crr-overs" class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Overs Bowled</label>
+                <span class="text-[9px] font-medium text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded">overs.balls (e.g. 12.3)</span>
+              </div>
+              <input id="crr-overs" type="text" inputmode="decimal" placeholder="e.g. 12.3" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-white/[0.06] focus:outline-none focus:border-purple-500 transition-all text-sm" />
+            </div>
+            <button id="calc-crr-btn" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 rounded-xl transition-all shadow-lg shadow-purple-900/20 text-sm">Calculate Current RR</button>
+          </div>
+
+          <div id="form-required" class="space-y-4 hidden">
+            <div class="grid grid-cols-2 gap-3">
+              <div class="space-y-2">
+                <label for="rrr-target" class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Target Score</label>
+                <input id="rrr-target" type="number" min="0" step="1" placeholder="e.g. 280" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-white/[0.06] focus:outline-none focus:border-purple-500 transition-all text-sm" />
+              </div>
+              <div class="space-y-2">
+                <label for="rrr-current" class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Current Score</label>
+                <input id="rrr-current" type="number" min="0" step="1" placeholder="e.g. 120" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-white/[0.06] focus:outline-none focus:border-purple-500 transition-all text-sm" />
+              </div>
+            </div>
+            <div class="space-y-2">
+              <label for="rrr-overs" class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Overs Remaining</label>
+              <input id="rrr-overs" type="text" inputmode="decimal" placeholder="e.g. 37.0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-white/[0.06] focus:outline-none focus:border-purple-500 transition-all text-sm" />
+            </div>
+            <button id="calc-rrr-btn" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 rounded-xl transition-all shadow-lg shadow-purple-900/20 text-sm">Calculate Required RR</button>
+          </div>
+        </div>
+
+        <!-- ─── Stats Dashboard (Cricbuzz-style) ─── -->
+        <div id="stats-dashboard" class="hidden space-y-4">
+          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 md:p-6">
+            <h3 class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-4">Match Stats</h3>
+            <div class="grid grid-cols-3 gap-3">
+              <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-3.5 text-center hover:border-white/[0.08] transition-all">
+                <span class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider">Current RR</span>
+                <div class="mt-1 text-2xl md:text-3xl font-black tabular-nums"><span id="rr-value" class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span></div>
+              </div>
+              <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-3.5 text-center hover:border-white/[0.08] transition-all">
+                <span class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider">Required RR</span>
+                <div class="mt-1 text-2xl md:text-3xl font-black tabular-nums"><span id="required-rr-value" class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span></div>
+              </div>
+              <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-3.5 text-center hover:border-white/[0.08] transition-all">
+                <span class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider">Projected</span>
+                <div class="mt-1 text-2xl md:text-3xl font-black tabular-nums"><span id="projected-value" class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chase Difficulty Meter -->
+          <div id="chase-difficulty-section" class="hidden bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Chase Difficulty</h3>
+              <span id="chase-label" class="text-xs font-bold font-mono px-2.5 py-0.5 rounded-full border"></span>
+            </div>
+            <div class="relative h-3 bg-zinc-800 rounded-full overflow-hidden">
+              <div id="chase-bar" class="h-full rounded-full transition-all duration-700 ease-out" style="width:0%"></div>
+            </div>
+            <div class="flex justify-between text-[9px] text-zinc-600 mt-1.5">
+              <span>Easy</span>
+              <span>Moderate</span>
+              <span>Hard</span>
+              <span>Very Hard</span>
+              <span>Extreme</span>
+            </div>
+          </div>
+
+          <!-- Match Pressure Indicator -->
+          <div id="pressure-section" class="hidden bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Match Pressure</h3>
+              <span id="pressure-label" class="text-xs font-bold font-mono px-2.5 py-0.5 rounded-full border"></span>
+            </div>
+            <div class="relative h-3 bg-zinc-800 rounded-full overflow-hidden">
+              <div id="pressure-bar" class="h-full rounded-full transition-all duration-700 ease-out" style="width:0%"></div>
+            </div>
+            <div class="flex justify-between text-[9px] text-zinc-600 mt-1.5">
+              <span>Low</span>
+              <span>Medium</span>
+              <span>High</span>
+              <span>Critical</span>
+            </div>
+          </div>
+
+          <!-- Over-by-over Projection -->
+          <div id="projection-section" class="hidden bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5">
+            <h3 class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-3">Over-by-over Projection</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-xs">
+                <thead>
+                  <tr class="text-zinc-600 font-semibold uppercase tracking-wider">
+                    <th class="text-left py-2 pr-4">Phase</th>
+                    <th class="text-right py-2 pr-4">Overs</th>
+                    <th class="text-right py-2 pr-4">Runs @ Current</th>
+                    <th class="text-right py-2 pr-4">Runs @ Required</th>
+                    <th class="text-right py-2">Behind / Ahead</th>
+                  </tr>
+                </thead>
+                <tbody id="projection-table-body" class="text-zinc-300"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Winning Pace Analysis -->
+          <div id="pace-analysis" class="hidden bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center shrink-0 mt-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <div>
+                <h4 class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Winning Pace Analysis</h4>
+                <p id="pace-text" class="text-sm text-zinc-300 mt-1.5 leading-relaxed"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Copy Results -->
+          <div class="flex justify-center">
+            <button id="copy-rr-btn" class="inline-flex items-center gap-2 bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-400 hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy Results
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Cricket Insights ─── -->
+      <section class="mt-16">
+        <div class="text-center mb-8">
+          <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Learn</span>
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">
+            Cricket
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Insights</span>
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 hover:border-white/[0.1] transition-all">
+            <div class="flex items-start gap-3">
+              <span class="text-lg mt-0.5">📊</span>
+              <div>
+                <h3 class="text-sm font-semibold text-zinc-200 mb-1">What Is Run Rate?</h3>
+                <p class="text-xs text-zinc-500 leading-relaxed">Run rate is the average number of runs a batting side scores per over. It is calculated by dividing total runs scored by the number of overs bowled. A run rate of 6.0 means a team scores 6 runs every over on average.</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 hover:border-white/[0.1] transition-all">
+            <div class="flex items-start gap-3">
+              <span class="text-lg mt-0.5">🎯</span>
+              <div>
+                <h3 class="text-sm font-semibold text-zinc-200 mb-1">Why Chase Difficulty Matters</h3>
+                <p class="text-xs text-zinc-500 leading-relaxed">The chase difficulty compares current RR against required RR. A gap of 1+ RPO means the batting side needs to accelerate. The difficulty meter helps captains decide when to attack vs consolidate.</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 hover:border-white/[0.1] transition-all">
+            <div class="flex items-start gap-3">
+              <span class="text-lg mt-0.5">⚡</span>
+              <div>
+                <h3 class="text-sm font-semibold text-zinc-200 mb-1">T20 Strategy</h3>
+                <p class="text-xs text-zinc-500 leading-relaxed">In T20 cricket, a run rate of 8–10 is competitive while 10+ is dominant. Powerplay overs (1–6) are crucial for acceleration. Death overs (16–20) often see RR above 12 as batters go for big hits.</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 hover:border-white/[0.1] transition-all">
+            <div class="flex items-start gap-3">
+              <span class="text-lg mt-0.5">🏛️</span>
+              <div>
+                <h3 class="text-sm font-semibold text-zinc-200 mb-1">ODI &amp; Test Strategy</h3>
+                <p class="text-xs text-zinc-500 leading-relaxed">In ODIs, a run rate of 5–6 is par with 7+ being strong. Teams build in phases: consolidation (1–15), acceleration (16–40), and death (41–50). In Tests, building partnerships matters more than raw rate.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <KeyboardHints hints={[
+        { keys: "Enter", label: "Calculate run rate" },
+        { keys: "⌘K", label: "Open search" },
+        { keys: "Tab", label: "Switch mode" },
+      ]} />
+
+      <RelatedTools current="run-rate-calculator" />
+
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked
+          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+        </h2>
+        <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
+      </div>
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  const crrRuns = document.getElementById("crr-runs");
+  const crrOvers = document.getElementById("crr-overs");
+  const calcCrrBtn = document.getElementById("calc-crr-btn");
+  const rrrTarget = document.getElementById("rrr-target");
+  const rrrCurrent = document.getElementById("rrr-current");
+  const rrrOvers = document.getElementById("rrr-overs");
+  const calcRrrBtn = document.getElementById("calc-rrr-btn");
+  const statsDashboard = document.getElementById("stats-dashboard");
+  const rrValue = document.getElementById("rr-value");
+  const requiredRrValue = document.getElementById("required-rr-value");
+  const projectedValue = document.getElementById("projected-value");
+  const chaseDifficulty = document.getElementById("chase-difficulty-section");
+  const chaseBar = document.getElementById("chase-bar");
+  const chaseLabel = document.getElementById("chase-label");
+  const pressureSection = document.getElementById("pressure-section");
+  const pressureBar = document.getElementById("pressure-bar");
+  const pressureLabel = document.getElementById("pressure-label");
+  const projectionSection = document.getElementById("projection-section");
+  const projectionBody = document.getElementById("projection-table-body");
+  const paceText = document.getElementById("pace-text");
+  const paceAnalysis = document.getElementById("pace-analysis");
+  const presetBtns = document.querySelectorAll(".preset-btn");
+
+  let activeOvers = 20;
+  let currentRR = 0;
+  let requiredRR = 0;
+  let oversUsed = 0;
+  let oversRemaining = 0;
+
+  function parseOvers(input) {
+    const raw = input.trim();
+    if (!raw) return NaN;
+    const parts = raw.split(".");
+    const overs = parseInt(parts[0]);
+    if (isNaN(overs) || overs < 0) return NaN;
+    if (parts.length === 1) return overs;
+    const balls = parseInt(parts[1]);
+    if (isNaN(balls) || balls < 0 || balls > 5) return NaN;
+    return overs + balls / 6;
+  }
+
+  function formatRR(value) {
+    if (isNaN(value) || value < 0) return "0.00";
+    return value.toFixed(2);
+  }
+
+  function getChaseDifficulty(crr, rrr) {
+    if (crr <= 0 || rrr <= 0) return null;
+    const diff = crr - rrr;
+    if (diff >= 0) return { level: "Easy", pct: 10, color: "#22c55e", desc: "Batting side is ahead of the rate" };
+    if (diff > -1) return { level: "Moderate", pct: 30, color: "#f59e0b", desc: "Within striking distance" };
+    if (diff > -2) return { level: "Hard", pct: 50, color: "#f97316", desc: "Need to accelerate" };
+    if (diff > -4) return { level: "Very Hard", pct: 75, color: "#ef4444", desc: "Significant acceleration needed" };
+    return { level: "Extreme", pct: 95, color: "#dc2626", desc: "Almost impossible chase" };
+  }
+
+  function getPressure(crr, rrr) {
+    if (crr <= 0 || rrr <= 0) return null;
+    const diff = crr - rrr;
+    if (diff >= 0) return { level: "Low", pct: 10, color: "#22c55e" };
+    if (diff > -1) return { level: "Medium", pct: 35, color: "#f59e0b" };
+    if (diff > -2) return { level: "High", pct: 65, color: "#f97316" };
+    return { level: "Critical", pct: 90, color: "#dc2626" };
+  }
+
+  function buildProjection() {
+    if (currentRR <= 0) { projectionSection.classList.add("hidden"); return; }
+    projectionSection.classList.remove("hidden");
+
+    const formatLabel = activeOvers === 20 ? "T20" : activeOvers === 50 ? "ODI" : "Test";
+    const phases = [];
+    if (activeOvers === 20) {
+      phases.push({ label: "Powerplay", overs: 6 });
+      phases.push({ label: "Mid Overs", overs: 14 });
+      phases.push({ label: "Death Overs", overs: 20 });
+    } else if (activeOvers === 50) {
+      phases.push({ label: "Powerplay", overs: 10 });
+      phases.push({ label: "Mid Overs 1", overs: 25 });
+      phases.push({ label: "Mid Overs 2", overs: 40 });
+      phases.push({ label: "Death Overs", overs: 50 });
+    } else {
+      phases.push({ label: "Session 1", overs: 30 });
+      phases.push({ label: "Session 2", overs: 60 });
+      phases.push({ label: "Session 3", overs: 90 });
+    }
+
+    projectionBody.innerHTML = phases.map((p) => {
+      const runsAtCurrent = Math.round(currentRR * p.overs);
+      let runsAtRequired = "—";
+      let diff = "—";
+      if (requiredRR > 0) {
+        runsAtRequired = Math.round(requiredRR * p.overs);
+        const gap = runsAtCurrent - runsAtRequired;
+        diff = gap >= 0 ? `<span class="text-emerald-400">+${gap}</span>` : `<span class="text-red-400">${gap}</span>`;
+      }
+      return `<tr class="border-b border-white/[0.04] last:border-0">
+        <td class="py-2.5 pr-4 text-zinc-400 font-medium">${p.label}</td>
+        <td class="py-2.5 pr-4 text-right font-mono tabular-nums">${p.overs}</td>
+        <td class="py-2.5 pr-4 text-right font-mono tabular-nums text-zinc-200">${runsAtCurrent}</td>
+        <td class="py-2.5 pr-4 text-right font-mono tabular-nums text-zinc-200">${runsAtRequired}</td>
+        <td class="py-2.5 text-right font-mono tabular-nums">${diff}</td>
+      </tr>`;
+    }).join("");
+  }
+
+  function updateStats() {
+    const show = currentRR > 0 || requiredRR > 0;
+    statsDashboard.classList.toggle("hidden", !show);
+    if (!show) return;
+
+    rrValue.textContent = formatRR(currentRR);
+    requiredRrValue.textContent = formatRR(requiredRR);
+
+    const projected = Math.round(currentRR * activeOvers);
+    projectedValue.textContent = projected > 0 ? projected : "0";
+
+    // Chase difficulty
+    const chase = getChaseDifficulty(currentRR, requiredRR);
+    if (chase) {
+      chaseDifficulty.classList.remove("hidden");
+      chaseBar.style.width = chase.pct + "%";
+      chaseBar.style.background = chase.color;
+      const chaseColors = { Easy: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30", Moderate: "bg-amber-500/20 text-amber-400 border-amber-500/30", Hard: "bg-orange-500/20 text-orange-400 border-orange-500/30", "Very Hard": "bg-red-500/20 text-red-400 border-red-500/30", Extreme: "bg-red-600/20 text-red-500 border-red-600/30" };
+      chaseLabel.textContent = chase.level;
+      chaseLabel.className = `text-xs font-bold font-mono px-2.5 py-0.5 rounded-full border ${chaseColors[chase.level] || chaseColors.Easy}`;
+    } else {
+      chaseDifficulty.classList.add("hidden");
+    }
+
+    // Pressure
+    const pressure = getPressure(currentRR, requiredRR);
+    if (pressure) {
+      pressureSection.classList.remove("hidden");
+      pressureBar.style.width = pressure.pct + "%";
+      pressureBar.style.background = pressure.color;
+      const pressColors = { Low: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30", Medium: "bg-amber-500/20 text-amber-400 border-amber-500/30", High: "bg-orange-500/20 text-orange-400 border-orange-500/30", Critical: "bg-red-500/20 text-red-400 border-red-500/30" };
+      pressureLabel.textContent = pressure.level;
+      pressureLabel.className = `text-xs font-bold font-mono px-2.5 py-0.5 rounded-full border ${pressColors[pressure.level] || pressColors.Low}`;
+    } else {
+      pressureSection.classList.add("hidden");
+    }
+
+    // Projection
+    buildProjection();
+
+    // Pace analysis
+    const label = activeOvers === 20 ? "T20" : activeOvers === 50 ? "ODI" : "Test";
+    let pace = `Format: ${label} (${activeOvers} overs). Current run rate: ${formatRR(currentRR)}. Projected score: ${projected}.`;
+    if (requiredRR > 0) {
+      const diff = currentRR - requiredRR;
+      pace += ` Required RR: ${formatRR(requiredRR)}. `;
+      if (Math.abs(diff) < 0.1) pace += `The chase is perfectly on track — current RR matches required RR.`;
+      else if (diff > 0) pace += `Batting side is ahead by ${formatRR(Math.abs(diff))} RPO.`;
+      else pace += `Batting side needs to accelerate by ${formatRR(Math.abs(diff))} RPO.`;
+    } else {
+      const formatNote = label === "T20" ? " Competitive T20 total: 160-200." : label === "ODI" ? " Competitive ODI total: 270-320." : " In Tests, partnerships matter more than raw rate.";
+      pace += formatNote;
+    }
+    paceText.textContent = pace;
+    paceAnalysis.classList.remove("hidden");
+  }
+
+  calcCrrBtn.addEventListener("click", () => {
+    const runs = parseInt(crrRuns.value);
+    const oversDecimal = parseOvers(crrOvers.value);
+    if (isNaN(runs) || runs < 0 || isNaN(oversDecimal) || oversDecimal <= 0) {
+      if (isNaN(runs) || runs < 0) { crrRuns.focus(); crrRuns.classList.add("ring-2","ring-red-500/40","border-red-500/60"); setTimeout(() => crrRuns.classList.remove("ring-2","ring-red-500/40","border-red-500/60"), 1500); }
+      if (isNaN(oversDecimal) || oversDecimal <= 0) { crrOvers.focus(); crrOvers.classList.add("ring-2","ring-red-500/40","border-red-500/60"); setTimeout(() => crrOvers.classList.remove("ring-2","ring-red-500/40","border-red-500/60"), 1500); }
+      return;
+    }
+    currentRR = runs / oversDecimal;
+    oversUsed = oversDecimal;
+    oversRemaining = activeOvers - oversUsed;
+    updateStats();
+  });
+
+  calcRrrBtn.addEventListener("click", () => {
+    const target = parseInt(rrrTarget.value);
+    const current = parseInt(rrrCurrent.value);
+    const oversRem = parseOvers(rrrOvers.value);
+    if (isNaN(target) || target <= 0 || isNaN(current) || current < 0 || isNaN(oversRem) || oversRem <= 0) {
+      if (isNaN(target) || target <= 0) { rrrTarget.focus(); rrrTarget.classList.add("ring-2","ring-red-500/40","border-red-500/60"); setTimeout(() => rrrTarget.classList.remove("ring-2","ring-red-500/40","border-red-500/60"), 1500); }
+      if (isNaN(current) || current < 0) { rrrCurrent.focus(); rrrCurrent.classList.add("ring-2","ring-red-500/40","border-red-500/60"); setTimeout(() => rrrCurrent.classList.remove("ring-2","ring-red-500/40","border-red-500/60"), 1500); }
+      if (isNaN(oversRem) || oversRem <= 0) { rrrOvers.focus(); rrrOvers.classList.add("ring-2","ring-red-500/40","border-red-500/60"); setTimeout(() => rrrOvers.classList.remove("ring-2","ring-red-500/40","border-red-500/60"), 1500); }
+      return;
+    }
+    if (current >= target) { requiredRR = 0; updateStats(); return; }
+    requiredRR = (target - current) / oversRem;
+    oversRemaining = oversRem;
+    updateStats();
+  });
+
+  // Enter key handlers
+  [crrRuns, crrOvers].forEach((el) => el.addEventListener("keydown", (e) => { if (e.key === "Enter") calcCrrBtn.click(); }));
+  [rrrTarget, rrrCurrent, rrrOvers].forEach((el) => el.addEventListener("keydown", (e) => { if (e.key === "Enter") calcRrrBtn.click(); }));
+
+  // Tab switching
+  const tabCurrent = document.getElementById("tab-current");
+  const tabRequired = document.getElementById("tab-required");
+  const formCurrent = document.getElementById("form-current");
+  const formRequired = document.getElementById("form-required");
+
+  tabCurrent.addEventListener("click", () => {
+    tabCurrent.className = "flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all";
+    tabRequired.className = "flex-1 text-zinc-400 hover:text-zinc-200 text-xs font-semibold py-2.5 rounded-lg transition-all";
+    formCurrent.classList.remove("hidden"); formRequired.classList.add("hidden");
+  });
+  tabRequired.addEventListener("click", () => {
+    tabRequired.className = "flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all";
+    tabCurrent.className = "flex-1 text-zinc-400 hover:text-zinc-200 text-xs font-semibold py-2.5 rounded-lg transition-all";
+    formRequired.classList.remove("hidden"); formCurrent.classList.add("hidden");
+  });
+
+  // Format presets
+  presetBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      presetBtns.forEach((b) => {
+        b.dataset.active = "false";
+        b.classList.remove("bg-purple-600/15","border-purple-500/50","text-purple-300");
+        b.classList.add("bg-white/[0.03]","border-white/[0.1]","text-zinc-400");
+      });
+      btn.dataset.active = "true";
+      btn.classList.remove("bg-white/[0.03]","border-white/[0.1]","text-zinc-400");
+      btn.classList.add("bg-purple-600/15","border-purple-500/50","text-purple-300");
+      activeOvers = parseInt(btn.dataset.overs);
+      if (currentRR > 0) updateStats();
+    });
+  });
+
+  // ─── Copy Results ───
+  function triggerToast(message: string, variant: "success" | "error" | "info" | "warning" = "success") {
+    if ((window as any).__showToast) {
+      (window as any).__showToast({ message, variant });
+    }
+  }
+
+  document.getElementById("copy-rr-btn")?.addEventListener("click", () => {
+    const text = [
+      `Current RR: ${rrValue.textContent}`,
+      `Required RR: ${requiredRrValue.textContent}`,
+      `Projected Score: ${projectedValue.textContent}`,
+      chaseDifficulty?.classList.contains("hidden") ? "" : `Chase Difficulty: ${chaseLabel?.textContent}`,
+      pressureSection?.classList.contains("hidden") ? "" : `Match Pressure: ${pressureLabel?.textContent}`,
+      paceText?.classList.contains("hidden") ? "" : `Analysis: ${paceText?.textContent}`,
+    ].filter(Boolean).join(" | ");
+    navigator.clipboard.writeText(text).catch(() => {});
+    triggerToast("Results copied!", "success");
+  });
+
+</script>
+

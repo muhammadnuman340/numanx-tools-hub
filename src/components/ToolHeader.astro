@@ -1,0 +1,50 @@
+---
+import FavoriteButton from "./FavoriteButton.astro";
+
+interface Props {
+  title: string;
+  gradient: string;
+  desc: string;
+  badge?: string;
+  slug?: string;
+}
+const { title, gradient, desc, badge = "Free Online Tool", slug } = Astro.props;
+---
+
+<div class="text-center mb-14">
+  <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm text-zinc-400 text-xs font-semibold tracking-wider uppercase mb-6">
+    <span class="relative flex h-2 w-2">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
+      <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500" />
+    </span>
+    {badge}
+  </div>
+  <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-none">
+    {title}
+    <span class="block mt-2 bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+      {gradient}
+    </span>
+  </h1>
+  <p class="mt-6 text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+    {desc}
+  </p>
+  {slug && (
+    <div class="mt-6 flex items-center justify-center gap-3">
+      <FavoriteButton slug={slug} />
+    </div>
+  )}
+</div>
+
+{slug && <script>
+  try {
+    const slug = "{slug}";
+    let usage: Record<string, number> = JSON.parse(localStorage.getItem("nt_tool_usage") || "{}");
+    usage[slug] = (usage[slug] || 0) + 1;
+    localStorage.setItem("nt_tool_usage", JSON.stringify(usage));
+    let recent: string[] = JSON.parse(localStorage.getItem("nt_recently_used") || "[]");
+    recent = recent.filter((id) => id !== slug);
+    recent.unshift(slug);
+    if (recent.length > 20) recent = recent.slice(0, 20);
+    localStorage.setItem("nt_recently_used", JSON.stringify(recent));
+  } catch {}
+</script>}

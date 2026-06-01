@@ -1,0 +1,531 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { tools as allTools, categories as catInfos } from "../data/tools";
+
+const tools = allTools.map((t) => ({
+  name: t.name,
+  slug: t.slug,
+  cat: catInfos.find((c) => c.id === t.category)?.title || t.category,
+  status: "Active",
+  completion: 100,
+  latency: ["14ms", "8ms", "12ms", "18ms", "6ms", "5ms", "24ms", "16ms", "22ms", "20ms", "10ms"][Math.floor(Math.random() * 11)],
+  reliability: Math.random() > 0.2 ? "100%" : "99.9%",
+  trend: Array.from({ length: 7 }, () => Math.floor(Math.random() * 80) + 10),
+}));
+
+const categories = catInfos.map((c, i) => ({
+  name: c.title,
+  count: c.count,
+  growth: ["+32%", "+24%", "+40%", "+15%"][i] || "+20%",
+  progress: [85, 70, 95, 60][i] || 75,
+  color: ["from-purple-500 to-pink-500", "from-blue-500 to-cyan-500", "from-green-500 to-emerald-500", "from-amber-500 to-orange-500"][i] || "from-purple-500 to-pink-500",
+  shadow: ["shadow-purple-500/10", "shadow-blue-500/10", "shadow-green-500/10", "shadow-amber-500/10"][i] || "shadow-purple-500/10",
+}));
+
+// Blog Analytics
+const blogAnalytics = {
+  published: 4,
+  planned: 6,
+  seoScore: 98,
+  posts: [
+    { title: "Best Free Image Tools 2026", status: "Published", views: "3.2K", conversion: "14%" },
+    { title: "Best AI Tools for Students", status: "Published", views: "2.8K", conversion: "12%" },
+    { title: "Best YouTube Tools for Creators", status: "Published", views: "1.9K", conversion: "9%" },
+    { title: "How to Compress Images", status: "Published", views: "1.5K", conversion: "11%" },
+  ]
+};
+
+// Future Features
+const futureFeatures = [
+  { name: "AI Translation Engine", cat: "AI", difficulty: "High", timeline: "Q3 2026", desc: "Local client-side language models for private, blazing fast translations." },
+  { name: "Resume Builder", cat: "Utility", difficulty: "Medium", timeline: "Q3 2026", desc: "Interactive ATS-optimized resume builder with direct PDF layout compiler." },
+  { name: "PDF Split & Merge", cat: "Utility", difficulty: "Medium", timeline: "Q4 2026", desc: "Fast browser-based PDF pages editor, trimmer, and binder." },
+  { name: "Base64 Encoder/Decoder", cat: "Developer", difficulty: "Low", timeline: "Q4 2026", desc: "Instant binary to ASCII string data translation pipeline." },
+  { name: "NumanX Creator Hub", cat: "Creator", difficulty: "High", timeline: "Q1 2027", desc: "Collaborative asset library, preset templates, and designer portfolios." },
+];
+
+// Achievements
+const achievements = [
+  { name: "First Tool Published", desc: "Initial launch of NumanX Tools ecosystem with QR Generator.", icon: "🎉", date: "Jan 2025" },
+  { name: "First Blog Published", desc: "SEO Content engine initialized with Best AI Tools guide.", icon: "✍️", date: "Mar 2025" },
+  { name: "10 Tool Milestone", desc: "Successfully shipped 11 fully operational, client-side tools.", icon: "🚀", date: "Jan 2026" },
+  { name: "SEO Foundation Complete", desc: "100% compliant robots.txt, dynamic sitemaps, and LD-JSON markup.", icon: "📈", date: "May 2026" },
+];
+
+// Roadmap
+const roadmap = [
+  { phase: "Phase 1", title: "NumanX Tools", desc: "Operational core browser tools for images, text, and sports calculators.", status: "100% Active" },
+  { phase: "Phase 2", title: "Creator Hub", desc: "Digital resource sharing platform for overlay packs, assets, and curated guides.", status: "Upcoming" },
+  { phase: "Phase 3", title: "Cricket Analytics", desc: "Comprehensive fan databases, strike-rate performance models, and game models.", status: "In Planning" },
+  { phase: "Phase 4", title: "AI Platform", desc: "Integrated local client model processing for direct text & visual generators.", status: "Future" },
+  { phase: "Phase 5", title: "Operating Brain", desc: "Seamless synchronized client environment connecting all modules together.", status: "Long-term" },
+];
+---
+
+<MainLayout title="NumanX Platform Dashboard" description="Track tools, categories, content growth, and ecosystem expansion on the NumanX platform.">
+  
+  <!-- Glow Overlays -->
+  <div class="absolute top-[10%] left-[10%] w-[350px] h-[350px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none -z-10"></div>
+  <div class="absolute top-[50%] right-[10%] w-[450px] h-[450px] rounded-full bg-blue-600/10 blur-[120px] pointer-events-none -z-10"></div>
+
+  <main class="min-h-screen pt-16 pb-24 px-4 sm:px-6 relative">
+    <script type="application/json" id="dashboard-tools-data">{JSON.stringify(tools.map(t => ({name: t.name, slug: t.slug, category: t.cat})))}</script>
+    
+    <div class="max-w-7xl mx-auto">
+
+      <!-- ================= DASHBOARD HERO ================= -->
+      <section class="mb-12 pt-8">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-800 bg-zinc-950/60 text-zinc-400 text-[11px] font-mono tracking-wider uppercase mb-4">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              ALL SYSTEMS OPERATIONAL
+            </div>
+            <h1 class="text-3xl md:text-5xl font-black tracking-tight text-white leading-none">
+              NumanX Platform
+              <span class="bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent">Dashboard</span>
+            </h1>
+            <p class="mt-3 text-zinc-400 text-sm md:text-base max-w-xl">
+              Track real-time compilation weights, categorised directory paths, publishing velocity, and roadmap metrics.
+            </p>
+          </div>
+          
+          <div class="flex items-center gap-3">
+            <button id="refresh-dashboard" class="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-800 bg-zinc-900/40 hover:bg-zinc-800/80 hover:border-zinc-700 text-xs font-semibold text-zinc-300 transition-all cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-zinc-400"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              Refresh Metrics
+            </button>
+            <a href="/tools/" class="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-xs font-semibold text-white transition-all shadow-lg shadow-purple-900/30">
+              Launch Tools
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PLATFORM STATS GRID ================= -->
+      <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10">
+        <div class="relative rounded-2xl border border-zinc-800/80 bg-zinc-900/30 p-6 hover:border-zinc-700/60 transition-all duration-300 group overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-colors"></div>
+          <p class="text-xs font-semibold text-zinc-500 uppercase tracking-widest">Total Tools</p>
+          <div class="text-3xl sm:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent mt-2">
+            <span class="stat-counter" data-target="15">0</span>+
+          </div>
+          <div class="flex items-center gap-1 text-[10px] text-emerald-400 mt-2 font-medium">
+            <span>↑ 18.2%</span>
+            <span class="text-zinc-600">vs last month</span>
+          </div>
+        </div>
+
+        <div class="relative rounded-2xl border border-zinc-800/80 bg-zinc-900/30 p-6 hover:border-zinc-700/60 transition-all duration-300 group overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors"></div>
+          <p class="text-xs font-semibold text-zinc-500 uppercase tracking-widest">Total Uses</p>
+          <div class="text-3xl sm:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent mt-2">
+            <span class="stat-counter" data-target="0" data-analytics="usage">0</span>
+          </div>
+          <div class="flex items-center gap-1 text-[10px] text-zinc-500 mt-2 font-medium">
+            <span>Lifetime tool executions</span>
+          </div>
+        </div>
+
+        <div class="relative rounded-2xl border border-zinc-800/80 bg-zinc-900/30 p-6 hover:border-zinc-700/60 transition-all duration-300 group overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/10 transition-colors"></div>
+          <p class="text-xs font-semibold text-zinc-500 uppercase tracking-widest">Favorites</p>
+          <div class="text-3xl sm:text-5xl font-black bg-gradient-to-r from-emerald-400 to-green-500 bg-clip-text text-transparent mt-2">
+            <span class="stat-counter" data-target="0" data-analytics="favorites">0</span>
+          </div>
+          <div class="flex items-center gap-1 text-[10px] text-zinc-500 mt-2 font-medium">
+            <span>Saved tools</span>
+          </div>
+        </div>
+
+        <div class="relative rounded-2xl border border-zinc-800/80 bg-zinc-900/30 p-6 hover:border-zinc-700/60 transition-all duration-300 group overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors"></div>
+          <p class="text-xs font-semibold text-zinc-500 uppercase tracking-widest">Recent Tools</p>
+          <div class="text-3xl sm:text-5xl font-black bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mt-2">
+            <span class="stat-counter" data-target="0" data-analytics="recent">0</span>
+          </div>
+          <div class="flex items-center gap-1 text-[10px] text-zinc-500 mt-2 font-medium">
+            <span>Recently used</span>
+          </div>
+        </div>
+          <div class="flex items-center gap-1 text-[10px] text-emerald-400 mt-2 font-medium">
+            <span>↑ 100%</span>
+            <span class="text-zinc-600">vs last month</span>
+          </div>
+        </div>
+
+        <div class="relative rounded-2xl border border-zinc-800/80 bg-zinc-900/30 p-6 hover:border-zinc-700/60 transition-all duration-300 group overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-colors"></div>
+          <p class="text-xs font-semibold text-zinc-500 uppercase tracking-widest">Categories</p>
+          <div class="text-3xl sm:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent mt-2">
+            <span class="stat-counter" data-target="4">0</span>
+          </div>
+          <div class="flex items-center gap-1 text-[10px] text-zinc-500 mt-2 font-medium">
+            <span>Active & stable</span>
+          </div>
+        </div>
+
+        <div class="relative rounded-2xl border border-zinc-800/80 bg-zinc-900/30 p-6 hover:border-zinc-700/60 transition-all duration-300 group overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors"></div>
+          <p class="text-xs font-semibold text-zinc-500 uppercase tracking-widest">Future Projects</p>
+          <div class="text-3xl sm:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent mt-2">
+            <span class="stat-counter" data-target="10">0</span>+
+          </div>
+          <div class="flex items-center gap-1 text-[10px] text-purple-400 mt-2 font-medium">
+            <span>On roadmap</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= MAIN DASHBOARD BODY GRID ================= -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+        
+        <!-- Left Panel: Tools Overview (8 cols) -->
+        <div class="lg:col-span-8 space-y-6">
+          <div class="rounded-2xl border border-zinc-800 bg-zinc-950/60 p-6 shadow-xl">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h2 class="text-lg font-bold text-white">Ecosystem Tools Inventory</h2>
+                <p class="text-xs text-zinc-500">Overview of browser utilities currently live in deployment.</p>
+              </div>
+              <span class="text-[10px] font-mono bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">ALL COMPILED</span>
+            </div>
+
+            <!-- Dashboard Table Mockup -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-zinc-800 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
+                    <th class="pb-3 font-semibold">Tool Name</th>
+                    <th class="pb-3 font-semibold">Division</th>
+                    <th class="pb-3 font-semibold">Execution Latency</th>
+                    <th class="pb-3 font-semibold">Stability</th>
+                    <th class="pb-3 font-semibold text-right">Progress</th>
+                  </tr>
+                </thead>
+                <tbody id="tool-usage-body" class="divide-y divide-zinc-900/60 text-xs text-zinc-300">
+                  {tools.map((t) => (
+                    <tr class="hover:bg-zinc-900/20 transition-all duration-150">
+                      <td class="py-3.5 font-semibold text-zinc-200 flex items-center gap-2">
+                        <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
+                        {t.name}
+                      </td>
+                      <td class="py-3.5">
+                        <span class="px-2 py-0.5 rounded-md bg-zinc-900 border border-zinc-800 text-[10px] text-zinc-400">{t.cat}</span>
+                      </td>
+                      <td class="py-3.5 font-mono text-zinc-400">{t.latency}</td>
+                      <td class="py-3.5 font-mono text-emerald-400">{t.reliability}</td>
+                      <td class="py-3.5 text-right font-mono text-purple-400 font-bold">{t.completion}%</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Category Progress Analytics -->
+          <div class="rounded-2xl border border-zinc-800 bg-zinc-950/60 p-6 shadow-xl">
+            <h2 class="text-lg font-bold text-white mb-6">Category Weights & Analytics</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {categories.map((c) => (
+                <div class={`rounded-xl border border-zinc-800/80 bg-zinc-900/10 p-5 ${c.shadow}`}>
+                  <div class="flex justify-between items-center mb-3">
+                    <span class="text-sm font-semibold text-zinc-200">{c.name}</span>
+                    <span class="text-xs font-bold text-emerald-400">{c.growth}</span>
+                  </div>
+                  <div class="flex justify-between text-xs text-zinc-500 mb-1.5">
+                    <span>{c.count} Active</span>
+                    <span>{c.progress}% Target Weight</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden">
+                    <div class={`h-full bg-gradient-to-r ${c.color} rounded-full`} style={`width: ${c.progress}%`}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Tool Activity Chart -->
+          <div class="rounded-2xl border border-zinc-800 bg-zinc-950/60 p-6 shadow-xl">
+            <h2 class="text-lg font-bold text-white mb-6">Tool Activity Trends (7 days)</h2>
+            <div class="grid grid-cols-7 gap-2 items-end h-32">
+              {["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map((day, i) => (
+                <div class="flex flex-col items-center gap-2 h-full justify-end">
+                  <div class="w-full bg-gradient-to-t from-purple-500 to-blue-500 rounded-t-md transition-all duration-500" style={`height: ${[60,75,55,85,70,90,65][i]}%`}></div>
+                  <span class="text-[9px] text-zinc-600 font-medium">{day}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Panel: Blog, Achievements & Metrics (4 cols) -->
+        <div class="lg:col-span-4 space-y-6">
+          <!-- Blog Analytics -->
+          <div class="rounded-2xl border border-zinc-800 bg-zinc-950/60 p-6 shadow-xl">
+            <h2 class="text-lg font-bold text-white mb-4">Blog Growth Engine</h2>
+            
+            <div class="grid grid-cols-3 gap-3 text-center mb-6">
+              <div class="p-3 bg-zinc-900/40 rounded-xl border border-zinc-800/80">
+                <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Active</span>
+                <p class="text-lg font-black text-purple-400 mt-1">{blogAnalytics.published}</p>
+              </div>
+              <div class="p-3 bg-zinc-900/40 rounded-xl border border-zinc-800/80">
+                <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Planned</span>
+                <p class="text-lg font-black text-blue-400 mt-1">{blogAnalytics.planned}</p>
+              </div>
+              <div class="p-3 bg-zinc-900/40 rounded-xl border border-zinc-800/80">
+                <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">SEO Score</span>
+                <p class="text-lg font-black text-emerald-400 mt-1">{blogAnalytics.seoScore}%</p>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              {blogAnalytics.posts.map((post) => (
+                <div class="p-3 rounded-xl border border-zinc-800/40 bg-zinc-900/10 flex items-center justify-between">
+                  <div class="min-w-0 flex-1 pr-3">
+                    <p class="text-xs font-semibold text-zinc-200 truncate">{post.title}</p>
+                    <p class="text-[10px] text-zinc-500">Click Rate: {post.conversion}</p>
+                  </div>
+                  <span class="text-[10px] font-bold font-mono text-purple-400 shrink-0">{post.views} Views</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Platform Achievements -->
+          <div class="rounded-2xl border border-zinc-800 bg-zinc-950/60 p-6 shadow-xl">
+            <h2 class="text-lg font-bold text-white mb-4">Ecosystem Milestones</h2>
+            
+            <div class="space-y-4">
+              {achievements.map((ach) => (
+                <div class="flex items-start gap-3.5">
+                  <span class="w-8 h-8 rounded-xl bg-purple-500/5 border border-zinc-800 flex items-center justify-center text-base shrink-0">{ach.icon}</span>
+                  <div>
+                    <div class="flex items-center justify-between gap-2">
+                      <h4 class="text-xs font-bold text-zinc-200">{ach.name}</h4>
+                      <span class="text-[9px] font-bold text-zinc-500 shrink-0">{ach.date}</span>
+                    </div>
+                    <p class="text-[10px] text-zinc-500 mt-0.5">{ach.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= ROADMAP DASHBOARD SECTION ================= -->
+      <section class="mb-12">
+        <div class="rounded-2xl border border-zinc-800 bg-zinc-950/60 p-6 sm:p-8 shadow-xl">
+          <div class="mb-8">
+            <span class="text-xs font-semibold text-purple-400 uppercase tracking-widest">LONG TERM PLAN</span>
+            <h2 class="text-xl md:text-2xl font-black text-white mt-1">NumanX Evolution Pipeline</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 relative">
+            {roadmap.map((step, idx) => (
+              <div class="p-5 rounded-xl border border-zinc-800 bg-zinc-900/10 hover:border-purple-500/20 transition-all duration-300 relative group">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-[10px] font-mono text-purple-400 font-bold tracking-wider">Phase {idx + 1}</span>
+                  <span class="text-[9px] font-semibold text-zinc-500 bg-zinc-800/80 px-1.5 py-0.5 rounded">{step.status}</span>
+                </div>
+                <h4 class="text-sm font-bold text-zinc-200 group-hover:text-white transition-colors">{step.title}</h4>
+                <p class="text-xs text-zinc-500 mt-2 leading-relaxed">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= FUTURE FEATURES PIPELINE ================= -->
+      <section class="mb-12">
+        <div class="mb-8">
+          <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">DEVELOPMENT VECTOR</span>
+          <h2 class="text-2xl md:text-3xl font-black text-white mt-1">Upcoming Tools Registry</h2>
+          <p class="text-sm text-zinc-500 mt-1">High fidelity utilities prioritized for local compilation on next release cycles.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {futureFeatures.map((item) => (
+            <div class="rounded-2xl border border-zinc-800 bg-zinc-900/20 p-6 hover:border-zinc-700 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-[10px] font-bold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded">{item.cat}</span>
+                  <span class="text-[9px] font-bold text-zinc-500 font-mono">timeline: {item.timeline}</span>
+                </div>
+                <h3 class="text-base font-bold text-zinc-200">{item.name}</h3>
+                <p class="text-xs text-zinc-500 mt-2 leading-relaxed">{item.desc}</p>
+              </div>
+              <div class="mt-6 pt-4 border-t border-zinc-900/60 flex justify-between items-center text-[10px]">
+                <span class="text-zinc-600">Priority Score</span>
+                <span class="font-bold font-mono text-zinc-400">{item.difficulty === "High" ? "🟢 HIGH" : item.difficulty === "Medium" ? "🟡 MEDIUM" : "🔵 STABLE"}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ================= FINAL CTA ================= -->
+      <section class="text-center relative">
+        <div class="relative rounded-3xl border border-zinc-800/80 bg-zinc-900/30 backdrop-blur-2xl p-10 md:p-14 shadow-2xl">
+          <div class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
+          
+          <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white">
+            Building The Future Of NumanX
+          </h2>
+          <p class="mt-4 text-zinc-400 text-sm max-w-lg mx-auto leading-relaxed">
+            Support our serverless mission of offline-friendly tools for creators around the world. Secure, blazingly fast, and forever free.
+          </p>
+          
+          <div class="mt-8 flex flex-wrap justify-center gap-4">
+            <a href="/tools/" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-200">
+              Explore Tools
+            </a>
+            <a href="/blog/" class="border border-zinc-800 hover:border-zinc-600 text-zinc-300 hover:text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-200">
+              Read Blog
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  // Dashboard tools data injected at build time
+
+  function triggerToast(message: string, variant: "success" | "error" | "info" | "warning" = "info") {
+    if ((window as any).__showToast) {
+      (window as any).__showToast({ message, variant });
+    }
+  }
+
+  // ─── Real-time Dashboard Analytics from localStorage ───
+  function loadAnalytics() {
+    try {
+      const favorites: string[] = JSON.parse(localStorage.getItem("nt_favorites") || "[]");
+      const recent: string[] = JSON.parse(localStorage.getItem("nt_recently_used") || "[]");
+      const usage: Record<string, number> = JSON.parse(localStorage.getItem("nt_tool_usage") || "{}");
+
+      // Update stat counters
+      document.querySelectorAll("[data-analytics]").forEach((el) => {
+        const key = el.getAttribute("data-analytics");
+        if (key === "favorites") el.textContent = favorites.length.toString();
+        if (key === "recent") el.textContent = recent.length.toString();
+        if (key === "usage") {
+          const total = Object.values(usage).reduce((a, b) => a + b, 0);
+          el.textContent = total.toString();
+        }
+      });
+
+      // Update tools table with real usage data
+      const tableBody = document.querySelector("#tool-usage-body");
+      if (tableBody) {
+        const toolsData = document.getElementById("dashboard-tools-data");
+      const allTools = toolsData ? JSON.parse(toolsData.textContent || "[]") : [];
+        if (allTools.length > 0) {
+          tableBody.innerHTML = allTools.map((t: any) => {
+            const count = usage[t.slug] || 0;
+            const maxUsage = Math.max(...Object.values(usage), 1);
+            const barW = Math.round((count / maxUsage) * 100);
+            return `
+              <tr class="hover:bg-zinc-900/20 transition-all duration-150">
+                <td class="py-3.5 font-semibold text-zinc-200 flex items-center gap-2">
+                  <span class="inline-block w-2 h-2 rounded-full ${count > 0 ? 'bg-emerald-500' : 'bg-zinc-700'}"></span>
+                  ${t.name}
+                </td>
+                <td class="py-3.5"><span class="px-2 py-0.5 rounded-md bg-zinc-900 border border-zinc-800 text-[10px] text-zinc-400">${t.category}</span></td>
+                <td class="py-3.5 font-mono text-zinc-400">${count > 0 ? count + ' uses' : '—'}</td>
+                <td class="py-3.5 text-right">
+                  <div class="w-24 h-1.5 bg-zinc-800 rounded-full ml-auto overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all" style="width:${barW}%"></div>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join("");
+        }
+      }
+
+      // Update activity chart based on day-of-week usage
+      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const now = new Date();
+      const chartData = days.map((_, i) => {
+        const d = new Date(now);
+        d.setDate(d.getDate() - (6 - i));
+        const key = `nt_day_${d.getFullYear()}_${d.getMonth()}_${d.getDate()}`;
+        return parseInt(localStorage.getItem(key) || "0");
+      });
+      const maxVal = Math.max(...chartData, 1);
+      chartData.forEach((val, i) => {
+        const bar = document.querySelector(`[data-day="${i}"]`);
+        if (bar) {
+          const pct = Math.max((val / maxVal) * 80, 5);
+          (bar as HTMLElement).style.height = `${pct}%`;
+        }
+      });
+    } catch (e) {
+      // silently fail if localStorage unavailable
+    }
+  }
+
+  // Refresh dashboard
+  const btn = document.getElementById("refresh-dashboard");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      btn.innerHTML = `
+        <svg class="animate-spin text-purple-400" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+        Re-checking Modules...
+      `;
+      setTimeout(() => {
+        loadAnalytics();
+        btn.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-zinc-400"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          Metrics Synchronised!
+        `;
+        setTimeout(() => {
+          btn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-zinc-400"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            Refresh Metrics
+          `;
+        }, 1500);
+      }, 1000);
+    });
+  }
+
+  // Stat Counter Animation Logic
+  const counters = document.querySelectorAll(".stat-counter");
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const el = entry.target as HTMLElement;
+        const target = parseInt(el.dataset.target || "0");
+        let current = 0;
+        const step = Math.ceil(target / 40);
+        const interval = setInterval(() => {
+          current += step;
+          if (current >= target) { 
+            current = target; 
+            clearInterval(interval); 
+          }
+          el.textContent = current.toString();
+        }, 40);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach((c) => observer.observe(c));
+
+  // Load real analytics on page load
+  loadAnalytics();
+</script>

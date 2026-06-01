@@ -1,0 +1,29 @@
+---
+interface Props {
+  icon?: string;
+  title?: string;
+  message?: string;
+  actionLabel?: string;
+  actionHref?: string;
+  class?: string;
+}
+
+const { icon, title = "Nothing here yet", message = "Try adjusting your search or filters.", actionLabel, actionHref, class: className } = Astro.props;
+---
+
+<div class={`text-center py-16 ${className || ""}`}>
+  {icon && (
+    <div class="w-14 h-14 rounded-2xl bg-white/[0.04] flex items-center justify-center mx-auto mb-4">
+      <span class="text-2xl">{icon}</span>
+    </div>
+  )}
+  <h3 class="text-lg font-semibold text-zinc-300">{title}</h3>
+  <p class="text-sm text-zinc-500 mt-1 max-w-md mx-auto">{message}</p>
+  {actionLabel && actionHref && (
+    <a href={actionHref} class="inline-flex items-center gap-2 mt-6 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold transition-all duration-200">
+      {actionLabel}
+    </a>
+  )}
+  <slot />
+</div>
+

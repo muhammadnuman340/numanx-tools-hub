@@ -1,0 +1,46 @@
+<nav id="table-of-contents" class="hidden lg:block sticky top-24 w-56 shrink-0" aria-label="Table of contents">
+  <p class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-3">On This Page</p>
+  <ul id="toc-list" class="space-y-1.5 text-sm border-l border-white/[0.06] pl-4">
+    {/* Populated by JS */}
+  </ul>
+</nav>
+
+<script>
+  const toc = document.getElementById("toc-list");
+  const sidebar = document.getElementById("table-of-contents");
+  if (toc && sidebar) {
+    const headings = document.querySelectorAll("article h2, article h3");
+    if (headings.length === 0) {
+      sidebar.style.display = "none";
+    } else {
+      const items: { id: string; text: string; tag: string }[] = [];
+      headings.forEach((h, i) => {
+        const id = h.textContent?.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || `heading-${i}`;
+        h.id = id;
+        items.push({ id, text: h.textContent || "", tag: h.tagName });
+      });
+
+      toc.innerHTML = items.map((item) => `
+        <li>
+          <a href="#${item.id}" class="toc-link block ${item.tag === "H3" ? "pl-3" : ""} text-xs ${item.tag === "H3" ? "text-zinc-600" : "text-zinc-500"} hover:text-purple-400 transition-colors truncate">
+            ${item.text}
+          </a>
+        </li>
+      `).join("");
+
+      const links = toc.querySelectorAll<HTMLAnchorElement>(".toc-link");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            links.forEach((l) => l.classList.remove("text-purple-400"));
+            const active = toc.querySelector<HTMLAnchorElement>(`a[href="#${entry.target.id}"]`);
+            if (active) active.classList.add("text-purple-400");
+          }
+        });
+      }, { rootMargin: "-80px 0px -60% 0px" });
+
+      headings.forEach((h) => observer.observe(h));
+    }
+  }
+</script>
+

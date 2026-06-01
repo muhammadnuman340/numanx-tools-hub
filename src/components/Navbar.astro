@@ -1,0 +1,106 @@
+---
+import { categories } from "../data/tools";
+import ToolIcon from "./icons/ToolIcon.astro";
+---
+
+<header class="fixed top-0 left-0 right-0 z-[100] border-b border-white/[0.04] bg-[#0a0a0b]/70 backdrop-blur-2xl supports-[backdrop-filter]:bg-[#0a0a0b]/60">
+  <div class="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 h-14 sm:h-16">
+
+    <a href="/" class="shrink-0 relative group">
+      <span class="text-xl font-black tracking-tight bg-gradient-to-r from-purple-300 via-purple-200 to-white bg-clip-text text-transparent drop-shadow-sm">NumanX</span>
+      <span class="absolute -bottom-0.5 left-0 w-full h-[2px] bg-gradient-to-r from-purple-400 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+    </a>
+
+    <nav class="hidden md:flex items-center gap-1" aria-label="Main navigation">
+      <a href="/" class="px-3 py-2 text-sm text-zinc-400 hover:text-white rounded-lg hover:bg-white/[0.04] transition-all duration-200">Home</a>
+      <a href="/tools/" class="px-3 py-2 text-sm text-zinc-400 hover:text-white rounded-lg hover:bg-white/[0.04] transition-all duration-200">Tools</a>
+      
+      <!-- Categories Dropdown -->
+      <div class="relative group/cat">
+        <button class="flex items-center gap-1.5 px-3 py-2 text-sm text-zinc-400 hover:text-white rounded-lg hover:bg-white/[0.04] transition-all duration-200 cursor-pointer" aria-expanded="false" aria-haspopup="true">
+          Categories
+          <svg class="w-3.5 h-3.5 text-zinc-600 group-hover/cat:rotate-180 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 rounded-2xl border border-white/[0.06] bg-[#0a0a0b]/90 backdrop-blur-2xl shadow-2xl opacity-0 invisible group-hover/cat:opacity-100 group-hover/cat:visible transition-all duration-200 translate-y-2 group-hover/cat:translate-y-0 pointer-events-none group-hover/cat:pointer-events-auto">
+          <div class="p-2 space-y-0.5">
+            {categories.map((cat) => (
+              <a href={`/category/${cat.id}/`} class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-all duration-200 group/item">
+                <ToolIcon name={cat.icon} class="shrink-0" />
+                <div>
+                  <p class="font-medium group-hover/item:translate-x-0.5 transition-transform">{cat.title}</p>
+                  <p class="text-[11px] text-zinc-600">{cat.count} tools</p>
+                </div>
+                <svg class="ml-auto w-3.5 h-3.5 text-zinc-700 opacity-0 group-hover/item:opacity-100 -translate-x-2 group-hover/item:translate-x-0 transition-all duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <a href="/blog/" class="px-3 py-2 text-sm text-zinc-400 hover:text-white rounded-lg hover:bg-white/[0.04] transition-all duration-200">Blog</a>
+      <a href="/about/" class="px-3 py-2 text-sm text-zinc-400 hover:text-white rounded-lg hover:bg-white/[0.04] transition-all duration-200">About</a>
+    </nav>
+
+    <div class="flex items-center gap-2 sm:gap-3">
+      <button id="search-trigger" class="flex items-center gap-1.5 text-zinc-400 hover:text-white p-1.5 pr-2.5 rounded-xl hover:bg-white/[0.06] transition-all duration-200 group" aria-label="Search (Ctrl+K)">
+        <svg class="w-[18px] h-[18px] group-hover:scale-110 transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <kbd class="hidden sm:inline-flex items-center gap-0.5 px-1 py-0.5 rounded-md bg-white/[0.04] text-zinc-600 text-[9px] font-mono border border-white/[0.06]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg>
+          K
+        </kbd>
+      </button>
+      <a href="/favorites/" class="hidden sm:flex text-zinc-400 hover:text-white p-2 rounded-xl hover:bg-white/[0.06] transition-all duration-200 group" aria-label="Favorites">
+        <svg class="w-[18px] h-[18px] group-hover:scale-110 transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </a>
+      <button id="menu-toggle" class="md:hidden text-zinc-400 hover:text-white p-2 rounded-xl hover:bg-white/[0.06] transition-all duration-200" aria-label="Toggle menu">
+        <svg id="menu-icon-open" class="w-[22px] h-[22px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <a href="/tools/" class="hidden sm:inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs sm:text-sm px-4 py-2 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-purple-900/30 hover:shadow-purple-500/30 whitespace-nowrap">
+        Get Started
+        <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="md:hidden hidden border-t border-white/[0.04] bg-[#0a0a0b]/90 backdrop-blur-2xl">
+    <div class="px-4 py-3 space-y-1">
+      <a href="/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-all">Home</a>
+      <a href="/tools/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-all">Tools</a>
+      <div class="px-3 py-2">
+        <p class="text-[11px] font-semibold text-zinc-600 uppercase tracking-wider mb-2">Categories</p>
+        <div class="space-y-0.5">
+          {categories.map((cat) => (
+            <a href={`/category/${cat.id}/`} class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-all">
+              <ToolIcon name={cat.icon} />
+              <span>{cat.title}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+      <a href="/blog/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-all">Blog</a>
+      <a href="/favorites/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-all">Favorites</a>
+      <a href="/about/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-all">About</a>
+      <a href="/contact/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-all">Contact</a>
+      <a href="/search/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-all">Search</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+  if (toggle && menu) {
+    toggle.addEventListener("click", () => {
+      menu.classList.toggle("hidden");
+    });
+  }
+  const searchTrigger = document.getElementById("search-trigger");
+  if (searchTrigger) {
+    searchTrigger.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (window.__openSearch) window.__openSearch();
+    });
+  }
+</script>

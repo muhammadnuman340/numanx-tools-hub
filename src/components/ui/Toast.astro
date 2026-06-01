@@ -1,0 +1,60 @@
+---
+export type ToastVariant = "success" | "error" | "info" | "warning";
+
+interface Props {
+  variant?: ToastVariant;
+  message?: string;
+  duration?: number;
+}
+---
+
+<div
+  id="toast-container"
+  class="fixed top-4 right-4 z-[999] flex flex-col gap-2 pointer-events-none"
+  aria-live="polite"
+  aria-atomic="true"
+>
+</div>
+
+<script>
+  interface ToastOptions {
+    message: string;
+    variant?: "success" | "error" | "info" | "warning";
+    duration?: number;
+  }
+
+  const variantStyles: Record<string, { bg: string; border: string; icon: string; color: string }> = {
+    success: { bg: "bg-emerald-500/10", border: "border-emerald-500/30", icon: "✓", color: "text-emerald-400" },
+    error: { bg: "bg-red-500/10", border: "border-red-500/30", icon: "✕", color: "text-red-400" },
+    info: { bg: "bg-blue-500/10", border: "border-blue-500/30", icon: "ℹ", color: "text-blue-400" },
+    warning: { bg: "bg-amber-500/10", border: "border-amber-500/30", icon: "⚠", color: "text-amber-400" },
+  };
+
+  function showToast({ message, variant = "info", duration = 4000 }: ToastOptions) {
+    const container = document.getElementById("toast-container");
+    if (!container) return;
+
+    const style = variantStyles[variant];
+    const toast = document.createElement("div");
+    toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl border backdrop-blur-md shadow-xl animate-[slideInRight_0.3s_ease-out] ${style.bg} ${style.border}`;
+    toast.innerHTML = `
+      <span class="w-6 h-6 rounded-lg flex items-center justify-center text-sm font-bold ${style.color}">${style.icon}</span>
+      <p class="text-sm text-zinc-200 font-medium flex-1">${message}</p>
+      <button class="text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer" aria-label="Dismiss">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    `;
+
+    container.appendChild(toast);
+
+    const dismiss = () => {
+      toast.style.animation = "slideOutRight 0.3s ease-in forwards";
+      setTimeout(() => toast.remove(), 300);
+    };
+
+    toast.querySelector("button")?.addEventListener("click", dismiss);
+    setTimeout(dismiss, duration);
+  }
+
+  (window as any).__showToast = showToast;
+</script>

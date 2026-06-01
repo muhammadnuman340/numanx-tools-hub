@@ -12,8 +12,12 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.3.0",
     "astro": "^6.4.2",
-    "lucide-astro": "^0.556.0",
-    "qrcode": "^1.5.4"
+    "qrcode": "^1.5.4",
+    "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.95.0"
   }
 }

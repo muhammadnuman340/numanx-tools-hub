@@ -1,0 +1,247 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+import KeyboardHints from "../../components/KeyboardHints.astro";
+
+const faqItems = [
+  { question: "What does the JSON formatter do?", answer: "It takes raw, compact, or malformed JSON and formats it with proper indentation, line breaks, and syntax highlighting for readability." },
+  { question: "Is my JSON data sent to a server?", answer: "No. All formatting, validation, and minification happens entirely in your browser. Your data never leaves your device." },
+  { question: "What happens if my JSON is invalid?", answer: "The tool will display a clear error message showing the line and position of the issue, along with what was expected vs what was found." },
+  { question: "Can I minify JSON with this tool?", answer: "Yes. Click the 'Minify' button to compress your JSON into a single line — perfect for API payloads and storage optimization." },
+  { question: "What's the difference between format and validate?", answer: "Format beautifies the JSON with indentation. Validate checks if the JSON is structurally correct. Both run simultaneously — if it formats, it's valid." },
+];
+const schema = {
+  name: "JSON Formatter & Validator",
+  applicationCategory: "Developer Tools",
+  description: "Format, validate, and minify JSON data with syntax highlighting, error detection, and one-click copy.",
+  featureList: [
+    "Format JSON with proper indentation and line breaks",
+    "Validate JSON with detailed error messages",
+    "Minify JSON for API payloads",
+    "Syntax highlighting for readability",
+    "Copy formatted or minified output",
+    "100% client-side with zero data transfer"
+  ],
+};
+---
+
+<MainLayout
+  title="JSON Formatter Free Online - Validate & Beautify JSON"
+  description="Format, validate, and minify JSON data online with syntax highlighting, error detection, and one-click copy. Free developer tool with zero server uploads."
+  keywords="json formatter, json validator, json beautifier, json minifier, json parser, api tools, developer tools"
+  toolSchema={schema}
+  faq={faqItems}
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Tools", url: "/tools/" },
+    { name: "JSON Formatter", url: "/tools/json-formatter/" },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto">
+      <ToolHeader
+        title="JSON"
+        gradient="Formatter Pro"
+        desc="Format, validate, and minify JSON in real-time. Syntax highlighting, detailed error messages, and one-click copy — all in your browser."
+        badge="★ Upgraded"
+        slug="json-formatter"
+      />
+
+      <ShareBar />
+
+      <!-- Tool Interface -->
+      <div class="mt-8 space-y-4">
+
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap gap-2">
+          <button id="format-btn" class="bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Format</button>
+          <button id="minify-btn" class="bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-300 hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Minify</button>
+          <button id="copy-btn" class="bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-300 hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Copy Output</button>
+          <button id="clear-btn" class="bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-500 hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Clear</button>
+        </div>
+
+        <!-- Editor Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div>
+            <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-2 block">Input JSON</label>
+            <textarea id="json-input" class="w-full h-[450px] bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all font-mono resize-y" placeholder="Paste your JSON here..." spellcheck="false"></textarea>
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Output</label>
+              <span id="status-badge" class="text-[10px] font-mono text-zinc-600 px-2 py-0.5 rounded-full border border-white/[0.06]">ready</span>
+            </div>
+            <pre id="json-output" class="w-full h-[450px] overflow-y-auto bg-black/40 border border-white/[0.06] rounded-xl px-4 py-3 text-sm font-mono text-zinc-500 whitespace-pre-wrap">Click "Format" to begin</pre>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div id="json-stats" class="hidden bg-white/[0.03] border border-white/[0.06] rounded-2xl p-3 flex flex-wrap gap-4 text-xs text-zinc-500">
+          <span><strong class="text-zinc-400">Lines:</strong> <span id="stat-lines">0</span></span>
+          <span><strong class="text-zinc-400">Chars:</strong> <span id="stat-chars">0</span></span>
+          <span><strong class="text-zinc-400">Keys:</strong> <span id="stat-keys">0</span></span>
+          <span><strong class="text-zinc-400">Size:</strong> <span id="stat-size">0 B</span></span>
+        </div>
+
+      </div>
+
+      <!-- FAQ -->
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked
+          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+        </h2>
+        <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
+      </div>
+
+      <KeyboardHints hints={[
+        { keys: "Ctrl+Enter", label: "Format JSON" },
+        { keys: "⌘K", label: "Open search" },
+        { keys: "Ctrl+Z", label: "Undo" },
+      ]} />
+
+      <RelatedTools current="json-formatter" />
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  const input = document.getElementById("json-input") as HTMLTextAreaElement;
+  const output = document.getElementById("json-output");
+  const formatBtn = document.getElementById("format-btn");
+  const minifyBtn = document.getElementById("minify-btn");
+  const copyBtn = document.getElementById("copy-btn");
+  const clearBtn = document.getElementById("clear-btn");
+  const statusBadge = document.getElementById("status-badge");
+  const statsPanel = document.getElementById("json-stats");
+  const statLines = document.getElementById("stat-lines");
+  const statChars = document.getElementById("stat-chars");
+  const statKeys = document.getElementById("stat-keys");
+  const statSize = document.getElementById("stat-size");
+
+  function escapeHtml(s: string): string {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function syntaxHighlight(json: string): string {
+    return escapeHtml(json).replace(
+      /("(?:[^"\\]|\\.)*")\s*:/g,
+      '<span class="text-purple-300">$1</span>:'
+    ).replace(
+      /("(?:[^"\\]|\\.)*")/g,
+      '<span class="text-emerald-300">$1</span>'
+    ).replace(
+      /\b(-?\d+\.?\d*(?:[eE][+-]?\d+)?)\b/g,
+      '<span class="text-amber-300">$1</span>'
+    ).replace(
+      /\b(true|false)\b/g,
+      '<span class="text-blue-400">$1</span>'
+    ).replace(
+      /\b(null)\b/g,
+      '<span class="text-red-400">$1</span>'
+    );
+  }
+
+  function countKeys(obj: unknown): number {
+    if (typeof obj !== "object" || obj === null) return 0;
+    let count = 0;
+    for (const key of Object.keys(obj)) {
+      count++;
+      count += countKeys((obj as Record<string, unknown>)[key]);
+    }
+    return count;
+  }
+
+  function triggerToast(message: string, variant: "success" | "error" | "info" | "warning" = "success") {
+    if ((window as any).__showToast) {
+      (window as any).__showToast({ message, variant });
+    }
+  }
+
+  function process(mode: "format" | "minify") {
+    const raw = input.value.trim();
+    if (!raw) {
+      output.innerHTML = '<span class="text-zinc-600">Paste some JSON to get started</span>';
+      statusBadge.textContent = "empty";
+      statusBadge.className = "text-[10px] font-mono text-zinc-600 px-2 py-0.5 rounded-full border border-white/[0.06]";
+      statsPanel.classList.add("hidden");
+      return;
+    }
+
+    try {
+      const parsed = JSON.parse(raw);
+      const result = mode === "format" ? JSON.stringify(parsed, null, 2) : JSON.stringify(parsed);
+      output.innerHTML = mode === "format" ? syntaxHighlight(result) : escapeHtml(result);
+      statusBadge.textContent = "✓ valid";
+      statusBadge.className = "text-[10px] font-mono text-emerald-400 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20";
+
+      // Stats
+      const keys = countKeys(parsed);
+      statLines.textContent = result.split("\n").length.toString();
+      statChars.textContent = result.length.toString();
+      statKeys.textContent = keys.toString();
+      const bytes = new TextEncoder().encode(result).length;
+      statSize.textContent = bytes < 1024 ? `${bytes} B` : `${(bytes / 1024).toFixed(1)} KB`;
+      statsPanel.classList.remove("hidden");
+
+      // Store formatted for copy
+      (output as HTMLElement).dataset.plainText = result;
+      triggerToast(mode === "format" ? "JSON beautified successfully!" : "JSON minified successfully!", "success");
+    } catch (e) {
+      const msg = e instanceof SyntaxError ? e.message : "Invalid JSON";
+      output.innerHTML = `<span class="text-red-400">✗ Error:</span> <span class="text-red-300">${escapeHtml(msg)}</span>`;
+      statusBadge.textContent = "✗ invalid";
+      statusBadge.className = "text-[10px] font-mono text-red-400 px-2 py-0.5 rounded-full bg-red-500/10 border border-red-500/20";
+      statsPanel.classList.add("hidden");
+      triggerToast("Invalid JSON syntax detected!", "error");
+    }
+  }
+
+  formatBtn.addEventListener("click", () => process("format"));
+  minifyBtn.addEventListener("click", () => process("minify"));
+
+  copyBtn.addEventListener("click", () => {
+    const text = (output as HTMLElement).dataset.plainText || output.textContent;
+    if (text && text !== 'Click "Format" to begin' && !text.includes("Error")) {
+      navigator.clipboard.writeText(text).then(() => {
+        triggerToast("JSON copied to clipboard!", "success");
+      });
+    } else {
+      triggerToast("Nothing valid to copy!", "warning");
+    }
+  });
+
+  clearBtn.addEventListener("click", () => {
+    input.value = "";
+    output.innerHTML = '<span class="text-zinc-600">Paste some JSON to get started</span>';
+    statusBadge.textContent = "ready";
+    statusBadge.className = "text-[10px] font-mono text-zinc-600 px-2 py-0.5 rounded-full border border-white/[0.06]";
+    statsPanel.classList.add("hidden");
+    input.focus();
+  });
+
+  // Ctrl+Enter / Cmd+Enter to format
+  input.addEventListener("keydown", (e: KeyboardEvent) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+      e.preventDefault();
+      process("format");
+    }
+  });
+
+  // Load saved or set default
+  try {
+    const saved = localStorage.getItem("nt_json_input");
+    if (saved) { input.value = saved; }
+    else {
+      input.value = '{\n  "name": "JSON Formatter",\n  "version": 1,\n  "features": ["format", "validate", "minify"],\n  "active": true\n}';
+    }
+  } catch {
+    input.value = '{\n  "name": "JSON Formatter",\n  "version": 1\n}';
+  }
+  input.addEventListener("input", () => {
+    try { localStorage.setItem("nt_json_input", input.value); } catch {}
+  });
+</script>

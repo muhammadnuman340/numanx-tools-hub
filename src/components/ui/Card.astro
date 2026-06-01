@@ -1,0 +1,27 @@
+---
+interface Props {
+  variant?: "default" | "glass" | "interactive";
+  padding?: "sm" | "md" | "lg";
+  class?: string;
+}
+
+const { variant = "default", padding = "md", class: className } = Astro.props;
+
+const variantClasses: Record<string, string> = {
+  default: "bg-white/[0.03] border border-white/[0.06] rounded-2xl",
+  glass: "bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-2xl",
+  interactive: "bg-white/[0.03] border border-white/[0.06] rounded-2xl hover:border-purple-500/30 hover:bg-white/[0.05] transition-all duration-300 group hover:shadow-lg hover:shadow-purple-900/10",
+};
+
+const paddingClasses: Record<string, string> = {
+  sm: "p-4",
+  md: "p-5",
+  lg: "p-6",
+};
+---
+
+<div class={`${variantClasses[variant]} ${paddingClasses[padding]} ${className || ""}`}>
+  <slot name="image" />
+  <slot name="badge" />
+  <slot />
+</div>
