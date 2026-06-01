@@ -25,6 +25,16 @@
 - **Repo:** https://github.com/muhammadnuman340/numanx-tools-hub (private)
 - **Branch:** master
 
+## Deploy (Cloudflare Pages)
+
+- **Project:** numanx-tools
+- **Preview URL:** https://8fa5285a.numanx-tools.pages.dev
+- **Production URL:** https://numanx-tools.pages.dev
+- **Custom domain:** https://numanxtools.site (configure DNS at registrar)
+- **CI/CD:** Auto-deploys on git push (set up via Cloudflare dashboard Git integration)
+- **Token (API):** `cfut_fRUXzDwusWS0NbBVRYwKcl8xADN25xwFgbTm534Va12d3789` (Pages:Edit + Accounts:Read)
+- **Account ID:** `ad599981f000a8ebb2083120d14434f2`
+
 ## Site URL
 
 - **Production:** https://numanxtools.site

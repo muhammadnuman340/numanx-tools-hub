@@ -25,12 +25,14 @@ const {
 } = Astro.props;
 
 const siteName = "NumanX Tools";
+const orgName = "NumanX Studio";
 const siteDesc = description || "Build. Create. Analyze. Free online tools for creators, students, and developers — a product of NumanX Studio.";
 const siteKeywords = keywords || "free tools, online tools, file converters, cricket calculators, word counter, qr generator, image compressor";
-const siteUrl = canonical || "https://numanxtools.site";
-const ogImage = image || "https://numanxtools.site/og-default.svg";
-const orgName = "NumanX Studio";
-const orgUrl = "https://numanxtools.site";
+const siteUrl = canonical || "https://numanx-tools.pages.dev";
+
+const ogImage = image || "https://numanx-tools.pages.dev/og-default.svg";
+
+const orgUrl = "https://numanx-tools.pages.dev";
 
 const pageTitle = title
   ? title.includes("NumanX") ? title : `${title} | ${siteName}`
@@ -44,7 +46,7 @@ const breadcrumbsSchema = breadcrumbs && breadcrumbs.length > 0 ? {
     "@type": "ListItem",
     "position": idx + 1,
     "name": b.name,
-    "item": b.url.startsWith("http") ? b.url : `https://numanxtools.site${b.url}`
+    "item": b.url.startsWith("http") ? b.url : `https://numanx-tools.pages.dev${b.url}`
   }))
 } : null;
 
@@ -182,7 +184,7 @@ const builtToolSchema = toolSchema ? {
 <meta name="twitter:creator" content="@numanxstudio" />
 
 <!-- Google Search Console -->
-<meta name="google-site-verification" content="VERIFICATION_CODE" />
+<meta name="google-site-verification" content="google56b08745d0fdbc9e.html" />
 
 <!-- Organization Schema -->
 <script type="application/ld+json" set:html={JSON.stringify({

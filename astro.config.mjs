@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://numanxtools.site',
+  site: 'https://numanx-tools.pages.dev',
   compressHTML: true,
   scopedStyleStrategy: 'where',
   build: {

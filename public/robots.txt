@@ -3,4 +3,4 @@ Allow: /
 Disallow: /favorites/
 Disallow: /search/
 
-Sitemap: https://numanxtools.site/sitemap.xml
+Sitemap: https://numanx-tools.pages.dev/sitemap.xml

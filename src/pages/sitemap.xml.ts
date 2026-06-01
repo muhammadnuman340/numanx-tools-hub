@@ -1,6 +1,6 @@
 import { tools, categories } from "../data/tools";
 
-const site = 'https://numanxtools.site';
+const site = 'https://numanx-tools.pages.dev';
 const today = new Date().toISOString().split('T')[0];
 
 export async function GET() {
