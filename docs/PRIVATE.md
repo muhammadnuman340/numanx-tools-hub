@@ -2,6 +2,14 @@
 
 > ⚠️ This file is for internal reference only. Not published to the site.
 
+**Quick Links:**
+- **Site:** https://numanx-tools.pages.dev
+- **Sitemap:** https://numanx-tools.pages.dev/sitemap.xml
+- **robots.txt:** https://numanx-tools.pages.dev/robots.txt
+- **GitHub:** https://github.com/muhammadnuman340/numanx-tools-hub
+- **Search Console:** https://search.google.com/search-console?resource_id=https://numanx-tools.pages.dev
+- **Cloudflare Dashboard:** https://dash.cloudflare.com/ → Workers & Pages → numanx-tools
+
 ---
 
 ## Tech Stack
