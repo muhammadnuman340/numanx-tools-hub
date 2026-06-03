@@ -1,0 +1,128 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "What is a JWT token?", answer: "JWT (JSON Web Token) is a compact, URL-safe token format used for authentication and information exchange. It consists of three parts: a header (algorithm & type), a payload (claims/data), and a signature (verification)." },
+  { question: "Is my token data sent to a server?", answer: "No. All decoding happens entirely in your browser. The token is split and base64-decoded on your device — nothing is uploaded." },
+  { question: "Can I verify the signature?", answer: "This tool decodes the header and payload for inspection but does not verify the cryptographic signature. Signature verification requires the secret or public key used to sign the token." },
+];
+const schema = { name: "JWT Decoder", applicationCategory: "Developer Tools", description: "Decode JWT tokens instantly — view the header, payload, and signature information in your browser.", featureList: ["Decode JWT header and payload", "Formatted JSON display", "Signature status indicator", "100% client-side"] };
+---
+<MainLayout title="JWT Decoder - Decode JSON Web Tokens Online Free" description="Decode JWT tokens instantly — view the header, payload, and signature in your browser. Free online JWT decoder." keywords="jwt decoder, jwt, json web token, decode jwt, jwt tool, token decoder" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"JWT Decoder",url:"/tools/jwt-decoder/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="JWT" gradient="Decoder Pro" desc="Decode JWT tokens instantly — inspect the header, payload, and signature in a clean interface." badge="✦ New Tool" slug="jwt-decoder" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+        <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-2 block">JWT Token</label>
+        <textarea id="token-input" class="w-full h-28 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-orange-500/50 focus:outline-none transition-all resize-none font-mono" placeholder="Paste your JWT token here..."></textarea>
+        <button id="decode-btn" class="w-full bg-orange-600 hover:bg-orange-500 text-white text-sm font-semibold py-2.5 rounded-xl transition-all mt-3 active:scale-95">Decode</button>
+        <div id="result-area" class="mt-6 space-y-4 hidden">
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Header</label>
+              <span id="header-alg" class="text-[10px] font-mono text-orange-400 px-2 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20"></span>
+            </div>
+            <pre id="header-output" class="w-full h-24 overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm font-mono text-primary whitespace-pre-wrap"></pre>
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Payload</label>
+              <span id="payload-info" class="text-[10px] font-mono text-dim"></span>
+            </div>
+            <pre id="payload-output" class="w-full h-36 overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm font-mono text-primary whitespace-pre-wrap"></pre>
+          </div>
+          <div class="bg-surface border border-surface-2 rounded-xl p-3 flex items-center gap-3">
+            <span class="text-[10px] font-semibold text-muted uppercase tracking-wider">Signature</span>
+            <span id="sig-status" class="text-xs font-mono"></span>
+            <code id="sig-preview" class="text-[10px] font-mono text-dim truncate flex-1 text-right"></code>
+          </div>
+        </div>
+      </div>
+    </div>
+    <RelatedTools current="jwt-decoder" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  const tokenInput = document.getElementById("token-input") as HTMLTextAreaElement;
+  const decodeBtn = document.getElementById("decode-btn");
+  const resultArea = document.getElementById("result-area");
+  const headerOutput = document.getElementById("header-output");
+  const headerAlg = document.getElementById("header-alg");
+  const payloadOutput = document.getElementById("payload-output");
+  const payloadInfo = document.getElementById("payload-info");
+  const sigStatus = document.getElementById("sig-status");
+  const sigPreview = document.getElementById("sig-preview");
+
+  function escapeHtml(s: string): string {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function syntaxHighlight(json: string): string {
+    return escapeHtml(json).replace(
+      /("(?:[^"\\]|\\.)*")\s*:/g,
+      '<span class="text-orange-300">$1</span>:'
+    ).replace(
+      /("(?:[^"\\]|\\.)*")/g,
+      '<span class="text-emerald-300">$1</span>'
+    ).replace(
+      /\b(-?\d+\.?\d*(?:[eE][+-]?\d+)?)\b/g,
+      '<span class="text-amber-300">$1</span>'
+    ).replace(
+      /\b(true|false)\b/g,
+      '<span class="text-blue-400">$1</span>'
+    ).replace(
+      /\b(null)\b/g,
+      '<span class="text-red-400">$1</span>'
+    );
+  }
+
+  function base64UrlDecode(str: string): string {
+    let base64 = str.replace(/-/g, "+").replace(/_/g, "/");
+    while (base64.length % 4) base64 += "=";
+    return atob(base64);
+  }
+
+  function triggerToast(msg: string, variant: "success" | "error" | "warning" = "success") {
+    if ((window as any).__showToast) (window as any).__showToast({ message: msg, variant });
+  }
+
+  decodeBtn.addEventListener("click", () => {
+    const token = tokenInput.value.trim();
+    if (!token) {
+      triggerToast("Paste a JWT token first!", "warning");
+      return;
+    }
+    const parts = token.split(".");
+    if (parts.length !== 3) {
+      triggerToast("Invalid JWT token — expected 3 parts separated by dots", "error");
+      resultArea.classList.add("hidden");
+      return;
+    }
+    try {
+      const headerRaw = base64UrlDecode(parts[0]);
+      const payloadRaw = base64UrlDecode(parts[1]);
+      const signature = parts[2];
+      const header = JSON.parse(headerRaw);
+      const payload = JSON.parse(payloadRaw);
+      headerOutput.innerHTML = syntaxHighlight(JSON.stringify(header, null, 2));
+      headerAlg.textContent = (header.alg || "unknown") as string;
+      payloadOutput.innerHTML = syntaxHighlight(JSON.stringify(payload, null, 2));
+      const claimCount = Object.keys(payload).length;
+      payloadInfo.textContent = `${claimCount} claim${claimCount !== 1 ? "s" : ""}`;
+      sigStatus.textContent = "Present";
+      sigStatus.className = "text-xs font-mono text-emerald-400";
+      sigPreview.textContent = signature.substring(0, 32) + "...";
+      resultArea.classList.remove("hidden");
+      triggerToast("JWT decoded successfully!", "success");
+    } catch (e) {
+      triggerToast("Failed to decode JWT — invalid base64 or JSON", "error");
+      resultArea.classList.add("hidden");
+    }
+  });
+</script>

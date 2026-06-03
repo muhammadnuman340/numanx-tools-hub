@@ -1,0 +1,128 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "How does the AI summarizer work?", answer: "Our AI summarizer uses extractive summarization — it scores each sentence based on word frequency importance and selects the most representative sentences. This preserves the original meaning while reducing text length significantly. All processing happens in your browser with no data sent to servers." },
+  { question: "What compression ratio should I use?", answer: "The default compression ratio of 30% works well for most texts. For longer articles (1000+ words), you might prefer 20% for a tighter summary. For short texts under 200 words, 50% is recommended to retain enough context. You can adjust the slider to find your sweet spot." },
+  { question: "Is my text stored or shared?", answer: "No. Everything runs entirely in your browser using JavaScript. Your text is never sent to any server, stored, or shared. This means you can safely summarize confidential documents, private notes, or sensitive content without privacy concerns." },
+];
+
+const schema = {
+  name: "AI Text Summarizer",
+  applicationCategory: "AI Tools",
+  description: "Summarize long articles, documents, and text using extractive AI summarization. Reduce text length while preserving key meaning.",
+  featureList: ["Extractive sentence scoring", "Adjustable compression ratio", "Privacy-first browser processing", "Original word count & compression stats", "Copy summary with one click"],
+};
+---
+<MainLayout title="AI Text Summarizer - Free Online Summarizing Tool" description="Summarize long articles and text using AI-powered extractive summarization. Adjust compression ratio, see summary stats, and keep your data private." keywords="text summarizer, AI summary generator, article summarizer, extractive summarization, text compression" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Text Summarizer",url:"/tools/ai-text-summarizer/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="AI Text" gradient="Summarizer Pro" desc="Summarize long articles, documents, and any text in seconds. Extract key sentences while preserving the original meaning." badge="✦ AI Powered" slug="ai-text-summarizer" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6 space-y-4">
+        <textarea id="input-text" rows="8" placeholder="Paste your article or text here..." class="w-full bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-none focus:outline-none focus:border-violet-500/60 transition-all"></textarea>
+        <div class="flex items-center gap-4">
+          <div class="flex-1">
+            <label class="text-xs text-dim block mb-1">Compression: <span id="compression-label">30%</span></label>
+            <input type="range" id="compression-slider" min="10" max="60" value="30" class="w-full accent-violet-500" />
+          </div>
+          <button id="summarize-btn" class="px-6 py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all">Summarize</button>
+        </div>
+        <textarea id="output-text" rows="6" readonly placeholder="Your summary will appear here..." class="w-full bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-none focus:outline-none transition-all"></textarea>
+        <div class="flex items-center justify-between">
+          <div id="summary-stats" class="flex gap-4 text-xs text-dim"></div>
+          <button id="copy-summary-btn" class="px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Copy Summary</button>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Text Summarizer uses an <strong class="text-primary">extractive summarization</strong> algorithm that analyzes your text at the sentence level. It first splits the text into individual sentences, then calculates a relevance score for each sentence based on word frequency analysis — words that appear more frequently across the document are considered more important.</p><p>Each sentence is scored by summing the frequency weights of its words (excluding common stop words), and the top-scoring sentences are selected to form the summary. The <strong class="text-primary">compression ratio</strong> slider lets you control how much of the original text is retained — lower percentages produce shorter, denser summaries while higher percentages include more context.</p><p>This approach works best for factual, informative texts like news articles, research papers, and documentation. Since everything runs client-side, your text never leaves your device.</p></div></section>
+    <RelatedTools current="ai-text-summarizer" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+
+<script>
+  const inputEl = document.getElementById("input-text");
+  const outputEl = document.getElementById("output-text");
+  const summarizeBtn = document.getElementById("summarize-btn");
+  const copyBtn = document.getElementById("copy-summary-btn");
+  const slider = document.getElementById("compression-slider");
+  const compressionLabel = document.getElementById("compression-label");
+  const statsEl = document.getElementById("summary-stats");
+
+  const stopWords = new Set(["the","a","an","and","or","but","in","on","at","to","for","of","by","with","from","as","is","was","are","were","be","been","being","have","has","had","do","does","did","will","would","can","could","shall","should","may","might","must","it","its","this","that","these","those","i","you","he","she","we","they","me","him","her","us","them","my","your","his","its","our","their","not","no","nor","so","if","than","then","else","all","each","every","both","few","some","any","many","much","such","only","own","same","here","there","when","where","why","how","what","which","who","whom"]);
+
+  function summarize(text, ratio) {
+    const sentences = text.match(/[^.!?\n]+[.!?]*/g) || text.split(/\n+/).filter(s => s.trim());
+    if (sentences.length === 0) return { summary: "", originalWords: 0, summaryWords: 0, compression: 0 };
+
+    const words = text.toLowerCase().replace(/[^a-z\s]/g, "").split(/\s+/).filter(w => w && !stopWords.has(w));
+    const freq = {};
+    words.forEach(w => { freq[w] = (freq[w] || 0) + 1 });
+    const maxFreq = Math.max(...Object.values(freq), 1);
+
+    const scored = sentences.map(s => {
+      const sWords = s.toLowerCase().replace(/[^a-z\s]/g, "").split(/\s+/).filter(w => w && !stopWords.has(w));
+      const score = sWords.reduce((sum, w) => sum + (freq[w] || 0) / maxFreq, 0) / Math.max(sWords.length, 1);
+      return { sentence: s.trim(), score, length: sWords.length };
+    });
+
+    const totalWords = sentences.reduce((sum, s) => {
+      return sum + s.toLowerCase().replace(/[^a-z\s]/g, "").split(/\s+/).filter(w => w).length;
+    }, 0);
+    const targetWords = Math.max(1, Math.round(totalWords * ratio / 100));
+
+    scored.sort((a, b) => b.score - a.score);
+
+    let selected = [];
+    let wordCount = 0;
+    for (const s of scored) {
+      if (wordCount >= targetWords) break;
+      selected.push(s);
+      wordCount += s.length;
+    }
+
+    selected.sort((a, b) => sentences.indexOf(a.sentence) - sentences.indexOf(b.sentence));
+
+    const summary = selected.map(s => s.sentence).join(" ");
+    const summaryWords = summary.split(/\s+/).filter(w => w).length;
+    const comp = totalWords > 0 ? Math.round((1 - summaryWords / totalWords) * 100) : 0;
+
+    return { summary, originalWords: totalWords, summaryWords, compression: comp };
+  }
+
+  function triggerToast(message, variant) {
+    if (window.__showToast) window.__showToast({ message, variant });
+  }
+
+  summarizeBtn.addEventListener("click", () => {
+    const text = inputEl.value.trim();
+    if (!text) { triggerToast("Please enter some text to summarize", "warning"); return; }
+    if (text.split(/\s+/).filter(w => w).length < 10) { triggerToast("Need at least 10 words for a meaningful summary", "warning"); return; }
+
+    const ratio = parseInt(slider.value);
+    const result = summarize(text, ratio);
+    outputEl.value = result.summary;
+
+    statsEl.innerHTML = `
+      <span>Original: <strong class="text-primary">${result.originalWords}</strong> words</span>
+      <span>Summary: <strong class="text-primary">${result.summaryWords}</strong> words</span>
+      <span>Compressed: <strong class="text-violet-400">${result.compression}%</strong></span>
+    `;
+    triggerToast("Summary generated!", "success");
+  });
+
+  copyBtn.addEventListener("click", async () => {
+    if (!outputEl.value.trim()) { triggerToast("Nothing to copy!", "warning"); return; }
+    await navigator.clipboard.writeText(outputEl.value);
+    triggerToast("Summary copied to clipboard!", "success");
+  });
+
+  slider.addEventListener("input", () => {
+    compressionLabel.textContent = slider.value + "%";
+  });
+</script>

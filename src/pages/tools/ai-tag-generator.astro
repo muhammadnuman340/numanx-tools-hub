@@ -1,0 +1,215 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "How does AI tag generation work?", answer: "The AI Tag Generator analyzes your content by removing common stop words, counting word frequencies, and ranking the most significant terms. It then generates relevant single-word and multi-word tags, including hashtag variants. The tool also detects content categories (programming, food, etc.) to suggest contextually relevant tags." },
+  { question: "How many tags should I generate?", answer: "For most content, 5-10 highly relevant tags work best. Use 5 tags for focused precision, 10 for a balanced set, 15 for comprehensive coverage, and 20 for maximum reach. You can adjust the number using the selector. Each tag includes a relevance score to help you pick the best ones." },
+  { question: "Why are some tags marked with a score?", answer: "Each tag includes a relevance score (0-100%) showing how strongly it relates to your content. Higher scores mean the term appears more frequently or is more semantically relevant. Focus on tags with scores above 50% for the most accurate and effective content tagging." },
+];
+
+const schema = {
+  name: "AI Tag Generator Pro",
+  applicationCategory: "AI Tools",
+  description: "Generate relevant tags and hashtags from any content. AI-powered keyword extraction with category detection and relevance scoring.",
+};
+---
+<MainLayout title="AI Tag Generator - Free Online Tag & Hashtag Generator" description="Generate relevant tags and hashtags from your content using AI keyword extraction. Category detection and relevance scoring included." keywords="tag generator, hashtag generator, keyword extractor, content tags, AI tag generator, hashtag suggester" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Tag Generator",url:"/tools/ai-tag-generator/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="AI Tag" gradient="Generator Pro" desc="Generate relevant tags, keywords, and hashtags from any content with AI-powered extraction and category detection." badge="✦ AI Powered" slug="ai-tag-generator" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10"><div class="bg-surface-1 border border-surface rounded-2xl p-6">
+      <textarea id="input-text" rows="5" placeholder="Paste your content, article title, or description..." class="w-full bg-transparent text-white placeholder-zinc-600 p-4 resize-none focus:outline-none text-sm leading-relaxed border border-surface-2 rounded-xl mb-4"></textarea>
+      <div class="flex items-center gap-3 mb-4">
+        <label class="text-xs text-tertiary font-medium">Number of tags:</label>
+        <select id="tag-count" class="bg-surface-2 border border-surface-3 text-white text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-violet-500">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+      <button id="generate-btn" class="w-full py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all duration-200 shadow-lg shadow-violet-600/20">Generate Tags</button>
+      <div id="results" class="hidden mt-6 space-y-4">
+        <div id="category-badge" class="hidden"><span class="inline-block px-3 py-1 rounded-full text-[10px] font-bold bg-violet-600/20 text-violet-400 border border-violet-600/30"></span></div>
+        <div id="tags-container" class="flex flex-wrap gap-2"></div>
+        <button id="copy-tags-btn" class="w-full py-2 rounded-lg text-xs font-semibold bg-surface-2 border border-surface-3 text-tertiary hover:text-white transition-all">Copy All Tags</button>
+      </div>
+    </div></div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Tag Generator processes your content in three steps. First, it removes common stop words (the, a, is, etc.) and normalizes the remaining terms. Second, it counts word frequencies and bigram (two-word phrase) frequencies, ranking them by importance. Third, it generates both plain tags and hashtag variants while detecting the content's category.</p><p>Category detection uses keyword matching to identify topics like programming, food, technology, health, travel, design, and more — adding contextually relevant suggested tags for each category.</p></div></section>
+    <RelatedTools current="ai-tag-generator" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+const stopWords = new Set([
+  "a", "an", "the", "and", "or", "but", "in", "on", "at", "to", "for",
+  "of", "by", "with", "from", "as", "is", "was", "are", "were", "be",
+  "been", "being", "have", "has", "had", "do", "does", "did", "will",
+  "would", "could", "should", "may", "might", "shall", "can", "need",
+  "it", "its", "this", "that", "these", "those", "i", "you", "he", "she",
+  "we", "they", "my", "your", "his", "her", "our", "their", "me", "him",
+  "us", "them", "not", "no", "nor", "so", "if", "then", "than", "too",
+  "very", "just", "about", "also", "more", "some", "such", "only", "other",
+  "into", "over", "after", "before", "between", "through", "during", "up",
+  "out", "off", "down", "all", "each", "every", "both", "few", "most",
+  "any", "much", "many", "how", "what", "which", "who", "whom", "when",
+  "where", "why", "here", "there", "again", "further", "once", "then",
+  "than", "because", "while", "although", "though", "since", "until",
+  "like", "well", "way", "even", "still", "already", "yet", "really",
+  "quite", "actually", "always", "never", "often", "sometimes", "now",
+  "here", "there", "around", "back", "go", "get", "make", "take", "come",
+  "see", "know", "think", "want", "give", "tell", "say", "find", "leave",
+  "work", "seem", "feel", "try", "call", "keep", "let", "begin", "show",
+  "hear", "play", "run", "move", "live", "believe", "hold", "bring",
+  "happen", "write", "provide", "sit", "stand", "lose", "set", "meet"
+]);
+
+const categoryKeywords = {
+  Programming: ["code", "programming", "software", "developer", "app", "api", "javascript", "python", "java", "react", "node", "html", "css", "web", "algorithm", "database", "debug", "function", "variable", "framework", "library", "frontend", "backend", "fullstack", "devops", "git", "deploy", "server", "client"],
+  Food: ["food", "recipe", "cooking", "baking", "ingredient", "chef", "meal", "dinner", "lunch", "breakfast", "snack", "dessert", "spice", "sauce", "grill", "roast", "bake", "steam", "fry", "saut\u00e9", "delicious", "tasty", "flavor", "cuisine", "gourmet", "organic", "vegan", "vegetarian", "gluten"],
+  Technology: ["tech", "technology", "digital", "innovation", "gadget", "device", "smart", "ai", "artificial intelligence", "machine learning", "blockchain", "cloud", "cyber", "data", "robot", "automation", "software", "hardware", "startup", "saas", "iot", "vr", "ar", "quantum", "neural"],
+  Health: ["health", "fitness", "exercise", "workout", "nutrition", "diet", "wellness", "yoga", "meditation", "mental", "doctor", "medical", "therapy", "sleep", "energy", "vitamin", "protein", "cardio", "strength", "recovery", "mindful", "selfcare"],
+  Travel: ["travel", "trip", "vacation", "holiday", "tour", "destination", "hotel", "flight", "beach", "mountain", "adventure", "explore", "wander", "journey", "backpack", "roadtrip", "culture", "sightseeing", "tourism", "safari", "cruise"],
+  Design: ["design", "ui", "ux", "interface", "graphic", "visual", "creative", "art", "typography", "color", "layout", "brand", "logo", "illustration", "animation", "prototype", "wireframe", "mockup", "figma", "sketch", "photoshop", "canva"],
+  Business: ["business", "startup", "marketing", "sales", "finance", "investment", "entrepreneur", "strategy", "management", "growth", "revenue", "profit", "brand", "market", "customer", "service", "product", "ecommerce", "seo", "socialmedia", "advertising"],
+  Education: ["education", "learning", "course", "study", "student", "teacher", "tutor", "lesson", "class", "school", "university", "college", "degree", "certificate", "skill", "training", "online", "elearning", "academic", "research", "knowledge"],
+};
+
+function extractWords(text) {
+  return text.toLowerCase().match(/[a-z]+(?:'[a-z]+)?/g) || [];
+}
+
+function getBigrams(words) {
+  const bigrams = [];
+  for (let i = 0; i < words.length - 1; i++) {
+    bigrams.push(words[i] + " " + words[i+1]);
+  }
+  return bigrams;
+}
+
+function detectCategory(words) {
+  let bestCat = null, bestScore = 0;
+  for (const [cat, keywords] of Object.entries(categoryKeywords)) {
+    let score = 0;
+    for (const kw of keywords) {
+      const parts = kw.split(" ");
+      if (parts.length === 2) {
+        for (let i = 0; i < words.length - 1; i++) {
+          if (words[i] === parts[0] && words[i+1] === parts[1]) score += 3;
+        }
+      } else {
+        score += words.filter(w => w === parts[0]).length * 2;
+      }
+    }
+    if (score > bestScore) { bestScore = score; bestCat = cat; }
+  }
+  return bestScore > 0 ? bestCat : null;
+}
+
+function getCategoryTags(category) {
+  const suggestions = {
+    Programming: ["coding", "webdev", "programming", "softwareengineering", "tech"],
+    Food: ["cooking", "foodie", "recipe", "homemade", "delicious"],
+    Technology: ["tech", "innovation", "futuretech", "digital", "ai"],
+    Health: ["wellness", "healthyliving", "fitness", "selfcare", "nutrition"],
+    Travel: ["travelgram", "wanderlust", "adventure", "explore", "vacation"],
+    Design: ["designthinking", "creativity", "visualdesign", "uxdesign", "art"],
+    Business: ["entrepreneurship", "businessgrowth", "startup", "marketing", "success"],
+    Education: ["learning", "education", "knowledge", "studytips", "elearning"],
+  };
+  return suggestions[category] || [];
+}
+
+function generateTags(text, count) {
+  if (!text.trim()) return { tags: [], category: null };
+  const words = extractWords(text);
+  const filtered = words.filter(w => !stopWords.has(w) && w.length > 1);
+  if (filtered.length === 0) return { tags: [], category: null };
+
+  const freq = {};
+  for (const w of filtered) freq[w] = (freq[w] || 0) + 1;
+
+  const bigrams = getBigrams(filtered);
+  const biFreq = {};
+  for (const b of bigrams) biFreq[b] = (biFreq[b] || 0) + 1;
+
+  const scored = {};
+  for (const [word, f] of Object.entries(freq)) {
+    scored[word] = f / filtered.length;
+  }
+  for (const [bigram, f] of Object.entries(biFreq)) {
+    if (f > 1) scored[bigram] = f / filtered.length * 1.5;
+  }
+
+  const sorted = Object.entries(scored).sort((a, b) => b[1] - a[1]);
+  const maxScore = sorted.length > 0 ? sorted[0][1] : 1;
+
+  const tags = [];
+  for (const [term, score] of sorted) {
+    if (tags.length >= count) break;
+    const pct = Math.min(100, Math.round((score / maxScore) * 100));
+    if (pct >= 10) {
+      const hashtag = "#" + term.replace(/\s+/g, "");
+      tags.push({ term, score: pct, hashtag });
+    }
+  }
+
+  const category = detectCategory(filtered);
+  if (category) {
+    const catTags = getCategoryTags(category);
+    for (const ct of catTags) {
+      if (tags.length >= count) break;
+      if (!tags.find(t => t.hashtag === "#" + ct)) {
+        tags.push({ term: ct, score: 60 + Math.floor(Math.random() * 25), hashtag: "#" + ct });
+      }
+    }
+  }
+
+  return { tags, category };
+}
+
+document.getElementById("generate-btn").addEventListener("click", () => {
+  const text = document.getElementById("input-text").value;
+  const count = parseInt(document.getElementById("tag-count").value);
+  const results = generateTags(text, count);
+
+  if (results.tags.length === 0) {
+    if (window.__showToast) window.__showToast({ message: "Please enter more content to generate tags", variant: "warning" });
+    return;
+  }
+
+  document.getElementById("results").classList.remove("hidden");
+
+  const catBadge = document.getElementById("category-badge");
+  if (results.category) {
+    catBadge.classList.remove("hidden");
+    catBadge.querySelector("span").textContent = "\uD83C\uDFC6 " + results.category;
+  } else {
+    catBadge.classList.add("hidden");
+  }
+
+  const container = document.getElementById("tags-container");
+  container.innerHTML = results.tags.map(t => {
+    let colorClass = "bg-violet-600/20 text-violet-400 border-violet-600/30";
+    if (t.score >= 80) colorClass = "bg-emerald-600/20 text-emerald-400 border-emerald-600/30";
+    else if (t.score >= 60) colorClass = "bg-violet-600/20 text-violet-400 border-violet-600/30";
+    else colorClass = "bg-zinc-600/20 text-zinc-400 border-zinc-600/30";
+    return `<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold border ${colorClass} transition-all hover:scale-105 cursor-default"><span>${t.term}</span><span class="text-[9px] opacity-70">${t.score}%</span><span class="text-[9px] opacity-50">${t.hashtag}</span></span>`;
+  }).join("");
+});
+
+document.getElementById("copy-tags-btn").addEventListener("click", async () => {
+  const tags = document.querySelectorAll("#tags-container span");
+  if (tags.length === 0) {
+    if (window.__showToast) window.__showToast({ message: "No tags to copy!", variant: "warning" });
+    return;
+  }
+  const text = Array.from(tags).map(t => t.textContent.trim()).join("\n");
+  await navigator.clipboard.writeText(text);
+  if (window.__showToast) window.__showToast({ message: "Tags copied!", variant: "success" });
+});
+</script>

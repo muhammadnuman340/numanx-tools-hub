@@ -1,0 +1,151 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "What does the SQL formatter do?", answer: "It takes raw SQL queries and formats them with proper indentation, line breaks before major clauses, and optional keyword capitalization for better readability." },
+  { question: "Is my SQL sent to a server?", answer: "No. All formatting and minification happens entirely in your browser. Your query never leaves your device." },
+  { question: "Can I switch between uppercase and lowercase keywords?", answer: "Yes. Use the toggle button above the output area to switch keywords between UPPERCASE (SELECT, FROM, WHERE) and lowercase (select, from, where)." },
+];
+const schema = { name: "SQL Formatter", applicationCategory: "Developer Tools", description: "Format and minify SQL queries with keyword capitalization, indentation, and line breaks. Free online SQL formatter.", featureList: ["Format SQL with proper indentation", "Minify SQL to a single line", "Uppercase/lowercase keyword toggle", "One-click copy output", "100% client-side"] };
+---
+<MainLayout title="SQL Formatter - Format SQL Queries Online Free" description="Format and minify SQL queries with proper indentation, keyword capitalization, and line breaks. Free online SQL formatter for developers." keywords="sql formatter, sql beautifier, sql pretty, format sql, sql tool, developer tools" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"SQL Formatter",url:"/tools/sql-formatter/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="SQL" gradient="Formatter Pro" desc="Format and minify SQL queries with proper indentation, keyword capitalization, and clean layout." badge="✦ New Tool" slug="sql-formatter" />
+    <ShareBar />
+    <div class="max-w-3xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+        <div class="flex flex-wrap gap-2">
+          <button id="format-btn" class="bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all active:scale-95">Format</button>
+          <button id="minify-btn" class="bg-surface-2 hover:bg-surface-3 border border-surface text-secondary hover:text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all active:scale-95">Minify</button>
+          <button id="copy-btn" class="bg-surface-2 hover:bg-surface-3 border border-surface text-secondary hover:text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-all active:scale-95">Copy</button>
+          <button id="clear-btn" class="bg-surface-2 hover:bg-surface-3 border border-surface text-muted hover:text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-all active:scale-95">Clear</button>
+        </div>
+        <div class="mt-4">
+          <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-2 block">Input SQL</label>
+          <textarea id="sql-input" class="w-full h-40 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-violet-500/50 focus:outline-none transition-all resize-none font-mono" placeholder="Paste your SQL query here..." spellcheck="false">SELECT id, name, email FROM users WHERE active = 1 ORDER BY created_at DESC</textarea>
+        </div>
+        <div class="mt-4">
+          <div class="flex items-center justify-between mb-2">
+            <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Output</label>
+            <label class="flex items-center gap-2 text-xs text-muted cursor-pointer">
+              <span>UPPERCASE</span>
+              <div class="relative inline-block w-9 h-4">
+                <input id="case-toggle" type="checkbox" class="sr-only peer" />
+                <div class="absolute inset-0 rounded-full bg-surface-3 peer-checked:bg-violet-600 transition-colors"></div>
+                <div class="absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white peer-checked:translate-x-5 transition-transform"></div>
+              </div>
+              <span>lowercase</span>
+            </label>
+          </div>
+          <textarea id="sql-output" class="w-full h-40 px-4 py-3 rounded-xl border border-surface-2 bg-black/40 text-white text-sm focus:outline-none transition-all resize-none font-mono" readonly placeholder="Click Format to begin..."></textarea>
+        </div>
+      </div>
+    </div>
+    <RelatedTools current="sql-formatter" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  const sqlInput = document.getElementById("sql-input") as HTMLTextAreaElement;
+  const sqlOutput = document.getElementById("sql-output") as HTMLTextAreaElement;
+  const formatBtn = document.getElementById("format-btn");
+  const minifyBtn = document.getElementById("minify-btn");
+  const copyBtn = document.getElementById("copy-btn");
+  const clearBtn = document.getElementById("clear-btn");
+  const caseToggle = document.getElementById("case-toggle") as HTMLInputElement;
+
+  const majorClauses = ["SELECT", "FROM", "WHERE", "AND", "OR", "ORDER BY", "GROUP BY", "HAVING", "LIMIT", "OFFSET", "SET", "VALUES", "INSERT INTO", "UPDATE", "DELETE", "CREATE TABLE", "ALTER TABLE", "DROP TABLE", "JOIN", "LEFT JOIN", "RIGHT JOIN", "INNER JOIN", "OUTER JOIN", "FULL JOIN", "CROSS JOIN", "ON", "UNION", "UNION ALL", "BETWEEN", "IN", "LIKE", "NOT", "EXISTS", "CASE", "WHEN", "THEN", "ELSE", "END", "ASC", "DESC"];
+  const clausePriority = ["SELECT", "INSERT INTO", "UPDATE", "DELETE", "CREATE TABLE", "ALTER TABLE", "DROP TABLE", "SET", "VALUES", "FROM", "WHERE", "GROUP BY", "HAVING", "ORDER BY", "LIMIT", "OFFSET", "JOIN", "LEFT JOIN", "RIGHT JOIN", "INNER JOIN", "OUTER JOIN", "FULL JOIN", "CROSS JOIN", "UNION", "UNION ALL"];
+
+  function escapeHtml(s: string): string {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function formatSQL(raw: string): string {
+    let s = raw.trim();
+    let lower = caseToggle.checked;
+    if (!s) return "";
+    s = s.replace(/\s+/g, " ").trim();
+    clausePriority.forEach(clause => {
+      const re = new RegExp("\\b" + clause.replace(/ /g, "\\s+") + "\\b", "gi");
+      s = s.replace(re, (match) => {
+        const kw = clause;
+        return lower ? kw.toLowerCase() : kw;
+      });
+    });
+    clausePriority.forEach(clause => {
+      const kw = lower ? clause.toLowerCase() : clause;
+      s = s.replace(new RegExp("(?<!\\S)" + kw.replace(/ /g, "\\s+") + "(?!\\S)", "gi"), "\n" + kw);
+    });
+    s = s.replace(/^[\s\n]+/, "");
+    const lines = s.split("\n");
+    let indentLevel = 0;
+    const result: string[] = [];
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i].trim();
+      if (!line) continue;
+      const upperLine = line.toUpperCase();
+      if (upperLine.startsWith("SELECT") || upperLine.startsWith("INSERT") || upperLine.startsWith("UPDATE") || upperLine.startsWith("DELETE") || upperLine.startsWith("CREATE") || upperLine.startsWith("ALTER") || upperLine.startsWith("DROP")) {
+        indentLevel = 0;
+      }
+      if (upperLine.startsWith(")") && indentLevel > 0) indentLevel--;
+      const indent = "  ".repeat(indentLevel);
+      result.push(indent + line);
+      if (upperLine.startsWith("(") || upperLine.endsWith("(")) indentLevel++;
+      if (upperLine.startsWith("SELECT ")) indentLevel = 1;
+    }
+    return result.join("\n");
+  }
+
+  function minifySQL(raw: string): string {
+    return raw.trim().replace(/\s+/g, " ").trim();
+  }
+
+  function triggerToast(msg: string, variant: "success" | "error" | "warning" = "success") {
+    if ((window as any).__showToast) (window as any).__showToast({ message: msg, variant });
+  }
+
+  formatBtn.addEventListener("click", () => {
+    try {
+      const result = formatSQL(sqlInput.value);
+      if (!result) { triggerToast("Enter a SQL query first!", "warning"); return; }
+      sqlOutput.value = result;
+      triggerToast("SQL formatted!", "success");
+    } catch { triggerToast("Failed to format SQL", "error"); }
+  });
+
+  minifyBtn.addEventListener("click", () => {
+    const result = minifySQL(sqlInput.value);
+    if (!result) { triggerToast("Enter a SQL query first!", "warning"); return; }
+    sqlOutput.value = result;
+    triggerToast("SQL minified!", "success");
+  });
+
+  copyBtn.addEventListener("click", async () => {
+    if (!sqlOutput.value) { triggerToast("Nothing to copy!", "warning"); return; }
+    await navigator.clipboard.writeText(sqlOutput.value);
+    triggerToast("Copied!", "success");
+  });
+
+  clearBtn.addEventListener("click", () => {
+    sqlInput.value = "";
+    sqlOutput.value = "";
+    sqlInput.focus();
+  });
+
+  caseToggle.addEventListener("change", () => {
+    if (sqlOutput.value) {
+      const isLower = caseToggle.checked;
+      const text = sqlOutput.value;
+      if (isLower) {
+        sqlOutput.value = text.replace(/\bSELECT\b|\bFROM\b|\bWHERE\b|\bAND\b|\bOR\b|\bORDER BY\b|\bGROUP BY\b|\bHAVING\b|\bLIMIT\b|\bOFFSET\b|\bSET\b|\bVALUES\b|\bINSERT INTO\b|\bUPDATE\b|\bDELETE\b|\bCREATE TABLE\b|\bALTER TABLE\b|\bDROP TABLE\b|\bJOIN\b|\bLEFT JOIN\b|\bRIGHT JOIN\b|\bINNER JOIN\b|\bFULL JOIN\b|\bON\b|\bUNION\b|\bNOT\b|\bIN\b|\bLIKE\b|\bBETWEEN\b|\bCASE\b|\bWHEN\b|\bTHEN\b|\bELSE\b|\bEND\b|\bASC\b|\bDESC\b/gi, (m) => m.toLowerCase());
+      } else {
+        sqlOutput.value = text.replace(/\bselect\b|\bfrom\b|\bwhere\b|\band\b|\bor\b|\border by\b|\bgroup by\b|\bhaving\b|\blimit\b|\boffset\b|\bset\b|\bvalues\b|\binsert into\b|\bupdate\b|\bdelete\b|\bcreate table\b|\balter table\b|\bdrop table\b|\bjoin\b|\bleft join\b|\bright join\b|\binner join\b|\bfull join\b|\bon\b|\bunion\b|\bnot\b|\bin\b|\blike\b|\bbetween\b|\bcase\b|\bwhen\b|\bthen\b|\belse\b|\bend\b|\basc\b|\bdesc\b/gi, (m) => m.toUpperCase());
+      }
+    }
+  });
+</script>

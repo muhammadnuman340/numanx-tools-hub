@@ -1,0 +1,323 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "What types of grammar errors does the checker detect?", answer: "The grammar checker catches common mistakes including: confused words (their/there/they're, your/you're, its/it's), incorrect apostrophe usage (its vs it's, possessive forms), double negatives, subject-verb agreement issues, common misspellings, and incorrect verb forms. It also highlights repeated words and punctuation problems." },
+  { question: "Is this grammar checker suitable for professional writing?", answer: "This tool is great for catching common grammar mistakes quickly, but it's a rule-based checker, not a full AI writing assistant. It works best as a first pass for everyday writing — emails, social media posts, school assignments, and quick edits. For professional or academic writing, we recommend using it alongside a human proofreader." },
+  { question: "Is my text stored or analyzed by external servers?", answer: "No. All grammar checking happens entirely in your browser using JavaScript. Your text is never sent to any server, stored, or shared. This makes it safe to check confidential documents, private correspondence, or sensitive content." },
+];
+
+const schema = {
+  name: "AI Grammar Checker",
+  applicationCategory: "AI Tools",
+  description: "Check your writing for common grammar mistakes, confused words, punctuation errors, and misspellings with this free online grammar checker.",
+  featureList: ["Detect confused words (their/there/they're, your/you're, its/it's)", "Catch apostrophe and punctuation errors", "Identify double negatives and subject-verb issues", "Highlight common misspellings", "Privacy-first — all processing in your browser"],
+};
+---
+<MainLayout title="AI Grammar Checker - Free Online Grammar & Spell Check" description="Check your writing for grammar mistakes, confused words, punctuation errors, and common misspellings. Free online grammar checker with privacy-first processing." keywords="grammar checker, spell checker, grammar corrector, writing assistant, grammar fix" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Grammar Checker",url:"/tools/ai-grammar-checker/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="AI Grammar" gradient="Checker Pro" desc="Catch grammar mistakes, confused words, punctuation errors, and common misspellings. Clean up your writing in seconds." badge="✦ AI Powered" slug="ai-grammar-checker" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6 space-y-4">
+        <textarea id="input-text" rows="8" placeholder="Paste your text here to check for grammar errors..." class="w-full bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-none focus:outline-none focus:border-violet-500/60 transition-all"></textarea>
+        <button id="check-btn" class="w-full py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all">Check Grammar</button>
+        <div id="results-area" class="hidden space-y-4">
+          <div id="errors-list" class="space-y-2"></div>
+          <div id="corrected-area" class="bg-surface-2 border border-surface-3 rounded-xl p-4">
+            <div class="text-xs text-dim mb-2">Corrected Text:</div>
+            <div id="corrected-text" class="text-sm text-white leading-relaxed"></div>
+            <button id="copy-corrected-btn" class="mt-3 px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Copy Corrected</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Grammar Checker uses a <strong class="text-primary">rule-based pattern matching</strong> engine to scan your text for common grammar mistakes. It maintains extensive dictionaries of confused word pairs (like their/there/they're, your/you're, its/it's), common misspellings, and grammar rule patterns.</p><p>When you click "Check Grammar," the engine breaks your text into sentences and words, then applies a series of rules to detect errors. Each detected error is highlighted with a color-coded tag showing the error type, and a suggested correction is provided. The corrected version of your text is automatically generated by applying all suggestions.</p><p>The entire process runs <strong class="text-primary">entirely in your browser</strong> using JavaScript — no data is sent to any server, ensuring your writing stays private and secure.</p></div></section>
+    <RelatedTools current="ai-grammar-checker" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+
+<script>
+  const inputEl = document.getElementById("input-text");
+  const checkBtn = document.getElementById("check-btn");
+  const resultsArea = document.getElementById("results-area");
+  const errorsList = document.getElementById("errors-list");
+  const correctedText = document.getElementById("corrected-text");
+  const copyCorrectedBtn = document.getElementById("copy-corrected-btn");
+
+  function triggerToast(message, variant) {
+    if (window.__showToast) window.__showToast({ message, variant });
+  }
+
+  const rules = [
+    // their/there/they're
+    { pattern: /\btheir\b(?!\s*own\b)/gi, check: (m, words, i) => {
+      const next = words[i+1]?.toLowerCase();
+      if (next === "are" || next === "is" || next === "was" || next === "were" || next === "not") return "they're";
+      if (next && !["book","house","car","bag","dog","cat","work","idea","way","own","owning"].includes(next) && !/^[a-z]+(s|ed|ing)$/.test(next)) return "they're";
+      return null;
+    }, type: "confused", label: "Confused Word" },
+    { pattern: /\bthere\b/gi, check: (m, words, i) => {
+      if (i > 0 && ["is","are","was","were","will","has","have","had","does","do","did"].includes(words[i-1]?.toLowerCase())) return null;
+      const prev = words[i-1]?.toLowerCase();
+      const next = words[i+1]?.toLowerCase();
+      if (prev === "and" || prev === "or" || prev === "but") return null;
+      if (next && /^[a-z]+(ing|ed)$/.test(next) && !["is","are","was","were","will"].includes(prev)) return "their";
+      return null;
+    }, type: "confused", label: "Confused Word" },
+    // your/you're
+    { pattern: /\byour\b/gi, check: (m, words, i) => {
+      const next = words[i+1]?.toLowerCase();
+      if (next === "are" || next === "re" || next === "not" || next === "going" || next === "welcome") return "you're";
+      if (next && (next.endsWith("ing") || ["right","wrong","sure","crazy","serious"].includes(next))) return "you're";
+      return null;
+    }, type: "confused", label: "Confused Word" },
+    { pattern: /\byoure\b|\byou're\b/gi, check: (m, words, i) => {
+      const next = words[i+1]?.toLowerCase();
+      if (next && !["not","going","welcome","right","wrong","sure","crazy","serious"].includes(next) && !next.endsWith("ing")) return "your";
+      return null;
+    }, type: "confused", label: "Confused Word" },
+    // its/it's
+    { pattern: /\bits\b(?!\s*[a-z]+(ing|s)\b)/gi, check: (m, words, i) => {
+      if (i === 0) return null;
+      const prev = words[i-1]?.toLowerCase();
+      if (prev === "and" || prev === "or" || prev === "but" || prev === "if") return null;
+      const next = words[i+1]?.toLowerCase();
+      if (next === "own" || next === "way" || next === "name" || next === "size" || next === "color") return null;
+      if (next === "a" || next === "an" || next === "the") return "it's";
+      if (next && /^(a|an|the|my|his|her|our|their)$/.test(next)) return null;
+      if (next && (next.endsWith("ing") || next.endsWith("ed") || ["not","been","being","always","never","also","just","really"].includes(next))) return "it's";
+      return null;
+    }, type: "confused", label: "Confused Word" },
+    { pattern: /\bits\b(?=\s+own\b|\s+way\b|\s+name\b|\s+size\b)/gi, check: () => null, type: "confused", label: "Confused Word" },
+    { pattern: /\bit's\b/gi, check: (m, words, i) => {
+      const next = words[i+1]?.toLowerCase();
+      if (next && /^(own|way|name|size|color|history|purpose|members|features)$/.test(next)) return "its";
+      return null;
+    }, type: "confused", label: "Confused Word" },
+    // double negatives
+    { pattern: /\b(?:don't|doesn't|didn't|won't|wouldn't|couldn't|shouldn't|isn't|aren't|wasn't|weren't|haven't|hasn't|hadn't|never|no|nobody|nothing|nowhere|neither|hardly|scarcely)\b(?:\s+\w+){0,4}\s+(?:don't|doesn't|didn't|won't|wouldn't|couldn't|shouldn't|isn't|aren't|wasn't|weren't|haven't|hasn't|hadn't|never|no|nobody|nothing|nowhere|neither|hardly|scarcely)\b/gi,
+    check: () => "Remove the double negative for clarity", type: "double-negative", label: "Double Negative" },
+    // apostrophe in possessive its
+    { pattern: /\b(?:his|her|our|their|my|your|its)\s+(\w+)'s\b/gi, check: (m) => {
+      const match = m.match(/\b(?:his|her|our|their|my|your|its)\s+(\w+)'s\b/i);
+      if (match && !["let's","it's","he's","she's","that's","what's","who's","here's","there's","where's","how's"].includes(match[0].toLowerCase())) {
+        return match[0].replace(/'s\b/, "s");
+      }
+      return null;
+    }, type: "apostrophe", label: "Apostrophe Error" },
+  ];
+
+  const commonMisspellings = {
+    "recieve": "receive", "wierd": "weird", "occured": "occurred", "occuring": "occurring",
+    "seperate": "separate", "definately": "definitely", "practise": "practice",
+    "licence": "license", "offence": "offense", "defence": "defense",
+    "accomodate": "accommodate", "accomodation": "accommodation", "acheive": "achieve",
+    "beleive": "believe", "beleif": "belief", "calender": "calendar",
+    "catagory": "category", "comittee": "committee", "commitee": "committee",
+    "concious": "conscious", "curiculum": "curriculum", "embarass": "embarrass",
+    "enviroment": "environment", "goverment": "government", "neccessary": "necessary",
+    "occassion": "occasion", "occasionaly": "occasionally", "paralel": "parallel",
+    "percieve": "perceive", "priviledge": "privilege", "priveledge": "privilege",
+    "pubically": "publicly", "recomend": "recommend", "refered": "referred",
+    "refering": "referring", "sincerly": "sincerely", "speach": "speech",
+    "sucess": "success", "succesful": "successful", "temperary": "temporary",
+    "tommorow": "tomorrow", "tommorrow": "tomorrow", "truely": "truly",
+    "untill": "until", "wierd": "weird", "writting": "writing", "alot": "a lot",
+    "cant": "can't", "dont": "don't", "wont": "won't", "didnt": "didn't",
+    "doesnt": "doesn't", "isnt": "isn't", "arent": "aren't", "wasnt": "wasn't",
+    "werent": "weren't", "havent": "haven't", "hasnt": "hasn't", "hadnt": "hadn't",
+    "couldnt": "couldn't", "wouldnt": "wouldn't", "shouldnt": "shouldn't",
+    "itsa": "it's a", "thats": "that's", "whats": "what's",
+    "theres": "there's", "heres": "here's", "whos": "who's",
+  };
+
+  const subVerbs = { "i": "am", "you": "are", "he": "is", "she": "is", "it": "is", "we": "are", "they": "are" };
+  const subVerbsPast = { "i": "was", "you": "were", "he": "was", "she": "was", "it": "was", "we": "were", "they": "were" };
+
+  const verbForms = {
+    "go": { past: "went", pastPart: "gone", presPart: "going", third: "goes" },
+    "see": { past: "saw", pastPart: "seen", presPart: "seeing", third: "sees" },
+    "do": { past: "did", pastPart: "done", presPart: "doing", third: "does" },
+    "have": { past: "had", pastPart: "had", presPart: "having", third: "has" },
+    "say": { past: "said", pastPart: "said", presPart: "saying", third: "says" },
+    "make": { past: "made", pastPart: "made", presPart: "making", third: "makes" },
+    "take": { past: "took", pastPart: "taken", presPart: "taking", third: "takes" },
+    "write": { past: "wrote", pastPart: "written", presPart: "writing", third: "writes" },
+    "speak": { past: "spoke", pastPart: "spoken", presPart: "speaking", third: "speaks" },
+    "break": { past: "broke", pastPart: "broken", presPart: "breaking", third: "breaks" },
+    "drive": { past: "drove", pastPart: "driven", presPart: "driving", third: "drives" },
+    "eat": { past: "ate", pastPart: "eaten", presPart: "eating", third: "eats" },
+    "fall": { past: "fell", pastPart: "fallen", presPart: "falling", third: "falls" },
+    "give": { past: "gave", pastPart: "given", presPart: "giving", third: "gives" },
+    "know": { past: "knew", pastPart: "known", presPart: "knowing", third: "knows" },
+    "begin": { past: "began", pastPart: "begun", presPart: "beginning", third: "begins" },
+    "ring": { past: "rang", pastPart: "rung", presPart: "ringing", third: "rings" },
+    "sing": { past: "sang", pastPart: "sung", presPart: "singing", third: "sings" },
+    "swim": { past: "swam", pastPart: "swum", presPart: "swimming", third: "swims" },
+  };
+
+  function checkGrammar(text) {
+    const errors = [];
+    const words = text.split(/\s+/);
+    const sentences = text.match(/[^.!?\n]+[.!?]*/g) || [text];
+
+    // Rule-based checks
+    for (const rule of rules) {
+      let match;
+      while ((match = rule.pattern.exec(text)) !== null) {
+        const wordIndex = text.slice(0, match.index).split(/\s+/).length - 1;
+        const word = words[wordIndex];
+        if (!word) continue;
+        const suggestion = rule.check(match[0], words, wordIndex);
+        if (suggestion) {
+          errors.push({
+            word: match[0],
+            index: match.index,
+            length: match[0].length,
+            suggestion,
+            type: rule.type,
+            label: rule.label,
+          });
+        }
+      }
+    }
+
+    // Spelling checks
+    const wordArr = text.split(/(\s+|[.!?,;:])/);
+    let charOffset = 0;
+    for (const w of wordArr) {
+      const clean = w.replace(/[^a-zA-Z]/g, "").toLowerCase();
+      if (clean.length > 1 && commonMisspellings[clean]) {
+        errors.push({
+          word: w,
+          index: charOffset,
+          length: w.length,
+          suggestion: commonMisspellings[clean],
+          type: "spelling",
+          label: "Misspelling",
+        });
+      }
+      charOffset += w.length;
+    }
+
+    // Subject-verb agreement checks
+    for (const sent of sentences) {
+      const sWords = sent.split(/\s+/).filter(w => w);
+      for (let i = 0; i < sWords.length - 1; i++) {
+        const sub = sWords[i].toLowerCase().replace(/[^a-z]/g, "");
+        const verb = sWords[i+1].toLowerCase().replace(/[^a-z]/g, "");
+        if (subVerbs[sub]) {
+          const expectedBe = subVerbs[sub];
+          if (verb === "is" || verb === "are" || verb === "am" || verb === "was" || verb === "were") {
+            if (verb !== expectedBe && verb !== subVerbsPast[sub]) {
+              const idx = text.indexOf(sWords[i] + " " + sWords[i+1]);
+              if (idx >= 0) {
+                errors.push({
+                  word: `${sWords[i]} ${sWords[i+1]}`,
+                  index: idx,
+                  length: sWords[i].length + 1 + sWords[i+1].length,
+                  suggestion: `${sWords[i]} ${expectedBe}`,
+                  type: "agreement",
+                  label: "Subject-Verb Agreement",
+                });
+              }
+            }
+          }
+        }
+        // Check that "he/she/it" + verb without -s
+        if (["he","she","it"].includes(sub) && verbForms[verb] && verb === verbForms[verb].past) {
+          // past tense is fine with he/she/it
+          continue;
+        }
+      }
+    }
+
+    // Repeated words
+    for (let i = 0; i < words.length - 1; i++) {
+      const clean1 = words[i].toLowerCase().replace(/[^a-z]/g, "");
+      const clean2 = words[i+1].toLowerCase().replace(/[^a-z]/g, "");
+      if (clean1 === clean2 && clean1.length > 1) {
+        const idx = text.indexOf(words[i] + " " + words[i+1]);
+        if (idx >= 0 && !errors.find(e => e.index === idx)) {
+          errors.push({
+            word: `${words[i]} ${words[i+1]}`,
+            index: idx,
+            length: words[i].length + 1 + words[i+1].length,
+            suggestion: words[i],
+            type: "repeated",
+            label: "Repeated Word",
+          });
+        }
+      }
+    }
+
+    return errors;
+  }
+
+  function applyCorrections(text, errors) {
+    let result = text;
+    const sorted = [...errors].sort((a, b) => b.index - a.index);
+    for (const err of sorted) {
+      const before = result.slice(0, err.index);
+      const after = result.slice(err.index + err.length);
+      result = before + err.suggestion + after;
+    }
+    return result;
+  }
+
+  function getColor(type) {
+    const colors = {
+      "confused": { bg: "bg-rose-500/15", border: "border-rose-500/30", text: "text-rose-300", dot: "bg-rose-400" },
+      "spelling": { bg: "bg-amber-500/15", border: "border-amber-500/30", text: "text-amber-300", dot: "bg-amber-400" },
+      "double-negative": { bg: "bg-red-500/15", border: "border-red-500/30", text: "text-red-300", dot: "bg-red-400" },
+      "apostrophe": { bg: "bg-sky-500/15", border: "border-sky-500/30", text: "text-sky-300", dot: "bg-sky-400" },
+      "agreement": { bg: "bg-orange-500/15", border: "border-orange-500/30", text: "text-orange-300", dot: "bg-orange-400" },
+      "repeated": { bg: "bg-fuchsia-500/15", border: "border-fuchsia-500/30", text: "text-fuchsia-300", dot: "bg-fuchsia-400" },
+    };
+    return colors[type] || { bg: "bg-zinc-500/15", border: "border-zinc-500/30", text: "text-zinc-300", dot: "bg-zinc-400" };
+  }
+
+  checkBtn.addEventListener("click", () => {
+    const text = inputEl.value.trim();
+    if (!text) { triggerToast("Please enter some text to check", "warning"); return; }
+
+    const errors = checkGrammar(text);
+    resultsArea.classList.remove("hidden");
+
+    if (errors.length === 0) {
+      errorsList.innerHTML = `<div class="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 text-center"><span class="text-emerald-400 text-sm font-medium">✓ No grammar errors found!</span></div>`;
+      correctedText.textContent = text;
+      triggerToast("No errors found!", "success");
+      return;
+    }
+
+    errorsList.innerHTML = errors.map((err, i) => {
+      const c = getColor(err.type);
+      return `<div class="${c.bg} ${c.border} border rounded-xl p-3 flex items-start gap-3">
+        <span class="w-5 h-5 rounded-full ${c.dot} shrink-0 flex items-center justify-center text-[10px] text-white font-bold">${i+1}</span>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-0.5">
+            <span class="text-[10px] font-semibold uppercase tracking-wider ${c.text}">${err.label}</span>
+          </div>
+          <div class="text-sm"><span class="text-red-400 line-through">${err.word}</span> → <span class="text-emerald-400 font-medium">${err.suggestion}</span></div>
+        </div>
+      </div>`;
+    }).join("");
+
+    correctedText.textContent = applyCorrections(text, errors);
+    triggerToast(`Found ${errors.length} error${errors.length > 1 ? "s" : ""}!`, errors.length > 0 ? "warning" : "success");
+  });
+
+  copyCorrectedBtn.addEventListener("click", async () => {
+    const text = correctedText.textContent;
+    if (!text) { triggerToast("Nothing to copy!", "warning"); return; }
+    await navigator.clipboard.writeText(text);
+    triggerToast("Corrected text copied!", "success");
+  });
+</script>

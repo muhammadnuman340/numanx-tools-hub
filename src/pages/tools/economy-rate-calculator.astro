@@ -1,0 +1,73 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "What is economy rate in cricket?", answer: "Economy rate is the average number of runs a bowler concedes per over bowled. It is calculated by dividing total runs conceded by total overs bowled." },
+  { question: "How do fractional overs work in economy rate calculation?", answer: "In cricket, an over consists of 6 balls. A fractional over like 7.3 means 7 overs and 3 balls. For calculation, 3 balls is converted to 0.5 of an over (3/6 = 0.5), making it 7.5 overs total." },
+  { question: "What is a good economy rate in cricket?", answer: "A good economy rate varies by format. In T20s, under 7 is excellent. In ODIs, under 5 is strong. In Tests, under 3 is exceptional. Lower economy rates indicate better bowling control." },
+];
+const schema = { name: "Economy Rate Calculator", applicationCategory: "Sports", description: "Calculate cricket bowling economy rate instantly. Enter runs conceded and overs bowled to get your economy rate.", featureList: ["Cricket economy rate calculation", "Fractional over support", "Instant results", "Free online tool"] };
+---
+<MainLayout title="Economy Rate Calculator - Cricket Bowling Economy Calculator" description="Calculate cricket bowling economy rate instantly. Enter runs conceded and overs bowled to get your economy rate." keywords="economy rate calculator, cricket economy rate, bowling economy, cricket calculator" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Economy Rate Calculator",url:"/tools/economy-rate-calculator/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="Economy" gradient="Rate Pro" desc="Calculate cricket bowling economy rate instantly. Enter runs conceded and overs bowled to get your economy rate." badge="✦ New Tool" slug="economy-rate-calculator" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+        <label class="block text-xs font-medium text-tertiary mb-1.5">Runs Conceded</label>
+        <input id="runs-input" type="number" min="0" step="1" value="0" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-400/50 focus:outline-none transition-all mb-4" placeholder="e.g. 42" />
+        <label class="block text-xs font-medium text-tertiary mb-1.5">Overs Bowled (e.g. 7.3)</label>
+        <input id="overs-input" type="number" min="0" step="0.1" value="0" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-400/50 focus:outline-none transition-all mb-4" placeholder="e.g. 7.3" />
+        <button id="calculate-btn" class="w-full bg-gradient-to-r from-amber-400 to-orange-500 text-black font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all">Calculate Economy Rate</button>
+        <div id="result" class="mt-6 pt-6 border-t border-surface hidden">
+          <div class="grid grid-cols-3 gap-4 text-center">
+            <div><div class="text-2xl font-black text-amber-400" id="economy-rate">0.00</div><div class="text-xs text-tertiary mt-1">Economy Rate</div></div>
+            <div><div class="text-2xl font-black text-white" id="total-runs">0</div><div class="text-xs text-tertiary mt-1">Total Runs</div></div>
+            <div><div class="text-2xl font-black text-white" id="total-overs">0.0</div><div class="text-xs text-tertiary mt-1">Total Overs</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Understanding <span class="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">Economy Rate</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>Economy rate is a key bowling statistic in cricket that measures how many runs a bowler concedes per over. It is calculated by dividing total runs conceded by total overs bowled, where fractional overs are converted to their decimal equivalent. A lower economy rate indicates better bowling performance and control. This metric is especially important in limited-overs formats where run containment is crucial.</p></div></section>
+    <RelatedTools current="economy-rate-calculator" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  const runsInput = document.getElementById("runs-input");
+  const oversInput = document.getElementById("overs-input");
+  const calculateBtn = document.getElementById("calculate-btn");
+  const resultDiv = document.getElementById("result");
+  const economyRate = document.getElementById("economy-rate");
+  const totalRuns = document.getElementById("total-runs");
+  const totalOvers = document.getElementById("total-overs");
+
+  function fractionalOversToDecimal(overs) {
+    const whole = Math.floor(overs);
+    const frac = Math.round((overs - whole) * 10);
+    const balls = frac > 6 ? (frac - 6) : frac;
+    const actualOvers = balls > 6 ? whole + 1 : whole;
+    const actualBalls = balls > 6 ? balls - 6 : balls;
+    return actualOvers + actualBalls / 6;
+  }
+
+  calculateBtn.addEventListener("click", () => {
+    const runs = parseFloat(runsInput.value) || 0;
+    const oversRaw = parseFloat(oversInput.value) || 0;
+    const oversDecimal = fractionalOversToDecimal(oversRaw);
+    const rate = oversDecimal > 0 ? (runs / oversDecimal) : 0;
+
+    const whole = Math.floor(oversRaw);
+    const frac = Math.round((oversRaw - whole) * 10);
+    const ballsPart = frac > 6 ? (frac - 6) : frac;
+
+    economyRate.textContent = rate.toFixed(2);
+    totalRuns.textContent = runs;
+    totalOvers.textContent = whole + "." + ballsPart;
+    resultDiv.classList.remove("hidden");
+  });
+</script>

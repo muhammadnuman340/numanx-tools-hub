@@ -7,6 +7,7 @@ author: "NumanX Tools"
 category: "Image Tools"
 tags: ["image compression", "optimization", "web performance", "SEO", "tutorial"]
 readingTime: "8 min read"
+slug: "how-to-compress-images"
 ---
 
 Image compression is one of the most important skills for anyone building websites or creating content. Large images slow down your site, hurt your SEO, and frustrate visitors.

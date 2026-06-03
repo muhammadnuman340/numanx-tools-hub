@@ -1,0 +1,84 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "How are random numbers generated?", answer: "Random numbers are generated using the browser's built-in Math.random() function, which uses a pseudo-random number generator. For most everyday purposes like giveaways, games, and sampling, this provides sufficient randomness." },
+  { question: "Can I allow duplicate numbers?", answer: "Yes, the 'Allow duplicates' option lets you control whether the generated numbers can repeat. When duplicates are disallowed, the generator will skip numbers already selected, which may limit results if the range is smaller than the requested count." },
+  { question: "What is the maximum range I can set?", answer: "There is no practical limit on the range. You can set any minimum and maximum values, including negative numbers. However, if you disable duplicates and the range is smaller than the count, the generator will return as many unique numbers as possible." },
+];
+const schema = { name: "Random Number Generator", applicationCategory: "Utilities", description: "Generate random numbers within a custom range. Set min, max, count, and toggle duplicates. Free online random number generator.", featureList: ["Custom range support", "Duplicate control", "Multiple number generation", "Copy to clipboard"] };
+---
+<MainLayout title="Random Number Generator - Generate Random Numbers Online" description="Generate random numbers within a custom range. Set min, max, count, and toggle duplicates. Free online random number generator." keywords="random number generator, random number, number generator, random, rng" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Random Number Generator",url:"/tools/random-number-generator/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="Random" gradient="Number Pro" desc="Generate random numbers within a custom range. Set min, max, count, and toggle duplicates." badge="✦ New Tool" slug="random-number-generator" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+        <div class="grid grid-cols-3 gap-3 mb-4">
+          <div><label class="block text-xs font-medium text-tertiary mb-1.5">Min</label><input id="min-input" type="number" value="1" class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-pink-400/50 focus:outline-none transition-all" /></div>
+          <div><label class="block text-xs font-medium text-tertiary mb-1.5">Max</label><input id="max-input" type="number" value="100" class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-pink-400/50 focus:outline-none transition-all" /></div>
+          <div><label class="block text-xs font-medium text-tertiary mb-1.5">Count</label><input id="count-input" type="number" min="1" value="1" class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-pink-400/50 focus:outline-none transition-all" /></div>
+        </div>
+        <label class="flex items-center gap-2 mb-4 cursor-pointer"><input id="allow-dups" type="checkbox" checked class="accent-pink-500" /><span class="text-xs text-tertiary">Allow duplicates</span></label>
+        <button id="generate-btn" class="w-full bg-gradient-to-r from-pink-400 to-rose-500 text-white font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all">Generate</button>
+        <div id="results-area" class="mt-6 pt-6 border-t border-surface hidden">
+          <div class="flex items-center justify-between mb-3"><span class="text-xs font-medium text-tertiary">Results</span><button id="copy-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy</button></div>
+          <div id="results-list" class="flex flex-wrap gap-2"></div>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-pink-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Random Number <span class="bg-gradient-to-r from-pink-400 to-rose-500 bg-clip-text text-transparent">Generation</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>Random number generation is a fundamental tool used in countless applications, from selecting lottery numbers and drawing contest winners to statistical sampling and game development. With a customizable range and duplicate control, you can adapt the output to virtually any use case requiring unbiased, unpredictable numbers.</p></div></section>
+    <RelatedTools current="random-number-generator" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-pink-400 to-rose-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  const minInput = document.getElementById("min-input");
+  const maxInput = document.getElementById("max-input");
+  const countInput = document.getElementById("count-input");
+  const allowDups = document.getElementById("allow-dups");
+  const generateBtn = document.getElementById("generate-btn");
+  const resultsArea = document.getElementById("results-area");
+  const resultsList = document.getElementById("results-list");
+  const copyBtn = document.getElementById("copy-btn");
+
+  generateBtn.addEventListener("click", () => {
+    const min = parseInt(minInput.value) || 0;
+    const max = parseInt(maxInput.value) || 100;
+    const count = parseInt(countInput.value) || 1;
+    const allowDuplicates = allowDups.checked;
+
+    resultsList.innerHTML = "";
+    resultsArea.classList.remove("hidden");
+
+    const pool = [];
+    const used = new Set();
+
+    for (let i = 0; i < count; i++) {
+      let attempts = 0;
+      let num;
+      do {
+        num = Math.floor(Math.random() * (max - min + 1)) + min;
+        attempts++;
+        if (attempts > 10000) break;
+      } while (!allowDuplicates && used.has(num));
+      used.add(num);
+      pool.push(num);
+      const span = document.createElement("span");
+      span.className = "px-3 py-2 rounded-lg bg-surface-2 border border-surface-3 text-white text-sm font-mono";
+      span.textContent = num;
+      resultsList.appendChild(span);
+    }
+  });
+
+  copyBtn.addEventListener("click", async () => {
+    const nums = [...resultsList.querySelectorAll("span")].map(s => s.textContent).join(", ");
+    if (!nums) return;
+    await navigator.clipboard.writeText(nums);
+    if ((window as any).__showToast) (window as any).__showToast({ message: "Copied!", variant: "success" });
+  });
+</script>

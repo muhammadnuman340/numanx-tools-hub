@@ -1,0 +1,95 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "What is the Fisher-Yates shuffle algorithm?", answer: "The Fisher-Yates shuffle is a mathematically optimal algorithm for generating a random permutation of a finite sequence. It works by iterating through the array from the last element to the first, swapping each element with a randomly selected earlier element, ensuring every permutation is equally likely." },
+  { question: "Can I pick multiple random items at once?", answer: "Yes, use the 'Pick Random' button with the count input to specify how many random items you want selected from your list. The items are picked without replacement, so each item can only be selected once per pick." },
+  { question: "What happens if my list has empty lines?", answer: "Empty lines are automatically filtered out. Only non-empty lines are considered as list items. This makes it easy to paste multi-line content without worrying about trailing or extra blank lines." },
+];
+const schema = { name: "List Randomizer", applicationCategory: "Utilities", description: "Randomize lists with Fisher-Yates shuffle. Shuffle items, pick random entries, and manage your lists easily.", featureList: ["Fisher-Yates shuffle", "Random item picker", "Custom pick count", "Clear and reset"] };
+---
+<MainLayout title="List Randomizer - Shuffle and Randomize Lists Online" description="Randomize lists with Fisher-Yates shuffle. Shuffle items, pick random entries, and manage your lists easily." keywords="list randomizer, shuffle list, random picker, fisher-yates shuffle, list shuffler" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"List Randomizer",url:"/tools/list-randomizer/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="List" gradient="Randomizer Pro" desc="Randomize lists with Fisher-Yates shuffle. Shuffle items, pick random entries, and manage your lists easily." badge="✦ New Tool" slug="list-randomizer" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+        <label class="block text-xs font-medium text-tertiary mb-1.5">Enter List (one item per line)</label>
+        <textarea id="list-input" class="w-full h-32 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-teal-400/50 focus:outline-none transition-all resize-none font-mono" placeholder="Item 1&#10;Item 2&#10;Item 3"></textarea>
+        <div class="flex items-center gap-2 mt-3 mb-4">
+          <label class="text-xs text-tertiary">Pick count:</label>
+          <input id="pick-count" type="number" min="1" value="1" class="w-16 px-2 py-1.5 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-teal-400/50 focus:outline-none transition-all" />
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button id="shuffle-btn" class="bg-gradient-to-r from-teal-400 to-cyan-500 text-white font-bold text-xs px-4 py-2 rounded-xl hover:opacity-90 transition-all">Shuffle</button>
+          <button id="pick-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-4 py-2 rounded-xl border border-surface-3 transition-all">Pick Random</button>
+          <button id="clear-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-4 py-2 rounded-xl border border-surface-3 transition-all">Clear</button>
+        </div>
+        <div id="results-area" class="mt-6 pt-6 border-t border-surface hidden">
+          <span class="text-xs font-medium text-tertiary mb-3 block">Results</span>
+          <ol id="results-list" class="space-y-1.5 list-decimal list-inside"></ol>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-teal-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">List <span class="bg-gradient-to-r from-teal-400 to-cyan-500 bg-clip-text text-transparent">Randomization</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>List randomization is essential for drawing winners, creating random groups, ordering items unbiasedly, and conducting fair selections. The Fisher-Yates shuffle ensures that every possible permutation of your list is equally likely, making it the gold standard for unbiased shuffling. Whether you need a completely shuffled list or just a few random picks, this tool provides both functionalities seamlessly.</p></div></section>
+    <RelatedTools current="list-randomizer" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-teal-400 to-cyan-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  const listInput = document.getElementById("list-input");
+  const pickCount = document.getElementById("pick-count");
+  const shuffleBtn = document.getElementById("shuffle-btn");
+  const pickBtn = document.getElementById("pick-btn");
+  const clearBtn = document.getElementById("clear-btn");
+  const resultsArea = document.getElementById("results-area");
+  const resultsList = document.getElementById("results-list");
+
+  function getItems() {
+    return listInput.value.split("\n").filter(line => line.trim() !== "");
+  }
+
+  function shuffle(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function display(items) {
+    resultsList.innerHTML = "";
+    items.forEach((item, i) => {
+      const li = document.createElement("li");
+      li.className = "text-sm text-white font-mono bg-surface-2 border border-surface-3 rounded-lg px-3 py-2";
+      li.textContent = item;
+      resultsList.appendChild(li);
+    });
+    resultsArea.classList.remove("hidden");
+  }
+
+  shuffleBtn.addEventListener("click", () => {
+    const items = getItems();
+    if (items.length === 0) return;
+    display(shuffle(items));
+  });
+
+  pickBtn.addEventListener("click", () => {
+    const items = getItems();
+    if (items.length === 0) return;
+    const count = Math.min(parseInt(pickCount.value) || 1, items.length);
+    const shuffled = shuffle(items);
+    display(shuffled.slice(0, count));
+  });
+
+  clearBtn.addEventListener("click", () => {
+    listInput.value = "";
+    resultsList.innerHTML = "";
+    resultsArea.classList.add("hidden");
+  });
+</script>

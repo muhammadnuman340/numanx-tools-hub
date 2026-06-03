@@ -1,0 +1,83 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "What does the HTML formatter do?", answer: "It takes messy or minified HTML and beautifies it with proper indentation and line breaks, making it readable and well-structured." },
+  { question: "Is my HTML code stored or uploaded?", answer: "No. All processing happens entirely in your browser. Your HTML never leaves your device." },
+  { question: "Does this work with malformed HTML?", answer: "It attempts to format any HTML-like content. For best results, use well-formed HTML. The formatter handles most common tag structures." },
+];
+const htmlSchema = { name: "HTML Formatter", applicationCategory: "Developer Tools", description: "Format and beautify HTML code with proper indentation. Minify HTML for production use.", featureList: ["Format HTML with proper indentation", "Minify for production", "Copy to clipboard", "100% client-side"] };
+---
+<MainLayout title="HTML Formatter - Format & Beautify HTML Online Free" description="Format and beautify your HTML code with proper indentation. Minify HTML for production. Free online HTML formatter." keywords="html formatter, html beautifier, html minifier, format html, html indentation" toolSchema={htmlSchema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"HTML Formatter",url:"/tools/html-formatter/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="HTML" gradient="Formatter Pro" desc="Format and beautify your HTML code with proper indentation. Minify HTML for production use." badge="✦ New Tool" slug="html-formatter" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+        <textarea id="input-text" class="w-full h-32 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-500/50 focus:outline-none transition-all resize-none font-mono" placeholder="Paste your HTML code here..."></textarea>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <button id="format-btn" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-green-600 text-white">Format</button>
+          <button id="minify-btn" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary">Minify</button>
+        </div>
+        <div class="mt-6 pt-6 border-t border-surface">
+          <label class="block text-xs font-medium text-tertiary mb-1.5">Result</label>
+          <textarea id="output-text" class="w-full h-32 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:outline-none resize-none font-mono" readonly placeholder="Formatted HTML will appear here..."></textarea>
+          <button id="copy-btn" class="mt-2 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy Result</button>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Why Use an <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">HTML Formatter?</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>Clean, properly indented HTML is essential for maintainability and debugging. Whether you're working with minified production code, legacy templates, or generated markup, an HTML formatter restores readability instantly — saving hours of manual cleanup.</p></div></section>
+    <RelatedTools current="html-formatter" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  const input = document.getElementById("input-text");
+  const output = document.getElementById("output-text");
+  const copyBtn = document.getElementById("copy-btn");
+  const formatBtn = document.getElementById("format-btn");
+  const minifyBtn = document.getElementById("minify-btn");
+
+  formatBtn.addEventListener("click", () => {
+    const html = input.value;
+    if (!html) { output.value = ""; return; }
+    output.value = formatHTML(html);
+  });
+
+  minifyBtn.addEventListener("click", () => {
+    const html = input.value;
+    if (!html) { output.value = ""; return; }
+    output.value = html
+      .replace(/>\s+</g, "><")
+      .replace(/\s{2,}/g, " ")
+      .replace(/\s*\n\s*/g, "")
+      .trim();
+  });
+
+  function formatHTML(html) {
+    let indent = 0;
+    const lines = [];
+    const tokens = html.replace(/>\s*</g, ">\n<").split("\n");
+    const selfClosing = /^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/i;
+    for (const line of tokens) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+      const closes = trimmed.startsWith("</");
+      const isSelfClosing = selfClosing.test(trimmed.replace(/<(\w+).*/,"$1"));
+      if (closes) indent--;
+      lines.push("  ".repeat(Math.max(0, indent)) + trimmed);
+      if (!closes && !isSelfClosing && trimmed.endsWith(">") && !trimmed.endsWith("/>")) indent++;
+    }
+    return lines.join("\n");
+  }
+
+  copyBtn.addEventListener("click", async () => {
+    if (!output.value) return;
+    await navigator.clipboard.writeText(output.value);
+    if (window.__showToast) window.__showToast({ message: "Copied!", variant: "success" });
+  });
+</script>

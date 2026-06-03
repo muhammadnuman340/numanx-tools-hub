@@ -1,0 +1,84 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "Is the SVG to PNG conversion done server-side?", answer: "No, all conversion happens entirely in your browser. The SVG is rendered onto an HTML5 Canvas element using a Blob URL, then exported as a PNG image. Your SVG code never leaves your device." },
+  { question: "What SVG features are supported?", answer: "Most standard SVG elements and styling are supported since the conversion uses the browser's native SVG rendering engine through Canvas. However, advanced features like external fonts, external images, or complex filters may not render correctly." },
+  { question: "What dimensions should I use for the PNG?", answer: "The width and height you specify determine the output PNG dimensions in pixels. For best results, ensure your SVG uses relative or consistent coordinates. Higher dimensions produce larger, sharper images but also increase the file size." },
+];
+const schema = { name: "SVG to PNG Converter", applicationCategory: "Image", description: "Convert SVG code to PNG images instantly in your browser. Custom dimensions, live preview, and one-click download.", featureList: ["Client-side conversion", "Custom dimensions", "Live preview", "One-click download"] };
+---
+<MainLayout title="SVG to PNG Converter - Convert SVG to PNG Online Free" description="Convert SVG code to PNG images instantly in your browser. Custom dimensions, live preview, and one-click download." keywords="svg to png, convert svg, svg converter, png converter, svg to image" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"SVG to PNG Converter",url:"/tools/svg-to-png/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="SVG →" gradient="PNG Pro" desc="Convert SVG code to PNG images instantly in your browser. Custom dimensions, live preview, and one-click download." badge="✦ New Tool" slug="svg-to-png" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+        <label class="block text-xs font-medium text-tertiary mb-1.5">SVG Code</label>
+        <textarea id="svg-input" class="w-full h-40 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-400/50 focus:outline-none transition-all resize-none font-mono" placeholder='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="green" /></svg>'></textarea>
+        <div class="grid grid-cols-2 gap-3 mt-4 mb-4">
+          <div><label class="block text-xs font-medium text-tertiary mb-1.5">Width (px)</label><input id="width-input" type="number" min="1" value="500" class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-400/50 focus:outline-none transition-all" /></div>
+          <div><label class="block text-xs font-medium text-tertiary mb-1.5">Height (px)</label><input id="height-input" type="number" min="1" value="500" class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-400/50 focus:outline-none transition-all" /></div>
+        </div>
+        <button id="convert-btn" class="w-full bg-gradient-to-r from-green-400 to-emerald-500 text-white font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all">Convert to PNG</button>
+        <div id="preview-area" class="mt-6 pt-6 border-t border-surface hidden">
+          <div class="flex items-center justify-between mb-3"><span class="text-xs font-medium text-tertiary">Preview</span><a id="download-link" download="converted.png" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all cursor-pointer">Download PNG</a></div>
+          <div class="bg-surface-2 rounded-xl p-4 flex items-center justify-center border border-surface-3 min-h-[200px]"><img id="preview-img" class="max-w-full h-auto" alt="PNG preview" /></div>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">SVG to <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">PNG Conversion</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>SVG (Scalable Vector Graphics) is ideal for logos, icons, and illustrations because it scales infinitely without losing quality. However, many platforms require raster PNG images. This converter renders your SVG code onto a canvas element and exports it as a PNG, giving you full control over the output dimensions while keeping the entire process client-side for privacy and speed.</p></div></section>
+    <RelatedTools current="svg-to-png" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  const svgInput = document.getElementById("svg-input");
+  const widthInput = document.getElementById("width-input");
+  const heightInput = document.getElementById("height-input");
+  const convertBtn = document.getElementById("convert-btn");
+  const previewArea = document.getElementById("preview-area");
+  const previewImg = document.getElementById("preview-img");
+  const downloadLink = document.getElementById("download-link");
+
+  convertBtn.addEventListener("click", async () => {
+    const svgCode = svgInput.value.trim();
+    if (!svgCode) return;
+
+    const width = parseInt(widthInput.value) || 500;
+    const height = parseInt(heightInput.value) || 500;
+
+    try {
+      const blob = new Blob([svgCode], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, width, height);
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const dataUrl = canvas.toDataURL("image/png");
+        previewImg.src = dataUrl;
+        downloadLink.href = dataUrl;
+        previewArea.classList.remove("hidden");
+
+        URL.revokeObjectURL(url);
+      };
+      img.onerror = () => {
+        if ((window as any).__showToast) (window as any).__showToast({ message: "Invalid SVG code", variant: "error" });
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
+    } catch (e) {
+      if ((window as any).__showToast) (window as any).__showToast({ message: "Conversion failed", variant: "error" });
+    }
+  });
+</script>

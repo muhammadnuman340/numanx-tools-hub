@@ -1,0 +1,91 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "What regex flavors are supported?", answer: "This tester uses JavaScript's built-in RegExp engine, supporting standard patterns including groups, lookaheads, character classes, quantifiers, and flags (g, i, m, s, u, y)." },
+  { question: "Is my regex or test data stored or uploaded?", answer: "No. All regex testing happens entirely in your browser. Your patterns and test data never leave your device." },
+  { question: "How do I use flags?", answer: "Enter flags in the flags field: g (global - find all matches), i (case-insensitive), m (multiline - ^ and $ match line boundaries), s (dotall - . matches newlines), u (unicode), y (sticky)." },
+];
+const regexSchema = { name: "Regex Tester", applicationCategory: "Developer Tools", description: "Test and debug regular expressions in real-time. View match counts and highlighted results.", featureList: ["Real-time regex testing", "Multiple flag support", "Match count display", "100% client-side"] };
+---
+<MainLayout title="Regex Tester - Test Regular Expressions Online Free" description="Test and debug regular expressions in real-time. Supports flags, global matching, and match counting. Free online regex tester." keywords="regex tester, regular expression tester, regex debugger, regex matcher, regex online" toolSchema={regexSchema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Regex Tester",url:"/tools/regex-tester/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="Regex" gradient="Tester Pro" desc="Test and debug regular expressions in real-time. View match counts and highlighted results with full flag support." badge="✦ New Tool" slug="regex-tester" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+        <div class="flex gap-3 mb-4">
+          <div class="flex-1">
+            <label class="block text-xs font-medium text-tertiary mb-1.5">Pattern</label>
+            <input id="regex-pattern" class="w-full px-4 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all font-mono" placeholder="Enter regex pattern..." />
+          </div>
+          <div class="w-24">
+            <label class="block text-xs font-medium text-tertiary mb-1.5">Flags</label>
+            <input id="regex-flags" class="w-full px-4 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all font-mono" placeholder="gim" />
+          </div>
+        </div>
+        <label class="block text-xs font-medium text-tertiary mb-1.5">Test Text</label>
+        <textarea id="input-text" class="w-full h-32 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all resize-none font-mono" placeholder="Enter text to test against your regex..."></textarea>
+        <div class="mt-6 pt-6 border-t border-surface">
+          <label class="block text-xs font-medium text-tertiary mb-1.5">Match Results</label>
+          <div id="match-count" class="text-xs text-tertiary mb-2"></div>
+          <textarea id="output-text" class="w-full h-24 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:outline-none resize-none font-mono" readonly placeholder="Matches will appear here..."></textarea>
+          <button id="copy-btn" class="mt-2 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy Results</button>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Why Use a <span class="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">Regex Tester?</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>Regular expressions are powerful but tricky to get right. A regex tester gives you instant feedback on your patterns, showing exactly what matches and what doesn't — so you can iterate quickly and avoid bugs in your string processing logic.</p></div></section>
+    <RelatedTools current="regex-tester" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  const patternInput = document.getElementById("regex-pattern");
+  const flagsInput = document.getElementById("regex-flags");
+  const inputText = document.getElementById("input-text");
+  const outputText = document.getElementById("output-text");
+  const matchCountEl = document.getElementById("match-count");
+  const copyBtn = document.getElementById("copy-btn");
+
+  function testRegex() {
+    const pattern = patternInput.value;
+    const flags = flagsInput.value;
+    const text = inputText.value;
+
+    if (!pattern || !text) {
+      outputText.value = "";
+      matchCountEl.textContent = "";
+      return;
+    }
+
+    try {
+      const regex = new RegExp(pattern, flags);
+      const matches = [...text.matchAll(regex)];
+      if (matches.length === 0) {
+        outputText.value = "No matches found.";
+        matchCountEl.textContent = "0 matches";
+        return;
+      }
+      const lines = matches.map((m, i) => `Match #${i + 1}: "${m[0]}"${m.index !== undefined ? ` at index ${m.index}` : ""}`);
+      outputText.value = lines.join("\n");
+      matchCountEl.textContent = `${matches.length} match${matches.length !== 1 ? "es" : ""} found`;
+    } catch (e) {
+      outputText.value = `Error: ${e.message}`;
+      matchCountEl.textContent = "Invalid regex";
+    }
+  }
+
+  patternInput.addEventListener("input", testRegex);
+  flagsInput.addEventListener("input", testRegex);
+  inputText.addEventListener("input", testRegex);
+
+  copyBtn.addEventListener("click", async () => {
+    if (!outputText.value) return;
+    await navigator.clipboard.writeText(outputText.value);
+    if (window.__showToast) window.__showToast({ message: "Copied!", variant: "success" });
+  });
+</script>

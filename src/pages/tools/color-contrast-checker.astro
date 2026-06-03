@@ -1,0 +1,98 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "What is WCAG contrast ratio?", answer: "WCAG (Web Content Accessibility Guidelines) defines contrast ratios to ensure text is readable. The ratio is calculated as (L1 + 0.05) / (L2 + 0.05) where L1 is the relative luminance of the lighter color and L2 of the darker color. AA requires 4.5:1 for normal text, AAA requires 7:1." },
+  { question: "What is the difference between AA and AAA?", answer: "AA is the minimum recommended contrast level (4.5:1 for normal text, 3:1 for large text). AAA is an enhanced standard (7:1 for normal text, 4.5:1 for large text). AA is typically required for legal compliance, while AAA is a best-practice target." },
+  { question: "How do I fix low contrast issues?", answer: "To improve contrast, darken the foreground text or lighten the background (or vice versa). Small adjustments to hex values can significantly impact the contrast ratio. Tools like this checker help you verify compliance before deploying your design." },
+];
+const schema = { name: "Color Contrast Checker", applicationCategory: "Utilities", description: "Check color contrast ratios for WCAG AA/AAA compliance. Enter foreground and background hex colors to verify accessibility.", featureList: ["WCAG AA/AAA checking", "Normal and large text", "UI component compliance", "Visual color preview"] };
+---
+<MainLayout title="Color Contrast Checker - WCAG Accessibility Checker" description="Check color contrast ratios for WCAG AA/AAA compliance. Enter foreground and background hex colors to verify accessibility." keywords="color contrast checker, WCAG contrast, accessibility checker, contrast ratio, hex color contrast" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Color Contrast Checker",url:"/tools/color-contrast-checker/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="Contrast" gradient="Checker Pro" desc="Check color contrast ratios for WCAG AA/AAA compliance. Enter foreground and background hex colors to verify accessibility." badge="✦ New Tool" slug="color-contrast-checker" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div><label class="block text-xs font-medium text-tertiary mb-1.5">Foreground</label><input id="fg-input" type="text" value="#ffffff" maxlength="7" class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-violet-400/50 focus:outline-none transition-all uppercase" /><div id="fg-preview" class="mt-2 h-12 rounded-xl border border-surface-3" style="background:#ffffff"></div></div>
+          <div><label class="block text-xs font-medium text-tertiary mb-1.5">Background</label><input id="bg-input" type="text" value="#000000" maxlength="7" class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-violet-400/50 focus:outline-none transition-all uppercase" /><div id="bg-preview" class="mt-2 h-12 rounded-xl border border-surface-3" style="background:#000000"></div></div>
+        </div>
+        <button id="check-btn" class="w-full bg-gradient-to-r from-violet-400 to-purple-500 text-white font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all">Check Contrast</button>
+        <div id="results" class="mt-6 pt-6 border-t border-surface hidden">
+          <div class="text-center mb-4"><span class="text-xs text-tertiary">Contrast Ratio</span><div class="text-3xl font-black text-white" id="ratio-display">21:1</div></div>
+          <div class="space-y-2" id="compliance-list"></div>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Color Contrast <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Accessibility</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>Color contrast accessibility ensures that text and UI elements are perceivable by users with visual impairments. The WCAG guidelines define specific contrast ratios that content must meet to be considered accessible. AA compliance (4.5:1 for normal text) is the legal standard in many regions, while AAA (7:1) provides an enhanced experience. This tool helps designers and developers verify their color choices against these standards instantly.</p></div></section>
+    <RelatedTools current="color-contrast-checker" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  const fgInput = document.getElementById("fg-input");
+  const bgInput = document.getElementById("bg-input");
+  const fgPreview = document.getElementById("fg-preview");
+  const bgPreview = document.getElementById("bg-preview");
+  const checkBtn = document.getElementById("check-btn");
+  const results = document.getElementById("results");
+  const ratioDisplay = document.getElementById("ratio-display");
+  const complianceList = document.getElementById("compliance-list");
+
+  function hexToRgb(hex) {
+    const h = hex.replace("#", "");
+    return { r: parseInt(h.substring(0, 2), 16), g: parseInt(h.substring(2, 4), 16), b: parseInt(h.substring(4, 6), 16) };
+  }
+
+  function relativeLuminance(r, g, b) {
+    const [rs, gs, bs] = [r, g, b].map(v => { v = v / 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+    return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+  }
+
+  function contrastRatio(l1, l2) {
+    const lighter = Math.max(l1, l2);
+    const darker = Math.min(l1, l2);
+    return (lighter + 0.05) / (darker + 0.05);
+  }
+
+  function updatePreviews() {
+    fgPreview.style.background = fgInput.value;
+    bgPreview.style.background = bgInput.value;
+  }
+
+  fgInput.addEventListener("input", updatePreviews);
+  bgInput.addEventListener("input", updatePreviews);
+
+  checkBtn.addEventListener("click", () => {
+    const fg = hexToRgb(fgInput.value);
+    const bg = hexToRgb(bgInput.value);
+    const lFg = relativeLuminance(fg.r, fg.g, fg.b);
+    const lBg = relativeLuminance(bg.r, bg.g, bg.b);
+    const ratio = contrastRatio(lFg, lBg);
+
+    ratioDisplay.textContent = ratio.toFixed(2) + ":1";
+    results.classList.remove("hidden");
+
+    const checks = [
+      { label: "AA Normal Text", pass: ratio >= 4.5, threshold: "4.5:1" },
+      { label: "AA Large Text", pass: ratio >= 3, threshold: "3:1" },
+      { label: "AAA Normal Text", pass: ratio >= 7, threshold: "7:1" },
+      { label: "AAA Large Text", pass: ratio >= 4.5, threshold: "4.5:1" },
+    ];
+
+    complianceList.innerHTML = "";
+    checks.forEach(c => {
+      const div = document.createElement("div");
+      div.className = "flex items-center justify-between px-4 py-2 rounded-lg border " + (c.pass ? "bg-green-900/20 border-green-500/30" : "bg-red-900/20 border-red-500/30");
+      div.innerHTML = `<span class="text-sm ${c.pass ? 'text-green-400' : 'text-red-400'}">${c.label}</span><span class="text-xs font-medium ${c.pass ? 'text-green-400' : 'text-red-400'}">${c.pass ? '✓ Pass' : '✗ Fail'} (min ${c.threshold})</span>`;
+      complianceList.appendChild(div);
+    });
+  });
+
+  updatePreviews();
+</script>

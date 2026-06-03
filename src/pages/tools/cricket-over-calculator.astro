@@ -1,0 +1,102 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "How many balls are in a cricket over?", answer: "A standard cricket over consists of 6 legal deliveries (balls). In some formats, no-ball and wide deliveries extend the over, but the over is still counted as 6 legitimate balls." },
+  { question: "How do you convert balls to overs?", answer: "To convert balls to overs, divide the total balls by 6. The quotient is the number of complete overs and the remainder is the remaining balls. For example, 15 balls = 2.3 overs (2 overs and 3 balls)." },
+  { question: "What does 7.3 overs mean in cricket?", answer: "7.3 overs means 7 complete overs and 3 balls of the 8th over. In decimal form for calculations, this is equivalent to 7.5 overs (7 + 3/6). The .3 notation is uniquely used in cricket scoring." },
+];
+const schema = { name: "Cricket Over Calculator", applicationCategory: "Sports", description: "Convert between balls and overs for cricket scoring. Enter balls to get overs or enter overs to get total balls.", featureList: ["Balls to overs conversion", "Overs to balls conversion", "Cricket scoring support", "Instant results"] };
+---
+<MainLayout title="Cricket Over Calculator - Balls to Overs Converter" description="Convert between balls and overs for cricket scoring. Free cricket over calculator with balls to overs and overs to balls conversion." keywords="cricket over calculator, balls to overs, overs to balls, cricket scoring, cricket calculator" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Cricket Over Calculator",url:"/tools/cricket-over-calculator/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="Cricket" gradient="Overs Pro" desc="Convert between balls and overs for cricket scoring. Enter balls to get overs or enter overs to get total balls." badge="✦ New Tool" slug="cricket-over-calculator" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+        <div class="flex gap-2 mb-4">
+          <button id="mode-balls" class="flex-1 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all">Balls → Overs</button>
+          <button id="mode-overs" class="flex-1 bg-surface-2 text-tertiary hover:text-primary text-xs font-medium px-4 py-2 rounded-xl border border-surface-3 transition-all">Overs → Balls</button>
+        </div>
+        <div id="balls-mode">
+          <label class="block text-xs font-medium text-tertiary mb-1.5">Total Balls</label>
+          <input id="balls-input" type="number" min="0" step="1" value="0" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-yellow-400/50 focus:outline-none transition-all mb-4" placeholder="e.g. 87" />
+          <button id="convert-balls-btn" class="w-full bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all">Convert to Overs</button>
+          <div id="balls-result" class="mt-4 pt-4 border-t border-surface hidden">
+            <div class="text-center"><div class="text-2xl font-black text-yellow-400" id="overs-output">0.0</div><div class="text-xs text-tertiary mt-1">Overs (Cricket Notation)</div></div>
+            <div class="text-center mt-2"><span class="text-xs text-tertiary"><span class="text-white font-semibold" id="total-balls-display">0</span> total balls = <span class="text-white font-semibold" id="complete-overs">0</span> overs & <span class="text-white font-semibold" id="remaining-balls">0</span> balls</span></div>
+          </div>
+        </div>
+        <div id="overs-mode" class="hidden">
+          <label class="block text-xs font-medium text-tertiary mb-1.5">Overs (e.g. 12.3)</label>
+          <input id="overs-input" type="number" min="0" step="0.1" value="0" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-yellow-400/50 focus:outline-none transition-all mb-4" placeholder="e.g. 12.3" />
+          <button id="convert-overs-btn" class="w-full bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all">Convert to Balls</button>
+          <div id="overs-result" class="mt-4 pt-4 border-t border-surface hidden">
+            <div class="text-center"><div class="text-2xl font-black text-yellow-400" id="balls-output">0</div><div class="text-xs text-tertiary mt-1">Total Balls</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-yellow-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Cricket <span class="bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">Over Conversions</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>Cricket uses a unique notation system where overs are written as whole numbers with decimal parts representing balls bowled in the current over. For example, 15.3 means 15 complete overs and 3 balls of the 16th over. Converting between balls and overs is essential for scoring, statistical analysis, and understanding match situations. This tool handles both conversions instantly.</p></div></section>
+    <RelatedTools current="cricket-over-calculator" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  const modeBallsBtn = document.getElementById("mode-balls");
+  const modeOversBtn = document.getElementById("mode-overs");
+  const ballsMode = document.getElementById("balls-mode");
+  const oversMode = document.getElementById("overs-mode");
+
+  const ballsInput = document.getElementById("balls-input");
+  const convertBallsBtn = document.getElementById("convert-balls-btn");
+  const ballsResult = document.getElementById("balls-result");
+  const oversOutput = document.getElementById("overs-output");
+  const totalBallsDisplay = document.getElementById("total-balls-display");
+  const completeOvers = document.getElementById("complete-overs");
+  const remainingBalls = document.getElementById("remaining-balls");
+
+  const oversInput = document.getElementById("overs-input");
+  const convertOversBtn = document.getElementById("convert-overs-btn");
+  const oversResult = document.getElementById("overs-result");
+  const ballsOutput = document.getElementById("balls-output");
+
+  modeBallsBtn.addEventListener("click", () => {
+    modeBallsBtn.className = "flex-1 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all";
+    modeOversBtn.className = "flex-1 bg-surface-2 text-tertiary hover:text-primary text-xs font-medium px-4 py-2 rounded-xl border border-surface-3 transition-all";
+    ballsMode.classList.remove("hidden");
+    oversMode.classList.add("hidden");
+  });
+
+  modeOversBtn.addEventListener("click", () => {
+    modeOversBtn.className = "flex-1 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all";
+    modeBallsBtn.className = "flex-1 bg-surface-2 text-tertiary hover:text-primary text-xs font-medium px-4 py-2 rounded-xl border border-surface-3 transition-all";
+    oversMode.classList.remove("hidden");
+    ballsMode.classList.add("hidden");
+  });
+
+  convertBallsBtn.addEventListener("click", () => {
+    const balls = parseInt(ballsInput.value) || 0;
+    const oversInt = Math.floor(balls / 6);
+    const remBalls = balls % 6;
+    const oversNotation = oversInt + "." + remBalls;
+    oversOutput.textContent = oversNotation;
+    totalBallsDisplay.textContent = balls;
+    completeOvers.textContent = oversInt;
+    remainingBalls.textContent = remBalls;
+    ballsResult.classList.remove("hidden");
+  });
+
+  convertOversBtn.addEventListener("click", () => {
+    const oversRaw = parseFloat(oversInput.value) || 0;
+    const whole = Math.floor(oversRaw);
+    const frac = Math.round((oversRaw - whole) * 10);
+    const totalBalls = whole * 6 + (frac > 6 ? 6 : frac);
+    ballsOutput.textContent = totalBalls;
+    oversResult.classList.remove("hidden");
+  });
+</script>

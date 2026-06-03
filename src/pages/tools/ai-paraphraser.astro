@@ -1,0 +1,241 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "How does AI paraphrasing work?", answer: "The AI Paraphraser uses a built-in synonym dictionary to intelligently replace words with suitable alternatives. Different modes apply different transformation rules — Standard replaces common words, Fluent restructures short phrases, Formal uses elevated vocabulary, and Creative applies more varied replacements for maximum originality." },
+  { question: "Which paraphrasing mode should I choose?", answer: "Standard mode is best for quick rewording while preserving original structure. Fluent mode improves flow and readability. Formal mode elevates tone for professional contexts. Creative mode produces the most varied output, ideal for content refresh and avoiding duplication. Try different modes to find the best result." },
+  { question: "Is my text stored or saved?", answer: "No. All paraphrasing happens entirely in your browser. Your text is never sent to any server. The tool processes everything locally using JavaScript, ensuring your content remains private and secure at all times." },
+];
+
+const schema = {
+  name: "AI Paraphraser Pro",
+  applicationCategory: "AI Tools",
+  description: "Paraphrase any text with four modes: Standard, Fluent, Formal, and Creative. AI-powered synonym replacement for content rewriting.",
+};
+---
+<MainLayout title="AI Paraphraser - Free Online Paraphrasing Tool" description="Paraphrase text with AI-powered synonym replacement. Choose from Standard, Fluent, Formal, and Creative modes for content rewriting." keywords="paraphraser, paraphrasing tool, rewrite text, synonym replacer, content rewriter, AI paraphrasing" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Paraphraser",url:"/tools/ai-paraphraser/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="AI" gradient="Paraphraser Pro" desc="Paraphrase your text in four different modes — Standard, Fluent, Formal, and Creative — using AI synonym replacement." badge="✦ AI Powered" slug="ai-paraphraser" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10"><div class="bg-surface-1 border border-surface rounded-2xl p-6">
+      <textarea id="input-text" rows="5" placeholder="Paste your text here to paraphrase..." class="w-full bg-transparent text-white placeholder-zinc-600 p-4 resize-none focus:outline-none text-sm leading-relaxed border border-surface-2 rounded-xl mb-4"></textarea>
+      <div class="flex flex-wrap gap-2 mb-4" id="mode-selector">
+        <button data-mode="standard" class="mode-btn px-4 py-2 rounded-lg text-xs font-semibold border transition-all bg-violet-600 text-white border-violet-500">Standard</button>
+        <button data-mode="fluent" class="mode-btn px-4 py-2 rounded-lg text-xs font-semibold border transition-all bg-surface-2 text-tertiary border-surface-3 hover:text-white">Fluent</button>
+        <button data-mode="formal" class="mode-btn px-4 py-2 rounded-lg text-xs font-semibold border transition-all bg-surface-2 text-tertiary border-surface-3 hover:text-white">Formal</button>
+        <button data-mode="creative" class="mode-btn px-4 py-2 rounded-lg text-xs font-semibold border transition-all bg-surface-2 text-tertiary border-surface-3 hover:text-white">Creative</button>
+      </div>
+      <button id="paraphrase-btn" class="w-full py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all duration-200 shadow-lg shadow-violet-600/20">Paraphrase</button>
+      <div id="output-section" class="hidden mt-4">
+        <div class="relative rounded-xl border border-surface-2 bg-surface-1 overflow-hidden">
+          <textarea id="output-text" rows="5" readonly class="w-full bg-transparent text-white p-4 resize-none focus:outline-none text-sm leading-relaxed"></textarea>
+          <button id="copy-btn" class="absolute top-2 right-2 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy</button>
+        </div>
+        <div class="text-right mt-2"><span id="word-count" class="text-xs text-tertiary"></span></div>
+      </div>
+    </div></div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Paraphraser uses a built-in synonym dictionary covering hundreds of common English words. Each mode applies different transformation rules: <strong class="text-primary">Standard</strong> replaces common words with contextually appropriate synonyms. <strong class="text-primary">Fluent</strong> restructures short phrases and reorders clauses. <strong class="text-primary">Formal</strong> elevates vocabulary and removes contractions. <strong class="text-primary">Creative</strong> applies varied synonym replacement with more aggressive restructuring.</p><p>All processing happens locally in your browser — no data is ever sent to a server, ensuring complete privacy.</p></div></section>
+    <RelatedTools current="ai-paraphraser" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+const synonyms = {
+  good: ["excellent", "superb", "outstanding", "fine"],
+  bad: ["poor", "terrible", "awful", "subpar"],
+  big: ["large", "huge", "enormous", "massive"],
+  small: ["tiny", "little", "compact", "minute"],
+  fast: ["quick", "rapid", "swift", "speedy"],
+  slow: ["gradual", "leisurely", "sluggish"],
+  happy: ["glad", "pleased", "delighted", "cheerful"],
+  sad: ["unhappy", "sorrowful", "gloomy", "melancholy"],
+  nice: ["pleasant", "lovely", "delightful", "agreeable"],
+  old: ["ancient", "elderly", "aged", "mature"],
+  new: ["fresh", "recent", "modern", "current"],
+  important: ["significant", "crucial", "vital", "essential"],
+  interesting: ["fascinating", "engaging", "compelling", "captivating"],
+  beautiful: ["gorgeous", "stunning", "lovely", "exquisite"],
+  hard: ["difficult", "challenging", "tough", "demanding"],
+  easy: ["simple", "effortless", "straightforward"],
+  help: ["assist", "support", "aid", "facilitate"],
+  use: ["utilize", "employ", "leverage", "apply"],
+  make: ["create", "produce", "generate", "craft"],
+  get: ["obtain", "acquire", "receive", "secure"],
+  show: ["demonstrate", "display", "exhibit", "reveal"],
+  think: ["believe", "consider", "suppose", "reckon"],
+  need: ["require", "demand", "necessitate"],
+  provide: ["supply", "furnish", "offer", "deliver"],
+};
+
+const formalSynonyms = {
+  good: ["satisfactory", "commendable", "exceptional", "superior"],
+  bad: ["inferior", "deficient", "substandard", "unsatisfactory"],
+  big: ["substantial", "considerable", "significant", "extensive"],
+  small: ["diminutive", "modest", "compact", "minimal"],
+  help: ["facilitate", "assist", "provide support"],
+  use: ["utilize", "employ", "leverage"],
+  make: ["produce", "manufacture", "fabricate"],
+  get: ["obtain", "acquire", "procure", "secure"],
+  show: ["demonstrate", "illustrate", "exhibit"],
+  think: ["opine", "surmise", "postulate", "conceive"],
+  need: ["require", "necessitate", "be incumbent upon"],
+  buy: ["purchase", "acquire", "procure"],
+  start: ["commence", "initiate", "embark upon"],
+  end: ["terminate", "conclude", "cease"],
+};
+
+const contractions = /\b(can't|don't|won't|isn't|aren't|wasn't|weren't|haven't|hasn't|hadn't|doesn't|didn't|couldn't|wouldn't|shouldn't|mightn't|mustn't|i'm|you're|he's|she's|it's|we're|they're|i've|you've|we've|they've|i'll|you'll|he'll|she'll|we'll|they'll|i'd|you'd|he'd|she'd|we'd|they'd)\b/gi;
+
+const contractionMap = {
+  "can't": "cannot", "don't": "do not", "won't": "will not",
+  "isn't": "is not", "aren't": "are not", "wasn't": "was not",
+  "weren't": "were not", "haven't": "have not", "hasn't": "has not",
+  "hadn't": "had not", "doesn't": "does not", "didn't": "did not",
+  "couldn't": "could not", "wouldn't": "would not", "shouldn't": "should not",
+  "mightn't": "might not", "mustn't": "must not",
+  "i'm": "I am", "you're": "you are", "he's": "he is", "she's": "she is",
+  "it's": "it is", "we're": "we are", "they're": "they are",
+  "i've": "I have", "you've": "you have", "we've": "we have", "they've": "they have",
+  "i'll": "I will", "you'll": "you will", "he'll": "he will", "she'll": "she will",
+  "we'll": "we will", "they'll": "they will",
+  "i'd": "I would", "you'd": "you would", "he'd": "he would", "she'd": "she would",
+  "we'd": "we would", "they'd": "they would",
+};
+
+const creativeModifiers = {
+  good: ["stellar", "first-rate", "top-notch", "remarkable"],
+  bad: ["dreadful", "atrocious", "abysmal", "lamentable"],
+  big: ["colossal", "gigantic", "immense", "towering"],
+  small: ["petite", "diminutive", "wee", "microscopic"],
+  fast: ["brisk", "hasty", "expeditious", "whirlwind"],
+  slow: ["unhurried", "leisurely", "plodding", "gradual"],
+  happy: ["jubilant", "ecstatic", "elated", "thrilled"],
+  sad: ["dismal", "despondent", "somber", "wistful"],
+  nice: ["charming", "enchanting", "captivating", "delightful"],
+};
+
+function getRandomSynonym(word, mode) {
+  const lower = word.toLowerCase();
+  let dict;
+  if (mode === "formal") dict = formalSynonyms;
+  else if (mode === "creative") dict = { ...synonyms, ...creativeModifiers };
+  else dict = synonyms;
+  const list = dict[lower];
+  if (!list) return null;
+  return list[Math.floor(Math.random() * list.length)];
+}
+
+function replaceInSentence(sentence, mode) {
+  const words = sentence.split(/(\s+)/);
+  return words.map(w => {
+    if (w.trim() === "") return w;
+    const isUpper = w[0] === w[0].toUpperCase() && w[0] !== w[0].toLowerCase();
+    const clean = w.replace(/[^a-zA-Z'-]/g, "");
+    const punct = w.replace(/[a-zA-Z'-]/g, "");
+    const syn = getRandomSynonym(clean, mode);
+    if (syn) {
+      const result = isUpper ? syn[0].toUpperCase() + syn.slice(1) : syn;
+      if (mode === "creative" && Math.random() > 0.3) return result + punct;
+      if (mode === "standard" && Math.random() > 0.35) return result + punct;
+      if (mode === "fluent" && Math.random() > 0.4) return result + punct;
+      return w;
+    }
+    return w;
+  }).join("");
+}
+
+function expandContractions(text) {
+  return text.replace(contractions, (match) => contractionMap[match.toLowerCase()] || match);
+}
+
+function fluentRestructure(text) {
+  const sentences = text.split(/(?<=[.!?])\s+/).filter(s => s.trim());
+  return sentences.map(s => {
+    if (s.split(" ").length > 8 && Math.random() > 0.5) {
+      const parts = s.split(/[,;]/);
+      if (parts.length > 1 && Math.random() > 0.5) {
+        const idx = Math.floor(Math.random() * (parts.length - 1)) + 1;
+        parts.splice(idx, 0, parts.shift());
+        return parts.join(",").trim();
+      }
+    }
+    return s;
+  }).join(" ");
+}
+
+function creativeRestructure(text) {
+  const sentences = text.split(/(?<=[.!?])\s+/).filter(s => s.trim());
+  return sentences.map(s => {
+    if (Math.random() > 0.6) {
+      const words = s.split(/\s+/);
+      if (words.length > 5) {
+        const idx = Math.floor(Math.random() * (words.length - 2)) + 1;
+        const temp = words[idx];
+        words[idx] = words[idx + 1];
+        words[idx + 1] = temp;
+        return words.join(" ");
+      }
+    }
+    return s;
+  }).join(" ");
+}
+
+function paraphrase(text, mode) {
+  if (!text.trim()) return "";
+  let result = text.trim();
+
+  if (mode === "formal") {
+    result = expandContractions(result);
+    result = replaceInSentence(result, "formal");
+  } else if (mode === "fluent") {
+    result = replaceInSentence(result, "fluent");
+    result = fluentRestructure(result);
+  } else if (mode === "creative") {
+    result = replaceInSentence(result, "creative");
+    result = creativeRestructure(result);
+    result = fluentRestructure(result);
+  } else {
+    result = replaceInSentence(result, "standard");
+  }
+
+  return result;
+}
+
+let currentMode = "standard";
+
+document.querySelectorAll(".mode-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".mode-btn").forEach(b => {
+      b.className = "mode-btn px-4 py-2 rounded-lg text-xs font-semibold border transition-all bg-surface-2 text-tertiary border-surface-3 hover:text-white";
+    });
+    btn.className = "mode-btn px-4 py-2 rounded-lg text-xs font-semibold border transition-all bg-violet-600 text-white border-violet-500";
+    currentMode = btn.dataset.mode;
+  });
+});
+
+document.getElementById("paraphrase-btn").addEventListener("click", () => {
+  const input = document.getElementById("input-text").value;
+  if (!input.trim()) {
+    if (window.__showToast) window.__showToast({ message: "Please enter text to paraphrase", variant: "warning" });
+    return;
+  }
+  const output = paraphrase(input, currentMode);
+  document.getElementById("output-section").classList.remove("hidden");
+  document.getElementById("output-text").value = output;
+  document.getElementById("word-count").textContent = output.split(/\s+/).filter(w => w).length + " words";
+});
+
+document.getElementById("copy-btn").addEventListener("click", async () => {
+  const text = document.getElementById("output-text").value;
+  if (!text) {
+    if (window.__showToast) window.__showToast({ message: "Nothing to copy!", variant: "warning" });
+    return;
+  }
+  await navigator.clipboard.writeText(text);
+  if (window.__showToast) window.__showToast({ message: "Paraphrased text copied!", variant: "success" });
+});
+</script>

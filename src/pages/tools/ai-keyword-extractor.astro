@@ -1,0 +1,202 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "How does the keyword extractor identify keywords?", answer: "The extractor uses a four-step process: 1) Tokenization — splits text into individual words and bigrams, 2) Stop word filtering — removes common words like 'the', 'is', 'at' that carry little meaning, 3) Frequency counting — tallies how often each word appears, 4) Ranking — sorts keywords by frequency, showing you the most important terms. It also detects common two-word phrases (bigrams) for more context-rich keywords." },
+  { question: "What are stop words and why are they removed?", answer: "Stop words are common, high-frequency words (like 'the', 'a', 'an', 'and', 'or', 'in', 'on', 'at', 'to', 'for', 'of', 'by', 'with') that appear in almost every English text but carry little meaningful content. By removing them, the extractor can focus on the content-bearing words that truly represent what your text is about." },
+  { question: "Can I use extracted keywords for SEO?", answer: "Yes! The extracted keywords are excellent for SEO optimization. They reveal the core topics and themes of your content, helping you identify: primary keywords to target, related terms to include, content gaps, and optimization opportunities. Use the ranked list to ensure your most important keywords appear in titles, headings, meta descriptions, and throughout your content naturally." },
+];
+
+const schema = {
+  name: "AI Keyword Extractor",
+  applicationCategory: "AI Tools",
+  description: "Extract key terms, phrases, and topics from any text. Ranked by frequency with bigram detection and visual word cloud display.",
+  featureList: ["Keyword extraction with frequency ranking", "Bigram (two-word phrase) detection", "Visual word cloud display", "Stop word filtering for meaningful results", "Copy keywords with one click"],
+};
+---
+<MainLayout title="AI Keyword Extractor - Extract Keywords & Phrases from Text" description="Extract the most important keywords and phrases from any text. See ranked keywords with frequency counts, bigrams, and a visual word cloud." keywords="keyword extractor, keyword analysis, SEO keywords, text analysis, word frequency, phrase extraction" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Keyword Extractor",url:"/tools/ai-keyword-extractor/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="AI Keyword" gradient="Extractor Pro" desc="Extract the most important keywords, phrases, and topics from any text. See ranked results with frequency data and a visual word cloud." badge="✦ AI Powered" slug="ai-keyword-extractor" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6 space-y-4">
+        <textarea id="input-text" rows="8" placeholder="Paste your text here to extract keywords..." class="w-full bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-none focus:outline-none focus:border-violet-500/60 transition-all"></textarea>
+        <button id="extract-btn" class="w-full py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all">Extract Keywords</button>
+        <div id="results-area" class="hidden space-y-4">
+          <div class="bg-surface-2 border border-surface-3 rounded-xl p-5 space-y-5">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-semibold text-dim uppercase tracking-wider">Ranked Keywords</span>
+                <button id="copy-keywords-btn" class="px-3 py-1 bg-surface-1 hover:bg-surface-3 border border-surface-3 rounded-lg text-[10px] text-tertiary hover:text-primary transition-all">Copy All</button>
+              </div>
+              <div id="keywords-list" class="space-y-1"></div>
+            </div>
+            <div>
+              <span class="text-xs font-semibold text-dim uppercase tracking-wider mb-3 block">Word Cloud</span>
+              <div id="word-cloud" class="flex flex-wrap gap-2 justify-center min-h-[120px] bg-surface-1 border border-surface rounded-xl p-4"></div>
+            </div>
+            <div>
+              <span class="text-xs font-semibold text-dim uppercase tracking-wider mb-2 block">Detected Bigrams (Two-Word Phrases)</span>
+              <div id="bigrams-list" class="flex flex-wrap gap-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Keyword Extractor uses a <strong class="text-primary">statistical NLP approach</strong> to identify the most meaningful terms in your text. The process begins with tokenization — splitting the text into individual words and contiguous word pairs (bigrams). A comprehensive stop word list then filters out common, low-information words to ensure only meaningful content words remain.</p><p>Each remaining word and bigram is counted for frequency, and results are ranked from most to least common. The <strong class="text-primary">word cloud</strong> provides a visual representation where keyword size corresponds to frequency, making it easy to spot dominant themes at a glance. Bigram detection captures multi-word concepts like "machine learning" or "climate change" that carry more context than single words.</p><p>Everything runs in your browser — your text is never uploaded to any server, ensuring complete privacy.</p></div></section>
+    <RelatedTools current="ai-keyword-extractor" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+
+<script>
+  const inputEl = document.getElementById("input-text");
+  const extractBtn = document.getElementById("extract-btn");
+  const resultsArea = document.getElementById("results-area");
+  const keywordsList = document.getElementById("keywords-list");
+  const wordCloud = document.getElementById("word-cloud");
+  const bigramsList = document.getElementById("bigrams-list");
+  const copyKeywordsBtn = document.getElementById("copy-keywords-btn");
+
+  function triggerToast(message, variant) {
+    if (window.__showToast) window.__showToast({ message, variant });
+  }
+
+  const stopWords = new Set([
+    "a","about","above","after","again","against","all","am","an","and","any","are","arent","as","at","be","because",
+    "been","before","being","below","between","both","but","by","cant","cannot","could","couldnt","did","didnt","do",
+    "does","doesnt","doing","dont","down","during","each","few","for","from","further","had","hadnt","has","hasnt",
+    "have","havent","having","he","hed","hell","hes","her","here","heres","hers","herself","him","himself","his","how",
+    "hows","i","id","ill","im","ive","if","in","into","is","isnt","it","its","its","itself","lets","me","more","most",
+    "mustnt","my","myself","no","nor","not","of","off","on","once","only","or","other","ought","our","ours","ourselves",
+    "out","over","own","same","shant","she","shed","shell","shes","should","shouldnt","so","some","such","than","that",
+    "thats","the","their","theirs","them","themselves","then","there","theres","these","they","theyd","theyll","theyre",
+    "theyve","this","those","through","to","too","under","until","up","very","was","wasnt","we","wed","well","were",
+    "weve","were","werent","what","whats","when","whens","where","wheres","which","while","who","whos","whom","why",
+    "whys","with","wont","would","wouldnt","you","youd","youll","youre","youve","your","yours","yourself","yourselves",
+    "also","just","like","even","much","well","back","still","already","yet","may","might","shall","can","every",
+    "done","got","get","going","being","seen","said","came","come","make","made","take","took","know","new","way",
+    "many","us","thing","things","need","used","use","using","seems","thats","two","one","see","say","really",
+    "first","last","next","around","here","there","please","yes","sure","ok","oh","well","right","now","then",
+    "always","never","ever","away","upon","ago","long","much","able","away","per","via","etc","because",
+  ]);
+
+  function isStopWord(w) {
+    return stopWords.has(w) || /^[0-9]+$/.test(w) || w.length < 2;
+  }
+
+  function extractKeywords(text) {
+    const clean = text.toLowerCase().replace(/[^a-z0-9\s'-]/g, " ").replace(/\s+/g, " ").trim();
+    const words = clean.split(/\s+/).filter(w => w && !isStopWord(w));
+
+    // Single word frequencies
+    const freq = {};
+    words.forEach(w => { freq[w] = (freq[w] || 0) + 1 });
+
+    // Bigram frequencies
+    const bigramFreq = {};
+    for (let i = 0; i < words.length - 1; i++) {
+      if (!isStopWord(words[i]) && !isStopWord(words[i+1])) {
+        const bg = words[i] + " " + words[i+1];
+        bigramFreq[bg] = (bigramFreq[bg] || 0) + 1;
+      }
+    }
+
+    // Filter out bigrams that appear only once
+    const significantBigrams = Object.entries(bigramFreq)
+      .filter(([, count]) => count > 1)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+    const sorted = Object.entries(freq)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .slice(0, 30);
+
+    // Limit bigrams
+    const topBigrams = significantBigrams.slice(0, 15);
+
+    return { keywords: sorted, bigrams: topBigrams };
+  }
+
+  function getFontSize(count, maxCount, minCount) {
+    const range = maxCount - minCount || 1;
+    const normalized = (count - minCount) / range;
+    return Math.round(10 + normalized * 26);
+  }
+
+  function getOpacity(count, maxCount, minCount) {
+    const range = maxCount - minCount || 1;
+    const normalized = (count - minCount) / range;
+    return 0.5 + normalized * 0.5;
+  }
+
+  function getColor(i) {
+    const colors = ["from-violet-400","from-blue-400","from-purple-400","from-indigo-400","from-fuchsia-400","from-teal-400","from-cyan-400","from-rose-400","from-pink-400","from-sky-400"];
+    const toColors = ["to-purple-600","to-indigo-600","to-fuchsia-600","to-blue-600","to-pink-600","to-teal-600","to-cyan-600","to-rose-600","to-violet-600","to-sky-600"];
+    return { from: colors[i % colors.length], to: toColors[i % toColors.length] };
+  }
+
+  extractBtn.addEventListener("click", () => {
+    const text = inputEl.value.trim();
+    if (!text) { triggerToast("Please enter some text to extract keywords", "warning"); return; }
+    if (text.split(/\s+/).filter(w => w).length < 5) { triggerToast("Please enter at least 5 words", "warning"); return; }
+
+    const { keywords, bigrams } = extractKeywords(text);
+    resultsArea.classList.remove("hidden");
+
+    if (keywords.length === 0) {
+      keywordsList.innerHTML = '<p class="text-xs text-dim text-center py-4">No significant keywords found. Try longer or more varied text.</p>';
+      wordCloud.innerHTML = "";
+      bigramsList.innerHTML = "";
+      return;
+    }
+
+    const maxCount = keywords[0][1];
+    const minCount = keywords[keywords.length - 1][1];
+
+    keywordsList.innerHTML = keywords.slice(0, 20).map(([word, count], i) => {
+      const barW = (count / maxCount) * 100;
+      return `<div class="flex items-center gap-3">
+        <span class="text-[10px] text-dim w-5 text-right">${i + 1}</span>
+        <span class="text-xs text-secondary font-medium w-32 truncate">${word}</span>
+        <div class="flex-1 h-2 rounded-full bg-zinc-800 overflow-hidden">
+          <div class="h-full rounded-full bg-gradient-to-r from-violet-500 to-purple-500 transition-all" style="width:${barW}%"></div>
+        </div>
+        <span class="text-[10px] text-dim w-12 text-right tabular-nums">${count}x</span>
+      </div>`;
+    }).join("");
+
+    wordCloud.innerHTML = keywords.slice(0, 40).map(([word, count], i) => {
+      const size = getFontSize(count, maxCount, minCount);
+      const opacity = getOpacity(count, maxCount, minCount);
+      const c = getColor(i);
+      return `<span class="inline-block bg-gradient-to-r ${c.from} ${c.to} bg-clip-text text-transparent font-bold transition-all hover:scale-110 cursor-default" style="font-size:${size}px;opacity:${opacity}">${word}</span>`;
+    }).join("");
+
+    if (bigrams.length > 0) {
+      bigramsList.innerHTML = bigrams.map(([phrase, count]) =>
+        `<span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface-1 border border-surface-3 rounded-lg text-[11px] text-secondary font-medium">
+          <span>${phrase}</span>
+          <span class="text-[10px] text-violet-400 font-bold">${count}x</span>
+        </span>`
+      ).join("");
+    } else {
+      bigramsList.innerHTML = '<span class="text-xs text-dim">No significant phrase repetitions found</span>';
+    }
+
+    triggerToast(`Extracted ${keywords.length} keywords!`, "success");
+  });
+
+  copyKeywordsBtn.addEventListener("click", async () => {
+    const text = inputEl.value.trim();
+    if (!text) { triggerToast("Nothing to copy!", "warning"); return; }
+    const { keywords, bigrams } = extractKeywords(text);
+    const kwText = keywords.map(([w, c]) => `${w} (${c})`).join("\n");
+    const bigramText = bigrams.length > 0 ? "\n\nBigrams:\n" + bigrams.map(([p, c]) => `${p} (${c})`).join("\n") : "";
+    await navigator.clipboard.writeText("Keywords:\n" + kwText + bigramText);
+    triggerToast("Keywords copied to clipboard!", "success");
+  });
+</script>

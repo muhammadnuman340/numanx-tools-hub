@@ -1,0 +1,119 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "How does the diff checker work?", answer: "It compares two texts line by line. Lines present in one version but not the other are highlighted — added lines in green, removed lines in red, and unchanged lines in neutral." },
+  { question: "Is my text sent to a server?", answer: "No. All comparison happens entirely in your browser. Your text never leaves your device." },
+  { question: "Can I compare large files?", answer: "The tool works well with most text sizes, but for very large files (thousands of lines) performance may vary since all processing is done client-side." },
+];
+const schema = { name: "Diff Checker", applicationCategory: "Developer Tools", description: "Compare two texts side-by-side and see added, removed, and unchanged lines highlighted instantly.", featureList: ["Side-by-side comparison", "Line-by-line diff highlighting", "Added (green) / removed (red) markers", "100% client-side"] };
+---
+<MainLayout title="Diff Checker - Compare Text Online Free" description="Compare two texts side-by-side and see added, removed, and unchanged lines highlighted instantly. Free online diff checker." keywords="diff checker, text comparison, diff tool, compare text, line diff" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Diff Checker",url:"/tools/diff-checker/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="Diff" gradient="Checker Pro" desc="Compare two texts side-by-side and instantly see added, removed, and unchanged lines highlighted." badge="✦ New Tool" slug="diff-checker" />
+    <ShareBar />
+    <div class="max-w-4xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-2 block">Original Text</label>
+            <textarea id="text-left" class="w-full h-48 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-500/50 focus:outline-none transition-all resize-none font-mono" placeholder="Paste original text here..."></textarea>
+          </div>
+          <div>
+            <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-2 block">New Text</label>
+            <textarea id="text-right" class="w-full h-48 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-500/50 focus:outline-none transition-all resize-none font-mono" placeholder="Paste new text here..."></textarea>
+          </div>
+        </div>
+        <div class="flex justify-center mt-4">
+          <button id="compare-btn" class="bg-green-600 hover:bg-green-500 text-white text-sm font-semibold px-8 py-2.5 rounded-xl transition-all active:scale-95">Compare</button>
+        </div>
+        <div id="diff-result" class="mt-6 hidden">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-2 block">Original</label>
+              <pre id="diff-left" class="w-full h-64 overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm font-mono text-primary whitespace-pre-wrap"></pre>
+            </div>
+            <div>
+              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-2 block">New</label>
+              <pre id="diff-right" class="w-full h-64 overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm font-mono text-primary whitespace-pre-wrap"></pre>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 mt-3 text-xs">
+            <span class="flex items-center gap-1"><span class="inline-block w-3 h-3 rounded bg-green-600/30 border border-green-600/50"></span> Added</span>
+            <span class="flex items-center gap-1"><span class="inline-block w-3 h-3 rounded bg-red-600/30 border border-red-600/50"></span> Removed</span>
+            <span class="flex items-center gap-1"><span class="inline-block w-3 h-3 rounded bg-surface-1 border border-surface-3"></span> Unchanged</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <RelatedTools current="diff-checker" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  const leftInput = document.getElementById("text-left") as HTMLTextAreaElement;
+  const rightInput = document.getElementById("text-right") as HTMLTextAreaElement;
+  const compareBtn = document.getElementById("compare-btn");
+  const diffResult = document.getElementById("diff-result");
+  const diffLeft = document.getElementById("diff-left");
+  const diffRight = document.getElementById("diff-right");
+
+  function escapeHtml(s: string): string {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+
+  function simpleDiff(leftLines: string[], rightLines: string[]) {
+    const m = leftLines.length, n = rightLines.length;
+    const dp: number[][] = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+    for (let i = 1; i <= m; i++)
+      for (let j = 1; j <= n; j++)
+        dp[i][j] = leftLines[i - 1] === rightLines[j - 1] ? dp[i - 1][j - 1] + 1 : Math.max(dp[i - 1][j], dp[i][j - 1]);
+    const leftResult: { text: string; type: "same" | "removed" }[] = [];
+    const rightResult: { text: string; type: "same" | "added" }[] = [];
+    let i = m, j = n;
+    while (i > 0 || j > 0) {
+      if (i > 0 && j > 0 && leftLines[i - 1] === rightLines[j - 1]) {
+        leftResult.unshift({ text: leftLines[i - 1], type: "same" });
+        rightResult.unshift({ text: rightLines[j - 1], type: "same" });
+        i--; j--;
+      } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+        rightResult.unshift({ text: rightLines[j - 1], type: "added" });
+        leftResult.unshift({ text: "", type: "removed" });
+        j--;
+      } else {
+        leftResult.unshift({ text: leftLines[i - 1], type: "removed" });
+        rightResult.unshift({ text: "", type: "added" });
+        i--;
+      }
+    }
+    return { leftResult, rightResult };
+  }
+
+  function renderLine(text: string, type: string, side: "left" | "right"): string {
+    if (text === "" && type === "removed") return `<div class="bg-red-600/20 border-l-2 border-red-500 px-3 py-0.5 text-red-300 font-mono text-sm leading-relaxed">&nbsp;</div>`;
+    if (text === "" && type === "added") return `<div class="bg-green-600/20 border-l-2 border-green-500 px-3 py-0.5 text-green-300 font-mono text-sm leading-relaxed">&nbsp;</div>`;
+    if (type === "same") return `<div class="bg-transparent px-3 py-0.5 text-primary font-mono text-sm leading-relaxed">${escapeHtml(text)}</div>`;
+    if (type === "removed") return `<div class="bg-red-600/20 border-l-2 border-red-500 px-3 py-0.5 text-red-300 font-mono text-sm leading-relaxed">${escapeHtml(text)}</div>`;
+    if (type === "added") return `<div class="bg-green-600/20 border-l-2 border-green-500 px-3 py-0.5 text-green-300 font-mono text-sm leading-relaxed">${escapeHtml(text)}</div>`;
+    return "";
+  }
+
+  compareBtn.addEventListener("click", () => {
+    const leftText = leftInput.value;
+    const rightText = rightInput.value;
+    if (!leftText && !rightText) {
+      if ((window as any).__showToast) (window as any).__showToast({ message: "Paste text in both fields", variant: "warning" });
+      return;
+    }
+    const leftLines = leftText.split("\n");
+    const rightLines = rightText.split("\n");
+    const { leftResult, rightResult } = simpleDiff(leftLines, rightLines);
+    diffLeft.innerHTML = leftResult.map(r => renderLine(r.text, r.type, "left")).join("");
+    diffRight.innerHTML = rightResult.map(r => renderLine(r.text, r.type, "right")).join("");
+    diffResult.classList.remove("hidden");
+  });
+</script>

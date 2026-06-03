@@ -1,0 +1,107 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "Does the countdown timer work offline?", answer: "Yes, the countdown timer runs entirely in your browser using JavaScript's setInterval. No server connection is needed once the page is loaded. The timer calculates the difference between the target date and the current time." },
+  { question: "What timezone does the timer use?", answer: "The timer uses your device's local timezone. The target date and time are interpreted in the timezone of the user's browser. For precise coordination across timezones, ensure all participants are aware of the local time context." },
+  { question: "Can I set a countdown for days ahead?", answer: "Yes, you can set any future date and time. The timer supports dates up to the year 2099. It will display the remaining time in days, hours, minutes, and seconds, updating in real-time every second." },
+];
+const schema = { name: "Countdown Timer", applicationCategory: "Utilities", description: "Set a countdown timer for any date and event. Live display of days, hours, minutes, and seconds remaining.", featureList: ["Custom date and time", "Event name support", "Live countdown display", "Reset functionality"] };
+---
+<MainLayout title="Countdown Timer - Free Online Countdown Timer" description="Set a countdown timer for any date and event. Live display of days, hours, minutes, and seconds remaining." keywords="countdown timer, online countdown, event timer, countdown clock, days hours minutes seconds" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Countdown Timer",url:"/tools/countdown-timer/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="Countdown" gradient="Timer Pro" desc="Set a countdown timer for any date and event. Live display of days, hours, minutes, and seconds remaining." badge="✦ New Tool" slug="countdown-timer" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+        <label class="block text-xs font-medium text-tertiary mb-1.5">Event Name</label>
+        <input id="event-input" type="text" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-rose-400/50 focus:outline-none transition-all mb-4" placeholder="e.g. New Year 2027" />
+        <label class="block text-xs font-medium text-tertiary mb-1.5">Target Date & Time</label>
+        <input id="datetime-input" type="datetime-local" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-rose-400/50 focus:outline-none transition-all mb-4" />
+        <div class="flex gap-2">
+          <button id="start-btn" class="flex-1 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all">Start</button>
+          <button id="reset-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-4 py-3 rounded-xl border border-surface-3 transition-all">Reset</button>
+        </div>
+        <div id="countdown-display" class="mt-6 pt-6 border-t border-surface hidden">
+          <div id="event-name-display" class="text-sm text-tertiary text-center mb-4">Countdown to <span class="text-white font-semibold"></span></div>
+          <div class="grid grid-cols-4 gap-3 text-center">
+            <div class="bg-surface-2 rounded-xl py-4 px-2 border border-surface-3"><div class="text-3xl md:text-4xl font-black text-rose-400" id="days-val">00</div><div class="text-xs text-tertiary mt-1">Days</div></div>
+            <div class="bg-surface-2 rounded-xl py-4 px-2 border border-surface-3"><div class="text-3xl md:text-4xl font-black text-rose-400" id="hours-val">00</div><div class="text-xs text-tertiary mt-1">Hours</div></div>
+            <div class="bg-surface-2 rounded-xl py-4 px-2 border border-surface-3"><div class="text-3xl md:text-4xl font-black text-rose-400" id="mins-val">00</div><div class="text-xs text-tertiary mt-1">Minutes</div></div>
+            <div class="bg-surface-2 rounded-xl py-4 px-2 border border-surface-3"><div class="text-3xl md:text-4xl font-black text-rose-400" id="secs-val">00</div><div class="text-xs text-tertiary mt-1">Seconds</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-rose-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Countdown <span class="bg-gradient-to-r from-rose-400 to-pink-500 bg-clip-text text-transparent">Timers</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>Countdown timers are perfect for tracking time until important events like product launches, project deadlines, holidays, or personal milestones. By calculating the difference between the current time and a target date, the timer provides a real-time update of days, hours, minutes, and seconds remaining, helping you stay aware of approaching deadlines and special occasions.</p></div></section>
+    <RelatedTools current="countdown-timer" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-rose-400 to-pink-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+  const eventInput = document.getElementById("event-input");
+  const datetimeInput = document.getElementById("datetime-input");
+  const startBtn = document.getElementById("start-btn");
+  const resetBtn = document.getElementById("reset-btn");
+  const countdownDisplay = document.getElementById("countdown-display");
+  const eventNameDisplay = document.getElementById("event-name-display");
+  const daysVal = document.getElementById("days-val");
+  const hoursVal = document.getElementById("hours-val");
+  const minsVal = document.getElementById("mins-val");
+  const secsVal = document.getElementById("secs-val");
+
+  let interval = null;
+
+  function pad(n) {
+    return String(n).padStart(2, "0");
+  }
+
+  function updateCountdown(target) {
+    const now = new Date().getTime();
+    const diff = target - now;
+
+    if (diff <= 0) {
+      daysVal.textContent = "00";
+      hoursVal.textContent = "00";
+      minsVal.textContent = "00";
+      secsVal.textContent = "00";
+      if (interval) clearInterval(interval);
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+    daysVal.textContent = pad(days);
+    hoursVal.textContent = pad(hours);
+    minsVal.textContent = pad(mins);
+    secsVal.textContent = pad(secs);
+  }
+
+  startBtn.addEventListener("click", () => {
+    if (interval) clearInterval(interval);
+    const dateStr = datetimeInput.value;
+    const eventName = eventInput.value.trim() || "Event";
+    if (!dateStr) return;
+
+    const target = new Date(dateStr).getTime();
+    eventNameDisplay.innerHTML = `Countdown to <span class="text-white font-semibold">${eventName}</span>`;
+    countdownDisplay.classList.remove("hidden");
+    updateCountdown(target);
+    interval = setInterval(() => updateCountdown(target), 1000);
+  });
+
+  resetBtn.addEventListener("click", () => {
+    if (interval) clearInterval(interval);
+    interval = null;
+    eventInput.value = "";
+    datetimeInput.value = "";
+    countdownDisplay.classList.add("hidden");
+  });
+</script>

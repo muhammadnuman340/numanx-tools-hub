@@ -1,18 +1,20 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import { getFeaturedTools, getPopularTools, categories as catInfos } from "../data/tools";
+import { tools, getFeaturedTools, getPopularTools, categories as catInfos } from "../data/tools";
 import AdSlot from "../components/AdSlot.astro";
 import CarbonAd from "../components/CarbonAd.astro";
 import ValueCard from "../components/ui/ValueCard.astro";
 import ToolIcon from "../components/icons/ToolIcon.astro";
 import AdUnit from "../components/AdUnit.astro";
 
+const activeCategoryCount = catInfos.filter((c) => c.count > 0).length;
+
 const featuredTools = getFeaturedTools(6).map((t) => ({
   name: t.name, desc: t.longDescription, url: t.url, icon: t.icon,
   cat: catInfos.find((c) => c.id === t.category)?.title || t.category,
 }));
 
-const categories = catInfos.map((c) => ({
+const categories = catInfos.filter((c) => c.count > 0).map((c) => ({
   title: c.title, desc: c.description, count: `${c.count} Tools`, icon: c.icon, gradient: c.gradient,
 }));
 
@@ -29,12 +31,19 @@ const popularTools = getPopularTools(4).map((t) => ({
   name: t.name, url: t.url, icon: t.icon, badge: t.isNew ? "New" : t.isPopular ? "Popular" : "Trending",
 }));
 
-const blogPosts = [
-  { title: "Best Free Image Tools 2026", desc: "The best free image editing and conversion tools available online in 2026.", url: "/blog/best-free-image-tools-2026/", time: "5 min read", imgText: "Image Tools" },
-  { title: "Best AI Tools for Students", desc: "Top AI tools every student should use in 2026 for studying, writing, and research.", url: "/blog/best-ai-tools-for-students/", time: "7 min read", imgText: "AI Tools" },
-  { title: "Best YouTube Tools for Creators", desc: "Essential tools for YouTube creators to grow channels and edit videos.", url: "/blog/best-youtube-tools-for-creators/", time: "6 min read", imgText: "Creator Tools" },
-  { title: "How to Compress Images", desc: "Learn how to compress images without losing quality using free online tools.", url: "/blog/how-to-compress-images/", time: "5 min read", imgText: "Image Tips" },
-];
+const blogPostModules = import.meta.glob("./blog/*.md", { eager: true });
+const allBlogPosts = Object.entries(blogPostModules).map(([path, mod]) => {
+  const fm = (mod as any).frontmatter || {};
+  const slug = path.replace("./blog/", "").replace(".md", "");
+  return {
+    title: fm.title || slug,
+    desc: fm.description || "",
+    url: `/blog/${slug}/`,
+    time: fm.readingTime || "5 min read",
+    imgText: (fm.category || "Blog").replace(" Tools", ""),
+  };
+});
+const blogPosts = allBlogPosts.slice(0, 4);
 
 const roadmap = [
   { phase: "Phase 1", title: "NumanX Tools", desc: "Premium online tools for image optimization, text analysis, QR assets, and sports utilities. Fully active and operational.", status: "Completed" },
@@ -208,7 +217,7 @@ const roadmap = [
           <div class="relative rounded-2xl border border-surface bg-surface-1 backdrop-blur-xl p-6 hover:border-purple-500/30 hover:bg-surface-2 hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
             <div class="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-colors"></div>
             <div class="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
-              <span class="stat-counter" data-target="16">16</span>+
+              <span class="stat-counter" data-target={tools.length}>{tools.length}</span>+
             </div>
             <p class="text-sm font-semibold text-secondary mt-2">Tools Available</p>
             <p class="text-xs text-tertiary mt-1">Free tools ready for production</p>
@@ -216,10 +225,10 @@ const roadmap = [
           <div class="relative rounded-2xl border border-surface bg-surface-1 backdrop-blur-xl p-6 hover:border-purple-500/30 hover:bg-surface-2 hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
             <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors"></div>
             <div class="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
-              <span class="stat-counter" data-target="4">4</span>
+              <span class="stat-counter" data-target={activeCategoryCount}>{activeCategoryCount}</span>
             </div>
             <p class="text-sm font-semibold text-secondary mt-2">Core Categories</p>
-            <p class="text-xs text-tertiary mt-1">Image, Creator, Utility, Cricket</p>
+            <p class="text-xs text-tertiary mt-1">{catInfos.filter((c) => c.count > 0).map((c) => c.title).join(", ")}</p>
           </div>
           <div class="relative rounded-2xl border border-surface bg-surface-1 backdrop-blur-xl p-6 hover:border-purple-500/30 hover:bg-surface-2 hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
             <div class="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-colors"></div>
@@ -645,6 +654,14 @@ const roadmap = [
     { id: "json-formatter", name: "JSON Formatter", icon: "json", url: "/tools/json-formatter/" },
     { id: "png-to-jpg", name: "PNG to JPG", icon: "jpg2png", url: "/tools/png-to-jpg/" },
     { id: "character-counter", name: "Character Counter", icon: "word", url: "/tools/character-counter/" },
+    { id: "image-cropper", name: "Image Cropper", icon: "resize", url: "/tools/image-cropper/" },
+    { id: "percentage-calculator", name: "Percentage Calculator", icon: "age", url: "/tools/percentage-calculator/" },
+    { id: "bmi-calculator", name: "BMI Calculator", icon: "target", url: "/tools/bmi-calculator/" },
+    { id: "case-converter", name: "Case Converter", icon: "word", url: "/tools/case-converter/" },
+    { id: "uuid-generator", name: "UUID Generator", icon: "lock", url: "/tools/uuid-generator/" },
+    { id: "color-converter", name: "Color Converter", icon: "target", url: "/tools/color-converter/" },
+    { id: "base64-tool", name: "Base64 Encoder/Decoder", icon: "lock", url: "/tools/base64-tool/" },
+    { id: "lorem-ipsum", name: "Lorem Ipsum Generator", icon: "word", url: "/tools/lorem-ipsum/" },
   ];
 
   try {

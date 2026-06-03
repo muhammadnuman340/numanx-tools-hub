@@ -26,6 +26,7 @@ const popularItems = getPopularTools(5);
         <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-surface-2 text-tertiary hover:text-primary hover:bg-surface-3" data-cat="Creator Tools" role="tab" aria-selected="false">Creator Tools</button>
         <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-surface-2 text-tertiary hover:text-primary hover:bg-surface-3" data-cat="Utility Tools" role="tab" aria-selected="false">Utility Tools</button>
         <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-surface-2 text-tertiary hover:text-primary hover:bg-surface-3" data-cat="Cricket Tools" role="tab" aria-selected="false">Cricket Tools</button>
+        <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-surface-2 text-tertiary hover:text-primary hover:bg-surface-3" data-cat="Developer Tools" role="tab" aria-selected="false">Developer Tools</button>
         <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-surface-2 text-tertiary hover:text-primary hover:bg-surface-3" data-cat="Blog" role="tab" aria-selected="false">Blog</button>
       </div>
 
@@ -83,27 +84,61 @@ const popularItems = getPopularTools(5);
     { id: "image-resizer", name: "Image Resizer", desc: "Resize images to any dimension with aspect ratio lock and presets.", cat: "Image", icon: "resize", url: "/tools/image-resizer/" },
     { id: "unit-converter", name: "Unit Converter", desc: "Convert length, mass, volume, temperature, area, speed, time, and data units.", cat: "Utility", icon: "unit", url: "/tools/unit-converter/" },
     { id: "markdown-editor", name: "Markdown Editor", desc: "Write and preview markdown in real-time with toolbar and HTML export.", cat: "Creator", icon: "markdown", url: "/tools/markdown-editor/" },
-    { id: "json-formatter", name: "JSON Formatter", desc: "Format, validate, and minify JSON data with syntax highlighting.", cat: "Utility", icon: "json", url: "/tools/json-formatter/" },
+    { id: "json-formatter", name: "JSON Formatter", desc: "Format, validate, and minify JSON data with syntax highlighting.", cat: "Developer", icon: "json", url: "/tools/json-formatter/" },
     { id: "png-to-jpg", name: "PNG to JPG", desc: "Convert PNG images to JPG format with adjustable quality.", cat: "Image", icon: "jpg2png", url: "/tools/png-to-jpg/" },
     { id: "character-counter", name: "Character Counter", desc: "Count characters, words, sentences, paragraphs, and lines in real-time.", cat: "Utility", icon: "word", url: "/tools/character-counter/" },
     { id: "image-cropper", name: "Image Cropper", desc: "Crop images with customizable aspect ratios and download the result.", cat: "Image", icon: "resize", url: "/tools/image-cropper/" },
     { id: "percentage-calculator", name: "Percentage Calculator", desc: "Calculate X% of Y, percentage change, and percentage difference.", cat: "Utility", icon: "age", url: "/tools/percentage-calculator/" },
     { id: "bmi-calculator", name: "BMI Calculator", desc: "Calculate your Body Mass Index with metric or imperial units.", cat: "Utility", icon: "target", url: "/tools/bmi-calculator/" },
     { id: "case-converter", name: "Case Converter", desc: "Convert text between uppercase, lowercase, title case, and more.", cat: "Utility", icon: "word", url: "/tools/case-converter/" },
-    { id: "uuid-generator", name: "UUID Generator", desc: "Generate UUID v4 and v7 identifiers instantly.", cat: "Utility", icon: "lock", url: "/tools/uuid-generator/" },
-    { id: "color-converter", name: "Color Converter", desc: "Convert colors between HEX, RGB, and HSL formats.", cat: "Utility", icon: "target", url: "/tools/color-converter/" },
-    { id: "base64-tool", name: "Base64 Encoder/Decoder", desc: "Encode and decode Base64 strings instantly.", cat: "Utility", icon: "lock", url: "/tools/base64-tool/" },
+    { id: "uuid-generator", name: "UUID Generator", desc: "Generate UUID v4 and v7 identifiers instantly.", cat: "Developer", icon: "lock", url: "/tools/uuid-generator/" },
+    { id: "color-converter", name: "Color Converter", desc: "Convert colors between HEX, RGB, and HSL formats.", cat: "Developer", icon: "target", url: "/tools/color-converter/" },
+    { id: "base64-tool", name: "Base64 Encoder/Decoder", desc: "Encode and decode Base64 strings instantly.", cat: "Developer", icon: "lock", url: "/tools/base64-tool/" },
     { id: "lorem-ipsum", name: "Lorem Ipsum Generator", desc: "Generate placeholder text in various formats.", cat: "Creator", icon: "word", url: "/tools/lorem-ipsum/" },
     { id: "best-ai-tools-for-students", name: "Best AI Tools for Students", desc: "Top AI tools every student should use in 2026 for studying, writing, and research.", cat: "Blog", icon: "creator", url: "/blog/best-ai-tools-for-students/" },
     { id: "best-free-image-tools-2026", name: "Best Free Image Tools 2026", desc: "The best free image editing and conversion tools available online in 2026.", cat: "Blog", icon: "creator", url: "/blog/best-free-image-tools-2026/" },
     { id: "best-youtube-tools-for-creators", name: "Best YouTube Tools for Creators", desc: "Essential tools for YouTube creators to grow channels and edit videos.", cat: "Blog", icon: "creator", url: "/blog/best-youtube-tools-for-creators/" },
     { id: "how-to-compress-images", name: "How to Compress Images", desc: "Learn how to compress images without losing quality using free online tools.", cat: "Blog", icon: "creator", url: "/blog/how-to-compress-images/" },
+    { id: "top-10-ai-tools-content-creators-2026", name: "Top 10 AI Tools for Content Creators in 2026", desc: "Discover the best AI-powered tools revolutionizing content creation in 2026.", cat: "Blog", icon: "creator", url: "/blog/top-10-ai-tools-content-creators-2026/" },
+    { id: "how-to-optimize-images-for-web", name: "How to Optimize Images for Web Performance", desc: "Learn techniques to optimize images for faster website loading without sacrificing visual quality.", cat: "Blog", icon: "creator", url: "/blog/how-to-optimize-images-for-web/" },
+    { id: "cricket-run-rate-beginners-guide", name: "Understanding Cricket Run Rate: A Beginner's Guide", desc: "Learn what run rate means in cricket, how to calculate it, and why it matters for match strategy.", cat: "Blog", icon: "creator", url: "/blog/cricket-run-rate-beginners-guide/" },
+    { id: "complete-guide-password-security", name: "The Complete Guide to Password Security", desc: "Everything you need to know about creating, managing, and storing secure passwords in 2026.", cat: "Blog", icon: "creator", url: "/blog/complete-guide-password-security/" },
+    { id: "qr-codes-marketing-best-practices", name: "QR Codes in Marketing: Best Practices for 2026", desc: "How to use QR codes effectively in your marketing campaigns with proven strategies and designs.", cat: "Blog", icon: "creator", url: "/blog/qr-codes-marketing-best-practices/" },
+    { id: "hashtag-strategy-viral-growth", name: "Hashtag Strategy for Viral Growth on Social Media", desc: "Master the art of hashtag research and strategy to maximize reach and engagement on every platform.", cat: "Blog", icon: "creator", url: "/blog/hashtag-strategy-viral-growth/" },
+    { id: "image-compression-without-losing-quality", name: "Image Compression Without Losing Quality: Complete Guide", desc: "Learn how to dramatically reduce image file sizes while maintaining visual quality for web and print.", cat: "Blog", icon: "creator", url: "/blog/image-compression-without-losing-quality/" },
+    { id: "webp-vs-png-vs-jpg-which-format-wins", name: "WebP vs PNG vs JPG: Which Image Format Wins in 2026?", desc: "Compare the pros and cons of WebP, PNG, and JPG formats to choose the best one for any use case.", cat: "Blog", icon: "creator", url: "/blog/webp-vs-png-vs-jpg-which-format-wins/" },
+    { id: "age-calculator-fun-facts-birthday", name: "Age Calculator: Fun Facts About Your Birthday You Never Knew", desc: "Discover fascinating facts about your birth date, zodiac signs, historical events, and how old you really are.", cat: "Blog", icon: "creator", url: "/blog/age-calculator-fun-facts-birthday/" },
+    { id: "how-to-resize-images-social-media", name: "How to Resize Images for Social Media Platforms [2026 Guide]", desc: "Perfect image sizes for Instagram, TikTok, YouTube, Twitter, LinkedIn, and Facebook.", cat: "Blog", icon: "creator", url: "/blog/how-to-resize-images-social-media/" },
+    { id: "html-formatter", name: "HTML Formatter", desc: "Format, minify, and validate HTML code with syntax highlighting and error detection.", cat: "Developer", icon: "code", url: "/tools/html-formatter/" },
+    { id: "css-formatter", name: "CSS Formatter", desc: "Format, minify, and validate CSS with syntax highlighting and error detection.", cat: "Developer", icon: "code", url: "/tools/css-formatter/" },
+    { id: "regex-tester", name: "Regex Tester", desc: "Test and debug regular expressions with live matching and detailed match information.", cat: "Developer", icon: "search", url: "/tools/regex-tester/" },
+    { id: "diff-checker", name: "Diff Checker", desc: "Compare two texts and highlight differences line by line with color-coded output.", cat: "Developer", icon: "columns", url: "/tools/diff-checker/" },
+    { id: "url-encoder", name: "URL Encoder/Decoder", desc: "Encode and decode URLs, query strings, and special characters instantly.", cat: "Developer", icon: "link", url: "/tools/url-encoder/" },
+    { id: "jwt-decoder", name: "JWT Decoder", desc: "Decode and inspect JWT tokens — header, payload, and signature verification.", cat: "Developer", icon: "lock", url: "/tools/jwt-decoder/" },
+    { id: "sql-formatter", name: "SQL Formatter", desc: "Format and beautify SQL queries with configurable indentation and keyword case.", cat: "Developer", icon: "database", url: "/tools/sql-formatter/" },
+    { id: "economy-rate-calculator", name: "Economy Rate Calculator", desc: "Calculate bowling economy rate — runs conceded per over in cricket.", cat: "Cricket", icon: "target", url: "/tools/economy-rate-calculator/" },
+    { id: "cricket-over-calculator", name: "Cricket Over Calculator", desc: "Convert between balls bowled and overs with precision for any cricket format.", cat: "Cricket", icon: "runrate", url: "/tools/cricket-over-calculator/" },
+    { id: "random-number-generator", name: "Random Number Generator", desc: "Generate random numbers within a range with count and uniqueness options.", cat: "Utility", icon: "bolt", url: "/tools/random-number-generator/" },
+    { id: "list-randomizer", name: "List Randomizer", desc: "Shuffle, randomize, and pick from any list of items with various modes.", cat: "Utility", icon: "shuffle", url: "/tools/list-randomizer/" },
+    { id: "color-contrast-checker", name: "Color Contrast Checker", desc: "Check WCAG contrast ratios between foreground and background colors.", cat: "Utility", icon: "target", url: "/tools/color-contrast-checker/" },
+    { id: "countdown-timer", name: "Countdown Timer", desc: "Create countdown timers for any date or event with live day/hour/minute/second updates.", cat: "Creator", icon: "clock", url: "/tools/countdown-timer/" },
+    { id: "svg-to-png", name: "SVG to PNG", desc: "Convert SVG code or files to high-quality PNG images with custom dimensions.", cat: "Image", icon: "image", url: "/tools/svg-to-png/" },
+    { id: "ai-text-summarizer", name: "AI Text Summarizer", desc: "Summarize long articles and text into concise, readable summaries using AI.", cat: "AI", icon: "message", url: "/tools/ai-text-summarizer/" },
+    { id: "ai-grammar-checker", name: "AI Grammar Checker", desc: "Check grammar, spelling, and punctuation with AI-powered suggestions.", cat: "AI", icon: "edit", url: "/tools/ai-grammar-checker/" },
+    { id: "ai-sentiment-analyzer", name: "AI Sentiment Analyzer", desc: "Analyze text sentiment — positive, negative, or neutral with emotion detection.", cat: "AI", icon: "thumbsup", url: "/tools/ai-sentiment-analyzer/" },
+    { id: "ai-keyword-extractor", name: "AI Keyword Extractor", desc: "Extract key topics and phrases from any text automatically.", cat: "AI", icon: "search", url: "/tools/ai-keyword-extractor/" },
+    { id: "ai-language-detector", name: "AI Language Detector", desc: "Detect the language of any text with support for 80+ languages.", cat: "AI", icon: "globe2", url: "/tools/ai-language-detector/" },
+    { id: "ai-readability-analyzer", name: "AI Readability Analyzer", desc: "Analyze text readability with Flesch-Kincaid, Gunning Fog, and more.", cat: "AI", icon: "book", url: "/tools/ai-readability-analyzer/" },
+    { id: "ai-paraphraser", name: "AI Paraphraser", desc: "Rewrite any text with different phrasing while preserving meaning.", cat: "AI", icon: "edit", url: "/tools/ai-paraphraser/" },
+    { id: "ai-tag-generator", name: "AI Tag Generator", desc: "Generate relevant tags and hashtags from your content automatically.", cat: "AI", icon: "hashtag", url: "/tools/ai-tag-generator/" },
   ].map((item) => ({
     ...item,
     searchCat: item.cat === "Blog" ? "Blog" :
                item.cat === "Image" ? "Image Tools" :
                item.cat === "Cricket" ? "Cricket Tools" :
-               item.cat === "Generators" || item.cat === "Text" || item.cat === "Calculators" ? "Utility Tools" :
+               item.cat === "Developer" ? "Developer Tools" :
+               item.cat === "Utility" || item.cat === "Generators" || item.cat === "Text" || item.cat === "Calculators" ? "Utility Tools" :
+               item.cat === "AI" ? "AI Tools" :
                "Creator Tools"
   }));
 
