@@ -1,4 +1,4 @@
-﻿---
+---
 import MainLayout from "../../layouts/MainLayout.astro";
 import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
@@ -13,7 +13,7 @@ const faqItems = [
     { question: "Is my data sent to a server?", answer: "No. Everything happens in your browser using the qrcode JavaScript library. Your data never leaves your device." },
     { question: "What download formats are available?", answer: "You can download your QR code as PNG, JPG, or SVG. SVG is ideal for print and scaling to any size without quality loss." },
     { question: "How do error correction levels work?", answer: "Higher error correction allows the QR to be scanned even if partially damaged. L (7%), M (15%), Q (25%), H (30%). Higher levels can encode less data but are more reliable." },
-    { question: "Can I make a WiFi QR code?", answer: "Yes! Select the WiFi template and enter your network SSID and password. The QR code will let guests connect instantly â€” no need to share your password verbally." },
+    { question: "Can I make a WiFi QR code?", answer: "Yes! Select the WiFi template and enter your network SSID and password. The QR code will let guests connect instantly — no need to share your password verbally." },
   ];
 const qrSchema = {
   "name": "QR Generator Pro",
@@ -24,7 +24,7 @@ const qrSchema = {
     "WiFi, Email, Phone, SMS, YouTube, and vCard templates",
     "SVG, PNG, and JPG download formats",
     "4 error correction levels for damaged-code recovery",
-    "100% client-side — no server uploads, zero data transfer"
+    "100% client-side � no server uploads, zero data transfer"
   ],
 }
 ---
@@ -46,26 +46,26 @@ const qrSchema = {
       <ToolHeader
         title="QR Code"
         gradient="Generator Pro"
-        desc="Create custom QR codes with templates, colors, logos, and SVG export. Live preview as you type â€” free and privacy-first."
-        badge="âœ¦ Pro Version"
+        desc="Create custom QR codes with templates, colors, logos, and SVG export. Live preview as you type — free and privacy-first."
+        badge="✦ Pro Version"
         slug="qr-generator"
       />
 
       <ShareBar />
 
-      <!-- â”€â”€â”€ Tool Interface â”€â”€â”€ -->
+      <!-- ─── Tool Interface ─── -->
       <div class="mt-8 grid grid-cols-1 lg:grid-cols-5 gap-5">
 
-        <!-- â”€â”€ Left Panel: Inputs â”€â”€ -->
+        <!-- ── Left Panel: Inputs ── -->
         <div class="lg:col-span-3 space-y-4">
 
           <!-- Templates -->
-          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5">
-            <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-3 block">Template</label>
+          <div class="bg-surface-1 border border-surface rounded-2xl p-5">
+            <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3 block">Template</label>
             <div class="grid grid-cols-5 gap-2" id="template-tabs">
               {["Website","WiFi","Email","Phone","YouTube"].map((t) => (
                 <button class="template-btn rounded-xl py-2.5 px-2 text-[11px] font-medium border transition-all flex flex-col items-center gap-1" data-template={t}>
-                  <span class="text-base">{t === "Website" ? "ðŸŒ" : t === "WiFi" ? "ðŸ“¶" : t === "Email" ? "âœ‰ï¸" : t === "Phone" ? "ðŸ“ž" : "â–¶ï¸"}</span>
+                  <span class="text-base">{t === "Website" ? "🌐" : t === "WiFi" ? "📶" : t === "Email" ? "✉️" : t === "Phone" ? "📞" : "▶️"}</span>
                   <span>{t}</span>
                 </button>
               ))}
@@ -73,71 +73,71 @@ const qrSchema = {
           </div>
 
           <!-- Dynamic Input Fields -->
-          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 space-y-4" id="input-fields">
+          <div class="bg-surface-1 border border-surface rounded-2xl p-5 space-y-4" id="input-fields">
             <!-- Website (default) -->
             <div id="field-website" class="field-group space-y-2">
-              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">URL or Text</label>
-              <input id="qr-text" type="text" placeholder="https://example.com" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">URL or Text</label>
+              <input id="qr-text" type="text" placeholder="https://example.com" class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
             </div>
             <div id="field-wifi" class="field-group space-y-2 hidden">
-              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">WiFi Network</label>
-              <input id="wifi-ssid" type="text" placeholder="Network name (SSID)" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
-              <input id="wifi-pass" type="text" placeholder="Password" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">WiFi Network</label>
+              <input id="wifi-ssid" type="text" placeholder="Network name (SSID)" class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <input id="wifi-pass" type="text" placeholder="Password" class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
             </div>
             <div id="field-email" class="field-group space-y-2 hidden">
-              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Email</label>
-              <input id="email-to" type="email" placeholder="recipient@example.com" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
-              <input id="email-subject" type="text" placeholder="Subject" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
-              <textarea id="email-body" placeholder="Message" rows="3" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"></textarea>
+              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Email</label>
+              <input id="email-to" type="email" placeholder="recipient@example.com" class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <input id="email-subject" type="text" placeholder="Subject" class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <textarea id="email-body" placeholder="Message" rows="3" class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"></textarea>
             </div>
             <div id="field-phone" class="field-group space-y-2 hidden">
-              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Phone Number</label>
-              <input id="phone-number" type="tel" placeholder="+1234567890" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Phone Number</label>
+              <input id="phone-number" type="tel" placeholder="+1234567890" class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
             </div>
             <div id="field-youtube" class="field-group space-y-2 hidden">
-              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">YouTube Video URL</label>
-              <input id="youtube-url" type="url" placeholder="https://youtube.com/watch?v=..." class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">YouTube Video URL</label>
+              <input id="youtube-url" type="url" placeholder="https://youtube.com/watch?v=..." class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
             </div>
           </div>
 
           <!-- Colors + Logo -->
-          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 space-y-4">
+          <div class="bg-surface-1 border border-surface rounded-2xl p-5 space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider block mb-2">Foreground</label>
-                <input id="fg-color" type="color" value="#000000" class="w-full h-10 rounded-xl bg-zinc-900 border border-white/[0.06] cursor-pointer" />
+                <label class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2">Foreground</label>
+                <input id="fg-color" type="color" value="#000000" class="w-full h-10 rounded-xl bg-zinc-900 border border-surface cursor-pointer" />
               </div>
               <div>
-                <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider block mb-2">Background</label>
-                <input id="bg-color" type="color" value="#ffffff" class="w-full h-10 rounded-xl bg-zinc-900 border border-white/[0.06] cursor-pointer" />
+                <label class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2">Background</label>
+                <input id="bg-color" type="color" value="#ffffff" class="w-full h-10 rounded-xl bg-zinc-900 border border-surface cursor-pointer" />
               </div>
             </div>
             <div>
-              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider block mb-2">Size</label>
-              <select id="qr-size" class="w-full bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all">
-                {[100,150,200,250,300,400,500].map(s => <option value={s}>{s}×{s}px</option>)}
+              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2">Size</label>
+              <select id="qr-size" class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all">
+                {[100,150,200,250,300,400,500].map(s => <option value={s}>{s}�{s}px</option>)}
               </select>
             </div>
           </div>
         </div>
 
-        <!-- ── Right Panel: Preview + Download ── -->
+        <!-- -- Right Panel: Preview + Download -- -->
         <div class="lg:col-span-2 space-y-4">
-          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 flex flex-col items-center">
+          <div class="bg-surface-1 border border-surface rounded-2xl p-5 flex flex-col items-center">
             <div id="qr-canvas-wrapper" class="bg-white rounded-xl p-4 mb-4">
               <canvas id="qr-canvas"></canvas>
             </div>
-            <span id="qr-size-badge" class="text-[10px] text-zinc-500 font-mono">--</span>
+            <span id="qr-size-badge" class="text-[10px] text-muted font-mono">--</span>
           </div>
           <div class="grid grid-cols-3 gap-2">
             {["PNG","JPG","SVG"].map(f => (
-              <button class="download-btn bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-400 hover:text-white text-xs font-medium py-2.5 rounded-xl transition-all active:scale-95" data-format={f}>Download {f}</button>
+              <button class="download-btn bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-medium py-2.5 rounded-xl transition-all active:scale-95" data-format={f}>Download {f}</button>
             ))}
           </div>
         </div>
       </div>
 
-      <!-- ─── FAQ ─── -->
+      <!-- --- FAQ --- -->
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
           Frequently Asked
@@ -147,7 +147,7 @@ const qrSchema = {
       </div>
 
       <KeyboardHints hints={[
-        { keys: "⌘K", label: "Open search" },
+        { keys: "?K", label: "Open search" },
         { keys: "Enter", label: "Generate QR" },
         { keys: "Esc", label: "Clear / Reset" },
       ]} />
@@ -194,7 +194,7 @@ const qrSchema = {
   async function generateQR() {
     currentData = getQRData();
     const size = parseInt(qrSize.value);
-    sizeBadge.textContent = `${size}×${size}`;
+    sizeBadge.textContent = `${size}�${size}`;
     try {
       await QRCode.toCanvas(canvas, currentData, {
         width: size,
@@ -210,9 +210,9 @@ const qrSchema = {
     btn.addEventListener("click", () => {
       templateBtns.forEach((b) => {
         b.classList.remove("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
-        b.classList.add("bg-white/[0.05]", "border-white/[0.06]", "text-zinc-400");
+        b.classList.add("bg-surface-2", "border-surface", "text-tertiary");
       });
-      btn.classList.remove("bg-white/[0.05]", "border-white/[0.06]", "text-zinc-400");
+      btn.classList.remove("bg-surface-2", "border-surface", "text-tertiary");
       btn.classList.add("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
       currentTemplate = btn.dataset.template;
       document.querySelectorAll(".field-group").forEach((g) => g.classList.add("hidden"));

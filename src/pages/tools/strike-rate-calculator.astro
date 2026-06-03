@@ -55,34 +55,34 @@ const srSchema = {
       <div class="max-w-xl mx-auto mt-8 space-y-4">
 
         <!-- Tab Switcher -->
-        <div class="bg-zinc-950 p-1.5 rounded-xl border border-white/[0.06] flex gap-2">
+        <div class="bg-zinc-950 p-1.5 rounded-xl border border-surface flex gap-2">
           <button class="calc-tab flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5" data-tab="batting">
             🚀 Batting SR
           </button>
-          <button class="calc-tab flex-1 text-zinc-400 hover:text-zinc-200 text-xs font-semibold py-2.5 rounded-lg transition-all flex items-center justify-center gap-1.5" data-tab="bowling">
+          <button class="calc-tab flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all flex items-center justify-center gap-1.5" data-tab="bowling">
             🎯 Bowling SR
           </button>
         </div>
 
         <!-- Input Card -->
-        <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 md:p-6">
+        <div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6">
 
           <!-- Batting Panel -->
           <div id="batting-panel" class="space-y-4">
             <div class="grid grid-cols-2 gap-3">
               <div class="space-y-2">
-                <label for="bat-runs" class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Runs Scored</label>
-                <input type="number" id="bat-runs" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-white/[0.06] focus:outline-none focus:border-purple-500 transition-all text-sm" />
+                <label for="bat-runs" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Runs Scored</label>
+                <input type="number" id="bat-runs" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm" />
               </div>
               <div class="space-y-2">
-                <label for="bat-balls" class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Balls Faced</label>
-                <input type="number" id="bat-balls" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-white/[0.06] focus:outline-none focus:border-purple-500 transition-all text-sm" />
+                <label for="bat-balls" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Balls Faced</label>
+                <input type="number" id="bat-balls" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm" />
               </div>
             </div>
-            <div class="bg-white/[0.02] border border-zinc-800/60 rounded-xl p-4 text-center space-y-1">
-              <span class="text-[10px] uppercase font-semibold tracking-wider text-zinc-500">Calculated Strike Rate</span>
+            <div class="bg-surface-1 border border-zinc-800/60 rounded-xl p-4 text-center space-y-1">
+              <span class="text-[10px] uppercase font-semibold tracking-wider text-muted">Calculated Strike Rate</span>
               <div class="text-3xl font-extrabold text-purple-400 tracking-tight tabular-nums"><span id="sr-output">0.00</span></div>
-              <p id="sr-feedback" class="text-xs text-zinc-500 italic pt-1">Enter stats to see performance tier</p>
+              <p id="sr-feedback" class="text-xs text-muted italic pt-1">Enter stats to see performance tier</p>
             </div>
           </div>
 
@@ -90,25 +90,25 @@ const srSchema = {
           <div id="bowling-panel" class="space-y-4 hidden">
             <div class="grid grid-cols-2 gap-3">
               <div class="space-y-2">
-                <label for="bowl-balls" class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Balls Bowled</label>
-                <input type="number" id="bowl-balls" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-white/[0.06] focus:outline-none focus:border-purple-500 transition-all text-sm" />
+                <label for="bowl-balls" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Balls Bowled</label>
+                <input type="number" id="bowl-balls" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm" />
               </div>
               <div class="space-y-2">
-                <label for="bowl-wkts" class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Wickets Taken</label>
-                <input type="number" id="bowl-wkts" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-white/[0.06] focus:outline-none focus:border-purple-500 transition-all text-sm" />
+                <label for="bowl-wkts" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Wickets Taken</label>
+                <input type="number" id="bowl-wkts" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm" />
               </div>
             </div>
-            <div class="bg-white/[0.02] border border-zinc-800/60 rounded-xl p-4 text-center space-y-1">
-              <span class="text-[10px] uppercase font-semibold tracking-wider text-zinc-500">Bowling Strike Rate</span>
+            <div class="bg-surface-1 border border-zinc-800/60 rounded-xl p-4 text-center space-y-1">
+              <span class="text-[10px] uppercase font-semibold tracking-wider text-muted">Bowling Strike Rate</span>
               <div class="text-3xl font-extrabold text-purple-400 tracking-tight tabular-nums"><span id="bowl-sr-output">0.00</span></div>
-              <p id="bowl-sr-feedback" class="text-xs text-zinc-500 italic pt-1">Enter stats to see performance tier</p>
+              <p id="bowl-sr-feedback" class="text-xs text-muted italic pt-1">Enter stats to see performance tier</p>
             </div>
           </div>
         </div>
 
         <!-- Player Presets (ESPN Cricinfo-style) -->
-        <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-4">
-          <span class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-2.5 block">Famous Player Presets</span>
+        <div class="bg-surface-1 border border-surface rounded-2xl p-4">
+          <span class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-2.5 block">Famous Player Presets</span>
           <div class="grid grid-cols-4 gap-2" id="preset-btns">
             {[
               { name: "Babar Azam", runs: 72, balls: 50, emoji: "🇵🇰" },
@@ -116,7 +116,7 @@ const srSchema = {
               { name: "AB de Villiers", runs: 133, balls: 57, emoji: "🇿🇦" },
               { name: "Andre Russell", runs: 48, balls: 19, emoji: "🏝️" },
             ].map((p) => (
-              <button class="preset-btn flex flex-col items-center gap-1 rounded-xl py-2.5 px-1 text-[10px] font-medium border transition-all bg-white/[0.03] border-white/[0.06] text-zinc-400 hover:border-purple-500/40 hover:text-purple-300" data-runs={p.runs} data-balls={p.balls}>
+              <button class="preset-btn flex flex-col items-center gap-1 rounded-xl py-2.5 px-1 text-[10px] font-medium border transition-all bg-surface-1 border-surface text-tertiary hover:border-purple-500/40 hover:text-purple-300" data-runs={p.runs} data-balls={p.balls}>
                 <span class="text-sm">{p.emoji}</span>
                 <span>{p.name}</span>
               </button>
@@ -128,18 +128,18 @@ const srSchema = {
         <div id="results-section" class="hidden space-y-4">
 
           <!-- Key Stats -->
-          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 md:p-6">
+          <div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6">
             <div class="flex items-center justify-between mb-4">
-              <h3 class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Performance Dashboard</h3>
+              <h3 class="text-[10px] font-semibold text-muted uppercase tracking-wider">Performance Dashboard</h3>
               <span id="impact-badge" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all hidden"></span>
             </div>
             <div class="grid grid-cols-2 gap-3">
-              <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-4 text-center hover:border-white/[0.08] transition-all">
-                <span class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider">Batting SR</span>
+              <div class="rounded-xl bg-zinc-950/40 border border-surface p-4 text-center hover:border-surface-2 transition-all">
+                <span class="text-[9px] font-semibold text-dim uppercase tracking-wider">Batting SR</span>
                 <div class="mt-1 text-3xl font-black tabular-nums"><span id="bat-sr-value" class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span></div>
               </div>
-              <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-4 text-center hover:border-white/[0.08] transition-all">
-                <span class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider">Bowling SR</span>
+              <div class="rounded-xl bg-zinc-950/40 border border-surface p-4 text-center hover:border-surface-2 transition-all">
+                <span class="text-[9px] font-semibold text-dim uppercase tracking-wider">Bowling SR</span>
                 <div class="mt-1 text-3xl font-black tabular-nums"><span id="bowl-sr-value" class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span></div>
               </div>
             </div>
@@ -147,34 +147,34 @@ const srSchema = {
 
           <!-- Impact Rating + Match Influence -->
           <div class="grid grid-cols-2 gap-3">
-            <div class="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
-              <span class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider">Impact Rating</span>
+            <div class="bg-surface-1 border border-surface rounded-xl p-4">
+              <span class="text-[9px] font-semibold text-dim uppercase tracking-wider">Impact Rating</span>
               <div class="flex items-baseline gap-2 mt-1">
-                <span id="impact-rating" class="text-2xl font-black text-zinc-200 tabular-nums">0</span>
-                <span class="text-[10px] text-zinc-600">/ 100</span>
+                <span id="impact-rating" class="text-2xl font-black text-primary tabular-nums">0</span>
+                <span class="text-[10px] text-dim">/ 100</span>
               </div>
               <div class="mt-2 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
                 <div id="impact-bar" class="h-full rounded-full transition-all duration-700" style="width:0%"></div>
               </div>
-              <span id="impact-desc" class="text-[10px] text-zinc-500 mt-1.5 block">Enter batting stats</span>
+              <span id="impact-desc" class="text-[10px] text-muted mt-1.5 block">Enter batting stats</span>
             </div>
-            <div class="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
-              <span class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider">Match Influence</span>
+            <div class="bg-surface-1 border border-surface rounded-xl p-4">
+              <span class="text-[9px] font-semibold text-dim uppercase tracking-wider">Match Influence</span>
               <div class="flex items-baseline gap-2 mt-1">
-                <span id="influence-score" class="text-2xl font-black text-zinc-200 tabular-nums">0</span>
-                <span class="text-[10px] text-zinc-600">/ 100</span>
+                <span id="influence-score" class="text-2xl font-black text-primary tabular-nums">0</span>
+                <span class="text-[10px] text-dim">/ 100</span>
               </div>
               <div class="mt-2 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
                 <div id="influence-bar" class="h-full rounded-full transition-all duration-700" style="width:0%"></div>
               </div>
-              <span id="influence-desc" class="text-[10px] text-zinc-500 mt-1.5 block">Enter batting stats</span>
+              <span id="influence-desc" class="text-[10px] text-muted mt-1.5 block">Enter batting stats</span>
             </div>
           </div>
 
           <!-- Aggression Meter -->
-          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5">
+          <div class="bg-surface-1 border border-surface rounded-2xl p-5">
             <div class="flex items-center justify-between mb-3">
-              <h3 class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Aggression Meter</h3>
+              <h3 class="text-[10px] font-semibold text-muted uppercase tracking-wider">Aggression Meter</h3>
               <span id="aggression-label" class="text-xs font-bold font-mono px-2.5 py-0.5 rounded-full border hidden"></span>
             </div>
             <div class="flex items-center gap-0.5 h-4 rounded-full overflow-hidden">
@@ -187,7 +187,7 @@ const srSchema = {
             <div id="aggression-arrow-wrap" class="relative h-6 mt-1">
               <div id="aggression-arrow" class="absolute top-0 text-xs transition-all duration-700" style="left:0%">▼</div>
             </div>
-            <div class="flex justify-between text-[9px] text-zinc-600 mt-0.5">
+            <div class="flex justify-between text-[9px] text-dim mt-0.5">
               <span>Defensive</span>
               <span>Steady</span>
               <span>Aggressive</span>
@@ -197,9 +197,9 @@ const srSchema = {
           </div>
 
           <!-- Performance Meter -->
-          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5">
+          <div class="bg-surface-1 border border-surface rounded-2xl p-5">
             <div class="flex items-center justify-between mb-3">
-              <h3 class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Performance Meter</h3>
+              <h3 class="text-[10px] font-semibold text-muted uppercase tracking-wider">Performance Meter</h3>
               <span id="meter-label" class="text-xs font-bold"></span>
             </div>
             <div class="flex items-center gap-1">
@@ -208,7 +208,7 @@ const srSchema = {
               <div class="h-2.5 flex-1 bg-lime-500/30"></div>
               <div class="h-2.5 flex-1 rounded-r-full bg-emerald-500/30"></div>
             </div>
-            <div class="flex justify-between text-[9px] text-zinc-600 mt-1">
+            <div class="flex justify-between text-[9px] text-dim mt-1">
               <span>Poor</span>
               <span>Average</span>
               <span>Good</span>
@@ -221,7 +221,7 @@ const srSchema = {
 
           <!-- Copy Results -->
           <div class="flex justify-center">
-            <button id="copy-sr-btn" class="inline-flex items-center gap-2 bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-400 hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95">
+            <button id="copy-sr-btn" class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
               Copy Results
             </button>
@@ -230,55 +230,55 @@ const srSchema = {
 
         <!-- ─── Player Comparison ─── -->
         <div id="comparison-section" class="hidden">
-          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 md:p-6">
+          <div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6">
             <div class="flex items-center gap-2 mb-4">
               <span class="text-sm leading-none">📊</span>
-              <span class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Player Comparison</span>
+              <span class="text-[10px] font-semibold text-muted uppercase tracking-wider">Player Comparison</span>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-4">
+              <div class="rounded-xl bg-zinc-950/40 border border-surface p-4">
                 <div class="flex items-center gap-2 mb-3">
                   <span class="w-6 h-6 rounded-full bg-purple-600/20 flex items-center justify-center text-[10px] font-bold text-purple-400">A</span>
-                  <span class="text-xs font-semibold text-zinc-300">Player A</span>
+                  <span class="text-xs font-semibold text-secondary">Player A</span>
                 </div>
                 <div class="grid grid-cols-2 gap-2 mb-2">
                   <div>
-                    <label class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider">Runs</label>
-                    <input id="comp-a-runs" type="number" min="0" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-white/[0.06] focus:outline-none focus:border-purple-500 text-xs mt-1" />
+                    <label class="text-[9px] font-semibold text-dim uppercase tracking-wider">Runs</label>
+                    <input id="comp-a-runs" type="number" min="0" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" />
                   </div>
                   <div>
-                    <label class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider">Balls</label>
-                    <input id="comp-a-balls" type="number" min="0" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-white/[0.06] focus:outline-none focus:border-purple-500 text-xs mt-1" />
+                    <label class="text-[9px] font-semibold text-dim uppercase tracking-wider">Balls</label>
+                    <input id="comp-a-balls" type="number" min="0" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" />
                   </div>
                 </div>
                 <div class="text-right">
-                  <span class="text-[9px] text-zinc-600 uppercase tracking-wider font-semibold">SR </span>
-                  <span id="comp-a-sr" class="text-sm font-black text-zinc-500 tabular-nums">0.00</span>
+                  <span class="text-[9px] text-dim uppercase tracking-wider font-semibold">SR </span>
+                  <span id="comp-a-sr" class="text-sm font-black text-muted tabular-nums">0.00</span>
                 </div>
               </div>
-              <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-4">
+              <div class="rounded-xl bg-zinc-950/40 border border-surface p-4">
                 <div class="flex items-center gap-2 mb-3">
                   <span class="w-6 h-6 rounded-full bg-blue-600/20 flex items-center justify-center text-[10px] font-bold text-blue-400">B</span>
-                  <span class="text-xs font-semibold text-zinc-300">Player B</span>
+                  <span class="text-xs font-semibold text-secondary">Player B</span>
                 </div>
                 <div class="grid grid-cols-2 gap-2 mb-2">
                   <div>
-                    <label class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider">Runs</label>
-                    <input id="comp-b-runs" type="number" min="0" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-white/[0.06] focus:outline-none focus:border-purple-500 text-xs mt-1" />
+                    <label class="text-[9px] font-semibold text-dim uppercase tracking-wider">Runs</label>
+                    <input id="comp-b-runs" type="number" min="0" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" />
                   </div>
                   <div>
-                    <label class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider">Balls</label>
-                    <input id="comp-b-balls" type="number" min="0" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-white/[0.06] focus:outline-none focus:border-purple-500 text-xs mt-1" />
+                    <label class="text-[9px] font-semibold text-dim uppercase tracking-wider">Balls</label>
+                    <input id="comp-b-balls" type="number" min="0" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" />
                   </div>
                 </div>
                 <div class="text-right">
-                  <span class="text-[9px] text-zinc-600 uppercase tracking-wider font-semibold">SR </span>
-                  <span id="comp-b-sr" class="text-sm font-black text-zinc-500 tabular-nums">0.00</span>
+                  <span class="text-[9px] text-dim uppercase tracking-wider font-semibold">SR </span>
+                  <span id="comp-b-sr" class="text-sm font-black text-muted tabular-nums">0.00</span>
                 </div>
               </div>
             </div>
             <div id="comp-result" class="mt-3 hidden">
-              <div class="rounded-xl border border-white/[0.06] bg-white/[0.03] p-3 text-center">
+              <div class="rounded-xl border border-surface bg-surface-1 p-3 text-center">
                 <p id="comp-text" class="text-xs font-medium"></p>
               </div>
             </div>
@@ -296,39 +296,39 @@ const srSchema = {
           </h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div class="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 hover:border-white/[0.1] transition-all">
+          <div class="rounded-xl border border-surface bg-surface-1 p-5 hover:border-surface-3 transition-all">
             <div class="flex items-start gap-3">
               <span class="text-lg mt-0.5">📊</span>
               <div>
-                <h3 class="text-sm font-semibold text-zinc-200 mb-1">What Is Strike Rate?</h3>
-                <p class="text-xs text-zinc-500 leading-relaxed">Batting strike rate measures runs per 100 balls faced. Formula: (Runs ÷ Balls) × 100. A SR of 100 = 1 run per ball. Bowling strike rate measures balls per wicket — lower is better.</p>
+                <h3 class="text-sm font-semibold text-primary mb-1">What Is Strike Rate?</h3>
+                <p class="text-xs text-muted leading-relaxed">Batting strike rate measures runs per 100 balls faced. Formula: (Runs ÷ Balls) × 100. A SR of 100 = 1 run per ball. Bowling strike rate measures balls per wicket — lower is better.</p>
               </div>
             </div>
           </div>
-          <div class="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 hover:border-white/[0.1] transition-all">
+          <div class="rounded-xl border border-surface bg-surface-1 p-5 hover:border-surface-3 transition-all">
             <div class="flex items-start gap-3">
               <span class="text-lg mt-0.5">🎯</span>
               <div>
-                <h3 class="text-sm font-semibold text-zinc-200 mb-1">Why Strike Rate Matters</h3>
-                <p class="text-xs text-zinc-500 leading-relaxed">SR determines a player's impact. In limited-overs cricket, high batting SR is essential for big totals. Low bowling SR means consistent wicket-taking. Both are key metrics in modern cricket analytics.</p>
+                <h3 class="text-sm font-semibold text-primary mb-1">Why Strike Rate Matters</h3>
+                <p class="text-xs text-muted leading-relaxed">SR determines a player's impact. In limited-overs cricket, high batting SR is essential for big totals. Low bowling SR means consistent wicket-taking. Both are key metrics in modern cricket analytics.</p>
               </div>
             </div>
           </div>
-          <div class="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 hover:border-white/[0.1] transition-all">
+          <div class="rounded-xl border border-surface bg-surface-1 p-5 hover:border-surface-3 transition-all">
             <div class="flex items-start gap-3">
               <span class="text-lg mt-0.5">⚡</span>
               <div>
-                <h3 class="text-sm font-semibold text-zinc-200 mb-1">T20 Batting Strategy</h3>
-                <p class="text-xs text-zinc-500 leading-relaxed">In T20s, SR 130+ is excellent, 150+ is world-class. Powerplay overs demand positive intent, middle overs require smart rotation, and death overs need pure acceleration.</p>
+                <h3 class="text-sm font-semibold text-primary mb-1">T20 Batting Strategy</h3>
+                <p class="text-xs text-muted leading-relaxed">In T20s, SR 130+ is excellent, 150+ is world-class. Powerplay overs demand positive intent, middle overs require smart rotation, and death overs need pure acceleration.</p>
               </div>
             </div>
           </div>
-          <div class="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 hover:border-white/[0.1] transition-all">
+          <div class="rounded-xl border border-surface bg-surface-1 p-5 hover:border-surface-3 transition-all">
             <div class="flex items-start gap-3">
               <span class="text-lg mt-0.5">🏛️</span>
               <div>
-                <h3 class="text-sm font-semibold text-zinc-200 mb-1">ODI &amp; Bowling Strategy</h3>
-                <p class="text-xs text-zinc-500 leading-relaxed">In ODIs, SR 85-100 is competitive, 100+ excellent. Bowling SR under 35 in ODIs and under 20 in T20s is elite. Strike rates vary by format, conditions, and match situation.</p>
+                <h3 class="text-sm font-semibold text-primary mb-1">ODI &amp; Bowling Strategy</h3>
+                <p class="text-xs text-muted leading-relaxed">In ODIs, SR 85-100 is competitive, 100+ excellent. Bowling SR under 35 in ODIs and under 20 in T20s is elite. Strike rates vary by format, conditions, and match situation.</p>
               </div>
             </div>
           </div>
@@ -531,9 +531,9 @@ const srSchema = {
     const bSr = bB > 0 ? (bR / bB) * 100 : 0;
 
     compASr.textContent = formatSR(aSr);
-    compASr.className = "text-sm font-black tabular-nums " + (aR > 0 && aB > 0 ? "text-white" : "text-zinc-500");
+    compASr.className = "text-sm font-black tabular-nums " + (aR > 0 && aB > 0 ? "text-white" : "text-muted");
     compBSr.textContent = formatSR(bSr);
-    compBSr.className = "text-sm font-black tabular-nums " + (bR > 0 && bB > 0 ? "text-white" : "text-zinc-500");
+    compBSr.className = "text-sm font-black tabular-nums " + (bR > 0 && bB > 0 ? "text-white" : "text-muted");
 
     if ((aR > 0 && aB > 0) || (bR > 0 && bB > 0)) {
       compResult.classList.remove("hidden");
@@ -545,13 +545,13 @@ const srSchema = {
         compText.className = "text-xs font-medium text-emerald-300";
       } else if (aSr === bSr && aR > 0 && aB > 0 && bR > 0 && bB > 0) {
         compText.textContent = `Both players have identical SR of ${formatSR(aSr)}.`;
-        compText.className = "text-xs font-medium text-zinc-300";
+        compText.className = "text-xs font-medium text-secondary";
       } else if (aR > 0 && aB > 0 && (!(bR > 0 && bB > 0))) {
         compText.textContent = `Player A: ${formatSR(aSr)}. Enter Player B's stats to compare.`;
-        compText.className = "text-xs font-medium text-zinc-300";
+        compText.className = "text-xs font-medium text-secondary";
       } else if (bR > 0 && bB > 0 && (!(aR > 0 && aB > 0))) {
         compText.textContent = `Player B: ${formatSR(bSr)}. Enter Player A's stats to compare.`;
-        compText.className = "text-xs font-medium text-zinc-300";
+        compText.className = "text-xs font-medium text-secondary";
       } else {
         compResult.classList.add("hidden");
       }
@@ -599,9 +599,9 @@ const srSchema = {
     tab.addEventListener("click", () => {
       calcTabs.forEach((t) => {
         t.classList.remove("bg-purple-600", "text-white");
-        t.classList.add("text-zinc-400", "hover:text-zinc-200");
+        t.classList.add("text-tertiary", "hover:text-primary");
       });
-      tab.classList.remove("text-zinc-400", "hover:text-zinc-200");
+      tab.classList.remove("text-tertiary", "hover:text-primary");
       tab.classList.add("bg-purple-600", "text-white");
       if (tab.dataset.tab === "batting") {
         battingPanel.classList.remove("hidden");

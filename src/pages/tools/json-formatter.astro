@@ -58,32 +58,32 @@ const schema = {
         <!-- Action Buttons -->
         <div class="flex flex-wrap gap-2">
           <button id="format-btn" class="bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Format</button>
-          <button id="minify-btn" class="bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-300 hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Minify</button>
-          <button id="copy-btn" class="bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-300 hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Copy Output</button>
-          <button id="clear-btn" class="bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-500 hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Clear</button>
+          <button id="minify-btn" class="bg-surface-2 hover:bg-surface-3 border border-surface text-secondary hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Minify</button>
+          <button id="copy-btn" class="bg-surface-2 hover:bg-surface-3 border border-surface text-secondary hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Copy Output</button>
+          <button id="clear-btn" class="bg-surface-2 hover:bg-surface-3 border border-surface text-muted hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Clear</button>
         </div>
 
         <!-- Editor Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div>
-            <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-2 block">Input JSON</label>
-            <textarea id="json-input" class="w-full h-[450px] bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all font-mono resize-y" placeholder="Paste your JSON here..." spellcheck="false"></textarea>
+            <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-2 block">Input JSON</label>
+            <textarea id="json-input" class="w-full h-[450px] bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all font-mono resize-y" placeholder="Paste your JSON here..." spellcheck="false"></textarea>
           </div>
           <div>
             <div class="flex items-center justify-between mb-2">
-              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Output</label>
-              <span id="status-badge" class="text-[10px] font-mono text-zinc-600 px-2 py-0.5 rounded-full border border-white/[0.06]">ready</span>
+              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Output</label>
+              <span id="status-badge" class="text-[10px] font-mono text-dim px-2 py-0.5 rounded-full border border-surface">ready</span>
             </div>
-            <pre id="json-output" class="w-full h-[450px] overflow-y-auto bg-black/40 border border-white/[0.06] rounded-xl px-4 py-3 text-sm font-mono text-zinc-500 whitespace-pre-wrap">Click "Format" to begin</pre>
+            <pre id="json-output" class="w-full h-[450px] overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm font-mono text-muted whitespace-pre-wrap">Click "Format" to begin</pre>
           </div>
         </div>
 
         <!-- Stats -->
-        <div id="json-stats" class="hidden bg-white/[0.03] border border-white/[0.06] rounded-2xl p-3 flex flex-wrap gap-4 text-xs text-zinc-500">
-          <span><strong class="text-zinc-400">Lines:</strong> <span id="stat-lines">0</span></span>
-          <span><strong class="text-zinc-400">Chars:</strong> <span id="stat-chars">0</span></span>
-          <span><strong class="text-zinc-400">Keys:</strong> <span id="stat-keys">0</span></span>
-          <span><strong class="text-zinc-400">Size:</strong> <span id="stat-size">0 B</span></span>
+        <div id="json-stats" class="hidden bg-surface-1 border border-surface rounded-2xl p-3 flex flex-wrap gap-4 text-xs text-muted">
+          <span><strong class="text-tertiary">Lines:</strong> <span id="stat-lines">0</span></span>
+          <span><strong class="text-tertiary">Chars:</strong> <span id="stat-chars">0</span></span>
+          <span><strong class="text-tertiary">Keys:</strong> <span id="stat-keys">0</span></span>
+          <span><strong class="text-tertiary">Size:</strong> <span id="stat-size">0 B</span></span>
         </div>
 
       </div>
@@ -164,9 +164,9 @@ const schema = {
   function process(mode: "format" | "minify") {
     const raw = input.value.trim();
     if (!raw) {
-      output.innerHTML = '<span class="text-zinc-600">Paste some JSON to get started</span>';
+      output.innerHTML = '<span class="text-dim">Paste some JSON to get started</span>';
       statusBadge.textContent = "empty";
-      statusBadge.className = "text-[10px] font-mono text-zinc-600 px-2 py-0.5 rounded-full border border-white/[0.06]";
+      statusBadge.className = "text-[10px] font-mono text-dim px-2 py-0.5 rounded-full border border-surface";
       statsPanel.classList.add("hidden");
       return;
     }
@@ -216,9 +216,9 @@ const schema = {
 
   clearBtn.addEventListener("click", () => {
     input.value = "";
-    output.innerHTML = '<span class="text-zinc-600">Paste some JSON to get started</span>';
+    output.innerHTML = '<span class="text-dim">Paste some JSON to get started</span>';
     statusBadge.textContent = "ready";
-    statusBadge.className = "text-[10px] font-mono text-zinc-600 px-2 py-0.5 rounded-full border border-white/[0.06]";
+    statusBadge.className = "text-[10px] font-mono text-dim px-2 py-0.5 rounded-full border border-surface";
     statsPanel.classList.add("hidden");
     input.focus();
   });

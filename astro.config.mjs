@@ -9,6 +9,7 @@ export default defineConfig({
   scopedStyleStrategy: 'where',
   build: {
     inlineStylesheets: 'auto',
+    assetsInlineLimit: 4096,
   },
   vite: {
     plugins: [tailwindcss()],
@@ -16,7 +17,9 @@ export default defineConfig({
       cssMinify: 'lightningcss',
       rollupOptions: {
         output: {
-          manualChunks: undefined,
+          assetFileNames: '_astro/[name].[hash][extname]',
+          chunkFileNames: '_astro/[name].[hash].js',
+          entryFileNames: '_astro/[name].[hash].js',
         },
       },
     },

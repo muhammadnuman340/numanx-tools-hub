@@ -8,7 +8,7 @@ const { slug, class: className } = Astro.props;
 ---
 
 <button
-  class="favorite-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/[0.06] text-xs font-medium transition-all duration-200 hover:border-purple-500/40 cursor-pointer {className || ''}"
+  class="favorite-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-surface text-xs font-medium transition-all duration-200 hover:border-purple-500/40 cursor-pointer {className || ''}"
   data-slug={slug}
   aria-label="Toggle favorite"
 >
@@ -28,12 +28,12 @@ const { slug, class: className } = Astro.props;
       if (isFav) {
         icon.setAttribute("fill", "currentColor");
         btn.classList.add("text-amber-400", "border-amber-500/30", "bg-amber-500/10");
-        btn.classList.remove("text-zinc-400", "border-white/[0.06]");
+        btn.classList.remove("text-tertiary", "border-surface");
         if (text) text.textContent = "Saved";
       } else {
         icon.setAttribute("fill", "none");
         btn.classList.remove("text-amber-400", "border-amber-500/30", "bg-amber-500/10");
-        btn.classList.add("text-zinc-400", "border-white/[0.06]");
+        btn.classList.add("text-tertiary", "border-surface");
         if (text) text.textContent = "Save";
       }
     }

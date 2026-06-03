@@ -1,5 +1,6 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
+import AdUnit from "../../components/AdUnit.astro";
 
 const postModules = import.meta.glob("./*.md", { eager: true });
 const blogPosts = Object.entries(postModules).map(([path, mod]) => ({
@@ -14,11 +15,20 @@ const latest = blogPosts;
 const categories = ["All", "AI Tools", "Image Tools", "Creator Tools", "Cricket Tools", "Productivity"];
 ---
 
-<MainLayout title="Blog - NumanX Tools">
+<MainLayout
+  title="Blog - NumanX Tools | Tips, Guides & Resources for Creators"
+  description="Tips, guides, and resources for creators, students, and developers. Learn about image tools, AI productivity, cricket analytics, social media growth, and more."
+  keywords="blog, numanx blog, creator tips, productivity guides, image tools guide, cricket analytics blog, AI tools blog, student productivity, social media tips, best online tools"
+  canonical="https://numanx-tools.pages.dev/blog/"
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Blog", url: "/blog/" },
+  ]}
+>
   <main class="min-h-screen pt-8 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-12">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-zinc-400 text-xs font-semibold tracking-wider uppercase mb-6">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6">
           <span class="relative flex h-2 w-2">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
             <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500" />
@@ -31,10 +41,14 @@ const categories = ["All", "AI Tools", "Image Tools", "Creator Tools", "Cricket 
             Blog
           </span>
         </h1>
-        <p class="mt-6 text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+        <p class="mt-6 text-tertiary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
           Tips, guides, and resources to help you work smarter.
-          <span class="text-zinc-300"> Tools, AI, and productivity insights.</span>
+          <span class="text-secondary"> Tools, AI, and productivity insights.</span>
         </p>
+      </div>
+
+      <div class="max-w-4xl mx-auto px-4 mb-8">
+        <AdUnit format="horizontal" />
       </div>
 
       {
@@ -47,11 +61,11 @@ const categories = ["All", "AI Tools", "Image Tools", "Creator Tools", "Cricket 
               <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-3 mb-3">
                   <span class="inline-flex px-2.5 py-0.5 rounded-full bg-purple-600/15 border border-purple-500/30 text-purple-300 text-xs font-medium">{featured.frontmatter.category}</span>
-                  <span class="text-xs text-zinc-600">{featured.frontmatter.date}</span>
+                  <span class="text-xs text-dim">{featured.frontmatter.date}</span>
                 </div>
                 <h2 class="text-xl md:text-2xl font-bold text-white group-hover:text-purple-300 transition-colors duration-200 leading-snug">{featured.frontmatter.title}</h2>
-                <p class="text-sm text-zinc-400 mt-2 leading-relaxed line-clamp-2">{featured.frontmatter.description}</p>
-                <div class="flex items-center gap-3 mt-4 text-sm text-zinc-500">
+                <p class="text-sm text-tertiary mt-2 leading-relaxed line-clamp-2">{featured.frontmatter.description}</p>
+                <div class="flex items-center gap-3 mt-4 text-sm text-muted">
                   <span>{featured.frontmatter.readingTime || "5 min read"}</span>
                 </div>
                 <span class="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-purple-400 group-hover:text-purple-300 transition-colors">
@@ -67,9 +81,9 @@ const categories = ["All", "AI Tools", "Image Tools", "Creator Tools", "Cricket 
       <div class="bg-zinc-900/30 border border-zinc-800/80 p-5 rounded-2xl mb-8">
         <div class="flex flex-col sm:flex-row gap-3 items-stretch">
           <div class="relative flex-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted pointer-events-none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input id="search-input" type="text" placeholder="Search articles..." class="w-full pl-10 pr-10 py-3 rounded-xl bg-zinc-950 border border-zinc-700 text-white placeholder-zinc-500 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500/60 transition-all duration-200" />
-            <button id="search-clear" class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-zinc-400 transition-colors hidden">
+            <button id="search-clear" class="absolute right-3 top-1/2 -translate-y-1/2 text-dim hover:text-tertiary transition-colors hidden">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
           </div>
@@ -91,8 +105,8 @@ const categories = ["All", "AI Tools", "Image Tools", "Creator Tools", "Cricket 
               </div>
               <span class="inline-flex px-2 py-0.5 rounded-full bg-purple-600/15 border border-purple-500/30 text-purple-300 text-[10px] font-medium mb-2.5">{post.frontmatter.category || "General"}</span>
               <h3 class="text-base font-bold text-white group-hover:text-purple-300 transition-colors duration-200 leading-snug">{post.frontmatter.title}</h3>
-              <p class="text-xs text-zinc-400 mt-2 leading-relaxed line-clamp-2">{post.frontmatter.description}</p>
-              <div class="flex items-center gap-2 mt-3 text-[11px] text-zinc-600">
+              <p class="text-xs text-tertiary mt-2 leading-relaxed line-clamp-2">{post.frontmatter.description}</p>
+              <div class="flex items-center gap-2 mt-3 text-[11px] text-dim">
                 <span>{post.frontmatter.date}</span>
                 <span>·</span>
                 <span>{post.frontmatter.readingTime || "5 min read"}</span>
@@ -101,12 +115,16 @@ const categories = ["All", "AI Tools", "Image Tools", "Creator Tools", "Cricket 
           ))}
       </div>
 
+      <div class="max-w-4xl mx-auto my-8">
+        <AdUnit format="horizontal" />
+      </div>
+
       <div id="empty-state" class="hidden mt-10 text-center py-16">
         <div class="w-14 h-14 rounded-2xl bg-zinc-900/60 flex items-center justify-center mx-auto mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-zinc-600"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-dim"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </div>
-        <p class="text-zinc-400 text-sm font-medium">No articles found</p>
-        <p class="text-zinc-600 text-xs mt-1">Try a different search term or category.</p>
+        <p class="text-tertiary text-sm font-medium">No articles found</p>
+        <p class="text-dim text-xs mt-1">Try a different search term or category.</p>
       </div>
 
       <div class="mt-16 bg-zinc-900/30 border border-zinc-800/80 p-8 md:p-10 rounded-2xl text-center">
@@ -114,7 +132,7 @@ const categories = ["All", "AI Tools", "Image Tools", "Creator Tools", "Cricket 
           Stay
           <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Updated</span>
         </h2>
-        <p class="text-zinc-400 mt-3 max-w-md mx-auto text-sm">
+        <p class="text-tertiary mt-3 max-w-md mx-auto text-sm">
           Get the latest tools, tips, and guides delivered to your inbox.
         </p>
         <form class="mt-6 max-w-md mx-auto flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault(); document.getElementById('nl-success').classList.remove('hidden'); this.querySelector('input').value='';">
@@ -144,12 +162,12 @@ const categories = ["All", "AI Tools", "Image Tools", "Creator Tools", "Cricket 
       const cat = b.dataset.category;
       if (cat === activeCat) {
         b.dataset.active = "true";
-        b.classList.remove("bg-zinc-800/40", "border-zinc-700", "text-zinc-400");
+        b.classList.remove("bg-zinc-800/40", "border-zinc-700", "text-tertiary");
         b.classList.add("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
       } else {
         b.dataset.active = "false";
         b.classList.remove("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
-        b.classList.add("bg-zinc-800/40", "border-zinc-700", "text-zinc-400");
+        b.classList.add("bg-zinc-800/40", "border-zinc-700", "text-tertiary");
       }
     });
   }
@@ -184,10 +202,10 @@ const categories = ["All", "AI Tools", "Image Tools", "Creator Tools", "Cricket 
       catBtns.forEach((b) => {
         b.dataset.active = "false";
         b.classList.remove("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
-        b.classList.add("bg-zinc-800/40", "border-zinc-700", "text-zinc-400");
+        b.classList.add("bg-zinc-800/40", "border-zinc-700", "text-tertiary");
       });
       btn.dataset.active = "true";
-      btn.classList.remove("bg-zinc-800/40", "border-zinc-700", "text-zinc-400");
+      btn.classList.remove("bg-zinc-800/40", "border-zinc-700", "text-tertiary");
       btn.classList.add("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
       activeCat = btn.dataset.category;
       filterPosts();

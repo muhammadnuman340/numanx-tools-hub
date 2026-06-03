@@ -30,17 +30,17 @@ const { tabs, activeTab: _activeTab, class: className } = Astro.props;
 
 <style>
   .tab-btn[aria-selected="true"] {
-    background: #7c3aed;
-    border-color: #a855f7;
+    background: var(--purple-600);
+    border-color: var(--purple-500);
     color: white;
   }
   .tab-btn[aria-selected="false"] {
-    background: rgba(24, 24, 27, 0.4);
-    border-color: #27272a;
-    color: #a1a1aa;
+    background: var(--surface-2);
+    border-color: var(--border-surface);
+    color: var(--text-tertiary);
   }
   .tab-btn[aria-selected="false"]:hover {
-    color: white;
-    border-color: #3f3f46;
+    color: var(--text-primary);
+    border-color: var(--border-surface-3);
   }
 </style>

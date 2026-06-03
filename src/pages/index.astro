@@ -5,6 +5,7 @@ import AdSlot from "../components/AdSlot.astro";
 import CarbonAd from "../components/CarbonAd.astro";
 import ValueCard from "../components/ui/ValueCard.astro";
 import ToolIcon from "../components/icons/ToolIcon.astro";
+import AdUnit from "../components/AdUnit.astro";
 
 const featuredTools = getFeaturedTools(6).map((t) => ({
   name: t.name, desc: t.longDescription, url: t.url, icon: t.icon,
@@ -44,7 +45,7 @@ const roadmap = [
 ];
 ---
 
-<MainLayout title="NumanX Tools - Free Online Tools for Creators, Students & Builders" description="Discover 15+ free online tools for image compression, QR code generation, word counting, cricket calculators, and more. Privacy-first, client-side, no sign-up required." keywords="free online tools, image compressor, qr code generator, word counter, cricket calculator, password generator, hashtag generator, age calculator, png to webp, jpg to png, image resizer, online utilities free, browser tools no signup">
+<MainLayout title="NumanX Tools — Free Online Tools for Creators, Students &amp; Professionals" description="Free online tools including image converters, QR generators, word counters, creator tools, cricket calculators, and productivity utilities. Fast, private, and browser-based." keywords="free online tools, image compressor, image converter, qr code generator, word counter, cricket calculator, password generator, creator tools, productivity tools, browser based tools, free online tools for students, best free online tools">
   
   <!-- Glow Overlays -->
   <div class="absolute top-[10%] left-[5%] w-[400px] h-[400px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none -z-10"></div>
@@ -59,7 +60,7 @@ const roadmap = [
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           <div class="lg:col-span-7 text-left animate-[fadeInUp_0.6s_ease-out]">
-            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/[0.06] bg-white/[0.03] text-zinc-400 text-xs font-semibold tracking-wider uppercase mb-8">
+            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-surface bg-surface-1 text-tertiary text-xs font-semibold tracking-wider uppercase mb-8">
               <span class="relative flex h-2 w-2">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
@@ -74,7 +75,7 @@ const roadmap = [
               </span>
             </h1>
             
-            <p class="mt-6 text-zinc-400 text-lg sm:text-xl max-w-2xl leading-[1.75]">
+            <p class="mt-6 text-tertiary text-lg sm:text-xl max-w-2xl leading-[1.75]">
               <span class="text-purple-400 font-semibold">Build. Create. Analyze.</span> Powerful image tools, creator utilities, calculators, and cricket analytics — all free, client-side, and privacy-friendly.
             </p>
             
@@ -83,7 +84,7 @@ const roadmap = [
                 Explore Tools
                 <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
               </a>
-              <a href="/blog/" class="group inline-flex items-center gap-2 border border-white/[0.1] hover:border-purple-500/40 text-zinc-300 hover:text-white font-semibold text-sm px-6 py-3.5 rounded-xl bg-white/[0.03] backdrop-blur-sm transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-900/10">
+              <a href="/blog/" class="group inline-flex items-center gap-2 border border-surface-3 hover:border-purple-500/40 text-secondary hover:text-white font-semibold text-sm px-6 py-3.5 rounded-xl bg-surface-1 backdrop-blur-sm transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-900/10">
                 View Blog
                 <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               </a>
@@ -99,25 +100,25 @@ const roadmap = [
               <div class="absolute w-48 h-48 rounded-full bg-purple-500/10 blur-[60px] animate-[breathe_6s_ease-in-out_2s_infinite]" />
               
               <!-- Center Command Palette Mockup -->
-              <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 rounded-xl border border-white/[0.08] bg-[#0a0a0b]/90 p-3 backdrop-blur-xl shadow-2xl shadow-purple-900/20 animate-[fadeInUp_0.6s_ease-out_0.3s_both] hover:border-purple-500/30 transition-all duration-300">
-                <div class="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.04]">
-                  <svg class="w-3.5 h-3.5 text-zinc-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                  <span class="text-[11px] text-zinc-400">Search tools...</span>
-                  <kbd class="ml-auto flex items-center gap-0.5 px-1 py-0.5 rounded bg-white/[0.04] text-zinc-500 text-[8px] font-mono border border-white/[0.06]">
+              <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 rounded-xl border border-surface-2 var(--surface-nav) p-3 backdrop-blur-xl shadow-2xl shadow-purple-900/20 animate-[fadeInUp_0.6s_ease-out_0.3s_both] hover:border-purple-500/30 transition-all duration-300">
+                <div class="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-surface-2 border border-surface">
+                  <svg class="w-3.5 h-3.5 text-tertiary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  <span class="text-[11px] text-tertiary">Search tools...</span>
+                  <kbd class="ml-auto flex items-center gap-0.5 px-1 py-0.5 rounded bg-surface-2 text-muted text-[8px] font-mono border border-surface">
                     <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg>
                     K
                   </kbd>
                 </div>
                 <div class="mt-2 space-y-1">
-                  <div class="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-white/[0.03] transition-colors">
+                  <div class="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-surface-1 transition-colors">
                     <span class="w-4 h-4 rounded bg-purple-500/10 flex items-center justify-center text-[8px] text-purple-400 font-bold">W</span>
-                    <span class="text-[10px] text-zinc-400">Word Counter</span>
-                    <span class="ml-auto text-[8px] text-zinc-500">Ctrl+1</span>
+                    <span class="text-[10px] text-tertiary">Word Counter</span>
+                    <span class="ml-auto text-[8px] text-muted">Ctrl+1</span>
                   </div>
-                  <div class="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-white/[0.03] transition-colors">
+                  <div class="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-surface-1 transition-colors">
                     <span class="w-4 h-4 rounded bg-emerald-500/10 flex items-center justify-center text-[8px] text-emerald-400 font-bold">#</span>
-                    <span class="text-[10px] text-zinc-400">Hashtag Generator</span>
-                    <span class="ml-auto text-[8px] text-zinc-500">Ctrl+2</span>
+                    <span class="text-[10px] text-tertiary">Hashtag Generator</span>
+                    <span class="ml-auto text-[8px] text-muted">Ctrl+2</span>
                   </div>
                   <div class="flex items-center gap-2 px-2 py-1 rounded-md bg-purple-500/5 border border-purple-500/10">
                     <span class="w-4 h-4 rounded bg-blue-500/10 flex items-center justify-center text-[8px] text-blue-400 font-bold">QR</span>
@@ -128,36 +129,36 @@ const roadmap = [
               </div>
               
               <!-- Card 1: PNG to WebP -->
-              <div class="absolute top-[8%] left-[8%] w-60 rounded-2xl border border-white/[0.08] bg-[#0a0a0b]/80 p-4 shadow-2xl backdrop-blur-xl animate-[float_6s_ease-in-out_infinite] hover:border-purple-500/30 hover:shadow-purple-900/20 transition-all duration-300">
+              <div class="absolute top-[8%] left-[8%] w-60 rounded-2xl border border-surface-2 bg-surface-nav p-4 shadow-2xl backdrop-blur-xl animate-[float_6s_ease-in-out_infinite] hover:border-purple-500/30 hover:shadow-purple-900/20 transition-all duration-300">
                 <div class="flex items-center gap-3">
                   <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/10 flex items-center justify-center text-purple-400"><ToolIcon name="jpg2png" /></div>
                   <div>
-                    <h4 class="text-xs font-semibold text-zinc-200">PNG to WebP</h4>
-                    <p class="text-[10px] text-zinc-400">Fast client-side convert</p>
+                    <h4 class="text-xs font-semibold text-primary">PNG to WebP</h4>
+                    <p class="text-[10px] text-tertiary">Fast client-side convert</p>
                   </div>
                 </div>
-                <div class="mt-3 h-1.5 w-full bg-white/[0.04] rounded-full overflow-hidden">
+                <div class="mt-3 h-1.5 w-full bg-surface-2 rounded-full overflow-hidden">
                   <div class="h-full bg-gradient-to-r from-purple-500 to-purple-400 w-[85%] rounded-full"></div>
                 </div>
-                <div class="mt-2 flex justify-between text-[9px] text-zinc-400">
+                <div class="mt-2 flex justify-between text-[9px] text-tertiary">
                   <span>85% smaller</span>
                   <span>2.4MB → 360KB</span>
                 </div>
               </div>
 
               <!-- Card 2: QR Generator -->
-              <div class="absolute bottom-[12%] right-[6%] w-56 rounded-2xl border border-white/[0.08] bg-[#0a0a0b]/80 p-4 shadow-2xl backdrop-blur-xl animate-[float_8s_ease-in-out_2s_infinite] hover:border-purple-500/30 hover:shadow-purple-900/20 transition-all duration-300">
+              <div class="absolute bottom-[12%] right-[6%] w-56 rounded-2xl border border-surface-2 bg-surface-nav p-4 shadow-2xl backdrop-blur-xl animate-[float_8s_ease-in-out_2s_infinite] hover:border-purple-500/30 hover:shadow-purple-900/20 transition-all duration-300">
                 <div class="flex items-center gap-3">
                   <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/10 flex items-center justify-center text-blue-400"><ToolIcon name="qr" /></div>
                   <div>
-                    <h4 class="text-xs font-semibold text-zinc-200">QR Generator</h4>
-                    <p class="text-[10px] text-zinc-400">Generate instantly</p>
+                    <h4 class="text-xs font-semibold text-primary">QR Generator</h4>
+                    <p class="text-[10px] text-tertiary">Generate instantly</p>
                   </div>
                 </div>
                 <div class="mt-3 space-y-1.5">
                   <div class="flex justify-between text-[10px]">
-                    <span class="text-zinc-400">Type:</span>
-                    <span class="text-zinc-300">WiFi Network</span>
+                    <span class="text-tertiary">Type:</span>
+                    <span class="text-secondary">WiFi Network</span>
                   </div>
                   <div class="flex items-center gap-1.5">
                     <span class="relative flex h-1.5 w-1.5">
@@ -170,24 +171,24 @@ const roadmap = [
               </div>
 
               <!-- Card 3: Performance Stats -->
-              <div class="absolute top-[40%] right-[12%] w-52 rounded-2xl border border-white/[0.08] bg-[#0a0a0b]/80 p-4 shadow-2xl backdrop-blur-xl animate-[float_7s_ease-in-out_1s_infinite] hover:border-purple-500/30 hover:shadow-purple-900/20 transition-all duration-300">
+              <div class="absolute top-[40%] right-[12%] w-52 rounded-2xl border border-surface-2 bg-surface-nav p-4 shadow-2xl backdrop-blur-xl animate-[float_7s_ease-in-out_1s_infinite] hover:border-purple-500/30 hover:shadow-purple-900/20 transition-all duration-300">
                 <div class="flex items-center gap-2 mb-3">
                   <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/30"></div>
                   <span class="text-[10px] text-emerald-400 font-semibold">100% Uptime</span>
                 </div>
                 <div class="space-y-2">
                   <div class="flex items-center justify-between text-[11px]">
-                    <span class="text-zinc-400">Speed</span>
+                    <span class="text-tertiary">Speed</span>
                     <span class="text-purple-400 font-bold">98/100</span>
                   </div>
-                  <div class="w-full h-1.5 bg-white/[0.04] rounded-full overflow-hidden">
+                  <div class="w-full h-1.5 bg-surface-2 rounded-full overflow-hidden">
                     <div class="h-full bg-gradient-to-r from-purple-500 to-blue-500 w-[98%] rounded-full"></div>
                   </div>
                   <div class="flex items-center justify-between text-[11px]">
-                    <span class="text-zinc-400">Privacy</span>
+                    <span class="text-tertiary">Privacy</span>
                     <span class="text-emerald-400 font-bold">100%</span>
                   </div>
-                  <div class="w-full h-1.5 bg-white/[0.04] rounded-full overflow-hidden">
+                  <div class="w-full h-1.5 bg-surface-2 rounded-full overflow-hidden">
                     <div class="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 w-full rounded-full"></div>
                   </div>
                 </div>
@@ -199,40 +200,42 @@ const roadmap = [
         </div>
       </section>
 
+      <AdUnit format="horizontal" class="mb-16" />
+
       <!-- ================= STATS SECTION ================= -->
       <section class="mb-24 relative animate-[fadeInUp_0.6s_ease-out_0.3s_both]">
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          <div class="relative rounded-2xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-xl p-6 hover:border-purple-500/30 hover:bg-white/[0.05] hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
+          <div class="relative rounded-2xl border border-surface bg-surface-1 backdrop-blur-xl p-6 hover:border-purple-500/30 hover:bg-surface-2 hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
             <div class="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-colors"></div>
             <div class="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
               <span class="stat-counter" data-target="16">16</span>+
             </div>
-            <p class="text-sm font-semibold text-zinc-300 mt-2">Tools Available</p>
-            <p class="text-xs text-zinc-400 mt-1">Free tools ready for production</p>
+            <p class="text-sm font-semibold text-secondary mt-2">Tools Available</p>
+            <p class="text-xs text-tertiary mt-1">Free tools ready for production</p>
           </div>
-          <div class="relative rounded-2xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-xl p-6 hover:border-purple-500/30 hover:bg-white/[0.05] hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
+          <div class="relative rounded-2xl border border-surface bg-surface-1 backdrop-blur-xl p-6 hover:border-purple-500/30 hover:bg-surface-2 hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
             <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors"></div>
             <div class="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
               <span class="stat-counter" data-target="4">4</span>
             </div>
-            <p class="text-sm font-semibold text-zinc-300 mt-2">Core Categories</p>
-            <p class="text-xs text-zinc-400 mt-1">Image, Creator, Utility, Cricket</p>
+            <p class="text-sm font-semibold text-secondary mt-2">Core Categories</p>
+            <p class="text-xs text-tertiary mt-1">Image, Creator, Utility, Cricket</p>
           </div>
-          <div class="relative rounded-2xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-xl p-6 hover:border-purple-500/30 hover:bg-white/[0.05] hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
+          <div class="relative rounded-2xl border border-surface bg-surface-1 backdrop-blur-xl p-6 hover:border-purple-500/30 hover:bg-surface-2 hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
             <div class="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-colors"></div>
             <div class="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
               <span class="stat-counter" data-target="100">100</span>%
             </div>
-            <p class="text-sm font-semibold text-zinc-300 mt-2">Free & Open</p>
-            <p class="text-xs text-zinc-400 mt-1">No limits, no subscriptions</p>
+            <p class="text-sm font-semibold text-secondary mt-2">Free & Open</p>
+            <p class="text-xs text-tertiary mt-1">No limits, no subscriptions</p>
           </div>
-          <div class="relative rounded-2xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-xl p-6 hover:border-purple-500/30 hover:bg-white/[0.05] hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
+          <div class="relative rounded-2xl border border-surface bg-surface-1 backdrop-blur-xl p-6 hover:border-purple-500/30 hover:bg-surface-2 hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
             <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors"></div>
             <div class="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
               100%
             </div>
-            <p class="text-sm font-semibold text-zinc-300 mt-2">Privacy Secured</p>
-            <p class="text-xs text-zinc-400 mt-1">No database or cookies required</p>
+            <p class="text-sm font-semibold text-secondary mt-2">Privacy Secured</p>
+            <p class="text-xs text-tertiary mt-1">No database or cookies required</p>
           </div>
         </div>
       </section>
@@ -247,7 +250,7 @@ const roadmap = [
               <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Utilities</span>
             </h2>
           </div>
-          <a href="/tools/" class="group text-sm font-semibold text-zinc-400 hover:text-white flex items-center gap-1.5 transition-colors">
+          <a href="/tools/" class="group text-sm font-semibold text-tertiary hover:text-white flex items-center gap-1.5 transition-colors">
             Explore All Tools
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:translate-x-0.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>
@@ -255,14 +258,14 @@ const roadmap = [
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredTools.map((tool, idx) => (
-            <article class="group relative rounded-2xl border border-white/[0.06] bg-[#111113]/30 card-glow p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/30 hover:shadow-xl hover:shadow-purple-900/10 cursor-pointer" style={`animation: fadeInUp 0.5s ease-out ${0.6 + idx * 0.1}s both`} onclick={`window.location='${tool.url}'`} onkeydown={`if(event.key==='Enter')window.location='${tool.url}'`} tabindex="0" role="link" aria-label={`Open ${tool.name}`}>
+            <article class="group relative rounded-2xl border border-surface bg-[#111113]/30 card-glow p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/30 hover:shadow-xl hover:shadow-purple-900/10 cursor-pointer" style={`animation: fadeInUp 0.5s ease-out ${0.6 + idx * 0.1}s both`} onclick={`window.location='${tool.url}'`} onkeydown={`if(event.key==='Enter')window.location='${tool.url}'`} tabindex="0" role="link" aria-label={`Open ${tool.name}`}>
               <div>
                 <div class="flex items-center justify-between">
                   <span class="w-10 h-10 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-110 group-hover:bg-purple-600/20 transition-all duration-200"><ToolIcon name={tool.icon} /></span>
-                  <span class="text-[10px] text-zinc-400 font-medium px-2 py-0.5 rounded-md bg-white/[0.04]">{tool.cat}</span>
+                  <span class="text-[10px] text-tertiary font-medium px-2 py-0.5 rounded-md bg-surface-2">{tool.cat}</span>
                 </div>
-                <h3 class="text-base font-bold text-zinc-200 group-hover:text-white mt-4 transition-colors">{tool.name}</h3>
-                <p class="text-xs text-zinc-500 mt-2 leading-relaxed">{tool.desc}</p>
+                <h3 class="text-base font-bold text-primary group-hover:text-white mt-4 transition-colors">{tool.name}</h3>
+                <p class="text-xs text-muted mt-2 leading-relaxed">{tool.desc}</p>
               </div>
               <div class="mt-6 flex items-center gap-2 text-xs font-semibold text-purple-400 group-hover:text-purple-300">
                 Open Tool
@@ -287,24 +290,24 @@ const roadmap = [
             Browse Tools By
             <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Category</span>
           </h2>
-          <p class="text-sm text-zinc-400 mt-3 max-w-lg mx-auto">
+          <p class="text-sm text-tertiary mt-3 max-w-lg mx-auto">
             Our platform features diverse divisions designed for lightning-fast delivery in image compression, cricket scoring, and utility tools.
           </p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {categories.map((cat) => (
-            <div class="group rounded-2xl border border-white/[0.06] bg-[#111113]/30 card-glow p-6 flex flex-col justify-between hover:border-purple-500/20 transition-all duration-300 hover:-translate-y-1">
+            <div class="group rounded-2xl border border-surface bg-[#111113]/30 card-glow p-6 flex flex-col justify-between hover:border-purple-500/20 transition-all duration-300 hover:-translate-y-1">
               <div>
                 <div class="flex items-center justify-between">
                   <ToolIcon name={cat.icon} class="text-2xl" />
-                  <span class="text-[11px] font-bold text-zinc-400 px-2 py-0.5 rounded-full bg-zinc-800/80">{cat.count}</span>
+                  <span class="text-[11px] font-bold text-tertiary px-2 py-0.5 rounded-full bg-zinc-800/80">{cat.count}</span>
                 </div>
-                <h3 class="text-lg font-bold text-zinc-200 mt-4 group-hover:text-white transition-colors">{cat.title}</h3>
-                <p class="text-xs text-zinc-500 mt-2 leading-relaxed">{cat.desc}</p>
+                <h3 class="text-lg font-bold text-primary mt-4 group-hover:text-white transition-colors">{cat.title}</h3>
+                <p class="text-xs text-muted mt-2 leading-relaxed">{cat.desc}</p>
               </div>
               <div class="mt-6 border-t border-zinc-800/60 pt-4 flex justify-between items-center text-xs">
-                <span class="text-zinc-400">Instant Access</span>
+                <span class="text-tertiary">Instant Access</span>
                 <a href="/tools/" class="text-purple-400 hover:text-purple-300 font-semibold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
                   Browse &rarr;
                 </a>
@@ -343,42 +346,42 @@ const roadmap = [
           </h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="rounded-2xl border border-white/[0.06] bg-[#111113]/30 card-glow p-6 hover:border-purple-500/20 transition-all duration-300 hover:-translate-y-1">
+          <div class="rounded-2xl border border-surface bg-[#111113]/30 card-glow p-6 hover:border-purple-500/20 transition-all duration-300 hover:-translate-y-1">
             <div class="flex gap-1 mb-4">
               {[1,2,3,4,5].map(() => <span class="text-amber-400 text-sm">★</span>)}
             </div>
-            <p class="text-sm text-zinc-300 leading-relaxed">"The image compressor is incredible. I reduced a 5MB photo to 400KB with zero visible quality loss. And it's all client-side!"</p>
-            <div class="mt-4 pt-4 border-t border-white/[0.06] flex items-center gap-3">
+            <p class="text-sm text-secondary leading-relaxed">"The image compressor is incredible. I reduced a 5MB photo to 400KB with zero visible quality loss. And it's all client-side!"</p>
+            <div class="mt-4 pt-4 border-t border-surface flex items-center gap-3">
               <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-xs font-bold text-white">AK</div>
               <div>
-                <p class="text-xs font-semibold text-zinc-200">Alex K.</p>
-                <p class="text-[10px] text-zinc-400">Content Creator</p>
+                <p class="text-xs font-semibold text-primary">Alex K.</p>
+                <p class="text-[10px] text-tertiary">Content Creator</p>
               </div>
             </div>
           </div>
-          <div class="rounded-2xl border border-white/[0.06] bg-[#111113]/30 card-glow p-6 hover:border-purple-500/20 transition-all duration-300 hover:-translate-y-1">
+          <div class="rounded-2xl border border-surface bg-[#111113]/30 card-glow p-6 hover:border-purple-500/20 transition-all duration-300 hover:-translate-y-1">
             <div class="flex gap-1 mb-4">
               {[1,2,3,4,5].map(() => <span class="text-amber-400 text-sm">★</span>)}
             </div>
-            <p class="text-sm text-zinc-300 leading-relaxed">"The cricket calculators are a game-changer for my fantasy league drafts. Run rate projections help me pick the right players every time."</p>
-            <div class="mt-4 pt-4 border-t border-white/[0.06] flex items-center gap-3">
+            <p class="text-sm text-secondary leading-relaxed">"The cricket calculators are a game-changer for my fantasy league drafts. Run rate projections help me pick the right players every time."</p>
+            <div class="mt-4 pt-4 border-t border-surface flex items-center gap-3">
               <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-xs font-bold text-white">RJ</div>
               <div>
-                <p class="text-xs font-semibold text-zinc-200">Rahul J.</p>
-                <p class="text-[10px] text-zinc-400">Cricket Analyst</p>
+                <p class="text-xs font-semibold text-primary">Rahul J.</p>
+                <p class="text-[10px] text-tertiary">Cricket Analyst</p>
               </div>
             </div>
           </div>
-          <div class="rounded-2xl border border-white/[0.06] bg-[#111113]/30 card-glow p-6 hover:border-purple-500/20 transition-all duration-300 hover:-translate-y-1">
+          <div class="rounded-2xl border border-surface bg-[#111113]/30 card-glow p-6 hover:border-purple-500/20 transition-all duration-300 hover:-translate-y-1">
             <div class="flex gap-1 mb-4">
               {[1,2,3,4,5].map(() => <span class="text-amber-400 text-sm">★</span>)}
             </div>
-            <p class="text-sm text-zinc-300 leading-relaxed">"I use the QR generator daily for my business. The WiFi QR code template is genius — customers love tapping to connect!"</p>
-            <div class="mt-4 pt-4 border-t border-white/[0.06] flex items-center gap-3">
+            <p class="text-sm text-secondary leading-relaxed">"I use the QR generator daily for my business. The WiFi QR code template is genius — customers love tapping to connect!"</p>
+            <div class="mt-4 pt-4 border-t border-surface flex items-center gap-3">
               <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-xs font-bold text-white">SM</div>
               <div>
-                <p class="text-xs font-semibold text-zinc-200">Sarah M.</p>
-                <p class="text-[10px] text-zinc-400">Small Business Owner</p>
+                <p class="text-xs font-semibold text-primary">Sarah M.</p>
+                <p class="text-[10px] text-tertiary">Small Business Owner</p>
               </div>
             </div>
           </div>
@@ -401,7 +404,7 @@ const roadmap = [
 
       <!-- ================= TRENDING TOOLS ================= -->
       <section class="mb-24 relative animate-[fadeInUp_0.6s_ease-out_1.2s_both]">
-        <div class="relative rounded-3xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-xl p-8 sm:p-10 shadow-2xl overflow-hidden">
+        <div class="relative rounded-3xl border border-surface bg-surface-1 backdrop-blur-xl p-8 sm:p-10 shadow-2xl overflow-hidden">
           <div class="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-purple-600/10 blur-[80px] pointer-events-none"></div>
            
           <div class="flex items-end justify-between mb-10">
@@ -415,10 +418,10 @@ const roadmap = [
             
             <div class="w-full lg:max-w-md space-y-3 shrink-0">
               {popularTools.map((t) => (
-                <a href={t.url} class="flex items-center justify-between px-4 py-3 rounded-xl border border-white/[0.06] bg-white/[0.03] hover:border-purple-500/30 hover:bg-white/[0.05] transition-all duration-200 group">
+                <a href={t.url} class="flex items-center justify-between px-4 py-3 rounded-xl border border-surface bg-surface-1 hover:border-purple-500/30 hover:bg-surface-2 transition-all duration-200 group">
                   <div class="flex items-center gap-3">
                     <span class="text-sm text-purple-400 bg-purple-500/10 w-6 h-6 rounded flex items-center justify-center"><ToolIcon name={t.icon} /></span>
-                    <span class="text-xs font-semibold text-zinc-300 group-hover:text-white">{t.name}</span>
+                    <span class="text-xs font-semibold text-secondary group-hover:text-white">{t.name}</span>
                   </div>
                   <span class="text-[10px] font-bold tracking-wider uppercase text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded">{t.badge}</span>
                 </a>
@@ -438,7 +441,7 @@ const roadmap = [
               <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Creator Blog</span>
             </h2>
           </div>
-          <a href="/blog/" class="group text-sm font-semibold text-zinc-400 hover:text-white flex items-center gap-1.5 transition-colors">
+          <a href="/blog/" class="group text-sm font-semibold text-tertiary hover:text-white flex items-center gap-1.5 transition-colors">
             Browse All Articles
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:translate-x-0.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>
@@ -446,7 +449,7 @@ const roadmap = [
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogPosts.map((post) => (
-            <div class="group rounded-2xl border border-white/[0.06] bg-white/[0.03] overflow-hidden hover:border-white/[0.12] hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div class="group rounded-2xl border border-surface bg-surface-1 overflow-hidden hover:border-surface-3 hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
               <div>
                 <!-- Mock Blog Thumbnail using modern CSS backgrounds -->
                 <div class="h-44 w-full bg-gradient-to-br from-purple-900/20 via-zinc-900 to-zinc-950 flex items-center justify-center relative border-b border-zinc-800">
@@ -454,9 +457,9 @@ const roadmap = [
                   <span class="text-sm font-bold text-purple-400 tracking-wider uppercase bg-purple-600/10 px-3 py-1 rounded-full border border-purple-500/20">{post.imgText}</span>
                 </div>
                 <div class="p-6">
-                  <span class="text-[10px] font-medium text-zinc-400">{post.time}</span>
-                  <h3 class="text-base font-bold text-zinc-200 mt-2 group-hover:text-white transition-colors">{post.title}</h3>
-                  <p class="text-xs text-zinc-400 mt-2 leading-relaxed">{post.desc}</p>
+                  <span class="text-[10px] font-medium text-tertiary">{post.time}</span>
+                  <h3 class="text-base font-bold text-primary mt-2 group-hover:text-white transition-colors">{post.title}</h3>
+                  <p class="text-xs text-tertiary mt-2 leading-relaxed">{post.desc}</p>
                 </div>
               </div>
               <div class="p-6 pt-0">
@@ -470,9 +473,11 @@ const roadmap = [
         </div>
       </section>
 
+      <AdUnit format="horizontal" class="mb-16" />
+
       <!-- ================= FOUNDER SECTION ================= -->
       <section class="mb-24 animate-[fadeInUp_0.6s_ease-out_1.5s_both]">
-        <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 rounded-3xl border border-white/[0.06] bg-white/[0.02] p-8 sm:p-10">
+        <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 rounded-3xl border border-surface bg-surface-1 p-8 sm:p-10">
           <div class="w-36 h-36 rounded-2xl bg-gradient-to-br from-purple-600/30 to-blue-600/20 flex items-center justify-center border border-zinc-700/50 shrink-0">
             <span class="text-6xl font-black text-purple-400 tracking-tight">NU</span>
           </div>
@@ -480,7 +485,7 @@ const roadmap = [
           <div class="text-center lg:text-left flex-1">
             <span class="text-xs font-semibold text-purple-400 uppercase tracking-widest bg-purple-500/10 px-2 py-0.5 rounded">FOUNDER</span>
             <h2 class="text-3xl md:text-4xl font-black text-white mt-2">Muhammad Numan Usmani</h2>
-            <p class="text-sm text-zinc-400 mt-3 max-w-2xl leading-relaxed">
+            <p class="text-sm text-tertiary mt-3 max-w-2xl leading-relaxed">
               As an IT student, designer, and content creator, I started NumanX with a single mission: to design and ship high-performance, beautiful utilities completely free of server processing blocks, keeping user security paramount.
             </p>
             
@@ -488,7 +493,7 @@ const roadmap = [
               <a href="/about/" class="bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
                 About NumanX
               </a>
-              <a href="/terms-of-service/" class="border border-white/[0.08] hover:border-white/[0.2] text-zinc-300 hover:text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
+              <a href="/terms-of-service/" class="border border-surface-2 hover:border-surface text-secondary hover:text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
                 Read Terms
               </a>
             </div>
@@ -504,7 +509,7 @@ const roadmap = [
             Ecosystem
             <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Roadmap</span>
           </h2>
-          <p class="text-sm text-zinc-400 mt-3">
+          <p class="text-sm text-tertiary mt-3">
             Following structured release vectors to construct premium utilities, content hubs, and ML architectures.
           </p>
         </div>
@@ -514,14 +519,14 @@ const roadmap = [
           <div class="absolute top-[28px] left-[50px] right-[50px] h-0.5 bg-zinc-800 hidden lg:block -z-10"></div>
           
           {roadmap.map((step) => (
-            <div class={`rounded-2xl p-6 flex flex-col justify-between hover:border-purple-500/20 transition-all duration-300 relative ${step.phase === 'Phase 1' ? 'border-emerald-500/30 shadow-lg shadow-emerald-900/20 bg-emerald-500/[0.02]' : 'border-white/[0.06] bg-white/[0.03]'}`}>
+            <div class={`rounded-2xl p-6 flex flex-col justify-between hover:border-purple-500/20 transition-all duration-300 relative ${step.phase === 'Phase 1' ? 'border-emerald-500/30 shadow-lg shadow-emerald-900/20 bg-emerald-500/[0.02]' : 'border-surface bg-surface-1'}`}>
               <div>
                 <div class="flex items-center justify-between mb-4">
                   <span class="text-[10px] font-bold font-mono tracking-widest text-purple-400">{step.phase}</span>
-                  <span class={`text-[9px] font-semibold px-2 py-0.5 rounded ${step.phase === 'Phase 1' ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 animate-pulse' : 'text-zinc-400 bg-zinc-800/80'}`}>{step.status}</span>
+                  <span class={`text-[9px] font-semibold px-2 py-0.5 rounded ${step.phase === 'Phase 1' ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 animate-pulse' : 'text-tertiary bg-zinc-800/80'}`}>{step.status}</span>
                 </div>
-                <h3 class="text-base font-bold text-zinc-200">{step.title}</h3>
-                <p class="text-xs text-zinc-500 mt-2 leading-relaxed">{step.desc}</p>
+                <h3 class="text-base font-bold text-primary">{step.title}</h3>
+                <p class="text-xs text-muted mt-2 leading-relaxed">{step.desc}</p>
               </div>
             </div>
           ))}
@@ -530,16 +535,16 @@ const roadmap = [
 
       <!-- ================= NEWSLETTER UI ================= -->
       <section class="mb-24 relative animate-[fadeInUp_0.6s_ease-out_1.8s_both]">
-          <div class="rounded-3xl border border-white/[0.06] bg-white/[0.02] p-8 sm:p-10 text-center">
+          <div class="rounded-3xl border border-surface bg-surface-1 p-8 sm:p-10 text-center">
             <div class="relative z-10 max-w-xl mx-auto">
               <span class="text-xs font-bold text-purple-400 uppercase tracking-widest font-mono">STAY UPDATED</span>
               <h2 class="text-2xl md:text-3xl font-black text-white mt-3">Join NumanX Dispatch</h2>
-              <p class="text-sm text-zinc-400 mt-2 leading-relaxed">
+              <p class="text-sm text-tertiary mt-2 leading-relaxed">
                 Get notified immediately when we publish fresh tools, creator packs, or cricket form predictors.
               </p>
               
               <form id="newsletter-form" class="mt-8 flex flex-col sm:flex-row items-center gap-3" aria-label="Newsletter subscription">
-                <input id="newsletter-email" type="email" placeholder="Enter your email address" required class="w-full px-5 py-3.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white placeholder-zinc-400 text-sm focus:border-purple-500/50 focus:outline-none transition-all" aria-label="Email address" />
+                <input id="newsletter-email" type="email" placeholder="Enter your email address" required class="w-full px-5 py-3.5 rounded-xl border border-surface-2 bg-surface-1 text-white placeholder-zinc-400 text-sm focus:border-purple-500/50 focus:outline-none transition-all" aria-label="Email address" />
                 <button type="submit" class="w-full sm:w-auto bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm px-6 py-3.5 rounded-xl shrink-0 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
                   Subscribe
                 </button>
@@ -556,7 +561,7 @@ const roadmap = [
           <h2 class="text-3xl md:text-5xl font-black tracking-tight text-white">
             Start Using Free Tools Today
           </h2>
-          <p class="mt-4 text-zinc-400 text-sm md:text-base max-w-lg mx-auto leading-relaxed">
+          <p class="mt-4 text-tertiary text-sm md:text-base max-w-lg mx-auto leading-relaxed">
             Boost your productivity instantly. No registration keys, no installation files, just pure tools running in your browser sandbox.
           </p>
           
@@ -565,7 +570,7 @@ const roadmap = [
               Explore Tools
               <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <a href="/blog/" class="inline-flex items-center gap-2 border border-white/[0.08] hover:border-white/[0.2] text-zinc-300 hover:text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
+            <a href="/blog/" class="inline-flex items-center gap-2 border border-surface-2 hover:border-surface text-secondary hover:text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
               Browse Blog
             </a>
           </div>
@@ -653,7 +658,7 @@ const roadmap = [
         grid.innerHTML = recentTools.map((tool) => `
           <a href="${tool.url}" class="group rounded-xl border border-zinc-800 bg-[#111113]/30 card-glow p-4 hover:border-purple-500/40 transition-all duration-300 flex items-center gap-3">
             <span class="w-9 h-9 rounded-lg bg-purple-600/10 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-110 transition-transform">${getIconSvg(tool.icon)}</span>
-            <span class="text-sm font-semibold text-zinc-200 group-hover:text-white transition-colors">${tool.name}</span>
+            <span class="text-sm font-semibold text-primary group-hover:text-white transition-colors">${tool.name}</span>
           </a>
         `).join("");
       }

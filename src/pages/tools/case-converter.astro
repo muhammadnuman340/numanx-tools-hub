@@ -17,25 +17,25 @@ const ccSchema = { name: "Case Converter", applicationCategory: "Utilities", des
     <ToolHeader title="Case" gradient="Converter Pro" desc="Convert text between uppercase, lowercase, title case, sentence case, alternating case, and more." badge="✦ New Tool" slug="case-converter" />
     <ShareBar />
     <div class="max-w-xl mx-auto mt-10">
-      <div class="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6">
-        <textarea id="input-text" class="w-full h-32 px-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm focus:border-green-500/50 focus:outline-none transition-all resize-none font-mono" placeholder="Type or paste your text here..."></textarea>
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+        <textarea id="input-text" class="w-full h-32 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-500/50 focus:outline-none transition-all resize-none font-mono" placeholder="Type or paste your text here..."></textarea>
         <div class="flex flex-wrap gap-2 mt-4">
           <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-green-600 text-white" data-mode="upper">UPPERCASE</button>
-          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200" data-mode="lower">lowercase</button>
-          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200" data-mode="title">Title Case</button>
-          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200" data-mode="sentence">Sentence case</button>
-          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200" data-mode="alternating">aLtErNaTiNg</button>
-          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200" data-mode="inverse">INVERSE</button>
-          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-white/[0.04] text-zinc-400 hover:text-zinc-200" data-mode="camel">camelCase</button>
+          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary" data-mode="lower">lowercase</button>
+          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary" data-mode="title">Title Case</button>
+          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary" data-mode="sentence">Sentence case</button>
+          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary" data-mode="alternating">aLtErNaTiNg</button>
+          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary" data-mode="inverse">INVERSE</button>
+          <button class="case-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary" data-mode="camel">camelCase</button>
         </div>
-        <div class="mt-6 pt-6 border-t border-white/[0.06]">
-          <label class="block text-xs font-medium text-zinc-400 mb-1.5">Result</label>
-          <textarea id="output-text" class="w-full h-24 px-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white text-sm focus:outline-none resize-none font-mono" readonly placeholder="Result will appear here..."></textarea>
-          <button id="copy-btn" class="mt-2 bg-white/[0.04] hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 text-xs font-medium px-3 py-1.5 rounded-lg border border-white/[0.1] transition-all">Copy Result</button>
+        <div class="mt-6 pt-6 border-t border-surface">
+          <label class="block text-xs font-medium text-tertiary mb-1.5">Result</label>
+          <textarea id="output-text" class="w-full h-24 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:outline-none resize-none font-mono" readonly placeholder="Result will appear here..."></textarea>
+          <button id="copy-btn" class="mt-2 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy Result</button>
         </div>
       </div>
     </div>
-    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Why Use a <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">Case Converter?</span></h2></div><div class="space-y-4 text-sm text-zinc-400 leading-relaxed"><p>Text case conversion is essential for formatting content consistently. Whether you're writing code (camelCase), formatting titles (Title Case), or normalizing user input (lowercase), a case converter saves time and eliminates manual reformatting errors.</p></div></section>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Why Use a <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">Case Converter?</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>Text case conversion is essential for formatting content consistently. Whether you're writing code (camelCase), formatting titles (Title Case), or normalizing user input (lowercase), a case converter saves time and eliminates manual reformatting errors.</p></div></section>
     <RelatedTools current="case-converter" />
     <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
   </div></main>
@@ -46,8 +46,8 @@ const ccSchema = { name: "Case Converter", applicationCategory: "Utilities", des
   const copyBtn = document.getElementById("copy-btn");
   document.querySelectorAll(".case-btn").forEach(btn => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll(".case-btn").forEach(b => { b.classList.remove("bg-green-600","text-white"); b.classList.add("bg-white/[0.04]","text-zinc-400","hover:text-zinc-200"); });
-      btn.classList.remove("bg-white/[0.04]","text-zinc-400","hover:text-zinc-200");
+      document.querySelectorAll(".case-btn").forEach(b => { b.classList.remove("bg-green-600","text-white"); b.classList.add("bg-surface-2","text-tertiary","hover:text-primary"); });
+      btn.classList.remove("bg-surface-2","text-tertiary","hover:text-primary");
       btn.classList.add("bg-green-600","text-white");
       convert(btn.dataset.mode);
     });

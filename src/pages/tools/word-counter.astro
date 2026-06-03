@@ -58,55 +58,55 @@ const wcSchema = {
 
         <!-- Stats Bar — Grammarly-style compact row -->
         <div class="grid grid-cols-3 sm:grid-cols-6 gap-2.5" id="stats-bar">
-          <div class="stat-card group bg-white/[0.03] border border-white/[0.06] rounded-xl p-3 text-center hover:border-purple-500/30 transition-all">
+          <div class="stat-card group bg-surface-1 border border-surface rounded-xl p-3 text-center hover:border-purple-500/30 transition-all">
             <span id="word-count" class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent tabular-nums">0</span>
-            <span class="text-[9px] font-semibold uppercase tracking-wider text-zinc-500">Words</span>
+            <span class="text-[9px] font-semibold uppercase tracking-wider text-muted">Words</span>
           </div>
-          <div class="stat-card group bg-white/[0.03] border border-white/[0.06] rounded-xl p-3 text-center hover:border-purple-500/30 transition-all">
+          <div class="stat-card group bg-surface-1 border border-surface rounded-xl p-3 text-center hover:border-purple-500/30 transition-all">
             <span id="char-count" class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent tabular-nums">0</span>
-            <span class="text-[9px] font-semibold uppercase tracking-wider text-zinc-500">Chars</span>
+            <span class="text-[9px] font-semibold uppercase tracking-wider text-muted">Chars</span>
           </div>
-          <div class="stat-card group bg-white/[0.03] border border-white/[0.06] rounded-xl p-3 text-center hover:border-purple-500/30 transition-all">
+          <div class="stat-card group bg-surface-1 border border-surface rounded-xl p-3 text-center hover:border-purple-500/30 transition-all">
             <span id="char-ns" class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent tabular-nums">0</span>
-            <span class="text-[9px] font-semibold uppercase tracking-wider text-zinc-500">No Spaces</span>
+            <span class="text-[9px] font-semibold uppercase tracking-wider text-muted">No Spaces</span>
           </div>
-          <div class="stat-card group bg-white/[0.03] border border-white/[0.06] rounded-xl p-3 text-center hover:border-purple-500/30 transition-all">
+          <div class="stat-card group bg-surface-1 border border-surface rounded-xl p-3 text-center hover:border-purple-500/30 transition-all">
             <span id="sentence-count" class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent tabular-nums">0</span>
-            <span class="text-[9px] font-semibold uppercase tracking-wider text-zinc-500">Sentences</span>
+            <span class="text-[9px] font-semibold uppercase tracking-wider text-muted">Sentences</span>
           </div>
-          <div class="stat-card group bg-white/[0.03] border border-white/[0.06] rounded-xl p-3 text-center hover:border-purple-500/30 transition-all">
+          <div class="stat-card group bg-surface-1 border border-surface rounded-xl p-3 text-center hover:border-purple-500/30 transition-all">
             <span id="paragraph-count" class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent tabular-nums">0</span>
-            <span class="text-[9px] font-semibold uppercase tracking-wider text-zinc-500">Paragraphs</span>
+            <span class="text-[9px] font-semibold uppercase tracking-wider text-muted">Paragraphs</span>
           </div>
-          <div class="stat-card group bg-white/[0.03] border border-white/[0.06] rounded-xl p-3 text-center hover:border-purple-500/30 transition-all">
+          <div class="stat-card group bg-surface-1 border border-surface rounded-xl p-3 text-center hover:border-purple-500/30 transition-all">
             <span id="read-time" class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent tabular-nums">0m</span>
-            <span class="text-[9px] font-semibold uppercase tracking-wider text-zinc-500">Read Time</span>
+            <span class="text-[9px] font-semibold uppercase tracking-wider text-muted">Read Time</span>
           </div>
         </div>
 
         <!-- Text Area — Notion x ChatGPT style -->
-        <div class="relative rounded-2xl border border-white/[0.08] bg-white/[0.02] focus-within:border-purple-500/60 focus-within:shadow-[0_0_20px_-8px_#a855f7] transition-all duration-300 overflow-hidden">
+        <div class="relative rounded-2xl border border-surface-2 bg-surface-1 focus-within:border-purple-500/60 focus-within:shadow-[0_0_20px_-8px_#a855f7] transition-all duration-300 overflow-hidden">
           <textarea id="analyzer-input" rows="10" placeholder="Start typing or paste your text here…" class="w-full bg-transparent text-white placeholder-zinc-600 p-5 pb-16 resize-none focus:outline-none text-sm leading-relaxed"></textarea>
           <div class="absolute bottom-3 right-3 flex items-center gap-2">
-            <button id="clear-btn" class="bg-white/[0.04] hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 text-[10px] font-medium px-3 py-1.5 rounded-lg border border-white/[0.1] transition-all">Clear</button>
-            <button id="copy-btn" class="bg-white/[0.04] hover:bg-zinc-700 text-zinc-400 hover:text-zinc-200 text-[10px] font-medium px-3 py-1.5 rounded-lg border border-white/[0.1] transition-all">Copy</button>
+            <button id="clear-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Clear</button>
+            <button id="copy-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy</button>
             <button id="download-txt" class="bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-white text-[10px] font-medium px-3 py-1.5 rounded-lg border border-purple-500/30 transition-all">Download TXT</button>
           </div>
         </div>
 
         <!-- ─── Readability Meter ─── -->
-        <div id="readability-card" class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-4">
+        <div id="readability-card" class="bg-surface-1 border border-surface rounded-xl p-4">
           <div class="flex items-center justify-between mb-2">
             <div class="flex items-center gap-2">
               <span class="text-sm leading-none">🎯</span>
-              <span class="text-xs font-semibold text-zinc-300 uppercase tracking-wider">Readability Score</span>
+              <span class="text-xs font-semibold text-secondary uppercase tracking-wider">Readability Score</span>
             </div>
-            <span id="readability" class="text-xs font-bold text-zinc-400">—</span>
+            <span id="readability" class="text-xs font-bold text-tertiary">—</span>
           </div>
           <div class="h-1.5 rounded-full bg-zinc-800 overflow-hidden">
             <div id="readability-bar" class="h-full rounded-full transition-all duration-500 ease-out" style="width:0%"></div>
           </div>
-          <div class="flex justify-between text-[9px] text-zinc-600 mt-1.5">
+          <div class="flex justify-between text-[9px] text-dim mt-1.5">
             <span>Complex</span>
             <span>Fair</span>
             <span>Easy</span>
@@ -116,40 +116,40 @@ const wcSchema = {
         <!-- ─── Analysis Grid ─── -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
           <!-- Keyword Density Panel -->
-          <div id="keyword-panel" class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 min-h-[140px]">
+          <div id="keyword-panel" class="bg-surface-1 border border-surface rounded-xl p-4 min-h-[140px]">
             <div class="flex items-center justify-between mb-3">
               <div class="flex items-center gap-2">
                 <span class="text-sm leading-none">📊</span>
-                <span class="text-xs font-semibold text-zinc-300 uppercase tracking-wider">Keyword Density</span>
+                <span class="text-xs font-semibold text-secondary uppercase tracking-wider">Keyword Density</span>
               </div>
-              <span class="text-[9px] text-zinc-500">Top 10</span>
+              <span class="text-[9px] text-muted">Top 10</span>
             </div>
             <div id="keyword-list" class="flex flex-wrap gap-1.5"></div>
-            <p id="keyword-empty" class="text-xs text-zinc-600 text-center py-6 hidden">Start typing to see keyword analysis…</p>
+            <p id="keyword-empty" class="text-xs text-dim text-center py-6 hidden">Start typing to see keyword analysis…</p>
           </div>
 
           <!-- Text Stats Panel -->
-          <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-4">
+          <div class="bg-surface-1 border border-surface rounded-xl p-4">
             <div class="flex items-center gap-2 mb-3">
               <span class="text-sm leading-none">📋</span>
-              <span class="text-xs font-semibold text-zinc-300 uppercase tracking-wider">Text Analysis</span>
+              <span class="text-xs font-semibold text-secondary uppercase tracking-wider">Text Analysis</span>
             </div>
             <div class="grid grid-cols-2 gap-2.5">
-              <div class="bg-white/[0.03] border border-white/[0.04] rounded-lg p-3 text-center">
-                <span id="avg-word-len" class="block text-lg font-bold text-zinc-300 tabular-nums">—</span>
-                <span class="text-[9px] text-zinc-600 font-medium">Avg Word Len</span>
+              <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center">
+                <span id="avg-word-len" class="block text-lg font-bold text-secondary tabular-nums">—</span>
+                <span class="text-[9px] text-dim font-medium">Avg Word Len</span>
               </div>
-              <div class="bg-white/[0.03] border border-white/[0.04] rounded-lg p-3 text-center">
-                <span id="longest-word" class="block text-lg font-bold text-zinc-300 truncate">—</span>
-                <span class="text-[9px] text-zinc-600 font-medium">Longest Word</span>
+              <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center">
+                <span id="longest-word" class="block text-lg font-bold text-secondary truncate">—</span>
+                <span class="text-[9px] text-dim font-medium">Longest Word</span>
               </div>
-              <div class="bg-white/[0.03] border border-white/[0.04] rounded-lg p-3 text-center">
-                <span id="unique-words" class="block text-lg font-bold text-zinc-300 tabular-nums">0</span>
-                <span class="text-[9px] text-zinc-600 font-medium">Unique Words</span>
+              <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center">
+                <span id="unique-words" class="block text-lg font-bold text-secondary tabular-nums">0</span>
+                <span class="text-[9px] text-dim font-medium">Unique Words</span>
               </div>
-              <div class="bg-white/[0.03] border border-white/[0.04] rounded-lg p-3 text-center">
-                <span id="speak-time" class="block text-lg font-bold text-zinc-300 tabular-nums">0m</span>
-                <span class="text-[9px] text-zinc-600 font-medium">Speak Time</span>
+              <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center">
+                <span id="speak-time" class="block text-lg font-bold text-secondary tabular-nums">0m</span>
+                <span class="text-[9px] text-dim font-medium">Speak Time</span>
               </div>
             </div>
           </div>
@@ -165,9 +165,9 @@ const wcSchema = {
             <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Word Counter?</span>
           </h2>
         </div>
-        <div class="space-y-4 text-sm text-zinc-400 leading-relaxed">
-          <p>A <strong class="text-zinc-200">word counter</strong> is a tool that automatically counts the number of words, characters, sentences, and paragraphs in a given text. It provides instant feedback on your writing length and structure, helping you stay within limits for essays, articles, social media posts, or SEO content.</p>
-          <p>Modern word counters go beyond simple counts. They analyze <strong class="text-zinc-200">keyword density</strong> to show which words you use most, estimate <strong class="text-zinc-200">reading and speaking times</strong> so you can pace your content, and calculate <strong class="text-zinc-200">readability scores</strong> to determine how easy your text is to understand.</p>
+        <div class="space-y-4 text-sm text-tertiary leading-relaxed">
+          <p>A <strong class="text-primary">word counter</strong> is a tool that automatically counts the number of words, characters, sentences, and paragraphs in a given text. It provides instant feedback on your writing length and structure, helping you stay within limits for essays, articles, social media posts, or SEO content.</p>
+          <p>Modern word counters go beyond simple counts. They analyze <strong class="text-primary">keyword density</strong> to show which words you use most, estimate <strong class="text-primary">reading and speaking times</strong> so you can pace your content, and calculate <strong class="text-primary">readability scores</strong> to determine how easy your text is to understand.</p>
           <p>Writers, students, editors, SEO professionals, and content creators use word counters daily to polish their work and meet platform-specific requirements — from Twitter's 280-character limit to blog posts targeting 1,500+ words.</p>
         </div>
       </section>
@@ -182,39 +182,39 @@ const wcSchema = {
           </h2>
         </div>
         <div class="space-y-4">
-          <div class="flex gap-4 p-4 rounded-xl border border-white/[0.06] bg-zinc-900/20">
+          <div class="flex gap-4 p-4 rounded-xl border border-surface bg-zinc-900/20">
             <span class="w-8 h-8 rounded-lg bg-purple-600/15 flex items-center justify-center text-purple-400 text-sm font-bold shrink-0">1</span>
             <div>
-              <h3 class="text-sm font-semibold text-zinc-200">Vary Your Sentence Length</h3>
-              <p class="text-xs text-zinc-500 mt-1 leading-relaxed">Mix short, punchy sentences with longer, detailed ones. This creates rhythm and keeps readers engaged. The readability meter helps you spot if your text feels too dense or too choppy.</p>
+              <h3 class="text-sm font-semibold text-primary">Vary Your Sentence Length</h3>
+              <p class="text-xs text-muted mt-1 leading-relaxed">Mix short, punchy sentences with longer, detailed ones. This creates rhythm and keeps readers engaged. The readability meter helps you spot if your text feels too dense or too choppy.</p>
             </div>
           </div>
-          <div class="flex gap-4 p-4 rounded-xl border border-white/[0.06] bg-zinc-900/20">
+          <div class="flex gap-4 p-4 rounded-xl border border-surface bg-zinc-900/20">
             <span class="w-8 h-8 rounded-lg bg-purple-600/15 flex items-center justify-center text-purple-400 text-sm font-bold shrink-0">2</span>
             <div>
-              <h3 class="text-sm font-semibold text-zinc-200">Watch Your Keyword Density</h3>
-              <p class="text-xs text-zinc-500 mt-1 leading-relaxed">Overusing the same word makes writing feel repetitive. Aim for keyword density between 1–3%. Use the density panel to spot overused words and swap in synonyms for a natural flow.</p>
+              <h3 class="text-sm font-semibold text-primary">Watch Your Keyword Density</h3>
+              <p class="text-xs text-muted mt-1 leading-relaxed">Overusing the same word makes writing feel repetitive. Aim for keyword density between 1–3%. Use the density panel to spot overused words and swap in synonyms for a natural flow.</p>
             </div>
           </div>
-          <div class="flex gap-4 p-4 rounded-xl border border-white/[0.06] bg-zinc-900/20">
+          <div class="flex gap-4 p-4 rounded-xl border border-surface bg-zinc-900/20">
             <span class="w-8 h-8 rounded-lg bg-purple-600/15 flex items-center justify-center text-purple-400 text-sm font-bold shrink-0">3</span>
             <div>
-              <h3 class="text-sm font-semibold text-zinc-200">Shorten Long Sentences</h3>
-              <p class="text-xs text-zinc-500 mt-1 leading-relaxed">Sentences over 30 words can confuse readers. If your average word length is high or readability is low, break long sentences into shorter, clearer ones. Your average word length should ideally stay under 6 characters.</p>
+              <h3 class="text-sm font-semibold text-primary">Shorten Long Sentences</h3>
+              <p class="text-xs text-muted mt-1 leading-relaxed">Sentences over 30 words can confuse readers. If your average word length is high or readability is low, break long sentences into shorter, clearer ones. Your average word length should ideally stay under 6 characters.</p>
             </div>
           </div>
-          <div class="flex gap-4 p-4 rounded-xl border border-white/[0.06] bg-zinc-900/20">
+          <div class="flex gap-4 p-4 rounded-xl border border-surface bg-zinc-900/20">
             <span class="w-8 h-8 rounded-lg bg-purple-600/15 flex items-center justify-center text-purple-400 text-sm font-bold shrink-0">4</span>
             <div>
-              <h3 class="text-sm font-semibold text-zinc-200">Use Active Voice</h3>
-              <p class="text-xs text-zinc-500 mt-1 leading-relaxed">Active voice makes your writing direct and energetic. Instead of "The ball was hit by him," write "He hit the ball." The word counter helps you track total words as you revise for clarity.</p>
+              <h3 class="text-sm font-semibold text-primary">Use Active Voice</h3>
+              <p class="text-xs text-muted mt-1 leading-relaxed">Active voice makes your writing direct and energetic. Instead of "The ball was hit by him," write "He hit the ball." The word counter helps you track total words as you revise for clarity.</p>
             </div>
           </div>
-          <div class="flex gap-4 p-4 rounded-xl border border-white/[0.06] bg-zinc-900/20">
+          <div class="flex gap-4 p-4 rounded-xl border border-surface bg-zinc-900/20">
             <span class="w-8 h-8 rounded-lg bg-purple-600/15 flex items-center justify-center text-purple-400 text-sm font-bold shrink-0">5</span>
             <div>
-              <h3 class="text-sm font-semibold text-zinc-200">Edit for Conciseness</h3>
-              <p class="text-xs text-zinc-500 mt-1 leading-relaxed">Cut unnecessary words like "very," "really," "that," and "just." Every word should earn its place. Use the character count to see how trimming affects your total — shorter is often stronger.</p>
+              <h3 class="text-sm font-semibold text-primary">Edit for Conciseness</h3>
+              <p class="text-xs text-muted mt-1 leading-relaxed">Cut unnecessary words like "very," "really," "that," and "just." Every word should earn its place. Use the character count to see how trimming affects your total — shorter is often stronger.</p>
             </div>
           </div>
         </div>
@@ -306,7 +306,7 @@ const wcSchema = {
       readabilityBar.className = `h-full rounded-full transition-all duration-500 ease-out ${barColor}`;
     } else {
       readability.textContent = "—";
-      readability.className = "text-xs font-bold text-zinc-400";
+      readability.className = "text-xs font-bold text-tertiary";
       readabilityBar.style.width = "0%";
     }
 
@@ -331,7 +331,7 @@ const wcSchema = {
         keywordList.innerHTML = sorted.map(([word, count]) => {
           const pct = ((count / wc) * 100).toFixed(1);
           const barW = Math.min(parseFloat(pct) * 20, 100);
-          return `<span class="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-white/[0.03] border border-zinc-700/50 text-[10px] text-zinc-300">
+          return `<span class="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-surface-1 border border-zinc-700/50 text-[10px] text-secondary">
             <span class="font-medium">${word}</span>
             <span class="text-purple-400 font-bold">${pct}%</span>
             <span class="w-8 h-1 rounded-full bg-zinc-700 overflow-hidden"><span class="block h-full rounded-full bg-purple-500" style="width:${barW}%"></span></span>

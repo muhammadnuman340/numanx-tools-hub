@@ -9,21 +9,21 @@ const { title, description, delay = 0 } = Astro.props;
 ---
 
 <div
-  class="group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/30 hover:shadow-lg hover:shadow-purple-900/10"
+  class="group relative overflow-hidden rounded-2xl border border-surface bg-surface-1 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/30 hover:shadow-lg hover:shadow-purple-900/10"
   style={delay ? `animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s both` : ''}
 >
   <div class="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br from-purple-600/10 to-blue-600/0 blur-2xl transition-all duration-500 group-hover:scale-150 group-hover:from-purple-500/20" />
 
-  <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.06] text-zinc-400 group-hover:text-purple-400 group-hover:border-purple-500/20 transition-colors duration-300">
+  <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-surface-2 border border-surface text-tertiary group-hover:text-purple-400 group-hover:border-purple-500/20 transition-colors duration-300">
     <slot name="icon" />
   </div>
 
-  <h3 class="text-lg font-semibold text-zinc-200 transition-colors duration-200 group-hover:text-white flex flex-col">
+  <h3 class="text-lg font-semibold text-primary transition-colors duration-200 group-hover:text-white flex flex-col">
     {title}
     <span class="mt-1.5 h-[1px] w-4 rounded bg-purple-500/40 transition-all duration-300 group-hover:w-12 group-hover:bg-purple-400" />
   </h3>
 
-    <p class="mt-3 text-sm leading-relaxed text-zinc-500 transition-colors duration-200 group-hover:text-zinc-300">
+    <p class="mt-3 text-sm leading-relaxed text-muted transition-colors duration-200 group-hover:text-secondary">
     {description}
   </p>
 

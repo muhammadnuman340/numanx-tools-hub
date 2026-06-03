@@ -8,9 +8,9 @@ interface Props {
 const { variant = "default", padding = "md", class: className } = Astro.props;
 
 const variantClasses: Record<string, string> = {
-  default: "bg-white/[0.03] border border-white/[0.06] rounded-2xl",
-  glass: "bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-2xl",
-  interactive: "bg-white/[0.03] border border-white/[0.06] rounded-2xl hover:border-purple-500/30 hover:bg-white/[0.05] transition-all duration-300 group hover:shadow-lg hover:shadow-purple-900/10",
+  default: "bg-surface-1 border border-surface rounded-2xl",
+  glass: "bg-surface-1 backdrop-blur-xl border border-surface rounded-2xl",
+  interactive: "bg-surface-1 border border-surface rounded-2xl hover:border-purple-500/30 hover:bg-surface-2 transition-all duration-300 group hover:shadow-lg hover:shadow-purple-900/10",
 };
 
 const paddingClasses: Record<string, string> = {

@@ -6,7 +6,7 @@ interface Props {
 const { class: className } = Astro.props;
 ---
 
-<aside aria-label="Sponsorship" class={`relative group overflow-hidden rounded-2xl border border-dashed border-white/[0.06] bg-white/[0.02] p-6 sm:p-8 text-center transition-all duration-300 hover:border-purple-500/40 hover:bg-white/[0.04] ${className || ""}`}>
+<aside aria-label="Sponsorship" class={`relative group overflow-hidden rounded-2xl border border-dashed border-surface bg-surface-1 p-6 sm:p-8 text-center transition-all duration-300 hover:border-purple-500/40 hover:bg-surface-2 ${className || ""}`}>
 
   <div class="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-500/[0.04] to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden="true" />
 
@@ -15,11 +15,11 @@ const { class: className } = Astro.props;
       Sponsorship Slot Available
     </span>
 
-    <h3 class="text-base sm:text-lg font-semibold text-zinc-300 group-hover:text-white transition-colors duration-200">
+    <h3 class="text-base sm:text-lg font-semibold text-secondary group-hover:text-white transition-colors duration-200">
       Reach Creators & Builders Daily
     </h3>
 
-    <p class="mt-2 max-w-xs text-xs text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors duration-200">
+    <p class="mt-2 max-w-xs text-xs text-tertiary leading-relaxed group-hover:text-secondary transition-colors duration-200">
       Position your brand, SaaS tool, or newsletter in front of thousands of digital creators.
     </p>
 

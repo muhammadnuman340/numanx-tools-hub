@@ -56,7 +56,7 @@ const schema = {
       <div class="mt-8 space-y-4">
 
         <!-- Toolbar -->
-        <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-2 flex flex-wrap gap-1">
+        <div class="bg-surface-1 border border-surface rounded-2xl p-2 flex flex-wrap gap-1">
           {[
             { cmd: "bold", label: "B", style: "font-bold" },
             { cmd: "italic", label: "I", style: "italic" },
@@ -78,8 +78,8 @@ const schema = {
             { cmd: "table", label: "⊞ Table" },
           ].map((item) =>
             item.cmd === "|"
-              ? `<span class="w-px h-6 bg-white/[0.06] mx-1 self-center"></span>`
-              : `<button class="toolbar-btn px-2.5 py-1.5 rounded-lg text-xs font-medium text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-all active:scale-95" data-cmd="${item.cmd}">${item.label}</button>`
+              ? `<span class="w-px h-6 bg-surface-3 mx-1 self-center"></span>`
+              : `<button class="toolbar-btn px-2.5 py-1.5 rounded-lg text-xs font-medium text-tertiary hover:text-white hover:bg-surface-3 transition-all active:scale-95" data-cmd="${item.cmd}">${item.label}</button>`
           ).join("")}
         </div>
 
@@ -87,10 +87,10 @@ const schema = {
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div>
             <div class="flex items-center justify-between mb-2">
-              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Markdown</label>
-              <span id="md-stats" class="text-[10px] text-zinc-600 font-mono">0 words</span>
+              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Markdown</label>
+              <span id="md-stats" class="text-[10px] text-dim font-mono">0 words</span>
             </div>
-            <textarea id="md-input" class="w-full h-[500px] bg-black/40 border border-white/[0.06] text-zinc-200 text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all font-mono resize-y" placeholder="Type your markdown here..."># Hello World
+            <textarea id="md-input" class="w-full h-[500px] bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all font-mono resize-y" placeholder="Type your markdown here..."># Hello World
 
 Start typing **markdown** on the left, see the *rendered* preview on the right.
 
@@ -104,19 +104,19 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
           </div>
           <div>
             <div class="flex items-center justify-between mb-2">
-              <label class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Preview</label>
+              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Preview</label>
               <div class="flex gap-2">
-                <button id="copy-html-btn" class="text-[10px] font-medium text-zinc-500 hover:text-zinc-300 px-2 py-1 rounded-lg border border-white/[0.06] hover:bg-white/[0.05] transition-all">Copy HTML</button>
-                <button id="export-html-btn" class="text-[10px] font-medium text-zinc-500 hover:text-zinc-300 px-2 py-1 rounded-lg border border-white/[0.06] hover:bg-white/[0.05] transition-all">Export HTML</button>
+                <button id="copy-html-btn" class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all">Copy HTML</button>
+                <button id="export-html-btn" class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all">Export HTML</button>
               </div>
             </div>
-            <div id="md-preview" class="w-full h-[500px] overflow-y-auto bg-black/40 border border-white/[0.06] rounded-xl px-4 py-3 text-sm text-zinc-300 prose prose-invert max-w-none"></div>
+            <div id="md-preview" class="w-full h-[500px] overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm text-secondary prose prose-invert max-w-none"></div>
           </div>
         </div>
 
         <!-- Info -->
-        <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-4 text-xs text-zinc-500 leading-relaxed">
-          <strong class="text-zinc-400">Supports:</strong> H1-H6, bold, italic, strikethrough, links, images, ordered/unordered lists, blockquotes, inline code, fenced code blocks, horizontal rules, tables, and line breaks. Content auto-saves to your browser.
+        <div class="bg-surface-1 border border-surface rounded-2xl p-4 text-xs text-muted leading-relaxed">
+          <strong class="text-tertiary">Supports:</strong> H1-H6, bold, italic, strikethrough, links, images, ordered/unordered lists, blockquotes, inline code, fenced code blocks, horizontal rules, tables, and line breaks. Content auto-saves to your browser.
         </div>
 
       </div>
@@ -215,7 +215,7 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
           continue;
         } else {
           const code = escapeHtml(codeContent.join("\n"));
-          html += `<pre class="bg-zinc-900 rounded-xl p-4 my-3 overflow-x-auto"><code class="text-sm text-zinc-300 font-mono">${code}</code></pre>\n`;
+          html += `<pre class="bg-zinc-900 rounded-xl p-4 my-3 overflow-x-auto"><code class="text-sm text-secondary font-mono">${code}</code></pre>\n`;
           inCodeBlock = false;
           continue;
         }
@@ -237,7 +237,7 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
 
       // Horizontal rule
       if (/^(-{3,}|\*{3,}|_{3,})\s*$/.test(line.trim())) {
-        html += '<hr class="border-white/[0.06] my-4" />\n';
+        html += '<hr class="border-surface my-4" />\n';
         continue;
       }
 
@@ -245,28 +245,28 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
       const hMatch = line.match(/^(#{1,6})\s+(.+)$/);
       if (hMatch) {
         const level = hMatch[1].length;
-        html += `<h${level} class="font-bold text-zinc-100 mt-5 mb-2 ${level <= 2 ? 'text-xl' : level === 3 ? 'text-lg' : 'text-base'}">${inlineMd(hMatch[2])}</h${level}>\n`;
+        html += `<h${level} class="font-bold text-primary mt-5 mb-2 ${level <= 2 ? 'text-xl' : level === 3 ? 'text-lg' : 'text-base'}">${inlineMd(hMatch[2])}</h${level}>\n`;
         continue;
       }
 
       // Blockquote
       if (line.trim().startsWith("> ")) {
         const content = line.trim().slice(2);
-        html += `<blockquote class="border-l-2 border-purple-500/50 pl-4 my-2 text-zinc-400 italic">${inlineMd(content)}</blockquote>\n`;
+        html += `<blockquote class="border-l-2 border-purple-500/50 pl-4 my-2 text-tertiary italic">${inlineMd(content)}</blockquote>\n`;
         continue;
       }
 
       // Unordered list
       const ulMatch = line.match(/^(\s*)[*\-+]\s+(.+)$/);
       if (ulMatch) {
-        html += `<li class="ml-4 list-disc text-zinc-300">${inlineMd(ulMatch[2])}</li>\n`;
+        html += `<li class="ml-4 list-disc text-secondary">${inlineMd(ulMatch[2])}</li>\n`;
         continue;
       }
 
       // Ordered list
       const olMatch = line.match(/^(\s*)\d+\.\s+(.+)$/);
       if (olMatch) {
-        html += `<li class="ml-4 list-decimal text-zinc-300">${inlineMd(olMatch[2])}</li>\n`;
+        html += `<li class="ml-4 list-decimal text-secondary">${inlineMd(olMatch[2])}</li>\n`;
         continue;
       }
 
@@ -277,12 +277,12 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
       }
 
       // Regular paragraph
-      html += `<p class="my-1.5 text-zinc-300 leading-relaxed">${inlineMd(line)}</p>\n`;
+      html += `<p class="my-1.5 text-secondary leading-relaxed">${inlineMd(line)}</p>\n`;
     }
 
     if (inCodeBlock) {
       const code = escapeHtml(codeContent.join("\n"));
-      html += `<pre class="bg-zinc-900 rounded-xl p-4 my-3 overflow-x-auto"><code class="text-sm text-zinc-300 font-mono">${code}</code></pre>\n`;
+      html += `<pre class="bg-zinc-900 rounded-xl p-4 my-3 overflow-x-auto"><code class="text-sm text-secondary font-mono">${code}</code></pre>\n`;
     }
     if (inTable) flushTable();
 

@@ -11,7 +11,7 @@ interface Props {
 
 const { variant = "text", width, height, class: className, lines = 3 } = Astro.props;
 
-const baseClass = "animate-pulse bg-white/[0.04] rounded-lg";
+const baseClass = "animate-pulse bg-surface-2 rounded-lg";
 
 const variants: Record<SkeletonVariant, string> = {
   card: `${baseClass} rounded-2xl`,

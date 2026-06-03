@@ -13,7 +13,7 @@ export interface Tool {
   relatedIds: string[];
 }
 
-export type ToolCategory = "image-tools" | "creator-tools" | "utility-tools" | "cricket-tools";
+export type ToolCategory = "image-tools" | "creator-tools" | "utility-tools" | "cricket-tools" | "ai-tools" | "developer-tools";
 
 export interface CategoryInfo {
   id: ToolCategory;
@@ -28,7 +28,9 @@ export const categories: CategoryInfo[] = [
   { id: "image-tools", title: "Image Tools", description: "Convert, compress, crop, and resize images inside your browser with zero server uploads.", icon: "image", gradient: "from-purple-500/20 to-pink-500/20 text-purple-400", count: 6 },
   { id: "creator-tools", title: "Creator Tools", description: "Smart hashtag generators, QR builders, and text processors to scale your social footprint.", icon: "creator", gradient: "from-blue-500/20 to-cyan-500/20 text-blue-400", count: 4 },
   { id: "utility-tools", title: "Utility Tools", description: "Secure password creation, precise age calculations, and text structure counters.", icon: "utility", gradient: "from-green-500/20 to-emerald-500/20 text-green-400", count: 12 },
-  { id: "cricket-tools", title: "Cricket Tools", description: "Professional match run rate calculators and batting/bowling strike rate models.", icon: "cricket", gradient: "from-amber-500/20 to-orange-500/20 text-amber-400", count: 2 },
+    { id: "cricket-tools", title: "Cricket Tools", description: "Professional match run rate calculators and batting/bowling strike rate models.", icon: "cricket", gradient: "from-amber-500/20 to-orange-500/20 text-amber-400", count: 2 },
+    { id: "ai-tools", title: "AI Tools", description: "Powerful AI-powered utilities for content generation, translation, and intelligent text processing — all running locally in your browser.", icon: "creator", gradient: "from-violet-500/20 to-purple-500/20 text-violet-400", count: 0 },
+    { id: "developer-tools", title: "Developer Tools", description: "Essential utilities for developers — JSON formatter, Base64 encoder, UUID generator, color converter, and more.", icon: "utility", gradient: "from-cyan-500/20 to-blue-500/20 text-cyan-400", count: 0 },
 ];
 
 export const tools: Tool[] = [

@@ -1,6 +1,7 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 import { tools as allTools, categories as catInfos } from "../data/tools";
+import AdUnit from "../components/AdUnit.astro";
 
 const tools = allTools.map((t) => ({
   name: t.name,
@@ -62,7 +63,7 @@ const roadmap = [
 ];
 ---
 
-<MainLayout title="NumanX Platform Dashboard" description="Track tools, categories, content growth, and ecosystem expansion on the NumanX platform.">
+<MainLayout title="NumanX Platform Dashboard" description="Track tools, categories, content growth, and ecosystem expansion on the NumanX platform." canonical="https://numanx-tools.pages.dev/dashboard/">
   
   <!-- Glow Overlays -->
   <div class="absolute top-[10%] left-[10%] w-[350px] h-[350px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none -z-10"></div>
@@ -77,7 +78,7 @@ const roadmap = [
       <section class="mb-12 pt-8">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-800 bg-zinc-950/60 text-zinc-400 text-[11px] font-mono tracking-wider uppercase mb-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-800 bg-zinc-950/60 text-tertiary text-[11px] font-mono tracking-wider uppercase mb-4">
               <span class="relative flex h-2 w-2">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -88,14 +89,14 @@ const roadmap = [
               NumanX Platform
               <span class="bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent">Dashboard</span>
             </h1>
-            <p class="mt-3 text-zinc-400 text-sm md:text-base max-w-xl">
+            <p class="mt-3 text-tertiary text-sm md:text-base max-w-xl">
               Track real-time compilation weights, categorised directory paths, publishing velocity, and roadmap metrics.
             </p>
           </div>
           
           <div class="flex items-center gap-3">
-            <button id="refresh-dashboard" class="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-800 bg-zinc-900/40 hover:bg-zinc-800/80 hover:border-zinc-700 text-xs font-semibold text-zinc-300 transition-all cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-zinc-400"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            <button id="refresh-dashboard" class="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-800 bg-zinc-900/40 hover:bg-zinc-800/80 hover:border-zinc-700 text-xs font-semibold text-secondary transition-all cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-tertiary"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
               Refresh Metrics
             </button>
             <a href="/tools/" class="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-xs font-semibold text-white transition-all shadow-lg shadow-purple-900/30">
@@ -105,72 +106,76 @@ const roadmap = [
         </div>
       </section>
 
+      <div class="max-w-4xl mx-auto mb-8">
+        <AdUnit format="horizontal" />
+      </div>
+
       <!-- ================= PLATFORM STATS GRID ================= -->
       <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10">
         <div class="relative rounded-2xl border border-zinc-800/80 bg-zinc-900/30 p-6 hover:border-zinc-700/60 transition-all duration-300 group overflow-hidden">
           <div class="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-colors"></div>
-          <p class="text-xs font-semibold text-zinc-500 uppercase tracking-widest">Total Tools</p>
+          <p class="text-xs font-semibold text-muted uppercase tracking-widest">Total Tools</p>
           <div class="text-3xl sm:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent mt-2">
             <span class="stat-counter" data-target="15">0</span>+
           </div>
           <div class="flex items-center gap-1 text-[10px] text-emerald-400 mt-2 font-medium">
             <span>↑ 18.2%</span>
-            <span class="text-zinc-600">vs last month</span>
+            <span class="text-dim">vs last month</span>
           </div>
         </div>
 
         <div class="relative rounded-2xl border border-zinc-800/80 bg-zinc-900/30 p-6 hover:border-zinc-700/60 transition-all duration-300 group overflow-hidden">
           <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors"></div>
-          <p class="text-xs font-semibold text-zinc-500 uppercase tracking-widest">Total Uses</p>
+          <p class="text-xs font-semibold text-muted uppercase tracking-widest">Total Uses</p>
           <div class="text-3xl sm:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent mt-2">
             <span class="stat-counter" data-target="0" data-analytics="usage">0</span>
           </div>
-          <div class="flex items-center gap-1 text-[10px] text-zinc-500 mt-2 font-medium">
+          <div class="flex items-center gap-1 text-[10px] text-muted mt-2 font-medium">
             <span>Lifetime tool executions</span>
           </div>
         </div>
 
         <div class="relative rounded-2xl border border-zinc-800/80 bg-zinc-900/30 p-6 hover:border-zinc-700/60 transition-all duration-300 group overflow-hidden">
           <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/10 transition-colors"></div>
-          <p class="text-xs font-semibold text-zinc-500 uppercase tracking-widest">Favorites</p>
+          <p class="text-xs font-semibold text-muted uppercase tracking-widest">Favorites</p>
           <div class="text-3xl sm:text-5xl font-black bg-gradient-to-r from-emerald-400 to-green-500 bg-clip-text text-transparent mt-2">
             <span class="stat-counter" data-target="0" data-analytics="favorites">0</span>
           </div>
-          <div class="flex items-center gap-1 text-[10px] text-zinc-500 mt-2 font-medium">
+          <div class="flex items-center gap-1 text-[10px] text-muted mt-2 font-medium">
             <span>Saved tools</span>
           </div>
         </div>
 
         <div class="relative rounded-2xl border border-zinc-800/80 bg-zinc-900/30 p-6 hover:border-zinc-700/60 transition-all duration-300 group overflow-hidden">
           <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors"></div>
-          <p class="text-xs font-semibold text-zinc-500 uppercase tracking-widest">Recent Tools</p>
+          <p class="text-xs font-semibold text-muted uppercase tracking-widest">Recent Tools</p>
           <div class="text-3xl sm:text-5xl font-black bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mt-2">
             <span class="stat-counter" data-target="0" data-analytics="recent">0</span>
           </div>
-          <div class="flex items-center gap-1 text-[10px] text-zinc-500 mt-2 font-medium">
+          <div class="flex items-center gap-1 text-[10px] text-muted mt-2 font-medium">
             <span>Recently used</span>
           </div>
         </div>
           <div class="flex items-center gap-1 text-[10px] text-emerald-400 mt-2 font-medium">
             <span>↑ 100%</span>
-            <span class="text-zinc-600">vs last month</span>
+            <span class="text-dim">vs last month</span>
           </div>
         </div>
 
         <div class="relative rounded-2xl border border-zinc-800/80 bg-zinc-900/30 p-6 hover:border-zinc-700/60 transition-all duration-300 group overflow-hidden">
           <div class="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-colors"></div>
-          <p class="text-xs font-semibold text-zinc-500 uppercase tracking-widest">Categories</p>
+          <p class="text-xs font-semibold text-muted uppercase tracking-widest">Categories</p>
           <div class="text-3xl sm:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent mt-2">
             <span class="stat-counter" data-target="4">0</span>
           </div>
-          <div class="flex items-center gap-1 text-[10px] text-zinc-500 mt-2 font-medium">
+          <div class="flex items-center gap-1 text-[10px] text-muted mt-2 font-medium">
             <span>Active & stable</span>
           </div>
         </div>
 
         <div class="relative rounded-2xl border border-zinc-800/80 bg-zinc-900/30 p-6 hover:border-zinc-700/60 transition-all duration-300 group overflow-hidden">
           <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors"></div>
-          <p class="text-xs font-semibold text-zinc-500 uppercase tracking-widest">Future Projects</p>
+          <p class="text-xs font-semibold text-muted uppercase tracking-widest">Future Projects</p>
           <div class="text-3xl sm:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent mt-2">
             <span class="stat-counter" data-target="10">0</span>+
           </div>
@@ -179,6 +184,10 @@ const roadmap = [
           </div>
         </div>
       </section>
+
+      <div class="max-w-4xl mx-auto mb-8">
+        <AdUnit format="horizontal" />
+      </div>
 
       <!-- ================= MAIN DASHBOARD BODY GRID ================= -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
@@ -189,7 +198,7 @@ const roadmap = [
             <div class="flex items-center justify-between mb-6">
               <div>
                 <h2 class="text-lg font-bold text-white">Ecosystem Tools Inventory</h2>
-                <p class="text-xs text-zinc-500">Overview of browser utilities currently live in deployment.</p>
+                <p class="text-xs text-muted">Overview of browser utilities currently live in deployment.</p>
               </div>
               <span class="text-[10px] font-mono bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">ALL COMPILED</span>
             </div>
@@ -198,7 +207,7 @@ const roadmap = [
             <div class="overflow-x-auto">
               <table class="w-full text-left border-collapse">
                 <thead>
-                  <tr class="border-b border-zinc-800 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
+                  <tr class="border-b border-zinc-800 text-[10px] font-bold text-muted uppercase tracking-widest">
                     <th class="pb-3 font-semibold">Tool Name</th>
                     <th class="pb-3 font-semibold">Division</th>
                     <th class="pb-3 font-semibold">Execution Latency</th>
@@ -206,17 +215,17 @@ const roadmap = [
                     <th class="pb-3 font-semibold text-right">Progress</th>
                   </tr>
                 </thead>
-                <tbody id="tool-usage-body" class="divide-y divide-zinc-900/60 text-xs text-zinc-300">
+                <tbody id="tool-usage-body" class="divide-y divide-zinc-900/60 text-xs text-secondary">
                   {tools.map((t) => (
                     <tr class="hover:bg-zinc-900/20 transition-all duration-150">
-                      <td class="py-3.5 font-semibold text-zinc-200 flex items-center gap-2">
+                      <td class="py-3.5 font-semibold text-primary flex items-center gap-2">
                         <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
                         {t.name}
                       </td>
                       <td class="py-3.5">
-                        <span class="px-2 py-0.5 rounded-md bg-zinc-900 border border-zinc-800 text-[10px] text-zinc-400">{t.cat}</span>
+                        <span class="px-2 py-0.5 rounded-md bg-zinc-900 border border-zinc-800 text-[10px] text-tertiary">{t.cat}</span>
                       </td>
-                      <td class="py-3.5 font-mono text-zinc-400">{t.latency}</td>
+                      <td class="py-3.5 font-mono text-tertiary">{t.latency}</td>
                       <td class="py-3.5 font-mono text-emerald-400">{t.reliability}</td>
                       <td class="py-3.5 text-right font-mono text-purple-400 font-bold">{t.completion}%</td>
                     </tr>
@@ -234,10 +243,10 @@ const roadmap = [
               {categories.map((c) => (
                 <div class={`rounded-xl border border-zinc-800/80 bg-zinc-900/10 p-5 ${c.shadow}`}>
                   <div class="flex justify-between items-center mb-3">
-                    <span class="text-sm font-semibold text-zinc-200">{c.name}</span>
+                    <span class="text-sm font-semibold text-primary">{c.name}</span>
                     <span class="text-xs font-bold text-emerald-400">{c.growth}</span>
                   </div>
-                  <div class="flex justify-between text-xs text-zinc-500 mb-1.5">
+                  <div class="flex justify-between text-xs text-muted mb-1.5">
                     <span>{c.count} Active</span>
                     <span>{c.progress}% Target Weight</span>
                   </div>
@@ -256,7 +265,7 @@ const roadmap = [
               {["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map((day, i) => (
                 <div class="flex flex-col items-center gap-2 h-full justify-end">
                   <div class="w-full bg-gradient-to-t from-purple-500 to-blue-500 rounded-t-md transition-all duration-500" style={`height: ${[60,75,55,85,70,90,65][i]}%`}></div>
-                  <span class="text-[9px] text-zinc-600 font-medium">{day}</span>
+                  <span class="text-[9px] text-dim font-medium">{day}</span>
                 </div>
               ))}
             </div>
@@ -271,15 +280,15 @@ const roadmap = [
             
             <div class="grid grid-cols-3 gap-3 text-center mb-6">
               <div class="p-3 bg-zinc-900/40 rounded-xl border border-zinc-800/80">
-                <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Active</span>
+                <span class="text-[10px] font-bold text-muted uppercase tracking-widest">Active</span>
                 <p class="text-lg font-black text-purple-400 mt-1">{blogAnalytics.published}</p>
               </div>
               <div class="p-3 bg-zinc-900/40 rounded-xl border border-zinc-800/80">
-                <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Planned</span>
+                <span class="text-[10px] font-bold text-muted uppercase tracking-widest">Planned</span>
                 <p class="text-lg font-black text-blue-400 mt-1">{blogAnalytics.planned}</p>
               </div>
               <div class="p-3 bg-zinc-900/40 rounded-xl border border-zinc-800/80">
-                <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">SEO Score</span>
+                <span class="text-[10px] font-bold text-muted uppercase tracking-widest">SEO Score</span>
                 <p class="text-lg font-black text-emerald-400 mt-1">{blogAnalytics.seoScore}%</p>
               </div>
             </div>
@@ -288,8 +297,8 @@ const roadmap = [
               {blogAnalytics.posts.map((post) => (
                 <div class="p-3 rounded-xl border border-zinc-800/40 bg-zinc-900/10 flex items-center justify-between">
                   <div class="min-w-0 flex-1 pr-3">
-                    <p class="text-xs font-semibold text-zinc-200 truncate">{post.title}</p>
-                    <p class="text-[10px] text-zinc-500">Click Rate: {post.conversion}</p>
+                    <p class="text-xs font-semibold text-primary truncate">{post.title}</p>
+                    <p class="text-[10px] text-muted">Click Rate: {post.conversion}</p>
                   </div>
                   <span class="text-[10px] font-bold font-mono text-purple-400 shrink-0">{post.views} Views</span>
                 </div>
@@ -307,10 +316,10 @@ const roadmap = [
                   <span class="w-8 h-8 rounded-xl bg-purple-500/5 border border-zinc-800 flex items-center justify-center text-base shrink-0">{ach.icon}</span>
                   <div>
                     <div class="flex items-center justify-between gap-2">
-                      <h4 class="text-xs font-bold text-zinc-200">{ach.name}</h4>
-                      <span class="text-[9px] font-bold text-zinc-500 shrink-0">{ach.date}</span>
+                      <h4 class="text-xs font-bold text-primary">{ach.name}</h4>
+                      <span class="text-[9px] font-bold text-muted shrink-0">{ach.date}</span>
                     </div>
-                    <p class="text-[10px] text-zinc-500 mt-0.5">{ach.desc}</p>
+                    <p class="text-[10px] text-muted mt-0.5">{ach.desc}</p>
                   </div>
                 </div>
               ))}
@@ -333,10 +342,10 @@ const roadmap = [
               <div class="p-5 rounded-xl border border-zinc-800 bg-zinc-900/10 hover:border-purple-500/20 transition-all duration-300 relative group">
                 <div class="flex items-center justify-between mb-3">
                   <span class="text-[10px] font-mono text-purple-400 font-bold tracking-wider">Phase {idx + 1}</span>
-                  <span class="text-[9px] font-semibold text-zinc-500 bg-zinc-800/80 px-1.5 py-0.5 rounded">{step.status}</span>
+                  <span class="text-[9px] font-semibold text-muted bg-zinc-800/80 px-1.5 py-0.5 rounded">{step.status}</span>
                 </div>
-                <h4 class="text-sm font-bold text-zinc-200 group-hover:text-white transition-colors">{step.title}</h4>
-                <p class="text-xs text-zinc-500 mt-2 leading-relaxed">{step.desc}</p>
+                <h4 class="text-sm font-bold text-primary group-hover:text-white transition-colors">{step.title}</h4>
+                <p class="text-xs text-muted mt-2 leading-relaxed">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -348,7 +357,7 @@ const roadmap = [
         <div class="mb-8">
           <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">DEVELOPMENT VECTOR</span>
           <h2 class="text-2xl md:text-3xl font-black text-white mt-1">Upcoming Tools Registry</h2>
-          <p class="text-sm text-zinc-500 mt-1">High fidelity utilities prioritized for local compilation on next release cycles.</p>
+          <p class="text-sm text-muted mt-1">High fidelity utilities prioritized for local compilation on next release cycles.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -357,14 +366,14 @@ const roadmap = [
               <div>
                 <div class="flex items-center justify-between mb-3">
                   <span class="text-[10px] font-bold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded">{item.cat}</span>
-                  <span class="text-[9px] font-bold text-zinc-500 font-mono">timeline: {item.timeline}</span>
+                  <span class="text-[9px] font-bold text-muted font-mono">timeline: {item.timeline}</span>
                 </div>
-                <h3 class="text-base font-bold text-zinc-200">{item.name}</h3>
-                <p class="text-xs text-zinc-500 mt-2 leading-relaxed">{item.desc}</p>
+                <h3 class="text-base font-bold text-primary">{item.name}</h3>
+                <p class="text-xs text-muted mt-2 leading-relaxed">{item.desc}</p>
               </div>
               <div class="mt-6 pt-4 border-t border-zinc-900/60 flex justify-between items-center text-[10px]">
-                <span class="text-zinc-600">Priority Score</span>
-                <span class="font-bold font-mono text-zinc-400">{item.difficulty === "High" ? "🟢 HIGH" : item.difficulty === "Medium" ? "🟡 MEDIUM" : "🔵 STABLE"}</span>
+                <span class="text-dim">Priority Score</span>
+                <span class="font-bold font-mono text-tertiary">{item.difficulty === "High" ? "🟢 HIGH" : item.difficulty === "Medium" ? "🟡 MEDIUM" : "🔵 STABLE"}</span>
               </div>
             </div>
           ))}
@@ -379,7 +388,7 @@ const roadmap = [
           <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white">
             Building The Future Of NumanX
           </h2>
-          <p class="mt-4 text-zinc-400 text-sm max-w-lg mx-auto leading-relaxed">
+          <p class="mt-4 text-tertiary text-sm max-w-lg mx-auto leading-relaxed">
             Support our serverless mission of offline-friendly tools for creators around the world. Secure, blazingly fast, and forever free.
           </p>
           
@@ -387,7 +396,7 @@ const roadmap = [
             <a href="/tools/" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-200">
               Explore Tools
             </a>
-            <a href="/blog/" class="border border-zinc-800 hover:border-zinc-600 text-zinc-300 hover:text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-200">
+            <a href="/blog/" class="border border-zinc-800 hover:border-zinc-600 text-secondary hover:text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-200">
               Read Blog
             </a>
           </div>
@@ -437,12 +446,12 @@ const roadmap = [
             const barW = Math.round((count / maxUsage) * 100);
             return `
               <tr class="hover:bg-zinc-900/20 transition-all duration-150">
-                <td class="py-3.5 font-semibold text-zinc-200 flex items-center gap-2">
+                <td class="py-3.5 font-semibold text-primary flex items-center gap-2">
                   <span class="inline-block w-2 h-2 rounded-full ${count > 0 ? 'bg-emerald-500' : 'bg-zinc-700'}"></span>
                   ${t.name}
                 </td>
-                <td class="py-3.5"><span class="px-2 py-0.5 rounded-md bg-zinc-900 border border-zinc-800 text-[10px] text-zinc-400">${t.category}</span></td>
-                <td class="py-3.5 font-mono text-zinc-400">${count > 0 ? count + ' uses' : '—'}</td>
+                <td class="py-3.5"><span class="px-2 py-0.5 rounded-md bg-zinc-900 border border-zinc-800 text-[10px] text-tertiary">${t.category}</span></td>
+                <td class="py-3.5 font-mono text-tertiary">${count > 0 ? count + ' uses' : '—'}</td>
                 <td class="py-3.5 text-right">
                   <div class="w-24 h-1.5 bg-zinc-800 rounded-full ml-auto overflow-hidden">
                     <div class="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all" style="width:${barW}%"></div>
@@ -490,12 +499,12 @@ const roadmap = [
       setTimeout(() => {
         loadAnalytics();
         btn.innerHTML = `
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-zinc-400"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-tertiary"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
           Metrics Synchronised!
         `;
         setTimeout(() => {
           btn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-zinc-400"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-tertiary"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
             Refresh Metrics
           `;
         }, 1500);

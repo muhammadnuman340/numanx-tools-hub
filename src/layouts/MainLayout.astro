@@ -11,6 +11,7 @@ import Toast from "../components/ui/Toast.astro";
 import ClientRouter from 'astro/components/ClientRouter.astro';
 
 const GA_ID = import.meta.env.PUBLIC_GA_ID || '';
+const ADSENSE_ID = import.meta.env.PUBLIC_ADSENSE_ID || '';
 
 const {
   title,
@@ -36,30 +37,39 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/svg+xml" sizes="192x192" href="/icon-192.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
 
-    <!-- Preconnect for fonts -->
+    <!-- ─── Resource Hints ─── -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    {ADSENSE_ID && <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin />}
+
+    <!-- ─── Font Loading: preload + stylesheet with display=optional ─── -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=optional" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=optional" media="print" onload="this.media='all'" />
 
     <SEO {title} {description} {keywords} {canonical} {image} {noindex} {faq} {breadcrumbs} {toolSchema} {articleSchema} {publishedTime} {modifiedTime} {tags} type={type} />
 
     {GA_ID && <Analytics id={GA_ID} />}
     <AdSense />
 
-    <!-- Google Tag Manager (lazy) -->
-    <script>window.addEventListener('load',function(){setTimeout(function(){var w=window,d=document,s='script',l='dataLayer',i='GTM-TBXFNLDB';w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);},1000)});</script>
-    <!-- End Google Tag Manager (lazy) -->
+    <!-- Google Tag Manager (lazy, after interaction) -->
+    <script>var gt=document.documentElement;["touchstart","click","keydown","scroll"].forEach(function(e){gt.addEventListener(e,function(){setTimeout(function(){var w=window,d=document,s='script',l='dataLayer',i='GTM-TBXFNLDB';w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);},1e3);},{once:true})})</script>
 
     <ClientRouter fallback="animate" />
     <slot name="head" />
   </head>
 
-  <body class="bg-[#0a0a0b] text-zinc-100 antialiased selection:bg-purple-500/30 selection:text-white">
+  <body class="antialiased selection:bg-purple-500/30 selection:text-white">
     <!-- Skip to main content -->
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[999] focus:px-4 focus:py-2 focus:bg-purple-600 focus:text-white focus:rounded-xl focus:text-sm focus:font-semibold focus:outline-none">
       Skip to main content
@@ -95,57 +105,13 @@ const {
     <Toast />
 
     <script>
-      // ─── Scroll Progress Bar ───
-      const progressBar = document.getElementById("scroll-progress");
-      if (progressBar) {
-        window.addEventListener("scroll", () => {
-          const scrollTop = window.scrollY;
-          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-          const scrolled = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-          progressBar.style.width = `${scrolled}%`;
-        }, { passive: true });
-      }
+      (function(){var p=document.getElementById("scroll-progress");if(p)window.addEventListener("scroll",function(){var s=window.scrollY,h=document.documentElement.scrollHeight-window.innerHeight;p.style.width=((h>0?s/h*100:0)+"%")},{passive:true})})();
 
-      // ─── Custom Studio Cursor ───
-      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-      if (isDesktop) {
-        const dot = document.getElementById("custom-cursor-dot");
-        const ring = document.getElementById("custom-cursor-ring");
-        if (dot && ring) {
-          let mouseX = 0, mouseY = 0;
-          let ringX = 0, ringY = 0;
-          let visible = false;
+      (function(){if(!window.matchMedia("(min-width:1024px)").matches)return;var d=document.getElementById("custom-cursor-dot"),r=document.getElementById("custom-cursor-ring");if(!d||!r)return;var mx=0,my=0,rx=0,ry=0,v=false;window.addEventListener("mousemove",function(e){mx=e.clientX;my=e.clientY;d.style.transform="translate("+mx+"px,"+my+"px)";if(!v){v=true;d.style.opacity="1";r.style.opacity="1"}},{passive:true});!function t(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;r.style.left=rx+"px";r.style.top=ry+"px";requestAnimationFrame(t)}()})();
 
-          const onMouseMove = (e: MouseEvent) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
-            if (!visible) {
-              visible = true;
-              dot.style.opacity = "1";
-              ring.style.opacity = "1";
-            }
-          };
+      if('serviceWorker'in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})});
 
-          const tick = () => {
-            ringX += (mouseX - ringX) * 0.12;
-            ringY += (mouseY - ringY) * 0.12;
-            ring.style.left = `${ringX}px`;
-            ring.style.top = `${ringY}px`;
-            requestAnimationFrame(tick);
-          };
-
-          window.addEventListener("mousemove", onMouseMove, { passive: true });
-          tick();
-        }
-      }
-
-      // ─── Service Worker Registration ───
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(() => {});
-        });
-      }
+      (function(){if('IntersectionObserver'in window){document.querySelectorAll('[data-lazy]').forEach(function(el){new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){el.src=el.dataset.src;el.removeAttribute('data-lazy');this.disconnect()}})},{rootMargin:'200px'}).observe(el)})}})();
     </script>
   </body>
 </html>

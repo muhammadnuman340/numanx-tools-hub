@@ -53,10 +53,10 @@ const icSchema = {
       />
 
       <div class="w-full max-w-xl mx-auto px-4 my-6">
-        <div class="bg-white/[0.02] border border-white/[0.06] p-6 rounded-2xl shadow-xl">
+        <div class="bg-surface-1 border border-surface p-6 rounded-2xl shadow-xl">
           <div
             id="dropzone"
-            class="relative rounded-2xl border-2 border-dashed border-white/[0.1] bg-white/[0.03] p-10 md:p-16 text-center cursor-pointer hover:border-purple-500/50 hover:bg-white/[0.05] transition-all duration-300 group"
+            class="relative rounded-2xl border-2 border-dashed border-surface-3 bg-surface-1 p-10 md:p-16 text-center cursor-pointer hover:border-purple-500/50 hover:bg-surface-2 transition-all duration-300 group"
           >
             <input id="file-input" type="file" accept="image/*" multiple class="hidden" />
             <div id="dropzone-content">
@@ -67,13 +67,13 @@ const icSchema = {
                   <line x1="12" y1="3" x2="12" y2="15" />
                 </svg>
               </div>
-              <h3 class="text-lg font-semibold text-zinc-200 mb-2">
+              <h3 class="text-lg font-semibold text-primary mb-2">
                 Drop your images here
               </h3>
-              <p class="text-sm text-zinc-500 mb-4">
+              <p class="text-sm text-muted mb-4">
                 or <span class="text-purple-400 underline underline-offset-2 font-medium">browse files</span>
               </p>
-              <p class="text-xs text-zinc-600">
+              <p class="text-xs text-dim">
                 Supports JPG, PNG, WebP, BMP, GIF &mdash; up to 20 files
               </p>
             </div>
@@ -81,15 +81,15 @@ const icSchema = {
 
           <div id="controls-section" class="hidden mt-6">
             <div class="mb-5">
-              <label class="block text-sm font-semibold text-zinc-200 mb-3">Quality Presets</label>
+              <label class="block text-sm font-semibold text-primary mb-3">Quality Presets</label>
               <div id="preset-buttons" class="flex gap-2 flex-wrap mb-4">
-                <button class="preset-btn relative rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-200 bg-white/[0.03] border-white/[0.1] text-zinc-400" data-quality="0.9" data-active="false">
+                <button class="preset-btn relative rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-200 bg-surface-1 border-surface-3 text-tertiary" data-quality="0.9" data-active="false">
                   <div class="flex items-center gap-1.5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
                     <span>Visual Lossless</span>
                   </div>
                 </button>
-                <button class="preset-btn relative rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-200 bg-white/[0.03] border-white/[0.1] text-zinc-400" data-quality="0.8" data-active="false">
+                <button class="preset-btn relative rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-200 bg-surface-1 border-surface-3 text-tertiary" data-quality="0.8" data-active="false">
                   <div class="flex items-center gap-1.5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><polyline points="4 14 10 14 7 23 18 9 12 9 15 1"/></svg>
                     <span>Low</span>
@@ -101,19 +101,19 @@ const icSchema = {
                     <span>Medium</span>
                   </div>
                 </button>
-                <button class="preset-btn relative rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-200 bg-white/[0.03] border-white/[0.1] text-zinc-400" data-quality="0.2" data-active="false">
+                <button class="preset-btn relative rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-200 bg-surface-1 border-surface-3 text-tertiary" data-quality="0.2" data-active="false">
                   <div class="flex items-center gap-1.5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><polyline points="4 14 10 14 7 23 18 9 12 9 15 1"/></svg>
                     <span>High</span>
                   </div>
                 </button>
-                <button class="preset-btn relative rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-200 bg-white/[0.03] border-white/[0.1] text-zinc-400" data-quality="0.1" data-active="false">
+                <button class="preset-btn relative rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-200 bg-surface-1 border-surface-3 text-tertiary" data-quality="0.1" data-active="false">
                   <div class="flex items-center gap-1.5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><polyline points="4 14 10 14 7 23 18 9 12 9 15 1"/></svg>
                     <span>Extreme</span>
                   </div>
                 </button>
-                <button class="preset-btn relative rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-200 bg-white/[0.03] border-white/[0.1] text-zinc-400" data-quality="custom" data-active="false">
+                <button class="preset-btn relative rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-200 bg-surface-1 border-surface-3 text-tertiary" data-quality="custom" data-active="false">
                   <div class="flex items-center gap-1.5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
                     <span>Custom</span>
@@ -122,7 +122,7 @@ const icSchema = {
               </div>
               <div id="custom-slider-wrap" class="hidden">
                 <div class="flex items-center justify-between mb-2">
-                  <span class="text-sm text-zinc-400">Quality</span>
+                  <span class="text-sm text-tertiary">Quality</span>
                   <span id="quality-value" class="text-sm font-bold text-purple-400 tabular-nums">80%</span>
                 </div>
                 <input
@@ -133,7 +133,7 @@ const icSchema = {
                   value="80"
                   class="w-full h-2 rounded-full appearance-none cursor-pointer accent-purple-600 bg-zinc-700 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-purple-600 [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:shadow-purple-500/50 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:transition-transform [&::-webkit-slider-thumb]:duration-200 [&::-webkit-slider-thumb]:hover:scale-110"
                 />
-                <div class="flex justify-between text-xs text-zinc-600 mt-1">
+                <div class="flex justify-between text-xs text-dim mt-1">
                   <span>10%</span>
                   <span>100%</span>
                 </div>
@@ -155,7 +155,7 @@ const icSchema = {
               </button>
               <button
                 id="download-all-btn"
-                class="hidden rounded-xl border border-white/[0.08] px-5 py-3.5 text-sm font-semibold text-zinc-300 hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98] disabled:opacity-40 disabled:pointer-events-none items-center justify-center gap-2"
+                class="hidden rounded-xl border border-surface-2 px-5 py-3.5 text-sm font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98] disabled:opacity-40 disabled:pointer-events-none items-center justify-center gap-2"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span>Download All</span>
@@ -166,7 +166,7 @@ const icSchema = {
       </div>
 
       <div id="privacy-notice" class="hidden mt-4 max-w-xl mx-auto px-4">
-        <div class="flex items-center gap-2.5 px-5 py-3 rounded-xl border border-white/[0.06] bg-white/[0.03] text-sm text-zinc-400">
+        <div class="flex items-center gap-2.5 px-5 py-3 rounded-xl border border-surface bg-surface-1 text-sm text-tertiary">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
@@ -176,22 +176,22 @@ const icSchema = {
       </div>
 
       <div id="analytics-bar" class="hidden mt-6 max-w-xl mx-auto px-4">
-        <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5">
+        <div class="bg-surface-1 border border-surface rounded-2xl p-5">
           <div class="flex items-center justify-between mb-3">
-            <span class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">Compression Analytics</span>
-            <span id="analytics-file-count" class="text-xs text-zinc-500"></span>
+            <span class="text-[10px] font-semibold text-muted uppercase tracking-wider">Compression Analytics</span>
+            <span id="analytics-file-count" class="text-xs text-muted"></span>
           </div>
           <div class="grid grid-cols-3 gap-3">
-            <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-3 text-center">
-              <span class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider block">Total Original</span>
-              <span id="analytics-original" class="text-lg font-black text-zinc-300 tabular-nums mt-1 block">0 B</span>
+            <div class="rounded-xl bg-zinc-950/40 border border-surface p-3 text-center">
+              <span class="text-[9px] font-semibold text-dim uppercase tracking-wider block">Total Original</span>
+              <span id="analytics-original" class="text-lg font-black text-secondary tabular-nums mt-1 block">0 B</span>
             </div>
-            <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-3 text-center">
-              <span class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider block">Total Compressed</span>
+            <div class="rounded-xl bg-zinc-950/40 border border-surface p-3 text-center">
+              <span class="text-[9px] font-semibold text-dim uppercase tracking-wider block">Total Compressed</span>
               <span id="analytics-compressed" class="text-lg font-black text-emerald-400 tabular-nums mt-1 block">0 B</span>
             </div>
-            <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-3 text-center">
-              <span class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider block">Total Savings</span>
+            <div class="rounded-xl bg-zinc-950/40 border border-surface p-3 text-center">
+              <span class="text-[9px] font-semibold text-dim uppercase tracking-wider block">Total Savings</span>
               <span id="analytics-savings" class="text-lg font-black text-lime-400 tabular-nums mt-1 block">0%</span>
             </div>
           </div>
@@ -209,7 +209,7 @@ const icSchema = {
             <polyline points="21 15 16 10 5 21" />
           </svg>
           Compressed Images
-          <span id="gallery-count" class="text-sm font-normal text-zinc-500"></span>
+          <span id="gallery-count" class="text-sm font-normal text-muted"></span>
         </h2>
         <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
       </div>
@@ -220,33 +220,33 @@ const icSchema = {
           <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">This Tool</span>
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="group rounded-xl border border-white/[0.06] bg-white/[0.03] p-5 text-center hover:border-white/[0.1] transition-all duration-300">
+          <div class="group rounded-xl border border-surface bg-surface-1 p-5 text-center hover:border-surface-3 transition-all duration-300">
             <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>
             </div>
-            <h3 class="text-sm font-semibold text-zinc-200">Batch Compression</h3>
-            <p class="text-xs text-zinc-500 mt-2 leading-relaxed">Compress up to 20 images at once with a single click. See aggregate savings across all files in real-time.</p>
+            <h3 class="text-sm font-semibold text-primary">Batch Compression</h3>
+            <p class="text-xs text-muted mt-2 leading-relaxed">Compress up to 20 images at once with a single click. See aggregate savings across all files in real-time.</p>
           </div>
-          <div class="group rounded-xl border border-white/[0.06] bg-white/[0.03] p-5 text-center hover:border-white/[0.1] transition-all duration-300">
+          <div class="group rounded-xl border border-surface bg-surface-1 p-5 text-center hover:border-surface-3 transition-all duration-300">
             <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
             </div>
-            <h3 class="text-sm font-semibold text-zinc-200">Privacy-First</h3>
-            <p class="text-xs text-zinc-500 mt-2 leading-relaxed">Zero data leaves your device. Every operation runs client-side with no server uploads.</p>
+            <h3 class="text-sm font-semibold text-primary">Privacy-First</h3>
+            <p class="text-xs text-muted mt-2 leading-relaxed">Zero data leaves your device. Every operation runs client-side with no server uploads.</p>
           </div>
-          <div class="group rounded-xl border border-white/[0.06] bg-white/[0.03] p-5 text-center hover:border-white/[0.1] transition-all duration-300">
+          <div class="group rounded-xl border border-surface bg-surface-1 p-5 text-center hover:border-surface-3 transition-all duration-300">
             <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
             </div>
-            <h3 class="text-sm font-semibold text-zinc-200">Before &amp; After</h3>
-            <p class="text-xs text-zinc-500 mt-2 leading-relaxed">Toggle between original and compressed preview to compare quality. See exact savings per image.</p>
+            <h3 class="text-sm font-semibold text-primary">Before &amp; After</h3>
+            <p class="text-xs text-muted mt-2 leading-relaxed">Toggle between original and compressed preview to compare quality. See exact savings per image.</p>
           </div>
-          <div class="group rounded-xl border border-white/[0.06] bg-white/[0.03] p-5 text-center hover:border-white/[0.1] transition-all duration-300">
+          <div class="group rounded-xl border border-surface bg-surface-1 p-5 text-center hover:border-surface-3 transition-all duration-300">
             <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" /><line x1="13" y1="19" x2="19" y2="13" /><line x1="16" y1="16" x2="20" y2="20" /><line x1="19" y1="21" x2="21" y2="19" /></svg>
             </div>
-            <h3 class="text-sm font-semibold text-zinc-200">5 Quality Presets</h3>
-            <p class="text-xs text-zinc-500 mt-2 leading-relaxed">Choose Visual Lossless, Low, Medium, High, or Extreme, or fine-tune with the custom quality slider.</p>
+            <h3 class="text-sm font-semibold text-primary">5 Quality Presets</h3>
+            <p class="text-xs text-muted mt-2 leading-relaxed">Choose Visual Lossless, Low, Medium, High, or Extreme, or fine-tune with the custom quality slider.</p>
           </div>
         </div>
       </div>
@@ -326,11 +326,11 @@ const icSchema = {
     presetBtns.forEach((b) => {
       b.dataset.active = "false";
       b.classList.remove("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
-      b.classList.add("bg-white/[0.03]", "border-white/[0.1]", "text-zinc-400");
+      b.classList.add("bg-surface-1", "border-surface-3", "text-tertiary");
     });
     if (activeBtn) {
       activeBtn.dataset.active = "true";
-      activeBtn.classList.remove("bg-white/[0.03]", "border-white/[0.1]", "text-zinc-400");
+      activeBtn.classList.remove("bg-surface-1", "border-surface-3", "text-tertiary");
       activeBtn.classList.add("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
     }
   }
@@ -382,7 +382,7 @@ const icSchema = {
 
   function addThumbnailCard(f) {
     const card = document.createElement("div");
-    card.className = "rounded-xl border border-white/[0.06] bg-white/[0.03] p-4";
+    card.className = "rounded-xl border border-surface bg-surface-1 p-4";
     card.innerHTML = `
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-2.5 min-w-0">
@@ -390,14 +390,14 @@ const icSchema = {
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           </div>
           <div class="min-w-0">
-            <p class="text-sm font-medium text-zinc-200 truncate">${f.name}</p>
-            <p class="text-xs text-zinc-500">${formatSize(f.size)}</p>
+            <p class="text-sm font-medium text-primary truncate">${f.name}</p>
+            <p class="text-xs text-muted">${formatSize(f.size)}</p>
           </div>
         </div>
-        <span class="status-badge px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/[0.04] text-zinc-500 shrink-0">Pending</span>
+        <span class="status-badge px-2.5 py-1 rounded-lg text-xs font-semibold bg-surface-2 text-muted shrink-0">Pending</span>
       </div>
-      <div class="rounded-xl bg-white/[0.03] overflow-hidden flex items-center justify-center aspect-video relative">
-        <span class="text-xs text-zinc-600">Loading preview...</span>
+      <div class="rounded-xl bg-surface-1 overflow-hidden flex items-center justify-center aspect-video relative">
+        <span class="text-xs text-dim">Loading preview...</span>
       </div>
     `;
     galleryGrid.prepend(card);
@@ -427,16 +427,16 @@ const icSchema = {
 
   dropzone.addEventListener("dragover", (e) => {
     e.preventDefault();
-    dropzone.classList.add("border-purple-500/50", "bg-white/[0.05]");
+    dropzone.classList.add("border-purple-500/50", "bg-surface-2");
   });
 
   dropzone.addEventListener("dragleave", () => {
-    dropzone.classList.remove("border-purple-500/50", "bg-white/[0.05]");
+    dropzone.classList.remove("border-purple-500/50", "bg-surface-2");
   });
 
   dropzone.addEventListener("drop", (e) => {
     e.preventDefault();
-    dropzone.classList.remove("border-purple-500/50", "bg-white/[0.05]");
+    dropzone.classList.remove("border-purple-500/50", "bg-surface-2");
     handleFiles(e.dataTransfer.files);
   });
 
@@ -458,7 +458,7 @@ const icSchema = {
       const cards = galleryGrid.querySelectorAll(":scope > div");
       let targetCard = null;
       for (const c of cards) {
-        if (c.querySelector(".text-sm.font-medium.text-zinc-200.truncate")?.textContent === f.name) {
+        if (c.querySelector(".text-sm.font-medium.text-primary.truncate")?.textContent === f.name) {
           targetCard = c;
           break;
         }
@@ -494,7 +494,7 @@ const icSchema = {
             statusBadge.className = "status-badge px-2.5 py-1 rounded-lg text-xs font-semibold shrink-0 " +
               (savings >= 50 ? "bg-emerald-600/15 text-emerald-400" :
                savings >= 20 ? "bg-lime-600/15 text-lime-400" :
-               "bg-white/[0.03] text-zinc-300");
+               "bg-surface-1 text-secondary");
 
             targetCard.dataset.compressedUrl = dataUrl;
 
@@ -502,7 +502,7 @@ const icSchema = {
             previewDiv.innerHTML = `
               <div class="relative w-full h-full">
                 <img src="${dataUrl}" alt="${f.name}" class="w-full h-full object-contained compressed-img" />
-                <button class="toggle-before absolute top-2 right-2 bg-black/40 border border-white/[0.08] rounded-lg px-2 py-1 text-[10px] font-semibold text-zinc-300 hover:text-white hover:border-purple-500/50 transition-all flex items-center gap-1">
+                <button class="toggle-before absolute top-2 right-2 bg-black/40 border border-surface-2 rounded-lg px-2 py-1 text-[10px] font-semibold text-secondary hover:text-white hover:border-purple-500/50 transition-all flex items-center gap-1">
                   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
                   <span>Original</span>
                 </button>
@@ -531,8 +531,8 @@ const icSchema = {
             const infoRow = document.createElement("div");
             infoRow.className = "info-row flex items-center justify-between mt-3";
             infoRow.innerHTML = `
-              <div class="flex items-center gap-3 text-xs text-zinc-500">
-                <span class="flex items-center gap-1"><span class="text-zinc-600">Before:</span> ${formatSize(origSize)}</span>
+              <div class="flex items-center gap-3 text-xs text-muted">
+                <span class="flex items-center gap-1"><span class="text-dim">Before:</span> ${formatSize(origSize)}</span>
                 <span class="flex items-center gap-1"><span class="text-emerald-400">After:</span> ${formatSize(blob.size)}</span>
                 <span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${savings >= 50 ? "bg-emerald-600/20 text-emerald-400" : "bg-lime-600/20 text-lime-400"}">-${savings}%</span>
               </div>

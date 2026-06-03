@@ -28,7 +28,7 @@ const siteName = "NumanX Tools";
 const orgName = "NumanX Studio";
 const siteDesc = description || "Build. Create. Analyze. Free online tools for creators, students, and developers — a product of NumanX Studio.";
 const siteKeywords = keywords || "free tools, online tools, file converters, cricket calculators, word counter, qr generator, image compressor";
-const siteUrl = canonical || "https://numanx-tools.pages.dev";
+const siteUrl = canonical || Astro.url.href;
 
 const ogImage = image || "https://numanx-tools.pages.dev/og-default.svg";
 
@@ -98,8 +98,9 @@ const websiteSchema = {
 };
 
 // Article schema (if blog post)
-const builtArticleSchema = articleSchema || (type === "article" ? {
-  "@type": "Article",
+const builtArticleSchema = articleSchema ? { "@context": "https://schema.org", ...articleSchema } :
+  (type === "article" ? {
+  "@context": "https://schema.org",
   "headline": pageTitle,
   "description": siteDesc,
   "author": {
@@ -153,11 +154,13 @@ const builtToolSchema = toolSchema ? {
 <meta name="keywords" content={siteKeywords} />
 <meta name="robots" content={noindex ? "noindex, nofollow" : nofollow ? "index, nofollow" : "index, follow, max-snippet:-1, max-image-preview:large"} />
 <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large" />
-<meta name="theme-color" content="#0a0a0b" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0b" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
 <meta name="application-name" content={siteName} />
 <meta name="msapplication-TileColor" content="#0a0a0b" />
-<meta name="yandex-verification" content="e7f8d3a2b1c4d5e6" />
-<meta name="msvalidate.01" content="A1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6" />
+
+<!-- Google Search Console -->
+<meta name="google-site-verification" content="google56b08745d0fdbc9e" />
 
 <link rel="canonical" href={siteUrl} />
 
@@ -183,9 +186,6 @@ const builtToolSchema = toolSchema ? {
 <meta name="twitter:site" content="@numanxstudio" />
 <meta name="twitter:creator" content="@numanxstudio" />
 
-<!-- Google Search Console -->
-<meta name="google-site-verification" content="google56b08745d0fdbc9e.html" />
-
 <!-- Organization Schema -->
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
@@ -194,7 +194,10 @@ const builtToolSchema = toolSchema ? {
   "url": orgUrl,
   "logo": { "@type": "ImageObject", "url": `${orgUrl}/favicon.svg` },
   "sameAs": ["https://github.com/numanxstudio","https://x.com/numanxstudio","https://instagram.com/numanxstudio","https://facebook.com/numanxstudio","https://youtube.com/@numanxstudio"],
-  "contactPoint": { "@type": "ContactPoint", "email": "hello@numanxstudio.com", "contactType": "customer service" }
+  "contactPoint": { "@type": "ContactPoint", "email": "hello@numanxstudio.com", "contactType": "customer service" },
+  "address": { "@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK" },
+  "foundingDate": "2024",
+  "founder": { "@type": "Person", "name": "Muhammad Numan Usmani" }
 })} />
 
 <!-- WebSite Schema -->

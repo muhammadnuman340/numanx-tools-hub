@@ -1,13 +1,14 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 import { tools } from "../data/tools";
+import AdUnit from "../components/AdUnit.astro";
 ---
 
-<MainLayout title="Favorites - NumanX Tools" description="Your saved tools for quick access.">
+<MainLayout title="Favorites - NumanX Tools" description="Your saved tools for quick access." noindex={true}>
   <main class="min-h-screen pt-8 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-12 pt-8">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-zinc-400 text-xs font-semibold tracking-wider uppercase mb-6">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           Your Collection
         </div>
@@ -17,9 +18,13 @@ import { tools } from "../data/tools";
             Tools
           </span>
         </h1>
-        <p class="mt-4 text-zinc-400 text-lg max-w-xl mx-auto leading-relaxed">
+        <p class="mt-4 text-tertiary text-lg max-w-xl mx-auto leading-relaxed">
           Your saved tools for quick access. Star any tool to add it here.
         </p>
+      </div>
+
+      <div class="max-w-4xl mx-auto mb-8">
+        <AdUnit format="horizontal" />
       </div>
 
       <div id="favorites-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
@@ -28,10 +33,10 @@ import { tools } from "../data/tools";
 
       <div id="empty-favorites" class="hidden text-center py-20">
         <div class="w-16 h-16 rounded-2xl bg-zinc-800/60 flex items-center justify-center mx-auto mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-zinc-600"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-dim"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
         </div>
-        <h2 class="text-xl font-bold text-zinc-300">No favorites yet</h2>
-        <p class="text-sm text-zinc-500 mt-2">Click the star icon on any tool to save it here.</p>
+        <h2 class="text-xl font-bold text-secondary">No favorites yet</h2>
+        <p class="text-sm text-muted mt-2">Click the star icon on any tool to save it here.</p>
         <a href="/tools/" class="inline-flex items-center gap-2 mt-6 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold transition-all duration-200">
           Browse Tools
         </a>
@@ -81,12 +86,12 @@ import { tools } from "../data/tools";
               <div class="w-10 h-10 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
                 ${getIconSvg(tool.icon)}
               </div>
-              <h3 class="text-base font-semibold text-zinc-100 group-hover:text-purple-300 transition-colors">${tool.name}</h3>
+              <h3 class="text-base font-semibold text-primary group-hover:text-purple-300 transition-colors">${tool.name}</h3>
             </div>
-            <p class="text-xs text-zinc-400 leading-relaxed">${tool.desc}</p>
+            <p class="text-xs text-tertiary leading-relaxed">${tool.desc}</p>
           </div>
           <div class="mt-4 flex items-center justify-between">
-            <span class="text-[10px] text-zinc-600 px-2 py-0.5 rounded bg-zinc-800/60">${tool.cat}</span>
+            <span class="text-[10px] text-dim px-2 py-0.5 rounded bg-zinc-800/60">${tool.cat}</span>
             <a href="${tool.url}" class="text-xs font-semibold text-purple-400 hover:text-purple-300">Open Tool</a>
           </div>
         </div>

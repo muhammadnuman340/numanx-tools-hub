@@ -7,60 +7,60 @@ const popularItems = getPopularTools(5);
 <div id="search-overlay" class="fixed inset-0 z-[200] hidden" role="dialog" aria-modal="true" aria-label="Search tools and content">
   <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" id="search-backdrop" />
   <div class="relative flex items-start justify-center pt-[12vh] px-4">
-    <div class="w-full max-w-2xl bg-[#0a0a0b]/95 border border-white/[0.06] rounded-3xl shadow-2xl shadow-black/60 overflow-hidden animate-[scaleIn_0.2s_cubic-bezier(0.34,1.56,0.64,1)]">
+    <div class="w-full max-w-2xl bg-surface-search border border-surface rounded-3xl shadow-2xl shadow-black/60 overflow-hidden animate-[scaleIn_0.2s_cubic-bezier(0.34,1.56,0.64,1)]">
       
       <!-- Search Input -->
-      <div role="search" class="flex items-center gap-3 px-5 py-4 border-b border-white/[0.06]">
-        <svg class="w-[18px] h-[18px] text-zinc-400 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <div role="search" class="flex items-center gap-3 px-5 py-4 border-b border-surface">
+        <svg class="w-[18px] h-[18px] text-tertiary shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input id="search-input" type="text" placeholder="Search tools, blogs, calculators..." autocomplete="off" class="flex-1 bg-transparent text-white placeholder-zinc-400 text-base focus:outline-none" aria-label="Search tools, blogs, and calculators" />
-        <kbd class="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-white/[0.04] text-zinc-400 text-[11px] font-mono border border-white/[0.06]">
+        <kbd class="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-surface-2 text-tertiary text-[11px] font-mono border border-surface">
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg>
           ESC
         </kbd>
       </div>
 
       <!-- Category Filters -->
-      <div id="search-categories" class="flex gap-2 px-5 py-3 border-b border-white/[0.06] overflow-x-auto" role="tablist" aria-label="Filter by category">
+      <div id="search-categories" class="flex gap-2 px-5 py-3 border-b border-surface overflow-x-auto" role="tablist" aria-label="Filter by category">
         <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-purple-600 text-white" data-cat="all" role="tab" aria-selected="true">All</button>
-        <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-white/[0.04] text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.08]" data-cat="Image Tools" role="tab" aria-selected="false">Image Tools</button>
-        <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-white/[0.04] text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.08]" data-cat="Creator Tools" role="tab" aria-selected="false">Creator Tools</button>
-        <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-white/[0.04] text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.08]" data-cat="Utility Tools" role="tab" aria-selected="false">Utility Tools</button>
-        <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-white/[0.04] text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.08]" data-cat="Cricket Tools" role="tab" aria-selected="false">Cricket Tools</button>
-        <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-white/[0.04] text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.08]" data-cat="Blog" role="tab" aria-selected="false">Blog</button>
+        <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-surface-2 text-tertiary hover:text-primary hover:bg-surface-3" data-cat="Image Tools" role="tab" aria-selected="false">Image Tools</button>
+        <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-surface-2 text-tertiary hover:text-primary hover:bg-surface-3" data-cat="Creator Tools" role="tab" aria-selected="false">Creator Tools</button>
+        <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-surface-2 text-tertiary hover:text-primary hover:bg-surface-3" data-cat="Utility Tools" role="tab" aria-selected="false">Utility Tools</button>
+        <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-surface-2 text-tertiary hover:text-primary hover:bg-surface-3" data-cat="Cricket Tools" role="tab" aria-selected="false">Cricket Tools</button>
+        <button class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-surface-2 text-tertiary hover:text-primary hover:bg-surface-3" data-cat="Blog" role="tab" aria-selected="false">Blog</button>
       </div>
 
       <!-- Results -->
       <div class="max-h-[360px] overflow-y-auto scroll-smooth" id="search-results">
         <div class="px-5 py-3">
-          <p class="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider">Popular</p>
+          <p class="text-[11px] font-semibold text-tertiary uppercase tracking-wider">Popular</p>
           <div class="mt-2 space-y-1" id="search-default">
             {popularItems.map((item) => (
-            <a href={item.url} class="search-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/[0.06] transition-all group/item">
+            <a href={item.url} class="search-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-surface-3 transition-all group/item">
               <span class="w-8 h-8 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 shrink-0 group-hover/item:scale-110 transition-transform"><ToolIcon name={item.icon} /></span>
               <div class="min-w-0 flex-1">
-                <p class="text-sm font-medium text-zinc-200 group-hover/item:text-white transition-colors">{item.name}</p>
-                <p class="text-xs text-zinc-400 truncate">{item.description}</p>
+                <p class="text-sm font-medium text-primary group-hover/item:text-white transition-colors">{item.name}</p>
+                <p class="text-xs text-tertiary truncate">{item.description}</p>
               </div>
-              <span class="text-[10px] text-zinc-400 px-2 py-0.5 rounded-md bg-white/[0.04] shrink-0">{categories.find((c) => c.id === item.category)?.title || item.category}</span>
+              <span class="text-[10px] text-tertiary px-2 py-0.5 rounded-md bg-surface-2 shrink-0">{categories.find((c) => c.id === item.category)?.title || item.category}</span>
             </a>
             ))}
           </div>
         </div>
         <div id="search-dynamic" class="hidden px-5 py-3 space-y-1"></div>
         <div id="search-empty" class="hidden px-5 py-12 text-center">
-          <div class="w-14 h-14 rounded-2xl bg-white/[0.04] flex items-center justify-center mx-auto mb-3">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="text-zinc-400" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <div class="w-14 h-14 rounded-2xl bg-surface-2 flex items-center justify-center mx-auto mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="text-tertiary" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </div>
-          <p class="text-sm text-zinc-400 font-medium">No results found</p>
-          <p class="text-xs text-zinc-400 mt-1">Try a different search term or browse all tools.</p>
+          <p class="text-sm text-tertiary font-medium">No results found</p>
+          <p class="text-xs text-tertiary mt-1">Try a different search term or browse all tools.</p>
         </div>
       </div>
 
       <!-- Footer -->
-      <div class="flex items-center gap-4 px-5 py-3 border-t border-white/[0.06] text-[11px] text-zinc-400">
-        <span class="flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] font-mono text-zinc-400">↑</kbd> <kbd class="px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] font-mono text-zinc-400">↓</kbd> Navigate</span>
-        <span class="flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] font-mono text-zinc-400">↵</kbd> Open</span>
-        <span class="flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] font-mono text-zinc-400">Esc</kbd> Close</span>
+      <div class="flex items-center gap-4 px-5 py-3 border-t border-surface text-[11px] text-tertiary">
+        <span class="flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-surface-2 border border-surface font-mono text-tertiary">↑</kbd> <kbd class="px-1.5 py-0.5 rounded bg-surface-2 border border-surface font-mono text-tertiary">↓</kbd> Navigate</span>
+        <span class="flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-surface-2 border border-surface font-mono text-tertiary">↵</kbd> Open</span>
+        <span class="flex items-center gap-1.5"><kbd class="px-1.5 py-0.5 rounded bg-surface-2 border border-surface font-mono text-tertiary">Esc</kbd> Close</span>
       </div>
     </div>
   </div>
@@ -140,9 +140,9 @@ const popularItems = getPopularTools(5);
     activeCat = "all";
     catBtns.forEach((b) => {
       b.classList.remove("bg-purple-600", "text-white");
-      b.classList.add("bg-white/[0.04]", "text-zinc-400", "hover:text-zinc-200", "hover:bg-white/[0.08]");
+      b.classList.add("bg-surface-2", "text-tertiary", "hover:text-primary", "hover:bg-surface-3");
     });
-    (catBtns[0] as HTMLElement)?.classList.remove("bg-white/[0.04]", "text-zinc-400", "hover:text-zinc-200", "hover:bg-white/[0.08]");
+    (catBtns[0] as HTMLElement)?.classList.remove("bg-surface-2", "text-tertiary", "hover:text-primary", "hover:bg-surface-3");
     (catBtns[0] as HTMLElement)?.classList.add("bg-purple-600", "text-white");
     if (searchTriggerEl) {
       searchTriggerEl.focus();
@@ -196,15 +196,15 @@ const popularItems = getPopularTools(5);
     results.forEach((item, i) => {
       const a = document.createElement("a");
       a.href = item.url;
-      a.className = "search-result-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/[0.06] transition-all cursor-pointer group/item";
+      a.className = "search-result-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-surface-3 transition-all cursor-pointer group/item";
       a.dataset.index = String(i);
       a.innerHTML = `
         <span class="w-8 h-8 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 shrink-0 group-hover/item:scale-110 transition-transform">${getIconSvg(item.icon)}</span>
         <div class="min-w-0 flex-1">
-          <p class="text-sm font-medium text-zinc-200">${item.name}</p>
-          <p class="text-xs text-zinc-400 truncate">${item.desc}</p>
+          <p class="text-sm font-medium text-primary">${item.name}</p>
+          <p class="text-xs text-tertiary truncate">${item.desc}</p>
         </div>
-        <span class="text-[10px] text-zinc-400 px-2 py-0.5 rounded-md bg-white/[0.04] shrink-0">${item.cat}</span>
+        <span class="text-[10px] text-tertiary px-2 py-0.5 rounded-md bg-surface-2 shrink-0">${item.cat}</span>
       `;
       a.addEventListener("click", closeSearch);
       if (searchDynamic) searchDynamic.appendChild(a);
@@ -217,9 +217,9 @@ const popularItems = getPopularTools(5);
     btn.addEventListener("click", () => {
       catBtns.forEach((b) => {
         b.classList.remove("bg-purple-600", "text-white");
-        b.classList.add("bg-white/[0.04]", "text-zinc-500", "hover:text-zinc-200", "hover:bg-white/[0.08]");
+        b.classList.add("bg-surface-2", "text-muted", "hover:text-primary", "hover:bg-surface-3");
       });
-      btn.classList.remove("bg-white/[0.04]", "text-zinc-500", "hover:text-zinc-200", "hover:bg-white/[0.08]");
+      btn.classList.remove("bg-surface-2", "text-muted", "hover:text-primary", "hover:bg-surface-3");
       btn.classList.add("bg-purple-600", "text-white");
       activeCat = btn.dataset.cat;
       filterResults();
@@ -247,10 +247,10 @@ const popularItems = getPopularTools(5);
   function updateSelection(items: NodeListOf<Element>) {
     items.forEach((el, i) => {
       if (i === selectedIndex) {
-        el.classList.add("bg-white/[0.06]");
+        el.classList.add("bg-surface-3");
         el.scrollIntoView({ block: "nearest" });
       } else {
-        el.classList.remove("bg-white/[0.06]");
+        el.classList.remove("bg-surface-3");
       }
     });
   }

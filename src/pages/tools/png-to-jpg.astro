@@ -51,10 +51,10 @@ const pjSchema = {
       />
 
       <div class="w-full max-w-xl mx-auto px-4 my-6">
-        <div class="bg-white/[0.02] border border-white/[0.06] p-6 rounded-2xl shadow-xl">
+        <div class="bg-surface-1 border border-surface p-6 rounded-2xl shadow-xl">
           <div
             id="dropzone"
-            class="relative rounded-2xl border-2 border-dashed border-white/[0.1] bg-white/[0.03] p-10 md:p-16 text-center cursor-pointer hover:border-purple-500/50 hover:bg-white/[0.05] transition-all duration-300 group"
+            class="relative rounded-2xl border-2 border-dashed border-surface-3 bg-surface-1 p-10 md:p-16 text-center cursor-pointer hover:border-purple-500/50 hover:bg-surface-2 transition-all duration-300 group"
           >
             <input id="file-input" type="file" accept=".png,image/png" class="hidden" />
             <div id="dropzone-content">
@@ -65,13 +65,13 @@ const pjSchema = {
                   <line x1="12" y1="3" x2="12" y2="15" />
                 </svg>
               </div>
-              <h3 class="text-lg font-semibold text-zinc-200 mb-2">
+              <h3 class="text-lg font-semibold text-primary mb-2">
                 Drop your PNG image here
               </h3>
-              <p class="text-sm text-zinc-400 mb-4">
+              <p class="text-sm text-tertiary mb-4">
                 or <span class="text-purple-400 underline underline-offset-2 font-medium">browse files</span>
               </p>
-              <p class="text-xs text-zinc-400">
+              <p class="text-xs text-tertiary">
                 Supports .png &mdash; converts to .jpg with quality control
               </p>
             </div>
@@ -79,12 +79,12 @@ const pjSchema = {
 
           <div id="controls-section" class="hidden mt-6">
             <div class="mb-4">
-              <label class="flex items-center justify-between text-xs text-zinc-400 mb-2">
+              <label class="flex items-center justify-between text-xs text-tertiary mb-2">
                 <span>Quality</span>
                 <span id="quality-label" class="font-semibold text-purple-400">85%</span>
               </label>
               <input id="quality-slider" type="range" min="10" max="100" value="85" class="w-full h-1.5 rounded-full appearance-none bg-zinc-800 cursor-pointer accent-purple-500" />
-              <div class="flex justify-between text-[9px] text-zinc-600 mt-1">
+              <div class="flex justify-between text-[9px] text-dim mt-1">
                 <span>Smaller</span>
                 <span>Larger</span>
               </div>
@@ -99,14 +99,14 @@ const pjSchema = {
       </div>
 
       <div id="result-section" class="hidden mt-6 max-w-xl mx-auto px-4">
-        <div class="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-5">
+        <div class="bg-surface-1 border border-surface rounded-2xl p-5">
           <div class="grid grid-cols-2 gap-4 mb-4">
-            <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-3 text-center">
-              <span class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider block">Original PNG</span>
-              <span id="result-original" class="text-lg font-black text-zinc-300 tabular-nums mt-1 block">0 B</span>
+            <div class="rounded-xl bg-zinc-950/40 border border-surface p-3 text-center">
+              <span class="text-[9px] font-semibold text-dim uppercase tracking-wider block">Original PNG</span>
+              <span id="result-original" class="text-lg font-black text-secondary tabular-nums mt-1 block">0 B</span>
             </div>
-            <div class="rounded-xl bg-zinc-950/40 border border-white/[0.04] p-3 text-center">
-              <span class="text-[9px] font-semibold text-zinc-600 uppercase tracking-wider block">Converted JPG</span>
+            <div class="rounded-xl bg-zinc-950/40 border border-surface p-3 text-center">
+              <span class="text-[9px] font-semibold text-dim uppercase tracking-wider block">Converted JPG</span>
               <span id="result-converted" class="text-lg font-black text-purple-400 tabular-nums mt-1 block">0 B</span>
             </div>
           </div>
@@ -118,10 +118,10 @@ const pjSchema = {
             </a>
           </div>
         </div>
-        <div id="preview-section" class="mt-4 rounded-xl bg-zinc-950/40 border border-white/[0.04] overflow-hidden">
-          <div class="flex border-b border-white/[0.04]">
-            <button id="preview-original-btn" class="flex-1 py-2 text-xs font-semibold text-zinc-400 bg-white/[0.03] transition-colors">Original</button>
-            <button id="preview-converted-btn" class="flex-1 py-2 text-xs font-semibold text-zinc-600 hover:text-zinc-300 transition-colors">JPG Result</button>
+        <div id="preview-section" class="mt-4 rounded-xl bg-zinc-950/40 border border-surface overflow-hidden">
+          <div class="flex border-b border-surface">
+            <button id="preview-original-btn" class="flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors">Original</button>
+            <button id="preview-converted-btn" class="flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors">JPG Result</button>
           </div>
           <div class="p-4 flex items-center justify-center min-h-[200px] bg-zinc-900/30">
             <img id="preview-image" class="max-w-full max-h-[300px] object-contain rounded-lg" alt="Preview" />
@@ -200,16 +200,16 @@ const pjSchema = {
 
   dropzone.addEventListener("dragover", (e) => {
     e.preventDefault();
-    dropzone.classList.add("border-purple-500/50", "bg-white/[0.05]");
+    dropzone.classList.add("border-purple-500/50", "bg-surface-2");
   });
 
   dropzone.addEventListener("dragleave", () => {
-    dropzone.classList.remove("border-purple-500/50", "bg-white/[0.05]");
+    dropzone.classList.remove("border-purple-500/50", "bg-surface-2");
   });
 
   dropzone.addEventListener("drop", (e) => {
     e.preventDefault();
-    dropzone.classList.remove("border-purple-500/50", "bg-white/[0.05]");
+    dropzone.classList.remove("border-purple-500/50", "bg-surface-2");
     if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
   });
 
@@ -253,8 +253,8 @@ const pjSchema = {
 
           previewImage.src = convertedBlobUrl;
 
-          previewOriginalBtn.className = "flex-1 py-2 text-xs font-semibold text-zinc-600 hover:text-zinc-300 transition-colors";
-          previewConvertedBtn.className = "flex-1 py-2 text-xs font-semibold text-zinc-400 bg-white/[0.03] transition-colors";
+          previewOriginalBtn.className = "flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors";
+          previewConvertedBtn.className = "flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors";
 
           resultSection.classList.remove("hidden");
           convertBtnText.textContent = "Convert Again";
@@ -271,16 +271,16 @@ const pjSchema = {
   previewOriginalBtn.addEventListener("click", () => {
     if (originalDataUrl) {
       previewImage.src = originalDataUrl;
-      previewOriginalBtn.className = "flex-1 py-2 text-xs font-semibold text-zinc-400 bg-white/[0.03] transition-colors";
-      previewConvertedBtn.className = "flex-1 py-2 text-xs font-semibold text-zinc-600 hover:text-zinc-300 transition-colors";
+      previewOriginalBtn.className = "flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors";
+      previewConvertedBtn.className = "flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors";
     }
   });
 
   previewConvertedBtn.addEventListener("click", () => {
     if (convertedBlobUrl) {
       previewImage.src = convertedBlobUrl;
-      previewConvertedBtn.className = "flex-1 py-2 text-xs font-semibold text-zinc-400 bg-white/[0.03] transition-colors";
-      previewOriginalBtn.className = "flex-1 py-2 text-xs font-semibold text-zinc-600 hover:text-zinc-300 transition-colors";
+      previewConvertedBtn.className = "flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors";
+      previewOriginalBtn.className = "flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors";
     }
   });
 </script>

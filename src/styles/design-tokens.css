@@ -39,6 +39,15 @@ html[data-theme="dark"] {
   --border-accent: rgba(168, 85, 247, 0.3);
   --border-accent-hover: rgba(168, 85, 247, 0.5);
 
+  --surface-1: rgba(255,255,255,0.02);
+  --surface-2: rgba(255,255,255,0.04);
+  --surface-3: rgba(255,255,255,0.06);
+  --surface-nav: rgba(10,10,11,0.9);
+  --surface-search: rgba(0,0,0,0.85);
+  --border-surface: rgba(255,255,255,0.06);
+  --border-surface-2: rgba(255,255,255,0.08);
+  --border-surface-3: rgba(255,255,255,0.1);
+
   --text-primary: #f4f4f5;
   --text-secondary: #d4d4d8;
   --text-tertiary: #a1a1aa;
@@ -288,4 +297,26 @@ html[data-theme="light"] {
   --text-tertiary: #3f3f46;
   --text-muted: #52525b;
   --text-dim: #71717a;
+
+  --surface-1: rgba(0,0,0,0.02);
+  --surface-2: rgba(0,0,0,0.04);
+  --surface-3: rgba(0,0,0,0.06);
+  --surface-nav: rgba(255,255,255,0.9);
+  --surface-search: rgba(255,255,255,0.95);
+  --border-surface: rgba(0,0,0,0.08);
+  --border-surface-2: rgba(0,0,0,0.12);
+  --border-surface-3: rgba(0,0,0,0.16);
+
+  /* ─── Inverted zinc palette so all bg-zinc-*, text-zinc-*, border-zinc-* work in light mode ─── */
+  --color-zinc-50: oklch(14.1% 0.005 285.823);
+  --color-zinc-100: oklch(21% 0.006 285.885);
+  --color-zinc-200: oklch(27.4% 0.006 286.033);
+  --color-zinc-300: oklch(37% 0.013 285.805);
+  --color-zinc-400: oklch(44.2% 0.017 285.786);
+  --color-zinc-500: oklch(55.2% 0.016 285.938);
+  --color-zinc-600: oklch(70.5% 0.015 286.067);
+  --color-zinc-700: oklch(87.1% 0.006 286.286);
+  --color-zinc-800: oklch(92% 0.004 286.32);
+  --color-zinc-900: oklch(96.7% 0.001 286.375);
+  --color-zinc-950: oklch(98.5% 0 0);
 }

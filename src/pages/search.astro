@@ -2,6 +2,7 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import { tools, categories } from "../data/tools";
 import ToolIcon from "../components/icons/ToolIcon.astro";
+import AdUnit from "../components/AdUnit.astro";
 
 const searchTools = tools.map((t) => ({
   name: t.name,
@@ -23,11 +24,11 @@ const searchCategories = ["All", ...categories.map((c) => c.title), "Blog"];
 const popular = allItems.slice(0, 5);
 ---
 
-<MainLayout title="Search Tools" description="Find online tools, calculators, creator utilities, and cricket analytics tools.">
+<MainLayout title="Search Tools - NumanX Tools" description="Find online tools, calculators, creator utilities, and cricket analytics tools." noindex={true}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-6xl mx-auto">
       <section class="text-center mb-12 pt-8">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-zinc-400 text-xs font-semibold tracking-wider uppercase mb-8">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-tertiary text-xs font-semibold tracking-wider uppercase mb-8">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           Global Search
         </div>
@@ -37,14 +38,14 @@ const popular = allItems.slice(0, 5);
             Tool or Article
           </span>
         </h1>
-        <p class="mt-4 text-zinc-400 text-lg max-w-2xl mx-auto leading-relaxed">
+        <p class="mt-4 text-tertiary text-lg max-w-2xl mx-auto leading-relaxed">
           Search across all tools, blog posts, and categories instantly.
         </p>
         <div class="mt-8 max-w-xl mx-auto relative">
           <div class="flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-zinc-700 bg-zinc-900/80 focus-within:border-purple-500/50 focus-within:shadow-lg focus-within:shadow-purple-900/10 transition-all duration-300">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-zinc-500 shrink-0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted shrink-0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input id="search-page-input" type="text" placeholder="Search tools, blogs, calculators..." autocomplete="off" class="flex-1 bg-transparent text-white placeholder-zinc-500 text-base focus:outline-none" />
-            <kbd class="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-zinc-800 text-zinc-500 text-[11px] font-mono border border-zinc-700 shrink-0">
+            <kbd class="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-zinc-800 text-muted text-[11px] font-mono border border-zinc-700 shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg>
               K
             </kbd>
@@ -52,10 +53,14 @@ const popular = allItems.slice(0, 5);
         </div>
       </section>
 
+      <div class="max-w-4xl mx-auto mb-8">
+        <AdUnit format="horizontal" />
+      </div>
+
       <section class="mb-10">
         <div class="flex flex-wrap justify-center gap-2" id="page-categories">
           {searchCategories.map((cat) => (
-            <button class="page-cat-btn rounded-lg px-4 py-2 text-sm font-medium transition-all whitespace-nowrap {cat === 'All' ? 'bg-purple-600 text-white' : 'bg-zinc-800/60 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800'}" data-cat="{cat}">{cat}</button>
+            <button class="page-cat-btn rounded-lg px-4 py-2 text-sm font-medium transition-all whitespace-nowrap {cat === 'All' ? 'bg-purple-600 text-white' : 'bg-zinc-800/60 text-tertiary hover:text-primary hover:bg-zinc-800'}" data-cat="{cat}">{cat}</button>
           ))}
         </div>
       </section>
@@ -67,23 +72,23 @@ const popular = allItems.slice(0, 5);
               <div class="flex items-center gap-3 mb-3">
                 <span class="w-8 h-8 rounded-lg bg-purple-600/10 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-110 transition-transform duration-200"><ToolIcon name={item.icon} /></span>
                 <div>
-                  <h3 class="text-sm font-semibold text-zinc-200 group-hover:text-white transition-colors">{item.name}</h3>
-                  <span class="text-[10px] text-zinc-600">{item.cat}</span>
+                  <h3 class="text-sm font-semibold text-primary group-hover:text-white transition-colors">{item.name}</h3>
+                  <span class="text-[10px] text-dim">{item.cat}</span>
                 </div>
               </div>
-              <p class="text-xs text-zinc-500 leading-relaxed">{item.desc}</p>
+              <p class="text-xs text-muted leading-relaxed">{item.desc}</p>
             </a>
           ))}
         </div>
         <div id="page-empty" class="hidden py-20 text-center">
           <div class="w-14 h-14 rounded-2xl bg-zinc-800/60 flex items-center justify-center mx-auto mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-zinc-500"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-muted"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </div>
-          <p class="text-base text-zinc-400 font-medium">No results found</p>
-          <p class="text-sm text-zinc-600 mt-1">Try a different search term or browse all tools.</p>
+          <p class="text-base text-tertiary font-medium">No results found</p>
+          <p class="text-sm text-dim mt-1">Try a different search term or browse all tools.</p>
           <div class="mt-6 flex flex-wrap justify-center gap-3">
             {popular.map((p) => (
-              <a href={p.url} class="px-4 py-2 rounded-xl bg-zinc-800/60 border border-zinc-700 text-xs text-zinc-400 hover:text-zinc-200 hover:border-zinc-500 transition-all">{p.name}</a>
+              <a href={p.url} class="px-4 py-2 rounded-xl bg-zinc-800/60 border border-zinc-700 text-xs text-tertiary hover:text-primary hover:border-zinc-500 transition-all">{p.name}</a>
             ))}
           </div>
         </div>
@@ -143,11 +148,11 @@ const popular = allItems.slice(0, 5);
           <div class="flex items-center gap-3 mb-3">
             <span class="w-8 h-8 rounded-lg bg-purple-600/10 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-110 transition-transform duration-200">${getIconSvg(item.icon)}</span>
             <div>
-              <h3 class="text-sm font-semibold text-zinc-200 group-hover:text-white transition-colors">${item.name}</h3>
-              <span class="text-[10px] text-zinc-600">${item.cat}</span>
+              <h3 class="text-sm font-semibold text-primary group-hover:text-white transition-colors">${item.name}</h3>
+              <span class="text-[10px] text-dim">${item.cat}</span>
             </div>
           </div>
-          <p class="text-xs text-zinc-500 leading-relaxed">${item.desc}</p>
+          <p class="text-xs text-muted leading-relaxed">${item.desc}</p>
         </a>
       `).join("");
     }
@@ -159,9 +164,9 @@ const popular = allItems.slice(0, 5);
     btn.addEventListener("click", () => {
       catBtns.forEach((b) => {
         b.classList.remove("bg-purple-600", "text-white");
-        b.classList.add("bg-zinc-800/60", "text-zinc-400", "hover:text-zinc-200", "hover:bg-zinc-800");
+        b.classList.add("bg-zinc-800/60", "text-tertiary", "hover:text-primary", "hover:bg-zinc-800");
       });
-      btn.classList.remove("bg-zinc-800/60", "text-zinc-400", "hover:text-zinc-200", "hover:bg-zinc-800");
+      btn.classList.remove("bg-zinc-800/60", "text-tertiary", "hover:text-primary", "hover:bg-zinc-800");
       btn.classList.add("bg-purple-600", "text-white");
       activeCat = btn.dataset.cat;
       filter();

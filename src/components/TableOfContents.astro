@@ -1,6 +1,6 @@
 <nav id="table-of-contents" class="hidden lg:block sticky top-24 w-56 shrink-0" aria-label="Table of contents">
-  <p class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-3">On This Page</p>
-  <ul id="toc-list" class="space-y-1.5 text-sm border-l border-white/[0.06] pl-4">
+  <p class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3">On This Page</p>
+  <ul id="toc-list" class="space-y-1.5 text-sm border-l border-surface pl-4">
     {/* Populated by JS */}
   </ul>
 </nav>
@@ -22,7 +22,7 @@
 
       toc.innerHTML = items.map((item) => `
         <li>
-          <a href="#${item.id}" class="toc-link block ${item.tag === "H3" ? "pl-3" : ""} text-xs ${item.tag === "H3" ? "text-zinc-600" : "text-zinc-500"} hover:text-purple-400 transition-colors truncate">
+          <a href="#${item.id}" class="toc-link block ${item.tag === "H3" ? "pl-3" : ""} text-xs ${item.tag === "H3" ? "text-dim" : "text-muted"} hover:text-purple-400 transition-colors truncate">
             ${item.text}
           </a>
         </li>
