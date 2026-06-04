@@ -18,11 +18,31 @@ const schema = { name: "Color Contrast Checker", applicationCategory: "Utilities
     <ShareBar />
     <div class="max-w-xl mx-auto mt-10">
       <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+            <span id="usage-badge" class="text-xs text-muted"></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="flex gap-1">
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+            </div>
+          </div>
+        </div>
         <div class="grid grid-cols-2 gap-4 mb-4">
           <div><label class="block text-xs font-medium text-tertiary mb-1.5">Foreground</label><input id="fg-input" type="text" value="#ffffff" maxlength="7" class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-violet-400/50 focus:outline-none transition-all uppercase" /><div id="fg-preview" class="mt-2 h-12 rounded-xl border border-surface-3" style="background:#ffffff"></div></div>
           <div><label class="block text-xs font-medium text-tertiary mb-1.5">Background</label><input id="bg-input" type="text" value="#000000" maxlength="7" class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-violet-400/50 focus:outline-none transition-all uppercase" /><div id="bg-preview" class="mt-2 h-12 rounded-xl border border-surface-3" style="background:#000000"></div></div>
         </div>
         <button id="check-btn" class="w-full bg-gradient-to-r from-violet-400 to-purple-500 text-white font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all">Check Contrast</button>
+        <div class="flex gap-2 mt-4">
+          <button id="copy-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy Results</button>
+          <button id="share-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all" title="Copy share link">🔗</button>
+          <button id="download-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Download</button>
+          <button id="clear-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Clear</button>
+        </div>
         <div id="results" class="mt-6 pt-6 border-t border-surface hidden">
           <div class="text-center mb-4"><span class="text-xs text-tertiary">Contrast Ratio</span><div class="text-3xl font-black text-white" id="ratio-display">21:1</div></div>
           <div class="space-y-2" id="compliance-list"></div>
@@ -94,5 +114,38 @@ const schema = { name: "Color Contrast Checker", applicationCategory: "Utilities
     });
   });
 
+  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
+  document.getElementById("copy-btn")?.addEventListener("click", () => {
+    const text = "Contrast Ratio: " + ratioDisplay.textContent + "\n\n" + complianceList.textContent;
+    if (!text.trim()) return;
+    navigator.clipboard.writeText(text).catch(()=>{});
+    playPing();
+    const btn = document.getElementById("copy-btn");
+    btn.textContent = "Copied!";
+    setTimeout(() => { btn.textContent = "Copy Results"; }, 2000);
+  });
+  document.getElementById("download-btn")?.addEventListener("click", () => {
+    const content = "Contrast Ratio: " + ratioDisplay.textContent + "\n\n" + complianceList.textContent;
+    if (!content.trim()) return;
+    const blob = new Blob([content], {type:"text/plain"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "contrast-results.txt";
+    a.click();
+    playPing();
+    URL.revokeObjectURL(a.href);
+  });
+  document.getElementById("clear-btn")?.addEventListener("click", () => {
+    fgInput.value = "#ffffff";
+    bgInput.value = "#000000";
+    results.classList.add("hidden");
+    updatePreviews();
+    playPing();
+  });
+  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("ratio-display");const t=o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof (window as any).__showToast==="function")(window as any).__showToast({message:"Link copied!",variant:"success"});});
+  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
+  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["contrast"])b.textContent="Used "+u["contrast"]+"×"}catch(e){}
+  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-violet'],button[class*='bg-purple']").forEach(b=>{b.className=b.className.replace(/bg-(violet|purple)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(violet|purple)-\d+/g,"hover:bg-"+c+"-500")});try{localStorage.setItem("nt_theme",c)}catch(e){}})});
+  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click()}catch(e){}
   updatePreviews();
 </script>

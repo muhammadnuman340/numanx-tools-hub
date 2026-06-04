@@ -17,9 +17,34 @@ const schema = { name: "JWT Decoder", applicationCategory: "Developer Tools", de
     <ToolHeader title="JWT" gradient="Decoder Pro" desc="Decode JWT tokens instantly — inspect the header, payload, and signature in a clean interface." badge="✦ New Tool" slug="jwt-decoder" />
     <ShareBar />
     <div class="max-w-xl mx-auto mt-10">
-      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6 relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+            <span id="usage-badge" class="text-xs text-muted"></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="flex gap-1">
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+            </div>
+            <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+          </div>
+        </div>
         <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-2 block">JWT Token</label>
-        <textarea id="token-input" class="w-full h-28 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-orange-500/50 focus:outline-none transition-all resize-none font-mono" placeholder="Paste your JWT token here..."></textarea>
+        <div class="flex items-center gap-1.5 mb-2">
+          <button class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A−</button>
+          <button class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A+</button>
+          <span class="text-xs text-muted ml-auto">Ctrl+Enter to decode</span>
+        </div>
+        <div class="flex">
+          <div id="line-nums" class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3" style="min-width:2.5em">1</div>
+          <textarea id="token-input" class="flex-1 h-28 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-orange-500/50 focus:outline-none transition-all resize-none font-mono" placeholder="Paste your JWT token here..."></textarea>
+        </div>
+        <div id="reading-time" class="text-xs text-muted mt-1"></div>
+        <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
         <button id="decode-btn" class="w-full bg-orange-600 hover:bg-orange-500 text-white text-sm font-semibold py-2.5 rounded-xl transition-all mt-3 active:scale-95">Decode</button>
         <div id="result-area" class="mt-6 space-y-4 hidden">
           <div>
@@ -41,6 +66,15 @@ const schema = { name: "JWT Decoder", applicationCategory: "Developer Tools", de
             <span id="sig-status" class="text-xs font-mono"></span>
             <code id="sig-preview" class="text-[10px] font-mono text-dim truncate flex-1 text-right"></code>
           </div>
+        </div>
+        <div class="flex gap-2 mt-4">
+          <button id="copy-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy Results</button>
+          <button id="share-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all" title="Copy share link">🔗</button>
+          <button id="download-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Download</button>
+          <button id="clear-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Clear</button>
+          <select id="export-format" class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5">
+            <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option>
+          </select>
         </div>
       </div>
     </div>
@@ -92,6 +126,35 @@ const schema = { name: "JWT Decoder", applicationCategory: "Developer Tools", de
     if ((window as any).__showToast) (window as any).__showToast({ message: msg, variant });
   }
 
+  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
+  document.getElementById("copy-btn")?.addEventListener("click", () => {
+    const text = "Header:\n" + headerOutput.textContent + "\n\nPayload:\n" + payloadOutput.textContent;
+    if (!text.trim()) return;
+    navigator.clipboard.writeText(text).catch(()=>{});
+    playPing();
+    const btn = document.getElementById("copy-btn");
+    btn.textContent = "Copied!";
+    setTimeout(() => { btn.textContent = "Copy Results"; }, 2000);
+  });
+  document.getElementById("download-btn")?.addEventListener("click", () => {
+    const content = "JWT Token: " + tokenInput.value + "\n\n=== Header ===\n" + headerOutput.textContent + "\n\n=== Payload ===\n" + payloadOutput.textContent + "\n\n=== Signature ===\n" + sigPreview.textContent;
+    if (!tokenInput.value) return;
+    const fmt = (document.getElementById("export-format") as HTMLSelectElement)?.value || "txt";
+    const mimes = {txt:"text/plain",json:"application/json",csv:"text/csv",html:"text/html"};
+    const data = fmt === "json" ? JSON.stringify(content) : content;
+    const blob = new Blob([data], {type:mimes[fmt]||"text/plain"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "jwt-decoded." + fmt;
+    a.click();
+    playPing();
+    URL.revokeObjectURL(a.href);
+  });
+  document.getElementById("clear-btn")?.addEventListener("click", () => {
+    tokenInput.value = "";
+    resultArea.classList.add("hidden");
+    playPing();
+  });
   decodeBtn.addEventListener("click", () => {
     const token = tokenInput.value.trim();
     if (!token) {
@@ -125,4 +188,15 @@ const schema = { name: "JWT Decoder", applicationCategory: "Developer Tools", de
       resultArea.classList.add("hidden");
     }
   });
+  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("payload-output");const t=o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof (window as any).__showToast==="function")(window as any).__showToast({message:"Link copied!",variant:"success"});});
+  document.querySelector(".font-inc")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.min(24,s+2)+"px";})});
+  document.querySelector(".font-dec")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.max(10,s-2)+"px";})});
+  try{const s=localStorage.getItem("nt_fs");if(s)document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px")}catch(e){}
+  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
+  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["jwt"])b.textContent="Used "+u["jwt"]+"×"}catch(e){}
+  const rt=document.getElementById("token-input");if(rt){rt.addEventListener("input",()=>{const w=rt.value?rt.value.trim().split(/\s+/).length:0;const e=document.getElementById("reading-time");if(e)e.textContent=Math.max(1,Math.round(w/200))+" min read · "+Math.max(1,Math.round(w/150))+" min speak"});rt.dispatchEvent(new Event("input"));}
+  const li=document.getElementById("token-input");if(li){const ul=()=>{const n=document.getElementById("line-nums");if(n)n.textContent=Array.from({length:li.value.split("\n").length},(_,i)=>i+1).join("\n")};li.addEventListener("input",ul);li.addEventListener("scroll",()=>{const n=document.getElementById("line-nums");if(n)n.scrollTop=li.scrollTop});ul();}
+  const lf=document.getElementById("token-input");if(lf){lf.addEventListener("input",()=>{const t=lf.value.toLowerCase().replace(/[^a-z]/g,"");if(!t){document.getElementById("letter-freq")?.classList.add("hidden");return;}const f={};for(const c of t)f[c]=(f[c]||0)+1;const s=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,8);const m=s[0]?s[0][1]:1;const el=document.getElementById("letter-freq");el.classList.remove("hidden");el.innerHTML=s.map(([c,n])=>`<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n/m)*80+10}%"></div><span class="text-muted">${n}</span></div>`).join("")})}
+  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-orange'],button[class*='bg-amber']").forEach(b=>{b.className=b.className.replace(/bg-(orange|amber)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(orange|amber)-\d+/g,"hover:bg-"+c+"-500")});try{localStorage.setItem("nt_theme",c)}catch(e){}})});
+  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click()}catch(e){}
 </script>

@@ -598,18 +598,34 @@ const roadmap = [
 
 <script>
   // Newsletter Logic
-  const form = document.getElementById("newsletter-form") as HTMLFormElement | null;
-  const msg = document.getElementById("newsletter-msg");
-  if (form && msg) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      msg.classList.remove("hidden");
-      form.reset();
-      setTimeout(() => {
-        msg.classList.add("hidden");
-      }, 5000);
-    });
-  }
+  document.getElementById("newsletter-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = (document.getElementById("newsletter-email") as HTMLInputElement).value;
+    const msgEl = document.getElementById("newsletter-msg");
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        msgEl.textContent = data.message || "Successfully subscribed to NumanX updates!";
+        msgEl.classList.remove("hidden", "text-red-400");
+        msgEl.classList.add("text-emerald-400");
+        (document.getElementById("newsletter-form") as HTMLFormElement).reset();
+        setTimeout(() => msgEl.classList.add("hidden"), 5000);
+      } else {
+        msgEl.textContent = data.error || "Subscription failed. Please try again.";
+        msgEl.classList.remove("hidden", "text-emerald-400");
+        msgEl.classList.add("text-red-400");
+      }
+    } catch (err) {
+      msgEl.textContent = "Network error. Please try again.";
+      msgEl.classList.remove("hidden", "text-emerald-400");
+      msgEl.classList.add("text-red-400");
+    }
+  });
 
   // Stat Counter Logic
   const counters = document.querySelectorAll(".stat-counter");

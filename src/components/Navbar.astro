@@ -38,6 +38,8 @@ import ThemeToggle from "./ThemeToggle.astro";
         </div>
       </div>
 
+      <a href="/guides/" class="px-3 py-2 text-sm text-tertiary hover:text-white rounded-lg hover:bg-surface-2 transition-all duration-200">Guides</a>
+      <a href="/comparisons/" class="px-3 py-2 text-sm text-tertiary hover:text-white rounded-lg hover:bg-surface-2 transition-all duration-200">Comparisons</a>
       <a href="/blog/" class="px-3 py-2 text-sm text-tertiary hover:text-white rounded-lg hover:bg-surface-2 transition-all duration-200">Blog</a>
       <a href="/recommended/" class="px-3 py-2 text-sm text-tertiary hover:text-white rounded-lg hover:bg-surface-2 transition-all duration-200">Recommended</a>
       <a href="/about/" class="px-3 py-2 text-sm text-tertiary hover:text-white rounded-lg hover:bg-surface-2 transition-all duration-200">About</a>
@@ -55,7 +57,7 @@ import ThemeToggle from "./ThemeToggle.astro";
       <a href="/favorites/" class="hidden sm:flex text-tertiary hover:text-white p-2 rounded-xl hover:bg-surface-3 transition-all duration-200 group" aria-label="Favorites">
         <svg class="w-[18px] h-[18px] group-hover:scale-110 transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
       </a>
-      <button id="menu-toggle" class="md:hidden text-tertiary hover:text-white p-2 rounded-xl hover:bg-surface-3 transition-all duration-200" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+      <button id="menu-toggle" class="md:hidden text-tertiary hover:text-white p-2 rounded-xl hover:bg-surface-3 transition-all duration-200" aria-label="Toggle sidebar" aria-expanded="false" aria-controls="app-sidebar">
         <svg id="menu-icon-open" class="w-[22px] h-[22px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
       <a href="/tools/" class="hidden sm:inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs sm:text-sm px-4 py-2 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-purple-900/30 hover:shadow-purple-500/30 whitespace-nowrap">
@@ -66,30 +68,6 @@ import ThemeToggle from "./ThemeToggle.astro";
 
   </div>
 
-  <!-- Mobile Menu -->
-  <nav id="mobile-menu" class="md:hidden hidden border-t border-surface bg-surface-nav backdrop-blur-2xl" aria-label="Mobile navigation">
-    <div class="px-4 py-3 space-y-1">
-      <a href="/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-tertiary hover:text-white hover:bg-surface-3 transition-all">Home</a>
-      <a href="/tools/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-tertiary hover:text-white hover:bg-surface-3 transition-all">Tools</a>
-      <div class="px-3 py-2">
-        <p class="text-[11px] font-semibold text-tertiary uppercase tracking-wider mb-2">Categories</p>
-        <div class="space-y-0.5">
-          {categories.map((cat) => (
-            <a href={`/category/${cat.id}/`} class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm text-tertiary hover:text-white hover:bg-surface-3 transition-all">
-              <ToolIcon name={cat.icon} />
-              <span>{cat.title}</span>
-            </a>
-          ))}
-        </div>
-      </div>
-      <a href="/blog/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-tertiary hover:text-white hover:bg-surface-3 transition-all">Blog</a>
-      <a href="/favorites/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-tertiary hover:text-white hover:bg-surface-3 transition-all">Favorites</a>
-      <a href="/recommended/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-tertiary hover:text-white hover:bg-surface-3 transition-all">Recommended</a>
-      <a href="/about/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-tertiary hover:text-white hover:bg-surface-3 transition-all">About</a>
-      <a href="/contact/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-tertiary hover:text-white hover:bg-surface-3 transition-all">Contact</a>
-      <a href="/search/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-tertiary hover:text-white hover:bg-surface-3 transition-all">Search</a>
-    </div>
-  </nav>
 </header>
 
 <script>
@@ -126,21 +104,12 @@ import ThemeToggle from "./ThemeToggle.astro";
     });
   }
 
-  // Mobile menu toggle
+  // Mobile menu toggle → opens sidebar
   const toggle = document.getElementById("menu-toggle");
-  const menu = document.getElementById("mobile-menu");
-  if (toggle && menu) {
+  if (toggle) {
     toggle.addEventListener("click", () => {
-      const isOpen = !menu.classList.contains("hidden");
-      menu.classList.toggle("hidden");
-      toggle.setAttribute("aria-expanded", String(!isOpen));
-    });
-    menu.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        menu.classList.add("hidden");
-        toggle.setAttribute("aria-expanded", "false");
-        toggle.focus();
-      }
+      if (window.__toggleSidebar) window.__toggleSidebar();
+      toggle.setAttribute("aria-expanded", String(document.getElementById("app-sidebar")?.classList.contains("sidebar-mobile-open")));
     });
   }
 

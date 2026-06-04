@@ -54,7 +54,18 @@ const acSchema = {
 
       <!-- ─── Input Card ─── -->
       <div class="max-w-xl mx-auto mt-8">
-        <div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6 space-y-4">
+        <div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6 space-y-4 relative">
+          <button id="fullscreen-btn" class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+
+          <div class="flex items-center gap-2 mb-3">
+            <span id="usage-badge" class="text-xs text-muted"></span>
+            <div class="flex gap-1 ml-auto">
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+            </div>
+          </div>
 
           <!-- Presets -->
           <div class="space-y-2">
@@ -224,10 +235,15 @@ const acSchema = {
           </div>
 
           <!-- Copy Results -->
-          <div class="flex justify-center mt-4">
+          <div class="flex items-center justify-center gap-2 mt-4">
+            <button id="share-btn" class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95" title="Share">🔗</button>
             <button id="copy-age-btn" class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
               Copy Results
+            </button>
+            <button id="download-btn" class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download
             </button>
           </div>
         </div>
@@ -472,6 +488,51 @@ const acSchema = {
     triggerToast("Results copied!", "success");
   });
 
+  // ─── Download ───
+  document.getElementById("download-btn")?.addEventListener("click", () => {
+    const text = [
+      `Age: ${ageYears.textContent}y ${ageMonths.textContent}m ${ageDays.textContent}d`,
+      `Total: ${totalMonths.textContent} months · ${totalWeeks.textContent} weeks · ${totalDays.textContent} days · ${totalHours.textContent} hours · ${totalMinutes.textContent} minutes`,
+      `Heartbeats: ${heartbeatCount.textContent} · Breaths: ${breathCount.textContent} · Sleep: ${sleepCount.textContent}`,
+      `Zodiac: ${zodiacBadge.textContent} · Chinese: ${chineseZodiacBadge.textContent}`,
+      `Next birthday: ${birthdayCountdown.textContent}`,
+    ].join("\n");
+    if (!text) return;
+    const blob = new Blob([text], {type:"text/plain"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "age-calculator-results.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  // ─── Fullscreen ───
+  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
+    const card = document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+    if (!card) return;
+    if (document.fullscreenElement) { document.exitFullscreen(); document.getElementById("fullscreen-btn").textContent = "⛶"; }
+    else { card.requestFullscreen?.() || card.webkitRequestFullscreen?.(); document.getElementById("fullscreen-btn").textContent = "✕"; }
+  });
+  document.addEventListener("fullscreenchange", () => {
+    const btn = document.getElementById("fullscreen-btn");
+    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  });
+
+  // ─── Keyboard shortcuts ───
+  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
+
+  // ─── Usage badge ───
+  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["age-calculator"])b.textContent="Used "+u["age-calculator"]+"×";}catch(e){}
+
+  // ─── Share button ───
+  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("output-text")||document.querySelector("[id$='result']");const t=o?.value||o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof showToast==="function")showToast("Link copied!");});
+
+  // ─── Sound effects ───
+  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
+
+  // ─── Color theme picker ───
+  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500");});try{localStorage.setItem("nt_theme",c);}catch(e){}});});
+  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
 </script>
 
 

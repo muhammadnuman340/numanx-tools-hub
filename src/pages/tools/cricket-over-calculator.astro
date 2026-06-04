@@ -17,7 +17,17 @@ const schema = { name: "Cricket Over Calculator", applicationCategory: "Sports",
     <ToolHeader title="Cricket" gradient="Overs Pro" desc="Convert between balls and overs for cricket scoring. Enter balls to get overs or enter overs to get total balls." badge="✦ New Tool" slug="cricket-over-calculator" />
     <ShareBar />
     <div class="max-w-xl mx-auto mt-10">
-      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6 relative">
+          <button id="fullscreen-btn" class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+        <div class="flex items-center gap-2 mb-3">
+          <span id="usage-badge" class="text-xs text-muted"></span>
+          <div class="flex gap-1 ml-auto">
+            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
+            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
+            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
+            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+          </div>
+        </div>
         <div class="flex gap-2 mb-4">
           <button id="mode-balls" class="flex-1 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all">Balls → Overs</button>
           <button id="mode-overs" class="flex-1 bg-surface-2 text-tertiary hover:text-primary text-xs font-medium px-4 py-2 rounded-xl border border-surface-3 transition-all">Overs → Balls</button>
@@ -38,6 +48,12 @@ const schema = { name: "Cricket Over Calculator", applicationCategory: "Sports",
           <div id="overs-result" class="mt-4 pt-4 border-t border-surface hidden">
             <div class="text-center"><div class="text-2xl font-black text-yellow-400" id="balls-output">0</div><div class="text-xs text-tertiary mt-1">Total Balls</div></div>
           </div>
+        </div>
+        <div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-surface">
+          <button id="share-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all" title="Share">🔗</button>
+          <button id="copy-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy</button>
+          <button id="download-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Download</button>
+          <button id="clear-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Clear</button>
         </div>
       </div>
     </div>
@@ -99,4 +115,66 @@ const schema = { name: "Cricket Over Calculator", applicationCategory: "Sports",
     ballsOutput.textContent = totalBalls;
     oversResult.classList.remove("hidden");
   });
+
+  // ─── Copy ───
+  document.getElementById("copy-btn")?.addEventListener("click", () => {
+    const isBallsMode = !ballsMode.classList.contains("hidden");
+    const text = isBallsMode
+      ? `${totalBallsDisplay.textContent} balls = ${oversOutput.textContent} overs (${completeOvers.textContent} overs ${remainingBalls.textContent} balls)`
+      : `${oversInput.value || "0"} overs = ${ballsOutput.textContent} balls`;
+    if (!text) return;
+    navigator.clipboard.writeText(text).catch(() => {});
+    const btn = document.getElementById("copy-btn");
+    btn.textContent = "Copied!";
+    setTimeout(() => { btn.textContent = "Copy"; }, 2000);
+  });
+
+  // ─── Download ───
+  document.getElementById("download-btn")?.addEventListener("click", () => {
+    const isBallsMode = !ballsMode.classList.contains("hidden");
+    const content = isBallsMode
+      ? `${totalBallsDisplay.textContent} balls = ${oversOutput.textContent} overs (${completeOvers.textContent} overs ${remainingBalls.textContent} balls)`
+      : `${oversInput.value || "0"} overs = ${ballsOutput.textContent} balls`;
+    if (!content) return;
+    const blob = new Blob([content], {type:"text/plain"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "cricket-over-conversion.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  // ─── Clear ───
+  document.getElementById("clear-btn")?.addEventListener("click", () => {
+    document.querySelectorAll("input[type=number]").forEach(i => i.value = "0");
+    document.querySelectorAll("[id$='result']").forEach(el => el.classList.add("hidden"));
+  });
+
+  // ─── Fullscreen ───
+  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
+    const card = document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+    if (!card) return;
+    if (document.fullscreenElement) { document.exitFullscreen(); document.getElementById("fullscreen-btn").textContent = "⛶"; }
+    else { card.requestFullscreen?.() || card.webkitRequestFullscreen?.(); document.getElementById("fullscreen-btn").textContent = "✕"; }
+  });
+  document.addEventListener("fullscreenchange", () => {
+    const btn = document.getElementById("fullscreen-btn");
+    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  });
+
+  // ─── Keyboard shortcuts ───
+  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
+
+  // ─── Usage badge ───
+  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["cricket-over-calculator"])b.textContent="Used "+u["cricket-over-calculator"]+"×";}catch(e){}
+
+  // ─── Share button ───
+  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("output-text")||document.querySelector("[id$='result']");const t=o?.value||o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof showToast==="function")showToast("Link copied!");});
+
+  // ─── Sound effects ───
+  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
+
+  // ─── Color theme picker ───
+  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500");});try{localStorage.setItem("nt_theme",c);}catch(e){}});});
+  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
 </script>

@@ -1,0 +1,1704 @@
+﻿---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "What can the AI Chat Assistant do?", answer: "It can answer questions about tools, SHA-256 hashing, color conversion (hex/rgb/hsl), BMI calculation, slug generation, binary/text conversion, ASCII lookup, dice rolling (d4d100), password strength analysis, Fibonacci sequences, prime checking with factorization, date info (day of week, leap year), random inspirational quotes, lottery number generation, text transformations (word count, JSON format, base64, case convert, URL encode/decode, ROT13, reverse text, Morse code, palindrome check), math calculations, number base conversions, date arithmetic, list operations, frequency analysis, number formatting, time conversion, timers, password/UUID generation, and more." },
+  { question: "Does the AI use an external API?", answer: "No. All responses are generated locally in your browser using built-in logic. No data is ever sent to any server, ensuring complete privacy." },
+  { question: "Can I have a conversation history?", answer: "Yes. Your conversation is automatically saved in your browser's local storage. You can clear the conversation at any time using the Clear button above the chat." },
+  { question: "What kind of commands does the AI understand?", answer: "Try: 'calculate 2+3*4', 'rot13: hello', 'sort: banana, apple, cherry', 'frequency: hello world', 'spell 1234', 'roman 42', 'days until 2026-12-31', 'timer 5 minutes', 'morse encode: hello', 'convert 255 to binary', 'palindrome: racecar', 'count words in hello world', 'format json: {\"a\":1}', 'encode base64: hello', 'generate password 16', 'what tools do you have?', 'show ai tools', or just say hello!" },
+];
+
+const schema = {
+  name: "AI Chat Assistant",
+  applicationCategory: "AI Tools",
+  description: "A full-page conversational AI assistant that helps with tools, transformations, and platform navigation  all running locally.",
+};
+---
+<MainLayout title="AI Chat Assistant - Free AI Chatbot for Tools & Tasks" description="Chat with a local AI assistant about NumanX tools, execute text transformations, generate passwords, format JSON, and more  all in your browser." keywords="ai chat, chatbot, ai assistant, conversation, help, ai helper, virtual assistant, local ai" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Chat Assistant",url:"/tools/ai-chat/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="AI Chat" gradient="Assistant" desc="Chat with a local AI assistant about tools, features, and tasks. All processing is private and runs entirely in your browser." badge=" New" slug="ai-chat" />
+    <ShareBar />
+    <div class="max-w-2xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl overflow-hidden">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-4 py-3 border-b border-surface">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="12" y1="8" x2="12" y2="14"/><line x1="9" y1="11" x2="15" y2="11"/></svg>
+            </div>
+            <div>
+              <p class="text-sm font-bold text-primary">NumanX AI</p>
+              <p class="text-[10px] text-muted">Conversational assistant</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="flex gap-1">
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+            </div>
+            <div class="relative">
+              <button id="search-toggle-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-violet-500/40 transition-all text-xs" title="Search conversation">
+                <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </button>
+            </div>
+            <div class="relative" id="export-container">
+              <button id="export-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-violet-500/40 transition-all text-xs" title="Export conversation">
+                <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </button>
+              <div id="export-dropdown" class="hidden absolute right-0 mt-1 w-44 bg-surface-2 border border-surface rounded-lg shadow-xl z-10 py-1">
+                <button data-export="json" class="block w-full text-left px-3 py-1.5 text-xs text-secondary hover:bg-surface-3 hover:text-white transition-colors">Export as JSON</button>
+                <button data-export="txt" class="block w-full text-left px-3 py-1.5 text-xs text-secondary hover:bg-surface-3 hover:text-white transition-colors">Export as TXT</button>
+                <button data-export="md" class="block w-full text-left px-3 py-1.5 text-xs text-secondary hover:bg-surface-3 hover:text-white transition-colors">Export as Markdown</button>
+              </div>
+            </div>
+            <button id="clear-chat-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-violet-500/40 transition-all text-xs" title="Clear conversation">
+              <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Search bar -->
+        <div id="search-bar" class="hidden px-4 py-2 border-b border-surface">
+          <div class="relative">
+            <input id="chat-search" type="text" class="w-full bg-surface-2 border border-surface-2 rounded-lg px-3 py-1.5 text-xs text-primary placeholder:text-muted focus:outline-none focus:border-violet-500/50 transition-all" placeholder="Search messages..." autocomplete="off" />
+            <span id="search-count" class="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] text-muted"></span>
+          </div>
+        </div>
+
+        <!-- Messages -->
+        <div id="chat-messages" class="h-[420px] overflow-y-auto p-4 space-y-3 scrollbar-hide">
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shrink-0 mt-0.5">
+              <svg class="w-3.5 h-3.5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="flex-1 bg-surface-2 rounded-xl rounded-tl-none px-3.5 py-2.5">
+              <p class="text-xs text-secondary leading-relaxed">
+                Hi! I'm your NumanX AI assistant. I can answer questions about tools, help with text tasks, and guide you. Try some examples below!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Typing indicator -->
+        <div id="typing-indicator" class="hidden px-4 py-2">
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shrink-0">
+              <svg class="w-3.5 h-3.5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="flex-1 bg-surface-2 rounded-xl rounded-tl-none px-3.5 py-3">
+              <span class="typing-dot inline-block w-1.5 h-1.5 rounded-full bg-purple-400 mx-0.5"></span>
+              <span class="typing-dot inline-block w-1.5 h-1.5 rounded-full bg-purple-400 mx-0.5"></span>
+              <span class="typing-dot inline-block w-1.5 h-1.5 rounded-full bg-purple-400 mx-0.5"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick suggestions -->
+        <div id="suggestions" class="flex flex-wrap gap-1.5 px-4 pb-2 pt-0">
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">What tools do you have?</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">hash: hello</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">color #ff8800</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">calculate 2+3*4</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">bmi 70 kg 175 cm</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">roll d20</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">strength: MyP@ss</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">quote</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">convert 255 to binary</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">rot13: hello world</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">sort: banana, apple, cherry</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">frequency: hello world</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">ascii A</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">day 2026-06-04</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">leap 2024</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">prime 17</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">palindrome: racecar</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">fibonacci 10</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">lottery</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">slug: Hello World</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">text to binary: hello</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">timer 5 seconds</button>
+          <button class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer">morse encode: hello</button>
+        </div>
+
+        <!-- Input -->
+        <div class="px-4 py-3 border-t border-surface">
+          <form id="chat-form" class="flex items-center gap-2">
+            <input id="chat-input" type="text" class="flex-1 bg-surface-2 border border-surface-2 rounded-xl px-3.5 py-2.5 text-sm text-primary placeholder:text-muted focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20 transition-all" placeholder="Ask about tools or try a command..." autocomplete="off" />
+            <button type="submit" id="send-btn" class="w-9 h-9 rounded-xl bg-violet-600 hover:bg-violet-500 flex items-center justify-center text-white transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shrink-0" aria-label="Send message">
+              <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+            <button type="button" id="voice-btn" class="voice-btn w-9 h-9 rounded-xl bg-surface-2 border border-surface-2 hover:border-violet-500/40 flex items-center justify-center text-tertiary hover:text-white transition-all cursor-pointer shrink-0" aria-label="Voice input">
+              <svg class="voice-icon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+            </button>
+          </form>
+          <p class="text-[9px] text-dim mt-1.5 text-center">All responses are generated locally  No data sent to servers</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- How It Works -->
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Chat Assistant uses intelligent pattern matching to understand your requests. It can recognize greetings, tool-related questions, and specific commands like <strong class="text-primary">calculate</strong>, <strong class="text-primary">convert 255 to binary</strong>, <strong class="text-primary">rot13</strong>, <strong class="text-primary">sort</strong>, <strong class="text-primary">frequency</strong>, <strong class="text-primary">palindrome</strong>, <strong class="text-primary">timer</strong>, <strong class="text-primary">days until</strong>, <strong class="text-primary">spell 1234</strong>, <strong class="text-primary">roman</strong>, <strong class="text-primary">morse encode</strong>, <strong class="text-primary">count words</strong>, <strong class="text-primary">format json</strong>, and more.</p><p>Each command is executed locally using built-in JavaScript  no API calls, no server requests. Your text stays private. The assistant also saves your conversation history in your browser for continuity.</p></div></section>
+
+    <RelatedTools current="ai-chat" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+function playPing(){ try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){} }
+
+const H_KEY = "nt_chat_history";
+const MAX_HISTORY = 50;
+
+const containers = {
+  messages: document.getElementById("chat-messages"),
+  typing: document.getElementById("typing-indicator"),
+  input: document.getElementById("chat-input"),
+  form: document.getElementById("chat-form"),
+  sendBtn: document.getElementById("send-btn"),
+};
+
+let msgIndex = 0;
+let context = { lastTopic: null, toolCount: null };
+
+function escapeHtml(str) {
+  return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function escapeAttr(str) {
+  return str.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+// Tool data
+const allTools = [
+  { name:"QR Generator", cat:"Creator Tools", desc:"Generate QR codes from URLs and text", url:"/tools/qr-generator/", keywords:["qr","barcode","scan"] },
+  { name:"Word Counter", cat:"Utility Tools", desc:"Count words, characters, sentences", url:"/tools/word-counter/", keywords:["word","count","character","text"] },
+  { name:"Password Generator", cat:"Utility Tools", desc:"Generate secure passwords", url:"/tools/password-generator/", keywords:["password","secure","random"] },
+  { name:"JSON Formatter", cat:"Developer Tools", desc:"Format and validate JSON", url:"/tools/json-formatter/", keywords:["json","format","validate"] },
+  { name:"Base64 Tool", cat:"Developer Tools", desc:"Encode/decode Base64", url:"/tools/base64-tool/", keywords:["base64","encode","decode"] },
+  { name:"UUID Generator", cat:"Developer Tools", desc:"Generate UUIDs v4 and v7", url:"/tools/uuid-generator/", keywords:["uuid","guid","id"] },
+  { name:"Unit Converter", cat:"Utility Tools", desc:"Convert length, mass, temp, speed, data, volume", url:"/tools/unit-converter/", keywords:["convert","unit","length","mass","temp"] },
+  { name:"AI Text Summarizer", cat:"AI Tools", desc:"Summarize long text into concise summaries", url:"/tools/ai-text-summarizer/", keywords:["summarize","summary","text","article"] },
+  { name:"AI Grammar Checker", cat:"AI Tools", desc:"Check grammar, spelling, punctuation", url:"/tools/ai-grammar-checker/", keywords:["grammar","spelling","check","writing"] },
+  { name:"AI Sentiment Analyzer", cat:"AI Tools", desc:"Analyze text sentiment", url:"/tools/ai-sentiment-analyzer/", keywords:["sentiment","emotion","tone","positive","negative"] },
+  { name:"Color Converter", cat:"Developer Tools", desc:"Convert between HEX, RGB, HSL", url:"/tools/color-converter/", keywords:["color","hex","rgb","hsl"] },
+  { name:"Percentage Calculator", cat:"Utility Tools", desc:"Calculate percentages", url:"/tools/percentage-calculator/", keywords:["percent","percentage","of"] },
+  { name:"Random Number Gen", cat:"Utility Tools", desc:"Generate random numbers", url:"/tools/random-number-generator/", keywords:["random","number","dice"] },
+  { name:"URL Encoder", cat:"Developer Tools", desc:"Encode/decode URLs", url:"/tools/url-encoder/", keywords:["url","encode","decode"] },
+  { name:"Case Converter", cat:"Creator Tools", desc:"Convert text case", url:"/tools/case-converter/", keywords:["case","upper","lower","title"] },
+  { name:"Image Compressor", cat:"Image Tools", desc:"Compress images without quality loss", url:"/tools/image-compressor/", keywords:["image","compress","optimize","size"] },
+  { name:"AI Language Detector", cat:"AI Tools", desc:"Detect language of any text", url:"/tools/ai-language-detector/", keywords:["language","detect","identify"] },
+  { name:"AI Readability Analyzer", cat:"AI Tools", desc:"Analyze text readability scores", url:"/tools/ai-readability-analyzer/", keywords:["readability","flesch","score"] },
+  { name:"AI Paraphraser", cat:"AI Tools", desc:"Rewrite text with different phrasing", url:"/tools/ai-paraphraser/", keywords:["paraphrase","rewrite","rephrase"] },
+  { name:"AI Tag Generator", cat:"AI Tools", desc:"Generate tags and hashtags from content", url:"/tools/ai-tag-generator/", keywords:["tag","hashtag","keyword","seo"] },
+  { name:"Markdown Editor", cat:"Creator Tools", desc:"Write and preview markdown in real-time", url:"/tools/markdown-editor/", keywords:["markdown","md","preview","editor"] },
+  { name:"Image Resizer", cat:"Image Tools", desc:"Resize images to any dimension", url:"/tools/image-resizer/", keywords:["resize","image","dimension"] },
+  { name:"HTML Formatter", cat:"Developer Tools", desc:"Format, minify, validate HTML", url:"/tools/html-formatter/", keywords:["html","format","beautify","minify"] },
+  { name:"CSS Formatter", cat:"Developer Tools", desc:"Format, minify, validate CSS", url:"/tools/css-formatter/", keywords:["css","format","beautify"] },
+  { name:"Regex Tester", cat:"Developer Tools", desc:"Test and debug regular expressions", url:"/tools/regex-tester/", keywords:["regex","regular expression","pattern"] },
+  { name:"Diff Checker", cat:"Developer Tools", desc:"Compare two texts side by side", url:"/tools/diff-checker/", keywords:["diff","compare","difference"] },
+  { name:"BMI Calculator", cat:"Utility Tools", desc:"Calculate your Body Mass Index", url:"/tools/bmi-calculator/", keywords:["bmi","body mass","weight","health"] },
+  { name:"SQL Formatter", cat:"Developer Tools", desc:"Format and beautify SQL queries", url:"/tools/sql-formatter/", keywords:["sql","format","query","database"] },
+  { name:"Character Counter", cat:"Utility Tools", desc:"Count characters, words, sentences", url:"/tools/character-counter/", keywords:["character","count","letter"] },
+  { name:"JWT Decoder", cat:"Developer Tools", desc:"Decode and inspect JWT tokens", url:"/tools/jwt-decoder/", keywords:["jwt","token","decode","auth"] },
+  { name:"SVG to PNG", cat:"Image Tools", desc:"Convert SVG to high-quality PNG", url:"/tools/svg-to-png/", keywords:["svg","png","convert","vector"] },
+  { name:"List Randomizer", cat:"Utility Tools", desc:"Shuffle and pick from any list", url:"/tools/list-randomizer/", keywords:["shuffle","randomize","pick","list"] },
+  { name:"Color Contrast Checker", cat:"Utility Tools", desc:"Check WCAG color contrast ratios", url:"/tools/color-contrast-checker/", keywords:["contrast","wcag","accessibility","a11y"] },
+  { name:"Countdown Timer", cat:"Creator Tools", desc:"Create countdown timers for any event", url:"/tools/countdown-timer/", keywords:["countdown","timer","event"] },
+  { name:"AI Chat Assistant", cat:"AI Tools", desc:"Chat with the AI assistant about tools and tasks", url:"/tools/ai-chat/", keywords:["chat","assistant","conversation"] },
+];
+
+const catColors = {
+  "AI Tools": "text-violet-400",
+  "Developer Tools": "text-cyan-400",
+  "Utility Tools": "text-green-400",
+  "Creator Tools": "text-blue-400",
+  "Image Tools": "text-pink-400",
+  "Cricket Tools": "text-amber-400",
+};
+
+// 
+// TOOL EXECUTORS
+// 
+
+function execWordCount(text) {
+  const words = text.trim() ? text.trim().split(/\s+/).filter(w => w) : [];
+  return `**Word Count:** ${words.length} words, ${text.length} characters (${text.replace(/\s/g, "").length} no spaces), ${text.split(/[.!?]+/).filter(s => s.trim()).length} sentences.`;
+}
+
+function execCaseConvert(text, mode) {
+  const modes = {
+    upper: t => t.toUpperCase(),
+    lower: t => t.toLowerCase(),
+    title: t => t.replace(/\w\S*/g, w => w[0].toUpperCase() + w.slice(1).toLowerCase()),
+    sentence: t => t[0].toUpperCase() + t.slice(1).toLowerCase(),
+  };
+  return modes[mode] ? modes[mode](text) : text;
+}
+
+function execBase64Encode(text) { try { return btoa(unescape(encodeURIComponent(text))); } catch { return "Error: encoding failed"; } }
+function execBase64Decode(text) { try { return decodeURIComponent(escape(atob(text.trim()))); } catch { return "Error: invalid Base64 input"; } }
+
+function execJsonFormat(text) {
+  try { const p = JSON.parse(text); return "```json\n" + JSON.stringify(p, null, 2) + "\n```"; }
+  catch (e) { return "\u2717 **Invalid JSON:** " + e.message; }
+}
+
+function execPassword(len, type) {
+  const l = Math.max(4, Math.min(128, len || 16));
+  if (type === "pin") {
+    const a = new Uint32Array(l); crypto.getRandomValues(a);
+    return Array.from(a, v => "0123456789"[v % 10]).join("");
+  }
+  if (type === "passphrase") {
+    const words = ["sunset","ocean","forest","mountain","river","thunder","crystal","silver","golden","flame","shadow","blaze","storm","frost","ember","cosmic","velvet","drift","fusion","echo","orbit","zenith","aurora","cascade","harbor","lunar","solar","tidal","vortex","wilder"];
+    const count = Math.max(3, Math.min(8, Math.floor(l / 5)));
+    const sel = [];
+    for (let i = 0; i < count; i++) { let w; do { w = words[Math.floor(Math.random() * words.length)]; } while (sel.includes(w)); sel.push(w); }
+    return sel.map((w, i) => i === 0 ? w[0].toUpperCase() + w.slice(1) : w).join("-");
+  }
+  const set = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
+  const a = new Uint32Array(l); crypto.getRandomValues(a);
+  return Array.from(a, v => set[v % set.length]).join("");
+}
+
+function execUUID() {
+  const v4 = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => { const r = crypto.getRandomValues(new Uint8Array(1))[0] / 256 | 0; return (c === "x" ? r : (r & 0x3) | 0x8).toString(16); });
+  return "**UUID v4:** `" + v4 + "`";
+}
+
+function execUrlEncode(text) { try { return encodeURIComponent(text); } catch { return "Error: encoding failed"; } }
+function execUrlDecode(text) { try { return decodeURIComponent(text); } catch { return "Error: invalid URL-encoded input"; } }
+
+function execRandom(min, max, count) {
+  const mn = Math.min(min, max), mx = Math.max(min, max);
+  const c = Math.max(1, Math.min(100, count || 1));
+  const nums = []; const used = new Set();
+  for (let i = 0; i < c; i++) {
+    let num, att = 0;
+    do { num = Math.floor(Math.random() * (mx - mn + 1)) + mn; att++; } while (used.has(num) && att < 1000);
+    used.add(num); nums.push(num);
+  }
+  return "**Random numbers:** " + nums.join(", ");
+}
+
+function execConvert(value, fromUnit, toUnit) {
+  const units = {
+    length: { Meters:1, Kilometers:1000, Miles:1609.34, Feet:0.3048, Inches:0.0254, Centimeters:0.01, Millimeters:0.001, Yards:0.9144 },
+    mass: { Kilograms:1, Grams:0.001, Pounds:0.453592, Ounces:0.0283495 },
+    speed: { "km/h":1, mph:1.60934, "m/s":3.6, knots:1.852 },
+    data: { Bytes:1, KB:1024, MB:1048576, GB:1073741824, TB:1099511627776 },
+    volume: { Liters:1, Milliliters:0.001, Gallons:3.78541, Quarts:0.946353, Cups:0.236588, "Fluid Ounces":0.0295735 },
+  };
+  for (const [cat, unitMap] of Object.entries(units)) {
+    const fromKey = Object.keys(unitMap).find(k => k.toLowerCase().startsWith(fromUnit.toLowerCase()) || fromUnit.toLowerCase().startsWith(k.toLowerCase().replace(/s$/,"")));
+    const toKey = Object.keys(unitMap).find(k => k.toLowerCase().startsWith(toUnit.toLowerCase()) || toUnit.toLowerCase().startsWith(k.toLowerCase().replace(/s$/,"")));
+    if (fromKey && toKey) {
+      const result = value * unitMap[fromKey] / unitMap[toKey];
+      return "**" + value + " " + fromKey + "** = **" + (result < 0.001 || result > 1e9 ? result.toExponential(4) : result.toFixed(4)) + " " + toKey + "**";
+    }
+  }
+  return null;
+}
+
+function execPctOf(a, b) { return (a / 100) * b; }
+function execPctIs(a, b) { return b !== 0 ? (a / b) * 100 : 0; }
+function execPctChange(a, b) { return a !== 0 ? ((b - a) / Math.abs(a)) * 100 : 0; }
+
+function summarize(text, ratio) {
+  const stopWords = new Set(["the","a","an","and","or","but","in","on","at","to","for","of","by","with","from","as","is","was","are","were","be","been","being","have","has","had","do","does","did","will","would","can","could","shall","should","may","might","must","it","its","this","that","these","those","i","you","he","she","we","they","me","him","her","us","them","my","your","his","its","our","their","not","no","nor","so","if","than","then","else","all","each","every","both","few","some","any","many","much","such","only","own","same","here","there","when","where","why","how","what","which","who","whom"]);
+  const sentences = text.match(/[^.!?\n]+[.!?]*/g) || text.split(/\n+/).filter(s => s.trim());
+  if (!sentences.length) return "No sentences found.";
+  const words = text.toLowerCase().replace(/[^a-z\s]/g, "").split(/\s+/).filter(w => w && !stopWords.has(w));
+  const freq = {};
+  words.forEach(w => { freq[w] = (freq[w] || 0) + 1; });
+  const maxFreq = Math.max(...Object.values(freq), 1);
+  const scored = sentences.map(s => {
+    const sWords = s.toLowerCase().replace(/[^a-z\s]/g, "").split(/\s+/).filter(w => w && !stopWords.has(w));
+    const score = sWords.reduce((sum, w) => sum + (freq[w] || 0) / maxFreq, 0) / Math.max(sWords.length, 1);
+    return { sentence: s.trim(), score, length: sWords.length };
+  });
+  const totalWords = sentences.reduce((sum, s) => sum + s.toLowerCase().replace(/[^a-z\s]/g, "").split(/\s+/).filter(w => w).length, 0);
+  const targetWords = Math.max(1, Math.round(totalWords * (ratio || 30) / 100));
+  scored.sort((a, b) => b.score - a.score);
+  let selected = [], wordCount = 0;
+  for (const s of scored) { if (wordCount >= targetWords) break; selected.push(s); wordCount += s.length; }
+  selected.sort((a, b) => sentences.indexOf(a.sentence) - sentences.indexOf(b.sentence));
+  return selected.map(s => s.sentence).join(" ");
+}
+
+function checkGrammar(text) {
+  const misspellings = { "recieve": "receive", "occured": "occurred", "occuring": "occurring", "seperate": "separate", "definately": "definitely", "accomodate": "accommodate", "beleive": "believe", "enviroment": "environment", "neccessary": "necessary", "priviledge": "privilege", "truely": "truly", "wierd": "weird", "calender": "calendar", "occassion": "occasion", "writting": "writing", "alot": "a lot", "cant": "can't", "dont": "don't", "wont": "won't", "didnt": "didn't", "isnt": "isn't", "arent": "aren't", "wasnt": "wasn't", "werent": "weren't", "havent": "haven't", "hasnt": "hasn't", "couldnt": "couldn't", "wouldnt": "wouldn't", "shouldnt": "shouldn't", "itsa": "it's a", "thats": "that's", "whats": "what's", "theres": "there's" };
+  const errors = [];
+  const wordArr = text.split(/(\s+|[.!?,;:])/);
+  for (const w of wordArr) {
+    const clean = w.replace(/[^a-zA-Z]/g, "").toLowerCase();
+    if (clean.length > 1 && misspellings[clean]) errors.push({ word: w, suggestion: misspellings[clean], type: "Spelling" });
+  }
+  if (errors.length === 0) return "\u2713 No issues found! Great writing!";
+  return "Found " + errors.length + " issue" + (errors.length > 1 ? "s" : "") + ":\n" + errors.slice(0, 5).map(e => "- **" + e.word + "** \u2192 " + e.suggestion).join("\n") + (errors.length > 5 ? "\n...and " + (errors.length - 5) + " more" : "");
+}
+
+// -- Math Evaluator --
+function execMath(expr) {
+  const sanitized = expr.replace(/[^0-9+\-*/.()%^ ]/g, "").replace(/\^/g, "**");
+  if (!sanitized || sanitized.length > 200) return null;
+  try {
+    const result = Function(`"use strict"; return (${sanitized})`)();
+    if (typeof result !== "number" || !isFinite(result)) return null;
+    return "**Result:** " + (Number.isInteger(result) ? result : result.toFixed(6));
+  } catch (e) { return null; }
+}
+
+// -- Number Base Converter --
+function execBaseConvert(value, fromBase, toBase) {
+  const bases = { decimal:10, hex:16, hexadecimal:16, binary:2, bin:2, octal:8, oct:8 };
+  const fb = bases[fromBase.toLowerCase()] || parseInt(fromBase) || 10;
+  const tb = bases[toBase.toLowerCase()] || parseInt(toBase) || 10;
+  if (fb < 2 || fb > 36 || tb < 2 || tb > 36) return null;
+  try {
+    const dec = parseInt(String(value).replace(/^0x/i, ""), fb);
+    if (isNaN(dec)) return null;
+    const result = dec.toString(tb).toUpperCase();
+    const labels = { 2:"Binary", 8:"Octal", 10:"Decimal", 16:"Hexadecimal" };
+    const fromLabel = labels[fb] || "Base-" + fb;
+    const toLabel = labels[tb] || "Base-" + tb;
+    return "**" + value + "** (" + fromLabel + ") = **" + result + "** (" + toLabel + ")";
+  } catch (e) { return null; }
+}
+
+// -- Date Calculator --
+function execDateDiff(d1, d2) {
+  const a = new Date(d1), b = new Date(d2);
+  if (isNaN(a) || isNaN(b)) return null;
+  const ms = Math.abs(b - a);
+  const days = Math.floor(ms / 86400000);
+  const weeks = Math.floor(days / 7);
+  const months = Math.floor(days / 30.44);
+  const years = Math.floor(days / 365.25);
+  return "**" + days + " days** (" + weeks + " weeks, " + months + " months, ~" + years + " years) between " + d1 + " and " + d2;
+}
+function execDaysUntil(dateStr) {
+  const target = new Date(dateStr);
+  if (isNaN(target)) return null;
+  const now = new Date();
+  const ms = target - now;
+  const days = Math.ceil(ms / 86400000);
+  if (days < 0) return "**" + Math.abs(days) + " days ago** (" + dateStr + " was in the past)";
+  if (days === 0) return "**Today!** " + dateStr + " is today!";
+  return "**" + days + " days** until " + dateStr + " (~" + Math.floor(days / 7) + " weeks)";
+}
+function execAddDays(dateStr, days) {
+  const d = new Date(dateStr);
+  if (isNaN(d)) return null;
+  d.setDate(d.getDate() + days);
+  const result = d.toISOString().split("T")[0];
+  return "**" + dateStr + "** + " + days + " days = **" + result + "** (" + d.toLocaleDateString("en-US", { weekday:"long", month:"long", day:"numeric", year:"numeric" }) + ")";
+}
+
+// -- Text Transformations --
+function execRot13(text) {
+  return text.replace(/[a-zA-Z]/g, c => {
+    const code = c.charCodeAt(0);
+    if (code >= 65 && code <= 90) return String.fromCharCode((code - 65 + 13) % 26 + 65);
+    return String.fromCharCode((code - 97 + 13) % 26 + 97);
+  });
+}
+function execReverse(text) { return text.split("").reverse().join(""); }
+function execPalindrome(text) {
+  const clean = text.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const isPal = clean === clean.split("").reverse().join("");
+  return (isPal ? "\u2705 **Yes!**" : "\u274C **No.**") + " `" + text + "` is " + (isPal ? "" : "not ") + "a palindrome.";
+}
+
+// -- Morse Code --
+const morseMap = { "A":".-","B":"-...","C":"-.-.","D":"-..","E":".","F":"..-.","G":"--.","H":"....","I":"..","J":".---","K":"-.-","L":".-..","M":"--","N":"-.","O":"---","P":".--.","Q":"--.-","R":".-.","S":"...","T":"-","U":"..-","V":"...-","W":".--","X":"-..-","Y":"-.--","Z":"--..","0":"-----","1":".----","2":"..---","3":"...--","4":"....-","5":".....","6":"-....","7":"--...","8":"---..","9":"----.", ".":".-.-.-",",":"--..--","?":"..--..","!":"-.-.--","/":"-..-.","(":"-.--.",")":"-.--.-","&":".-...",":":"---...",";":"-.-.-.","=":"-...-","+":".-.-.","-":"-....-","_":"..--.-",'"':".-..-.","@":".--.-."," ":"/" };
+const revMorse = Object.fromEntries(Object.entries(morseMap).map(([k,v]) => [v,k]));
+function execMorseEncode(text) {
+  return text.toUpperCase().split("").map(c => morseMap[c] || "").filter(Boolean).join(" ");
+}
+function execMorseDecode(code) {
+  return code.trim().split(/\s+/).map(s => revMorse[s] || "").join("");
+}
+
+// -- List Operations --
+function execListSort(text) {
+  const items = text.split(",").map(s => s.trim()).filter(Boolean);
+  if (items.length < 2) return null;
+  return "**Sorted:** " + items.sort((a,b) => a.localeCompare(b)).join(", ");
+}
+function execListReverse(text) {
+  const items = text.split(",").map(s => s.trim()).filter(Boolean);
+  if (items.length < 2) return null;
+  return "**Reversed:** " + items.reverse().join(", ");
+}
+function execListShuffle(text) {
+  const items = text.split(",").map(s => s.trim()).filter(Boolean);
+  if (items.length < 2) return null;
+  for (let i = items.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [items[i], items[j]] = [items[j], items[i]]; }
+  return "**Shuffled:** " + items.join(", ");
+}
+function execListDedupe(text) {
+  const items = text.split(",").map(s => s.trim()).filter(Boolean);
+  if (items.length < 2) return null;
+  return "**Unique:** " + [...new Set(items)].join(", ");
+}
+
+// -- Frequency Analysis --
+function execCharFreq(text) {
+  const clean = text.toLowerCase().replace(/[^a-z0-9]/g, "");
+  if (!clean) return null;
+  const freq = {};
+  for (const c of clean) freq[c] = (freq[c] || 0) + 1;
+  const sorted = Object.entries(freq).sort((a,b) => b[1] - a[1]).slice(0, 10);
+  return "**Character frequency (top 10):**\n" + sorted.map(([c,n]) => "`" + c + "`: " + n + "").join("  ");
+}
+function execWordFreq(text) {
+  const words = text.toLowerCase().replace(/[^a-z\s']/g, "").split(/\s+/).filter(w => w && w.length > 1 && !["the","a","an","and","or","but","in","on","at","to","for","of","by","with","from","as","is","was","are","were","be","been","being","have","has","had","do","does","did","will","would","can","could","shall","should","may","might","must","it","its","this","that","these","those","i","you","he","she","we","they","me","him","her","us","them","my","your","his","its","our","their","not","no","nor","so","if","than","then","else","all","each","every","both","few","some","any","many","much","such","only","own","same","here","there","when","where","why","how","what","which","who","whom"].includes(w));
+  if (!words.length) return null;
+  const freq = {};
+  words.forEach(w => freq[w] = (freq[w] || 0) + 1);
+  const sorted = Object.entries(freq).sort((a,b) => b[1] - a[1]).slice(0, 10);
+  return "**Word frequency (top 10):**\n" + sorted.map(([w,n]) => "`" + w + "`: " + n + "").join("  ");
+}
+
+// -- Number Formatting --
+function execSpellNumber(num) {
+  const n = parseFloat(num);
+  if (isNaN(n) || n < 0 || n > 999999999999 || !Number.isInteger(n)) return null;
+  const ones = ["","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+  const tens = ["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+  function spellHundreds(x) {
+    if (x === 0) return "";
+    let s = "";
+    if (x >= 100) { s += ones[Math.floor(x / 100)] + " hundred "; x %= 100; }
+    if (x >= 20) { s += tens[Math.floor(x / 10)] + (x % 10 ? "-" + ones[x % 10] : ""); }
+    else if (x > 0) s += ones[x];
+    return s.trim();
+  }
+  const billions = Math.floor(n / 1000000000);
+  const millions = Math.floor((n % 1000000000) / 1000000);
+  const thousands = Math.floor((n % 1000000) / 1000);
+  const remainder = n % 1000;
+  let result = "";
+  if (billions) result += spellHundreds(billions) + " billion ";
+  if (millions) result += spellHundreds(millions) + " million ";
+  if (thousands) result += spellHundreds(thousands) + " thousand ";
+  if (remainder || !result) result += spellHundreds(remainder);
+  return "**" + num + "** = *" + result.trim() + "*";
+}
+function execCommas(num) {
+  const parts = String(num).split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return "**" + parts.join(".") + "**";
+}
+function execRoman(num) {
+  const n = parseInt(num);
+  if (isNaN(n) || n < 1 || n > 3999) return null;
+  const vals = [1000,900,500,400,100,90,50,40,10,9,5,4,1];
+  const syms = ["M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"];
+  let result = "", rem = n;
+  for (let i = 0; i < vals.length; i++) { while (rem >= vals[i]) { result += syms[i]; rem -= vals[i]; } }
+  return "**" + num + "** in Roman numerals = **" + result + "**";
+}
+
+// -- Time Conversion --
+function execTimestamp(ts) {
+  const n = parseInt(ts);
+  if (isNaN(n)) return null;
+  const d = new Date(n * 1000);
+  if (isNaN(d)) return null;
+  return "**" + ts + "** = " + d.toUTCString() + "\n(" + d.toLocaleString() + ")";
+}
+function execTime12to24(time) {
+  const m = time.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (!m) return null;
+  let h = parseInt(m[1]), min = parseInt(m[2]);
+  if (m[3].toUpperCase() === "PM" && h !== 12) h += 12;
+  if (m[3].toUpperCase() === "AM" && h === 12) h = 0;
+  return "**" + time + "** = **" + String(h).padStart(2,"0") + ":" + String(min).padStart(2,"0") + "** (24h)";
+}
+function execTime24to12(time) {
+  const m = time.match(/^(\d{1,2}):(\d{2})$/);
+  if (!m) return null;
+  let h = parseInt(m[1]), min = parseInt(m[2]);
+  if (h < 0 || h > 23) return null;
+  const ampm = h >= 12 ? "PM" : "AM";
+  if (h === 0) h = 12;
+  else if (h > 12) h -= 12;
+  return "**" + time + "** = **" + h + ":" + String(min).padStart(2,"0") + " " + ampm + "** (12h)";
+}
+
+// -- Timer --
+let timerId = null;
+function execTimer(duration, unit) {
+  if (timerId) { clearTimeout(timerId); timerId = null; }
+  const units = { seconds:1, second:1, sec:1, s:1, minutes:60, minute:60, min:60, m:60, hours:3600, hour:3600, hr:3600, h:3600 };
+  const mult = units[unit.toLowerCase()] || (unit.endsWith("s") ? units[unit.slice(0,-1)] : null) || 60;
+  const totalMs = duration * mult * 1000;
+  if (totalMs < 1000 || totalMs > 86400000) return "Timer range: 1 second to 24 hours.";
+  timerId = setTimeout(() => {
+    timerId = null;
+    playPing();
+    if (window.__showToast) window.__showToast({ message: "\u23F0 Timer done! " + duration + " " + unit + " elapsed.", variant: "success" });
+  }, totalMs);
+  const display = duration + " " + unit;
+  return "\u23F1 **Timer set for " + display + ".** I'll ping you when it's done!";
+}
+
+// -- SHA-256 Hash --
+async function execHash(text) {
+  try {
+    const enc = new TextEncoder().encode(text);
+    const hash = await crypto.subtle.digest("SHA-256", enc);
+    const hex = Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,"0")).join("");
+    return "**SHA-256:** `" + hex + "`";
+  } catch (e) { return null; }
+}
+
+// -- Color Converter --
+const colorNames = { red:"#ff0000", green:"#00ff00", blue:"#0000ff", white:"#ffffff", black:"#000000", yellow:"#ffff00", cyan:"#00ffff", magenta:"#ff00ff", orange:"#ffa500", purple:"#800080", pink:"#ffc0cb", brown:"#a52a2a", gray:"#808080", grey:"#808080", navy:"#000080", teal:"#008080", maroon:"#800000", coral:"#ff7f50", tomato:"#ff6347", gold:"#ffd700", lime:"#00ff00", olive:"#808000", indigo:"#4b0082", violet:"#ee82ee", turquoise:"#40e0d0", silver:"#c0c0c0", beige:"#f5f5dc", mint:"#98ff98", lavender:"#e6e6fa", salmon:"#fa8072" };
+function execColorConv(input) {
+  let hex = input.replace(/^#/, "");
+  if (colorNames[input.toLowerCase()]) hex = colorNames[input.toLowerCase()].replace("#","");
+  if (/^[0-9a-f]{3}$/i.test(hex)) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  if (!/^[0-9a-f]{6}$/i.test(hex)) return null;
+  const r = parseInt(hex.slice(0,2), 16), g = parseInt(hex.slice(2,4), 16), b = parseInt(hex.slice(4,6), 16);
+  const r2 = r/255, g2 = g/255, b2 = b/255;
+  const mx = Math.max(r2,g2,b2), mn = Math.min(r2,g2,b2), d = mx-mn;
+  let h = 0, s = 0, l = (mx+mn)/2;
+  if (d) {
+    s = l > 0.5 ? d/(2-mx-mn) : d/(mx+mn);
+    if (mx === r2) h = ((g2-b2)/d + (g2 < b2 ? 6 : 0)) / 6;
+    else if (mx === g2) h = ((b2-r2)/d + 2) / 6;
+    else h = ((r2-g2)/d + 4) / 6;
+  }
+  return "**Color:** `#" + hex.toUpperCase() + "`\n**RGB:** rgb(" + r + "," + g + "," + b + ")\n**HSL:** hsl(" + Math.round(h*360) + ", " + Math.round(s*100) + "%, " + Math.round(l*100) + "%)";
+}
+
+// -- BMI Calculator --
+function execBmi(weight, wUnit, height, hUnit) {
+  let kg = weight, cm = height;
+  if (wUnit.startsWith("lb")) kg = weight * 0.453592;
+  if (hUnit.includes("ft") || hUnit.includes("in")) {
+    const hm = height.match(/(\d+)ft\s*(\d+)?/i);
+    if (hm) cm = (parseInt(hm[1]) * 30.48 + (parseInt(hm[2]||0) * 2.54));
+    else cm = height * 30.48;
+  }
+  cm = cm || height;
+  const m = cm / 100;
+  const bmi = kg / (m * m);
+  if (!isFinite(bmi)) return null;
+  let cat;
+  if (bmi < 18.5) cat = "Underweight";
+  else if (bmi < 25) cat = "Normal weight";
+  else if (bmi < 30) cat = "Overweight";
+  else if (bmi < 35) cat = "Obese Class I";
+  else if (bmi < 40) cat = "Obese Class II";
+  else cat = "Obese Class III";
+  return "**BMI:** " + bmi.toFixed(1) + " \u2014 *" + cat + "*\n**Weight:** " + kg.toFixed(1) + " kg | **Height:** " + cm.toFixed(1) + " cm";
+}
+
+// -- Slug Generator --
+function execSlug(text) {
+  return text.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+// -- Binary/Text Conversion --
+function execTextToBinary(text) {
+  return text.split("").map(c => c.charCodeAt(0).toString(2).padStart(8,"0")).join(" ");
+}
+function execBinaryToText(bin) {
+  return bin.trim().split(/\s+/).map(b => String.fromCharCode(parseInt(b, 2))).join("");
+}
+
+// -- ASCII Lookup --
+function execAscii(ch) {
+  if (ch.length === 1) return "**`" + ch + "`**  Decimal: **" + ch.charCodeAt(0) + "** | Hex: **" + ch.charCodeAt(0).toString(16).toUpperCase() + "** | Binary: **" + ch.charCodeAt(0).toString(2) + "**";
+  return null;
+}
+function execCharCode(code) {
+  const n = parseInt(code);
+  if (isNaN(n) || n < 0 || n > 0x10FFFF) return null;
+  return "**" + n + "**  Character: **`" + String.fromCodePoint(n) + "`**" + (n < 17 ? " | Hex: **" + n.toString(16).toUpperCase() + "**" : "");
+}
+
+// -- Dice Roller --
+function execDice(roll) {
+  const m = roll.match(/^(\d+)?d(\d+)(?:\s*([+-])\s*(\d+))?$/i);
+  if (!m) return null;
+  const count = parseInt(m[1] || 1);
+  const sides = parseInt(m[2]);
+  const modSign = m[3];
+  const modVal = parseInt(m[4] || 0);
+  if (count < 1 || count > 100 || sides < 2 || sides > 1000) return null;
+  const rolls = [];
+  let total = 0;
+  for (let i = 0; i < count; i++) {
+    const r = Math.floor(Math.random() * sides) + 1;
+    rolls.push(r); total += r;
+  }
+  const modTotal = modSign === "+" ? total + modVal : modSign === "-" ? total - modVal : total;
+  let result = "\u{1F3B2} **Rolling " + roll + ":** " + rolls.join(", ");
+  if (count > 1) result += " = " + total;
+  if (modSign) result += " " + modSign + " " + modVal + " = **" + modTotal + "**";
+  else result = "\u{1F3B2} **Result:** **" + total + "** (" + rolls.join(", ") + ")";
+  return result;
+}
+
+// -- Password Strength Analyzer --
+function execPasswordStrength(pwd) {
+  if (!pwd) return null;
+  let score = 0;
+  const len = pwd.length;
+  if (len >= 8) score += 1;
+  if (len >= 12) score += 1;
+  if (len >= 16) score += 1;
+  if (/[a-z]/.test(pwd)) score += 1;
+  if (/[A-Z]/.test(pwd)) score += 1;
+  if (/[0-9]/.test(pwd)) score += 1;
+  if (/[^a-zA-Z0-9]/.test(pwd)) score += 1;
+  const entropy = len > 0 ? Math.round(len * Math.log2(94)) : 0;
+  const strength = score <= 2 ? "Weak" : score <= 4 ? "Fair" : score <= 6 ? "Strong" : "Very Strong";
+  const color = score <= 2 ? "red" : score <= 4 ? "amber" : score <= 6 ? "lime" : "emerald";
+  return "**Strength:** *" + strength + "* (" + score + "/7) | **Entropy:** ~" + entropy + " bits | **Length:** " + len + " chars" + (entropy >= 60 ? " \u2705" : entropy >= 40 ? " \u26A0\uFE0F" : " \u274C");
+}
+
+// -- Fibonacci --
+function execFibonacci(n) {
+  const count = parseInt(n);
+  if (isNaN(count) || count < 1 || count > 100) return null;
+  const seq = [0, 1];
+  for (let i = 2; i < count; i++) seq.push(seq[i-1] + seq[i-2]);
+  return "**Fibonacci (" + count + "):** " + seq.slice(0, count).join(", ");
+}
+
+// -- Prime Checker --
+function execPrimeCheck(n) {
+  const num = parseInt(n);
+  if (isNaN(num) || num < 1) return null;
+  if (num <= 3) return "**" + num + "** is **prime** ";
+  if (num % 2 === 0 || num % 3 === 0) {
+    const factors = [];
+    let rem = num;
+    for (let i = 2; i * i <= rem; i++) { while (rem % i === 0) { factors.push(i); rem /= i; } }
+    if (rem > 1) factors.push(rem);
+    return "**" + num + "** is **not prime** \n**Factors:** " + factors.join("  ");
+  }
+  for (let i = 5; i * i <= num; i += 6) { if (num % i === 0 || num % (i+2) === 0) return "**" + num + "** is **not prime** "; }
+  return "**" + num + "** is **prime** ";
+}
+
+// -- Date Info --
+function execDayOfWeek(dateStr) {
+  const d = new Date(dateStr);
+  if (isNaN(d)) return null;
+  const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  return "**" + dateStr + "** is a **" + days[d.getDay()] + "**";
+}
+function execLeapYear(year) {
+  const y = parseInt(year);
+  if (isNaN(y)) return null;
+  const leap = (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+  return "**" + y + "** is " + (leap ? "" : "**not** ") + "a leap year " + (leap ? " (366 days)" : " (365 days)");
+}
+
+// -- Random Quote --
+const quotes = [
+  "The only way to do great work is to love what you do.  Steve Jobs",
+  "Innovation distinguishes between a leader and a follower.  Steve Jobs",
+  "Stay hungry, stay foolish.  Steve Jobs",
+  "The future belongs to those who believe in the beauty of their dreams.  Eleanor Roosevelt",
+  "The best time to plant a tree was 20 years ago. The second best time is now.  Chinese Proverb",
+  "It does not matter how slowly you go as long as you do not stop.  Confucius",
+  "Believe you can and you're halfway there.  Theodore Roosevelt",
+  "The only limit to our realization of tomorrow will be our doubts of today.  Franklin D. Roosevelt",
+  "Do what you can, with what you have, where you are.  Theodore Roosevelt",
+  "The journey of a thousand miles begins with one step.  Lao Tzu",
+  "Success is not final, failure is not fatal: it is the courage to continue that counts.  Winston Churchill",
+  "The only impossible journey is the one you never begin.  Tony Robbins",
+  "What you do speaks so loudly that I cannot hear what you say.  Ralph Waldo Emerson",
+  "The best way to predict the future is to create it.  Peter Drucker",
+  "In the middle of every difficulty lies opportunity.  Albert Einstein",
+  "Happiness is not something ready made. It comes from your own actions.  Dalai Lama",
+  "The purpose of life is not to be happy. It is to be useful, to be honorable, to be compassionate.  Ralph Waldo Emerson",
+  "Get busy living or get busy dying.  Stephen King",
+  "You miss 100% of the shots you don't take.  Wayne Gretzky",
+  "Whether you think you can or you think you can't, you're right.  Henry Ford",
+  "The only person you are destined to become is the person you decide to be.  Ralph Waldo Emerson",
+  "Everything you've ever wanted is on the other side of fear.  George Addair",
+  "Dream big and dare to fail.  Norman Vaughan",
+  "Act as if what you do makes a difference. It does.  William James",
+  "What lies behind us and what lies before us are tiny matters compared to what lies within us.  Ralph Waldo Emerson",
+];
+function execQuote() {
+  return "\u{1F4AC} *" + quotes[Math.floor(Math.random() * quotes.length)] + "*";
+}
+
+// -- Lottery Numbers --
+function execLottery(count, max) {
+  const c = count || 6, m = max || 49;
+  const nums = new Set();
+  while (nums.size < Math.min(c, m)) nums.add(Math.floor(Math.random() * m) + 1);
+  return "\u{1F3B1} **Lottery numbers (" + c + "/" + m + "):** " + [...nums].sort((a,b) => a-b).join("  ");
+}
+
+// 
+// COMMAND PARSER
+// 
+
+function processCommand(text) {
+  const q = text.trim();
+  const lq = q.toLowerCase();
+
+  // Greetings
+  if (/^(hi|hello|hey|howdy|sup|yo|good morning|good evening|good afternoon)[.!]*$/i.test(lq)) {
+    const userName = getUserName();
+    const greetings = [
+      userName ? "Hey " + userName + "! How can I help you today?" : "Hello! How can I help you today? Try asking about tools or giving me a command!",
+      userName ? "Hi " + userName + "! I'm your NumanX AI assistant. What can I do for you?" : "Hi there! I'm your NumanX AI assistant. What can I do for you?",
+      userName ? "Welcome back, " + userName + "! Ready to help. Try a command like `count words in ...` or ask about a tool." : "Hey! Ready to help. Try a command like `count words in ...` or ask about a tool.",
+    ];
+    return greetings[Math.floor(Math.random() * greetings.length)];
+  }
+
+  if (/^(thanks|thank you|thx|ty)[.!]*$/i.test(lq)) {
+    return "You're welcome! Let me know what else you need.";
+  }
+
+  if (/^(bye|goodbye|see you|cya)[.!]*$/i.test(lq)) {
+    return "Goodbye! Feel free to come back anytime you need help.";
+  }
+
+  // Tool counts
+  if (/how many tools/.test(lq)) {
+    catCounts(allTools);
+    return "We have **" + allTools.length + " tools** across 6 categories. Try asking about a specific category!";
+  }
+  if (/how many categories/.test(lq)) {
+    const cats = [...new Set(allTools.map(t => t.cat))];
+    return "There are **" + cats.length + " categories** with " + allTools.length + " total tools.";
+  }
+
+  // What tools / list tools
+  if (/what tools|list tools|show tools|all tools|what can you do/i.test(lq) && !/category|ai|image|utility|developer|creator|cricket/i.test(lq)) {
+    const cats = [...new Set(allTools.map(t => t.cat))];
+    let response = "Here are all **" + allTools.length + " tools** across " + cats.length + " categories:\n";
+    for (const cat of cats) {
+      const tools = allTools.filter(t => t.cat === cat);
+      response += "\n**" + cat + "** (" + tools.length + "): " + tools.map(t => "[" + t.name + "](" + t.url + ")").join(", ");
+    }
+    return response;
+  }
+
+  // By category
+  const catMatch = lq.match(/(?:find|show|list|what)\s+(ai|image|utility|developer|creator|cricket)\s*(?:tools)?/);
+  if (catMatch) {
+    const catMap = { "ai": "AI Tools", "image": "Image Tools", "utility": "Utility Tools", "developer": "Developer Tools", "creator": "Creator Tools", "cricket": "Cricket Tools" };
+    const cat = catMap[catMatch[1]];
+    if (cat) {
+      const tools = allTools.filter(t => t.cat === cat);
+      return "**" + cat + "** (" + tools.length + " tools):\n" + tools.map(t => "- [" + t.name + "](" + t.url + "): " + t.desc).join("\n");
+    }
+  }
+
+  // Tool info
+  const toolInfo = lq.match(/^(?:what is|tell me about|info|about)\s+(.+)/i);
+  if (toolInfo) {
+    const query = toolInfo[1].toLowerCase();
+    const found = allTools.filter(t => t.name.toLowerCase().includes(query) || t.keywords.some(k => query.includes(k))).slice(0, 3);
+    if (found.length > 0) {
+      return "Here's what I found:\n" + found.map(t => "- **[" + t.name + "](" + t.url + ")** (" + t.cat + "): " + t.desc).join("\n");
+    }
+  }
+
+  // What's new
+  if (/what'?s new|latest|recent/.test(lq)) {
+    return "We recently added many new tools! Check out **AI Chat Assistant**, **Character Counter**, **BMI Calculator**, **SQL Formatter**, **JWT Decoder**, and more. Visit the [All Tools](/tools/) page to see everything.";
+  }
+
+  // Popular / best
+  if (/popular|best|top|trending/.test(lq)) {
+    return "Popular tools: **QR Generator**, **Image Compressor**, **Password Generator**, **AI Grammar Checker**, and **JSON Formatter**. Check them out!";
+  }
+
+  //  Commands with arguments 
+
+  // Word count: "count words in <text>" or "word count <text>"
+  let m = lq.match(/^(?:count\s+words|word\s+count)(?:\s+in|\s*:|\s+)(.+)/);
+  if (m) return execWordCount(m[1]);
+
+  // Summarize: "summarize: <text>" or "summarize <text>"
+  m = lq.match(/^(?:summarize|summary)(?:\s*:|\s+)(.+)/);
+  if (m) {
+    const result = summarize(m[1], 30);
+    return "**Summary:** " + result;
+  }
+
+  // Grammar: "check grammar: <text>" or "grammar: <text>"
+  m = lq.match(/^(?:check\s+grammar|grammar)(?:\s*:|\s+)(.+)/);
+  if (m) return checkGrammar(m[1]);
+
+  // Case convert: "upper: <text>", "lower: <text>", etc
+  const caseModes = { upper:"upper", lowercase:"lower", "lower case":"lower", lower:"lower", "title case":"title", title:"title", "sentence case":"sentence", sentence:"sentence" };
+  for (const [key, mode] of Object.entries(caseModes)) {
+    m = lq.match(new RegExp("^" + key.replace(/ /g, "\\s") + "(?:\\s*:|\\s+)(.+)"));
+    if (m) return "**Result:** `" + execCaseConvert(m[1], mode) + "`";
+  }
+
+  // Base64 encode/decode
+  m = lq.match(/^(?:encode\s+base64|base64\s+encode)(?:\s*:|\s+)(.+)/);
+  if (m) return "**Base64 encoded:** `" + execBase64Encode(m[1]) + "`";
+  m = lq.match(/^(?:decode\s+base64|base64\s+decode)(?:\s*:|\s+)(.+)/);
+  if (m) {
+    const result = execBase64Decode(m[1]);
+    if (result.startsWith("Error")) return result;
+    return "**Base64 decoded:** `" + result + "`";
+  }
+
+  // URL encode/decode
+  m = lq.match(/^(?:encode\s+url|url\s+encode)(?:\s*:|\s+)(.+)/);
+  if (m) return "**URL encoded:** `" + execUrlEncode(m[1]) + "`";
+  m = lq.match(/^(?:decode\s+url|url\s+decode)(?:\s*:|\s+)(.+)/);
+  if (m) {
+    const result = execUrlDecode(m[1]);
+    if (result.startsWith("Error")) return result;
+    return "**URL decoded:** `" + result + "`";
+  }
+
+  // JSON format: "format json: <json>" or "json: <json>"
+  m = lq.match(/^(?:format|beautify)\s+json(?:\s*:|\s+)(.+)/);
+  if (m) return execJsonFormat(m[1]);
+  m = lq.match(/^(?:validate|check)\s+json(?:\s*:|\s+)(.+)/);
+  if (m) { try { JSON.parse(m[1]); return "\u2713 **Valid JSON**"; } catch (e) { return "\u2717 **Invalid JSON:** " + e.message; } }
+
+  // Password: "generate password [length]" / "password [length]" / "pin [length]"
+  m = lq.match(/^(?:generate\s+)?password(?:\s*:|\s+)?(\d+)?(?:\s+(random|pronounceable|passphrase|pin))?/);
+  if (m) return "**Generated password:** `" + execPassword(+(m[1] || 16), m[2] || "random") + "`";
+  m = lq.match(/^pin(?:\s*:|\s+)?(\d+)?/);
+  if (m) return "**Generated PIN:** `" + execPassword(+(m[1] || 6), "pin") + "`";
+
+  // UUID
+  if (/^(?:generate\s+)?uuid/.test(lq)) return execUUID();
+
+  // Random: "random [count]" / "random [min] [max]" / "roll dice"
+  m = lq.match(/^random(?:\s+(\d+))?(?:\s+(\d+)(?:\s*[-to]+\s*(\d+))?)?/);
+  if (m) {
+    if (m[2] && m[3]) return execRandom(+m[2], +m[3], +(m[1] || 1));
+    if (m[2]) return execRandom(0, +m[2], +(m[1] || 1));
+    if (m[1]) return execRandom(1, 100, +m[1]);
+    return execRandom(1, 100, 1);
+  }
+  if (/^roll dice|^dice\b/.test(lq)) return execRandom(1, 6, 1);
+
+  // Percentage: "X% of Y" / "X is what % of Y" / "percentage change X to Y"
+  m = q.match(/^(\d+\.?\d*)\s*%\s*of\s*(\d+\.?\d*)/);
+  if (m) return "**" + m[1] + "% of " + m[2] + "** = **" + execPctOf(+m[1], +m[2]).toFixed(2) + "**";
+  m = q.match(/^(\d+\.?\d*)\s+is\s+what\s+%\s+of\s+(\d+\.?\d*)/);
+  if (m) return "**" + m[1] + " is " + execPctIs(+m[1], +m[2]).toFixed(2) + "% of " + m[2] + "**";
+  m = q.match(/^(?:percentage|pct)\s+change\s+(\d+\.?\d*)\s+to\s+(\d+\.?\d*)/);
+  if (m) { const r = execPctChange(+m[1], +m[2]); return "**" + m[1] + "  " + m[2] + ":** " + (r >= 0 ? "+" : "") + r.toFixed(2) + "% change"; }
+
+  // Unit conversion: "convert X [from] to [to]" / "X [from] in [to]"
+  m = q.match(/^(?:convert\s+)?(\d+\.?\d*)\s+(.+?)\s+(?:to|in)\s+(.+)/);
+  if (m) {
+    const result = execConvert(+m[1], m[2].trim(), m[3].trim());
+    if (result) return result;
+  }
+
+  //  Math: "calculate 2+3*4" or "calc 2+3*4" or "eval 2+3*4"
+  m = lq.match(/^(?:calculate|calc|eval|math|what is|what's)\s+(.+)/);
+  if (m) { const r = execMath(m[1]); if (r) return r; }
+
+  //  Number base: "convert 255 to binary" / "255 in binary" / "FF in decimal"
+  m = lq.match(/(?:convert\s+)?([0-9a-fA-F]+)\s+(?:to|in)\s+(binary|decimal|hex(?:adecimal)?|octal|base[\s-]?\d+)/);
+  if (m) {
+    for (const base of ["binary","decimal","hex","hexadecimal","octal"]) {
+      if (lq.includes(base)) {
+        const from = /^[0-9a-fA-F]+$/.test(m[1]) && /[a-fA-F]/.test(m[1]) ? "hex" : "decimal";
+        const r = execBaseConvert(m[1], from, base);
+        if (r) return r;
+      }
+    }
+  }
+  m = lq.match(/^(\d+)\s+(?:in|to)\s+(binary|decimal|hex(?:adecimal)?|octal|base[\s-]?\d+)/);
+  if (m) { const r = execBaseConvert(m[1], "decimal", m[2]); if (r) return r; }
+  m = lq.match(/^([0-9a-fA-F]+)\s+(?:in|to)\s+(decimal|binary|octal)/);
+  if (m) { const r = execBaseConvert(m[1], "hex", m[2]); if (r) return r; }
+
+  //  Date: "days between 2026-01-01 and 2026-06-04" / "days until 2026-12-31" / "add 30 days to 2026-06-04"
+  m = lq.match(/^(?:days?|weeks?)\s+between\s+(\d{4}[-/]\d{1,2}[-/]\d{1,2})\s+(?:and|to)\s+(\d{4}[-/]\d{1,2}[-/]\d{1,2})/);
+  if (m) { const r = execDateDiff(m[1], m[2]); if (r) return r; }
+  m = lq.match(/^(?:days?|weeks?)\s+until\s+(\d{4}[-/]\d{1,2}[-/]\d{1,2})/);
+  if (m) { const r = execDaysUntil(m[1]); if (r) return r; }
+  m = lq.match(/^(?:add|plus)\s+(\d+)\s+(days?|weeks?)\s+(?:to|until|from)\s+(\d{4}[-/]\d{1,2}[-/]\d{1,2})/);
+  if (m) { const mult = m[2].startsWith("week") ? 7 : 1; const r = execAddDays(m[3], +m[1] * mult); if (r) return r; }
+
+  //  Text transformations: "rot13: hello" / "reverse: hello" / "palindrome: racecar"
+  m = lq.match(/^rot[\s-]?13(?:\s*:|\s+)(.+)/);
+  if (m) return "**ROT13:** `" + execRot13(m[1]) + "`";
+  m = lq.match(/^(?:reverse|rev)(?:\s*:|\s+)(.+)/);
+  if (m) return "**Reversed:** `" + execReverse(m[1]) + "`";
+  if (/^(?:is\s+)?palindrome|palindrome check/i.test(lq)) {
+    m = lq.match(/palindrome(?:\s*:|\s+)?(.+)/) || lq.match(/(?:is\s+)?(.+?)\s+a palindrome/);
+    if (m) return execPalindrome(m[1]);
+  }
+
+  //  Morse: "morse encode: hello" / "morse decode: .... . .-.. .-.. ---"
+  m = lq.match(/^morse\s+(?:encode|enc)(?:\s*:|\s+)(.+)/);
+  if (m) { const r = execMorseEncode(m[1]); if (r) return "**Morse:** `" + r + "`"; }
+  m = lq.match(/^morse\s+(?:decode|dec)(?:\s*:|\s+)(.+)/);
+  if (m) { const r = execMorseDecode(m[1]); if (r) return "**Decoded:** `" + r + "`"; }
+  if (/^morse\b/.test(lq) || /encode to morse/.test(lq)) {
+    m = lq.match(/^morse(?:\s*:|\s+)(.+)/);
+    if (m) { const r = execMorseEncode(m[1]); if (r) return "**Morse:** `" + r + "`"; }
+  }
+
+  //  List ops: "sort: a, b, c" / "reverse: a, b, c" / "shuffle: a, b, c" / "dedupe: a, b, a"
+  m = lq.match(/^(?:sort|order)(?:\s*:|\s+)(.+)/);
+  if (m) { const r = execListSort(m[1]); if (r) return r; }
+  m = lq.match(/^reverse(?:\s*:|\s+)(.+)/);
+  if (m) { if (m[1].includes(",")) { const r = execListReverse(m[1]); if (r) return r; } }
+  m = lq.match(/^(?:shuffle|randomize)(?:\s*:|\s+)(.+)/);
+  if (m) { const r = execListShuffle(m[1]); if (r) return r; }
+  m = lq.match(/^(?:dedupe|unique|deduplicate)(?:\s*:|\s+)(.+)/);
+  if (m) { const r = execListDedupe(m[1]); if (r) return r; }
+
+  //  Frequency: "frequency: hello world" / "char frequency: hello" / "word frequency: the cat"
+  m = lq.match(/^(?:char(?:acter)?\s+)?freq(?:uency)?(?:\s*:|\s+)(.+)/);
+  if (m) { const r = execCharFreq(m[1]); if (r) return r; }
+  m = lq.match(/^word\s+freq(?:uency)?(?:\s*:|\s+)(.+)/);
+  if (m) { const r = execWordFreq(m[1]); if (r) return r; }
+
+  //  Number formatting: "spell 1234" / "commas 1234567" / "roman 42" / "1234 in words"
+  m = lq.match(/^(?:spell|number\s+in\s+words|words?)\s+(\d{1,12})/);
+  if (m) { const r = execSpellNumber(m[1]); if (r) return r; }
+  m = lq.match(/^(?:commas|format\s+number)\s+(\d+\.?\d*)/);
+  if (m) { const r = execCommas(m[1]); if (r) return r; }
+  m = lq.match(/^(?:roman|to roman)\s+(\d{1,4})/);
+  if (m) { const r = execRoman(m[1]); if (r) return r; }
+  m = lq.match(/^(\d{1,12})\s+in\s+(words?|roman)/);
+  if (m) {
+    if (m[2].startsWith("word")) { const r = execSpellNumber(m[1]); if (r) return r; }
+    if (m[2].startsWith("roman")) { const r = execRoman(m[1]); if (r) return r; }
+  }
+
+  //  Time conversion: "timestamp 1717488000" / "convert 2:30 PM to 24h" / "convert 14:30 to 12h"
+  m = lq.match(/^(?:timestamp|ts|unix)\s+(\d{8,10})/);
+  if (m) { const r = execTimestamp(m[1]); if (r) return r; }
+  m = q.match(/(\d{1,2}:\d{2}\s*(?:AM|PM))/i);
+  if (m && (lq.includes("24h") || lq.includes("convert") || lq.includes("military"))) { const r = execTime12to24(m[1]); if (r) return r; }
+  m = q.match(/(\d{1,2}:\d{2})(?!\s*(?:AM|PM))/i);
+  if (m && (lq.includes("12h") || lq.includes("convert") || lq.includes("standard"))) { const r = execTime24to12(m[1]); if (r) return r; }
+
+  //  Timer: "set timer 5 minutes" / "timer 30 seconds" / "timer 2 hours"
+  m = lq.match(/^(?:set\s+)?timer(?:\s+for)?\s+(\d+)\s+(seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h)\b/i);
+  if (m) return execTimer(+m[1], m[2]);
+
+  //  SHA-256 Hash: "hash: hello" / "hash sha256: hello"
+  m = lq.match(/^hash(?:\s+sha[\s-]?256)?(?:\s*:|\s+)(.+)/);
+  if (m) return execHash(m[1]); // async  handled specially below
+
+  //  Color: "color #ff8800" / "color red to hsl" / "convert #ff0 to rgb"
+  m = lq.match(/^color\s+(.+?)(?:\s+(?:to|in)\s+(rgb|hsl|hex))?$/i);
+  if (m) { const r = execColorConv(m[1].trim()); if (r) return r; }
+  m = lq.match(/^convert\s+(#[0-9a-f]{3,6}|[a-z]+)\s+(?:to|in)\s+(rgb|hsl|hex)/i);
+  if (m) { const r = execColorConv(m[1].replace("#","")); if (r) return r; }
+
+  //  BMI: "bmi 70 kg 175 cm" / "bmi 154 lb 5ft9"
+  m = lq.match(/^bmi\s+(\d+\.?\d*)\s*(kg|kilo|lb|pounds?)?(?:.*?)(\d+\.?\d*)\s*(cm|m|meters?|ft|feet|foot|in|inches?|'|")?/i);
+  if (m) { const r = execBmi(+m[1], m[2]||"kg", +m[3], m[4]||"cm"); if (r) return r; }
+
+  //  Slug: "slug: Hello World!" / "slugify: Hello"
+  m = lq.match(/^(?:slug|slugify)(?:\s*:|\s+)(.+)/);
+  if (m) return "**Slug:** `" + execSlug(m[1]) + "`";
+
+  //  Binary/Text: "text to binary: hello" / "binary to text: 01101000..."
+  m = lq.match(/^(?:text|string)\s+(?:to|2|->)\s+binary(?:\s*:|\s+)(.+)/);
+  if (m) return "**Binary:** `" + execTextToBinary(m[1]) + "`";
+  m = lq.match(/^(?:binary|bin)\s+(?:to|2|->)\s+(?:text|string)(?:\s*:|\s+)(.+)/);
+  if (m) { const r = execBinaryToText(m[1]); if (r) return "**Decoded:** `" + r + "`"; }
+
+  //  ASCII: "ascii A" / "char 65" / "code 65"
+  m = lq.match(/^ascii\s+(.)/);
+  if (m) { const r = execAscii(m[1]); if (r) return r; }
+  m = lq.match(/^(?:char|chr|code|character)\s+(\d+)/);
+  if (m) { const r = execCharCode(m[1]); if (r) return r; }
+
+  //  Dice: "roll d20" / "roll 3d6+2" / "dice 2d8"
+  m = lq.match(/^(?:roll|dice|d)\s+(\d*d\d+(?:\s*[+-]\s*\d+)?)/i);
+  if (m) { const r = execDice(m[1].replace(/\s/g, "")); if (r) return r; }
+  m = lq.match(/^(\d*d\d+(?:\s*[+-]\s*\d+)?)$/i);
+  if (m) { const r = execDice(m[1].replace(/\s/g, "")); if (r) return r; }
+
+  //  Password strength: "strength: MyP@ss" / "check password: MyP@ss"
+  m = lq.match(/^(?:strength|check\s+password|pwd\s+strength)(?:\s*:|\s+)(.+)/);
+  if (m) return execPasswordStrength(m[1]);
+
+  //  Fibonacci: "fibonacci 10" / "fib 10"
+  m = lq.match(/^(?:fibonacci|fib)\s+(\d{1,3})/i);
+  if (m) { const r = execFibonacci(m[1]); if (r) return r; }
+
+  //  Prime: "prime 17" / "factors 12" / "is 17 prime"
+  m = lq.match(/^(?:prime|is\s+prime|factors?)\s+(\d+)/i);
+  if (m) { const r = execPrimeCheck(m[1]); if (r) return r; }
+  if (/^is\s+\d+\s+prime/.test(lq)) {
+    m = lq.match(/^is\s+(\d+)\s+prime/);
+    if (m) { const r = execPrimeCheck(m[1]); if (r) return r; }
+  }
+
+  //  Date info: "day 2026-06-04" / "leap 2024" / "what day is 2026-06-04"
+  m = lq.match(/^(?:day|weekday|what\s+day)\s+(\d{4}[-/]\d{1,2}[-/]\d{1,2})/i);
+  if (m) { const r = execDayOfWeek(m[1]); if (r) return r; }
+  m = lq.match(/^(?:is\s+)?(\d{4})\s+a\s+leap\s+year/);
+  if (m) { const r = execLeapYear(m[1]); if (r) return r; }
+  m = lq.match(/^(?:leap|leap\s+year)\s+(\d{4})/i);
+  if (m) { const r = execLeapYear(m[1]); if (r) return r; }
+
+  //  Quote: "quote" / "inspire me" / "random quote"
+  if (/^(?:quote|inspire|inspire me|random quote|motivate|motivate me|wisdom)$/i.test(lq)) return execQuote();
+
+  //  Lottery: "lottery" / "lotto 6/49" / "lotto numbers"
+  m = lq.match(/^(?:lottery|lotto)\s*(?:\s+(\d+)(?:\s*\/\s*(\d+))?)?/i);
+  if (m) return execLottery(m[1] ? +m[1] : 6, m[2] ? +m[2] : 49);
+
+  // Name capture: "my name is X" / "i'm X" / "call me X"
+  m = lq.match(/^(?:my name is|i am|i'm|call me)\s+(.+)/i);
+  if (m) {
+    const name = m[1].replace(/[.!]+$/, "").trim();
+    if (name.length > 1 && name.length < 30) {
+      try { localStorage.setItem("nt_user_name", name); } catch(e) {}
+      context.userName = name;
+      return "Nice to meet you, **" + escapeHtml(name) + "**! I'll remember your name for our chat.";
+    }
+  }
+
+  // Stats command
+  if (/^(?:stats?|statistics|chat stats?|conversation stats)/i.test(lq)) {
+    return execStats();
+  }
+
+  // Tool search (fuzzy) — with inline execution when possible
+  const searchTerms = lq.split(/\s+/).filter(w => w.length > 2 && !["the","what","how","can","you","tell","about","show","find","list","for","are","there","with","some","does","this","that","and","please","help"].includes(w));
+  if (searchTerms.length > 0) {
+    const found = allTools.filter(t => {
+      const n = (t.name + " " + t.desc + " " + t.cat + " " + t.keywords.join(" ")).toLowerCase();
+      return searchTerms.some(w => n.includes(w));
+    }).slice(0, 5);
+    if (found.length > 0) {
+      // Try to execute the tool inline if we have a command mapping
+      const bestTool = found[0];
+      const cmd = toolCommands[bestTool.name.toLowerCase()];
+      if (cmd !== undefined) {
+        // Extract text after the tool mention
+        const toolNames = [bestTool.name.toLowerCase()];
+        const parts = lq.split(new RegExp("(" + toolNames.map(n => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")", "i"));
+        const afterText = parts.length > 2 ? parts.slice(2).join("").trim() : "";
+        // Also try extracting after "use", "run", "for"
+        const extraText = afterText || lq.replace(/^(?:use|run|try|open|launch|start)\s+(?:the\s+)?/, "").replace(new RegExp("^" + bestTool.name.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), "").replace(/^(?:\s*(?:for|on|with|to|about|using)\s*:?\s*)/, "").trim();
+        if (extraText && extraText.length > 0 && extraText !== bestTool.name.toLowerCase()) {
+          const fullCmd = cmd + extraText;
+          const subResult = processCommand(fullCmd);
+          if (subResult) return subResult;
+        }
+        // No text provided — prompt for input
+        if (cmd === null) {
+          // Complex tool — just link
+          return "Here's the **[" + bestTool.name + "](" + bestTool.url + ")** tool.\n" + bestTool.desc + "\n\nVisit it to use the full interface.";
+        }
+        return "I can help with **" + bestTool.name + "**! " + toolCommands.prompt.replace("TOOL", bestTool.name.toLowerCase());
+      }
+      return "Here are matching tools:\n" + found.map(t => "- **[" + t.name + "](" + t.url + ")** (" + t.cat + "): " + t.desc).join("\n");
+    }
+  }
+
+  return null; // not matched
+}
+
+function catCounts(tools) {
+  const counts = {};
+  for (const t of tools) counts[t.cat] = (counts[t.cat] || 0) + 1;
+  return counts;
+}
+
+// Map tool names → executor command prefixes for inline tool execution
+const toolCommands = {
+  prompt: "Give me something to work with (e.g. \"" + "use TOOL: your text here" + "\").",
+  "word counter": "count words in ",
+  "word count": "count words in ",
+  "character counter": "count words in ",
+  "character count": "count words in ",
+  "password generator": "generate password ",
+  "json formatter": "format json: ",
+  "json beautifier": "format json: ",
+  "json validator": "validate json: ",
+  "base64 tool": "encode base64: ",
+  "base64 encoder": "encode base64: ",
+  "base64 decoder": "decode base64: ",
+  "uuid generator": "uuid",
+  "url encoder": "encode url: ",
+  "url decoder": "decode url: ",
+  "url encode": "encode url: ",
+  "unit converter": "convert ",
+  "ai text summarizer": "summarize: ",
+  "text summarizer": "summarize: ",
+  "ai grammar checker": "grammar: ",
+  "grammar checker": "grammar: ",
+  "spell checker": "grammar: ",
+  "ai sentiment analyzer": "analyze sentiment: ",
+  "sentiment analyzer": "analyze sentiment: ",
+  "sentiment analysis": "analyze sentiment: ",
+  "color converter": "color ",
+  "percentage calculator": "percentage of ",
+  "random number generator": "random ",
+  "random number": "random ",
+  "case converter": "lower: ",
+  "text case": "lower: ",
+  "bmi calculator": "bmi ",
+  "ai readability analyzer": null,
+  "readability analyzer": null,
+  "ai paraphraser": null,
+  "ai tag generator": null,
+  "tag generator": null,
+  "ai language detector": null,
+  "language detector": null,
+  "markdown editor": null,
+  "html formatter": null,
+  "css formatter": null,
+  "sql formatter": null,
+  "diff checker": null,
+  "regex tester": null,
+  "jwt decoder": null,
+  "image compressor": null,
+  "jpg to png": null,
+  "png to webp": null,
+  "png to jpg": null,
+  "image resizer": null,
+  "image cropper": null,
+  "svg to png": null,
+  "qr generator": null,
+  "hashtag generator": null,
+  "lorem ipsum": null,
+  "countdown timer": null,
+  "list randomizer": "shuffle: ",
+  "color contrast checker": null,
+  "economy rate calculator": null,
+  "strike rate calculator": null,
+  "run rate calculator": null,
+  "cricket over calculator": null,
+  "ai chat assistant": null,
+  "ai code assistant": null,
+  "ai image generator": null,
+  "age calculator": null,
+};
+
+// 
+// CHAT UI
+// 
+
+function formatTimestamp() {
+  const d = new Date();
+  let h = d.getHours(), m = d.getMinutes();
+  const ampm = h >= 12 ? "PM" : "AM";
+  if (h === 0) h = 12;
+  else if (h > 12) h -= 12;
+  return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0") + " " + ampm;
+}
+
+function markdownToHtml(text) {
+  let content = text;
+  // Fenced code blocks (must be first)
+  content = content.replace(/```(\w*)\n?([\s\S]*?)```/g, function(m, lang, code) {
+    var cls = "text-[10px] leading-relaxed text-purple-300";
+    if (lang) cls += " language-" + lang;
+    return "<pre class=\"bg-surface-1 rounded-lg p-2.5 my-1.5 overflow-x-auto\"><code class=\"" + cls + "\">" + code + "</code></pre>";
+  });
+  content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-violet-400 hover:underline">$1</a>');
+  content = content.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-primary">$1</strong>');
+  content = content.replace(/`([^`]+)`/g, '<code class="text-purple-300 bg-surface-1 px-1 py-0.5 rounded text-[10px]">$1</code>');
+  // Horizontal rules
+  content = content.replace(/^---$/gm, '<hr class="border-surface my-2">');
+  // Blockquotes (already entity-encoded &gt; from escapeHtml)
+  content = content.replace(/^&gt;\s+(.+)$/gm, '<blockquote class="border-l-2 border-violet-500/40 pl-2.5 italic text-muted my-1">$1</blockquote>');
+  // Unordered lists
+  content = content.replace(/^[\s]*[-*]\s+(.+)$/gm, '<li class="list-disc ml-4">$1</li>');
+  content = content.replace(/(<li.*<\/li>\n?)+/g, '<ul class="my-1">$&</ul>');
+  // Ordered lists
+  content = content.replace(/^[\s]*\d+\.\s+(.+)$/gm, '<li class="list-decimal ml-4">$1</li>');
+  content = content.replace(/(<li.*<\/li>\n?)+/g, function(m) {
+    if (m.indexOf("list-disc") === -1) return '<ol class="my-1">' + m + '</ol>';
+    return m;
+  });
+  // Headings
+  content = content.replace(/^###\s+(.+)$/gm, '<h3 class="text-sm font-bold text-primary mt-2 mb-1">$1</h3>');
+  content = content.replace(/^##\s+(.+)$/gm, '<h2 class="text-base font-bold text-primary mt-2 mb-1">$1</h2>');
+  // Newlines
+  content = content.replace(/\n/g, "<br>");
+  return content;
+}
+
+function addMessage(html, isUser, savedTs) {
+  const idx = msgIndex++;
+  const now = savedTs || formatTimestamp();
+  const div = document.createElement("div");
+  div.className = "flex items-start gap-2.5 " + (isUser ? "flex-row-reverse" : "");
+
+  const avatar = isUser
+    ? `<div class="w-7 h-7 rounded-lg bg-violet-500/20 flex items-center justify-center shrink-0 mt-0.5"><svg class="w-3.5 h-3.5 text-violet-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>`
+    : `<div class="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shrink-0 mt-0.5"><svg class="w-3.5 h-3.5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>`;
+
+  const bubbleClass = isUser
+    ? "bg-violet-500/10 border border-violet-500/20 rounded-xl rounded-tr-none"
+    : "bg-surface-2 rounded-xl rounded-tl-none";
+
+  let content = markdownToHtml(html);
+
+  const copyBtn = `<button class="msg-copy-btn absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity p-0.5 rounded hover:bg-surface-1 text-muted hover:text-white" data-msg-text="${escapeAttr(html)}" title="Copy message"><svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>`;
+
+  const ttsBtn = !isUser ? `<button class="msg-tts-btn absolute top-1 right-9 opacity-0 group-hover:opacity-100 transition-opacity p-0.5 rounded hover:bg-surface-1 text-muted hover:text-white" data-tts="${escapeAttr(html)}" title="Read aloud"><svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>` : "";
+
+  div.innerHTML = avatar + `<div class="${bubbleClass} px-3 py-2 max-w-[85%] ${isUser ? "" : "w-full"} relative group" data-msg-index="${idx}">
+    <span class="block text-[9px] text-muted/50 text-right mb-0.5">${now}</span>
+    <div class="text-xs text-secondary leading-relaxed ${isUser ? "text-primary" : ""} msg-content">${content}</div>
+    ${copyBtn}${ttsBtn}
+  </div>`;
+
+  containers.messages.appendChild(div);
+  containers.messages.scrollTo({ top: containers.messages.scrollHeight, behavior: "smooth" });
+  return idx;
+}
+
+function showTyping(show) {
+  containers.typing.classList.toggle("hidden", !show);
+  if (show) containers.messages.scrollTo({ top: containers.messages.scrollHeight, behavior: "smooth" });
+}
+
+function fallbackSearch(text) {
+  const lq = text.toLowerCase();
+  const words = lq.split(/\s+/).filter(w => w.length > 2);
+  const found = allTools.filter(t => {
+    const n = (t.name + " " + t.desc + " " + t.cat + " " + t.keywords.join(" ")).toLowerCase();
+    return words.some(w => n.includes(w));
+  }).slice(0, 3);
+  if (found.length > 0) {
+    addMessage("I found some related tools:\n" + found.map(t => "- **[" + t.name + "](" + t.url + ")** (" + t.cat + "): " + t.desc).join("\n"), false);
+  } else {
+    addMessage("I didn't understand that. Try one of these:\n `calculate 2+3*4`\n `hash: hello`\n `color #ff8800`\n `bmi 70 kg 175 cm`\n `slug: Hello World`\n `text to binary: hello`\n `ascii A`\n `roll d20`\n `strength: MyP@ss`\n `fibonacci 10`\n `prime 17`\n `day 2026-06-04`\n `leap 2024`\n `quote`\n `lottery`\n `convert 255 to binary`\n `rot13: hello`\n `sort: banana, apple, cherry`\n `frequency: hello world`\n `spell 1234`\n `days until 2026-12-31`\n `timer 5 seconds`\n `palindrome: racecar`\n `count words in ...`\n `format json: ...`\n `encode base64: hello`\n `generate password 16`\n `what tools do you have?`", false);
+  }
+}
+
+function handleSend(e) {
+  e?.preventDefault();
+  const text = containers.input.value.trim();
+  if (!text) return;
+
+  addMessage(escapeHtml(text), true);
+  containers.input.value = "";
+  containers.sendBtn.disabled = true;
+  showTyping(true);
+
+  setTimeout(() => {
+    const result = processCommand(text);
+    showTyping(false);
+    if (result && typeof result.then === "function") {
+      result.then(r => { showTyping(false); if (r) addMessage(r, false); else fallbackSearch(text); containers.sendBtn.disabled = false; containers.input.focus(); saveHistory(); });
+      return;
+    }
+    if (result) {
+      addMessage(result, false);
+    } else {
+      fallbackSearch(text);
+    }
+    containers.sendBtn.disabled = false;
+    containers.input.focus();
+    saveHistory();
+    askNameIfNeeded();
+  }, 400 + Math.random() * 400);
+}
+
+function saveHistory() {
+  try {
+    const items = containers.messages.querySelectorAll(".flex.items-start.gap-2\\.5");
+    const history = [];
+    items.forEach(el => {
+      const isUser = el.classList.contains("flex-row-reverse");
+      const bubble = el.querySelector("[data-msg-index]");
+      const contentEl = el.querySelector(".msg-content, .text-xs");
+      const content = contentEl?.innerHTML || "";
+      const ts = bubble?.querySelector(".block.text-\\[9px\\]")?.textContent || formatTimestamp();
+      history.push({ role: isUser ? "user" : "bot", content, ts });
+    });
+    localStorage.setItem(H_KEY, JSON.stringify(history.slice(-MAX_HISTORY)));
+  } catch (e) {}
+}
+
+function loadHistory() {
+  try {
+    const saved = localStorage.getItem(H_KEY);
+    if (!saved) return;
+    const history = JSON.parse(saved);
+    if (!Array.isArray(history) || history.length === 0) return;
+    // Clear welcome message
+    containers.messages.innerHTML = "";
+    for (const msg of history) {
+      addMessage(msg.content, msg.role === "user", msg.ts || "");
+    }
+  } catch (e) {}
+}
+
+function clearChat() {
+  if (!confirm("Clear the entire conversation?")) return;
+  containers.messages.innerHTML = "";
+  msgIndex = 0;
+  var userName = getUserName();
+  var welcomeText = userName ? "Hey " + userName + "! I'm your NumanX AI assistant. I can answer questions about tools, help with text tasks, and guide you. Try some examples below!" : "Hi! I'm your NumanX AI assistant. I can answer questions about tools, help with text tasks, and guide you. Try some examples below!";
+  addMessage(welcomeText, false);
+  try { localStorage.removeItem(H_KEY); } catch (e) {}
+  playPing();
+  if (window.__showToast) window.__showToast({ message: "Conversation cleared", variant: "info" });
+}
+
+// 
+// FEATURE 1: VOICE INPUT
+// 
+let isListening = false;
+let recognition = null;
+function initSpeechRecognition() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return;
+  recognition = new SR();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = "en-US";
+  recognition.onresult = function(e) {
+    const transcript = e.results[0][0].transcript;
+    containers.input.value = transcript;
+    stopListening();
+    handleSend();
+  };
+  recognition.onerror = function() { stopListening(); };
+  recognition.onend = function() { stopListening(); };
+}
+function toggleListening() {
+  if (!recognition) return;
+  if (isListening) { stopListening(); return; }
+  try { recognition.start(); isListening = true; updateVoiceBtn(); } catch(e) { stopListening(); }
+}
+function stopListening() {
+  isListening = false;
+  updateVoiceBtn();
+  try { if (recognition) recognition.stop(); } catch(e) {}
+}
+function updateVoiceBtn() {
+  const btn = document.getElementById("voice-btn");
+  if (!btn) return;
+  btn.classList.toggle("listening", isListening);
+  btn.innerHTML = isListening
+    ? '<span class="voice-dot"></span>'
+    : '<svg class="voice-icon w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>';
+}
+initSpeechRecognition();
+
+// 
+// FEATURE 2: TEXT-TO-SPEECH
+// 
+function handleTts(e) {
+  const btn = e.target.closest(".msg-tts-btn");
+  if (!btn) return;
+  const text = btn.getAttribute("data-tts");
+  if (!text) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text.replace(/<[^>]*>/g, ""));
+  utter.rate = 0.9;
+  window.speechSynthesis.speak(utter);
+}
+
+// 
+// FEATURE 3: COPY MESSAGE
+// 
+function handleCopy(e) {
+  const btn = e.target.closest(".msg-copy-btn");
+  if (!btn) return;
+  const text = btn.getAttribute("data-msg-text");
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(function() {
+    const orig = btn.innerHTML;
+    btn.innerHTML = "Copied!";
+    btn.style.fontSize = "8px";
+    btn.style.padding = "1px 3px";
+    setTimeout(function() { btn.innerHTML = orig; btn.style.fontSize = ""; btn.style.padding = ""; }, 1500);
+  }).catch(function() {});
+}
+
+// 
+// FEATURE 4: EXPORT CONVERSATION
+// 
+function exportConversation(format) {
+  const items = containers.messages.querySelectorAll(".flex.items-start.gap-2\\.5");
+  const msgs = [];
+  items.forEach(function(el) {
+    const isUser = el.classList.contains("flex-row-reverse");
+    const bubble = el.querySelector("[data-msg-index]");
+    const tsEl = bubble?.querySelector(".block.text-\\[9px\\]");
+    const contentEl = el.querySelector(".msg-content, .text-xs");
+    const raw = contentEl?.textContent || "";
+    const ts = tsEl?.textContent || "";
+    msgs.push({ role: isUser ? "user" : "bot", text: raw.replace(/\s+/g, " ").trim(), ts: ts });
+  });
+  let output = "", filename = "", mime = "";
+  if (format === "json") {
+    output = JSON.stringify(msgs, null, 2);
+    filename = "chat-export.json";
+    mime = "application/json";
+  } else if (format === "txt") {
+    output = msgs.map(function(m) { return "[" + m.ts + "] " + m.role.toUpperCase() + ": " + m.text; }).join("\n\n");
+    filename = "chat-export.txt";
+    mime = "text/plain";
+  } else if (format === "md") {
+    output = "# Chat Export\n\n" + msgs.map(function(m) {
+      return "### " + (m.role === "user" ? "You" : "NumanX AI") + " (" + m.ts + ")\n\n" + m.text;
+    }).join("\n\n---\n\n");
+    filename = "chat-export.md";
+    mime = "text/markdown";
+  }
+  const blob = new Blob([output], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// 
+// FEATURE 7: CHAT STATISTICS
+// 
+function execStats() {
+  const items = containers.messages.querySelectorAll(".flex.items-start.gap-2\\.5");
+  let userCount = 0, botCount = 0;
+  items.forEach(function(el) {
+    if (el.classList.contains("flex-row-reverse")) userCount++;
+    else botCount++;
+  });
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+  const commands = new Set();
+  items.forEach(function(el) {
+    const text = el.textContent?.toLowerCase().trim() || "";
+    if (text.startsWith("calc") || text.startsWith("hash") || text.startsWith("color") || text.startsWith("bmi") || text.startsWith("roll") || text.startsWith("random") || text.startsWith("convert") || text.startsWith("encode") || text.startsWith("decode") || text.startsWith("rot13") || text.startsWith("reverse") || text.startsWith("sort") || text.startsWith("shuffle") || text.startsWith("dedupe") || text.startsWith("freq") || text.startsWith("spell") || text.startsWith("roman") || text.startsWith("timestamp") || text.startsWith("timer") || text.startsWith("password") || text.startsWith("pin") || text.startsWith("uuid") || text.startsWith("slug") || text.startsWith("ascii") || text.startsWith("char") || text.startsWith("prime") || text.startsWith("fib") || text.startsWith("day") || text.startsWith("leap") || text.startsWith("quote") || text.startsWith("lottery") || text.startsWith("morse") || text.startsWith("text to binary") || text.startsWith("binary to") || text.startsWith("count words") || text.startsWith("summarize") || text.startsWith("grammar") || text.startsWith("strength") || text.startsWith("check password") || text.startsWith("morse")) {
+      commands.add(text.split(/\s/)[0]);
+    }
+  });
+  return "**Chat Statistics:**\n- **Total messages:** " + (userCount + botCount) + "\n- **Your messages:** " + userCount + "\n- **Bot responses:** " + botCount + "\n- **Last activity:** " + timeStr + "\n- **Different commands used:** ~" + commands.size;
+}
+
+// 
+// FEATURE 8: USER NAME MEMORY
+// 
+function askNameIfNeeded() {
+  try {
+    if (localStorage.getItem("nt_user_name")) return;
+    const asked = parseInt(localStorage.getItem("nt_name_asked") || "0");
+    if (asked >= 1) return;
+    const items = containers.messages.querySelectorAll(".flex.items-start.gap-2\\.5");
+    if (items.length >= 4) {
+      localStorage.setItem("nt_name_asked", "1");
+      setTimeout(function() { addMessage("By the way, what's your name? I'd love to personalize our chat!", false); }, 600);
+    }
+  } catch(e) {}
+}
+
+function getUserName() {
+  try { return localStorage.getItem("nt_user_name") || null; } catch(e) { return null; }
+}
+
+// 
+// FEATURE 9: CONVERSATION SEARCH
+// 
+let searchOpen = false;
+let searchMatchIndex = -1;
+let searchMatches = [];
+function toggleSearch() {
+  searchOpen = !searchOpen;
+  const bar = document.getElementById("search-bar");
+  const input = document.getElementById("chat-search");
+  if (searchOpen) {
+    bar?.classList.remove("hidden");
+    setTimeout(function() { input?.focus(); }, 100);
+  } else {
+    bar?.classList.add("hidden");
+    clearSearch();
+  }
+}
+function clearSearch() {
+  searchMatches = [];
+  searchMatchIndex = -1;
+  const countEl = document.getElementById("search-count");
+  if (countEl) countEl.textContent = "";
+  document.querySelectorAll(".search-highlight").forEach(function(el) {
+    el.classList.remove("search-highlight", "search-active");
+  });
+}
+function doSearch(query) {
+  clearSearch();
+  if (!query.trim()) return;
+  const bubbles = containers.messages.querySelectorAll("[data-msg-index] .msg-content");
+  const lq = query.toLowerCase();
+  bubbles.forEach(function(el) {
+    const text = el.textContent?.toLowerCase() || "";
+    if (text.includes(lq)) {
+      el.classList.add("search-highlight");
+      searchMatches.push(el);
+    }
+  });
+  const countEl = document.getElementById("search-count");
+  if (searchMatches.length > 0) {
+    countEl.textContent = "Found " + searchMatches.length + " result" + (searchMatches.length > 1 ? "s" : "");
+    searchMatchIndex = 0;
+    highlightMatch(0);
+  } else {
+    countEl.textContent = "No matches";
+  }
+}
+function highlightMatch(dir) {
+  searchMatches.forEach(function(el) { el.classList.remove("search-active"); });
+  if (searchMatches.length === 0) return;
+  searchMatchIndex = (searchMatchIndex + dir + searchMatches.length) % searchMatches.length;
+  const el = searchMatches[searchMatchIndex];
+  el.classList.add("search-active");
+  el.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+// 
+// FEATURE 10: EDIT & RESEND
+// 
+function handleMessageClick(e) {
+  const bubble = e.target.closest("[data-msg-index]");
+  if (!bubble) return;
+  const parent = bubble.parentElement;
+  if (!parent?.classList.contains("flex-row-reverse")) return;
+  const contentEl = bubble.querySelector(".msg-content, .text-xs");
+  const text = contentEl?.textContent?.replace(/\s*\(edited\)\s*$/, "").trim();
+  if (!text) return;
+  containers.input.value = text;
+  containers.input.focus();
+  if (!bubble.querySelector(".edited-indicator")) {
+    const indicator = document.createElement("span");
+    indicator.className = "edited-indicator text-[8px] text-muted ml-1";
+    indicator.textContent = "(edited)";
+    contentEl?.appendChild(indicator);
+  }
+}
+
+// 
+// EVENT LISTENERS
+// 
+
+containers.form?.addEventListener("submit", handleSend);
+containers.input?.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) handleSend(); });
+containers.input?.addEventListener("input", () => { containers.sendBtn.disabled = !containers.input.value.trim(); });
+
+document.getElementById("clear-chat-btn")?.addEventListener("click", clearChat);
+
+// Voice button
+document.getElementById("voice-btn")?.addEventListener("click", toggleListening);
+
+// Export button & dropdown
+document.getElementById("export-btn")?.addEventListener("click", function(e) {
+  e.stopPropagation();
+  const dd = document.getElementById("export-dropdown");
+  dd?.classList.toggle("hidden");
+});
+document.querySelectorAll("#export-dropdown button").forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    exportConversation(btn.getAttribute("data-export"));
+    document.getElementById("export-dropdown")?.classList.add("hidden");
+  });
+});
+document.addEventListener("click", function() {
+  document.getElementById("export-dropdown")?.classList.add("hidden");
+});
+
+// Search toggle
+document.getElementById("search-toggle-btn")?.addEventListener("click", toggleSearch);
+document.getElementById("chat-search")?.addEventListener("input", function() { doSearch(this.value); });
+document.getElementById("chat-search")?.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") { toggleSearch(); containers.input.focus(); }
+  if (e.key === "ArrowDown") { e.preventDefault(); highlightMatch(1); }
+  if (e.key === "ArrowUp") { e.preventDefault(); highlightMatch(-1); }
+});
+
+// Delegate clicks for copy, TTS, and message edit
+containers.messages?.addEventListener("click", function(e) {
+  handleCopy(e);
+  handleTts(e);
+  handleMessageClick(e);
+});
+
+// Suggestion chips
+document.querySelectorAll(".suggestion-chip").forEach(el => {
+  el.addEventListener("click", () => {
+    containers.input.value = el.textContent || "";
+    handleSend();
+  });
+});
+
+// Load saved conversation
+loadHistory();
+// Update welcome message with user name if available
+(function updateWelcome() {
+  var userName = getUserName();
+  if (!userName) return;
+  var firstMsg = containers.messages.querySelector(".flex.items-start.gap-2\\.5:not(.flex-row-reverse) .text-xs");
+  if (firstMsg && firstMsg.textContent.indexOf("Hi! I'm your NumanX AI assistant") !== -1) {
+    var greeting = "Hey " + userName + "! I'm your NumanX AI assistant. I can answer questions about tools, help with text tasks, and guide you. Try some examples below!";
+    var contentDiv = firstMsg.closest(".text-xs");
+    if (contentDiv) contentDiv.textContent = greeting;
+  }
+})();
+
+// Ask for name on first visit
+askNameIfNeeded();
+
+// Theme swatches
+document.querySelectorAll(".theme-swatch").forEach(s => {
+  s.addEventListener("click", () => {
+    const c = s.dataset.color;
+    document.querySelectorAll("button[class*='bg-violet'], button[class*='bg-purple']").forEach(b => {
+      b.className = b.className
+        .replace(/bg-(violet)-\d+/g, "bg-" + c + "-600")
+        .replace(/hover:bg-(violet)-\d+/g, "hover:bg-" + c + "-500")
+        .replace(/from-(violet)-\d+/g, "from-" + c + "-500")
+        .replace(/to-purple-\d+/g, "to-" + c + "-600");
+    });
+    try { localStorage.setItem("nt_chat_theme", c); } catch (e) {}
+  });
+});
+try { const c = localStorage.getItem("nt_chat_theme"); if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click(); } catch (e) {}
+
+// Typing dots animation
+const style = document.createElement("style");
+style.textContent = `
+  @keyframes typing { 0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }
+  .typing-dot { animation: typing 1.4s infinite ease-in-out; }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  .voice-btn.listening { border-color: #ef4444; background: rgba(239,68,68,0.15); }
+  .voice-dot { width: 10px; height: 10px; border-radius: 50%; background: #ef4444; animation: voicePulse 1s ease-in-out infinite; display: block; }
+  @keyframes voicePulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.7); } 50% { box-shadow: 0 0 0 6px rgba(239,68,68,0); } }
+  .search-highlight { background: rgba(139,92,246,0.15); border-radius: 4px; }
+  .search-highlight.search-active { background: rgba(139,92,246,0.35); outline: 2px solid rgb(139,92,246); outline-offset: 1px; }
+`;
+document.head.appendChild(style);
+
+// Usage tracking
+try {
+  const u = JSON.parse(localStorage.getItem("nt_tool_usage") || "{}");
+  u["ai-chat"] = (u["ai-chat"] || 0) + 1;
+  localStorage.setItem("nt_tool_usage", JSON.stringify(u));
+} catch (e) {}
+</script>
+

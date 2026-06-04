@@ -135,13 +135,13 @@ const categories = ["All", "AI Tools", "Image Tools", "Creator Tools", "Cricket 
         <p class="text-tertiary mt-3 max-w-md mx-auto text-sm">
           Get the latest tools, tips, and guides delivered to your inbox.
         </p>
-        <form class="mt-6 max-w-md mx-auto flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault(); document.getElementById('nl-success').classList.remove('hidden'); this.querySelector('input').value='';">
+        <form class="blog-newsletter-form mt-6 max-w-md mx-auto flex flex-col sm:flex-row gap-3">
           <input type="email" placeholder="Enter your email" required class="flex-1 px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-700 text-white placeholder-zinc-500 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500/60 transition-all duration-200" />
           <button type="submit" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm active:scale-[0.97] transition-all duration-200 shrink-0">
             Subscribe
           </button>
         </form>
-        <p id="nl-success" class="hidden text-emerald-400 text-sm mt-3 font-medium">Thanks for subscribing!</p>
+        <p id="nl-msg" class="hidden text-sm mt-3 font-medium" aria-live="polite"></p>
       </div>
     </div>
   </main>
@@ -210,5 +210,42 @@ const categories = ["All", "AI Tools", "Image Tools", "Creator Tools", "Cricket 
       activeCat = btn.dataset.category;
       filterPosts();
     });
+  });
+
+  // Newsletter form
+  document.querySelector(".blog-newsletter-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const input = e.target.querySelector("input[type='email']") as HTMLInputElement;
+    const msgEl = document.getElementById("nl-msg");
+    const email = input.value;
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        if (msgEl) {
+          msgEl.textContent = data.message || "Thanks for subscribing!";
+          msgEl.classList.remove("hidden", "text-red-400");
+          msgEl.classList.add("text-emerald-400");
+        }
+        input.value = "";
+        if (msgEl) setTimeout(() => msgEl.classList.add("hidden"), 5000);
+      } else {
+        if (msgEl) {
+          msgEl.textContent = data.error || "Subscription failed.";
+          msgEl.classList.remove("hidden", "text-emerald-400");
+          msgEl.classList.add("text-red-400");
+        }
+      }
+    } catch (err) {
+      if (msgEl) {
+        msgEl.textContent = "Network error.";
+        msgEl.classList.remove("hidden", "text-emerald-400");
+        msgEl.classList.add("text-red-400");
+      }
+    }
   });
 </script>

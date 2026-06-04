@@ -17,7 +17,17 @@ const schema = { name: "Economy Rate Calculator", applicationCategory: "Sports",
     <ToolHeader title="Economy" gradient="Rate Pro" desc="Calculate cricket bowling economy rate instantly. Enter runs conceded and overs bowled to get your economy rate." badge="✦ New Tool" slug="economy-rate-calculator" />
     <ShareBar />
     <div class="max-w-xl mx-auto mt-10">
-      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6 relative">
+          <button id="fullscreen-btn" class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+        <div class="flex items-center gap-2 mb-3">
+          <span id="usage-badge" class="text-xs text-muted"></span>
+          <div class="flex gap-1 ml-auto">
+            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
+            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
+            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
+            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+          </div>
+        </div>
         <label class="block text-xs font-medium text-tertiary mb-1.5">Runs Conceded</label>
         <input id="runs-input" type="number" min="0" step="1" value="0" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-400/50 focus:outline-none transition-all mb-4" placeholder="e.g. 42" />
         <label class="block text-xs font-medium text-tertiary mb-1.5">Overs Bowled (e.g. 7.3)</label>
@@ -28,6 +38,12 @@ const schema = { name: "Economy Rate Calculator", applicationCategory: "Sports",
             <div><div class="text-2xl font-black text-amber-400" id="economy-rate">0.00</div><div class="text-xs text-tertiary mt-1">Economy Rate</div></div>
             <div><div class="text-2xl font-black text-white" id="total-runs">0</div><div class="text-xs text-tertiary mt-1">Total Runs</div></div>
             <div><div class="text-2xl font-black text-white" id="total-overs">0.0</div><div class="text-xs text-tertiary mt-1">Total Overs</div></div>
+          </div>
+          <div class="flex items-center justify-center gap-2 mt-4">
+            <button id="share-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all" title="Share">🔗</button>
+            <button id="copy-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy</button>
+            <button id="download-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Download</button>
+            <button id="clear-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Clear</button>
           </div>
         </div>
       </div>
@@ -70,4 +86,61 @@ const schema = { name: "Economy Rate Calculator", applicationCategory: "Sports",
     totalOvers.textContent = whole + "." + ballsPart;
     resultDiv.classList.remove("hidden");
   });
+
+  // ─── Copy ───
+  document.getElementById("copy-btn")?.addEventListener("click", () => {
+    const text = `Economy Rate: ${economyRate.textContent} | Runs: ${totalRuns.textContent} | Overs: ${totalOvers.textContent}`;
+    if (!text) return;
+    navigator.clipboard.writeText(text).catch(() => {});
+    const btn = document.getElementById("copy-btn");
+    btn.textContent = "Copied!";
+    setTimeout(() => { btn.textContent = "Copy"; }, 2000);
+  });
+
+  // ─── Download ───
+  document.getElementById("download-btn")?.addEventListener("click", () => {
+    const content = `Economy Rate: ${economyRate.textContent}\nRuns Conceded: ${totalRuns.textContent}\nOvers Bowled: ${totalOvers.textContent}`;
+    if (!content) return;
+    const blob = new Blob([content], {type:"text/plain"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "economy-rate-results.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  // ─── Clear ───
+  document.getElementById("clear-btn")?.addEventListener("click", () => {
+    runsInput.value = "0";
+    oversInput.value = "0";
+    resultDiv.classList.add("hidden");
+  });
+
+  // ─── Fullscreen ───
+  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
+    const card = document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+    if (!card) return;
+    if (document.fullscreenElement) { document.exitFullscreen(); document.getElementById("fullscreen-btn").textContent = "⛶"; }
+    else { card.requestFullscreen?.() || card.webkitRequestFullscreen?.(); document.getElementById("fullscreen-btn").textContent = "✕"; }
+  });
+  document.addEventListener("fullscreenchange", () => {
+    const btn = document.getElementById("fullscreen-btn");
+    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  });
+
+  // ─── Keyboard shortcuts ───
+  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
+
+  // ─── Usage badge ───
+  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["economy-rate-calculator"])b.textContent="Used "+u["economy-rate-calculator"]+"×";}catch(e){}
+
+  // ─── Share button ───
+  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("output-text")||document.querySelector("[id$='result']");const t=o?.value||o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof showToast==="function")showToast("Link copied!");});
+
+  // ─── Sound effects ───
+  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
+
+  // ─── Color theme picker ───
+  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500");});try{localStorage.setItem("nt_theme",c);}catch(e){}});});
+  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
 </script>

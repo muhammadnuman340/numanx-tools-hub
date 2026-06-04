@@ -17,13 +17,26 @@ const schema = { name: "Countdown Timer", applicationCategory: "Utilities", desc
     <ToolHeader title="Countdown" gradient="Timer Pro" desc="Set a countdown timer for any date and event. Live display of days, hours, minutes, and seconds remaining." badge="✦ New Tool" slug="countdown-timer" />
     <ShareBar />
     <div class="max-w-xl mx-auto mt-10">
-      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6 relative">
+          <button id="fullscreen-btn" class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+        <div class="flex items-center gap-2 mb-3">
+          <span id="usage-badge" class="text-xs text-muted"></span>
+          <div class="flex gap-1 ml-auto">
+            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
+            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
+            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
+            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+          </div>
+        </div>
         <label class="block text-xs font-medium text-tertiary mb-1.5">Event Name</label>
         <input id="event-input" type="text" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-rose-400/50 focus:outline-none transition-all mb-4" placeholder="e.g. New Year 2027" />
         <label class="block text-xs font-medium text-tertiary mb-1.5">Target Date & Time</label>
         <input id="datetime-input" type="datetime-local" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-rose-400/50 focus:outline-none transition-all mb-4" />
         <div class="flex gap-2">
           <button id="start-btn" class="flex-1 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all">Start</button>
+          <button id="share-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-3 rounded-xl border border-surface-3 transition-all" title="Share">🔗</button>
+          <button id="copy-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-3 rounded-xl border border-surface-3 transition-all">Copy</button>
+          <button id="download-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-3 rounded-xl border border-surface-3 transition-all">Download</button>
           <button id="reset-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-4 py-3 rounded-xl border border-surface-3 transition-all">Reset</button>
         </div>
         <div id="countdown-display" class="mt-6 pt-6 border-t border-surface hidden">
@@ -104,4 +117,54 @@ const schema = { name: "Countdown Timer", applicationCategory: "Utilities", desc
     datetimeInput.value = "";
     countdownDisplay.classList.add("hidden");
   });
+
+  // ─── Copy ───
+  document.getElementById("copy-btn")?.addEventListener("click", () => {
+    const text = `${eventNameDisplay.querySelector("span")?.textContent || "Event"}: ${daysVal.textContent}d ${hoursVal.textContent}h ${minsVal.textContent}m ${secsVal.textContent}s`;
+    if (!text) return;
+    navigator.clipboard.writeText(text).catch(() => {});
+    const btn = document.getElementById("copy-btn");
+    btn.textContent = "Copied!";
+    setTimeout(() => { btn.textContent = "Copy"; }, 2000);
+  });
+
+  // ─── Download ───
+  document.getElementById("download-btn")?.addEventListener("click", () => {
+    const text = `${eventNameDisplay.querySelector("span")?.textContent || "Event"}: ${daysVal.textContent}d ${hoursVal.textContent}h ${minsVal.textContent}m ${secsVal.textContent}s`;
+    if (!text) return;
+    const blob = new Blob([text], {type:"text/plain"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "countdown-timer.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  // ─── Fullscreen ───
+  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
+    const card = document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+    if (!card) return;
+    if (document.fullscreenElement) { document.exitFullscreen(); document.getElementById("fullscreen-btn").textContent = "⛶"; }
+    else { card.requestFullscreen?.() || card.webkitRequestFullscreen?.(); document.getElementById("fullscreen-btn").textContent = "✕"; }
+  });
+  document.addEventListener("fullscreenchange", () => {
+    const btn = document.getElementById("fullscreen-btn");
+    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  });
+
+  // ─── Keyboard shortcuts ───
+  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
+
+  // ─── Usage badge ───
+  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["countdown-timer"])b.textContent="Used "+u["countdown-timer"]+"×";}catch(e){}
+
+  // ─── Share button ───
+  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("output-text")||document.querySelector("[id$='result']");const t=o?.value||o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof showToast==="function")showToast("Link copied!");});
+
+  // ─── Sound effects ───
+  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
+
+  // ─── Color theme picker ───
+  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500");});try{localStorage.setItem("nt_theme",c);}catch(e){}});});
+  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
 </script>

@@ -86,9 +86,38 @@ const wcSchema = {
 
         <!-- Text Area — Notion x ChatGPT style -->
         <div class="relative rounded-2xl border border-surface-2 bg-surface-1 focus-within:border-purple-500/60 focus-within:shadow-[0_0_20px_-8px_#a855f7] transition-all duration-300 overflow-hidden">
-          <textarea id="analyzer-input" rows="10" placeholder="Start typing or paste your text here…" class="w-full bg-transparent text-white placeholder-zinc-600 p-5 pb-16 resize-none focus:outline-none text-sm leading-relaxed"></textarea>
+          <div class="flex items-center justify-between px-5 pt-3">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+              <span id="usage-badge" class="text-xs text-muted"></span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="flex gap-1">
+                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
+                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
+                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
+                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+              </div>
+              <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 px-5">
+            <button class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A−</button>
+            <button class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A+</button>
+            <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
+          </div>
+          <div class="flex">
+            <div id="line-nums" class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3" style="min-width:2.5em">1</div>
+            <textarea id="analyzer-input" rows="10" placeholder="Start typing or paste your text here…" class="flex-1 bg-transparent text-white placeholder-zinc-600 p-5 pb-16 resize-none focus:outline-none text-sm leading-relaxed"></textarea>
+          </div>
+          <div id="reading-time" class="text-xs text-muted px-5 -mt-2"></div>
+          <div id="letter-freq" class="px-5 mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
           <div class="absolute bottom-3 right-3 flex items-center gap-2">
+            <select id="export-format" class="bg-surface-2 border border-surface text-[10px] text-tertiary rounded-lg px-2 py-1.5">
+              <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option>
+            </select>
             <button id="clear-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Clear</button>
+            <button id="share-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-2.5 py-1.5 rounded-lg border border-surface-3 transition-all" title="Copy share link">🔗</button>
             <button id="copy-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy</button>
             <button id="download-txt" class="bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-white text-[10px] font-medium px-3 py-1.5 rounded-lg border border-purple-500/30 transition-all">Download TXT</button>
           </div>
@@ -240,6 +269,7 @@ const wcSchema = {
 </MainLayout>
 
 <script>
+  function playPing(){ try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){} }
   const textarea = document.getElementById("analyzer-input");
   const $ = (id) => document.getElementById(id);
   const wordCount = $("word-count");
@@ -364,7 +394,7 @@ const wcSchema = {
     updateStats();
     textarea.focus();
     try { localStorage.removeItem("nt_wc_text"); } catch {}
-    triggerToast("Text cleared", "info");
+    playPing(); triggerToast("Text cleared", "info");
   });
 
   function triggerToast(message: string, variant: "success" | "error" | "info" | "warning" = "success") {
@@ -376,18 +406,118 @@ const wcSchema = {
   copyBtn.addEventListener("click", async () => {
     if (!textarea.value.trim()) { triggerToast("Nothing to copy!", "warning"); return; }
     await navigator.clipboard.writeText(textarea.value);
-    triggerToast("Text copied to clipboard!", "success");
+    playPing(); triggerToast("Text copied to clipboard!", "success");
   });
 
   downloadBtn.addEventListener("click", () => {
-    const blob = new Blob([textarea.value], { type: "text/plain" });
+    const outputText = textarea.value;
+    const fmt=(document.getElementById("export-format") as HTMLSelectElement)?.value||"txt";
+    let content = outputText;
+    let mime = "text/plain";
+    let ext = "txt";
+    if(fmt==="json"){ content=JSON.stringify({result:outputText, tool:"word-counter", timestamp:new Date().toISOString()}); mime="application/json"; ext="json"; }
+    if(fmt==="csv"){ content="Result\n\""+outputText.replace(/"/g,'""')+"\""; mime="text/csv"; ext="csv"; }
+    if(fmt==="html"){ content="<!DOCTYPE html><html><body><pre>"+outputText.replace(/</g,"&lt;")+"</pre></body></html>"; mime="text/html"; ext="html"; }
+    const blob = new Blob([content], { type: mime });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "numanx-word-count.txt";
+    a.download = "numanx-word-count."+ext;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+    playPing(); triggerToast("Downloaded!", "success");
   });
 
+  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
+    const card = document.getElementById("fullscreen-btn").closest(".bg-surface-1.border.border-surface.rounded-2xl") || document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+    if (!card) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      document.getElementById("fullscreen-btn").textContent = "⛶";
+    } else {
+      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
+      document.getElementById("fullscreen-btn").textContent = "✕";
+    }
+  });
+  document.addEventListener("fullscreenchange", () => {
+    const btn = document.getElementById("fullscreen-btn");
+    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  });
+
+  const DRAFT_KEY = "nt_draft_word-counter";
+  (function() {
+    const input = document.getElementById("input-text") || document.querySelector("textarea:not([readonly])");
+    if (!input) return;
+    try {
+      const saved = localStorage.getItem(DRAFT_KEY);
+      if (saved && !input.value) { input.value = saved; input.dispatchEvent(new Event("input")); }
+    } catch(e) {}
+    let saveTimer;
+    input.addEventListener("input", () => {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        try { localStorage.setItem(DRAFT_KEY, input.value); } catch(e) {}
+      }, 500);
+    });
+  })();
+
+  document.querySelector(".font-inc")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.min(24,s+2)+"px"; }); });
+  document.querySelector(".font-dec")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.max(10,s-2)+"px"; }); });
+  try { const s=localStorage.getItem("nt_fs"); if(s) document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px"); } catch(e){}
+
+  document.addEventListener("keydown", e => {
+    if(e.ctrlKey&&e.key==="Enter"){ e.preventDefault(); const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])")||document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])"); if(b) b.click(); }
+    if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){ e.preventDefault(); document.getElementById("clear-btn")?.click(); }
+    if(e.ctrlKey&&(e.key==="D"||e.key==="d")){ e.preventDefault(); document.getElementById("download-txt")?.click(); }
+  });
+
+  try { const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}"); const b=document.getElementById("usage-badge"); if(b&&u["word-counter"]) b.textContent="Used "+u["word-counter"]+"×"; } catch(e){}
+
+  document.getElementById("share-btn")?.addEventListener("click", () => {
+    const o=document.getElementById("analyzer-input")||document.querySelector("[id$='result']");
+    const t=o?.value||o?.textContent||"";
+    if(!t) return;
+    const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));
+    navigator.clipboard.writeText(u).catch(()=>{});
+    if(typeof triggerToast==="function") triggerToast("Link copied!");
+  });
+
+  const rtInput=document.getElementById("analyzer-input")||document.querySelector("textarea:not([readonly])");
+  if(rtInput){
+    rtInput.addEventListener("input", ()=>{
+      const w=rtInput.value?rtInput.value.trim().split(/\s+/).length:0;
+      const e=document.getElementById("reading-time");
+      if(e) e.textContent=Math.max(1,Math.round(w/200))+" min read · "+Math.max(1,Math.round(w/150))+" min speak";
+    });
+    rtInput.dispatchEvent(new Event("input"));
+  }
+
+  const lnInput=document.getElementById("analyzer-input");
+  if(lnInput){
+    const updateLN=()=>{ const n=document.getElementById("line-nums"); if(n) n.textContent=Array.from({length:lnInput.value.split("\n").length},(_,i)=>i+1).join("\n"); };
+    lnInput.addEventListener("input", updateLN);
+    lnInput.addEventListener("scroll", ()=>{ const n=document.getElementById("line-nums"); if(n) n.scrollTop=lnInput.scrollTop; });
+    updateLN();
+  }
+
+  const lfInput=document.getElementById("analyzer-input");
+  if(lfInput){
+    lfInput.addEventListener("input", ()=>{
+      const t=lfInput.value.toLowerCase().replace(/[^a-z]/g,""); if(!t){ document.getElementById("letter-freq").classList.add("hidden"); return; }
+      const f={}; for(const c of t) f[c]=(f[c]||0)+1;
+      const s=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,8); const m=s[0]?s[0][1]:1;
+      const el=document.getElementById("letter-freq"); el.classList.remove("hidden");
+      el.innerHTML=s.map(([c,n])=>`<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n/m)*80+10}%"></div><span class="text-muted">${n}</span></div>`).join("");
+    });
+  }
+
+  document.querySelectorAll(".theme-swatch").forEach(s=>{
+    s.addEventListener("click",()=>{
+      const c=s.dataset.color; const map={purple:"#a855f7",blue:"#3b82f6",green:"#22c55e",pink:"#ec4899",orange:"#f97316"};
+      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach(b=>{ b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500").replace(/from-(purple|violet)-\d+/g,"from-"+c+"-500").replace(/to-purple-\d+/g,"to-"+c+"-600"); });
+      try{localStorage.setItem("nt_theme",c);}catch(e){}
+    });
+  });
+  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
 </script>
 

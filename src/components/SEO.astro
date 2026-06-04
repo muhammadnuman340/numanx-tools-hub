@@ -15,6 +15,15 @@ interface Props {
   modifiedTime?: string;
   tags?: string[];
   type?: "website" | "article" | "product";
+  howto?: {
+    name: string;
+    description: string;
+    steps: Array<{ title: string; text: string; image?: string }>;
+    totalTime?: string;
+    image?: string;
+  };
+  guideSchema?: Record<string, any>;
+  itemList?: Array<{ name: string; url: string; description?: string }>;
 }
 
 const {
@@ -22,6 +31,7 @@ const {
   faq, breadcrumbs, toolSchema, articleSchema,
   publishedTime, modifiedTime, tags,
   type = "website",
+  howto, guideSchema, itemList,
 } = Astro.props;
 
 const siteName = "NumanX Tools";
@@ -58,6 +68,39 @@ const faqSchema = faq && faq.length > 0 ? {
     "@type": "Question",
     "name": item.question,
     "acceptedAnswer": { "@type": "Answer", "text": item.answer }
+  }))
+} : null;
+
+// HowTo schema
+const howtoSchema = howto ? {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": howto.name,
+  "description": howto.description,
+  ...(howto.image ? { "image": howto.image } : {}),
+  ...(howto.totalTime ? { "totalTime": howto.totalTime } : {}),
+  "step": howto.steps.map((s, i) => ({
+    "@type": "HowToStep",
+    "position": i + 1,
+    "name": s.title,
+    "text": s.text,
+    ...(s.image ? { "image": s.image } : {}),
+  })),
+} : null;
+
+// Guide/Article schema for guide pages
+const builtGuideSchema = guideSchema ? { "@context": "https://schema.org", ...guideSchema } : null;
+
+// ItemList schema for list pages
+const itemListSchema = itemList && itemList.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": itemList.map((item, idx) => ({
+    "@type": "ListItem",
+    "position": idx + 1,
+    "url": item.url.startsWith("http") ? item.url : `https://numanx-tools.pages.dev${item.url}`,
+    "name": item.name,
+    ...(item.description ? { "description": item.description } : {}),
   }))
 } : null;
 
@@ -219,6 +262,15 @@ const builtToolSchema = toolSchema ? {
 
 <!-- FAQ Schema -->
 {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+
+<!-- HowTo Schema -->
+{howtoSchema && <script type="application/ld+json" set:html={JSON.stringify(howtoSchema)} />}
+
+<!-- Guide/Article Schema -->
+{builtGuideSchema && <script type="application/ld+json" set:html={JSON.stringify(builtGuideSchema)} />}
+
+<!-- ItemList Schema -->
+{itemListSchema && <script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />}
 
 <!-- Tool Schema -->
 {builtToolSchema && <script type="application/ld+json" set:html={JSON.stringify(builtToolSchema)} />}

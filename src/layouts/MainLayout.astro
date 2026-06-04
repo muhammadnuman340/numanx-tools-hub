@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
+import Sidebar from "../components/Sidebar.astro";
+import AIAssistant from "../components/AIAssistant.astro";
 import Footer from "../components/Footer.astro";
 import SEO from "../components/SEO.astro";
 import SearchBar from "../components/SearchBar.astro";
@@ -96,13 +98,15 @@ const {
     </div>
 
     <Navbar />
-    <div id="main-content">
+    <Sidebar />
+    <div id="main-content" class="sidebar-content lg:ml-[240px] sidebar-collapsed:lg:ml-[62px] transition-all duration-300">
       <slot />
     </div>
     <Footer />
     <BackToTop />
     <SearchBar />
     <Toast />
+    <AIAssistant />
 
     <script>
       (function(){var p=document.getElementById("scroll-progress");if(p)window.addEventListener("scroll",function(){var s=window.scrollY,h=document.documentElement.scrollHeight-window.innerHeight;p.style.width=((h>0?s/h*100:0)+"%")},{passive:true})})();

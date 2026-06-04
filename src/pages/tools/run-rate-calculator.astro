@@ -5,6 +5,7 @@ import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
 import KeyboardHints from "../../components/KeyboardHints.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "How is run rate calculated in cricket?", answer: "Run rate is total runs scored divided by overs faced. E.g., 150 runs in 20 overs = 150 ÷ 20 = 7.50 runs per over." },
@@ -12,6 +13,9 @@ const faqItems = [
   { question: "What is the difference between RR and NRR?", answer: "RR measures a single innings. NRR (Net Run Rate) is the difference between runs scored for and against across a tournament." },
   { question: "How does the chase difficulty meter work?", answer: "It compares current RR to required RR. Easy = current RR > required. Moderate = within 1 RPO. Hard = 1–2 RPO behind. Very Hard = 2–4 RPO behind. Extreme = 4+ RPO behind." },
   { question: "What is a good run rate in ODI cricket?", answer: "A run rate of 5.0–5.5 is par, 6.0–6.5 is strong, and 7+ is dominant in ODI cricket." },
+  { question: "How do you calculate net run rate (NRR)?", answer: "NRR = (runs scored for / overs faced for) - (runs scored against / overs bowled against). It is used in tournaments like the ICC World Cup to break tied points." },
+  { question: "What is a good run rate in Test cricket?", answer: "In Test cricket, run rate is less critical. A rate of 3.5–4.0 is solid, while 4.5+ is aggressive. Building partnerships matters more than raw scoring rate." },
+  { question: "Can this calculator handle partial overs?", answer: "Yes. Enter overs in the format overs.balls (e.g., 12.3 for 12 overs and 3 balls). The calculator converts balls to decimal overs automatically." },
 ];
 
 const rrSchema = {
@@ -26,6 +30,29 @@ const rrSchema = {
     "Net Run Rate (NRR) calculation for tournament analysis"
   ],
 }
+
+const benefits = [
+  { icon: "🏏", title: "Multi-Format Support", desc: "Switch between T20, ODI, and Test formats with one click. Each format has optimized overs and phase breakdowns." },
+  { icon: "🎯", title: "Chase Difficulty Meter", desc: "5-level chase difficulty indicator shows how hard the target is. Easy, Moderate, Hard, Very Hard, or Extreme." },
+  { icon: "📊", title: "Over-by-Over Projections", desc: "See projected runs at current and required rates across Powerplay, middle overs, and death overs." },
+  { icon: "📈", title: "Match Pressure Gauge", desc: "Real-time pressure indicator helps understand the game situation at a glance — Low to Critical." },
+  { icon: "⚡", title: "Winning Pace Analysis", desc: "Get a plain-English summary of the chase situation with actionable insights for captains and analysts." },
+  { icon: "🆓", title: "Free & No Sign-Up", desc: "All features including NRR calculation, projections, and download are completely free with no account required." },
+];
+
+const howToSteps = [
+  { num: "1", title: "Select Format", desc: "Choose T20, ODI, or Test from the format presets. Each format has optimized overs and phase breakdowns." },
+  { num: "2", title: "Choose Calculation Mode", desc: "Switch between Current RR (runs scored / overs bowled) or Required RR (target calculation)." },
+  { num: "3", title: "Enter Match Data", desc: "Input runs scored, overs bowled, target score, or overs remaining depending on your selected mode." },
+  { num: "4", title: "Analyze Results", desc: "View current RR, required RR, chase difficulty, match pressure, over-by-over projections, and winning pace analysis." },
+];
+
+const useCases = [
+  { icon: "🏆", title: "Tournament NRR Tracking", desc: "Track your team's Net Run Rate across a tournament. Essential for World Cup, Asia Cup, and league stage qualification scenarios." },
+  { icon: "📺", title: "Live Match Analysis", desc: "Use during live matches to understand chase difficulty and predict outcomes. Great for commentators and analysts." },
+  { icon: "👨‍🏫", title: "Cricket Coaching", desc: "Teach players about run rate management, when to accelerate, and how to pace an innings across different formats." },
+  { icon: "🎮", title: "Fantasy Cricket", desc: "Make informed fantasy cricket decisions by analyzing team run rates, chase capabilities, and match momentum." },
+];
 ---
 
 <MainLayout
@@ -34,6 +61,12 @@ const rrSchema = {
   keywords="run rate calculator, cricket run rate, required run rate, chase difficulty, match pressure, over by over projection, t20, odi, test"
   toolSchema={rrSchema}
   faq={faqItems}
+  howto={{
+    name: "How to Calculate Cricket Run Rate",
+    description: "Calculate current and required run rates for any cricket format in 4 steps.",
+    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
+    totalTime: "PT1M",
+  }}
   breadcrumbs={[
     { name: "Home", url: "/" },
     { name: "Tools", url: "/tools/" },
@@ -110,7 +143,17 @@ const rrSchema = {
 
         <!-- ─── Stats Dashboard (Cricbuzz-style) ─── -->
         <div id="stats-dashboard" class="hidden space-y-4">
-          <div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6">
+<div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6 relative">
+          <button id="fullscreen-btn" class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+            <div class="flex items-center gap-2 mb-3">
+              <span id="usage-badge" class="text-xs text-muted"></span>
+              <div class="flex gap-1 ml-auto">
+                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
+                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
+                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
+                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+              </div>
+            </div>
             <h3 class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-4">Match Stats</h3>
             <div class="grid grid-cols-3 gap-3">
               <div class="rounded-xl bg-zinc-950/40 border border-surface p-3.5 text-center hover:border-surface-2 transition-all">
@@ -196,10 +239,15 @@ const rrSchema = {
           </div>
 
           <!-- Copy Results -->
-          <div class="flex justify-center">
+          <div class="flex items-center justify-center gap-2">
+            <button id="share-btn" class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95" title="Share">🔗</button>
             <button id="copy-rr-btn" class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
               Copy Results
+            </button>
+            <button id="download-btn" class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download
             </button>
           </div>
         </div>
@@ -269,6 +317,35 @@ const rrSchema = {
         </h2>
         <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
       </div>
+
+      <ToolContentSections
+        toolSlug="run-rate-calculator"
+        toolName="Run Rate Calculator"
+        category="Cricket Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+
+      <section class="mt-16 text-center">
+        <div class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10">
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight">
+            Master Cricket
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> Run Rate Analysis</span>
+          </h2>
+          <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
+            Analyze every chase, track tournament NRR, and make data-driven cricket decisions. All free, no sign-up needed.
+          </p>
+          <div class="mt-6 flex gap-3 justify-center flex-wrap">
+            <button onclick="document.querySelector('#crr-runs')?.focus()" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30">
+              Start Calculating
+            </button>
+            <a href="/tools/strike-rate-calculator/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700">
+              Try Strike Rate Calculator
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   </main>
 </MainLayout>
@@ -523,5 +600,51 @@ const rrSchema = {
     triggerToast("Results copied!", "success");
   });
 
+  // ─── Download ───
+  document.getElementById("download-btn")?.addEventListener("click", () => {
+    const text = [
+      `Current RR: ${rrValue.textContent}`,
+      `Required RR: ${requiredRrValue.textContent}`,
+      `Projected Score: ${projectedValue.textContent}`,
+      chaseDifficulty?.classList.contains("hidden") ? "" : `Chase Difficulty: ${chaseLabel?.textContent}`,
+      pressureSection?.classList.contains("hidden") ? "" : `Match Pressure: ${pressureLabel?.textContent}`,
+      paceText?.classList.contains("hidden") ? "" : `Analysis: ${paceText?.textContent}`,
+    ].filter(Boolean).join(" | ");
+    if (!text) return;
+    const blob = new Blob([text], {type:"text/plain"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "run-rate-results.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  // ─── Fullscreen ───
+  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
+    const card = document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+    if (!card) return;
+    if (document.fullscreenElement) { document.exitFullscreen(); document.getElementById("fullscreen-btn").textContent = "⛶"; }
+    else { card.requestFullscreen?.() || card.webkitRequestFullscreen?.(); document.getElementById("fullscreen-btn").textContent = "✕"; }
+  });
+  document.addEventListener("fullscreenchange", () => {
+    const btn = document.getElementById("fullscreen-btn");
+    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  });
+
+  // ─── Keyboard shortcuts ───
+  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
+
+  // ─── Usage badge ───
+  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["run-rate-calculator"])b.textContent="Used "+u["run-rate-calculator"]+"×";}catch(e){}
+
+  // ─── Share button ───
+  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("output-text")||document.querySelector("[id$='result']");const t=o?.value||o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof showToast==="function")showToast("Link copied!");});
+
+  // ─── Sound effects ───
+  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
+
+  // ─── Color theme picker ───
+  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500");});try{localStorage.setItem("nt_theme",c);}catch(e){}});});
+  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
 </script>
 

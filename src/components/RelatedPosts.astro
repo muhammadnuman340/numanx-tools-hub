@@ -1,33 +1,29 @@
 ---
 interface Props {
-  currentSlug: string;
+  currentSlug?: string;
   category?: string;
   tags?: string[];
+  limit?: number;
 }
 
-const { currentSlug, category, tags } = Astro.props;
+const postModules = import.meta.glob("../pages/blog/*.md", { eager: true });
+const allPosts = Object.entries(postModules).map(([path, mod]) => ({
+  slug: path.replace("../pages/blog/", "").replace(".md", ""),
+  ...mod,
+})).sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
 
-const allPosts = [
-  { slug: "best-ai-tools-for-students", title: "Best AI Tools for Students", cat: "AI Tools", desc: "Top AI tools every student should use in 2026.", url: "/blog/best-ai-tools-for-students/" },
-  { slug: "best-free-image-tools-2026", title: "Best Free Image Tools 2026", cat: "Image Tools", desc: "The best free image editing and conversion tools.", url: "/blog/best-free-image-tools-2026/" },
-  { slug: "best-youtube-tools-for-creators", title: "Best YouTube Tools for Creators", cat: "Creator Tools", desc: "Essential tools for YouTube creators.", url: "/blog/best-youtube-tools-for-creators/" },
-  { slug: "how-to-compress-images", title: "How to Compress Images", cat: "Image Tools", desc: "Learn how to compress images without losing quality.", url: "/blog/how-to-compress-images/" },
-  { slug: "top-10-ai-tools-content-creators-2026", title: "Top 10 AI Tools for Content Creators in 2026", cat: "AI Tools", desc: "The best AI tools revolutionizing content creation.", url: "/blog/top-10-ai-tools-content-creators-2026/" },
-  { slug: "how-to-optimize-images-for-web", title: "How to Optimize Images for Web Performance", cat: "Image Tools", desc: "Optimize images for faster load times.", url: "/blog/how-to-optimize-images-for-web/" },
-  { slug: "cricket-run-rate-beginners-guide", title: "Understanding Cricket Run Rate", cat: "Cricket Tools", desc: "A beginner's guide to cricket run rates.", url: "/blog/cricket-run-rate-beginners-guide/" },
-  { slug: "complete-guide-password-security", title: "Complete Guide to Password Security", cat: "Productivity", desc: "Everything you need to know about password security.", url: "/blog/complete-guide-password-security/" },
-  { slug: "qr-codes-marketing-best-practices", title: "QR Codes in Marketing Best Practices", cat: "Creator Tools", desc: "How to use QR codes effectively in marketing.", url: "/blog/qr-codes-marketing-best-practices/" },
-  { slug: "hashtag-strategy-viral-growth", title: "Hashtag Strategy for Viral Growth", cat: "Creator Tools", desc: "Master hashtag strategy for social media growth.", url: "/blog/hashtag-strategy-viral-growth/" },
-  { slug: "image-compression-without-losing-quality", title: "Image Compression Without Losing Quality", cat: "Image Tools", desc: "Compress images while maintaining visual quality.", url: "/blog/image-compression-without-losing-quality/" },
-  { slug: "webp-vs-png-vs-jpg-which-format-wins", title: "WebP vs PNG vs JPG: Which Format Wins?", cat: "Image Tools", desc: "Compare image formats for web performance.", url: "/blog/webp-vs-png-vs-jpg-which-format-wins/" },
-  { slug: "age-calculator-fun-facts-birthday", title: "Age Calculator: Fun Facts About Your Birthday", cat: "Productivity", desc: "Discover fun facts about your birthday.", url: "/blog/age-calculator-fun-facts-birthday/" },
-  { slug: "how-to-resize-images-social-media", title: "How to Resize Images for Social Media", cat: "Image Tools", desc: "Perfect image sizes for every social platform.", url: "/blog/how-to-resize-images-social-media/" },
-];
+const { currentSlug, category, tags, limit = 3 } = Astro.props;
 
 const related = allPosts
   .filter((p) => p.slug !== currentSlug)
-  .filter((p) => category ? p.cat === category : true)
-  .slice(0, 3);
+  .filter((p) => {
+    if (category && p.frontmatter.category === category) return true;
+    if (tags && tags.length > 0 && p.frontmatter.tags) {
+      return p.frontmatter.tags.some(t => tags.includes(t));
+    }
+    return !category && !tags;
+  })
+  .slice(0, limit);
 ---
 
 {related.length > 0 && (
@@ -35,13 +31,12 @@ const related = allPosts
     <h3 class="text-lg font-bold text-white mb-5">Related Articles</h3>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
       {related.map((post) => (
-        <a href={post.url} class="group rounded-xl border border-surface bg-surface-1 p-4 hover:border-purple-500/40 transition-all duration-300">
-          <span class="text-[10px] text-purple-400 font-medium">{post.cat}</span>
-          <h4 class="text-sm font-semibold text-primary group-hover:text-white mt-1 transition-colors">{post.title}</h4>
-          <p class="text-xs text-muted mt-1 line-clamp-2">{post.desc}</p>
+        <a href={`/blog/${post.slug}/`} class="group rounded-xl border border-surface bg-surface-1 p-4 hover:border-purple-500/40 transition-all duration-300">
+          <span class="text-[10px] text-purple-400 font-medium">{post.frontmatter.category}</span>
+          <h4 class="text-sm font-semibold text-primary group-hover:text-white mt-1 transition-colors">{post.frontmatter.title}</h4>
+          <p class="text-xs text-muted mt-1 line-clamp-2">{post.frontmatter.description}</p>
         </a>
       ))}
     </div>
   </div>
 )}
-

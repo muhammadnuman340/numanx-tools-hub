@@ -1,0 +1,116 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import ShareBar from "../../components/ShareBar.astro";
+import RelatedTools from "../../components/RelatedTools.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+
+const faqItems = [
+  { question: "What languages are supported?", answer: "AI Code Assistant supports JavaScript, TypeScript, Python, HTML, CSS, SQL, and JSON. Each language has tailored formatting rules for indentation, minification passes, and validation checks specific to its syntax patterns." },
+  { question: "How does code validation work?", answer: "Validation parses JSON to verify structure, checks braces and parentheses balance for JavaScript and TypeScript, matches opening/closing tags for HTML, balances braces for CSS, checks SQL keyword structure, and verifies Python indentation consistency." },
+  { question: "Is my code stored or uploaded?", answer: "No. All processing happens entirely in your browser. Your code never leaves your device. No server requests are made for formatting, minification, or validation." },
+];
+
+const schema = {
+  name: "AI Code Assistant",
+  applicationCategory: "Developer Tools",
+  description: "Format, minify, and validate code in JavaScript, TypeScript, Python, HTML, CSS, SQL, and JSON. Client-side processing with instant results.",
+  featureList: ["Multi-language formatting", "Code minification", "Syntax validation", "Line & character stats", "100% client-side"],
+};
+---
+<MainLayout title="AI Code Assistant - Free Online Code Formatter Minifier &amp; Validator" description="Format, minify, and validate code in JavaScript, TypeScript, Python, HTML, CSS, SQL, and JSON. All processing runs in your browser." keywords="code formatter, code minifier, code validator, javascript formatter, python formatter, html formatter, css formatter, sql formatter, json validator, typescript formatter" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Code Assistant",url:"/tools/ai-code-assistant/"}]}>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
+    <ToolHeader title="AI Code" gradient="Code Assistant" desc="Format, minify, and validate code in multiple languages. All processing runs client-side for instant results." badge="&#x2726; Developer Tool" slug="ai-code-assistant" />
+    <ShareBar />
+    <div class="max-w-xl mx-auto mt-10">
+      <div class="bg-surface-1 border border-surface rounded-2xl p-6 relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+            <span id="usage-badge" class="text-xs text-muted"></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="flex gap-1">
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
+              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+            </div>
+            <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">&#x26F6;</button>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5 mb-2">
+          <button class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A&#x2212;</button>
+          <button class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A+</button>
+          <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
+        </div>
+        <select id="lang-select" class="w-full mb-3 bg-surface-2 border border-surface-3 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-violet-500/60 transition-all"><option value="javascript">JavaScript</option><option value="python">Python</option><option value="html">HTML</option><option value="css">CSS</option><option value="sql">SQL</option><option value="json">JSON</option><option value="typescript">TypeScript</option></select>
+        <div class="flex">
+          <div id="line-nums" class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3" style="min-width:2.5em">1</div>
+          <textarea id="input-text" class="flex-1 h-32 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-violet-500/50 focus:outline-none transition-all resize-none font-mono" placeholder="Paste your code here..."></textarea>
+        </div>
+        <div id="code-stats" class="text-xs text-muted mt-1"></div>
+        <div class="flex gap-2 mt-3"><button id="format-btn" class="flex-1 py-2 rounded-lg text-xs font-semibold border transition-all bg-surface-2 text-tertiary border-surface-3 hover:text-white hover:border-violet-500/40">Format</button><button id="minify-btn" class="flex-1 py-2 rounded-lg text-xs font-semibold border transition-all bg-surface-2 text-tertiary border-surface-3 hover:text-white hover:border-violet-500/40">Minify</button><button id="validate-btn" class="flex-1 py-2 rounded-lg text-xs font-semibold border transition-all bg-surface-2 text-tertiary border-surface-3 hover:text-white hover:border-violet-500/40">Validate</button></div>
+        <div class="mt-4 pt-4 border-t border-surface">
+          <label class="block text-xs font-medium text-tertiary mb-1.5">Result</label>
+          <textarea id="output-text" class="w-full h-24 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:outline-none resize-none font-mono" readonly placeholder="Result will appear here..."></textarea>
+          <div class="flex gap-2 mt-2">
+            <select id="export-format" class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"><option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option></select>
+            <button id="download-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Download</button>
+            <button id="share-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-2.5 py-1.5 rounded-lg border border-surface-3 transition-all" title="Copy share link">&#x1F517;</button>
+            <button id="copy-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy</button>
+            <button id="clear-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">Developer Tool</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Code Assistant formats code by analyzing brace and indentation structure per language. JavaScript and TypeScript use bracket-based indentation, Python detects colon-driven block boundaries, HTML nests tags by depth, and CSS structures selectors with brace tracking. Minification strips unnecessary whitespace and comments while preserving functionality. Validation checks syntax rules including JSON parsing, brace/parenthesis balancing, tag matching, keyword presence, and indentation consistency.</p><p>Everything runs locally in your browser — no code is ever sent to a server, ensuring complete privacy.</p></div></section>
+    <RelatedTools current="ai-code-assistant" />
+    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+  </div></main>
+</MainLayout>
+<script>
+function playPing(){ try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){} }
+const iEl=document.getElementById("input-text"),oEl=document.getElementById("output-text"),lSel=document.getElementById("lang-select"),sEl=document.getElementById("code-stats");
+function tT(m,v){if(window.__showToast)window.__showToast({message:m,variant:v})}
+function fmtJSON(c){try{return JSON.stringify(JSON.parse(c),null,2)}catch(e){throw new Error("Invalid JSON: "+e.message)}}
+function fmtJS(c){let n=0;return c.split('\n').map(l=>{let t=l.trim();if(!t)return '';let cl=0;for(let x of t){if('}])'.indexOf(x)>=0)cl++;else break}n=Math.max(0,n-cl);let r='  '.repeat(n)+t;let op=0;for(let x of t){if('{(['.indexOf(x)>=0)op++}n+=op-cl;return r}).join('\n')}
+function fmtPy(c){let n=0;return c.split('\n').map(l=>{let t=l.trim();if(!t)return '';if(/^(return|raise|pass|break|continue|elif|except|finally)/.test(t))n=Math.max(0,n-1);let r='    '.repeat(n)+t;if(t.endsWith(':'))n++;return r}).join('\n')}
+function fmtHTML(c){let n=0;const v=new Set('br,hr,img,input,meta,link,area,base,col,embed,source,track,wbr,path,circle,rect,line,stop,use'.split(','));return c.split('\n').map(l=>{let t=l.trim();if(!t)return '';if(/^<\//.test(t))n=Math.max(0,n-1);let r='  '.repeat(n)+t;let m=t.match(/^<([a-zA-Z][a-zA-Z0-9]*)/);if(m&&!/^<\//.test(t)&&!/\/>$/.test(t)&&!v.has(m[1].toLowerCase())&&t.indexOf('</'+m[1]+'>')<0)n++;return r}).join('\n')}
+function fmtCSS(c){let n=0;return c.split('\n').map(l=>{let t=l.trim();if(!t)return '';if(t.startsWith('}'))n=Math.max(0,n-1);let r='  '.repeat(n)+t;if(t.indexOf('{')>=0)n++;return r}).join('\n')}
+function fmtSQL(c){return c.replace(/\b(select|from|where|and|or|join|inner|left|right|full|outer|on|group\s+by|order\s+by|having|limit|offset|insert\s+into|values|update|set|delete|create|table|drop|alter|add|column|into|set|as|distinct|count|sum|avg|min|max|exists|not|null|is|between|like|in|case|when|then|else|end)\b/gi,m=>m.toUpperCase())}
+function formatCode(c,l){switch(l){case'json':return fmtJSON(c);case'javascript':case'typescript':return fmtJS(c);case'python':return fmtPy(c);case'html':return fmtHTML(c);case'css':return fmtCSS(c);case'sql':return fmtSQL(c);default:return c}}
+function minJSON(c){try{return JSON.stringify(JSON.parse(c))}catch(e){throw new Error("Invalid JSON: "+e.message)}}
+function minJS(c){return c.replace(/\/\/.*/g,'').replace(/\/\*[\s\S]*?\*\//g,'').replace(/\s+/g,' ').trim()}
+function minPy(c){return c.split('\n').map(l=>l.trim()).filter(l=>l&&!l.startsWith('#')).join('\n')}
+function minHTML(c){return c.replace(/\s{2,}/g,' ').replace(/>\s+</g,'><').trim()}
+function minCSS(c){return c.replace(/\/\*[\s\S]*?\*\//g,'').replace(/\s*([{}:;,])\s*/g,'$1').replace(/;\s*}/g,'}').trim()}
+function minSQL(c){return c.replace(/\s+/g,' ').trim()}
+function minifyCode(c,l){switch(l){case'json':return minJSON(c);case'javascript':case'typescript':return minJS(c);case'python':return minPy(c);case'html':return minHTML(c);case'css':return minCSS(c);case'sql':return minSQL(c);default:return c.replace(/\s+/g,' ').trim()}}
+function valJSON(c){try{JSON.parse(c);return{valid:!0,errors:[]}}catch(e){return{valid:!1,errors:[e.message]}}}
+function valJS(c){let s=[],p={')':'(',']':'[','}':'{'},e=[];for(let i=0;i<c.length;i++){let ch=c[i];if('([{'.indexOf(ch)>=0)s.push({c:ch,i});else if(')]}'.indexOf(ch)>=0){if(!s.length)e.push("Unexpected "+ch+" at "+i);else{let l=s.pop();if(p[ch]!==l.c)e.push("Mismatched "+l.c+" at "+l.i+" with "+ch+" at "+i)}}}while(s.length){let l=s.pop();e.push("Unclosed "+l.c+" at "+l.i)}return{valid:!e.length,errors:e}}
+function valHTML(c){let s=[],e=[];const r= /<\/?([a-zA-Z][a-zA-Z0-9]*)\b[^>]*>/g;let m;const v=new Set('br,hr,img,input,meta,link,area,base,col,embed,source,track,wbr,path,circle,rect,line,stop,use'.split(','));while((m=r.exec(c))!==null){let t=m[0],n=m[1].toLowerCase();if(t.startsWith('</')){if(!s.length)e.push("Unexpected </"+n+"> at "+m.index);else{let l=s.pop();if(l!==n)e.push("Closing </"+n+"> but <"+l+"> expected at "+m.index)}}else if(!t.endsWith('/>')&&!v.has(n))s.push(n)}while(s.length)e.push("Unclosed <"+s.pop()+">");return{valid:!e.length,errors:e}}
+function valCSS(c){let b=0;for(let i=0;i<c.length;i++){if(c[i]==='{')b++;if(c[i]==='}')b--}let e=[];if(b>0)e.push(b+" unclosed opening brace(s)");if(b<0)e.push(Math.abs(b)+" unexpected closing brace(s)");return{valid:!e.length,errors:e}}
+function valSQL(c){let e=[];const hS=/\bselect\b/i.test(c),hF=/\bfrom\b/i.test(c);if(hS&&!hF)e.push("SELECT without FROM");if(!hS&&!hF)e.push("No SQL keywords detected");return{valid:!e.length,errors:e}}
+function valPy(c){let e=[],ls=c.split('\n').filter(l=>{let t=l.trim();return t&&!t.startsWith('#')});for(let i=0;i<ls.length;i++){let l=ls[i].trim();if(l.endsWith(':')&&i+1<ls.length){let ni=ls[i+1].search(/\S/);if(ni<=ls[i].search(/\S/))e.push("Line "+(i+2)+" should be indented after '"+l+"'")}}return{valid:!e.length,errors:e}}
+function validateCode(c,l){switch(l){case'json':return valJSON(c);case'javascript':case'typescript':return valJS(c);case'html':return valHTML(c);case'css':return valCSS(c);case'sql':return valSQL(c);case'python':return valPy(c);default:return{valid:!0,errors:[]}}}
+document.getElementById("format-btn").addEventListener("click",()=>{let c=iEl.value;if(!c.trim()){tT("Please enter code to format","warning");return}try{oEl.value=formatCode(c,lSel.value);playPing();tT("Formatted!","success")}catch(e){oEl.value="Error: "+e.message;tT("Formatting failed","error")}});
+document.getElementById("minify-btn").addEventListener("click",()=>{let c=iEl.value;if(!c.trim()){tT("Please enter code to minify","warning");return}try{oEl.value=minifyCode(c,lSel.value);playPing();tT("Minified!","success")}catch(e){oEl.value="Error: "+e.message;tT("Minification failed","error")}});
+document.getElementById("validate-btn").addEventListener("click",()=>{let c=iEl.value;if(!c.trim()){tT("Please enter code to validate","warning");return}let r=validateCode(c,lSel.value);if(r.valid){oEl.value="Validation passed \u2014 no errors found.";playPing();tT("Code is valid!","success")}else{oEl.value=r.errors.join('\n');tT(r.errors.length+" error(s) found","warning")}});
+document.getElementById("copy-btn").addEventListener("click",async()=>{if(!oEl.value.trim()){tT("Nothing to copy!","warning");return}await navigator.clipboard.writeText(oEl.value);playPing();tT("Copied!","success")});
+document.getElementById("download-btn")?.addEventListener("click",()=>{let t=oEl.value.trim();if(!t){tT("Nothing to download!","warning");return}let f=document.getElementById("export-format")?.value||"txt",c=t,m="text/plain",e="txt";if(f==="json"){c=JSON.stringify({result:t,tool:"ai-code-assistant",timestamp:new Date().toISOString()});m="application/json";e="json"}if(f==="csv"){c="Result\n\""+t.replace(/"/g,'""')+"\"";m="text/csv";e="csv"}if(f==="html"){c="<!DOCTYPE html><html><body><pre>"+t.replace(/</g,"&lt;")+"</pre></body></html>";m="text/html";e="html"}let b=new Blob([c],{type:m}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="code-assistant-output."+e;a.click();URL.revokeObjectURL(a.href);playPing();tT("Downloaded!","success")});
+document.getElementById("clear-btn")?.addEventListener("click",()=>{iEl.value="";oEl.value="";sEl.textContent="";iEl.focus();playPing();tT("Cleared!","info")});
+document.getElementById("fullscreen-btn")?.addEventListener("click",()=>{let c=document.getElementById("fullscreen-btn").closest(".bg-surface-1.border.border-surface.rounded-2xl")||document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");if(!c)return;if(document.fullscreenElement){document.exitFullscreen();document.getElementById("fullscreen-btn").textContent="\u26F6"}else{c.requestFullscreen?.()||c.webkitRequestFullscreen?.();document.getElementById("fullscreen-btn").textContent="\u2715"}});
+document.addEventListener("fullscreenchange",()=>{let b=document.getElementById("fullscreen-btn");if(b)b.textContent=document.fullscreenElement?"\u2715":"\u26F6"});
+(function(){const k="nt_draft_ai-code-assistant",i=document.getElementById("input-text")||document.querySelector("textarea:not([readonly])");if(!i)return;try{let s=localStorage.getItem(k);if(s&&!i.value){i.value=s;i.dispatchEvent(new Event("input"))}}catch(e){}let t;i.addEventListener("input",()=>{clearTimeout(t);t=setTimeout(()=>{try{localStorage.setItem(k,i.value)}catch(e){}},500)})})();
+document.querySelector(".font-inc")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.min(24,s+2)+"px"})});
+document.querySelector(".font-dec")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.max(10,s-2)+"px"})});
+try{let s=localStorage.getItem("nt_fs");if(s)document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px")}catch(e){}
+document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();let b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])")||document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])");if(b)b.click()}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click()}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click()}});
+try{let u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}"),b=document.getElementById("usage-badge");if(b&&u["ai-code-assistant"])b.textContent="Used "+u["ai-code-assistant"]+"\u00D7"}catch(e){}
+document.getElementById("share-btn")?.addEventListener("click",()=>{let o=document.getElementById("output-text")||document.querySelector("[id$='result']"),t=o?.value||o?.textContent||"";if(!t)return;let u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof tT==="function")tT("Link copied!")});
+iEl.addEventListener("input",()=>{let c=iEl.value,l=c?c.split('\n').length:0,ch=c?c.length:0;sEl.textContent=l+" lines, "+ch+" characters"});iEl.dispatchEvent(new Event("input"));
+const ln=document.getElementById("input-text");if(ln){let u=()=>{let n=document.getElementById("line-nums");if(n)n.textContent=Array.from({length:ln.value.split("\n").length},(_,i)=>i+1).join("\n")};ln.addEventListener("input",u);ln.addEventListener("scroll",()=>{let n=document.getElementById("line-nums");if(n)n.scrollTop=ln.scrollTop});u()}
+document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{let c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500").replace(/from-(purple|violet)-\d+/g,"from-"+c+"-500").replace(/to-purple-\d+/g,"to-"+c+"-600")});try{localStorage.setItem("nt_theme",c)}catch(e){}})});
+try{let c=localStorage.getItem("nt_theme");if(c)document.querySelector('.theme-swatch[data-color="'+c+'"]')?.click()}catch(e){}
+</script>
