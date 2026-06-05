@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "How does this image cropper work?", answer: "Upload an image, then drag the crop area handles or adjust the width/height values to select your desired region. The preview updates in real-time. Click 'Crop' to generate the final cropped image for download." },
@@ -11,6 +12,9 @@ const faqItems = [
   { question: "Can I crop to a specific aspect ratio?", answer: "Yes. Choose from presets like 1:1 (square), 4:3, 16:9 (widescreen), or select 'Freeform' to crop to any dimensions." },
   { question: "Is my image uploaded to a server?", answer: "No. All image processing happens entirely in your browser using the Canvas API. Your images never leave your device." },
   { question: "Will cropping reduce image quality?", answer: "Cropping removes pixels — it doesn't recompress or degrade the remaining image. The output quality depends on the export format: PNG is lossless, JPG uses the quality level you select." },
+  { question: "What is the best aspect ratio for social media?", answer: "Instagram feed: 1:1 (1080x1080). YouTube thumbnails: 16:9 (1280x720). Twitter: 16:9 or 2:1. LinkedIn banners: 4:1 (1584x396). Use the preset buttons to apply these ratios instantly." },
+  { question: "Can I crop to exact pixel dimensions?", answer: "Yes. Select Freeform mode and enter the exact width and height in pixels. The crop box adjusts to match your values while respecting the image boundaries." },
+  { question: "Is there a limit on image file size?", answer: "No. Since all processing happens in your browser using the Canvas API, there are no server-side limits. Very large images may use significant memory depending on your device." },
 ];
 
 const cropperSchema = {
@@ -25,6 +29,29 @@ const cropperSchema = {
     "100% client-side — no uploads, no servers"
   ],
 };
+
+const benefits = [
+  { icon: "🎯", title: "Precision Cropping", desc: "Drag handles to crop with pixel-perfect precision. Real-time preview shows exact dimensions as you adjust." },
+  { icon: "📐", title: "Aspect Ratio Presets", desc: "Choose from 1:1, 4:3, 16:9, or Freeform mode. Lock aspect ratio to maintain consistent compositions." },
+  { icon: "🖼️", title: "Multi-Format Export", desc: "Export cropped images as PNG (lossless, transparency) or JPG (smaller file size, quality control)." },
+  { icon: "🔒", title: "100% Private", desc: "All cropping happens in your browser. Your images never leave your device." },
+  { icon: "⚡", title: "Real-Time Preview", desc: "See your crop selection update instantly as you drag handles or type dimensions." },
+  { icon: "🆓", title: "Free Forever", desc: "No sign-ups, no limits, no hidden charges. Unlimited cropping for everyone." },
+];
+
+const howToSteps = [
+  { num: "1", title: "Upload Image", desc: "Drag & drop or browse to select a PNG or JPG image. The editor loads automatically with a default crop area." },
+  { num: "2", title: "Adjust Crop Area", desc: "Drag the crop box handles to select your desired region. Use aspect ratio presets for consistent framing." },
+  { num: "3", title: "Refine Dimensions", desc: "Type exact width and height values for pixel-perfect crops. The preview updates in real-time." },
+  { num: "4", title: "Crop & Download", desc: "Choose PNG or JPG format, adjust quality, and download your cropped image instantly." },
+];
+
+const useCases = [
+  { icon: "📱", title: "Social Media", desc: "Crop photos to 1:1 for Instagram, 16:9 for YouTube thumbnails, or custom dimensions for any platform." },
+  { icon: "🎨", title: "Photo Editing", desc: "Remove unwanted edges, reframe compositions, and focus on your subject with precision cropping." },
+  { icon: "🌐", title: "Web Design", desc: "Crop images to fit exact layout dimensions for hero sections, cards, galleries, and responsive designs." },
+  { icon: "🖨️", title: "Print Prep", desc: "Crop images to specific print aspect ratios like 4:3, 3:2, or custom dimensions for photo printing." },
+];
 ---
 
 <MainLayout

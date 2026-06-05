@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "What is the Fisher-Yates shuffle algorithm?", answer: "The Fisher-Yates shuffle is a mathematically optimal algorithm for generating a random permutation of a finite sequence. It works by iterating through the array from the last element to the first, swapping each element with a randomly selected earlier element, ensuring every permutation is equally likely." },
@@ -12,7 +13,14 @@ const faqItems = [
 ];
 const schema = { name: "List Randomizer", applicationCategory: "Utilities", description: "Randomize lists with Fisher-Yates shuffle. Shuffle items, pick random entries, and manage your lists easily.", featureList: ["Fisher-Yates shuffle", "Random item picker", "Custom pick count", "Clear and reset"] };
 ---
-<MainLayout title="List Randomizer - Shuffle and Randomize Lists Online" description="Randomize lists with Fisher-Yates shuffle. Shuffle items, pick random entries, and manage your lists easily." keywords="list randomizer, shuffle list, random picker, fisher-yates shuffle, list shuffler" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"List Randomizer",url:"/tools/list-randomizer/"}]}>
+<MainLayout title="List Randomizer - Shuffle and Randomize Lists Online" description="Randomize lists with Fisher-Yates shuffle. Shuffle items, pick random entries, and manage your lists easily." keywords="list randomizer, shuffle list, random picker, fisher-yates shuffle, list shuffler" toolSchema={schema} faq={faqItems}
+  howto={{
+    name: "How to Use List Randomizer",
+    description: "Step-by-step guide for using List Randomizer.",
+    steps: [],
+    totalTime: "PT1M",
+  }}
+  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"List Randomizer",url:"/tools/list-randomizer/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="List" gradient="Randomizer Pro" desc="Randomize lists with Fisher-Yates shuffle. Shuffle items, pick random entries, and manage your lists easily." badge="✦ New Tool" slug="list-randomizer" />
     <ShareBar />

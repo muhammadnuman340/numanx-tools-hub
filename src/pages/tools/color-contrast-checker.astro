@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "What is WCAG contrast ratio?", answer: "WCAG (Web Content Accessibility Guidelines) defines contrast ratios to ensure text is readable. The ratio is calculated as (L1 + 0.05) / (L2 + 0.05) where L1 is the relative luminance of the lighter color and L2 of the darker color. AA requires 4.5:1 for normal text, AAA requires 7:1." },
@@ -12,7 +13,14 @@ const faqItems = [
 ];
 const schema = { name: "Color Contrast Checker", applicationCategory: "Utilities", description: "Check color contrast ratios for WCAG AA/AAA compliance. Enter foreground and background hex colors to verify accessibility.", featureList: ["WCAG AA/AAA checking", "Normal and large text", "UI component compliance", "Visual color preview"] };
 ---
-<MainLayout title="Color Contrast Checker - WCAG Accessibility Checker" description="Check color contrast ratios for WCAG AA/AAA compliance. Enter foreground and background hex colors to verify accessibility." keywords="color contrast checker, WCAG contrast, accessibility checker, contrast ratio, hex color contrast" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Color Contrast Checker",url:"/tools/color-contrast-checker/"}]}>
+<MainLayout title="Color Contrast Checker - WCAG Accessibility Checker" description="Check color contrast ratios for WCAG AA/AAA compliance. Enter foreground and background hex colors to verify accessibility." keywords="color contrast checker, WCAG contrast, accessibility checker, contrast ratio, hex color contrast" toolSchema={schema} faq={faqItems}
+  howto={{
+    name: "How to Use Color Contrast Checker",
+    description: "Step-by-step guide for using Color Contrast Checker.",
+    steps: [],
+    totalTime: "PT1M",
+  }}
+  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Color Contrast Checker",url:"/tools/color-contrast-checker/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="Contrast" gradient="Checker Pro" desc="Check color contrast ratios for WCAG AA/AAA compliance. Enter foreground and background hex colors to verify accessibility." badge="✦ New Tool" slug="color-contrast-checker" />
     <ShareBar />

@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "How does the diff checker work?", answer: "It compares two texts line by line. Lines present in one version but not the other are highlighted — added lines in green, removed lines in red, and unchanged lines in neutral." },
@@ -12,7 +13,14 @@ const faqItems = [
 ];
 const schema = { name: "Diff Checker", applicationCategory: "Developer Tools", description: "Compare two texts side-by-side and see added, removed, and unchanged lines highlighted instantly.", featureList: ["Side-by-side comparison", "Line-by-line diff highlighting", "Added (green) / removed (red) markers", "100% client-side"] };
 ---
-<MainLayout title="Diff Checker - Compare Text Online Free" description="Compare two texts side-by-side and see added, removed, and unchanged lines highlighted instantly. Free online diff checker." keywords="diff checker, text comparison, diff tool, compare text, line diff" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Diff Checker",url:"/tools/diff-checker/"}]}>
+<MainLayout title="Diff Checker - Compare Text Online Free" description="Compare two texts side-by-side and see added, removed, and unchanged lines highlighted instantly. Free online diff checker." keywords="diff checker, text comparison, diff tool, compare text, line diff" toolSchema={schema} faq={faqItems}
+  howto={{
+    name: "How to Use Diff Checker",
+    description: "Step-by-step guide for using Diff Checker.",
+    steps: [],
+    totalTime: "PT1M",
+  }}
+  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Diff Checker",url:"/tools/diff-checker/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="Diff" gradient="Checker Pro" desc="Compare two texts side-by-side and instantly see added, removed, and unchanged lines highlighted." badge="✦ New Tool" slug="diff-checker" />
     <ShareBar />

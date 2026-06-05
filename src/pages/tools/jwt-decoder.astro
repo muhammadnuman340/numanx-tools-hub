@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "What is a JWT token?", answer: "JWT (JSON Web Token) is a compact, URL-safe token format used for authentication and information exchange. It consists of three parts: a header (algorithm & type), a payload (claims/data), and a signature (verification)." },
@@ -12,7 +13,14 @@ const faqItems = [
 ];
 const schema = { name: "JWT Decoder", applicationCategory: "Developer Tools", description: "Decode JWT tokens instantly — view the header, payload, and signature information in your browser.", featureList: ["Decode JWT header and payload", "Formatted JSON display", "Signature status indicator", "100% client-side"] };
 ---
-<MainLayout title="JWT Decoder - Decode JSON Web Tokens Online Free" description="Decode JWT tokens instantly — view the header, payload, and signature in your browser. Free online JWT decoder." keywords="jwt decoder, jwt, json web token, decode jwt, jwt tool, token decoder" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"JWT Decoder",url:"/tools/jwt-decoder/"}]}>
+<MainLayout title="JWT Decoder - Decode JSON Web Tokens Online Free" description="Decode JWT tokens instantly — view the header, payload, and signature in your browser. Free online JWT decoder." keywords="jwt decoder, jwt, json web token, decode jwt, jwt tool, token decoder" toolSchema={schema} faq={faqItems}
+  howto={{
+    name: "How to Use JWT Decoder",
+    description: "Step-by-step guide for using JWT Decoder.",
+    steps: [],
+    totalTime: "PT1M",
+  }}
+  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"JWT Decoder",url:"/tools/jwt-decoder/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="JWT" gradient="Decoder Pro" desc="Decode JWT tokens instantly — inspect the header, payload, and signature in a clean interface." badge="✦ New Tool" slug="jwt-decoder" />
     <ShareBar />

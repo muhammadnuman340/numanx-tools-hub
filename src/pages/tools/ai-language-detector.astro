@@ -4,11 +4,40 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
+
+const benefits = [
+  { title: "Multi-Language Support", desc: "Detects 28 languages including English, Spanish, French, German, Chinese, Arabic, Russian, Japanese, and more" },
+  { title: "Confidence Scoring", desc: "Each detection includes a confidence percentage so you know how reliable the result is" },
+  { title: "Real-Time Detection", desc: "Get instant language identification as you type with live character, word, and line counts" },
+  { title: "Script Identification", desc: "Not just the language — also identifies the writing script such as Latin, Cyrillic, Arabic, Devanagari, and others" },
+  { title: "Privacy-First Analysis", desc: "All text analysis happens locally in your browser. Nothing is sent to any server or stored" },
+  { title: "Completely Free", desc: "No sign-ups, no usage limits, no premium tiers — unlimited language detection" },
+];
+
+const howToSteps = [
+  { title: "Paste your text", desc: "Copy and paste any text you want to identify into the input box — works with any length" },
+  { title: "Click detect", desc: "Press the Detect Language button and the AI will analyze n-gram patterns to find the best match" },
+  { title: "Review results", desc: "View the detected language, confidence score, and writing script in the results panel" },
+  { title: "Copy or export", desc: "Copy the results to clipboard, download as TXT/JSON/CSV/HTML, or share with a link" },
+];
+
+const useCases = [
+  { title: "Content Localization", desc: "Quickly identify the language of user-generated content to route it to the right translation workflow" },
+  { title: "International Research", desc: "Determine the language of foreign language documents and articles before deciding how to process them" },
+  { title: "Customer Support", desc: "Automatically detect the language of incoming support tickets to assign them to the right team" },
+  { title: "Data Cleaning", desc: "Sort and categorize multilingual datasets by detecting and tagging the language of each entry" },
+];
 
 const faqItems = [
   { question: "How does AI language detection work?", answer: "Language detection uses character n-gram frequency analysis. Every language has unique patterns of letter combinations (n-grams). By comparing the n-gram profile of your input text against pre-computed profiles for 28 languages, the tool identifies the closest match and provides a confidence score." },
   { question: "How accurate is the language detector?", answer: "Accuracy depends on text length and quality. For text longer than 50 characters, accuracy is very high. Very short texts (under 20 characters) or texts with mixed languages may produce less reliable results. The confidence score helps you gauge reliability." },
   { question: "Can it detect multiple languages in one text?", answer: "Currently, the detector identifies the primary language of the entire text. For multilingual content, the dominant language (the one with the most matching n-gram patterns) is reported. We recommend testing each language segment separately for best results." },
+  { question: "What languages does the detector support?", answer: "The AI Language Detector supports 28 languages: English, Spanish, French, German, Italian, Portuguese, Dutch, Russian, Chinese, Japanese, Arabic, Hindi, Turkish, Swedish, Polish, Danish, Finnish, Norwegian, Czech, Greek, Korean, Thai, Vietnamese, Indonesian, Malay, Romanian, Hungarian, Ukrainian, and Hebrew. More languages are added regularly." },
+  { question: "Why do short texts give less accurate results?", answer: "Short texts (under 20 characters) provide fewer n-gram samples for comparison, making it harder to distinguish between similar languages. For best accuracy, use text that is at least 50 characters long. The confidence score will automatically reflect lower reliability for short inputs." },
+  { question: "Can I use the language detector for SEO?", answer: "Yes. Identifying the language of your content helps with hreflang tags, multilingual SEO strategies, and ensuring your content reaches the right audience in search results." },
+  { question: "Is there a limit on how many texts I can analyze?", answer: "No. There are no usage limits or restrictions. You can analyze as many texts as you want, completely free. All processing is done locally in your browser." },
+  { question: "How is my data protected when using this tool?", answer: "Your privacy is fully protected. All language detection processing happens entirely in your browser using JavaScript. Your text is never transmitted over the internet, stored on any server, or accessible to third parties." },
 ];
 
 const schema = {

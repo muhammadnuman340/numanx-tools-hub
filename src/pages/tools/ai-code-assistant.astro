@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "What languages are supported?", answer: "AI Code Assistant supports JavaScript, TypeScript, Python, HTML, CSS, SQL, and JSON. Each language has tailored formatting rules for indentation, minification passes, and validation checks specific to its syntax patterns." },
@@ -18,7 +19,14 @@ const schema = {
   featureList: ["Multi-language formatting", "Code minification", "Syntax validation", "Line & character stats", "100% client-side"],
 };
 ---
-<MainLayout title="AI Code Assistant - Free Online Code Formatter Minifier &amp; Validator" description="Format, minify, and validate code in JavaScript, TypeScript, Python, HTML, CSS, SQL, and JSON. All processing runs in your browser." keywords="code formatter, code minifier, code validator, javascript formatter, python formatter, html formatter, css formatter, sql formatter, json validator, typescript formatter" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Code Assistant",url:"/tools/ai-code-assistant/"}]}>
+<MainLayout title="AI Code Assistant - Free Online Code Formatter Minifier &amp; Validator" description="Format, minify, and validate code in JavaScript, TypeScript, Python, HTML, CSS, SQL, and JSON. All processing runs in your browser." keywords="code formatter, code minifier, code validator, javascript formatter, python formatter, html formatter, css formatter, sql formatter, json validator, typescript formatter" toolSchema={schema} faq={faqItems}
+  howto={{
+    name: "How to Use AI Code Assistant",
+    description: "Step-by-step guide for using AI Code Assistant.",
+    steps: [],
+    totalTime: "PT1M",
+  }}
+  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Code Assistant",url:"/tools/ai-code-assistant/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="AI Code" gradient="Code Assistant" desc="Format, minify, and validate code in multiple languages. All processing runs client-side for instant results." badge="&#x2726; Developer Tool" slug="ai-code-assistant" />
     <ShareBar />

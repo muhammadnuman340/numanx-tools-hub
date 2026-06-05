@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "What does the SQL formatter do?", answer: "It takes raw SQL queries and formats them with proper indentation, line breaks before major clauses, and optional keyword capitalization for better readability." },
@@ -12,7 +13,14 @@ const faqItems = [
 ];
 const schema = { name: "SQL Formatter", applicationCategory: "Developer Tools", description: "Format and minify SQL queries with keyword capitalization, indentation, and line breaks. Free online SQL formatter.", featureList: ["Format SQL with proper indentation", "Minify SQL to a single line", "Uppercase/lowercase keyword toggle", "One-click copy output", "100% client-side"] };
 ---
-<MainLayout title="SQL Formatter - Format SQL Queries Online Free" description="Format and minify SQL queries with proper indentation, keyword capitalization, and line breaks. Free online SQL formatter for developers." keywords="sql formatter, sql beautifier, sql pretty, format sql, sql tool, developer tools" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"SQL Formatter",url:"/tools/sql-formatter/"}]}>
+<MainLayout title="SQL Formatter - Format SQL Queries Online Free" description="Format and minify SQL queries with proper indentation, keyword capitalization, and line breaks. Free online SQL formatter for developers." keywords="sql formatter, sql beautifier, sql pretty, format sql, sql tool, developer tools" toolSchema={schema} faq={faqItems}
+  howto={{
+    name: "How to Use SQL Formatter",
+    description: "Step-by-step guide for using SQL Formatter.",
+    steps: [],
+    totalTime: "PT1M",
+  }}
+  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"SQL Formatter",url:"/tools/sql-formatter/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="SQL" gradient="Formatter Pro" desc="Format and minify SQL queries with proper indentation, keyword capitalization, and clean layout." badge="✦ New Tool" slug="sql-formatter" />
     <ShareBar />

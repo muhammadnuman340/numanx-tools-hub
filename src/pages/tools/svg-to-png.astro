@@ -4,13 +4,41 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "Is the SVG to PNG conversion done server-side?", answer: "No, all conversion happens entirely in your browser. The SVG is rendered onto an HTML5 Canvas element using a Blob URL, then exported as a PNG image. Your SVG code never leaves your device." },
   { question: "What SVG features are supported?", answer: "Most standard SVG elements and styling are supported since the conversion uses the browser's native SVG rendering engine through Canvas. However, advanced features like external fonts, external images, or complex filters may not render correctly." },
   { question: "What dimensions should I use for the PNG?", answer: "The width and height you specify determine the output PNG dimensions in pixels. For best results, ensure your SVG uses relative or consistent coordinates. Higher dimensions produce larger, sharper images but also increase the file size." },
+  { question: "Can I convert SVG with external images or fonts?", answer: "External resources like images, fonts, or CSS files referenced in your SVG may not render correctly because the browser sandboxes SVG rendering on Canvas. For best results, embed all assets directly in the SVG markup." },
+  { question: "What is the advantage of SVG over PNG?", answer: "SVG is a vector format that scales infinitely without losing quality, making it ideal for logos and icons. PNG is a raster format needed for platforms that don't support SVG, like most image editors and social media." },
+  { question: "Is the SVG code stored or logged?", answer: "No. All processing happens client-side in your browser. Your SVG code is not sent to any server, stored in any database, or logged in any way. Complete privacy is guaranteed." },
+  { question: "What file formats can I export to?", answer: "PNG is the primary export format with customizable dimensions. You can also copy the result as raw text, JSON, CSV, or HTML using the export format dropdown in the preview section." },
 ];
 const schema = { name: "SVG to PNG Converter", applicationCategory: "Image", description: "Convert SVG code to PNG images instantly in your browser. Custom dimensions, live preview, and one-click download.", featureList: ["Client-side conversion", "Custom dimensions", "Live preview", "One-click download"] };
+
+const benefits = [
+  { icon: "🔄", title: "Vector to Raster", desc: "Convert scalable SVG vectors to PNG raster images compatible with all platforms, editors, and social media." },
+  { icon: "📐", title: "Custom Dimensions", desc: "Set exact width and height in pixels. Generate PNG at any size from your SVG code." },
+  { icon: "👁️", title: "Live Preview", desc: "See the converted PNG instantly before downloading. Make sure every detail renders correctly." },
+  { icon: "🔒", title: "100% Private", desc: "SVG rendering and PNG conversion happen entirely in your browser. Your code never leaves your device." },
+  { icon: "⚡", title: "Instant Processing", desc: "No server round-trips. Your SVG is rendered locally via Canvas API and exported as PNG in milliseconds." },
+  { icon: "🆓", title: "Free Forever", desc: "No sign-ups, no limits, no hidden charges. Unlimited SVG to PNG conversions for everyone." },
+];
+
+const howToSteps = [
+  { num: "1", title: "Paste SVG Code", desc: "Copy and paste your SVG markup into the code editor. Supports any standard SVG with inline styling." },
+  { num: "2", title: "Set Dimensions", desc: "Enter the desired width and height in pixels. These determine the output PNG resolution." },
+  { num: "3", title: "Convert to PNG", desc: "Click convert to render your SVG onto a Canvas element and export as a PNG image." },
+  { num: "4", title: "Download", desc: "Preview the result and download your PNG image. The file is ready for immediate use." },
+];
+
+const useCases = [
+  { icon: "🎨", title: "Design Assets", desc: "Convert SVG icons and illustrations to PNG for use in design tools, presentations, and documents." },
+  { icon: "🌐", title: "Website Assets", desc: "Generate PNG fallbacks for SVG images on websites that need browser compatibility across all platforms." },
+  { icon: "📱", title: "App Development", desc: "Convert SVG vectors to PNG assets at exact resolutions for mobile and desktop app interfaces." },
+  { icon: "🖨️", title: "Print Design", desc: "Convert SVG logos and graphics to high-resolution PNG for print materials and branding assets." },
+];
 ---
 <MainLayout title="SVG to PNG Converter - Convert SVG to PNG Online Free" description="Convert SVG code to PNG images instantly in your browser. Custom dimensions, live preview, and one-click download." keywords="svg to png, convert svg, svg converter, png converter, svg to image" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"SVG to PNG Converter",url:"/tools/svg-to-png/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">

@@ -4,6 +4,30 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
+
+const benefits = [
+  { title: "Four Readability Scores", desc: "Get Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog Index, and SMOG Index — all in one analysis" },
+  { title: "Visual Score Gauge", desc: "See your Flesch Reading Ease score displayed on a beautiful gauge chart for instant visual understanding" },
+  { title: "Detailed Text Statistics", desc: "View word count, sentence count, syllable count, complex words, average words per sentence, and more" },
+  { title: "Grade Level Assessment", desc: "Understand exactly what education level is required to read your text with grade-level scoring" },
+  { title: "Color-Coded Feedback", desc: "Readability levels are color-coded from green (easy) to red (difficult) for quick scanning" },
+  { title: "Privacy-First Processing", desc: "All text analysis happens entirely in your browser. Nothing is sent to a server or stored" },
+];
+
+const howToSteps = [
+  { title: "Paste your text", desc: "Copy and paste any article, document, or passage into the input box for analysis" },
+  { title: "Click analyze", desc: "Press the Analyze Readability button to compute all four readability formulas instantly" },
+  { title: "Review scores", desc: "Check the Flesch gauge, grade levels, and detailed statistics in the results panel" },
+  { title: "Improve your text", desc: "Use the feedback to simplify sentences, replace complex words, and improve overall readability" },
+];
+
+const useCases = [
+  { title: "Content Writing", desc: "Ensure your blog posts, articles, and web content are written at the right level for your target audience" },
+  { title: "Educational Materials", desc: "Verify that textbooks, handouts, and learning materials match the intended grade level of students" },
+  { title: "Business Communication", desc: "Check that internal memos, reports, and client communications are clear and easy to understand" },
+  { title: "Healthcare Content", desc: "Use SMOG Index to ensure patient education materials meet health literacy guidelines" },
+];
 
 const faqItems = [
   { question: "What is a good Flesch Reading Ease score?", answer: "Scores typically range from 0-100. 60-70 is considered 'plain English' and easily understood by 13-15 year olds. Scores above 80 are very easy to read (conversational), while scores below 30 are very difficult (academic/technical). Most professional content aims for 50-70." },

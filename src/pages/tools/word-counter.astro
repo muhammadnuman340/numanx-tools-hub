@@ -5,6 +5,7 @@ import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
 import KeyboardHints from "../../components/KeyboardHints.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "How do I count words in a text?", answer: "Simply type or paste your text into the text area above. The word count, character count, and other stats update instantly as you type. No button clicking required." },
@@ -12,6 +13,9 @@ const faqItems = [
   { question: "What counts as a word?", answer: "A word is any sequence of characters separated by spaces or line breaks. Hyphenated words count as one word. Numbers and symbols are also counted as words when separated by spaces." },
   { question: "Does it count characters with or without spaces?", answer: "We show both! Total characters includes spaces, and characters without spaces excludes them. Many platforms count spaces in their character limits." },
   { question: "What is keyword density?", answer: "Keyword density shows how frequently a word appears in your text as a percentage of total words. It helps with SEO optimization — a healthy density is typically 1-3%." },
+  { question: "How does the readability score work?", answer: "The readability score uses the Flesch-Kincaid formula based on average sentence length and syllables per word. Scores range from 0 (complex) to 100 (easy). Aim for 60+ for broad audiences." },
+  { question: "What is the difference between reading time and speaking time?", answer: "Reading time is calculated at 200 words per minute (average silent reading). Speaking time uses 150 words per minute (average conversational pace). Both help you tailor content for your audience." },
+  { question: "Does the word counter count numbers and symbols?", answer: "Yes, the counter counts all characters including numbers, symbols, and punctuation. Words are sequences separated by spaces. Hyphenated words like 'well-known' count as a single word." },
 ];
 
 const wcSchema = {
@@ -26,6 +30,29 @@ const wcSchema = {
     "Privacy-first — all processing stays in your browser"
   ],
 }
+
+const benefits = [
+  { icon: "⚡", title: "Real-Time Stats", desc: "Words, characters, sentences, and paragraphs update instantly as you type. No buttons to click — just start typing and watch the dashboard come alive." },
+  { icon: "📊", title: "Keyword Density", desc: "See which words you use most with frequency percentages. Optimize your content for SEO with ideal keyword density of 1-3%." },
+  { icon: "🎯", title: "Readability Score", desc: "Get a Flesch-Kincaid readability score with color-coded feedback. Know instantly if your writing is easy, fair, or complex to read." },
+  { icon: "⏱️", title: "Reading & Speaking Time", desc: "Know exactly how long your content takes to read (200 WPM) and speak (150 WPM). Perfect for presentations, scripts, and audio content." },
+  { icon: "🔍", title: "Advanced Analysis", desc: "Track average word length, longest word, unique word count, and character counts with and without spaces for detailed text analysis." },
+  { icon: "🆓", title: "Completely Free", desc: "No sign-ups, no limits, no hidden charges. Analyze unlimited text with all features including keyword density and readability scoring." },
+];
+
+const howToSteps = [
+  { num: "1", title: "Type or Paste Text", desc: "Start typing or paste any text into the analysis area. The word counter updates automatically with zero delay." },
+  { num: "2", title: "Review the Dashboard", desc: "Watch words, characters, sentences, and paragraphs count in real-time. Each stat updates as you add or remove text." },
+  { num: "3", title: "Analyze Keyword Density", desc: "Check the keyword density panel to see which words appear most. Aim for 1-3% density for optimal SEO performance." },
+  { num: "4", title: "Check Readability", desc: "Use the readability meter and advanced stats to refine your writing. Adjust sentence length and word choice for better scores." },
+];
+
+const useCases = [
+  { icon: "✍️", title: "Content Writing", desc: "Track word counts for blog posts, articles, and essays. Ensure your content meets platform requirements and SEO best practices." },
+  { icon: "🎓", title: "Academic Writing", desc: "Stay within word limits for assignments, theses, and research papers. Monitor keyword usage and readability for clearer academic prose." },
+  { icon: "📱", title: "Social Media", desc: "Craft posts that fit character limits on Twitter, Instagram captions, and LinkedIn updates. Know exact counts before posting." },
+  { icon: "📋", title: "Professional Reports", desc: "Write concise business reports and proposals. Track readability to ensure your message is clear to all stakeholders." },
+];
 ---
 
 <MainLayout
@@ -34,6 +61,12 @@ const wcSchema = {
   keywords="word counter, character counter, sentence counter, paragraph counter, reading time, keyword density"
   toolSchema={wcSchema}
   faq={faqItems}
+  howto={{
+    name: "How to Use Word Counter",
+    description: "Count words, characters, sentences, and analyze keyword density and readability in 4 easy steps.",
+    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
+    totalTime: "PT1M",
+  }}
   breadcrumbs={[
     { name: "Home", url: "/" },
     { name: "Tools", url: "/tools/" },
@@ -255,8 +288,6 @@ const wcSchema = {
         { keys: "Ctrl+Z", label: "Undo" },
       ]} />
 
-      <RelatedTools current="word-counter" />
-
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
           Frequently Asked
@@ -264,6 +295,38 @@ const wcSchema = {
         </h2>
         <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
       </div>
+
+      <ToolContentSections
+        toolSlug="word-counter"
+        toolName="Word Counter"
+        category="Utility Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+
+      <!-- ─── CTA Section ─── -->
+      <section class="mt-16 text-center">
+        <div class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10">
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight">
+            Start Analyzing
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> Your Text Free</span>
+          </h2>
+          <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
+            No sign-up required. No limits. Analyze unlimited text with word count, keyword density, and readability scoring completely free.
+          </p>
+          <div class="mt-6 flex gap-3 justify-center flex-wrap">
+            <button onclick="document.querySelector('#analyzer-input')?.focus()" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30">
+              Start Analyzing
+            </button>
+            <a href="/tools/age-calculator/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700">
+              Try Age Calculator
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <RelatedTools current="word-counter" />
     </div>
   </main>
 </MainLayout>

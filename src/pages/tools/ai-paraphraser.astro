@@ -4,6 +4,30 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
+
+const benefits = [
+  { title: "Four Paraphrasing Modes", desc: "Choose from Standard, Fluent, Formal, and Creative modes — each with unique transformation rules for different needs" },
+  { title: "Synonym Intelligence", desc: "Built-in dictionary of hundreds of synonyms with context-aware replacement for natural-sounding results" },
+  { title: "Sentence Restructuring", desc: "Fluent and Creative modes actively restructure sentences for improved flow and originality beyond simple word swaps" },
+  { title: "Formal Tone Control", desc: "Formal mode expands contractions and elevates vocabulary for professional and academic writing" },
+  { title: "Instant Results", desc: "See your paraphrased text immediately with zero loading time — no server round-trips required" },
+  { title: "Completely Private", desc: "All processing happens in your browser. Your text never leaves your device and is never stored" },
+];
+
+const howToSteps = [
+  { title: "Paste your text", desc: "Copy and paste the text you want to rewrite into the input box" },
+  { title: "Choose paraphrasing mode", desc: "Select Standard, Fluent, Formal, or Creative mode depending on the tone you want to achieve" },
+  { title: "Click paraphrase", desc: "Hit the Paraphrase button and watch as the AI rewrites your text with intelligent synonym replacement" },
+  { title: "Review and copy", desc: "Check the output, try different modes for variety, and copy the result to your clipboard" },
+];
+
+const useCases = [
+  { title: "Academic Writing", desc: "Rephrase essays and papers to improve clarity, tone, and avoid unintentional plagiarism" },
+  { title: "Content Marketing", desc: "Refresh blog posts, social media content, and web copy with fresh phrasing for better engagement" },
+  { title: "Professional Communication", desc: "Polish emails, reports, and proposals with formal language that conveys authority and professionalism" },
+  { title: "Creative Writing", desc: "Experiment with different phrasing styles for stories, poems, and creative projects" },
+];
 
 const faqItems = [
   { question: "How does AI paraphrasing work?", answer: "The AI Paraphraser uses a built-in synonym dictionary to intelligently replace words with suitable alternatives. Different modes apply different transformation rules — Standard replaces common words, Fluent restructures short phrases, Formal uses elevated vocabulary, and Creative applies more varied replacements for maximum originality." },

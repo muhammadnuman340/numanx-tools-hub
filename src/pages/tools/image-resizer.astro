@@ -6,6 +6,7 @@ import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
 import HowToUse from "../../components/HowToUse.astro";
 import KeyboardHints from "../../components/KeyboardHints.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 
 const faqItems = [
@@ -15,6 +16,8 @@ const faqItems = [
     { question: "What export format should I choose?", answer: "Use PNG for maximum quality and transparency. Use JPG for photographs. Use WebP for modern websites — it combines small file size with excellent quality." },
     { question: "Can I resize multiple images at once?", answer: "Yes. Upload up to 20 images and resize them all in a single click with the same dimensions, aspect ratio, and format settings. See analytics across all resized files." },
     { question: "What is aspect ratio lock?", answer: "Aspect ratio lock maintains the original width-to-height proportion when resizing. When enabled, changing the width automatically adjusts the height (and vice versa) to prevent image distortion." },
+    { question: "Does resizing reduce image quality?", answer: "Resizing down (making images smaller) generally preserves quality well. Resizing up (enlarging) requires interpolation and may reduce sharpness. For best quality when resizing up, use PNG or WebP format and the highest quality setting." },
+    { question: "What is the best format for resized images?", answer: "PNG for maximum quality and transparency. JPG for photographs where smaller file size is important. WebP for modern websites — it offers excellent compression with good quality. Choose based on your use case." },
   ];
 const irSchema = {
   "name": "Image Resizer Pro",
@@ -28,6 +31,29 @@ const irSchema = {
     "100% client-side — no uploads, no servers, zero data transfer"
   ],
 }
+
+const benefits = [
+  { icon: "📐", title: "Aspect Ratio Lock", desc: "Lock proportions to prevent distortion. Change width and height auto-adjusts to maintain the perfect aspect ratio every time." },
+  { icon: "🎯", title: "Social Media Presets", desc: "8 presets for Instagram, YouTube, TikTok, Twitter, LinkedIn, and more. One-click sizing for every platform." },
+  { icon: "🔄", title: "Multi-Format Export", desc: "Export resized images as PNG, JPG, or WebP. Choose the perfect format for your use case." },
+  { icon: "🔒", title: "100% Private", desc: "All resizing happens in your browser. Your images never leave your device." },
+  { icon: "⚡", title: "Batch Processing", desc: "Resize up to 20 images at once with the same dimensions and format settings." },
+  { icon: "🆓", title: "Free Forever", desc: "No sign-ups, no limits, no hidden charges. Unlimited resizing for everyone." },
+];
+
+const howToSteps = [
+  { num: "1", title: "Upload Images", desc: "Drag & drop or browse to select your images. Supports JPG, PNG, WebP, BMP, and GIF — up to 20 files at once." },
+  { num: "2", title: "Set Dimensions", desc: "Choose from 8 social media presets or enter custom width and height. Toggle aspect ratio lock to maintain proportions." },
+  { num: "3", title: "Choose Format", desc: "Select from PNG, JPG, or WebP export format. Each format offers different quality and file size trade-offs." },
+  { num: "4", title: "Download", desc: "Preview before/after results and download your resized images individually or all at once." },
+];
+
+const useCases = [
+  { icon: "📱", title: "Social Media", desc: "Resize images to Instagram, YouTube, TikTok, Twitter, and LinkedIn specs instantly with built-in presets." },
+  { icon: "🌐", title: "Web Publishing", desc: "Resize website images for consistent hero sections, thumbnails, and responsive layouts without manual editing." },
+  { icon: "🛒", title: "E-commerce", desc: "Standardize product image dimensions across your online store for a professional, consistent look." },
+  { icon: "📧", title: "Email Marketing", desc: "Resize images to email-compliant dimensions that load fast and display correctly across all email clients." },
+];
 ---
 
 <MainLayout

@@ -5,6 +5,7 @@ import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
 import KeyboardHints from "../../components/KeyboardHints.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "What is a good strike rate in T20 cricket?", answer: "A strike rate of 120–130 is good, 130–150 is excellent, and 150+ is world-class in T20 cricket." },
@@ -12,6 +13,9 @@ const faqItems = [
   { question: "What is the difference between batting and bowling SR?", answer: "Batting SR measures runs per 100 balls (higher is better). Bowling SR measures balls per wicket (lower is better)." },
   { question: "What is a good bowling strike rate?", answer: "In T20s, under 20 is excellent, 20–25 is good. In ODIs, under 35 is excellent." },
   { question: "How is Impact Rating calculated?", answer: "Impact Rating combines strike rate and runs scored into a single 0–100 score. It normalizes SR against a baseline of 100 and weights it by total runs contribution." },
+  { question: "What is a good strike rate in ODI cricket?", answer: "In ODIs, a strike rate of 85–100 is competitive, 100–110 is excellent, and 110+ is world-class. The longer format allows more time to build an innings." },
+  { question: "How does the aggression meter work?", answer: "The aggression maps SR to 5 levels: Defensive (<85), Steady (85–110), Aggressive (110–140), Very Aggressive (140–170), and Explosive (170+). It provides a visual arrow indicator." },
+  { question: "Can I compare two players' strike rates?", answer: "Yes. Use the Player Comparison section below the main calculator. Enter runs and balls for Player A and Player B to see a side-by-side SR comparison with a winner highlight." },
 ];
 
 const srSchema = {
@@ -26,6 +30,29 @@ const srSchema = {
     "Batting average and dot-ball percentage metrics"
   ],
 }
+
+const benefits = [
+  { icon: "🏏", title: "Batting Strike Rate Analysis", desc: "Calculate batting SR instantly with performance tier ratings from Poor to Explosive. Live updates as you type." },
+  { icon: "🎯", title: "Bowling Strike Rate Analysis", desc: "Track how many balls per wicket bowlers take. Lower bowling SR means consistent wicket-taking ability." },
+  { icon: "📊", title: "Player Comparison Tool", desc: "Compare two players side-by-side with identical inputs. See who has the better strike rate at a glance." },
+  { icon: "📈", title: "Impact Rating & Match Influence", desc: "Combined 0-100 score that normalizes SR against a baseline and weights it by total runs contribution." },
+  { icon: "⚡", title: "Aggression Meter Visualizer", desc: "5-level aggression meter maps strike rate from Defensive to Explosive with a dynamic arrow indicator." },
+  { icon: "🆓", title: "Free & No Sign-Up", desc: "All features including player comparison, impact rating, and download are completely free with no account required." },
+];
+
+const howToSteps = [
+  { num: "1", title: "Enter Runs Scored", desc: "Input the total runs scored by the batter in the Runs Scored field. This is the numerator for strike rate calculation." },
+  { num: "2", title: "Enter Balls Faced", desc: "Input the number of balls faced by the batter. Strike rate = (Runs ÷ Balls) × 100." },
+  { num: "3", title: "Calculate Strike Rate", desc: "The calculator updates instantly as you type. View batting SR, performance tier, and impact rating." },
+  { num: "4", title: "Analyze Performance", desc: "Review aggression meter, match influence score, and compare with other players using the comparison tool." },
+];
+
+const useCases = [
+  { icon: "🏆", title: "Fantasy Cricket Selection", desc: "Evaluate player strike rates to pick the best fantasy XI. Compare batsmen across teams and tournaments for optimal picks." },
+  { icon: "👨‍🏫", title: "Cricket Coaching & Training", desc: "Teach young players about the importance of strike rate, scoring rate management, and batting efficiency across formats." },
+  { icon: "📺", title: "Live Match Analysis", desc: "Track strike rates in real-time during matches. Great for commentators, analysts, and passionate fans following the game." },
+  { icon: "📊", title: "Tournament Player Comparison", desc: "Compare strike rates of players across tournaments like IPL, PSL, BBL, and World Cup to identify top performers." },
+];
 ---
 
 <MainLayout
@@ -34,6 +61,12 @@ const srSchema = {
   keywords="strike rate calculator, batting strike rate, bowling strike rate, impact rating, aggression meter, cricket analytics, babar azam, virat kohli"
   toolSchema={srSchema}
   faq={faqItems}
+  howto={{
+    name: "How to Calculate Cricket Strike Rate",
+    description: "Calculate batting and bowling strike rates with impact rating, aggression meter, and player comparison in 4 steps.",
+    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
+    totalTime: "PT1M",
+  }}
   breadcrumbs={[
     { name: "Home", url: "/" },
     { name: "Tools", url: "/tools/" },
@@ -366,6 +399,35 @@ const srSchema = {
         </h2>
         <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
       </div>
+
+      <ToolContentSections
+        toolSlug="strike-rate-calculator"
+        toolName="Strike Rate Calculator"
+        category="Cricket Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+
+      <section class="mt-16 text-center">
+        <div class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10">
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight">
+            Master Cricket
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> Strike Rate Analysis</span>
+          </h2>
+          <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
+            Analyze batting and bowling strike rates, compare players, and track performance. All free, no sign-up needed.
+          </p>
+          <div class="mt-6 flex gap-3 justify-center flex-wrap">
+            <button onclick="document.querySelector('#bat-runs')?.focus()" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30">
+              Start Calculating
+            </button>
+            <a href="/tools/run-rate-calculator/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700">
+              Try Run Rate Calculator
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   </main>
 </MainLayout>

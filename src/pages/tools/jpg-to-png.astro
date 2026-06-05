@@ -6,6 +6,7 @@ import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
 import HowToUse from "../../components/HowToUse.astro";
 import KeyboardHints from "../../components/KeyboardHints.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 
 const faqItems = [
@@ -15,6 +16,8 @@ const faqItems = [
     { question: "Is this tool completely free?", answer: "Yes, entirely free. There are no watermarks, no file size limits, no daily caps, and no sign-up required. All processing happens in your browser using the Canvas API." },
     { question: "Are my images uploaded to a server?", answer: "No. All conversion happens entirely in your browser using the HTML5 Canvas API. Your images are never uploaded to any server, stored in any database, or transmitted over the network." },
     { question: "Can I convert multiple images at once?", answer: "Yes. You can upload and convert up to 20 JPG images at once. The gallery shows each image with file size comparison, and you can download individually or all at once." },
+    { question: "Is JPG or PNG better for websites?", answer: "JPG is better for photographs and complex images where file size matters. PNG is better for graphics, logos, screenshots, and images requiring transparency or crisp edges. Use JPG for photos, PNG for everything else." },
+    { question: "Does converting JPG to PNG improve quality?", answer: "No. Converting a JPG to PNG preserves the existing JPG quality — it cannot restore detail lost during original JPG compression. However, PNG saves the image losslessly so no further quality degradation occurs." },
   ];
 const jpSchema = {
   "name": "JPG to PNG Converter Pro",
@@ -28,6 +31,29 @@ const jpSchema = {
     "100% client-side — images never uploaded to any server"
   ],
 }
+
+const benefits = [
+  { icon: "📦", title: "Lossless Output", desc: "PNG preserves every pixel perfectly with no compression artifacts. Ideal for graphics, text, and images that need maximum quality." },
+  { icon: "🔄", title: "Transparency Ready", desc: "PNG supports full alpha channel transparency. Convert JPG to PNG and get images ready for overlays, logos, and compositing." },
+  { icon: "🎨", title: "Crisp Graphics", desc: "PNG handles sharp edges, text, and solid colors without the blurring or artifacts common in JPG compression." },
+  { icon: "🔒", title: "100% Private", desc: "All conversion happens in your browser using Canvas API. Your images never leave your device." },
+  { icon: "⚡", title: "Batch Conversion", desc: "Convert up to 20 JPG images to PNG simultaneously. Process entire folders in seconds." },
+  { icon: "🆓", title: "Free Forever", desc: "No sign-ups, no limits, no hidden charges. Convert as many images as you need, completely free." },
+];
+
+const howToSteps = [
+  { num: "1", title: "Upload JPG", desc: "Drag & drop or browse to select your JPG/JPEG images. Supports batch uploads of up to 20 files at once." },
+  { num: "2", title: "Convert to PNG", desc: "Click convert — the Canvas API processes everything locally in milliseconds with lossless quality." },
+  { num: "3", title: "Preview Result", desc: "Toggle between original JPG and converted PNG to compare quality and file size side-by-side." },
+  { num: "4", title: "Download PNG", desc: "Download your converted PNG images individually or all at once in a batch." },
+];
+
+const useCases = [
+  { icon: "🎨", title: "Graphic Design", desc: "Convert JPG photos to PNG for use in designs requiring transparency or lossless layers in tools like Photoshop and Figma." },
+  { icon: "🌐", title: "Web Development", desc: "Use PNG for website logos, icons, and UI elements that need crisp edges on all screen types and resolutions." },
+  { icon: "📱", title: "App Assets", desc: "Convert JPG screenshots to PNG for app store listings, marketing materials, and documentation that require sharp text." },
+  { icon: "🖨️", title: "Print Materials", desc: "PNG is preferred for print when vector formats aren't available. Convert JPG to PNG for high-quality print outputs." },
+];
 ---
 
 <MainLayout

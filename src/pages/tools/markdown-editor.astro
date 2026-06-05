@@ -5,6 +5,7 @@ import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
 import KeyboardHints from "../../components/KeyboardHints.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "Is my markdown content saved anywhere?", answer: "Your content is saved to your browser's localStorage so it persists between sessions. Nothing is uploaded to any server." },
@@ -12,6 +13,9 @@ const faqItems = [
   { question: "What markdown features are supported?", answer: "The editor supports headings (H1-H6), bold, italic, strikethrough, links, images, ordered/unordered lists, blockquotes, inline code, code blocks, horizontal rules, and tables." },
   { question: "Does it support dark mode?", answer: "The preview automatically follows the site's dark theme. The rendered output uses the same dark styling for consistency." },
   { question: "Can I use keyboard shortcuts?", answer: "Yes. Use the toolbar buttons or common shortcuts. The editor also supports tab for indentation and auto-closing of markdown syntax." },
+  { question: "Can I use markdown for GitHub README files?", answer: "Absolutely. This editor uses standard GitHub-flavored markdown syntax. Write your README here, preview it live, and copy the source directly to your repository." },
+  { question: "Does the editor support live preview?", answer: "Yes, the split-pane layout shows your raw markdown on the left and a fully rendered HTML preview on the right. Updates happen in real-time as you type." },
+  { question: "What is the difference between markdown and rich text?", answer: "Markdown uses plain text formatting syntax that is readable as-is, while rich text uses hidden formatting codes. Markdown is preferred for documentation because it's version-control friendly and portable." },
 ];
 const schema = {
   name: "Markdown Editor Pro",
@@ -26,6 +30,29 @@ const schema = {
     "Full markdown syntax support including tables and code blocks"
   ],
 };
+
+const benefits = [
+  { icon: "⚡", title: "Real-Time Preview", desc: "See your markdown rendered instantly in a split-pane view. Type on the left, see the formatted result on the right with zero delay." },
+  { icon: "🎨", title: "Rich Formatting Toolbar", desc: "Bold, italic, headings, lists, tables, code blocks, and more — all available with one click from the toolbar. No need to remember syntax." },
+  { icon: "⬇️", title: "HTML Export", desc: "Export your markdown as a standalone HTML file with clean, responsive styling. Perfect for sharing rendered documents." },
+  { icon: "💾", title: "Auto-Save Draft", desc: "Your content is automatically saved to localStorage. Refresh the page or come back later — your work is always there." },
+  { icon: "🔧", title: "Full Syntax Support", desc: "Support for all GitHub-flavored markdown including tables, fenced code blocks, images, links, strikethrough, and horizontal rules." },
+  { icon: "🆓", title: "Completely Free", desc: "No sign-ups, no limits. Use the markdown editor as much as you need for docs, READMEs, notes, and more." },
+];
+
+const howToSteps = [
+  { num: "1", title: "Type Markdown", desc: "Start typing markdown in the left panel. Use the toolbar for quick formatting — bold, italic, headings, lists, and more." },
+  { num: "2", title: "Preview Live", desc: "Watch the right panel update in real-time as you type. The rendered preview shows exactly how your content will look." },
+  { num: "3", title: "Copy or Export", desc: "Copy the rendered HTML to clipboard or export a complete HTML file with built-in styling for sharing." },
+  { num: "4", title: "Come Back Anytime", desc: "Your content auto-saves to your browser. Close and return later — your markdown will be right where you left it." },
+];
+
+const useCases = [
+  { icon: "📝", title: "Writing Documentation", desc: "Write project documentation, API guides, and technical docs with proper formatting. Export as HTML for your documentation site." },
+  { icon: "📖", title: "README Files", desc: "Craft polished README files for your GitHub repositories. Preview headings, code blocks, tables, and badges before committing." },
+  { icon: "📋", title: "Meeting Notes", desc: "Take structured meeting notes with headings, bullet points, and action items. The auto-save feature ensures you never lose notes." },
+  { icon: "✍️", title: "Blog Writing", desc: "Write blog posts in markdown format. Preview the rendered output and export HTML for direct publishing to your CMS." },
+];
 ---
 
 <MainLayout
@@ -34,6 +61,12 @@ const schema = {
   keywords="markdown editor, markdown preview, md editor, online markdown, markdown to html, rich text editor"
   toolSchema={schema}
   faq={faqItems}
+  howto={{
+    name: "How to Use Markdown Editor",
+    description: "Write and preview markdown in real-time with a rich toolbar and HTML export in 4 easy steps.",
+    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
+    totalTime: "PT1M",
+  }}
   breadcrumbs={[
     { name: "Home", url: "/" },
     { name: "Tools", url: "/tools/" },
@@ -165,6 +198,36 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
         { keys: "Ctrl+I", label: "Italic" },
         { keys: "⌘K", label: "Open search" },
       ]} />
+
+      <ToolContentSections
+        toolSlug="markdown-editor"
+        toolName="Markdown Editor"
+        category="Creator Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+
+      <!-- ─── CTA Section ─── -->
+      <section class="mt-16 text-center">
+        <div class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10">
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight">
+            Start Writing
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> Markdown Free</span>
+          </h2>
+          <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
+            No sign-up required. No limits. Write, preview, and export markdown documents completely free.
+          </p>
+          <div class="mt-6 flex gap-3 justify-center flex-wrap">
+            <button onclick="document.querySelector('#md-input')?.focus()" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30">
+              Start Writing
+            </button>
+            <a href="/tools/lorem-ipsum/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700">
+              Try Lorem Ipsum Generator
+            </a>
+          </div>
+        </div>
+      </section>
 
       <RelatedTools current="markdown-editor" />
     </div>

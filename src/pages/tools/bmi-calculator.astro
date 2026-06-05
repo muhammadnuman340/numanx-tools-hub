@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "What is BMI?", answer: "BMI (Body Mass Index) is a measure of body fat based on height and weight. It is calculated by dividing weight in kilograms by the square of height in meters. While not a direct measure of body fat, it's a useful screening tool for weight categories." },
@@ -33,6 +34,12 @@ const bmiSchema = {
   keywords="bmi calculator, body mass index, bmi, health calculator, weight calculator, bmi chart"
   toolSchema={bmiSchema}
   faq={faqItems}
+  howto={{
+    name: "How to Use BMI Calculator",
+    description: "Step-by-step guide for using BMI Calculator.",
+    steps: [],
+    totalTime: "PT1M",
+  }}
   breadcrumbs={[
     { name: "Home", url: "/" },
     { name: "Tools", url: "/tools/" },

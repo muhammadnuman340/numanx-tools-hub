@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "How do I calculate X% of Y?", answer: "Use the first calculator mode. Enter the percentage (X) and the total value (Y), and we'll compute X% of Y instantly. For example, 15% of 200 = 30." },
@@ -11,6 +12,9 @@ const faqItems = [
   { question: "How do I find what percent X is of Y?", answer: "Use the 'X is what % of Y' mode. Enter X as the part and Y as the whole. The result shows X as a percentage of Y. For example, 30 is 15% of 200." },
   { question: "Is this calculator accurate?", answer: "Yes, all calculations are performed with full JavaScript number precision. Results are rounded to 2 decimal places for readability, but the underlying calculation uses exact values." },
   { question: "Is my data stored anywhere?", answer: "No. All calculations happen locally in your browser. None of your numbers are sent to any server or stored anywhere." },
+  { question: "What is percentage difference vs percentage change?", answer: "Percentage change compares an old value to a new value ((new - old) / |old| × 100). Percentage difference compares two values symmetrically (|A - B| / ((A+B)/2) × 100) without a reference point." },
+  { question: "How do I calculate a tip or discount percentage?", answer: "Use the 'X% of Y' mode. Enter the tip/discount percentage as X and the bill/original price as Y. For example, 15% of $50 = $7.50 tip or discount." },
+  { question: "Can I calculate percentage increase for salary or investment growth?", answer: "Yes, use the 'Percentage Change' mode. Enter the original salary/investment value and the new value to see the percentage increase or decrease over time." },
 ];
 
 const pctSchema = {
@@ -25,6 +29,29 @@ const pctSchema = {
     "Privacy-first — all processing in your browser"
   ],
 };
+
+const benefits = [
+  { icon: "🧮", title: "Four Modes", desc: "Calculate X% of Y, what percent X is of Y, percentage change, and percentage difference. All common percentage scenarios covered." },
+  { icon: "⚡", title: "Instant Results", desc: "Results update as you type. No buttons to click — just enter your numbers and see the percentage immediately." },
+  { icon: "📋", title: "Copy Results", desc: "Copy any result to clipboard with one click. Perfect for transferring calculations to spreadsheets, documents, or reports." },
+  { icon: "🎯", title: "High Precision", desc: "Calculations use full JavaScript number precision. Results display 2 decimal places for readability while maintaining exact internal values." },
+  { icon: "🔄", title: "Multiple Scenarios", desc: "Switch between modes without losing your inputs. Each mode has dedicated fields that maintain their values." },
+  { icon: "🆓", title: "Completely Free", desc: "No sign-ups, no limits. Calculate unlimited percentages in all four modes completely free." },
+];
+
+const howToSteps = [
+  { num: "1", title: "Choose a Mode", desc: "Select from X% of Y, X is what % of Y, percentage change, or percentage difference depending on what you need to calculate." },
+  { num: "2", title: "Enter Values", desc: "Type your numbers into the input fields. Each mode shows the relevant labels to guide you." },
+  { num: "3", title: "Read the Result", desc: "The result updates instantly as you type. The formula is displayed alongside the answer for clarity." },
+  { num: "4", title: "Copy or Download", desc: "Copy the result to clipboard with one click or download as a text file for your records." },
+];
+
+const useCases = [
+  { icon: "🛒", title: "Shopping Discounts", desc: "Calculate sale prices during promotions. Find out how much you save with percentage-off discounts and coupon codes." },
+  { icon: "📈", title: "Financial Planning", desc: "Track investment returns, salary increases, and budget allocations. Understand percentage growth and decline over time." },
+  { icon: "📊", title: "Data Analysis", desc: "Calculate percentages for survey results, market share, and statistical analysis. Compare datasets with percentage difference." },
+  { icon: "🎓", title: "Academic Grading", desc: "Compute test scores, grade averages, and weighted percentages. Determine what percentage you need on a final exam." },
+];
 ---
 
 <MainLayout
@@ -33,6 +60,12 @@ const pctSchema = {
   keywords="percentage calculator, percent calculator, percentage change, calculate percentage, percent of, math calculator"
   toolSchema={pctSchema}
   faq={faqItems}
+  howto={{
+    name: "How to Calculate Percentages",
+    description: "Calculate X% of Y, percentage change, and more in 4 easy steps with instant results.",
+    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
+    totalTime: "PT1M",
+  }}
   breadcrumbs={[
     { name: "Home", url: "/" },
     { name: "Tools", url: "/tools/" },

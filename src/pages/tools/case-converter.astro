@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "What case types are supported?", answer: "Uppercase (ALL CAPS), lowercase (no caps), title case (Each Word Capitalized), sentence case (First word capitalized), alternating case (aLtErNaTiNg), inverse case (OPPOSITE CASE), and camelCase (camelCaseFormatting)." },
@@ -12,7 +13,14 @@ const faqItems = [
 ];
 const ccSchema = { name: "Case Converter", applicationCategory: "Utilities", description: "Convert text between uppercase, lowercase, title case, sentence case, and more instantly.", featureList: ["7 case conversion modes", "Instant real-time results", "Copy to clipboard", "100% client-side"] };
 ---
-<MainLayout title="Case Converter - Convert Text Case Online Free" description="Convert text between uppercase, lowercase, title case, sentence case, alternating case, and more. Free online case converter." keywords="case converter, uppercase, lowercase, title case, sentence case, text converter" toolSchema={ccSchema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Case Converter",url:"/tools/case-converter/"}]}>
+<MainLayout title="Case Converter - Convert Text Case Online Free" description="Convert text between uppercase, lowercase, title case, sentence case, alternating case, and more. Free online case converter." keywords="case converter, uppercase, lowercase, title case, sentence case, text converter" toolSchema={ccSchema} faq={faqItems}
+  howto={{
+    name: "How to Use Case Converter",
+    description: "Step-by-step guide for using Case Converter.",
+    steps: [],
+    totalTime: "PT1M",
+  }}
+  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Case Converter",url:"/tools/case-converter/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="Case" gradient="Converter Pro" desc="Convert text between uppercase, lowercase, title case, sentence case, alternating case, and more." badge="✦ New Tool" slug="case-converter" />
     <ShareBar />

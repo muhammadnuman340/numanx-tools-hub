@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "What does the CSS formatter do?", answer: "It takes minified or messy CSS and beautifies it with proper indentation, line breaks, and consistent spacing for maximum readability." },
@@ -12,7 +13,14 @@ const faqItems = [
 ];
 const cssSchema = { name: "CSS Formatter", applicationCategory: "Developer Tools", description: "Format and beautify CSS code with proper indentation. Minify CSS for production use.", featureList: ["Format CSS with proper indentation", "Minify for production", "Copy to clipboard", "100% client-side"] };
 ---
-<MainLayout title="CSS Formatter - Format & Beautify CSS Online Free" description="Format and beautify your CSS code with proper indentation. Minify CSS for production. Free online CSS formatter." keywords="css formatter, css beautifier, css minifier, format css, css indentation" toolSchema={cssSchema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"CSS Formatter",url:"/tools/css-formatter/"}]}>
+<MainLayout title="CSS Formatter - Format & Beautify CSS Online Free" description="Format and beautify your CSS code with proper indentation. Minify CSS for production. Free online CSS formatter." keywords="css formatter, css beautifier, css minifier, format css, css indentation" toolSchema={cssSchema} faq={faqItems}
+  howto={{
+    name: "How to Use CSS Formatter",
+    description: "Step-by-step guide for using CSS Formatter.",
+    steps: [],
+    totalTime: "PT1M",
+  }}
+  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"CSS Formatter",url:"/tools/css-formatter/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="CSS" gradient="Formatter Pro" desc="Format and beautify your CSS code with proper indentation. Minify CSS for production use." badge="✦ New Tool" slug="css-formatter" />
     <ShareBar />

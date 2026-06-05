@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "What regex flavors are supported?", answer: "This tester uses JavaScript's built-in RegExp engine, supporting standard patterns including groups, lookaheads, character classes, quantifiers, and flags (g, i, m, s, u, y)." },
@@ -12,7 +13,14 @@ const faqItems = [
 ];
 const regexSchema = { name: "Regex Tester", applicationCategory: "Developer Tools", description: "Test and debug regular expressions in real-time. View match counts and highlighted results.", featureList: ["Real-time regex testing", "Multiple flag support", "Match count display", "100% client-side"] };
 ---
-<MainLayout title="Regex Tester - Test Regular Expressions Online Free" description="Test and debug regular expressions in real-time. Supports flags, global matching, and match counting. Free online regex tester." keywords="regex tester, regular expression tester, regex debugger, regex matcher, regex online" toolSchema={regexSchema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Regex Tester",url:"/tools/regex-tester/"}]}>
+<MainLayout title="Regex Tester - Test Regular Expressions Online Free" description="Test and debug regular expressions in real-time. Supports flags, global matching, and match counting. Free online regex tester." keywords="regex tester, regular expression tester, regex debugger, regex matcher, regex online" toolSchema={regexSchema} faq={faqItems}
+  howto={{
+    name: "How to Use Regex Tester",
+    description: "Step-by-step guide for using Regex Tester.",
+    steps: [],
+    totalTime: "PT1M",
+  }}
+  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Regex Tester",url:"/tools/regex-tester/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="Regex" gradient="Tester Pro" desc="Test and debug regular expressions in real-time. View match counts and highlighted results with full flag support." badge="✦ New Tool" slug="regex-tester" />
     <ShareBar />

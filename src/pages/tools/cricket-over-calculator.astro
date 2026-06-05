@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "How many balls are in a cricket over?", answer: "A standard cricket over consists of 6 legal deliveries (balls). In some formats, no-ball and wide deliveries extend the over, but the over is still counted as 6 legitimate balls." },
@@ -12,7 +13,14 @@ const faqItems = [
 ];
 const schema = { name: "Cricket Over Calculator", applicationCategory: "Sports", description: "Convert between balls and overs for cricket scoring. Enter balls to get overs or enter overs to get total balls.", featureList: ["Balls to overs conversion", "Overs to balls conversion", "Cricket scoring support", "Instant results"] };
 ---
-<MainLayout title="Cricket Over Calculator - Balls to Overs Converter" description="Convert between balls and overs for cricket scoring. Free cricket over calculator with balls to overs and overs to balls conversion." keywords="cricket over calculator, balls to overs, overs to balls, cricket scoring, cricket calculator" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Cricket Over Calculator",url:"/tools/cricket-over-calculator/"}]}>
+<MainLayout title="Cricket Over Calculator - Balls to Overs Converter" description="Convert between balls and overs for cricket scoring. Free cricket over calculator with balls to overs and overs to balls conversion." keywords="cricket over calculator, balls to overs, overs to balls, cricket scoring, cricket calculator" toolSchema={schema} faq={faqItems}
+  howto={{
+    name: "How to Use Cricket Over Calculator",
+    description: "Step-by-step guide for using Cricket Over Calculator.",
+    steps: [],
+    totalTime: "PT1M",
+  }}
+  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Cricket Over Calculator",url:"/tools/cricket-over-calculator/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="Cricket" gradient="Overs Pro" desc="Convert between balls and overs for cricket scoring. Enter balls to get overs or enter overs to get total balls." badge="✦ New Tool" slug="cricket-over-calculator" />
     <ShareBar />

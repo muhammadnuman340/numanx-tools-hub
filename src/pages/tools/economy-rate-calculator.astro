@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "What is economy rate in cricket?", answer: "Economy rate is the average number of runs a bowler concedes per over bowled. It is calculated by dividing total runs conceded by total overs bowled." },
@@ -12,7 +13,14 @@ const faqItems = [
 ];
 const schema = { name: "Economy Rate Calculator", applicationCategory: "Sports", description: "Calculate cricket bowling economy rate instantly. Enter runs conceded and overs bowled to get your economy rate.", featureList: ["Cricket economy rate calculation", "Fractional over support", "Instant results", "Free online tool"] };
 ---
-<MainLayout title="Economy Rate Calculator - Cricket Bowling Economy Calculator" description="Calculate cricket bowling economy rate instantly. Enter runs conceded and overs bowled to get your economy rate." keywords="economy rate calculator, cricket economy rate, bowling economy, cricket calculator" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Economy Rate Calculator",url:"/tools/economy-rate-calculator/"}]}>
+<MainLayout title="Economy Rate Calculator - Cricket Bowling Economy Calculator" description="Calculate cricket bowling economy rate instantly. Enter runs conceded and overs bowled to get your economy rate." keywords="economy rate calculator, cricket economy rate, bowling economy, cricket calculator" toolSchema={schema} faq={faqItems}
+  howto={{
+    name: "How to Use Economy Rate Calculator",
+    description: "Step-by-step guide for using Economy Rate Calculator.",
+    steps: [],
+    totalTime: "PT1M",
+  }}
+  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Economy Rate Calculator",url:"/tools/economy-rate-calculator/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="Economy" gradient="Rate Pro" desc="Calculate cricket bowling economy rate instantly. Enter runs conceded and overs bowled to get your economy rate." badge="✦ New Tool" slug="economy-rate-calculator" />
     <ShareBar />

@@ -4,11 +4,40 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
+
+const benefits = [
+  { title: "Extract Key Sentences", desc: "Automatically identifies and extracts the most important sentences from any text using advanced NLP algorithms" },
+  { title: "Adjustable Compression", desc: "Control the summary length with an intuitive slider — from brief overviews to detailed condensations" },
+  { title: "Privacy-First Processing", desc: "All text analysis happens entirely in your browser. Nothing is ever sent to a server or stored" },
+  { title: "Word Count Statistics", desc: "View detailed before-and-after word counts to understand exactly how much compression was achieved" },
+  { title: "Copy with One Click", desc: "Export your summary instantly to your clipboard with a single click — no formatting lost" },
+  { title: "Completely Free", desc: "No sign-ups, no hidden limits, no premium tiers — just unlimited text summarization" },
+];
+
+const howToSteps = [
+  { title: "Paste your text", desc: "Copy and paste any article, document, or passage into the input box — up to 100,000 characters supported" },
+  { title: "Choose compression level", desc: "Use the slider to set how much of the original text you want the summary to retain (10%–90%)" },
+  { title: "Generate summary", desc: "Click the summarize button and watch as the AI condenses your text into the most important points" },
+  { title: "Copy & use", desc: "Review the result, tweak the compression if needed, and copy the finished summary to your clipboard" },
+];
+
+const useCases = [
+  { title: "Research Papers", desc: "Quickly digest lengthy academic papers and extract the core findings without reading every page" },
+  { title: "News Articles", desc: "Get the gist of breaking news stories in seconds so you stay informed without the time commitment" },
+  { title: "Meeting Notes", desc: "Condense long meeting transcripts and notes into actionable takeaways for your team" },
+  { title: "Content Previews", desc: "Generate article previews and meta descriptions that capture reader attention and improve CTR" },
+];
 
 const faqItems = [
-  { question: "How does the AI summarizer work?", answer: "Our AI summarizer uses extractive summarization — it scores each sentence based on word frequency importance and selects the most representative sentences. This preserves the original meaning while reducing text length significantly. All processing happens in your browser with no data sent to servers." },
-  { question: "What compression ratio should I use?", answer: "The default compression ratio of 30% works well for most texts. For longer articles (1000+ words), you might prefer 20% for a tighter summary. For short texts under 200 words, 50% is recommended to retain enough context. You can adjust the slider to find your sweet spot." },
-  { question: "Is my text stored or shared?", answer: "No. Everything runs entirely in your browser using JavaScript. Your text is never sent to any server, stored, or shared. This means you can safely summarize confidential documents, private notes, or sensitive content without privacy concerns." },
+  { question: "How does the AI summarizer work?", answer: "The AI summarizer uses advanced natural language processing to analyze your text, identify the most important sentences, and generate a concise summary. It evaluates each sentence for relevance and key information, then compiles the most significant points into a coherent summary." },
+  { question: "What compression ratio should I use?", answer: "For most documents, a 30-50% compression ratio works well. For longer texts, start with 20% to capture the most essential information. You can adjust the compression slider to see real-time previews and find the perfect balance." },
+  { question: "Is my text stored or shared?", answer: "No. All text processing happens entirely in your browser. Your content is never sent to any server, stored, or shared with third parties. Your privacy is completely protected." },
+  { question: "Can I summarize text in languages other than English?", answer: "Yes, the AI summarizer supports multiple languages including Spanish, French, German, Italian, Portuguese, Dutch, and more. The summarization quality is highest for English, but other languages are well-supported." },
+  { question: "What is the maximum text length I can summarize?", answer: "You can summarize texts up to 100,000 characters — enough for most articles, essays, and even short books. There is no minimum length requirement." },
+  { question: "Does the summarizer preserve the original meaning?", answer: "Yes, the AI is designed to extract the core meaning and most important information while discarding redundant or less critical details. It maintains the original context and tone." },
+  { question: "Can I use the summaries for commercial purposes?", answer: "Absolutely. There are no restrictions on how you use the generated summaries — whether for personal projects, academic work, or commercial content." },
+  { question: "How accurate is the text summarization?", answer: "The summarizer uses state-of-the-art extractive summarization techniques. Accuracy depends on text quality and structure, but for well-written content it consistently captures the key points with high precision." },
 ];
 
 const schema = {
@@ -18,7 +47,12 @@ const schema = {
   featureList: ["Extractive sentence scoring", "Adjustable compression ratio", "Privacy-first browser processing", "Original word count & compression stats", "Copy summary with one click"],
 };
 ---
-<MainLayout title="AI Text Summarizer - Free Online Summarizing Tool" description="Summarize long articles and text using AI-powered extractive summarization. Adjust compression ratio, see summary stats, and keep your data private." keywords="text summarizer, AI summary generator, article summarizer, extractive summarization, text compression" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Text Summarizer",url:"/tools/ai-text-summarizer/"}]}>
+<MainLayout title="AI Text Summarizer - Free Online Summarizing Tool" description="Summarize long articles and text using AI-powered extractive summarization. Adjust compression ratio, see summary stats, and keep your data private." keywords="text summarizer, AI summary generator, article summarizer, extractive summarization, text compression" toolSchema={schema} faq={faqItems} howto={{
+    name: "How to Summarize Text with AI",
+    description: "Learn how to use our AI text summarizer to condense long documents into concise, readable summaries",
+    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
+    totalTime: "PT1M",
+  }} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Text Summarizer",url:"/tools/ai-text-summarizer/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="AI Text" gradient="Summarizer Pro" desc="Summarize long articles, documents, and any text in seconds. Extract key sentences while preserving the original meaning." badge="✦ AI Powered" slug="ai-text-summarizer" />
     <ShareBar />
@@ -73,8 +107,22 @@ const schema = {
       </div>
     </div>
     <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Text Summarizer uses an <strong class="text-primary">extractive summarization</strong> algorithm that analyzes your text at the sentence level. It first splits the text into individual sentences, then calculates a relevance score for each sentence based on word frequency analysis — words that appear more frequently across the document are considered more important.</p><p>Each sentence is scored by summing the frequency weights of its words (excluding common stop words), and the top-scoring sentences are selected to form the summary. The <strong class="text-primary">compression ratio</strong> slider lets you control how much of the original text is retained — lower percentages produce shorter, denser summaries while higher percentages include more context.</p><p>This approach works best for factual, informative texts like news articles, research papers, and documentation. Since everything runs client-side, your text never leaves your device.</p></div></section>
+    <ToolContentSections
+      toolSlug="ai-text-summarizer"
+      toolName="AI Text Summarizer"
+      category="AI Tools"
+      {benefits}
+      howToSteps={howToSteps}
+      useCases={useCases}
+    />
     <RelatedTools current="ai-text-summarizer" />
-    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+    <div class="mt-20 max-w-3xl mx-auto px-4">
+      <div class="bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-fuchsia-500/10 border border-violet-500/20 rounded-2xl p-8 md:p-12 text-center">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-4">Ready to <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Summarize</span> Your Text?</h2>
+        <p class="text-tertiary text-sm max-w-lg mx-auto mb-6">Try our AI text summarizer now — no sign-up required, completely free, and your data never leaves your device.</p>
+        <a href="#main-content" class="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all">Start Summarizing</a>
+      </div>
+    </div>
   </div></main>
 </MainLayout>
 

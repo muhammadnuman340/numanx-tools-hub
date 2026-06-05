@@ -4,11 +4,40 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
+
+const benefits = [
+  { title: "Overall Sentiment Score", desc: "Get a clear positive, negative, or neutral classification for any text with percentage breakdowns" },
+  { title: "Emotion Breakdown", desc: "See detailed analysis of joy, anger, sadness, fear, and surprise levels in your text" },
+  { title: "Visual Charts", desc: "View donut chart and emotion bar graph for instant visual understanding of sentiment" },
+  { title: "Top Sentiment Words", desc: "Identify the specific positive and negative words driving the overall sentiment score" },
+  { title: "Privacy-First Processing", desc: "All analysis happens in your browser. Your text is never sent to any server" },
+  { title: "Completely Free", desc: "No sign-ups, no limits, no premium tiers — unlimited sentiment analysis" },
+];
+
+const howToSteps = [
+  { title: "Paste your text", desc: "Copy and paste any text you want to analyze — reviews, comments, feedback, or social posts" },
+  { title: "Analyze sentiment", desc: "Click the analyze button to scan your text against extensive positive and negative word dictionaries" },
+  { title: "Review the results", desc: "See your overall sentiment score, emotion breakdown, and top driving words instantly" },
+  { title: "Export or copy", desc: "Copy the results to your clipboard or download them in your preferred format" },
+];
+
+const useCases = [
+  { title: "Customer Feedback", desc: "Analyze customer reviews and feedback to understand overall satisfaction and pain points" },
+  { title: "Social Media Monitoring", desc: "Track sentiment of social media mentions, comments, and brand conversations" },
+  { title: "Product Reviews", desc: "Gauge how customers feel about your products by analyzing review sentiment" },
+  { title: "Survey Responses", desc: "Quickly assess the emotional tone of open-ended survey responses at scale" },
+];
 
 const faqItems = [
   { question: "How does the sentiment analyzer determine emotions?", answer: "The analyzer uses keyword-based sentiment analysis with extensive dictionaries of positive and negative words, plus emotion-specific lexicons for joy, anger, sadness, fear, and surprise. Each word in your text is compared against these dictionaries, and the overall sentiment score is calculated by weighing positive vs negative matches." },
   { question: "How accurate is the sentiment analysis?", answer: "For general-purpose text like social media posts, product reviews, and casual writing, the keyword-based approach provides good directional accuracy (typically 70-80%). However, it may miss context like sarcasm, irony, or nuanced language. It's best used as a quick sentiment indicator rather than a definitive analysis." },
   { question: "What types of text work best with this analyzer?", answer: "The analyzer works well with product reviews, social media comments, customer feedback, survey responses, and general opinion text. Longer texts (50+ words) produce more reliable results. Very short texts or highly technical/specialized language may yield less accurate sentiment readings." },
+  { question: "Does the analyzer detect sarcasm or irony?", answer: "The keyword-based approach has limited ability to detect sarcasm and irony. These linguistic nuances often require more advanced context-aware AI. The tool provides a good directional indicator but may misinterpret sarcastic or ironic statements." },
+  { question: "Can I analyze text in different languages?", answer: "Currently, the sentiment analyzer is optimized for English text with comprehensive English sentiment dictionaries. Other languages may produce less accurate results due to limited word coverage." },
+  { question: "What is the minimum text length for reliable analysis?", answer: "We recommend at least 50 words for reliable sentiment analysis. Shorter texts may still produce results, but the confidence and accuracy will be lower due to limited data points." },
+  { question: "How are the emotion percentages calculated?", answer: "Emotion levels are calculated by counting emotion-specific word matches (joy, anger, sadness, fear, surprise) and normalizing them against the highest-scoring emotion. Results are shown as percentages relative to the dominant emotion." },
+  { question: "Can I export the sentiment analysis results?", answer: "Yes, you can copy the results to your clipboard or download them in TXT, JSON, CSV, or HTML formats for further analysis or reporting." },
 ];
 
 const schema = {
@@ -18,7 +47,12 @@ const schema = {
   featureList: ["Sentiment scoring with positive/negative/neutral classification", "Emotion breakdown (joy, anger, sadness, fear, surprise)", "Top positive and negative word extraction", "Visual sentiment bar with color-coded results", "Privacy-first browser processing"],
 };
 ---
-<MainLayout title="AI Sentiment Analyzer - Free Online Sentiment Analysis Tool" description="Analyze text sentiment with AI-powered keyword analysis. Detect emotions, sentiment scores, and key emotional words in any text." keywords="sentiment analyzer, emotion detection, text analysis, sentiment score, opinion mining" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Sentiment Analyzer",url:"/tools/ai-sentiment-analyzer/"}]}>
+<MainLayout title="AI Sentiment Analyzer - Free Online Sentiment Analysis Tool" description="Analyze text sentiment with AI-powered keyword analysis. Detect emotions, sentiment scores, and key emotional words in any text." keywords="sentiment analyzer, emotion detection, text analysis, sentiment score, opinion mining" toolSchema={schema} faq={faqItems} howto={{
+    name: "How to Analyze Sentiment with AI",
+    description: "Learn how to use our AI sentiment analyzer to detect emotions and opinions in any text",
+    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
+    totalTime: "PT1M",
+  }} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Sentiment Analyzer",url:"/tools/ai-sentiment-analyzer/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="AI Sentiment" gradient="Analyzer Pro" desc="Detect the emotional tone of any text — positive, negative, or neutral. See a detailed breakdown of emotions and key sentiment-driving words." badge="✦ AI Powered" slug="ai-sentiment-analyzer" />
     <ShareBar />
@@ -108,8 +142,22 @@ const schema = {
       </div>
     </div>
     <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Sentiment Analyzer uses a <strong class="text-primary">lexicon-based approach</strong> to evaluate the emotional tone of your text. It maintains comprehensive dictionaries of sentiment-bearing words categorized by emotion type (joy, anger, sadness, fear, surprise) and polarity (positive, negative, neutral).</p><p>When you analyze text, the engine tokenizes the input and scores each word against these dictionaries. Words are weighted by intensity (e.g., "excellent" scores higher than "good"), and negations (like "not good") flip the polarity. The overall sentiment is calculated as a composite of positive, negative, and neutral scores, visualized in an easy-to-read bar.</p><p>The emotion breakdown reveals which emotional categories are most present in your text, helping you understand not just whether the sentiment is positive or negative, but the specific emotional drivers behind it.</p></div></section>
+    <ToolContentSections
+      toolSlug="ai-sentiment-analyzer"
+      toolName="AI Sentiment Analyzer"
+      category="AI Tools"
+      {benefits}
+      howToSteps={howToSteps}
+      useCases={useCases}
+    />
     <RelatedTools current="ai-sentiment-analyzer" />
-    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+    <div class="mt-20 max-w-3xl mx-auto px-4">
+      <div class="bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-fuchsia-500/10 border border-violet-500/20 rounded-2xl p-8 md:p-12 text-center">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-4">Ready to <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Analyze</span> Sentiment?</h2>
+        <p class="text-tertiary text-sm max-w-lg mx-auto mb-6">Try our AI sentiment analyzer now — no sign-up required, completely free, and your data never leaves your device.</p>
+        <a href="#main-content" class="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all">Analyze Now</a>
+      </div>
+    </div>
   </div></main>
 </MainLayout>
 

@@ -4,11 +4,40 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
+
+const benefits = [
+  { title: "Catch Common Errors", desc: "Detects confused words, apostrophe mistakes, double negatives, subject-verb issues, and misspellings in seconds" },
+  { title: "Confused Words Detection", desc: "Catches tricky pairs like their/there/they're, your/you're, its/it's with context-aware rules" },
+  { title: "Punctuation & Spelling", desc: "Highlights incorrect apostrophe usage, common misspellings, and repeated words throughout your text" },
+  { title: "Privacy-First Processing", desc: "All grammar checking runs entirely in your browser. Your text never leaves your device" },
+  { title: "Copy Corrected Text", desc: "Get instant before-and-after comparison with a single-click copy of the corrected version" },
+  { title: "Completely Free", desc: "No sign-ups, no limits, no premium tiers — just unlimited grammar checking" },
+];
+
+const howToSteps = [
+  { title: "Paste your text", desc: "Copy and paste any text you want to check into the input box" },
+  { title: "Run grammar check", desc: "Click the check button to scan your text against our comprehensive set of grammar rules" },
+  { title: "Review errors", desc: "See a detailed list of every error found, organized by type with suggested corrections" },
+  { title: "Copy corrected version", desc: "Copy the auto-corrected version of your text with one click and use it anywhere" },
+];
+
+const useCases = [
+  { title: "Email Proofing", desc: "Quickly proofread professional emails before sending to clients or colleagues" },
+  { title: "Academic Writing", desc: "Catch grammar mistakes in essays, papers, and assignments before submission" },
+  { title: "Social Media Posts", desc: "Polish your social media content to ensure it's error-free and professional" },
+  { title: "Business Documents", desc: "Review reports, proposals, and documentation for grammatical accuracy" },
+];
 
 const faqItems = [
   { question: "What types of grammar errors does the checker detect?", answer: "The grammar checker catches common mistakes including: confused words (their/there/they're, your/you're, its/it's), incorrect apostrophe usage (its vs it's, possessive forms), double negatives, subject-verb agreement issues, common misspellings, and incorrect verb forms. It also highlights repeated words and punctuation problems." },
   { question: "Is this grammar checker suitable for professional writing?", answer: "This tool is great for catching common grammar mistakes quickly, but it's a rule-based checker, not a full AI writing assistant. It works best as a first pass for everyday writing — emails, social media posts, school assignments, and quick edits. For professional or academic writing, we recommend using it alongside a human proofreader." },
   { question: "Is my text stored or analyzed by external servers?", answer: "No. All grammar checking happens entirely in your browser using JavaScript. Your text is never sent to any server, stored, or shared. This makes it safe to check confidential documents, private correspondence, or sensitive content." },
+  { question: "Does the grammar checker support languages other than English?", answer: "Currently, the grammar checker is optimized for English. It handles American and British English variations and includes a comprehensive set of English-specific grammar rules and spelling dictionaries." },
+  { question: "How accurate is the grammar detection?", answer: "The rule-based approach catches most common grammar mistakes with high accuracy. However, it may not catch every nuance — especially in complex sentences. It's a great first-pass tool but shouldn't replace a human proofreader for critical content." },
+  { question: "Can I check large documents?", answer: "Yes, you can check documents of any length. There's no character limit, and the processing happens instantly in your browser regardless of file size." },
+  { question: "Does it check punctuation and formatting?", answer: "Yes, it checks for apostrophe errors and repeated words. For comprehensive punctuation checking, we recommend using it alongside other tools." },
+  { question: "Is there a way to export the results?", answer: "Yes, you can download the corrected text in multiple formats including TXT, JSON, CSV, and HTML, or simply copy it to your clipboard." },
 ];
 
 const schema = {
@@ -18,7 +47,12 @@ const schema = {
   featureList: ["Detect confused words (their/there/they're, your/you're, its/it's)", "Catch apostrophe and punctuation errors", "Identify double negatives and subject-verb issues", "Highlight common misspellings", "Privacy-first — all processing in your browser"],
 };
 ---
-<MainLayout title="AI Grammar Checker - Free Online Grammar & Spell Check" description="Check your writing for grammar mistakes, confused words, punctuation errors, and common misspellings. Free online grammar checker with privacy-first processing." keywords="grammar checker, spell checker, grammar corrector, writing assistant, grammar fix" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Grammar Checker",url:"/tools/ai-grammar-checker/"}]}>
+<MainLayout title="AI Grammar Checker - Free Online Grammar & Spell Check" description="Check your writing for grammar mistakes, confused words, punctuation errors, and common misspellings. Free online grammar checker with privacy-first processing." keywords="grammar checker, spell checker, grammar corrector, writing assistant, grammar fix" toolSchema={schema} faq={faqItems} howto={{
+    name: "How to Check Grammar with AI",
+    description: "Learn how to use our AI grammar checker to detect and fix common writing mistakes",
+    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
+    totalTime: "PT1M",
+  }} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Grammar Checker",url:"/tools/ai-grammar-checker/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="AI Grammar" gradient="Checker Pro" desc="Catch grammar mistakes, confused words, punctuation errors, and common misspellings. Clean up your writing in seconds." badge="✦ AI Powered" slug="ai-grammar-checker" />
     <ShareBar />
@@ -83,8 +117,22 @@ const schema = {
   </div>
   <div id="history-list" class="space-y-1 max-h-40 overflow-y-auto"></div>
 </div>
+    <ToolContentSections
+      toolSlug="ai-grammar-checker"
+      toolName="AI Grammar Checker"
+      category="AI Tools"
+      {benefits}
+      howToSteps={howToSteps}
+      useCases={useCases}
+    />
     <RelatedTools current="ai-grammar-checker" />
-    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+    <div class="mt-20 max-w-3xl mx-auto px-4">
+      <div class="bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-fuchsia-500/10 border border-violet-500/20 rounded-2xl p-8 md:p-12 text-center">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-4">Ready to <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Check</span> Your Grammar?</h2>
+        <p class="text-tertiary text-sm max-w-lg mx-auto mb-6">Try our AI grammar checker now — no sign-up required, completely free, and your data never leaves your device.</p>
+        <a href="#main-content" class="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all">Start Checking</a>
+      </div>
+    </div>
 <div id="toast" class="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-xl bg-surface-2 border border-surface text-sm text-primary font-medium shadow-lg transition-all duration-300 translate-y-4 opacity-0 pointer-events-none">✓ Done</div>
   </div></main>
 </MainLayout>

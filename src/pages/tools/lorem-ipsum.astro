@@ -4,15 +4,60 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "What is Lorem Ipsum?", answer: "Lorem Ipsum is placeholder text commonly used in graphic design, publishing, and web development to demonstrate visual form before final content is ready." },
   { question: "What generation modes are available?", answer: "You can generate by paragraphs (each ~100 words), sentences, words, or bytes. Choose what suits your mockup needs." },
   { question: "Can I copy or download the generated text?", answer: "Yes, you can copy the generated text to clipboard with one click or download it as a .txt file." },
+  { question: "Is Lorem Ipsum based on real Latin?", answer: "Yes, Lorem Ipsum is derived from sections 1.10.32–33 of Cicero's 'De Finibus Bonorum et Malorum' from 45 BC, but it uses modified, scrambled text that has lost its original meaning." },
+  { question: "Why do designers use Lorem Ipsum instead of real text?", answer: "Lorem Ipsum has a natural-looking distribution of letters and words that mimics readable English, allowing designers to focus on layout and typography without being distracted by meaningful content." },
+  { question: "What is the difference between Lorem Ipsum and dummy text?", answer: "Lorem Ipsum is a specific type of dummy text with roots in classical Latin literature. Dummy text can be any placeholder content, but Lorem Ipsum is preferred for its realistic text distribution." },
+  { question: "Can I generate text in different languages?", answer: "This generator uses classic Lorem Ipsum text based on Latin. For other languages, you would need a language-specific placeholder text generator." },
+  { question: "What is the byte generation mode used for?", answer: "Byte mode generates an exact number of bytes of placeholder text, which is useful for testing database field lengths, API payload limits, and memory buffer sizes." },
 ];
 const liSchema = { name: "Lorem Ipsum Generator", applicationCategory: "Creator Tools", description: "Generate Lorem Ipsum placeholder text in paragraphs, sentences, words, or bytes.", featureList: ["Paragraph, sentence, word, and byte modes", "Customizable count", "Copy and download"] };
+
+const benefits = [
+  { icon: "📝", title: "Multiple Modes", desc: "Generate text by paragraphs, sentences, words, or bytes. Each mode gives you precise control over the amount of placeholder text you need." },
+  { icon: "⚡", title: "Instant Generation", desc: "Click generate and get your placeholder text immediately. No server calls, no waiting — pure client-side generation." },
+  { icon: "📋", title: "Copy & Download", desc: "Copy the generated text to clipboard with one click or download as a .txt file. Perfect for inserting into design mockups." },
+  { icon: "🎯", title: "Customizable Count", desc: "Set the exact number of paragraphs, sentences, or words. Fine-tune the output to match your design layout perfectly." },
+  { icon: "🔒", title: "100% Private", desc: "All generation happens in your browser. Your text never leaves your device — no server uploads, no data tracking." },
+  { icon: "🆓", title: "Completely Free", desc: "No sign-ups, no limits. Generate unlimited Lorem Ipsum text for all your design and development mockups." },
+];
+
+const howToSteps = [
+  { num: "1", title: "Choose Mode", desc: "Select paragraphs, sentences, or words depending on the type of placeholder text you need for your mockup." },
+  { num: "2", title: "Set Count", desc: "Enter the number of units you want to generate. For paragraphs, each is ~100 words. Adjust up or down as needed." },
+  { num: "3", title: "Generate Text", desc: "Click the Generate button to create your placeholder text. The output appears instantly in the text area below." },
+  { num: "4", title: "Copy or Download", desc: "Copy the generated text to your clipboard or download it as a .txt file for use in your design or development project." },
+];
+
+const useCases = [
+  { icon: "🎨", title: "Design Mockups", desc: "Fill wireframes and prototypes with realistic-looking text to demonstrate typography, layout, and spacing to clients." },
+  { icon: "🌐", title: "Web Development", desc: "Test website layouts, responsive designs, and content areas with placeholder text before final copy is ready." },
+  { icon: "📄", title: "Print & Publishing", desc: "Create print layouts, brochures, and flyer mockups with Lorem Ipsum to visualize the final design before content arrives." },
+  { icon: "🧪", title: "Software Testing", desc: "Use generated text to test text rendering, overflow handling, character limits, and UI edge cases in your applications." },
+];
 ---
-<MainLayout title="Lorem Ipsum Generator - Free Placeholder Text" description="Generate Lorem Ipsum placeholder text as paragraphs, sentences, words, or bytes. Free online generator for mockups." keywords="lorem ipsum, placeholder text, dummy text, generator" toolSchema={liSchema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Lorem Ipsum",url:"/tools/lorem-ipsum/"}]}>
+<MainLayout
+  title="Lorem Ipsum Generator - Free Placeholder Text"
+  description="Generate Lorem Ipsum placeholder text as paragraphs, sentences, words, or bytes. Free online generator for mockups."
+  keywords="lorem ipsum, placeholder text, dummy text, generator"
+  toolSchema={liSchema}
+  faq={faqItems}
+  howto={{
+    name: "How to Generate Lorem Ipsum",
+    description: "Generate placeholder text in paragraphs, sentences, or words for your design mockups in 4 easy steps.",
+    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
+    totalTime: "PT1M",
+  }}
+  breadcrumbs={[
+    { name: "Home", url: "/" },
+    { name: "Tools", url: "/tools/" },
+    { name: "Lorem Ipsum", url: "/tools/lorem-ipsum/" },
+  ]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="Lorem Ipsum" gradient="Generator" desc="Generate Lorem Ipsum placeholder text in paragraphs, sentences, words, or bytes." badge="✦ New Tool" slug="lorem-ipsum" />
     <ShareBar />
@@ -68,8 +113,39 @@ const liSchema = { name: "Lorem Ipsum Generator", applicationCategory: "Creator 
       </div>
     </div>
     <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-blue-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Why <span class="bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent">Lorem Ipsum?</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>Lorem Ipsum has been the standard placeholder text in the printing and typesetting industry since the 1500s. It provides a realistic text distribution that helps designers and developers visualize layouts, typography, and spacing before actual content is ready.</p></div></section>
-    <RelatedTools current="lorem-ipsum" />
     <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+
+      <ToolContentSections
+        toolSlug="lorem-ipsum"
+        toolName="Lorem Ipsum"
+        category="Creator Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+
+      <!-- ─── CTA Section ─── -->
+      <section class="mt-16 text-center">
+        <div class="max-w-2xl mx-auto bg-gradient-to-br from-blue-600/10 to-cyan-600/5 border border-blue-500/20 rounded-2xl p-8 md:p-10">
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight">
+            Generate
+            <span class="bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent"> Placeholder Text Free</span>
+          </h2>
+          <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
+            No sign-up required. No limits. Generate unlimited Lorem Ipsum text for all your design and development mockups.
+          </p>
+          <div class="mt-6 flex gap-3 justify-center flex-wrap">
+            <button onclick="document.querySelector('#li-generate')?.click()" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-blue-900/30">
+              Generate Now
+            </button>
+            <a href="/tools/countdown-timer/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700">
+              Try Countdown Timer
+            </a>
+          </div>
+        </div>
+      </section>
+
+    <RelatedTools current="lorem-ipsum" />
   </div></main>
 </MainLayout>
 <script>

@@ -4,18 +4,20 @@ import RelatedPosts from "./RelatedPosts.astro";
 import AdUnit from "./AdUnit.astro";
 import AuthorCard from "./AuthorCard.astro";
 import PopularTools from "./PopularTools.astro";
+import RecentlyUsed from "./RecentlyUsed.astro";
+import ExploreMore from "./ExploreMore.astro";
 
 const guideModules = import.meta.glob("../pages/guides/*.md", { eager: true });
 const comparisonModules = import.meta.glob("../pages/comparisons/*.md", { eager: true });
 
-const allGuides = Object.entries(guideModules).map(([path, mod]) => ({
+const allGuides = Object.entries(guideModules).map(([path, mod]: any) => ({
   slug: path.replace("../pages/guides/", "").replace(".md", ""),
-  ...mod,
+  frontmatter: mod?.frontmatter || {},
 }));
 
-const allComparisons = Object.entries(comparisonModules).map(([path, mod]) => ({
+const allComparisons = Object.entries(comparisonModules).map(([path, mod]: any) => ({
   slug: path.replace("../pages/comparisons/", "").replace(".md", ""),
-  ...mod,
+  frontmatter: mod?.frontmatter || {},
 }));
 
 interface BenefitItem {
@@ -119,7 +121,7 @@ const { toolSlug, toolName, category, benefits, howToSteps, useCases } = Astro.p
     <div class="max-w-4xl mx-auto">
       <h3 class="text-sm font-semibold text-muted uppercase tracking-wider mb-4">Related Guides</h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {allGuides.filter(g => g.frontmatter.tags?.some(t => toolSlug.includes(t) || toolSlug === t)).slice(0, 2).map(guide => (
+        {allGuides.filter(g => g.frontmatter && g.frontmatter.tags && g.frontmatter.tags.some(t => toolSlug.includes(t) || toolSlug === t)).slice(0, 2).map(guide => (
           <a href={`/guides/${guide.slug}/`} class="group rounded-xl border border-surface bg-surface-1 p-4 hover:border-purple-500/40 transition-all duration-300">
             <p class="text-xs font-medium text-purple-400">{guide.frontmatter.category}</p>
             <h4 class="text-sm font-semibold text-primary group-hover:text-white mt-1 transition-colors">{guide.frontmatter.title}</h4>
@@ -137,7 +139,7 @@ const { toolSlug, toolName, category, benefits, howToSteps, useCases } = Astro.p
     <div class="max-w-4xl mx-auto">
       <h3 class="text-sm font-semibold text-muted uppercase tracking-wider mb-4">Comparisons</h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {allComparisons.filter(c => c.frontmatter.tags?.some(t => toolSlug.includes(t) || toolSlug === t)).slice(0, 2).map(comp => (
+        {allComparisons.filter(c => c.frontmatter && c.frontmatter.tags && c.frontmatter.tags.some(t => toolSlug.includes(t) || toolSlug === t)).slice(0, 2).map(comp => (
           <a href={`/comparisons/${comp.slug}/`} class="group rounded-xl border border-surface bg-surface-1 p-4 hover:border-purple-500/40 transition-all duration-300">
             <span class="text-[10px] text-purple-400 font-medium">VS</span>
             <h4 class="text-sm font-semibold text-primary group-hover:text-white mt-1 transition-colors">{comp.frontmatter.title}</h4>
@@ -159,9 +161,11 @@ const { toolSlug, toolName, category, benefits, howToSteps, useCases } = Astro.p
 <!-- ─── Related Articles ─── -->
 <RelatedPosts currentSlug={toolSlug} category={category} />
 
-<!-- ─── Popular Tools Sidebar ─── -->
+<!-- ─── Conversion Widgets Grid ─── -->
 <section class="mt-12">
-  <div class="max-w-4xl mx-auto">
+  <div class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4">
     <PopularTools limit={4} />
+    <RecentlyUsed limit={4} />
+    <ExploreMore currentCategory={category} />
   </div>
 </section>

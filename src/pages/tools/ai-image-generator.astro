@@ -4,11 +4,16 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "Does this tool use real AI?", answer: "No. All images are generated client-side using deterministic algorithms powered by your prompt text. Pixel Art uses seeded pseudo-random pixel placement, ASCII Art converts text to character-based patterns, Pattern creates geometric designs, and Geometric generates abstract shapes \u2014 all without any API calls or external services." },
   { question: "Can I use these images commercially?", answer: "Yes, all images generated with this tool are created locally in your browser with no external dependencies. You have full ownership and can use them for any purpose, including commercial projects, without attribution." },
   { question: "What image sizes are available?", answer: "You can choose from three sizes: 64\u00D764 (favicon/icon size), 128\u00D7128 (small avatar), and 256\u00D7256 (standard icon). All images are downloaded as transparent-background PNG files." },
+  { question: "What is Pixel Art mode?", answer: "Pixel Art mode converts your text prompt into a seeded pseudo-random color map. Each word contributes to the color palette and pixel placement, creating unique retro-style pixel art every time." },
+  { question: "How is ASCII Art generated?", answer: "ASCII Art mode maps text characters onto a grid using density patterns. The characters from your prompt are mixed with alphanumeric symbols and placed at random positions with varied gray shades." },
+  { question: "Can I use the generated images in my projects?", answer: "Yes, all images are generated locally with no external dependencies. You have full ownership and can use them for any purpose, including commercial projects, without attribution." },
+  { question: "What is the difference between Pattern and Geometric modes?", answer: "Pattern mode creates repeating designs like stripes, dots, and sine waves. Geometric mode composes random abstract shapes — circles, rectangles, and triangles — into unique compositions with varied transparency." },
 ];
 const schema = { name: "AI Image Generator", applicationCategory: "Image", description: "Generate pixel art, ASCII art, patterns, and geometric images from text prompts \u2014 entirely in your browser, no AI API required.", featureList: ["Client-side generation", "Pixel Art mode", "ASCII Art mode", "Pattern mode", "Geometric mode", "PNG download"] };
 ---

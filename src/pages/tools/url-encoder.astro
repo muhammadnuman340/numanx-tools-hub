@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "What is URL encoding?", answer: "URL encoding (percent-encoding) replaces special characters in a URL with a % followed by their hexadecimal ASCII value. For example, spaces become %20 and special characters like & or # are encoded to prevent URL parsing issues." },
@@ -12,7 +13,14 @@ const faqItems = [
 ];
 const schema = { name: "URL Encoder / Decoder", applicationCategory: "Developer Tools", description: "Encode or decode URLs instantly using standard percent-encoding. Free online URL encoder/decoder tool.", featureList: ["URL encoding with encodeURIComponent", "URL decoding with decodeURIComponent", "One-click copy output", "100% client-side"] };
 ---
-<MainLayout title="URL Encoder Decoder - Encode & Decode URLs Online Free" description="Encode or decode URLs instantly using percent-encoding. Free online URL encoder/decoder for developers." keywords="url encoder, url decoder, percent encoding, encode url, decode url, url tool" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"URL Encoder",url:"/tools/url-encoder/"}]}>
+<MainLayout title="URL Encoder Decoder - Encode & Decode URLs Online Free" description="Encode or decode URLs instantly using percent-encoding. Free online URL encoder/decoder for developers." keywords="url encoder, url decoder, percent encoding, encode url, decode url, url tool" toolSchema={schema} faq={faqItems}
+  howto={{
+    name: "How to Use URL Encoder/Decoder",
+    description: "Step-by-step guide for using URL Encoder/Decoder.",
+    steps: [],
+    totalTime: "PT1M",
+  }}
+  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"URL Encoder",url:"/tools/url-encoder/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="URL" gradient="Encoder Pro" desc="Encode or decode URLs instantly using standard percent-encoding. Perfect for API parameters and query strings." badge="✦ New Tool" slug="url-encoder" />
     <ShareBar />

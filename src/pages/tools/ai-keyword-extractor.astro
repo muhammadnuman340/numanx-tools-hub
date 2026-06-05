@@ -4,11 +4,40 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
+
+const benefits = [
+  { title: "Ranked Keywords", desc: "Extract and sort the most important words and phrases from any text by frequency" },
+  { title: "Bigram Detection", desc: "Identify meaningful two-word phrases like 'machine learning' and 'climate change' automatically" },
+  { title: "Visual Word Cloud", desc: "See your keywords displayed in an attractive word cloud where size equals importance" },
+  { title: "Frequency Data", desc: "View exact frequency counts for every keyword to understand relative importance" },
+  { title: "Export & Copy", desc: "Copy keywords to clipboard or download results in multiple formats including TXT, JSON, CSV" },
+  { title: "Privacy-First", desc: "All extraction happens in your browser. Your text never leaves your device" },
+];
+
+const howToSteps = [
+  { title: "Paste your text", desc: "Copy and paste any article, document, or piece of content into the input area" },
+  { title: "Extract keywords", desc: "Click extract to analyze your text and identify high-frequency content-bearing words and phrases" },
+  { title: "Review results", desc: "Browse the ranked keyword list, bigrams, and interactive word cloud visualization" },
+  { title: "Copy or export", desc: "Copy keywords to your clipboard or download them for use in SEO analysis and content planning" },
+];
+
+const useCases = [
+  { title: "SEO Optimization", desc: "Identify primary and secondary keywords to target in your content for better search rankings" },
+  { title: "Content Research", desc: "Quickly understand the main topics and themes of any article or document" },
+  { title: "Competitor Analysis", desc: "Extract keywords from competitor content to understand their SEO strategy" },
+  { title: "Topic Clustering", desc: "Group related content by common keywords to build topical authority clusters" },
+];
 
 const faqItems = [
   { question: "How does the keyword extractor identify keywords?", answer: "The extractor uses a four-step process: 1) Tokenization — splits text into individual words and bigrams, 2) Stop word filtering — removes common words like 'the', 'is', 'at' that carry little meaning, 3) Frequency counting — tallies how often each word appears, 4) Ranking — sorts keywords by frequency, showing you the most important terms. It also detects common two-word phrases (bigrams) for more context-rich keywords." },
   { question: "What are stop words and why are they removed?", answer: "Stop words are common, high-frequency words (like 'the', 'a', 'an', 'and', 'or', 'in', 'on', 'at', 'to', 'for', 'of', 'by', 'with') that appear in almost every English text but carry little meaningful content. By removing them, the extractor can focus on the content-bearing words that truly represent what your text is about." },
   { question: "Can I use extracted keywords for SEO?", answer: "Yes! The extracted keywords are excellent for SEO optimization. They reveal the core topics and themes of your content, helping you identify: primary keywords to target, related terms to include, content gaps, and optimization opportunities. Use the ranked list to ensure your most important keywords appear in titles, headings, meta descriptions, and throughout your content naturally." },
+  { question: "What are bigrams and why are they useful?", answer: "Bigrams are two-word phrases that frequently appear together in your text (e.g., 'artificial intelligence', 'social media'). They capture more context than single words and help identify multi-word concepts and proper names that single-word extraction would miss." },
+  { question: "How many keywords can the extractor handle?", answer: "The extractor displays the top 30 single keywords and top 15 bigrams. The word cloud visualization shows up to 40 keywords, giving you a comprehensive view of your text's most important terms." },
+  { question: "Does the tool work with non-English text?", answer: "The stop word list is optimized for English, so English text produces the best results. The tool will still extract keywords from other languages, but the stop word filtering may be less effective." },
+  { question: "What's the minimum text length for keyword extraction?", answer: "We recommend at least 50 words for meaningful keyword extraction. Shorter texts may produce too few keywords to be useful." },
+  { question: "Can I adjust the stop word list?", answer: "Currently, the stop word list is fixed and optimized for general English content. It includes approximately 100 common English stop words." },
 ];
 
 const schema = {
@@ -18,7 +47,12 @@ const schema = {
   featureList: ["Keyword extraction with frequency ranking", "Bigram (two-word phrase) detection", "Visual word cloud display", "Stop word filtering for meaningful results", "Copy keywords with one click"],
 };
 ---
-<MainLayout title="AI Keyword Extractor - Extract Keywords & Phrases from Text" description="Extract the most important keywords and phrases from any text. See ranked keywords with frequency counts, bigrams, and a visual word cloud." keywords="keyword extractor, keyword analysis, SEO keywords, text analysis, word frequency, phrase extraction" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Keyword Extractor",url:"/tools/ai-keyword-extractor/"}]}>
+<MainLayout title="AI Keyword Extractor - Extract Keywords & Phrases from Text" description="Extract the most important keywords and phrases from any text. See ranked keywords with frequency counts, bigrams, and a visual word cloud." keywords="keyword extractor, keyword analysis, SEO keywords, text analysis, word frequency, phrase extraction" toolSchema={schema} faq={faqItems} howto={{
+    name: "How to Extract Keywords with AI",
+    description: "Learn how to use our AI keyword extractor to find the most important terms in any text",
+    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
+    totalTime: "PT1M",
+  }} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Keyword Extractor",url:"/tools/ai-keyword-extractor/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="AI Keyword" gradient="Extractor Pro" desc="Extract the most important keywords, phrases, and topics from any text. See ranked results with frequency data and a visual word cloud." badge="✦ AI Powered" slug="ai-keyword-extractor" />
     <ShareBar />
@@ -84,8 +118,22 @@ const schema = {
       </div>
     </div>
     <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Keyword Extractor uses a <strong class="text-primary">statistical NLP approach</strong> to identify the most meaningful terms in your text. The process begins with tokenization — splitting the text into individual words and contiguous word pairs (bigrams). A comprehensive stop word list then filters out common, low-information words to ensure only meaningful content words remain.</p><p>Each remaining word and bigram is counted for frequency, and results are ranked from most to least common. The <strong class="text-primary">word cloud</strong> provides a visual representation where keyword size corresponds to frequency, making it easy to spot dominant themes at a glance. Bigram detection captures multi-word concepts like "machine learning" or "climate change" that carry more context than single words.</p><p>Everything runs in your browser — your text is never uploaded to any server, ensuring complete privacy.</p></div></section>
+    <ToolContentSections
+      toolSlug="ai-keyword-extractor"
+      toolName="AI Keyword Extractor"
+      category="AI Tools"
+      {benefits}
+      howToSteps={howToSteps}
+      useCases={useCases}
+    />
     <RelatedTools current="ai-keyword-extractor" />
-    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+    <div class="mt-20 max-w-3xl mx-auto px-4">
+      <div class="bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-fuchsia-500/10 border border-violet-500/20 rounded-2xl p-8 md:p-12 text-center">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-4">Ready to <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Extract</span> Keywords?</h2>
+        <p class="text-tertiary text-sm max-w-lg mx-auto mb-6">Try our AI keyword extractor now — no sign-up required, completely free, and your data never leaves your device.</p>
+        <a href="#main-content" class="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all">Extract Now</a>
+      </div>
+    </div>
   </div></main>
 </MainLayout>
 

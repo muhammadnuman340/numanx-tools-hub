@@ -5,6 +5,7 @@ import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
 import HowToUse from "../../components/HowToUse.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "Why convert PNG to JPG?", answer: "JPG files are significantly smaller than PNGs, making them ideal for web use, email attachments, and storage. Converting PNG to JPG can reduce file size by 50-80% with minimal quality loss." },
@@ -12,6 +13,9 @@ const faqItems = [
   { question: "Does JPG support transparency?", answer: "No, JPG does not support transparency. If your PNG has transparent areas, they will be filled with white (or the background color you choose) when converted to JPG." },
   { question: "Is this tool completely free?", answer: "Yes, entirely free. No watermarks, no file size limits, no sign-up required. All processing happens in your browser using the Canvas API." },
   { question: "Are my images uploaded to a server?", answer: "No. All conversion happens entirely in your browser. Your images are never uploaded, stored, or transmitted over the network." },
+  { question: "What quality setting should I use?", answer: "85-90% is recommended for web use — it provides excellent compression with near-invisible quality loss. Use 95-100% for maximum quality when you need to preserve fine details. Use 50-70% for thumbnails or previews." },
+  { question: "Can I convert PNG with transparency to JPG?", answer: "Yes, but JPG does not support transparency. Transparent areas will be filled with white by default. This tool uses a white background fill to handle transparent PNG pixels during conversion." },
+  { question: "Is PNG to JPG conversion lossy?", answer: "Yes, JPG uses lossy compression which discards some image data to achieve smaller file sizes. The quality slider lets you control how much compression is applied — higher quality means less data loss but larger files." },
 ];
 
 const pjSchema = {
@@ -26,6 +30,29 @@ const pjSchema = {
     "100% client-side — images never uploaded"
   ],
 };
+
+const benefits = [
+  { icon: "📦", title: "Smaller File Size", desc: "JPG files are 50-80% smaller than PNGs. Save storage space and bandwidth while sharing images online." },
+  { icon: "⚡", title: "Faster Loading", desc: "Smaller JPG images load faster on websites and apps. Improve page speed and user experience instantly." },
+  { icon: "🎛️", title: "Quality Control", desc: "Adjust compression from 10-100% with the quality slider. Find the perfect balance between size and quality." },
+  { icon: "🔒", title: "100% Private", desc: "All conversion happens in your browser. Your images never leave your device." },
+  { icon: "📊", title: "Size Comparison", desc: "See original PNG size vs converted JPG size with savings percentage. Know exactly how much you saved." },
+  { icon: "🆓", title: "Free Forever", desc: "No sign-ups, no limits, no hidden charges. Unlimited conversions for everyone." },
+];
+
+const howToSteps = [
+  { num: "1", title: "Upload PNG", desc: "Drag & drop or browse to select your PNG image. Single image conversion with instant processing." },
+  { num: "2", title: "Adjust Quality", desc: "Use the quality slider to control JPG compression. Higher quality = larger file, lower quality = smaller file." },
+  { num: "3", title: "Preview Result", desc: "Compare original PNG and converted JPG side-by-side. Toggle between original and result views." },
+  { num: "4", title: "Download JPG", desc: "Download your optimized JPG image with the file size and savings displayed for confirmation." },
+];
+
+const useCases = [
+  { icon: "🌐", title: "Web Publishing", desc: "Convert PNG images to JPG for faster website loading. Ideal for blog posts, articles, and photo galleries." },
+  { icon: "📧", title: "Email Attachments", desc: "Reduce image file sizes for email attachments. Smaller JPGs send faster and stay under size limits." },
+  { icon: "📱", title: "Social Media", desc: "Convert high-res PNG photos to JPG before uploading to social platforms that recompress images anyway." },
+  { icon: "💾", title: "Storage Optimization", desc: "Free up disk space by converting large PNG files to space-efficient JPG format." },
+];
 ---
 
 <MainLayout

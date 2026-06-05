@@ -5,6 +5,7 @@ import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
 import KeyboardHints from "../../components/KeyboardHints.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "How many unit categories are supported?", answer: "The converter covers 8 categories: Length, Mass, Volume, Temperature, Area, Speed, Time, and Data Storage — over 100 units total." },
@@ -12,6 +13,9 @@ const faqItems = [
   { question: "How precise are the conversions?", answer: "Conversions use standard international conversion factors with up to 10 decimal places of precision for maximum accuracy." },
   { question: "Can I swap the from/to units quickly?", answer: "Yes. Click the swap button (⇄) between the unit fields to instantly exchange the from and to values." },
   { question: "Does it support imperial and metric?", answer: "Absolutely. Every category includes both metric and imperial/US customary units so you can convert between systems seamlessly." },
+  { question: "Can I convert temperature between Celsius, Fahrenheit, and Kelvin?", answer: "Yes, the Temperature category supports conversions between Celsius, Fahrenheit, and Kelvin using the standard conversion formulas. Results are precise to 2 decimal places." },
+  { question: "What data storage units are supported?", answer: "Data storage covers bytes, kilobytes, megabytes, gigabytes, terabytes, petabytes, kibibytes, mebibytes, gibibytes, tebibytes, bits, kilobits, and megabits — both decimal and binary." },
+  { question: "How do I convert speed units like Mach and light speed?", answer: "The Speed category includes meters/second, km/h, mph, knots, foot/second, Mach (sea level), and even light speed. Use it for physics, aviation, or everyday speed conversions." },
 ];
 const schema = {
   name: "Unit Converter Pro",
@@ -26,6 +30,29 @@ const schema = {
     "100% client-side with no server uploads"
   ],
 };
+
+const benefits = [
+  { icon: "📏", title: "100+ Units", desc: "Convert across 8 categories including length, mass, volume, temperature, area, speed, time, and data storage. Over 100 units total." },
+  { icon: "⚡", title: "Real-Time Results", desc: "Conversions update instantly as you type. No buttons to click — just enter a value and see the result immediately." },
+  { icon: "🔄", title: "Smart Category Detection", desc: "Switch between categories with one click. The converter remembers your last used units within each category for faster workflows." },
+  { icon: "🔁", title: "One-Click Swap", desc: "Swap the from and to units with a single click. Perfect for reverse conversions without re-entering values." },
+  { icon: "📋", title: "Copy & Download", desc: "Copy individual conversion results to clipboard or download as text. Each result includes the full conversion detail." },
+  { icon: "🆓", title: "Completely Free", desc: "No sign-ups, no limits. Convert unlimited values across all 8 categories with 100+ units completely free." },
+];
+
+const howToSteps = [
+  { num: "1", title: "Pick a Category", desc: "Choose from Length, Mass, Volume, Temperature, Area, Speed, Time, or Data. Each category has its own set of units." },
+  { num: "2", title: "Enter a Value", desc: "Type or paste the value you want to convert. The result updates in real-time as you type." },
+  { num: "3", title: "Select Units", desc: "Choose the source and target units from the dropdown menus. Use the swap button to quickly reverse the conversion." },
+  { num: "4", title: "Copy the Result", desc: "Click the result to copy it to your clipboard. Use the quick reference table to see common conversions at a glance." },
+];
+
+const useCases = [
+  { icon: "👨‍🍳", title: "Cooking & Baking", desc: "Convert between cups, tablespoons, milliliters, and grams for recipes. Switch between metric and imperial effortlessly." },
+  { icon: "🔧", title: "DIY & Construction", desc: "Convert length, area, and volume for home improvement projects. Switch between metric and imperial measurements." },
+  { icon: "🌍", title: "Travel & Navigation", desc: "Convert speed limits, distances, and temperatures when traveling between countries that use different measurement systems." },
+  { icon: "💻", title: "Data & Technology", desc: "Convert between bytes, bits, and their multiples for storage planning, bandwidth calculations, and data transfer estimates." },
+];
 ---
 
 <MainLayout
@@ -34,6 +61,12 @@ const schema = {
   keywords="unit converter, length converter, temperature converter, metric conversion, imperial to metric, unit conversion tool"
   toolSchema={schema}
   faq={faqItems}
+  howto={{
+    name: "How to Convert Units",
+    description: "Convert 100+ units across 8 categories including length, mass, volume, and temperature in 4 easy steps.",
+    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
+    totalTime: "PT1M",
+  }}
   breadcrumbs={[
     { name: "Home", url: "/" },
     { name: "Tools", url: "/tools/" },
@@ -112,6 +145,36 @@ const schema = {
         { keys: "⌘K", label: "Open search" },
         { keys: "Tab", label: "Next field" },
       ]} />
+
+      <ToolContentSections
+        toolSlug="unit-converter"
+        toolName="Unit Converter"
+        category="Utility Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+
+      <!-- ─── CTA Section ─── -->
+      <section class="mt-16 text-center">
+        <div class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10">
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight">
+            Start Converting
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> Units Free</span>
+          </h2>
+          <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
+            No sign-up required. No limits. Convert 100+ units across 8 categories completely free.
+          </p>
+          <div class="mt-6 flex gap-3 justify-center flex-wrap">
+            <button onclick="document.querySelector('#input-value')?.focus()" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30">
+              Convert Now
+            </button>
+            <a href="/tools/character-counter/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700">
+              Try Character Counter
+            </a>
+          </div>
+        </div>
+      </section>
 
       <RelatedTools current="unit-converter" />
     </div>

@@ -1,9 +1,10 @@
-ï»¿---
+---
 import MainLayout from "../../layouts/MainLayout.astro";
 import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "What can the AI Chat Assistant do?", answer: "It can answer questions about tools, SHA-256 hashing, color conversion (hex/rgb/hsl), BMI calculation, slug generation, binary/text conversion, ASCII lookup, dice rolling (d4d100), password strength analysis, Fibonacci sequences, prime checking with factorization, date info (day of week, leap year), random inspirational quotes, lottery number generation, text transformations (word count, JSON format, base64, case convert, URL encode/decode, ROT13, reverse text, Morse code, palindrome check), math calculations, number base conversions, date arithmetic, list operations, frequency analysis, number formatting, time conversion, timers, password/UUID generation, and more." },
@@ -18,7 +19,14 @@ const schema = {
   description: "A full-page conversational AI assistant that helps with tools, transformations, and platform navigation  all running locally.",
 };
 ---
-<MainLayout title="AI Chat Assistant - Free AI Chatbot for Tools & Tasks" description="Chat with a local AI assistant about NumanX tools, execute text transformations, generate passwords, format JSON, and more  all in your browser." keywords="ai chat, chatbot, ai assistant, conversation, help, ai helper, virtual assistant, local ai" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Chat Assistant",url:"/tools/ai-chat/"}]}>
+<MainLayout title="AI Chat Assistant - Free AI Chatbot for Tools & Tasks" description="Chat with a local AI assistant about NumanX tools, execute text transformations, generate passwords, format JSON, and more  all in your browser." keywords="ai chat, chatbot, ai assistant, conversation, help, ai helper, virtual assistant, local ai" toolSchema={schema} faq={faqItems}
+  howto={{
+    name: "How to Use AI Chat Assistant",
+    description: "Step-by-step guide for using AI Chat Assistant.",
+    steps: [],
+    totalTime: "PT1M",
+  }}
+  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Chat Assistant",url:"/tools/ai-chat/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="AI Chat" gradient="Assistant" desc="Chat with a local AI assistant about tools, features, and tasks. All processing is private and runs entirely in your browser." badge=" New" slug="ai-chat" />
     <ShareBar />
@@ -1083,7 +1091,7 @@ function processCommand(text) {
     return execStats();
   }
 
-  // Tool search (fuzzy) â€” with inline execution when possible
+  // Tool search (fuzzy) — with inline execution when possible
   const searchTerms = lq.split(/\s+/).filter(w => w.length > 2 && !["the","what","how","can","you","tell","about","show","find","list","for","are","there","with","some","does","this","that","and","please","help"].includes(w));
   if (searchTerms.length > 0) {
     const found = allTools.filter(t => {
@@ -1106,9 +1114,9 @@ function processCommand(text) {
           const subResult = processCommand(fullCmd);
           if (subResult) return subResult;
         }
-        // No text provided â€” prompt for input
+        // No text provided — prompt for input
         if (cmd === null) {
-          // Complex tool â€” just link
+          // Complex tool — just link
           return "Here's the **[" + bestTool.name + "](" + bestTool.url + ")** tool.\n" + bestTool.desc + "\n\nVisit it to use the full interface.";
         }
         return "I can help with **" + bestTool.name + "**! " + toolCommands.prompt.replace("TOOL", bestTool.name.toLowerCase());
@@ -1126,7 +1134,7 @@ function catCounts(tools) {
   return counts;
 }
 
-// Map tool names â†’ executor command prefixes for inline tool execution
+// Map tool names ? executor command prefixes for inline tool execution
 const toolCommands = {
   prompt: "Give me something to work with (e.g. \"" + "use TOOL: your text here" + "\").",
   "word counter": "count words in ",

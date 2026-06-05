@@ -4,6 +4,30 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
+
+const benefits = [
+  { title: "Smart Keyword Extraction", desc: "Automatically identifies the most important words and phrases from your content using frequency analysis" },
+  { title: "Relevance Scoring", desc: "Each tag includes a 0–100% relevance score so you can pick the most meaningful keywords for your content" },
+  { title: "Category Detection", desc: "Automatically detects content categories like Programming, Food, Technology, Health, Travel, and more" },
+  { title: "Hashtag Generation", desc: "Every tag comes with a ready-to-use hashtag variant optimized for social media platforms" },
+  { title: "Adjustable Count", desc: "Choose exactly how many tags you want — from 5 to 20 — with one simple selector" },
+  { title: "Privacy-First Processing", desc: "All tag generation happens locally in your browser. Your content is never sent to any server" },
+];
+
+const howToSteps = [
+  { title: "Paste your content", desc: "Copy and paste any article title, description, or body text into the input box" },
+  { title: "Choose tag count", desc: "Select how many tags you want to generate — 5 for precision, up to 20 for maximum coverage" },
+  { title: "Generate tags", desc: "Click the Generate Tags button and watch as the AI extracts the most relevant keywords" },
+  { title: "Copy and use", desc: "Review the scored tags, copy them all at once, and use them for SEO, social media, or categorization" },
+];
+
+const useCases = [
+  { title: "SEO Optimization", desc: "Generate targeted keywords and tags to improve search engine rankings and content discoverability" },
+  { title: "Social Media Posts", desc: "Create relevant hashtags for Instagram, Twitter, LinkedIn, and other social platforms instantly" },
+  { title: "Content Categorization", desc: "Automatically tag blog posts, articles, and products with accurate category labels" },
+  { title: "Blog & Article SEO", desc: "Extract the most relevant keywords from your writing to use as meta tags and SEO keywords" },
+];
 
 const faqItems = [
   { question: "How does AI tag generation work?", answer: "The AI Tag Generator analyzes your content by removing common stop words, counting word frequencies, and ranking the most significant terms. It then generates relevant single-word and multi-word tags, including hashtag variants. The tool also detects content categories (programming, food, etc.) to suggest contextually relevant tags." },

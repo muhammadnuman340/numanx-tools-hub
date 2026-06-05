@@ -5,6 +5,7 @@ import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
 import KeyboardHints from "../../components/KeyboardHints.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 
 const faqItems = [
@@ -13,6 +14,9 @@ const faqItems = [
     { question: "What's the difference between viral, trending, and niche hashtags?", answer: "Viral tags have massive reach but high competition. Trending tags are currently popular. Niche tags are specific to your topic — lower reach but higher engagement from targeted audiences." },
     { question: "How is the popularity score calculated?", answer: "Popularity scores are based on tag usage frequency, competition level, and current trends. Low = under 10K posts, Medium = 10K–100K, High = 100K–1M, Viral = 1M+." },
     { question: "Can I save my favorite hashtags?", answer: "Yes! Click the star icon on any hashtag to save it to your favorites. Saved tags are stored in your browser and persist across sessions." },
+    { question: "What are the best hashtags for Instagram Reels?", answer: "For Reels, use a mix of broad tags like #reels and #explorepage with niche tags specific to your content. Trending audio-based tags also help boost visibility on the Reels feed." },
+    { question: "How often should I change my hashtags?", answer: "Rotate your hashtag sets every few posts to avoid shadowbanning and reach new audiences. Using the same 30 tags on every post can trigger spam filters on Instagram." },
+    { question: "Do hashtags work on LinkedIn?", answer: "Yes, LinkedIn hashtags help categorize content and improve discoverability. Use 3–5 relevant hashtags per post. Mix broad industry tags with niche professional ones for best reach." },
   ];
 const htSchema = {
   "name": "Hashtag Generator Pro",
@@ -26,6 +30,29 @@ const htSchema = {
     "Client-side — no text or data sent to any server"
   ],
 }
+
+const benefits = [
+  { icon: "🚀", title: "Boost Reach", desc: "Get hashtags optimized for maximum discoverability across Instagram, TikTok, YouTube, Shorts, and Threads with popularity-tiered suggestions." },
+  { icon: "📊", title: "Smart Analytics", desc: "Each hashtag comes with a popularity score and estimated reach. Know exactly which tags will perform before you post." },
+  { icon: "⭐", title: "Save Favorites", desc: "Star your best-performing hashtags to save them to a favorites list. Build your personal tag library over time." },
+  { icon: "🎯", title: "Platform Optimized", desc: "Tag counts, formats, and suggestions are tailored per platform. Instagram gets 28 tags, TikTok gets 22, Threads gets 12 — all optimized." },
+  { icon: "⚡", title: "Instant Generation", desc: "Type your topic and generate a full set of hashtags in under a second. Zero waiting, zero server calls." },
+  { icon: "🆓", title: "Completely Free", desc: "No sign-ups, no limits, no hidden charges. Generate unlimited hashtag sets across all platforms free." },
+];
+
+const howToSteps = [
+  { num: "1", title: "Enter Your Topic", desc: "Type your content topic, niche, or keyword. The more specific you are, the more relevant your hashtags will be." },
+  { num: "2", title: "Choose Platform", desc: "Select Instagram, TikTok, YouTube, Shorts, or Threads. Each platform has different optimal tag counts and styles." },
+  { num: "3", title: "Generate Hashtags", desc: "Click generate to get a curated set of hashtags with popularity scores. Shuffle to randomize for fresh sets." },
+  { num: "4", title: "Copy & Post", desc: "Copy individual tags or the entire set. Star favorites to save them for future posts. Download as TXT." },
+];
+
+const useCases = [
+  { icon: "📸", title: "Instagram Growth", desc: "Grow your Instagram presence with viral and niche hashtags that help your posts appear on Explore and Reels feeds." },
+  { icon: "🎵", title: "TikTok Virality", desc: "Get your TikTok videos on the For You page with trending tags optimized for the TikTok algorithm and audience." },
+  { icon: "📺", title: "YouTube Discovery", desc: "Boost YouTube and Shorts discoverability with tags that help the algorithm categorize and recommend your content." },
+  { icon: "💼", title: "Business Marketing", desc: "Drive brand awareness with platform-specific hashtag strategies for your business social media campaigns." },
+];
 ---
 
 <MainLayout
@@ -34,6 +61,12 @@ const htSchema = {
   keywords="hashtag generator, viral hashtags, instagram hashtags, tiktok hashtags, youtube tags, threads hashtags, trending tags"
   toolSchema={htSchema}
   faq={faqItems}
+  howto={{
+    name: "How to Use Hashtag Generator",
+    description: "Generate viral, trending, and niche hashtags for any social media platform in 4 easy steps.",
+    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
+    totalTime: "PT1M",
+  }}
   breadcrumbs={[
     { name: "Home", url: "/" },
     { name: "Tools", url: "/tools/" },
@@ -272,6 +305,36 @@ const htSchema = {
         { keys: "Enter", label: "Generate hashtags" },
         { keys: "Click", label: "Copy hashtag" },
       ]} />
+
+      <ToolContentSections
+        toolSlug="hashtag-generator"
+        toolName="Hashtag Generator"
+        category="Creator Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+
+      <!-- ─── CTA Section ─── -->
+      <section class="mt-16 text-center">
+        <div class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10">
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight">
+            Start Generating
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> Hashtags Free</span>
+          </h2>
+          <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
+            No sign-up required. No limits. Generate unlimited viral hashtags for Instagram, TikTok, YouTube, and more completely free.
+          </p>
+          <div class="mt-6 flex gap-3 justify-center flex-wrap">
+            <button onclick="document.querySelector('#topic-input')?.focus()" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30">
+              Generate Now
+            </button>
+            <a href="/tools/markdown-editor/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700">
+              Try Markdown Editor
+            </a>
+          </div>
+        </div>
+      </section>
 
       <RelatedTools current="hashtag-generator" />
     </div>

@@ -4,6 +4,7 @@ import ToolHeader from "../../components/ToolHeader.astro";
 import ShareBar from "../../components/ShareBar.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 import Accordion from "../../components/ui/Accordion.astro";
+import ToolContentSections from "../../components/ToolContentSections.astro";
 
 const faqItems = [
   { question: "How are random numbers generated?", answer: "Random numbers are generated using the browser's built-in Math.random() function, which uses a pseudo-random number generator. For most everyday purposes like giveaways, games, and sampling, this provides sufficient randomness." },
@@ -12,7 +13,14 @@ const faqItems = [
 ];
 const schema = { name: "Random Number Generator", applicationCategory: "Utilities", description: "Generate random numbers within a custom range. Set min, max, count, and toggle duplicates. Free online random number generator.", featureList: ["Custom range support", "Duplicate control", "Multiple number generation", "Copy to clipboard"] };
 ---
-<MainLayout title="Random Number Generator - Generate Random Numbers Online" description="Generate random numbers within a custom range. Set min, max, count, and toggle duplicates. Free online random number generator." keywords="random number generator, random number, number generator, random, rng" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Random Number Generator",url:"/tools/random-number-generator/"}]}>
+<MainLayout title="Random Number Generator - Generate Random Numbers Online" description="Generate random numbers within a custom range. Set min, max, count, and toggle duplicates. Free online random number generator." keywords="random number generator, random number, number generator, random, rng" toolSchema={schema} faq={faqItems}
+  howto={{
+    name: "How to Use Random Number Generator",
+    description: "Step-by-step guide for using Random Number Generator.",
+    steps: [],
+    totalTime: "PT1M",
+  }}
+  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Random Number Generator",url:"/tools/random-number-generator/"}]}>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
     <ToolHeader title="Random" gradient="Number Pro" desc="Generate random numbers within a custom range. Set min, max, count, and toggle duplicates." badge="✦ New Tool" slug="random-number-generator" />
     <ShareBar />
