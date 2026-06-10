@@ -1,26 +1,32 @@
-const CACHE = 'numanx-tools-v3';
-const STATIC_CACHE = 'numanx-static-v3';
+const CACHE = 'numanx-tools-v4';
+const STATIC_CACHE = 'numanx-static-v4';
 const FONT_CACHE = 'numanx-fonts-v1';
+const DATA_CACHE = 'numanx-data-v1';
 
-const PRECACHE_URLS = ['/', '/tools/', '/offline/'];
+const PRECACHE_URLS = ['/', '/tools/', '/offline/', '/favicon.png', '/icon-192.png', '/icon-512.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE).then((c) => c.addAll(PRECACHE_URLS)).then(() => self.skipWaiting()),
+    caches
+      .open(CACHE)
+      .then((c) => c.addAll(PRECACHE_URLS))
+      .then(() => self.skipWaiting()),
   );
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE && k !== STATIC_CACHE && k !== FONT_CACHE).map((k) => caches.delete(k)))
-    ).then(() => self.clients.claim()),
+    caches
+      .keys()
+      .then((keys) =>
+        Promise.all(
+          keys.filter((k) => k !== CACHE && k !== STATIC_CACHE && k !== FONT_CACHE && k !== DATA_CACHE).map((k) => caches.delete(k)),
+        ),
+      )
+      .then(() => self.clients.claim()),
   );
-});
-
-self.addEventListener('activate', () => {
   if (self.registration.navigationPreload) self.registration.navigationPreload.enable();
-}, { once: true });
+});
 
 const FONT_ORIGINS = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 const STATIC_EXT = /\.(css|js|woff2?|ttf|eot|svg|png|jpg|webp|avif|ico|json)$/;
@@ -38,11 +44,15 @@ self.addEventListener('fetch', (event) => {
   // Fonts: cache-first, never update
   if (isFont) {
     event.respondWith(
-      caches.match(request).then((cached) => cached || fetch(request).then((res) => {
-        const clone = res.clone();
-        caches.open(FONT_CACHE).then((c) => c.put(request, clone));
-        return res;
-      })),
+      caches.match(request).then(
+        (cached) =>
+          cached ||
+          fetch(request).then((res) => {
+            const clone = res.clone();
+            caches.open(FONT_CACHE).then((c) => c.put(request, clone));
+            return res;
+          }),
+      ),
     );
     return;
   }
@@ -51,13 +61,15 @@ self.addEventListener('fetch', (event) => {
   if (isStatic) {
     event.respondWith(
       caches.match(request).then((cached) => {
-        const fetchPromise = fetch(request).then((res) => {
-          if (res.status === 200) {
-            const clone = res.clone();
-            caches.open(STATIC_CACHE).then((c) => c.put(request, clone));
-          }
-          return res;
-        }).catch(() => cached);
+        const fetchPromise = fetch(request)
+          .then((res) => {
+            if (res.status === 200) {
+              const clone = res.clone();
+              caches.open(STATIC_CACHE).then((c) => c.put(request, clone));
+            }
+            return res;
+          })
+          .catch(() => cached);
         return cached || fetchPromise;
       }),
     );
@@ -87,16 +99,65 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Sitemap / data / JSON: stale-while-revalidate
+  if (isSameOrigin && (url.pathname.endsWith('.xml') || url.pathname.endsWith('.json') || url.pathname.includes('/data/'))) {
+    event.respondWith(
+      caches.match(request).then((cached) => {
+        const fetchPromise = fetch(request)
+          .then((res) => {
+            if (res.status === 200) {
+              const clone = res.clone();
+              caches.open(DATA_CACHE).then((c) => c.put(request, clone));
+            }
+            return res;
+          })
+          .catch(() => cached);
+        return cached || fetchPromise;
+      }),
+    );
+    return;
+  }
+
   // Everything else: network-first, cache fallback
   event.respondWith(
     caches.match(request).then((cached) =>
-      fetch(request).then((res) => {
-        if (res.status === 200 && isSameOrigin) {
-          const clone = res.clone();
-          caches.open(CACHE).then((c) => c.put(request, clone));
-        }
-        return res;
-      }).catch(() => cached)
+      fetch(request)
+        .then((res) => {
+          if (res.status === 200 && isSameOrigin) {
+            const clone = res.clone();
+            caches.open(CACHE).then((c) => c.put(request, clone));
+          }
+          return res;
+        })
+        .catch(() => cached),
     ),
   );
+});
+
+// Background Sync: retry failed form submissions
+self.addEventListener('sync', (event) => {
+  if (event.tag === 'sync-contact') {
+    event.waitUntil(syncContactForm());
+  }
+});
+
+async function syncContactForm() {
+  try {
+    const data = await caches.match('/contact/pending');
+    if (data) {
+      const body = await data.json();
+      await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      caches.delete('/contact/pending');
+    }
+  } catch {}
+}
+
+// Listen for explicit cache-update messages from the page
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'CACHE_URLS') {
+    const urls = event.data.urls;
+    if (Array.isArray(urls) && urls.length) {
+      caches.open(CACHE).then((c) => c.addAll(urls));
+    }
+  }
 });

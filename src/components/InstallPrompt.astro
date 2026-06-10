@@ -1,0 +1,63 @@
+---
+---
+
+<div id="pwa-install-wrapper" class="hidden" role="complementary" aria-label="Install app">
+  <div
+    id="pwa-install-banner"
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[250] flex items-center gap-3 px-4 py-3 rounded-2xl border border-surface bg-surface-nav backdrop-blur-2xl shadow-2xl animate-slide-up max-w-sm w-[calc(100%-2rem)]"
+  >
+    <div class="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center shrink-0">
+      <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+    </div>
+    <div class="flex-1 min-w-0">
+      <p class="text-sm font-semibold text-primary truncate">Install NumanX Tools</p>
+      <p class="text-xs text-tertiary truncate">Add to your home screen for quick access</p>
+    </div>
+    <button
+      id="pwa-install-btn"
+      class="shrink-0 px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold transition-all duration-200 cursor-pointer"
+    >
+      Install
+    </button>
+    <button
+      id="pwa-install-dismiss"
+      class="shrink-0 w-7 h-7 flex items-center justify-center rounded-lg text-tertiary hover:text-white hover:bg-surface-3 transition-all cursor-pointer"
+      aria-label="Dismiss install prompt"
+    >
+      <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  let deferredPrompt: Event | null = null;
+  const wrapper = document.getElementById('pwa-install-wrapper');
+  const installBtn = document.getElementById('pwa-install-btn');
+  const dismissBtn = document.getElementById('pwa-install-dismiss');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (wrapper) wrapper.classList.remove('hidden');
+  });
+
+  installBtn?.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    (deferredPrompt as any).prompt();
+    const result = await (deferredPrompt as any).userChoice;
+    if (result.outcome === 'accepted') {
+      if (wrapper) wrapper.classList.add('hidden');
+    }
+    deferredPrompt = null;
+  });
+
+  dismissBtn?.addEventListener('click', () => {
+    if (wrapper) wrapper.classList.add('hidden');
+    deferredPrompt = null;
+  });
+
+  window.addEventListener('appinstalled', () => {
+    if (wrapper) wrapper.classList.add('hidden');
+    if (window.showToast) window.showToast('NumanX Tools installed!', 'success');
+  });
+</script>

@@ -11,6 +11,7 @@ import Analytics from '../components/Analytics.astro';
 import AdSense from '../components/AdSense.astro';
 import Toast from '../components/ui/Toast.astro';
 import FeedbackButton from '../components/FeedbackButton.astro';
+import InstallPrompt from '../components/InstallPrompt.astro';
 import ClientRouter from 'astro/components/ClientRouter.astro';
 
 const GA_ID = import.meta.env.PUBLIC_GA_ID || '';
@@ -203,6 +204,7 @@ const {
     <FeedbackButton />
     <SearchBar />
     <Toast />
+    <InstallPrompt />
     <AIAssistant />
 
     <script>

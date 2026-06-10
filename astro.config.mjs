@@ -11,6 +11,9 @@ export default defineConfig({
     inlineStylesheets: 'auto',
     assetsInlineLimit: 4096,
   },
+  prefetch: {
+    defaultStrategy: 'hover',
+  },
   vite: {
     plugins: [tailwindcss()],
     build: {
@@ -20,6 +23,11 @@ export default defineConfig({
           assetFileNames: '_astro/[name].[hash][extname]',
           chunkFileNames: '_astro/[name].[hash].js',
           entryFileNames: '_astro/[name].[hash].js',
+          manualChunks(id) {
+            if (id.includes('node_modules/qrcode')) {
+              return 'vendor/qrcode';
+            }
+          },
         },
       },
     },
