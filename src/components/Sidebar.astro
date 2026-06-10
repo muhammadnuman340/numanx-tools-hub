@@ -446,15 +446,9 @@ import ThemeToggle from './ThemeToggle.astro';
     updateMainOffset(pos);
   });
 
-  // --- Auto-collapse on link click (desktop) / close overlay (mobile) ---
+  // --- Close mobile overlay on link click ---
   sidebar?.querySelectorAll('a[href]').forEach((link) => {
     link.addEventListener('click', () => {
-      if (window.innerWidth >= 1024 && !html.classList.contains('sidebar-collapsed')) {
-        html.classList.add('sidebar-collapsed');
-        localStorage.setItem('sidebar_collapsed', 'true');
-        const pos = html.classList.contains('sidebar-right') ? 'right' : 'left';
-        setTimeout(() => updateMainOffset(pos), 50);
-      }
       if (window.innerWidth < 1024 && sidebar.classList.contains('sidebar-mobile-open')) {
         toggleMobileSidebar();
       }
