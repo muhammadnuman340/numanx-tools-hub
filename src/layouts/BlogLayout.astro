@@ -1,24 +1,24 @@
 ---
-import MainLayout from "./MainLayout.astro";
-import TableOfContents from "../components/TableOfContents.astro";
-import RelatedPosts from "../components/RelatedPosts.astro";
-import PopularPosts from "../components/PopularPosts.astro";
-import AdUnit from "../components/AdUnit.astro";
+import MainLayout from './MainLayout.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import RelatedPosts from '../components/RelatedPosts.astro';
+import PopularPosts from '../components/PopularPosts.astro';
+import AdUnit from '../components/AdUnit.astro';
 
 const { frontmatter } = Astro.props;
 const { title, description, date, author, category, tags, readingTime, slug, image } = frontmatter;
 
 const articleSchema = {
-  "@type": "Article",
-  "headline": title,
-  "description": description,
-  "author": { "@type": "Person", "name": author || "Muhammad Numan Usmani" },
-  "datePublished": date,
-  "dateModified": date,
-  "publisher": { "@type": "Organization", "name": "NumanX Tools" },
-  "mainEntityOfPage": { "@type": "WebPage", "@id": Astro.url.href },
-  "keywords": (tags || []).join(', '),
-  "wordCount": 0,
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  author: { '@type': 'Person', name: author || 'Muhammad Numan Usmani' },
+  datePublished: date,
+  dateModified: date,
+  publisher: { '@type': 'Organization', name: 'NumanX Tools' },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': Astro.url.href },
+  keywords: (tags || []).join(', '),
+  wordCount: 0,
 };
 ---
 
@@ -34,27 +34,54 @@ const articleSchema = {
   modifiedTime={date}
   tags={tags || []}
   breadcrumbs={[
-    { name: "Home", url: "/" },
-    { name: "Blog", url: "/blog/" },
+    { name: 'Home', url: '/' },
+    { name: 'Blog', url: '/blog/' },
     { name: title, url: Astro.url.pathname },
   ]}
 >
+  <!-- Reading progress indicator -->
+  <div class="sticky top-[64px] left-0 w-full h-[2px] bg-white/[0.05] z-40">
+    <div id="progress-bar" class="h-full bg-gradient-to-r from-purple-500 to-indigo-500 w-0 transition-all duration-75"></div>
+  </div>
   <main class="min-h-screen pt-8 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-6xl mx-auto">
       <div class="flex gap-8">
-        <article class="flex-1 min-w-0 max-w-4xl">
+        <article class="flex-1 min-w-0 max-w-3xl">
           <div class="flex items-center gap-3 text-sm text-muted mb-6 flex-wrap">
             <a href="/blog" class="inline-flex items-center gap-1 hover:text-purple-400 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg
+              >
               Back
             </a>
             <span class="text-dim">/</span>
-            <a href={`/blog/?category=${encodeURIComponent(category || "General")}`} class="px-2.5 py-0.5 rounded-full bg-purple-600/15 border border-purple-500/30 text-purple-300 text-xs font-medium hover:bg-purple-600/25 transition-colors">{category || "General"}</a>
+            <a
+              href={`/blog/?category=${encodeURIComponent(category || 'General')}`}
+              class="px-2.5 py-0.5 rounded-full bg-purple-600/15 border border-purple-500/30 text-purple-300 text-xs font-medium hover:bg-purple-600/25 transition-colors"
+              >{category || 'General'}</a
+            >
             <span class="text-dim">·</span>
             <time datetime={date}>{date}</time>
             <span class="text-dim">·</span>
-            <span>{readingTime || "5 min read"}</span>
+            <span>{readingTime || '5 min read'}</span>
           </div>
+
+          {
+            image && (
+              <div class="mb-8 rounded-xl overflow-hidden border border-surface">
+                <img src={image} alt={title} class="w-full h-auto object-cover" />
+              </div>
+            )
+          }
 
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1] mb-6">
             {title}
@@ -65,15 +92,25 @@ const articleSchema = {
           </p>
 
           <div class="flex items-center gap-4 pb-8 border-b border-surface mb-10">
-            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-sm font-bold text-white shrink-0">
-              {author ? author.charAt(0).toUpperCase() : "N"}
+            <div
+              class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-sm font-bold text-white shrink-0 overflow-hidden relative"
+            >
+              <span class="absolute inset-0 flex items-center justify-center"
+                >{author ? author.charAt(0).toUpperCase() : 'N'}</span
+              >
+              <img
+                src="/images/author-numan.webp"
+                alt={author || 'NumanX Tools'}
+                class="absolute inset-0 w-full h-full rounded-full object-cover z-10"
+                onerror="this.style.display='none'"
+              />
             </div>
             <div>
-              <p class="text-sm font-medium text-primary">{author || "NumanX Tools"}</p>
+              <p class="text-sm font-medium text-primary">{author || 'NumanX Tools'}</p>
               <p class="text-xs text-muted">
                 <time datetime={date}>{date}</time>
                 <span class="mx-1.5">·</span>
-                {readingTime || "5 min read"}
+                {readingTime || '5 min read'}
               </p>
             </div>
           </div>
@@ -82,61 +119,144 @@ const articleSchema = {
             <AdUnit format="horizontal" />
           </div>
 
-          <div class="prose prose-invert prose-lg max-w-none
+          <div
+            class="prose prose-invert prose-lg max-w-none animate-[fadeInUp_0.5s_ease-out_forwards]
             prose-headings:text-white prose-headings:font-black prose-headings:tracking-tight
             prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-5 prose-h2:scroll-mt-24
             prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-24
             prose-p:text-secondary prose-p:leading-relaxed prose-p:mb-5
             prose-a:text-purple-400 prose-a:no-underline hover:prose-a:text-purple-300 prose-a:transition-colors
             prose-strong:text-primary prose-strong:font-semibold
-            prose-ul:text-secondary prose-ul:leading-relaxed prose-ul:space-y-2
-            prose-ol:text-secondary prose-ol:leading-relaxed prose-ol:space-y-2
-            prose-li:my-1
+            prose-ul:text-secondary prose-ul:leading-relaxed prose-ul:space-y-2 prose-ul:list-disc prose-ul:pl-6
+            prose-ol:text-secondary prose-ol:leading-relaxed prose-ol:space-y-2 prose-ol:list-decimal prose-ol:pl-6
+            prose-li:my-1 prose-li:text-slate-300
+            prose-li::marker:text-purple-500
             prose-blockquote:border-l-4 prose-blockquote:border-purple-500 prose-blockquote:bg-purple-600/10 prose-blockquote:py-3 prose-blockquote:px-6 prose-blockquote:rounded-r-xl prose-blockquote:text-secondary prose-blockquote:not-italic
             prose-code:text-purple-300 prose-code:bg-surface-2 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-sm
             prose-pre:bg-surface-1 prose-pre:border prose-pre:border-surface prose-pre:rounded-xl prose-pre:shadow-xl
             prose-img:rounded-xl prose-img:border prose-img:border-surface
             prose-hr:border-surface prose-hr:my-12
-          ">
+            prose-table:w-full prose-table:border-collapse prose-table:my-8 prose-table:text-sm
+            prose-th:text-white prose-th:bg-white/[0.03] prose-th:font-semibold prose-th:text-left prose-th:px-4 prose-th:py-3 prose-th:border-b-2 prose-th:border-white/10
+            prose-td:px-4 prose-td:py-3 prose-td:text-slate-400 prose-td:border-b prose-td:border-white/5
+            hover:prose-tr:td:text-white hover:prose-tr:bg-white/[0.01]"
+          >
             <slot />
           </div>
 
           <div class="mt-12 pt-8 border-t border-surface">
             <div class="flex flex-wrap gap-2">
-              {(tags || []).map((tag: string) => (
-                <a href={`/blog/?tag=${encodeURIComponent(tag)}`} class="px-3 py-1.5 rounded-lg bg-surface-2 border border-surface-2 text-xs text-secondary font-medium hover:bg-surface-3 hover:text-white transition-colors">{tag}</a>
-              ))}
+              {
+                (tags || []).map((tag: string) => (
+                  <a
+                    href={`/blog/?tag=${encodeURIComponent(tag)}`}
+                    class="px-3 py-1.5 rounded-lg bg-surface-2 border border-surface-2 text-xs text-secondary font-medium hover:bg-surface-3 hover:text-white transition-colors"
+                  >
+                    {tag}
+                  </a>
+                ))
+              }
             </div>
           </div>
 
           <div class="mt-10 flex items-center justify-between p-5 rounded-xl border border-surface bg-surface-1">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-sm font-bold text-white shrink-0">
-                {author ? author.charAt(0).toUpperCase() : "N"}
+              <div
+                class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-sm font-bold text-white shrink-0 overflow-hidden relative"
+              >
+                <span class="absolute inset-0 flex items-center justify-center"
+                  >{author ? author.charAt(0).toUpperCase() : 'N'}</span
+                >
+                <img
+                  src="/images/author-numan.webp"
+                  alt={author || 'NumanX Tools'}
+                  class="absolute inset-0 w-full h-full rounded-full object-cover z-10"
+                  onerror="this.style.display='none'"
+                />
               </div>
               <div>
-                <p class="text-sm font-medium text-primary">{author || "NumanX Tools"}</p>
+                <p class="text-sm font-medium text-primary">{author || 'NumanX Tools'}</p>
                 <p class="text-xs text-muted">Tools &amp; Resources</p>
               </div>
             </div>
             <div class="flex gap-2">
-                              <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(Astro.url.href)}`} target="_blank" class="p-2.5 rounded-lg bg-surface-2 border border-surface-2 text-tertiary hover:text-white hover:bg-surface-3 transition-all duration-200" title="Share on Twitter">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+              <a
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(Astro.url.href)}`}
+                target="_blank"
+                class="p-2.5 rounded-lg bg-surface-2 border border-surface-2 text-tertiary hover:text-white hover:bg-surface-3 transition-all duration-200"
+                title="Share on Twitter"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  ><path
+                    d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"
+                  ></path></svg
+                >
               </a>
-                              <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(Astro.url.href)}`} target="_blank" class="p-2.5 rounded-lg bg-surface-2 border border-surface-2 text-tertiary hover:text-white hover:bg-surface-3 transition-all duration-200" title="Share on LinkedIn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              <a
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(Astro.url.href)}`}
+                target="_blank"
+                class="p-2.5 rounded-lg bg-surface-2 border border-surface-2 text-tertiary hover:text-white hover:bg-surface-3 transition-all duration-200"
+                title="Share on LinkedIn"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  ><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect
+                    x="2"
+                    y="9"
+                    width="4"
+                    height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg
+                >
               </a>
-              <button id="copy-link-btn" class="p-2.5 rounded-lg bg-surface-2 border border-surface-2 text-tertiary hover:text-white hover:bg-surface-3 transition-all duration-200" title="Copy link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              <button
+                id="copy-link-btn"
+                class="p-2.5 rounded-lg bg-surface-2 border border-surface-2 text-tertiary hover:text-white hover:bg-surface-3 transition-all duration-200"
+                title="Copy link"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  ><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path
+                    d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg
+                >
               </button>
             </div>
           </div>
 
-          <RelatedPosts currentSlug={slug || ""} category={category} tags={tags} />
+          <RelatedPosts currentSlug={slug || ''} category={category} tags={tags} />
 
           <div class="mt-10 text-center">
-            <a href="/blog" class="inline-flex items-center gap-2 text-sm text-muted hover:text-purple-400 transition-colors font-medium">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            <a
+              href="/blog"
+              class="inline-flex items-center gap-2 text-sm text-muted hover:text-purple-400 transition-colors font-medium"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                ><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg
+              >
               Back to all articles
             </a>
           </div>
@@ -152,18 +272,39 @@ const articleSchema = {
       </div>
     </div>
   </main>
+
+  <!-- Floating utility toolbar -->
+  <div class="fixed bottom-20 right-6 flex flex-col gap-2 z-50">
+    <button onclick="navigator.clipboard.writeText(window.location.href); this.classList.add('text-emerald-400'); setTimeout(() => this.classList.remove('text-emerald-400'), 2000);"
+            class="p-3 bg-slate-900 border border-white/10 text-slate-400 rounded-full shadow-xl transition-all duration-200 hover:text-white hover:border-purple-500/40 hover:bg-slate-800 active:scale-95 group"
+            title="Copy Link">
+      <svg class="w-5 h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+      </svg>
+    </button>
+  </div>
+
 </MainLayout>
 
 <script>
-  document.getElementById("copy-link-btn")?.addEventListener("click", async () => {
+  // Reading progress
+  window.addEventListener('scroll', () => {
+    const winScroll = document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    const bar = document.getElementById('progress-bar');
+    if (bar) bar.style.width = scrolled + '%';
+  });
+
+  document.getElementById('copy-link-btn')?.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
-      const btn = document.getElementById("copy-link-btn");
+      const btn = document.getElementById('copy-link-btn');
       btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
-      btn.classList.add("text-emerald-400");
+      btn.classList.add('text-emerald-400');
       setTimeout(() => {
         btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`;
-        btn.classList.remove("text-emerald-400");
+        btn.classList.remove('text-emerald-400');
       }, 2000);
     } catch {}
   });
