@@ -1,13 +1,14 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: "Best AI Tools for Students in 2026"
-description: "Boost your grades and save time with these powerful AI tools designed for students and academic success."
-date: "May 28, 2026"
-author: "NumanX Tools"
-category: "AI Tools"
-tags: ["AI tools", "students", "productivity", "study tools", "education"]
-readingTime: "7 min read"
-slug: "best-ai-tools-for-students"
+title: 'Best AI Tools for Students in 2026'
+description: 'Boost your grades and save time with these powerful AI tools designed for students and academic success.'
+date: 'May 28, 2026'
+author: 'NumanX Tools'
+category: 'AI Tools'
+tags: ['AI tools', 'students', 'productivity', 'study tools', 'education']
+readingTime: '7 min read'
+slug: 'best-ai-tools-for-students'
+image: '/images/blog/best-ai-tools-for-students.webp'
 ---
 
 Being a student in 2026 means you have access to AI tools that previous generations could only dream of. From writing assistance to research and productivity, here are the best AI tools every student should know about.
@@ -64,11 +65,11 @@ Students deal with countless images, PDFs, and documents. Tools like NumanX Tool
 
 ### Free Browser Tools for Students
 
-| Tool | Purpose |
-|------|---------|
-| Image Compressor | Reduce image sizes for submissions |
-| JPG to PNG | Convert images for presentations |
-| Image Resizer | Resize images for social or projects |
+| Tool             | Purpose                              |
+| ---------------- | ------------------------------------ |
+| Image Compressor | Reduce image sizes for submissions   |
+| JPG to PNG       | Convert images for presentations     |
+| Image Resizer    | Resize images for social or projects |
 
 ## Tips for Using AI as a Student
 

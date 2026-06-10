@@ -1,13 +1,14 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: "Age Calculator: Fun Facts About Your Birthday You Never Knew"
-description: "Discover fascinating facts about your birth date, zodiac signs, historical events, and how old you really are."
-date: "May 30, 2026"
-author: "NumanX Tools"
-category: "Productivity"
-tags: ["age calculator", "birthday fun facts", "zodiac", "time alive", "trivia"]
-readingTime: "5 min read"
-slug: "age-calculator-fun-facts-birthday"
+title: 'Age Calculator: Fun Facts About Your Birthday You Never Knew'
+description: 'Discover fascinating facts about your birth date, zodiac signs, historical events, and how old you really are.'
+date: 'May 30, 2026'
+author: 'NumanX Tools'
+category: 'Productivity'
+tags: ['age calculator', 'birthday fun facts', 'zodiac', 'time alive', 'trivia']
+readingTime: '5 min read'
+slug: 'age-calculator-fun-facts-birthday'
+image: '/images/blog/age-calculator-fun-facts-birthday.webp'
 ---
 
 Did you know that your birthday is more than just a number? From zodiac signs to historical events, the date you were born connects you to fascinating facts about the universe. This article explores how age calculators work and the surprising things they reveal about you.
@@ -42,13 +43,13 @@ Here are some mind-blowing numbers based on age.
 ### Time Alive by Age
 
 | Age | Days Alive | Hours Alive | Minutes Alive | Seconds Alive |
-|-----|-----------|-------------|---------------|---------------|
-| 1 | 365 | 8,760 | 525,600 | 31,536,000 |
-| 10 | 3,652 | 87,648 | 5,258,880 | 315,532,800 |
-| 18 | 6,574 | 157,776 | 9,466,560 | 567,993,600 |
-| 25 | 9,131 | 219,144 | 13,148,640 | 788,918,400 |
-| 30 | 10,957 | 262,968 | 15,778,080 | 946,684,800 |
-| 50 | 18,262 | 438,288 | 26,297,280 | 1,577,836,800 |
+| --- | ---------- | ----------- | ------------- | ------------- |
+| 1   | 365        | 8,760       | 525,600       | 31,536,000    |
+| 10  | 3,652      | 87,648      | 5,258,880     | 315,532,800   |
+| 18  | 6,574      | 157,776     | 9,466,560     | 567,993,600   |
+| 25  | 9,131      | 219,144     | 13,148,640    | 788,918,400   |
+| 30  | 10,957     | 262,968     | 15,778,080    | 946,684,800   |
+| 50  | 18,262     | 438,288     | 26,297,280    | 1,577,836,800 |
 
 ## 3. Western Zodiac Signs
 
@@ -56,20 +57,20 @@ Your birth date determines your Western zodiac sign, which astrologers believe i
 
 ### Zodiac Signs and Dates
 
-| Sign | Dates | Element | Personality |
-|------|-------|---------|-------------|
-| Aries | Mar 21 – Apr 19 | Fire | Bold, ambitious |
-| Taurus | Apr 20 – May 20 | Earth | Reliable, patient |
-| Gemini | May 21 – Jun 20 | Air | Adaptable, curious |
-| Cancer | Jun 21 – Jul 22 | Water | Emotional, caring |
-| Leo | Jul 23 – Aug 22 | Fire | Confident, generous |
-| Virgo | Aug 23 – Sep 22 | Earth | Analytical, practical |
-| Libra | Sep 23 – Oct 22 | Air | Diplomatic, fair |
-| Scorpio | Oct 23 – Nov 21 | Water | Passionate, resourceful |
-| Sagittarius | Nov 22 – Dec 21 | Fire | Adventurous, optimistic |
-| Capricorn | Dec 22 – Jan 19 | Earth | Disciplined, responsible |
-| Aquarius | Jan 20 – Feb 18 | Air | Innovative, independent |
-| Pisces | Feb 19 – Mar 20 | Water | Compassionate, artistic |
+| Sign        | Dates           | Element | Personality              |
+| ----------- | --------------- | ------- | ------------------------ |
+| Aries       | Mar 21 – Apr 19 | Fire    | Bold, ambitious          |
+| Taurus      | Apr 20 – May 20 | Earth   | Reliable, patient        |
+| Gemini      | May 21 – Jun 20 | Air     | Adaptable, curious       |
+| Cancer      | Jun 21 – Jul 22 | Water   | Emotional, caring        |
+| Leo         | Jul 23 – Aug 22 | Fire    | Confident, generous      |
+| Virgo       | Aug 23 – Sep 22 | Earth   | Analytical, practical    |
+| Libra       | Sep 23 – Oct 22 | Air     | Diplomatic, fair         |
+| Scorpio     | Oct 23 – Nov 21 | Water   | Passionate, resourceful  |
+| Sagittarius | Nov 22 – Dec 21 | Fire    | Adventurous, optimistic  |
+| Capricorn   | Dec 22 – Jan 19 | Earth   | Disciplined, responsible |
+| Aquarius    | Jan 20 – Feb 18 | Air     | Innovative, independent  |
+| Pisces      | Feb 19 – Mar 20 | Water   | Compassionate, artistic  |
 
 ## 4. Chinese Zodiac
 
@@ -77,13 +78,13 @@ The Chinese zodiac follows a 12-year cycle, with each year associated with an an
 
 ### Chinese Zodiac Animals
 
-| Year | Animal | Element | Traits |
-|------|--------|---------|--------|
-| 2024 | Dragon | Wood | Confident, intelligent |
-| 2025 | Snake | Wood | Wise, enigmatic |
-| 2026 | Horse | Fire | Energetic, free-spirited |
-| 2027 | Goat | Fire | Calm, creative |
-| 2028 | Monkey | Earth | Clever, curious |
+| Year | Animal | Element | Traits                   |
+| ---- | ------ | ------- | ------------------------ |
+| 2024 | Dragon | Wood    | Confident, intelligent   |
+| 2025 | Snake  | Wood    | Wise, enigmatic          |
+| 2026 | Horse  | Fire    | Energetic, free-spirited |
+| 2027 | Goat   | Fire    | Calm, creative           |
+| 2028 | Monkey | Earth   | Clever, curious          |
 
 Each animal repeats every 12 years. To find yours, subtract your birth year from the nearest known animal year and divide by 12.
 
@@ -123,15 +124,15 @@ Many celebrities share your birthday. Here are some famous examples.
 
 ### Celebrity Birthday Pairs
 
-| Date | Celebrities |
-|------|-------------|
-| January 8 | Elvis Presley, David Bowie |
-| February 6 | Bob Marley, Ronald Reagan |
-| April 4 | Maya Angelou, Heath Ledger |
-| June 13 | Mary-Kate and Ashley Olsen |
-| August 29 | Michael Jackson, John McCain |
-| September 2 | Keanu Reeves, Salma Hayek |
-| November 29 | C. S. Lewis, Don Cheadle |
+| Date        | Celebrities                  |
+| ----------- | ---------------------------- |
+| January 8   | Elvis Presley, David Bowie   |
+| February 6  | Bob Marley, Ronald Reagan    |
+| April 4     | Maya Angelou, Heath Ledger   |
+| June 13     | Mary-Kate and Ashley Olsen   |
+| August 29   | Michael Jackson, John McCain |
+| September 2 | Keanu Reeves, Salma Hayek    |
+| November 29 | C. S. Lewis, Don Cheadle     |
 | December 31 | Anthony Hopkins, John Denver |
 
 ## 8. Day of the Week You Were Born

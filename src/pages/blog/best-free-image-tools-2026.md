@@ -1,13 +1,14 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: "Best Free Image Tools in 2026"
-description: "Discover the best free image tools for compression, conversion, resizing, and editing — all without spending a penny."
-date: "Jun 1, 2026"
-author: "NumanX Tools"
-category: "Image Tools"
-tags: ["image tools", "free tools", "compression", "conversion", "2026"]
-readingTime: "6 min read"
-slug: "best-free-image-tools-2026"
+title: 'Best Free Image Tools in 2026'
+description: 'Discover the best free image tools for compression, conversion, resizing, and editing — all without spending a penny.'
+date: 'Jun 1, 2026'
+author: 'NumanX Tools'
+category: 'Image Tools'
+tags: ['image tools', 'free tools', 'compression', 'conversion', '2026']
+readingTime: '6 min read'
+slug: 'best-free-image-tools-2026'
+image: '/images/blog/best-free-image-tools-2026.webp'
 ---
 
 If you work with images — whether you're a developer, designer, content creator, or marketer — you know how important it is to have the right tools. But not everyone has the budget for premium software like Photoshop or Sketch.
@@ -73,12 +74,12 @@ All the tools listed above run entirely in your browser using the HTML5 Canvas A
 
 ## Tips for Choosing the Right Tool
 
-| Use Case | Best Tool |
-|----------|-----------|
-| Reduce file size | Image Compressor |
-| Convert to PNG | JPG to PNG Converter |
-| Convert to WebP | PNG to WebP Converter |
-| Resize for social | Image Resizer |
+| Use Case          | Best Tool             |
+| ----------------- | --------------------- |
+| Reduce file size  | Image Compressor      |
+| Convert to PNG    | JPG to PNG Converter  |
+| Convert to WebP   | PNG to WebP Converter |
+| Resize for social | Image Resizer         |
 
 ## Frequently Asked Questions
 

@@ -1,13 +1,14 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: "Best YouTube Tools for Creators in 2026"
-description: "Grow your YouTube channel faster with these essential tools for thumbnails, SEO, analytics, and content creation."
-date: "May 22, 2026"
-author: "NumanX Tools"
-category: "Creator Tools"
-tags: ["YouTube", "creators", "thumbnail", "SEO", "content creation"]
-readingTime: "7 min read"
-slug: "best-youtube-tools-for-creators"
+title: 'Best YouTube Tools for Creators in 2026'
+description: 'Grow your YouTube channel faster with these essential tools for thumbnails, SEO, analytics, and content creation.'
+date: 'May 22, 2026'
+author: 'NumanX Tools'
+category: 'Creator Tools'
+tags: ['YouTube', 'creators', 'thumbnail', 'SEO', 'content creation']
+readingTime: '7 min read'
+slug: 'best-youtube-tools-for-creators'
+image: '/images/blog/best-youtube-tools-for-creators.webp'
 ---
 
 YouTube is more competitive than ever. With millions of creators uploading daily, standing out requires more than just great content — you need the right tools.
@@ -63,12 +64,12 @@ YouTube recommends specific formats for thumbnails and channel art. Use the **JP
 
 ### Recommended Formats
 
-| Use Case | Best Format | Max Size |
-|----------|-------------|----------|
-| Video Thumbnail | JPG or PNG | 2MB |
-| Channel Banner | PNG or WebP | 6MB |
-| Profile Picture | PNG | 100KB |
-| End Screen | PNG | 1MB |
+| Use Case        | Best Format | Max Size |
+| --------------- | ----------- | -------- |
+| Video Thumbnail | JPG or PNG  | 2MB      |
+| Channel Banner  | PNG or WebP | 6MB      |
+| Profile Picture | PNG         | 100KB    |
+| End Screen      | PNG         | 1MB      |
 
 ## 6. Content Planning Tools
 

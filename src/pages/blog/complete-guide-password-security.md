@@ -1,13 +1,14 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: "The Complete Guide to Password Security"
-description: "Everything you need to know about creating, managing, and storing secure passwords in 2026."
-date: "May 28, 2026"
-author: "NumanX Tools"
-category: "Productivity"
-tags: ["password security", "cybersecurity", "password manager", "2FA", "online safety"]
-readingTime: "8 min read"
-slug: "complete-guide-password-security"
+title: 'The Complete Guide to Password Security'
+description: 'Everything you need to know about creating, managing, and storing secure passwords in 2026.'
+date: 'May 28, 2026'
+author: 'NumanX Tools'
+category: 'Productivity'
+tags: ['password security', 'cybersecurity', 'password manager', '2FA', 'online safety']
+readingTime: '8 min read'
+slug: 'complete-guide-password-security'
+image: '/images/blog/complete-guide-password-security.webp'
 ---
 
 Passwords are the keys to your digital life. Yet most people use weak, reused passwords that put their accounts at risk. This guide covers everything you need to know about password security in 2026, from creating strong passwords to using password managers and two-factor authentication.
@@ -36,13 +37,13 @@ Password strength is measured by entropy — how many guesses an attacker would 
 
 ### Password Weakness Examples
 
-| Password | Time to Crack | Verdict |
-|----------|--------------|---------|
-| password123 | Instant | Very weak |
-| John1985 | 0.5 seconds | Weak |
-| P@ssw0rd! | 2 seconds | Weak (common pattern) |
-| CorrectHorseBatteryStaple | 550 years | Strong |
-| kD9#mP2$vL8@nQ5 | 34 million years | Very strong |
+| Password                  | Time to Crack    | Verdict               |
+| ------------------------- | ---------------- | --------------------- |
+| password123               | Instant          | Very weak             |
+| John1985                  | 0.5 seconds      | Weak                  |
+| P@ssw0rd!                 | 2 seconds        | Weak (common pattern) |
+| CorrectHorseBatteryStaple | 550 years        | Strong                |
+| kD9#mP2$vL8@nQ5           | 34 million years | Very strong           |
 
 ## 2. Password Managers
 
@@ -57,12 +58,12 @@ You cannot remember dozens of unique, complex passwords. Password managers solve
 
 ### Best Password Managers in 2026
 
-| Tool | Platform | Free Tier | Key Feature |
-|------|----------|-----------|-------------|
-| Bitwarden | All | Yes | Open source |
-| 1Password | All | Trial | Travel mode |
-| Dashlane | All | Limited | Dark web monitoring |
-| Apple Keychain | Apple only | Yes | Native integration |
+| Tool           | Platform   | Free Tier | Key Feature         |
+| -------------- | ---------- | --------- | ------------------- |
+| Bitwarden      | All        | Yes       | Open source         |
+| 1Password      | All        | Trial     | Travel mode         |
+| Dashlane       | All        | Limited   | Dark web monitoring |
+| Apple Keychain | Apple only | Yes       | Native integration  |
 
 ### Using Our Password Generator
 
@@ -92,11 +93,11 @@ Fingerprint and facial recognition are convenient but have limitations. They sho
 
 ### Biometric Pros and Cons
 
-| Advantage | Disadvantage |
-|-----------|-------------|
-| Fast and convenient | Cannot be changed if compromised |
-| Unique to each person | False positives/negatives |
-| No need to remember | Privacy concerns |
+| Advantage             | Disadvantage                     |
+| --------------------- | -------------------------------- |
+| Fast and convenient   | Cannot be changed if compromised |
+| Unique to each person | False positives/negatives        |
+| No need to remember   | Privacy concerns                 |
 
 ## 5. Common Password Mistakes to Avoid
 

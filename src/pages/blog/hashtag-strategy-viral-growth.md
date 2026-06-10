@@ -1,13 +1,14 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: "Hashtag Strategy for Viral Growth on Social Media"
-description: "Master the art of hashtag research and strategy to maximize reach and engagement on every platform."
-date: "May 29, 2026"
-author: "NumanX Tools"
-category: "Creator Tools"
-tags: ["hashtags", "social media", "viral growth", "instagram", "tiktok", "twitter"]
-readingTime: "7 min read"
-slug: "hashtag-strategy-viral-growth"
+title: 'Hashtag Strategy for Viral Growth on Social Media'
+description: 'Master the art of hashtag research and strategy to maximize reach and engagement on every platform.'
+date: 'May 29, 2026'
+author: 'NumanX Tools'
+category: 'Creator Tools'
+tags: ['hashtags', 'social media', 'viral growth', 'instagram', 'tiktok', 'twitter']
+readingTime: '7 min read'
+slug: 'hashtag-strategy-viral-growth'
+image: '/images/blog/hashtag-strategy-viral-growth.webp'
 ---
 
 Hashtags remain one of the most effective ways to increase your content's reach on social media. But throwing random hashtags on your posts will not cut it anymore. In 2026, a strategic, researched approach to hashtags can be the difference between a handful of views and viral growth.
@@ -18,13 +19,13 @@ Social media algorithms use hashtags to categorize content and serve it to inter
 
 ### Hashtag Impact by Platform
 
-| Platform | Hashtag Importance | Limit |
-|----------|-------------------|-------|
-| Instagram | Very high | 30 per post |
-| TikTok | Very high | 100 characters |
-| X (Twitter) | Medium | No limit, but keep concise |
-| LinkedIn | Medium | No limit, but use sparingly |
-| YouTube | Medium | 15 per video |
+| Platform    | Hashtag Importance | Limit                       |
+| ----------- | ------------------ | --------------------------- |
+| Instagram   | Very high          | 30 per post                 |
+| TikTok      | Very high          | 100 characters              |
+| X (Twitter) | Medium             | No limit, but keep concise  |
+| LinkedIn    | Medium             | No limit, but use sparingly |
+| YouTube     | Medium             | 15 per video                |
 
 ## 1. Hashtag Research Methods
 
@@ -51,12 +52,12 @@ Instagram remains the most hashtag-centric platform. The right strategy can take
 
 ### Instagram Hashtag Categories
 
-| Type | Size | Purpose | Examples |
-|------|------|---------|---------|
-| Broad | 1M+ posts | Wide reach, high competition | #photography, #travel |
-| Medium | 100K–1M | Balanced reach | #travelphotography |
-| Niche | 10K–100K | Targeted audience | #soloTravelTips |
-| Ultra-niche | Under 10K | Highly targeted | #JapanPhotography2026 |
+| Type        | Size      | Purpose                      | Examples              |
+| ----------- | --------- | ---------------------------- | --------------------- |
+| Broad       | 1M+ posts | Wide reach, high competition | #photography, #travel |
+| Medium      | 100K–1M   | Balanced reach               | #travelphotography    |
+| Niche       | 10K–100K  | Targeted audience            | #soloTravelTips       |
+| Ultra-niche | Under 10K | Highly targeted              | #JapanPhotography2026 |
 
 ### The Perfect Instagram Mix
 

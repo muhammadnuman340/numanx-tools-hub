@@ -1,13 +1,14 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: "How to Optimize Images for Web Performance"
-description: "Learn techniques to optimize images for faster website loading without sacrificing visual quality."
-date: "May 28, 2026"
-author: "NumanX Tools"
-category: "Image Tools"
-tags: ["image optimization", "web performance", "SEO", "page speed", "compression"]
-readingTime: "7 min read"
-slug: "how-to-optimize-images-for-web"
+title: 'How to Optimize Images for Web Performance'
+description: 'Learn techniques to optimize images for faster website loading without sacrificing visual quality.'
+date: 'May 28, 2026'
+author: 'NumanX Tools'
+category: 'Image Tools'
+tags: ['image optimization', 'web performance', 'SEO', 'page speed', 'compression']
+readingTime: '7 min read'
+slug: 'how-to-optimize-images-for-web'
+image: '/images/blog/how-to-optimize-images-for-web.webp'
 ---
 
 Images account for over 50% of the average webpage's total weight. Optimizing them is one of the fastest ways to improve page load speed, user experience, and SEO rankings. This guide covers everything you need to know about web image optimization.
@@ -28,13 +29,13 @@ The format you choose has the single biggest impact on file size and quality.
 
 ### Format Comparison
 
-| Format | Best For | Transparency | Animation |
-|--------|----------|--------------|-----------|
-| JPEG | Photos, complex images | No | No |
-| PNG | Graphics, screenshots | Yes | No |
-| WebP | Modern web use | Yes | Yes |
-| AVIF | Next-gen compression | Yes | Yes |
-| SVG | Icons, logos, illustrations | Yes | Yes |
+| Format | Best For                    | Transparency | Animation |
+| ------ | --------------------------- | ------------ | --------- |
+| JPEG   | Photos, complex images      | No           | No        |
+| PNG    | Graphics, screenshots       | Yes          | No        |
+| WebP   | Modern web use              | Yes          | Yes       |
+| AVIF   | Next-gen compression        | Yes          | Yes       |
+| SVG    | Icons, logos, illustrations | Yes          | Yes       |
 
 ### When to Use Each Format
 
@@ -73,14 +74,14 @@ The `srcset` attribute lets you serve different image versions based on the user
 ### Example srcset Implementation
 
 ```html
-<img src="photo-800.jpg"
-     srcset="photo-400.jpg 400w,
-             photo-800.jpg 800w,
-             photo-1200.jpg 1200w"
-     sizes="(max-width: 600px) 100vw,
+<img
+  src="photo-800.jpg"
+  srcset="photo-400.jpg 400w, photo-800.jpg 800w, photo-1200.jpg 1200w"
+  sizes="(max-width: 600px) 100vw,
             (max-width: 1200px) 50vw,
             33vw"
-     alt="Description" />
+  alt="Description"
+/>
 ```
 
 This ensures mobile users on small screens download only the 400px version while desktop users get the full-resolution image.

@@ -1,13 +1,14 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: "QR Codes in Marketing: Best Practices for 2026"
-description: "How to use QR codes effectively in your marketing campaigns with proven strategies and designs."
-date: "May 29, 2026"
-author: "NumanX Tools"
-category: "Creator Tools"
-tags: ["QR codes", "marketing", "digital marketing", "QR code best practices", "campaign"]
-readingTime: "6 min read"
-slug: "qr-codes-marketing-best-practices"
+title: 'QR Codes in Marketing: Best Practices for 2026'
+description: 'How to use QR codes effectively in your marketing campaigns with proven strategies and designs.'
+date: 'May 29, 2026'
+author: 'NumanX Tools'
+category: 'Creator Tools'
+tags: ['QR codes', 'marketing', 'digital marketing', 'QR code best practices', 'campaign']
+readingTime: '6 min read'
+slug: 'qr-codes-marketing-best-practices'
+image: '/images/blog/qr-codes-marketing-best-practices.webp'
 ---
 
 QR codes have evolved from a niche technology into a mainstream marketing tool. In 2026, they are everywhere — on product packaging, restaurant tables, billboards, and business cards. But not all QR code campaigns are created equal. Here is how to use them effectively.
@@ -29,14 +30,14 @@ QR codes shine in specific marketing contexts.
 
 ### Top Performing QR Code Applications
 
-| Use Case | Example | Success Rate |
-|----------|---------|-------------|
-| Restaurant menus | Scan to view menu | Very high |
-| Product packaging | Scan for product details | High |
-| Event ticketing | Scan for entry | Very high |
-| Business cards | Scan to save contact | Medium |
-| Retail signage | Scan for promotions | High |
-| Payment links | Scan to pay | Very high |
+| Use Case          | Example                  | Success Rate |
+| ----------------- | ------------------------ | ------------ |
+| Restaurant menus  | Scan to view menu        | Very high    |
+| Product packaging | Scan for product details | High         |
+| Event ticketing   | Scan for entry           | Very high    |
+| Business cards    | Scan to save contact     | Medium       |
+| Retail signage    | Scan for promotions      | High         |
+| Payment links     | Scan to pay              | Very high    |
 
 ## 2. Design Best Practices
 
@@ -89,12 +90,12 @@ Scanning a QR code is only the first step. The destination page must be mobile-f
 
 ### QR Code Landing Page Examples
 
-| CTA | Destination |
-|-----|-------------|
-| Scan to order | Mobile menu with one-tap ordering |
-| Scan to save | Digital business card (vCard) |
-| Scan to watch | YouTube video or product demo |
-| Scan to download | App store or content offer |
+| CTA              | Destination                       |
+| ---------------- | --------------------------------- |
+| Scan to order    | Mobile menu with one-tap ordering |
+| Scan to save     | Digital business card (vCard)     |
+| Scan to watch    | YouTube video or product demo     |
+| Scan to download | App store or content offer        |
 
 ## 5. Tracking and Analytics
 

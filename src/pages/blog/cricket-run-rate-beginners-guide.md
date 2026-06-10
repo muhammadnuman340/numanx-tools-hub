@@ -1,13 +1,14 @@
 ---
 layout: ../../layouts/BlogLayout.astro
 title: "Understanding Cricket Run Rate: A Beginner's Guide"
-description: "Learn what run rate means in cricket, how to calculate it, and why it matters for match strategy."
-date: "May 28, 2026"
-author: "NumanX Tools"
-category: "Cricket Tools"
-tags: ["cricket", "run rate", "cricket analytics", "sports", "cricket strategy"]
-readingTime: "6 min read"
-slug: "cricket-run-rate-beginners-guide"
+description: 'Learn what run rate means in cricket, how to calculate it, and why it matters for match strategy.'
+date: 'May 28, 2026'
+author: 'NumanX Tools'
+category: 'Cricket Tools'
+tags: ['cricket', 'run rate', 'cricket analytics', 'sports', 'cricket strategy']
+readingTime: '6 min read'
+slug: 'cricket-run-rate-beginners-guide'
+image: '/images/blog/cricket-run-rate-beginners-guide.webp'
 ---
 
 If you are new to cricket, you have probably heard commentators mention "run rate" frequently. It is one of the most important statistics in the game, influencing everything from batting strategy to bowling changes. This guide explains run rate in simple terms.
@@ -64,11 +65,11 @@ Run rate behaves differently across cricket's three main formats.
 
 In T20, each team bats for a maximum of 20 overs. Run rates are typically high:
 
-| Phase | Typical Run Rate | Strategy |
-|-------|-----------------|----------|
-| Powerplay (1–6) | 7–9 runs/over | Aggressive batting |
-| Middle (7–15) | 8–10 runs/over | Balance risk and reward |
-| Death (16–20) | 10–14 runs/over | Maximum attacking |
+| Phase           | Typical Run Rate | Strategy                |
+| --------------- | ---------------- | ----------------------- |
+| Powerplay (1–6) | 7–9 runs/over    | Aggressive batting      |
+| Middle (7–15)   | 8–10 runs/over   | Balance risk and reward |
+| Death (16–20)   | 10–14 runs/over  | Maximum attacking       |
 
 A par score in T20 is around 160–180, requiring a run rate of 8–9 runs per over.
 
@@ -76,11 +77,11 @@ A par score in T20 is around 160–180, requiring a run rate of 8–9 runs per o
 
 ODIs allow 50 overs per side. Run rates are more measured:
 
-| Phase | Typical Run Rate | Strategy |
-|-------|-----------------|----------|
-| Early (1–10) | 4.5–5.5 | Build a foundation |
-| Middle (11–40) | 5–6 | Accelerate steadily |
-| Death (41–50) | 6–9 | Attack aggressively |
+| Phase          | Typical Run Rate | Strategy            |
+| -------------- | ---------------- | ------------------- |
+| Early (1–10)   | 4.5–5.5          | Build a foundation  |
+| Middle (11–40) | 5–6              | Accelerate steadily |
+| Death (41–50)  | 6–9              | Attack aggressively |
 
 Modern ODI scores of 300+ require a run rate of 6+ throughout the innings.
 

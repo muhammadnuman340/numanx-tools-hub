@@ -1,13 +1,14 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: "How to Compress Images Without Losing Quality"
-description: "Learn the best techniques to reduce image file sizes while keeping visual quality intact — perfect for websites and social media."
-date: "May 25, 2026"
-author: "NumanX Tools"
-category: "Image Tools"
-tags: ["image compression", "optimization", "web performance", "SEO", "tutorial"]
-readingTime: "8 min read"
-slug: "how-to-compress-images"
+title: 'How to Compress Images Without Losing Quality'
+description: 'Learn the best techniques to reduce image file sizes while keeping visual quality intact — perfect for websites and social media.'
+date: 'May 25, 2026'
+author: 'NumanX Tools'
+category: 'Image Tools'
+tags: ['image compression', 'optimization', 'web performance', 'SEO', 'tutorial']
+readingTime: '8 min read'
+slug: 'how-to-compress-images'
+image: '/images/blog/how-to-compress-images.webp'
 ---
 
 Image compression is one of the most important skills for anyone building websites or creating content. Large images slow down your site, hurt your SEO, and frustrate visitors.
@@ -34,12 +35,12 @@ Lossless compression reduces file size without removing any data. The image rema
 
 The format you choose has a massive impact on file size.
 
-| Format | Best For | Compression |
-|--------|----------|-------------|
-| JPEG | Photos, complex images | Lossy, small files |
-| PNG | Graphics, transparency | Lossless, larger files |
-| WebP | Modern websites | Both lossy and lossless |
-| AVIF | Next-gen compression | Superior to WebP |
+| Format | Best For               | Compression             |
+| ------ | ---------------------- | ----------------------- |
+| JPEG   | Photos, complex images | Lossy, small files      |
+| PNG    | Graphics, transparency | Lossless, larger files  |
+| WebP   | Modern websites        | Both lossy and lossless |
+| AVIF   | Next-gen compression   | Superior to WebP        |
 
 ## 2. Adjust Quality Settings
 
