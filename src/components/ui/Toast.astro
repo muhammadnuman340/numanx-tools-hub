@@ -1,5 +1,5 @@
 ---
-export type ToastVariant = "success" | "error" | "info" | "warning";
+export type ToastVariant = 'success' | 'error' | 'info' | 'warning';
 
 interface Props {
   variant?: ToastVariant;
@@ -19,42 +19,72 @@ interface Props {
 <script>
   interface ToastOptions {
     message: string;
-    variant?: "success" | "error" | "info" | "warning";
+    variant?: 'success' | 'error' | 'info' | 'warning';
     duration?: number;
   }
 
   const variantStyles: Record<string, { bg: string; border: string; icon: string; color: string }> = {
-    success: { bg: "bg-emerald-500/10", border: "border-emerald-500/30", icon: "✓", color: "text-emerald-400" },
-    error: { bg: "bg-red-500/10", border: "border-red-500/30", icon: "✕", color: "text-red-400" },
-    info: { bg: "bg-blue-500/10", border: "border-blue-500/30", icon: "ℹ", color: "text-blue-400" },
-    warning: { bg: "bg-amber-500/10", border: "border-amber-500/30", icon: "⚠", color: "text-amber-400" },
+    success: {
+      bg: 'bg-emerald-500/10',
+      border: 'border-emerald-500/30',
+      color: 'text-emerald-400',
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+    },
+    error: {
+      bg: 'bg-red-500/10',
+      border: 'border-red-500/30',
+      color: 'text-red-400',
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+    },
+    info: {
+      bg: 'bg-blue-500/10',
+      border: 'border-blue-500/30',
+      color: 'text-blue-400',
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`,
+    },
+    warning: {
+      bg: 'bg-amber-500/10',
+      border: 'border-amber-500/30',
+      color: 'text-amber-400',
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+    },
   };
 
-  function showToast({ message, variant = "info", duration = 4000 }: ToastOptions) {
-    const container = document.getElementById("toast-container");
+  function showToast({ message, variant = 'info', duration = 4000 }: ToastOptions) {
+    const container = document.getElementById('toast-container');
     if (!container) return;
 
     const style = variantStyles[variant];
-    const toast = document.createElement("div");
-    toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl border backdrop-blur-md shadow-xl animate-[slideInRight_0.3s_ease-out] ${style.bg} ${style.border}`;
+    const toast = document.createElement('div');
+    toast.className = `relative pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl border backdrop-blur-md shadow-xl animate-[slideInRight_0.3s_cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${style.bg} ${style.border}`;
     toast.innerHTML = `
-      <span class="w-6 h-6 rounded-lg flex items-center justify-center text-sm font-bold ${style.color}">${style.icon}</span>
+      <span class="w-7 h-7 rounded-lg flex items-center justify-center ${style.color}">${style.icon}</span>
       <p class="text-sm text-primary font-medium flex-1">${message}</p>
-      <button class="text-muted hover:text-secondary transition-colors cursor-pointer" aria-label="Dismiss">
+      <button class="text-muted hover:text-secondary transition-colors cursor-pointer shrink-0" aria-label="Dismiss">
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
+      <div class="absolute bottom-0 left-0 h-[2px] bg-white/10 toast-progress" style="width:100%"></div>
     `;
 
     container.appendChild(toast);
 
+    const progress = toast.querySelector('.toast-progress') as HTMLElement;
+
     const dismiss = () => {
-      toast.style.animation = "slideOutRight 0.3s ease-in forwards";
-      setTimeout(() => toast.remove(), 300);
+      toast.style.animation = 'slideOutRight 0.25s ease-in forwards';
+      setTimeout(() => toast.remove(), 250);
     };
 
-    toast.querySelector("button")?.addEventListener("click", dismiss);
+    toast.querySelector('button')?.addEventListener('click', dismiss);
+
+    if (progress) {
+      progress.style.transition = `width ${duration}ms linear`;
+      requestAnimationFrame(() => { progress.style.width = '0%'; });
+    }
+
     setTimeout(dismiss, duration);
   }
 
   (window as any).__showToast = showToast;
+  (window as any).showToast = showToast;
 </script>

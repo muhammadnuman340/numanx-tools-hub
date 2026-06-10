@@ -78,7 +78,7 @@ const articleSchema = {
           {
             image && (
               <div class="mb-8 rounded-xl overflow-hidden border border-surface">
-                <img src={image} alt={title} class="w-full h-auto object-cover" />
+                <img src={image} alt={title} class="w-full h-auto object-cover" loading="lazy" decoding="async" width="1200" height="630" />
               </div>
             )
           }
@@ -103,6 +103,8 @@ const articleSchema = {
                 alt={author || 'NumanX Tools'}
                 class="absolute inset-0 w-full h-full rounded-full object-cover z-10"
                 onerror="this.style.display='none'"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <div>
@@ -168,11 +170,13 @@ const articleSchema = {
                   >{author ? author.charAt(0).toUpperCase() : 'N'}</span
                 >
                 <img
-                  src="/images/author-numan.webp"
-                  alt={author || 'NumanX Tools'}
-                  class="absolute inset-0 w-full h-full rounded-full object-cover z-10"
-                  onerror="this.style.display='none'"
-                />
+                src="/images/author-numan.webp"
+                alt={author || 'NumanX Tools'}
+                class="absolute inset-0 w-full h-full rounded-full object-cover z-10"
+                onerror="this.style.display='none'"
+                loading="lazy"
+                decoding="async"
+              />
               </div>
               <div>
                 <p class="text-sm font-medium text-primary">{author || 'NumanX Tools'}</p>

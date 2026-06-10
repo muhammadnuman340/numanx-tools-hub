@@ -19,9 +19,11 @@ const page = Astro.url.pathname;
   class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden"
   role="dialog"
   aria-modal="true"
+  aria-labelledby="feedback-heading"
+  aria-describedby="feedback-desc"
 >
-  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="feedback-overlay"></div>
-  <div class="relative w-full max-w-md rounded-2xl border border-surface bg-surface-1 p-6 shadow-2xl animate-[fadeInUp_0.2s_ease-out]">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm animate-[fadeIn_0.2s_ease-out]" id="feedback-overlay"></div>
+  <div class="relative w-full max-w-md rounded-2xl border border-surface bg-surface-1 p-6 shadow-2xl animate-[scaleIn_0.25s_cubic-bezier(0.16,1,0.3,1)]" id="feedback-panel">
     <button
       id="feedback-close"
       class="absolute top-4 right-4 text-tertiary hover:text-white transition-colors cursor-pointer"
@@ -32,8 +34,8 @@ const page = Astro.url.pathname;
         <line x1="6" y1="6" x2="18" y2="18" />
       </svg>
     </button>
-    <h3 class="text-lg font-bold text-white mb-1">Send Feedback</h3>
-    <p class="text-xs text-tertiary mb-5">Help us improve NumanX Tools. Share your thoughts!</p>
+    <h3 id="feedback-heading" class="text-lg font-bold text-white mb-1">Send Feedback</h3>
+    <p id="feedback-desc" class="text-xs text-tertiary mb-5">Help us improve NumanX Tools. Share your thoughts!</p>
     <form id="feedback-form" class="space-y-4">
       <input type="hidden" id="feedback-page" value={page} />
       <div>
@@ -43,6 +45,7 @@ const page = Astro.url.pathname;
             <button
               type="button"
               data-star={star}
+              aria-label={`Rate ${star} star${star > 1 ? 's' : ''}`}
               class="star-btn w-9 h-9 rounded-lg bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-yellow-400 hover:border-yellow-500/30 transition-all cursor-pointer"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -59,6 +62,7 @@ const page = Astro.url.pathname;
           rows="3"
           placeholder="Tell us what you think..."
           required
+          aria-required="true"
           class="w-full px-4 py-3 rounded-xl bg-black/40 border border-surface text-white placeholder-zinc-600 text-sm focus:border-purple-500/50 focus:outline-none transition-colors resize-none"
         ></textarea>
       </div>
@@ -94,6 +98,7 @@ const page = Astro.url.pathname;
   const trigger = document.getElementById('feedback-trigger');
   const modal = document.getElementById('feedback-modal');
   const overlay = document.getElementById('feedback-overlay');
+  const panel = document.getElementById('feedback-panel');
   const close = document.getElementById('feedback-close');
   const form = document.getElementById('feedback-form');
   const stars = document.querySelectorAll('.star-btn');
@@ -101,50 +106,99 @@ const page = Astro.url.pathname;
   const submitBtn = document.getElementById('feedback-submit');
   const submitText = document.getElementById('fb-submit-text');
   const submitSpinner = document.getElementById('fb-submit-spinner');
+  const feedbackTextarea = document.getElementById('feedback-msg');
 
   let selectedRating = 0;
+  let previousFocus = null;
+
+  function focusTrap(e) {
+    if (!modal || modal.classList.contains('hidden')) return;
+    const focusable = modal.querySelectorAll('button, input, textarea, select, [tabindex]:not([tabindex="-1"])');
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      (last as HTMLElement).focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      (first as HTMLElement).focus();
+    }
+  }
+
+  function openModal() {
+    previousFocus = document.activeElement;
+    modal.classList.remove('hidden');
+    panel.style.animation = 'scaleIn 0.25s cubic-bezier(0.16,1,0.3,1) forwards';
+    overlay.style.animation = 'fadeIn 0.2s ease-out forwards';
+    document.addEventListener('keydown', focusTrap);
+    setTimeout(() => feedbackTextarea?.focus(), 100);
+  }
+
+  function closeModal() {
+    panel.style.animation = 'scaleOut 0.2s ease-out forwards';
+    overlay.style.animation = 'fadeOut 0.15s ease-out forwards';
+    document.removeEventListener('keydown', focusTrap);
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      if (previousFocus) (previousFocus as HTMLElement)?.focus();
+    }, 200);
+  }
 
   if (trigger && modal) {
-    trigger.addEventListener('click', () => modal.classList.remove('hidden'));
-    if (overlay) overlay.addEventListener('click', () => modal.classList.add('hidden'));
-    if (close) close.addEventListener('click', () => modal.classList.add('hidden'));
+    trigger.addEventListener('click', openModal);
+    if (overlay) overlay.addEventListener('click', closeModal);
+    if (close) close.addEventListener('click', closeModal);
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') modal.classList.add('hidden');
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+    });
+  }
+
+  function setStars(count) {
+    stars.forEach((s, i) => {
+      const svg = s.querySelector('svg');
+      const active = i < count;
+      s.classList.toggle('text-yellow-400', active);
+      s.classList.toggle('border-yellow-500/30', active);
+      s.classList.toggle('text-tertiary', !active);
+      if (svg) {
+        if (active) svg.setAttribute('fill', 'currentColor');
+        else svg.removeAttribute('fill');
+      }
+      s.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
   }
 
   stars.forEach((btn) => {
+    btn.addEventListener('mouseenter', () => {
+      const count = parseInt(btn.dataset.star, 10);
+      setStars(count);
+    });
+    btn.addEventListener('mouseleave', () => {
+      setStars(selectedRating);
+    });
     btn.addEventListener('click', () => {
       selectedRating = parseInt(btn.dataset.star, 10);
-      stars.forEach((s, i) => {
-        const svg = s.querySelector('svg');
-        if (i < selectedRating) {
-          s.classList.add('text-yellow-400', 'border-yellow-500/30');
-          s.classList.remove('text-tertiary');
-          if (svg) { svg.setAttribute('fill', 'currentColor'); }
-        } else {
-          s.classList.remove('text-yellow-400', 'border-yellow-500/30');
-          s.classList.add('text-tertiary');
-          if (svg) { svg.removeAttribute('fill'); }
-        }
-      });
+      setStars(selectedRating);
     });
   });
 
   if (form && fbMsg && submitBtn) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const message = document.getElementById('feedback-msg').value.trim();
+      const message = feedbackTextarea.value.trim();
       const email = document.getElementById('feedback-email').value.trim();
       const page = document.getElementById('feedback-page').value;
 
       if (!selectedRating || !message) {
         fbMsg.className = 'text-xs text-red-400 text-center';
         fbMsg.textContent = 'Please select a rating and enter a message.';
+        fbMsg.setAttribute('role', 'alert');
         return;
       }
 
       fbMsg.className = 'text-xs text-center hidden';
+      fbMsg.removeAttribute('role');
       submitBtn.disabled = true;
       submitText.classList.add('hidden');
       submitSpinner.classList.remove('hidden');
@@ -159,20 +213,20 @@ const page = Astro.url.pathname;
         if (resp.ok && data.success) {
           fbMsg.className = 'text-xs text-emerald-400 text-center';
           fbMsg.textContent = data.message || 'Thank you for your feedback!';
+          fbMsg.setAttribute('role', 'status');
           form.reset();
           selectedRating = 0;
-          stars.forEach((s) => {
-            s.classList.remove('text-yellow-400', 'border-yellow-500/30');
-            s.classList.add('text-tertiary');
-            s.querySelector('svg')?.removeAttribute('fill');
-          });
+          setStars(0);
+          setTimeout(closeModal, 1200);
         } else {
           fbMsg.className = 'text-xs text-red-400 text-center';
           fbMsg.textContent = data.error || 'Something went wrong.';
+          fbMsg.setAttribute('role', 'alert');
         }
       } catch {
         fbMsg.className = 'text-xs text-red-400 text-center';
         fbMsg.textContent = 'Network error. Please try again.';
+        fbMsg.setAttribute('role', 'alert');
       }
 
       submitBtn.disabled = false;

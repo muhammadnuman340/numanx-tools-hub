@@ -65,7 +65,7 @@ const categories = ['All', 'AI Tools', 'Image Tools', 'Creator Tools', 'Cricket 
               <div class="w-full md:w-[280px] shrink-0 aspect-video md:aspect-[4/3] rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center border border-zinc-800 overflow-hidden">
                 {
                   featured.frontmatter.image ? (
-                    <img src={featured.frontmatter.image} alt={featured.frontmatter.title} class="w-full h-full object-cover" />
+                    <img src={featured.frontmatter.image} alt={featured.frontmatter.title} class="w-full h-full object-cover" loading="lazy" decoding="async" />
                   ) : (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -197,7 +197,7 @@ const categories = ['All', 'AI Tools', 'Image Tools', 'Creator Tools', 'Cricket 
               <div class="w-full aspect-video rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mb-4 border border-zinc-800 overflow-hidden">
                 {
                   post.frontmatter.image ? (
-                    <img src={post.frontmatter.image} alt={post.frontmatter.title} class="w-full h-full object-cover" />
+                    <img src={post.frontmatter.image} alt={post.frontmatter.title} class="w-full h-full object-cover" loading="lazy" decoding="async" />
                   ) : (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
