@@ -1,0 +1,61 @@
+---
+import type { AppMetadata } from '../data/appsData';
+
+interface Props {
+  metadata: AppMetadata;
+}
+
+const { metadata } = Astro.props;
+const siteName = 'NumanX Tools';
+const siteUrl = 'https://numanx-tools.pages.dev';
+const defaultImage = '/og-default-1200.png';
+const canonical = `${siteUrl}/tools/${metadata.slug}/`;
+---
+
+<!-- Primary Meta Tags -->
+<title>{metadata.metaTitle}</title>
+<meta name="description" content={metadata.metaDescription} />
+<meta name="application-name" content={siteName} />
+<meta name="apple-mobile-web-app-title" content={siteName} />
+
+<!-- Canonical -->
+<link rel="canonical" href={canonical} />
+
+<!-- Open Graph -->
+<meta property="og:title" content={metadata.metaTitle} />
+<meta property="og:description" content={metadata.metaDescription} />
+<meta property="og:url" content={canonical} />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content="en_US" />
+<meta property="og:image" content={defaultImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={metadata.metaTitle} />
+<meta name="twitter:description" content={metadata.metaDescription} />
+<meta name="twitter:image" content={defaultImage} />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: metadata.metaTitle,
+  description: metadata.metaDescription,
+  url: canonical,
+  applicationCategory: metadata.applicationCategory || "UtilitiesApplication",
+  operatingSystem: "All",
+  browserRequirements: "Modern browser with JavaScript enabled",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD"
+  },
+  author: {
+    "@type": "Organization",
+    name: "NumanX Studio",
+    url: siteUrl
+  }
+})} />

@@ -1,0 +1,20 @@
+---
+// ThreeDScene.astro — Spline 3D scene container
+interface Props {
+  sceneUrl?: string;
+}
+
+const { sceneUrl = '' } = Astro.props;
+---
+
+{sceneUrl ? (
+  <div class="w-full h-full min-h-[300px] relative overflow-hidden rounded-2xl" aria-hidden="true">
+    <spline-viewer url={sceneUrl} loading-anim type="module"></spline-viewer>
+  </div>
+) : (
+  <div class="w-full h-full min-h-[300px] relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-900/20 to-amber-900/20" aria-hidden="true">
+    <div class="absolute inset-0 flex items-center justify-center">
+      <div class="w-16 h-16 border-2 border-purple-500/30 rounded-full animate-ping"></div>
+    </div>
+  </div>
+)}
