@@ -1,5 +1,14 @@
 import { describe, it, expect } from 'vitest';
-import { tools, categories, getToolBySlug, getToolsByCategory, getCategoryInfo, getNewTools, getPopularTools, getFeaturedTools } from '../tools';
+import {
+  tools,
+  categories,
+  getToolBySlug,
+  getToolsByCategory,
+  getCategoryInfo,
+  getNewTools,
+  getPopularTools,
+  getFeaturedTools,
+} from '../tools';
 
 describe('tools data', () => {
   it('has at least 20 tools', () => {
@@ -42,7 +51,7 @@ describe('tools data', () => {
 
   it('getNewTools returns only isNew tools', () => {
     const newTools = getNewTools(10);
-    expect(newTools.every(t => t.isNew)).toBe(true);
+    expect(newTools.every((t) => t.isNew)).toBe(true);
   });
 
   it('getCategoryInfo returns correct info', () => {

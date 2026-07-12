@@ -1,0 +1,183 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'What is a Cron expression?',
+    answer:
+      'A Cron expression is a string comprising five or six fields separated by white space that represents a set of times, normally as a schedule to execute some routine.',
+  },
+  {
+    question: 'What do the 5 parts of the cron string mean?',
+    answer:
+      'They represent: Minute (0-59), Hour (0-23), Day of the month (1-31), Month (1-12), and Day of the week (0-7, where 0 and 7 are Sunday).',
+  },
+  {
+    question: 'Is this tool completely offline?',
+    answer:
+      'Yes! All parsing and translation happens locally in your browser. No data is sent to any server.',
+  },
+];
+const schema = {
+  name: 'Cron Parser',
+  applicationCategory: 'Developer Tools',
+  description: 'Translate standard 5-part Cron strings into human-readable text instantly.',
+  featureList: [
+    'Parse Cron strings to human text',
+    'Real-time translation',
+    'Supports standard 5-part syntax',
+    '100% client-side',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '🕰️',
+    title: 'Instant Parsing',
+    desc: 'Translate complex 5-part cron expressions into plain English instantly as you type.',
+  },
+  {
+    icon: '✅',
+    title: 'Syntax Validation',
+    desc: 'Automatically checks your cron syntax and provides clear error messages if there is a mistake.',
+  },
+  {
+    icon: '🔒',
+    title: '100% Client-Side',
+    desc: 'All parsing logic runs locally in your browser. No data is sent to external servers.',
+  },
+  {
+    icon: '🚀',
+    title: 'Developer Friendly',
+    desc: 'Built specifically for developers to quickly debug and verify their scheduled task configurations.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Enter Expression',
+    desc: 'Type or paste a standard 5-part cron string into the input field (e.g., "0 0 * * *").',
+  },
+  {
+    num: '2',
+    title: 'View Translation',
+    desc: 'Instantly see the plain English translation of your cron schedule below the input.',
+  },
+  {
+    num: '3',
+    title: 'Fix Errors',
+    desc: 'If the expression is invalid, read the generated error message to correct your syntax.',
+  },
+  {
+    num: '4',
+    title: 'Copy & Deploy',
+    desc: 'Once verified, confidently use your cron string in your CI/CD pipelines or server schedules.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '⚙️',
+    title: 'Server Jobs',
+    desc: 'Verify Linux crontab configurations before deploying them to production servers.',
+  },
+  {
+    icon: '🔄',
+    title: 'CI/CD Pipelines',
+    desc: 'Double-check scheduled workflow triggers in GitHub Actions or GitLab CI.',
+  },
+  {
+    icon: '📅',
+    title: 'Database Backups',
+    desc: 'Ensure automated database backup scripts are scheduled to run at the correct times.',
+  },
+];
+---
+
+<MainLayout
+  title="Cron Parser - Translate Cron Expressions to English"
+  description="Translate standard 5-part Cron strings into human-readable text instantly. Free, fast, and secure client-side tool."
+  keywords="cron parser, cron to english, cronstrue, cron expression, cron translator"
+  toolSchema={schema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Parse Cron Expressions',
+    description: 'Step-by-step guide for translating Cron strings.',
+    steps: [],
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Cron Parser', url: '/tools/cron-parser/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="Cron"
+        gradient="Parser"
+        desc="Translate standard 5-part Cron strings into human-readable text instantly."
+        badge="✦ New Tool"
+        slug="cron-parser"
+      />
+      <ShareBar />
+      <div class="max-w-xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 relative">
+          <label class="text-xs font-semibold text-muted uppercase tracking-wider mb-2 block">Cron Expression</label>
+          <input
+            id="cron-input"
+            type="text"
+            class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-lg font-mono text-center focus:border-purple-500/50 focus:outline-none transition-all mb-6"
+            placeholder="* * * * *"
+            value="0 0 * * *"
+          />
+          <div class="p-6 bg-surface-1 border border-surface-2 rounded-xl text-center min-h-[100px] flex items-center justify-center">
+             <p id="result-text" class="text-xl md:text-2xl font-medium text-emerald-400">Every day at midnight</p>
+          </div>
+        </div>
+      </div>
+      <ToolContentSections
+        toolSlug="cron-parser"
+        toolName="Cron Parser"
+        category="Developer Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="cron-parser" />
+    </div>
+  </main>
+</MainLayout>
+
+<script src="https://unpkg.com/cronstrue@2.48.0/dist/cronstrue.min.js" is:inline></script>
+<script>
+  const input = document.getElementById('cron-input') as HTMLInputElement;
+  const result = document.getElementById('result-text');
+
+  function update() {
+    const val = input.value.trim();
+    if (!val) {
+      result.textContent = 'Enter a cron expression';
+      result.className = 'text-xl md:text-2xl font-medium text-muted';
+      return;
+    }
+    try {
+      // @ts-ignore
+      const text = cronstrue.toString(val);
+      result.textContent = text;
+      result.className = 'text-xl md:text-2xl font-medium text-emerald-400';
+    } catch (e: any) {
+      result.textContent = e.toString();
+      result.className = 'text-base font-medium text-red-400';
+    }
+  }
+
+  input.addEventListener('input', update);
+</script>

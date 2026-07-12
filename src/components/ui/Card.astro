@@ -1,26 +1,27 @@
 ---
 interface Props {
-  variant?: "default" | "glass" | "interactive";
-  padding?: "sm" | "md" | "lg";
+  variant?: 'default' | 'glass' | 'interactive';
+  padding?: 'sm' | 'md' | 'lg';
   class?: string;
 }
 
-const { variant = "default", padding = "md", class: className } = Astro.props;
+const { variant = 'default', padding = 'md', class: className } = Astro.props;
 
 const variantClasses: Record<string, string> = {
-  default: "bg-surface-1 border border-surface rounded-2xl",
-  glass: "bg-surface-1 backdrop-blur-xl border border-surface rounded-2xl",
-  interactive: "bg-surface-1 border border-surface rounded-2xl hover:border-purple-500/30 hover:bg-surface-2 transition-all duration-300 group hover:shadow-lg hover:shadow-purple-900/10",
+  default: 'bg-surface-1 border border-surface rounded-2xl',
+  glass: 'bg-surface-1 backdrop-blur-xl border border-surface rounded-2xl',
+  interactive:
+    'bg-surface-1 border border-surface rounded-2xl hover:border-purple-500/30 hover:bg-surface-2 transition-all duration-300 group hover:shadow-lg hover:shadow-purple-900/10',
 };
 
 const paddingClasses: Record<string, string> = {
-  sm: "p-4",
-  md: "p-5",
-  lg: "p-6",
+  sm: 'p-4',
+  md: 'p-5',
+  lg: 'p-6',
 };
 ---
 
-<div class={`${variantClasses[variant]} ${paddingClasses[padding]} ${className || ""}`}>
+<div class={`${variantClasses[variant]} ${paddingClasses[padding]} ${className || ''}`}>
   <slot name="image" />
   <slot name="badge" />
   <slot />

@@ -1,398 +1,755 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const benefits = [
-  { title: "Four Readability Scores", desc: "Get Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog Index, and SMOG Index — all in one analysis" },
-  { title: "Visual Score Gauge", desc: "See your Flesch Reading Ease score displayed on a beautiful gauge chart for instant visual understanding" },
-  { title: "Detailed Text Statistics", desc: "View word count, sentence count, syllable count, complex words, average words per sentence, and more" },
-  { title: "Grade Level Assessment", desc: "Understand exactly what education level is required to read your text with grade-level scoring" },
-  { title: "Color-Coded Feedback", desc: "Readability levels are color-coded from green (easy) to red (difficult) for quick scanning" },
-  { title: "Privacy-First Processing", desc: "All text analysis happens entirely in your browser. Nothing is sent to a server or stored" },
+  {
+    title: 'Four Readability Scores',
+    desc: 'Get Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog Index, and SMOG Index — all in one analysis',
+  },
+  {
+    title: 'Visual Score Gauge',
+    desc: 'See your Flesch Reading Ease score displayed on a beautiful gauge chart for instant visual understanding',
+  },
+  {
+    title: 'Detailed Text Statistics',
+    desc: 'View word count, sentence count, syllable count, complex words, average words per sentence, and more',
+  },
+  {
+    title: 'Grade Level Assessment',
+    desc: 'Understand exactly what education level is required to read your text with grade-level scoring',
+  },
+  {
+    title: 'Color-Coded Feedback',
+    desc: 'Readability levels are color-coded from green (easy) to red (difficult) for quick scanning',
+  },
+  {
+    title: 'Privacy-First Processing',
+    desc: 'All text analysis happens entirely in your browser. Nothing is sent to a server or stored',
+  },
 ];
 
 const howToSteps = [
-  { title: "Paste your text", desc: "Copy and paste any article, document, or passage into the input box for analysis" },
-  { title: "Click analyze", desc: "Press the Analyze Readability button to compute all four readability formulas instantly" },
-  { title: "Review scores", desc: "Check the Flesch gauge, grade levels, and detailed statistics in the results panel" },
-  { title: "Improve your text", desc: "Use the feedback to simplify sentences, replace complex words, and improve overall readability" },
+  {
+    title: 'Paste your text',
+    desc: 'Copy and paste any article, document, or passage into the input box for analysis',
+  },
+  {
+    title: 'Click analyze',
+    desc: 'Press the Analyze Readability button to compute all four readability formulas instantly',
+  },
+  {
+    title: 'Review scores',
+    desc: 'Check the Flesch gauge, grade levels, and detailed statistics in the results panel',
+  },
+  {
+    title: 'Improve your text',
+    desc: 'Use the feedback to simplify sentences, replace complex words, and improve overall readability',
+  },
 ];
 
 const useCases = [
-  { title: "Content Writing", desc: "Ensure your blog posts, articles, and web content are written at the right level for your target audience" },
-  { title: "Educational Materials", desc: "Verify that textbooks, handouts, and learning materials match the intended grade level of students" },
-  { title: "Business Communication", desc: "Check that internal memos, reports, and client communications are clear and easy to understand" },
-  { title: "Healthcare Content", desc: "Use SMOG Index to ensure patient education materials meet health literacy guidelines" },
+  {
+    title: 'Content Writing',
+    desc: 'Ensure your blog posts, articles, and web content are written at the right level for your target audience',
+  },
+  {
+    title: 'Educational Materials',
+    desc: 'Verify that textbooks, handouts, and learning materials match the intended grade level of students',
+  },
+  {
+    title: 'Business Communication',
+    desc: 'Check that internal memos, reports, and client communications are clear and easy to understand',
+  },
+  {
+    title: 'Healthcare Content',
+    desc: 'Use SMOG Index to ensure patient education materials meet health literacy guidelines',
+  },
 ];
 
 const faqItems = [
-  { question: "What is a good Flesch Reading Ease score?", answer: "Scores typically range from 0-100. 60-70 is considered 'plain English' and easily understood by 13-15 year olds. Scores above 80 are very easy to read (conversational), while scores below 30 are very difficult (academic/technical). Most professional content aims for 50-70." },
-  { question: "Which readability score should I use?", answer: "It depends on your audience. Flesch Reading Ease is great for general readability. Flesch-Kincaid Grade Level is widely used in education and government. Gunning Fog is excellent for business and journalism. SMOG Index is ideal for healthcare content. Using all four gives you a comprehensive picture." },
-  { question: "How can I improve my text's readability?", answer: "Use shorter words and sentences, avoid jargon, break long paragraphs into smaller ones, use bullet points and headings, prefer active voice over passive voice, and keep sentences under 20 words when possible. Aim for your target grade level and adjust based on your audience." },
+  {
+    question: 'What is a good Flesch Reading Ease score?',
+    answer:
+      "Scores typically range from 0-100. 60-70 is considered 'plain English' and easily understood by 13-15 year olds. Scores above 80 are very easy to read (conversational), while scores below 30 are very difficult (academic/technical). Most professional content aims for 50-70.",
+  },
+  {
+    question: 'Which readability score should I use?',
+    answer:
+      'It depends on your audience. Flesch Reading Ease is great for general readability. Flesch-Kincaid Grade Level is widely used in education and government. Gunning Fog is excellent for business and journalism. SMOG Index is ideal for healthcare content. Using all four gives you a comprehensive picture.',
+  },
+  {
+    question: "How can I improve my text's readability?",
+    answer:
+      'Use shorter words and sentences, avoid jargon, break long paragraphs into smaller ones, use bullet points and headings, prefer active voice over passive voice, and keep sentences under 20 words when possible. Aim for your target grade level and adjust based on your audience.',
+  },
 ];
 
 const schema = {
-  name: "AI Readability Analyzer Pro",
-  applicationCategory: "AI Tools",
-  description: "Analyze text readability with Flesch Reading Ease, Flesch-Kincaid, Gunning Fog, and SMOG Index scores. Get detailed stats on word count, sentence length, and syllable count.",
+  name: 'AI Readability Analyzer Pro',
+  applicationCategory: 'AI Tools',
+  description:
+    'Analyze text readability with Flesch Reading Ease, Flesch-Kincaid, Gunning Fog, and SMOG Index scores. Get detailed stats on word count, sentence length, and syllable count.',
 };
 ---
-<MainLayout title="AI Readability Analyzer - Free Text Readability Checker" description="Analyze your text with Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog Index, and SMOG Index scores." keywords="readability analyzer, flesch reading ease, flesch-kincaid, gunning fog, smog index, text readability checker" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Readability Analyzer",url:"/tools/ai-readability-analyzer/"}]}>
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
-    <ToolHeader title="AI Readability" gradient="Analyzer Pro" desc="Analyze text readability using Flesch Reading Ease, Flesch-Kincaid, Gunning Fog, and SMOG Index with detailed statistics." badge="✦ AI Powered" slug="ai-readability-analyzer" />
-    <ShareBar />
-    <div class="max-w-xl mx-auto mt-10"><div class="bg-surface-1 border border-surface rounded-2xl p-6 relative">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
-            <span id="usage-badge" class="text-xs text-muted"></span>
-          </div>
-          <div class="flex items-center gap-2">
-            <div class="flex gap-1">
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+
+<MainLayout
+  title="AI Readability Analyzer - Free Text Readability Checker"
+  description="Analyze your text with Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog Index, and SMOG Index scores."
+  keywords="readability analyzer, flesch reading ease, flesch-kincaid, gunning fog, smog index, text readability checker"
+  toolSchema={schema}
+  faq={faqItems}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'AI Readability Analyzer', url: '/tools/ai-readability-analyzer/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="AI Readability"
+        gradient="Analyzer Pro"
+        desc="Analyze text readability using Flesch Reading Ease, Flesch-Kincaid, Gunning Fog, and SMOG Index with detailed statistics."
+        badge="✦ AI Powered"
+        slug="ai-readability-analyzer"
+      />
+      <ShareBar />
+      <div class="max-w-xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 relative">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+              <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
-            <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+            <div class="flex items-center gap-2">
+              <div class="flex gap-1">
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="purple"
+                  style="background:#a855f7"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="blue"
+                  style="background:#3b82f6"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="green"
+                  style="background:#22c55e"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="pink"
+                  style="background:#ec4899"></button>
+              </div>
+              <button
+                id="fullscreen-btn"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                title="Fullscreen">⛶</button
+              >
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 mb-2">
+            <button
+              class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A−</button
+            >
+            <button
+              class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A+</button
+            >
+            <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
+          </div>
+          <div class="flex">
+            <div
+              id="line-nums"
+              class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3"
+              style="min-width:2.5em"
+            >
+              1
+            </div>
+            <textarea
+              id="input-text"
+              rows="6"
+              placeholder="Paste your text here to analyze readability..."
+              class="flex-1 bg-transparent text-white placeholder-zinc-600 p-4 resize-none focus:outline-none text-sm leading-relaxed border border-surface-2 rounded-xl mb-4"
+            ></textarea>
+          </div>
+          <div id="reading-time" class="text-xs text-muted -mt-3 mb-2"></div>
+          <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
+          <button
+            id="analyze-btn"
+            class="w-full py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all duration-200 shadow-lg shadow-violet-600/20"
+            >Analyze Readability</button
+          >
+          <div class="flex gap-2 mt-3">
+            <select
+              id="export-format"
+              class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
+            >
+              <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option
+                value="html">HTML</option
+              >
+            </select>
+            <button
+              id="copy-btn"
+              class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              >Copy</button
+            >
+            <button
+              id="download-btn"
+              class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              >Download</button
+            >
+            <button
+              id="share-btn"
+              class="px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              title="Copy share link">🔗</button
+            >
+            <button
+              id="clear-btn"
+              class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              >Clear</button
+            >
+          </div>
+          <div id="results" class="hidden mt-6 space-y-4">
+            <canvas id="readability-gauge" width="240" height="140" class="mx-auto mt-2"></canvas>
+            <div class="glass-card rounded-xl p-4">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs text-tertiary">Flesch Reading Ease</span><span
+                  id="flesch-score"
+                  class="text-lg font-bold text-white"></span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-surface-2 overflow-hidden">
+                <div id="flesch-bar" class="h-full rounded-full transition-all duration-500" style="width:0%"></div>
+              </div>
+              <span id="flesch-label" class="text-[10px] text-tertiary mt-1 block"></span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div class="bg-surface-1 border border-surface rounded-xl p-4 text-center">
+                <span class="text-xs text-tertiary block mb-1">Flesch-Kincaid</span><span
+                  id="fk-grade"
+                  class="text-xl font-bold text-white">—</span
+                >
+              </div>
+              <div class="bg-surface-1 border border-surface rounded-xl p-4 text-center">
+                <span class="text-xs text-tertiary block mb-1">Gunning Fog</span><span
+                  id="gunning-score"
+                  class="text-xl font-bold text-white">—</span
+                >
+              </div>
+              <div class="bg-surface-1 border border-surface rounded-xl p-4 text-center">
+                <span class="text-xs text-tertiary block mb-1">SMOG Index</span><span
+                  id="smog-score"
+                  class="text-xl font-bold text-white">—</span
+                >
+              </div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <div class="glass-card rounded-lg p-3 text-center">
+                <span class="text-[10px] text-tertiary block">Words</span><span
+                  id="word-count"
+                  class="text-sm font-bold text-white">0</span
+                >
+              </div>
+              <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center">
+                <span class="text-[10px] text-tertiary block">Sentences</span><span
+                  id="sentence-count"
+                  class="text-sm font-bold text-white">0</span
+                >
+              </div>
+              <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center">
+                <span class="text-[10px] text-tertiary block">Syllables</span><span
+                  id="syllable-count"
+                  class="text-sm font-bold text-white">0</span
+                >
+              </div>
+              <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center">
+                <span class="text-[10px] text-tertiary block">Complex Words</span><span
+                  id="complex-count"
+                  class="text-sm font-bold text-white">0</span
+                >
+              </div>
+              <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center">
+                <span class="text-[10px] text-tertiary block">Avg Words/Sentence</span><span
+                  id="avg-wps"
+                  class="text-sm font-bold text-white">0</span
+                >
+              </div>
+              <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center">
+                <span class="text-[10px] text-tertiary block">Avg Syllables/Word</span><span
+                  id="avg-spw"
+                  class="text-sm font-bold text-white">0</span
+                >
+              </div>
+              <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center">
+                <span class="text-[10px] text-tertiary block">Characters</span><span
+                  id="char-count"
+                  class="text-sm font-bold text-white">0</span
+                >
+              </div>
+              <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center">
+                <span class="text-[10px] text-tertiary block">Paragraphs</span><span
+                  id="para-count"
+                  class="text-sm font-bold text-white">0</span
+                >
+              </div>
+            </div>
           </div>
         </div>
-      <div class="flex items-center gap-1.5 mb-2">
-        <button class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A−</button>
-        <button class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A+</button>
-        <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
       </div>
-      <div class="flex">
-        <div id="line-nums" class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3" style="min-width:2.5em">1</div>
-        <textarea id="input-text" rows="6" placeholder="Paste your text here to analyze readability..." class="flex-1 bg-transparent text-white placeholder-zinc-600 p-4 resize-none focus:outline-none text-sm leading-relaxed border border-surface-2 rounded-xl mb-4"></textarea>
-      </div>
-      <div id="reading-time" class="text-xs text-muted -mt-3 mb-2"></div>
-      <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
-      <button id="analyze-btn" class="w-full py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all duration-200 shadow-lg shadow-violet-600/20">Analyze Readability</button>
-      <div class="flex gap-2 mt-3">
-        <select id="export-format" class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5">
-          <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option>
-        </select>
-        <button id="copy-btn" class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Copy</button>
-        <button id="download-btn" class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Download</button>
-        <button id="share-btn" class="px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all" title="Copy share link">🔗</button>
-        <button id="clear-btn" class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Clear</button>
-      </div>
-      <div id="results" class="hidden mt-6 space-y-4">
-        <canvas id="readability-gauge" width="240" height="140" class="mx-auto mt-2"></canvas>
-        <div class="bg-surface-1 border border-surface rounded-xl p-4">
-          <div class="flex items-center justify-between mb-1"><span class="text-xs text-tertiary">Flesch Reading Ease</span><span id="flesch-score" class="text-lg font-bold text-white"></span></div>
-          <div class="w-full h-2 rounded-full bg-surface-2 overflow-hidden"><div id="flesch-bar" class="h-full rounded-full transition-all duration-500" style="width:0%"></div></div>
-          <span id="flesch-label" class="text-[10px] text-tertiary mt-1 block"></span>
+      <section class="mt-20 max-w-3xl mx-auto">
+        <div class="text-center mb-8">
+          <span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2
+            class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
+          >
+            How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+              >Works</span
+            >
+          </h2>
+        </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
+          <p>
+            The AI Readability Analyzer applies four established readability formulas to your text. <strong
+              class="text-primary">Flesch Reading Ease</strong
+            > (206.835 - 1.015×W/S - 84.6×Syl/W) produces a 0-100 score. <strong class="text-primary"
+              >Flesch-Kincaid Grade Level</strong
+            > converts this to a US grade level. <strong class="text-primary">Gunning Fog</strong> estimates years of education
+            needed, and <strong class="text-primary">SMOG Index</strong> evaluates polysyllabic word density.
+          </p><p>
+            A built-in syllable counter uses vowel-grouping rules to accurately count syllables for English text,
+            identifying complex words (3+ syllables) that impact readability scores.
+          </p>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div class="bg-surface-1 border border-surface rounded-xl p-4 text-center"><span class="text-xs text-tertiary block mb-1">Flesch-Kincaid</span><span id="fk-grade" class="text-xl font-bold text-white">—</span></div>
-          <div class="bg-surface-1 border border-surface rounded-xl p-4 text-center"><span class="text-xs text-tertiary block mb-1">Gunning Fog</span><span id="gunning-score" class="text-xl font-bold text-white">—</span></div>
-          <div class="bg-surface-1 border border-surface rounded-xl p-4 text-center"><span class="text-xs text-tertiary block mb-1">SMOG Index</span><span id="smog-score" class="text-xl font-bold text-white">—</span></div>
-        </div>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center"><span class="text-[10px] text-tertiary block">Words</span><span id="word-count" class="text-sm font-bold text-white">0</span></div>
-          <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center"><span class="text-[10px] text-tertiary block">Sentences</span><span id="sentence-count" class="text-sm font-bold text-white">0</span></div>
-          <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center"><span class="text-[10px] text-tertiary block">Syllables</span><span id="syllable-count" class="text-sm font-bold text-white">0</span></div>
-          <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center"><span class="text-[10px] text-tertiary block">Complex Words</span><span id="complex-count" class="text-sm font-bold text-white">0</span></div>
-          <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center"><span class="text-[10px] text-tertiary block">Avg Words/Sentence</span><span id="avg-wps" class="text-sm font-bold text-white">0</span></div>
-          <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center"><span class="text-[10px] text-tertiary block">Avg Syllables/Word</span><span id="avg-spw" class="text-sm font-bold text-white">0</span></div>
-          <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center"><span class="text-[10px] text-tertiary block">Characters</span><span id="char-count" class="text-sm font-bold text-white">0</span></div>
-          <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center"><span class="text-[10px] text-tertiary block">Paragraphs</span><span id="para-count" class="text-sm font-bold text-white">0</span></div>
-        </div>
+      </section>
+      <RelatedTools current="ai-readability-analyzer" />
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+            >Questions</span
+          >
+        </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
-    </div></div>
-    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Readability Analyzer applies four established readability formulas to your text. <strong class="text-primary">Flesch Reading Ease</strong> (206.835 - 1.015×W/S - 84.6×Syl/W) produces a 0-100 score. <strong class="text-primary">Flesch-Kincaid Grade Level</strong> converts this to a US grade level. <strong class="text-primary">Gunning Fog</strong> estimates years of education needed, and <strong class="text-primary">SMOG Index</strong> evaluates polysyllabic word density.</p><p>A built-in syllable counter uses vowel-grouping rules to accurately count syllables for English text, identifying complex words (3+ syllables) that impact readability scores.</p></div></section>
-    <RelatedTools current="ai-readability-analyzer" />
-    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
-  </div></main>
+    </div>
+  </main>
 </MainLayout>
 <script>
-function playPing(){ try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){} }
-function countSyllables(word) {
-  word = word.toLowerCase().replace(/[^a-z]/g, "");
-  if (word.length <= 3) return 1;
-  word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, "");
-  word = word.replace(/^y/, "");
-  const vowels = word.match(/[aeiouy]{1,2}/g);
-  return vowels ? vowels.length : 1;
-}
-
-function isComplex(word) {
-  return countSyllables(word) >= 3;
-}
-
-function analyze(text) {
-  if (!text.trim()) return null;
-  const words = text.trim().split(/\s+/).filter(w => w.length > 0);
-  const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
-  const paragraphs = text.split(/\n+/).filter(p => p.trim().length > 0);
-  const wordCount = words.length;
-  const sentenceCount = sentences.length || 1;
-  const charCount = text.length;
-  let syllableCount = 0, complexCount = 0;
-  for (const w of words) {
-    const syl = countSyllables(w);
-    syllableCount += syl;
-    if (syl >= 3) complexCount++;
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
+  function countSyllables(word) {
+    word = word.toLowerCase().replace(/[^a-z]/g, '');
+    if (word.length <= 3) return 1;
+    word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');
+    word = word.replace(/^y/, '');
+    const vowels = word.match(/[aeiouy]{1,2}/g);
+    return vowels ? vowels.length : 1;
   }
 
-  const wordsPerSentence = wordCount / sentenceCount;
-  const syllablesPerWord = syllableCount / wordCount;
-
-  const flesch = Math.max(0, Math.min(100, 206.835 - 1.015 * wordsPerSentence - 84.6 * syllablesPerWord));
-  const fleschKincaid = Math.max(0, 0.39 * wordsPerSentence + 11.8 * syllablesPerWord - 15.59);
-  const gunningFog = Math.max(0, 0.4 * (wordsPerSentence + 100 * (complexCount / wordCount)));
-  const smog = Math.max(0, 1.0430 * Math.sqrt(complexCount * (30 / sentenceCount)) + 3.1291);
-
-  let fleschLabel;
-  if (flesch >= 90) fleschLabel = "Very Easy (5th grade)";
-  else if (flesch >= 80) fleschLabel = "Easy (6th grade)";
-  else if (flesch >= 70) fleschLabel = "Fairly Easy (7th grade)";
-  else if (flesch >= 60) fleschLabel = "Standard (8-9th grade)";
-  else if (flesch >= 50) fleschLabel = "Fairly Difficult (10-12th grade)";
-  else if (flesch >= 30) fleschLabel = "Difficult (College)";
-  else fleschLabel = "Very Difficult (College Graduate)";
-
-  let barColor;
-  if (flesch >= 80) barColor = "from-emerald-500 to-green-500";
-  else if (flesch >= 60) barColor = "from-green-500 to-yellow-500";
-  else if (flesch >= 40) barColor = "from-yellow-500 to-orange-500";
-  else barColor = "from-orange-500 to-red-500";
-
-  return { flesch, fleschKincaid, gunningFog, smog, fleschLabel, barColor, wordCount, sentenceCount, syllableCount, complexCount, wordsPerSentence, syllablesPerWord, charCount, paragraphCount: paragraphs.length };
-}
-
-function drawGauge(canvasId, score, maxScore) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  const ctx = canvas.getContext("2d");
-  const w = canvas.width, h = canvas.height;
-  const cx = w / 2, cy = h - 10, r = 100;
-  ctx.clearRect(0, 0, w, h);
-  
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, Math.PI, 0);
-  ctx.strokeStyle = "#27272a";
-  ctx.lineWidth = 14;
-  ctx.stroke();
-  
-  const pct = Math.min(score / maxScore, 1);
-  const endAngle = Math.PI + pct * Math.PI;
-  let color = "#ef4444";
-  if (score >= 60) color = "#f59e0b";
-  if (score >= 70) color = "#22c55e";
-  if (score >= 80) color = "#10b981";
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, Math.PI, endAngle);
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 14;
-  ctx.lineCap = "round";
-  ctx.stroke();
-  
-  ctx.fillStyle = "#e4e4e7";
-  ctx.font = "bold 28px sans-serif";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(Math.round(score), cx, cy - 35);
-  
-  ctx.fillStyle = "#a1a1aa";
-  ctx.font = "12px sans-serif";
-  ctx.fillText("Flesch Reading Ease", cx, cy - 10);
-  
-  let label = "";
-  if (score >= 90) label = "Very Easy";
-  else if (score >= 80) label = "Easy";
-  else if (score >= 70) label = "Fairly Easy";
-  else if (score >= 60) label = "Plain English";
-  else if (score >= 50) label = "Fairly Difficult";
-  else if (score >= 30) label = "Difficult";
-  else label = "Very Confusing";
-  
-  ctx.fillStyle = color;
-  ctx.font = "bold 14px sans-serif";
-  ctx.fillText(label, cx, cy + 20);
-  
-  ctx.fillStyle = "#52525b";
-  ctx.font = "9px sans-serif";
-  ctx.textAlign = "left";
-  ctx.fillText("0", 25, h - 5);
-  ctx.textAlign = "center";
-  ctx.fillText("50", cx, h - 5);
-  ctx.textAlign = "right";
-  ctx.fillText("100", w - 25, h - 5);
-}
-
-document.getElementById("analyze-btn").addEventListener("click", () => {
-  const text = document.getElementById("input-text").value;
-  const result = analyze(text);
-  const resDiv = document.getElementById("results");
-  if (!result) {
-    resDiv.classList.add("hidden");
-    if (window.__showToast) window.__showToast({ message: "Please enter some text to analyze", variant: "warning" });
-    return;
+  function isComplex(word) {
+    return countSyllables(word) >= 3;
   }
-  resDiv.classList.remove("hidden");
-  document.getElementById("flesch-score").textContent = Math.round(result.flesch);
-  document.getElementById("flesch-bar").style.width = result.flesch + "%";
-  document.getElementById("flesch-bar").className = "h-full rounded-full bg-gradient-to-r " + result.barColor + " transition-all duration-500";
-  document.getElementById("flesch-label").textContent = result.fleschLabel;
-  document.getElementById("fk-grade").textContent = result.fleschKincaid.toFixed(1);
-  document.getElementById("gunning-score").textContent = result.gunningFog.toFixed(1);
-  document.getElementById("smog-score").textContent = result.smog.toFixed(1);
-  document.getElementById("word-count").textContent = result.wordCount;
-  document.getElementById("sentence-count").textContent = result.sentenceCount;
-  document.getElementById("syllable-count").textContent = result.syllableCount;
-  document.getElementById("complex-count").textContent = result.complexCount;
-  document.getElementById("avg-wps").textContent = result.wordsPerSentence.toFixed(1);
-  document.getElementById("avg-spw").textContent = result.syllablesPerWord.toFixed(2);
-  document.getElementById("char-count").textContent = result.charCount;
-  document.getElementById("para-count").textContent = result.paragraphCount;
 
-  const freScoreEl = document.getElementById("flesch-score");
-  if (freScoreEl) {
-    const score = parseFloat(freScoreEl.textContent) || 0;
-    drawGauge("readability-gauge", score, 100);
+  function analyze(text) {
+    if (!text.trim()) return null;
+    const words = text
+      .trim()
+      .split(/\s+/)
+      .filter((w) => w.length > 0);
+    const sentences = text.split(/[.!?]+/).filter((s) => s.trim().length > 0);
+    const paragraphs = text.split(/\n+/).filter((p) => p.trim().length > 0);
+    const wordCount = words.length;
+    const sentenceCount = sentences.length || 1;
+    const charCount = text.length;
+    let syllableCount = 0,
+      complexCount = 0;
+    for (const w of words) {
+      const syl = countSyllables(w);
+      syllableCount += syl;
+      if (syl >= 3) complexCount++;
+    }
+
+    const wordsPerSentence = wordCount / sentenceCount;
+    const syllablesPerWord = syllableCount / wordCount;
+
+    const flesch = Math.max(0, Math.min(100, 206.835 - 1.015 * wordsPerSentence - 84.6 * syllablesPerWord));
+    const fleschKincaid = Math.max(0, 0.39 * wordsPerSentence + 11.8 * syllablesPerWord - 15.59);
+    const gunningFog = Math.max(0, 0.4 * (wordsPerSentence + 100 * (complexCount / wordCount)));
+    const smog = Math.max(0, 1.043 * Math.sqrt(complexCount * (30 / sentenceCount)) + 3.1291);
+
+    let fleschLabel;
+    if (flesch >= 90) fleschLabel = 'Very Easy (5th grade)';
+    else if (flesch >= 80) fleschLabel = 'Easy (6th grade)';
+    else if (flesch >= 70) fleschLabel = 'Fairly Easy (7th grade)';
+    else if (flesch >= 60) fleschLabel = 'Standard (8-9th grade)';
+    else if (flesch >= 50) fleschLabel = 'Fairly Difficult (10-12th grade)';
+    else if (flesch >= 30) fleschLabel = 'Difficult (College)';
+    else fleschLabel = 'Very Difficult (College Graduate)';
+
+    let barColor;
+    if (flesch >= 80) barColor = 'from-emerald-500 to-green-500';
+    else if (flesch >= 60) barColor = 'from-green-500 to-yellow-500';
+    else if (flesch >= 40) barColor = 'from-yellow-500 to-orange-500';
+    else barColor = 'from-orange-500 to-red-500';
+
+    return {
+      flesch,
+      fleschKincaid,
+      gunningFog,
+      smog,
+      fleschLabel,
+      barColor,
+      wordCount,
+      sentenceCount,
+      syllableCount,
+      complexCount,
+      wordsPerSentence,
+      syllablesPerWord,
+      charCount,
+      paragraphCount: paragraphs.length,
+    };
   }
-});
 
-document.getElementById("copy-btn")?.addEventListener("click", () => {
-  const flesch = document.getElementById("flesch-score")?.textContent || "";
-  const fk = document.getElementById("fk-grade")?.textContent || "";
-  const gunning = document.getElementById("gunning-score")?.textContent || "";
-  const smog = document.getElementById("smog-score")?.textContent || "";
-  const wc = document.getElementById("word-count")?.textContent || "";
-  if (!flesch) { if (window.__showToast) window.__showToast({ message: "Nothing to copy!", variant: "warning" }); return; }
-  navigator.clipboard.writeText(`Flesch Reading Ease: ${flesch}\nFlesch-Kincaid Grade: ${fk}\nGunning Fog: ${gunning}\nSMOG Index: ${smog}\nWords: ${wc}`);
-  playPing(); if (window.__showToast) window.__showToast({ message: "Copied!", variant: "success" });
-});
+  function drawGauge(canvasId, score, maxScore) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width,
+      h = canvas.height;
+    const cx = w / 2,
+      cy = h - 10,
+      r = 100;
+    ctx.clearRect(0, 0, w, h);
 
-document.getElementById("download-btn")?.addEventListener("click", () => {
-  const flesch = document.getElementById("flesch-score")?.textContent || "";
-  const label = document.getElementById("flesch-label")?.textContent || "";
-  const fk = document.getElementById("fk-grade")?.textContent || "";
-  const gunning = document.getElementById("gunning-score")?.textContent || "";
-  const smog = document.getElementById("smog-score")?.textContent || "";
-  const wc = document.getElementById("word-count")?.textContent || "";
-  const sc = document.getElementById("sentence-count")?.textContent || "";
-  if (!flesch) { if (window.__showToast) window.__showToast({ message: "Nothing to download!", variant: "warning" }); return; }
-  const outputText = `Readability Analysis\n\nFlesch Reading Ease: ${flesch} (${label})\nFlesch-Kincaid Grade: ${fk}\nGunning Fog: ${gunning}\nSMOG Index: ${smog}\nWords: ${wc} | Sentences: ${sc}`;
-  const fmt=document.getElementById("export-format")?.value||"txt";
-  let content = outputText;
-  let mime = "text/plain";
-  let ext = "txt";
-  if(fmt==="json"){ content=JSON.stringify({result:outputText, tool:"ai-readability-analyzer", timestamp:new Date().toISOString()}); mime="application/json"; ext="json"; }
-  if(fmt==="csv"){ content="Result\n\""+outputText.replace(/"/g,'""')+"\""; mime="text/csv"; ext="csv"; }
-  if(fmt==="html"){ content="<!DOCTYPE html><html><body><pre>"+outputText.replace(/</g,"&lt;")+"</pre></body></html>"; mime="text/html"; ext="html"; }
-  const blob = new Blob([content], {type:mime});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "readability-output."+ext;
-  a.click();
-  URL.revokeObjectURL(a.href);
-  playPing(); if (window.__showToast) window.__showToast({ message: "Downloaded!", variant: "success" });
-});
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, Math.PI, 0);
+    ctx.strokeStyle = '#27272a';
+    ctx.lineWidth = 14;
+    ctx.stroke();
 
-document.getElementById("clear-btn")?.addEventListener("click", () => {
-  document.getElementById("input-text").value = "";
-  document.getElementById("results").classList.add("hidden");
-  document.getElementById("input-text").focus();
-  playPing(); if (window.__showToast) window.__showToast({ message: "Cleared!", variant: "info" });
-});
+    const pct = Math.min(score / maxScore, 1);
+    const endAngle = Math.PI + pct * Math.PI;
+    let color = '#ef4444';
+    if (score >= 60) color = '#f59e0b';
+    if (score >= 70) color = '#22c55e';
+    if (score >= 80) color = '#10b981';
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, Math.PI, endAngle);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 14;
+    ctx.lineCap = 'round';
+    ctx.stroke();
 
-document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-  const card = document.getElementById("fullscreen-btn").closest(".bg-surface-1.border.border-surface.rounded-2xl") || document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
-  if (!card) return;
-  if (document.fullscreenElement) {
-    document.exitFullscreen();
-    document.getElementById("fullscreen-btn").textContent = "⛶";
-  } else {
-    card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
-    document.getElementById("fullscreen-btn").textContent = "✕";
+    ctx.fillStyle = '#e4e4e7';
+    ctx.font = 'bold 28px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(Math.round(score), cx, cy - 35);
+
+    ctx.fillStyle = '#a1a1aa';
+    ctx.font = '12px sans-serif';
+    ctx.fillText('Flesch Reading Ease', cx, cy - 10);
+
+    let label = '';
+    if (score >= 90) label = 'Very Easy';
+    else if (score >= 80) label = 'Easy';
+    else if (score >= 70) label = 'Fairly Easy';
+    else if (score >= 60) label = 'Plain English';
+    else if (score >= 50) label = 'Fairly Difficult';
+    else if (score >= 30) label = 'Difficult';
+    else label = 'Very Confusing';
+
+    ctx.fillStyle = color;
+    ctx.font = 'bold 14px sans-serif';
+    ctx.fillText(label, cx, cy + 20);
+
+    ctx.fillStyle = '#52525b';
+    ctx.font = '9px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('0', 25, h - 5);
+    ctx.textAlign = 'center';
+    ctx.fillText('50', cx, h - 5);
+    ctx.textAlign = 'right';
+    ctx.fillText('100', w - 25, h - 5);
   }
-});
-document.addEventListener("fullscreenchange", () => {
-  const btn = document.getElementById("fullscreen-btn");
-  if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
-});
 
-const DRAFT_KEY = "nt_draft_ai-readability-analyzer";
-(function() {
-  const input = document.getElementById("input-text") || document.querySelector("textarea:not([readonly])");
-  if (!input) return;
+  document.getElementById('analyze-btn').addEventListener('click', () => {
+    const text = document.getElementById('input-text').value;
+    const result = analyze(text);
+    const resDiv = document.getElementById('results');
+    if (!result) {
+      resDiv.classList.add('hidden');
+      if (window.__showToast) window.__showToast({ message: 'Please enter some text to analyze', variant: 'warning' });
+      return;
+    }
+    resDiv.classList.remove('hidden');
+    document.getElementById('flesch-score').textContent = Math.round(result.flesch);
+    document.getElementById('flesch-bar').style.width = result.flesch + '%';
+    document.getElementById('flesch-bar').className =
+      'h-full rounded-full bg-gradient-to-r ' + result.barColor + ' transition-all duration-500';
+    document.getElementById('flesch-label').textContent = result.fleschLabel;
+    document.getElementById('fk-grade').textContent = result.fleschKincaid.toFixed(1);
+    document.getElementById('gunning-score').textContent = result.gunningFog.toFixed(1);
+    document.getElementById('smog-score').textContent = result.smog.toFixed(1);
+    document.getElementById('word-count').textContent = result.wordCount;
+    document.getElementById('sentence-count').textContent = result.sentenceCount;
+    document.getElementById('syllable-count').textContent = result.syllableCount;
+    document.getElementById('complex-count').textContent = result.complexCount;
+    document.getElementById('avg-wps').textContent = result.wordsPerSentence.toFixed(1);
+    document.getElementById('avg-spw').textContent = result.syllablesPerWord.toFixed(2);
+    document.getElementById('char-count').textContent = result.charCount;
+    document.getElementById('para-count').textContent = result.paragraphCount;
+
+    const freScoreEl = document.getElementById('flesch-score');
+    if (freScoreEl) {
+      const score = parseFloat(freScoreEl.textContent) || 0;
+      drawGauge('readability-gauge', score, 100);
+    }
+  });
+
+  document.getElementById('copy-btn')?.addEventListener('click', () => {
+    const flesch = document.getElementById('flesch-score')?.textContent || '';
+    const fk = document.getElementById('fk-grade')?.textContent || '';
+    const gunning = document.getElementById('gunning-score')?.textContent || '';
+    const smog = document.getElementById('smog-score')?.textContent || '';
+    const wc = document.getElementById('word-count')?.textContent || '';
+    if (!flesch) {
+      if (window.__showToast) window.__showToast({ message: 'Nothing to copy!', variant: 'warning' });
+      return;
+    }
+    navigator.clipboard.writeText(
+      `Flesch Reading Ease: ${flesch}\nFlesch-Kincaid Grade: ${fk}\nGunning Fog: ${gunning}\nSMOG Index: ${smog}\nWords: ${wc}`,
+    );
+    playPing();
+    if (window.__showToast) window.__showToast({ message: 'Copied!', variant: 'success' });
+  });
+
+  document.getElementById('download-btn')?.addEventListener('click', () => {
+    const flesch = document.getElementById('flesch-score')?.textContent || '';
+    const label = document.getElementById('flesch-label')?.textContent || '';
+    const fk = document.getElementById('fk-grade')?.textContent || '';
+    const gunning = document.getElementById('gunning-score')?.textContent || '';
+    const smog = document.getElementById('smog-score')?.textContent || '';
+    const wc = document.getElementById('word-count')?.textContent || '';
+    const sc = document.getElementById('sentence-count')?.textContent || '';
+    if (!flesch) {
+      if (window.__showToast) window.__showToast({ message: 'Nothing to download!', variant: 'warning' });
+      return;
+    }
+    const outputText = `Readability Analysis\n\nFlesch Reading Ease: ${flesch} (${label})\nFlesch-Kincaid Grade: ${fk}\nGunning Fog: ${gunning}\nSMOG Index: ${smog}\nWords: ${wc} | Sentences: ${sc}`;
+    const fmt = document.getElementById('export-format')?.value || 'txt';
+    let content = outputText;
+    let mime = 'text/plain';
+    let ext = 'txt';
+    if (fmt === 'json') {
+      content = JSON.stringify({
+        result: outputText,
+        tool: 'ai-readability-analyzer',
+        timestamp: new Date().toISOString(),
+      });
+      mime = 'application/json';
+      ext = 'json';
+    }
+    if (fmt === 'csv') {
+      content = 'Result\n"' + outputText.replace(/"/g, '""') + '"';
+      mime = 'text/csv';
+      ext = 'csv';
+    }
+    if (fmt === 'html') {
+      content = '<!DOCTYPE html><html><body><pre>' + outputText.replace(/</g, '&lt;') + '</pre></body></html>';
+      mime = 'text/html';
+      ext = 'html';
+    }
+    const blob = new Blob([content], { type: mime });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'readability-output.' + ext;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    playPing();
+    if (window.__showToast) window.__showToast({ message: 'Downloaded!', variant: 'success' });
+  });
+
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    document.getElementById('input-text').value = '';
+    document.getElementById('results').classList.add('hidden');
+    document.getElementById('input-text').focus();
+    playPing();
+    if (window.__showToast) window.__showToast({ message: 'Cleared!', variant: 'info' });
+  });
+
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card =
+      document.getElementById('fullscreen-btn').closest('.bg-surface-1.border.border-surface.rounded-2xl') ||
+      document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
+    if (!card) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      document.getElementById('fullscreen-btn').textContent = '⛶';
+    } else {
+      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
+      document.getElementById('fullscreen-btn').textContent = '✕';
+    }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
+  });
+
+  const DRAFT_KEY = 'nt_draft_ai-readability-analyzer';
+  (function () {
+    const input = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');
+    if (!input) return;
+    try {
+      const saved = localStorage.getItem(DRAFT_KEY);
+      if (saved && !input.value) {
+        input.value = saved;
+        input.dispatchEvent(new Event('input'));
+      }
+    } catch (e) {}
+    let saveTimer;
+    input.addEventListener('input', () => {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        try {
+          localStorage.setItem(DRAFT_KEY, input.value);
+        } catch (e) {}
+      }, 500);
+    });
+  })();
+
+  document.querySelector('.font-inc')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.min(24, s + 2) + 'px';
+    });
+  });
+  document.querySelector('.font-dec')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.max(10, s - 2) + 'px';
+    });
+  });
   try {
-    const saved = localStorage.getItem(DRAFT_KEY);
-    if (saved && !input.value) { input.value = saved; input.dispatchEvent(new Event("input")); }
-  } catch(e) {}
-  let saveTimer;
-  input.addEventListener("input", () => {
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(() => {
-      try { localStorage.setItem(DRAFT_KEY, input.value); } catch(e) {}
-    }, 500);
+    const s = localStorage.getItem('nt_fs');
+    if (s) document.querySelectorAll('textarea').forEach((t) => (t.style.fontSize = s + 'px'));
+  } catch (e) {}
+
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b =
+        document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])") ||
+        document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      document.getElementById('clear-btn')?.click();
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
   });
-})();
 
-document.querySelector(".font-inc")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.min(24,s+2)+"px"; }); });
-document.querySelector(".font-dec")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.max(10,s-2)+"px"; }); });
-try { const s=localStorage.getItem("nt_fs"); if(s) document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px"); } catch(e){}
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['ai-readability-analyzer']) b.textContent = 'Used ' + u['ai-readability-analyzer'] + '×';
+  } catch (e) {}
 
-document.addEventListener("keydown", e => {
-  if(e.ctrlKey&&e.key==="Enter"){ e.preventDefault(); const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])")||document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])"); if(b) b.click(); }
-  if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){ e.preventDefault(); document.getElementById("clear-btn")?.click(); }
-  if(e.ctrlKey&&(e.key==="D"||e.key==="d")){ e.preventDefault(); document.getElementById("download-btn")?.click(); }
-});
-
-try { const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}"); const b=document.getElementById("usage-badge"); if(b&&u["ai-readability-analyzer"]) b.textContent="Used "+u["ai-readability-analyzer"]+"×"; } catch(e){}
-
-document.getElementById("share-btn")?.addEventListener("click", () => {
-  const o=document.getElementById("flesch-score")||document.querySelector("[id$='result']");
-  const t=o?.value||o?.textContent||"";
-  if(!t) return;
-  const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));
-  navigator.clipboard.writeText(u).catch(()=>{});
-  if(typeof window.__showToast==="function") window.__showToast({message:"Link copied!"});
-});
-
-const rtInput=document.getElementById("input-text")||document.querySelector("textarea:not([readonly])");
-if(rtInput){
-  rtInput.addEventListener("input", ()=>{
-    const w=rtInput.value?rtInput.value.trim().split(/\s+/).length:0;
-    const e=document.getElementById("reading-time");
-    if(e) e.textContent=Math.max(1,Math.round(w/200))+" min read · "+Math.max(1,Math.round(w/150))+" min speak";
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('flesch-score') || document.querySelector("[id$='result']");
+    const t = o?.value || o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof window.__showToast === 'function') window.__showToast({ message: 'Link copied!' });
   });
-  rtInput.dispatchEvent(new Event("input"));
-}
 
-const lnInput=document.getElementById("input-text");
-if(lnInput){
-  const updateLN=()=>{ const n=document.getElementById("line-nums"); if(n) n.textContent=Array.from({length:lnInput.value.split("\n").length},(_,i)=>i+1).join("\n"); };
-  lnInput.addEventListener("input", updateLN);
-  lnInput.addEventListener("scroll", ()=>{ const n=document.getElementById("line-nums"); if(n) n.scrollTop=lnInput.scrollTop; });
-  updateLN();
-}
+  const rtInput = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');
+  if (rtInput) {
+    rtInput.addEventListener('input', () => {
+      const w = rtInput.value ? rtInput.value.trim().split(/\s+/).length : 0;
+      const e = document.getElementById('reading-time');
+      if (e)
+        e.textContent =
+          Math.max(1, Math.round(w / 200)) + ' min read · ' + Math.max(1, Math.round(w / 150)) + ' min speak';
+    });
+    rtInput.dispatchEvent(new Event('input'));
+  }
 
-const lfInput=document.getElementById("input-text");
-if(lfInput){
-  lfInput.addEventListener("input", ()=>{
-    const t=lfInput.value.toLowerCase().replace(/[^a-z]/g,""); if(!t){ document.getElementById("letter-freq").classList.add("hidden"); return; }
-    const f={}; for(const c of t) f[c]=(f[c]||0)+1;
-    const s=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,8); const m=s[0]?s[0][1]:1;
-    const el=document.getElementById("letter-freq"); el.classList.remove("hidden");
-    el.innerHTML=s.map(([c,n])=>`<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n/m)*80+10}%"></div><span class="text-muted">${n}</span></div>`).join("");
+  const lnInput = document.getElementById('input-text');
+  if (lnInput) {
+    const updateLN = () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.textContent = Array.from({ length: lnInput.value.split('\n').length }, (_, i) => i + 1).join('\n');
+    };
+    lnInput.addEventListener('input', updateLN);
+    lnInput.addEventListener('scroll', () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.scrollTop = lnInput.scrollTop;
+    });
+    updateLN();
+  }
+
+  const lfInput = document.getElementById('input-text');
+  if (lfInput) {
+    lfInput.addEventListener('input', () => {
+      const t = lfInput.value.toLowerCase().replace(/[^a-z]/g, '');
+      if (!t) {
+        document.getElementById('letter-freq').classList.add('hidden');
+        return;
+      }
+      const f = {};
+      for (const c of t) f[c] = (f[c] || 0) + 1;
+      const s = Object.entries(f)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+      const m = s[0] ? s[0][1] : 1;
+      const el = document.getElementById('letter-freq');
+      el.classList.remove('hidden');
+      el.innerHTML = s
+        .map(
+          ([c, n]) =>
+            `<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n / m) * 80 + 10}%"></div><span class="text-muted">${n}</span></div>`,
+        )
+        .join('');
+    });
+  }
+
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      const map = { purple: '#a855f7', blue: '#3b82f6', green: '#22c55e', pink: '#ec4899', orange: '#f97316' };
+      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500')
+          .replace(/from-(purple|violet)-\d+/g, 'from-' + c + '-500')
+          .replace(/to-purple-\d+/g, 'to-' + c + '-600');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
   });
-}
-
-document.querySelectorAll(".theme-swatch").forEach(s=>{
-  s.addEventListener("click",()=>{
-    const c=s.dataset.color; const map={purple:"#a855f7",blue:"#3b82f6",green:"#22c55e",pink:"#ec4899",orange:"#f97316"};
-    document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach(b=>{ b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500").replace(/from-(purple|violet)-\d+/g,"from-"+c+"-500").replace(/to-purple-\d+/g,"to-"+c+"-600"); });
-    try{localStorage.setItem("nt_theme",c);}catch(e){}
-  });
-});
-try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>

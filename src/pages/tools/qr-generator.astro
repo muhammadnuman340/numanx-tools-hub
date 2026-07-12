@@ -1,56 +1,145 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import KeyboardHints from "../../components/KeyboardHints.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import KeyboardHints from '../../components/KeyboardHints.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
-    { question: "What is a QR code?", answer: "A QR code (Quick Response code) is a two-dimensional barcode that stores information like URLs, text, or contact details. It can be scanned by smartphones and QR readers for instant access to the encoded data." },
-    { question: "Can I customize the QR code colors?", answer: "Yes, you can change both the foreground and background colors, choose from quick theme presets, and upload a logo to appear in the center of your QR code." },
-    { question: "Is my data sent to a server?", answer: "No. Everything happens in your browser using the qrcode JavaScript library. Your data never leaves your device." },
-    { question: "What download formats are available?", answer: "You can download your QR code as PNG, JPG, or SVG. SVG is ideal for print and scaling to any size without quality loss." },
-    { question: "How do error correction levels work?", answer: "Higher error correction allows the QR to be scanned even if partially damaged. L (7%), M (15%), Q (25%), H (30%). Higher levels can encode less data but are more reliable." },
-    { question: "Can I make a WiFi QR code?", answer: "Yes! Select the WiFi template and enter your network SSID and password. The QR code will let guests connect instantly — no need to share your password verbally." },
-    { question: "How do I scan a QR code?", answer: "Most modern smartphones have built-in QR scanning in the camera app. Open your camera and point it at the QR code — a notification will appear with the encoded content." },
-    { question: "What is the difference between static and dynamic QR codes?", answer: "Static QR codes encode data directly and cannot be changed after creation. Dynamic QR codes redirect through a short URL, allowing you to update the destination without regenerating the code." },
-  ];
+  {
+    question: 'What is a QR code?',
+    answer:
+      'A QR code (Quick Response code) is a two-dimensional barcode that stores information like URLs, text, or contact details. It can be scanned by smartphones and QR readers for instant access to the encoded data.',
+  },
+  {
+    question: 'Can I customize the QR code colors?',
+    answer:
+      'Yes, you can change both the foreground and background colors, choose from quick theme presets, and upload a logo to appear in the center of your QR code.',
+  },
+  {
+    question: 'Is my data sent to a server?',
+    answer:
+      'No. Everything happens in your browser using the qrcode JavaScript library. Your data never leaves your device.',
+  },
+  {
+    question: 'What download formats are available?',
+    answer:
+      'You can download your QR code as PNG, JPG, or SVG. SVG is ideal for print and scaling to any size without quality loss.',
+  },
+  {
+    question: 'How do error correction levels work?',
+    answer:
+      'Higher error correction allows the QR to be scanned even if partially damaged. L (7%), M (15%), Q (25%), H (30%). Higher levels can encode less data but are more reliable.',
+  },
+  {
+    question: 'Can I make a WiFi QR code?',
+    answer:
+      'Yes! Select the WiFi template and enter your network SSID and password. The QR code will let guests connect instantly — no need to share your password verbally.',
+  },
+  {
+    question: 'How do I scan a QR code?',
+    answer:
+      'Most modern smartphones have built-in QR scanning in the camera app. Open your camera and point it at the QR code — a notification will appear with the encoded content.',
+  },
+  {
+    question: 'What is the difference between static and dynamic QR codes?',
+    answer:
+      'Static QR codes encode data directly and cannot be changed after creation. Dynamic QR codes redirect through a short URL, allowing you to update the destination without regenerating the code.',
+  },
+];
 const qrSchema = {
-  "name": "QR Generator Pro",
-  "applicationCategory": "Multimedia",
-  "description": "Create custom QR codes with logo, colors, templates, and SVG download. Free QR code generator with WiFi, Email, Phone, YouTube templates.",
-  "featureList": [
-    "Custom QR codes with logo and brand colors",
-    "WiFi, Email, Phone, SMS, YouTube, and vCard templates",
-    "SVG, PNG, and JPG download formats",
-    "4 error correction levels for damaged-code recovery",
-    "100% client-side — no server uploads, zero data transfer"
+  name: 'QR Generator Pro',
+  applicationCategory: 'Multimedia',
+  description:
+    'Create custom QR codes with logo, colors, templates, and SVG download. Free QR code generator with WiFi, Email, Phone, YouTube templates.',
+  featureList: [
+    'Custom QR codes with logo and brand colors',
+    'WiFi, Email, Phone, SMS, YouTube, and vCard templates',
+    'SVG, PNG, and JPG download formats',
+    '4 error correction levels for damaged-code recovery',
+    '100% client-side — no server uploads, zero data transfer',
   ],
-}
+};
 
 const benefits = [
-  { icon: "🔒", title: "100% Private", desc: "All QR codes are generated locally in your browser. Your data never touches any server — complete privacy guaranteed." },
-  { icon: "🎨", title: "Fully Customizable", desc: "Change colors, upload logos, pick themes, and choose from 6 templates. Make QR codes that match your brand perfectly." },
-  { icon: "⬇️", title: "Multiple Export Formats", desc: "Download as PNG, JPG, or SVG. SVG is ideal for print — scales to any size without pixelation or quality loss." },
-  { icon: "🔧", title: "Smart Templates", desc: "WiFi, Email, Phone, YouTube, and vCard templates pre-configure the encoding so you get the right format every time." },
-  { icon: "⚡", title: "Lightning Fast", desc: "Instant generation as you type. No page reloads, no API calls, no waiting. Real-time preview updates with zero latency." },
-  { icon: "🆓", title: "Completely Free", desc: "No sign-ups, no hidden charges, no usage limits. All features including SVG export and custom logos are completely free." },
+  {
+    icon: '🔒',
+    title: '100% Private',
+    desc: 'All QR codes are generated locally in your browser. Your data never touches any server — complete privacy guaranteed.',
+  },
+  {
+    icon: '🎨',
+    title: 'Fully Customizable',
+    desc: 'Change colors, upload logos, pick themes, and choose from 6 templates. Make QR codes that match your brand perfectly.',
+  },
+  {
+    icon: '⬇️',
+    title: 'Multiple Export Formats',
+    desc: 'Download as PNG, JPG, or SVG. SVG is ideal for print — scales to any size without pixelation or quality loss.',
+  },
+  {
+    icon: '🔧',
+    title: 'Smart Templates',
+    desc: 'WiFi, Email, Phone, YouTube, and vCard templates pre-configure the encoding so you get the right format every time.',
+  },
+  {
+    icon: '⚡',
+    title: 'Lightning Fast',
+    desc: 'Instant generation as you type. No page reloads, no API calls, no waiting. Real-time preview updates with zero latency.',
+  },
+  {
+    icon: '🆓',
+    title: 'Completely Free',
+    desc: 'No sign-ups, no hidden charges, no usage limits. All features including SVG export and custom logos are completely free.',
+  },
 ];
 
 const howToSteps = [
-  { num: "1", title: "Choose a Template", desc: "Pick from Website, WiFi, Email, Phone, or YouTube templates. Each template pre-configures the right encoding format for your use case." },
-  { num: "2", title: "Enter Your Data", desc: "Type or paste your URL, text, WiFi credentials, or contact information into the input fields. Watch the QR code update in real-time." },
-  { num: "3", title: "Customize Design", desc: "Change foreground and background colors, pick a theme preset, or upload a logo to appear in the center of your QR code." },
-  { num: "4", title: "Download or Share", desc: "Download your QR code as PNG, JPG, or SVG. Copy to clipboard or share the link directly from the tool." },
+  {
+    num: '1',
+    title: 'Choose a Template',
+    desc: 'Pick from Website, WiFi, Email, Phone, or YouTube templates. Each template pre-configures the right encoding format for your use case.',
+  },
+  {
+    num: '2',
+    title: 'Enter Your Data',
+    desc: 'Type or paste your URL, text, WiFi credentials, or contact information into the input fields. Watch the QR code update in real-time.',
+  },
+  {
+    num: '3',
+    title: 'Customize Design',
+    desc: 'Change foreground and background colors, pick a theme preset, or upload a logo to appear in the center of your QR code.',
+  },
+  {
+    num: '4',
+    title: 'Download or Share',
+    desc: 'Download your QR code as PNG, JPG, or SVG. Copy to clipboard or share the link directly from the tool.',
+  },
 ];
 
 const useCases = [
-  { icon: "🏪", title: "Restaurant Menus", desc: "Replace physical menus with QR codes that link to your digital menu. Update items anytime without reprinting." },
-  { icon: "📱", title: "Social Media Growth", desc: "Add QR codes to business cards, flyers, and posters that link directly to your Instagram, TikTok, or YouTube channel." },
-  { icon: "🏨", title: "Hotel & Hospitality", desc: "Provide guests with QR codes for WiFi access, room service menus, local attractions, and checkout forms." },
-  { icon: "🎫", title: "Event Ticketing", desc: "Generate QR codes for event tickets, VIP passes, and registration confirmations. Scan for instant entry verification." },
+  {
+    icon: '🏪',
+    title: 'Restaurant Menus',
+    desc: 'Replace physical menus with QR codes that link to your digital menu. Update items anytime without reprinting.',
+  },
+  {
+    icon: '📱',
+    title: 'Social Media Growth',
+    desc: 'Add QR codes to business cards, flyers, and posters that link directly to your Instagram, TikTok, or YouTube channel.',
+  },
+  {
+    icon: '🏨',
+    title: 'Hotel & Hospitality',
+    desc: 'Provide guests with QR codes for WiFi access, room service menus, local attractions, and checkout forms.',
+  },
+  {
+    icon: '🎫',
+    title: 'Event Ticketing',
+    desc: 'Generate QR codes for event tickets, VIP passes, and registration confirmations. Scan for instant entry verification.',
+  },
 ];
 ---
 
@@ -61,15 +150,15 @@ const useCases = [
   toolSchema={qrSchema}
   faq={faqItems}
   howto={{
-    name: "How to Generate a QR Code",
-    description: "Create a custom QR code with logo, colors, and templates in 4 easy steps.",
-    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
-    totalTime: "PT1M",
+    name: 'How to Generate a QR Code',
+    description: 'Create a custom QR code with logo, colors, and templates in 4 easy steps.',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
   }}
   breadcrumbs={[
-    { name: "Home", url: "/" },
-    { name: "Tools", url: "/tools/" },
-    { name: "QR Generator", url: "/tools/qr-generator/" },
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'QR Generator', url: '/tools/qr-generator/' },
   ]}
 >
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
@@ -86,51 +175,110 @@ const useCases = [
 
       <!-- ─── Tool Interface ─── -->
       <div class="mt-8 grid grid-cols-1 lg:grid-cols-5 gap-5">
-
         <!-- ── Left Panel: Inputs ── -->
         <div class="lg:col-span-3 space-y-4">
-
           <!-- Templates -->
-          <div class="bg-surface-1 border border-surface rounded-2xl p-5">
+          <div class="glass-card rounded-2xl p-5">
             <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3 block">Template</label>
             <div class="grid grid-cols-5 gap-2" id="template-tabs">
-              {["Website","WiFi","Email","Phone","YouTube"].map((t) => (
-                <button class="template-btn rounded-xl py-2.5 px-2 text-[11px] font-medium border transition-all flex flex-col items-center gap-1" data-template={t}>
-                  <span class="text-base">{t === "Website" ? "🌐" : t === "WiFi" ? "📶" : t === "Email" ? "✉️" : t === "Phone" ? "📞" : "▶️"}</span>
-                  <span>{t}</span>
-                </button>
-              ))}
+              {
+                ['Website', 'WiFi', 'Email', 'Phone', 'YouTube'].map((t) => (
+                  <button
+                    class="template-btn rounded-xl py-2.5 px-2 text-[11px] font-medium border transition-all flex flex-col items-center gap-1"
+                    data-template={t}
+                  >
+                    <span class="text-base">
+                      {t === 'Website'
+                        ? '🌐'
+                        : t === 'WiFi'
+                          ? '📶'
+                          : t === 'Email'
+                            ? '✉️'
+                            : t === 'Phone'
+                              ? '📞'
+                              : '▶️'}
+                    </span>
+                    <span>{t}</span>
+                  </button>
+                ))
+              }
             </div>
           </div>
 
           <!-- Dynamic Input Fields -->
-          <div class="bg-surface-1 border border-surface rounded-2xl p-5 space-y-4" id="input-fields">
+          <div class="glass-card rounded-2xl p-5 space-y-4" id="input-fields">
             <div class="flex items-center justify-between">
               <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
-              <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+              <button
+                id="fullscreen-btn"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                title="Fullscreen">⛶</button
+              >
             </div>
             <!-- Website (default) -->
             <div id="field-website" class="field-group space-y-2">
               <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">URL or Text</label>
-              <input id="qr-text" type="text" placeholder="https://example.com" class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <input
+                id="qr-text"
+                type="text"
+                placeholder="https://example.com"
+                class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+              />
             </div>
             <div id="field-wifi" class="field-group space-y-2 hidden">
               <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">WiFi Network</label>
-              <input id="wifi-ssid" type="text" placeholder="Network name (SSID)" class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
-              <input id="wifi-pass" type="text" placeholder="Password" class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <input
+                id="wifi-ssid"
+                type="text"
+                placeholder="Network name (SSID)"
+                class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+              />
+              <input
+                id="wifi-pass"
+                type="text"
+                placeholder="Password"
+                class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+              />
             </div>
             <div id="field-email" class="field-group space-y-2 hidden">
               <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Email</label>
-              <input id="email-to" type="email" placeholder="recipient@example.com" class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
-              <input id="email-subject" type="text" placeholder="Subject" class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <input
+                id="email-to"
+                type="email"
+                placeholder="recipient@example.com"
+                class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+              />
+              <input
+                id="email-subject"
+                type="text"
+                placeholder="Subject"
+                class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+              />
               <div class="flex items-center gap-1.5 mb-2">
-                <button class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40">A−</button>
-                <button class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40">A+</button>
+                <button
+                  class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40"
+                  >A−</button
+                >
+                <button
+                  class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40"
+                  >A+</button
+                >
                 <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
               </div>
               <div class="flex">
-                <div id="line-nums" class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3" style="min-width:2.5em">1</div>
-                <textarea id="email-body" placeholder="Message" rows="3" class="flex-1 w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"></textarea>
+                <div
+                  id="line-nums"
+                  class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3"
+                  style="min-width:2.5em"
+                >
+                  1
+                </div>
+                <textarea
+                  id="email-body"
+                  placeholder="Message"
+                  rows="3"
+                  class="flex-1 w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+                ></textarea>
               </div>
               <div class="flex justify-between text-xs text-muted mt-1.5 px-1">
                 <span><span id="char-count">0</span> chars</span>
@@ -142,11 +290,21 @@ const useCases = [
             </div>
             <div id="field-phone" class="field-group space-y-2 hidden">
               <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Phone Number</label>
-              <input id="phone-number" type="tel" placeholder="+1234567890" class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <input
+                id="phone-number"
+                type="tel"
+                placeholder="+1234567890"
+                class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+              />
             </div>
             <div id="field-youtube" class="field-group space-y-2 hidden">
               <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">YouTube Video URL</label>
-              <input id="youtube-url" type="url" placeholder="https://youtube.com/watch?v=..." class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <input
+                id="youtube-url"
+                type="url"
+                placeholder="https://youtube.com/watch?v=..."
+                class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+              />
             </div>
           </div>
 
@@ -154,18 +312,55 @@ const useCases = [
           <div class="bg-surface-1 border border-surface rounded-2xl p-5 space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2">Foreground</label>
-                <input id="fg-color" type="color" value="#000000" class="w-full h-10 rounded-xl bg-zinc-900 border border-surface cursor-pointer" />
+                <label class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2"
+                  >Foreground</label
+                >
+                <input
+                  id="fg-color"
+                  type="color"
+                  value="#000000"
+                  class="w-full h-10 rounded-xl bg-zinc-900 border border-surface cursor-pointer"
+                />
               </div>
               <div>
-                <label class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2">Background</label>
-                <input id="bg-color" type="color" value="#ffffff" class="w-full h-10 rounded-xl bg-zinc-900 border border-surface cursor-pointer" />
+                <label class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2"
+                  >Background</label
+                >
+                <input
+                  id="bg-color"
+                  type="color"
+                  value="#ffffff"
+                  class="w-full h-10 rounded-xl bg-zinc-900 border border-surface cursor-pointer"
+                />
               </div>
             </div>
             <div>
               <label class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2">Size</label>
-              <select id="qr-size" class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all">
-                {[100,150,200,250,300,400,500].map(s => <option value={s}>{s}�{s}px</option>)}
+              <select
+                id="qr-size"
+                class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+              >
+                {
+                  [100, 150, 200, 250, 300, 400, 500].map((s) => (
+                    <option value={s}>
+                      {s}�{s}px
+                    </option>
+                  ))
+                }
+              </select>
+            </div>
+            <div>
+              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2"
+                >Error Correction</label
+              >
+              <select
+                id="qr-error-level"
+                class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all mt-4"
+              >
+                <option value="L">L (7%)</option>
+                <option value="M">M (15%)</option>
+                <option value="Q">Q (25%)</option>
+                <option value="H" selected>H (30%)</option>
               </select>
             </div>
           </div>
@@ -180,22 +375,54 @@ const useCases = [
             <span id="qr-size-badge" class="text-[10px] text-muted font-mono">--</span>
           </div>
           <div class="grid grid-cols-4 gap-2">
-            <button id="copy-btn" class="bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-medium py-2.5 rounded-xl transition-all active:scale-95"><span>Copy</span></button>
-            {["PNG","JPG","SVG"].map(f => (
-              <button class="download-btn bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-medium py-2.5 rounded-xl transition-all active:scale-95" data-format={f}>Download {f}</button>
-            ))}
+            <button
+              id="copy-btn"
+              class="bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-medium py-2.5 rounded-xl transition-all active:scale-95"
+              ><span>Copy</span></button
+            >
+            {
+              ['PNG', 'JPG', 'SVG'].map((f) => (
+                <button
+                  class="download-btn bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-medium py-2.5 rounded-xl transition-all active:scale-95"
+                  data-format={f}
+                >
+                  Download {f}
+                </button>
+              ))
+            }
           </div>
           <div class="flex items-center gap-2">
             <span id="usage-badge" class="text-xs text-muted"></span>
-            <button id="share-btn" class="bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-medium px-3 py-1.5 rounded-xl transition-all" title="Share">🔗</button>
-            <select id="export-format" class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5 ml-auto">
-              <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option>
+            <button
+              id="share-btn"
+              class="bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-medium px-3 py-1.5 rounded-xl transition-all"
+              title="Share">🔗</button
+            >
+            <select
+              id="export-format"
+              class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5 ml-auto"
+            >
+              <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option
+                value="html">HTML</option
+              >
             </select>
             <div class="flex gap-1">
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="purple"
+                style="background:#a855f7"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="blue"
+                style="background:#3b82f6"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="green"
+                style="background:#22c55e"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="pink"
+                style="background:#ec4899"></button>
             </div>
           </div>
         </div>
@@ -207,14 +434,16 @@ const useCases = [
           Frequently Asked
           <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
         </h2>
-        <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
+        <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
 
-      <KeyboardHints hints={[
-        { keys: "?K", label: "Open search" },
-        { keys: "Enter", label: "Generate QR" },
-        { keys: "Esc", label: "Clear / Reset" },
-      ]} />
+      <KeyboardHints
+        hints={[
+          { keys: '?K', label: 'Open search' },
+          { keys: 'Enter', label: 'Generate QR' },
+          { keys: 'Esc', label: 'Clear / Reset' },
+        ]}
+      />
 
       <ToolContentSections
         toolSlug="qr-generator"
@@ -227,19 +456,30 @@ const useCases = [
 
       <!-- ─── CTA Section ─── -->
       <section class="mt-16 text-center">
-        <div class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10">
+        <div
+          class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10"
+        >
           <h2 class="text-2xl md:text-3xl font-black tracking-tight">
             Start Creating
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> QR Codes Free</span>
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
+              QR Codes Free</span
+            >
           </h2>
           <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
-            No sign-up required. No limits. Generate unlimited custom QR codes with logos, colors, and templates completely free.
+            No sign-up required. No limits. Generate unlimited custom QR codes with logos, colors, and templates
+            completely free.
           </p>
           <div class="mt-6 flex gap-3 justify-center flex-wrap">
-            <button onclick="document.querySelector('#qr-text')?.focus()" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30">
+            <button
+              onclick="document.querySelector('#qr-text')?.focus()"
+              class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30"
+            >
               Generate Now
             </button>
-            <a href="/tools/hashtag-generator/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700">
+            <a
+              href="/tools/hashtag-generator/"
+              class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700"
+            >
               Try Hashtag Generator
             </a>
           </div>
@@ -252,36 +492,40 @@ const useCases = [
 </MainLayout>
 
 <script>
-  import QRCode from "qrcode";
+  import QRCode from 'qrcode';
 
-  const canvas = document.getElementById("qr-canvas");
-  const qrText = document.getElementById("qr-text");
-  const fgColor = document.getElementById("fg-color");
-  const bgColor = document.getElementById("bg-color");
-  const qrSize = document.getElementById("qr-size");
-  const sizeBadge = document.getElementById("qr-size-badge");
-  const downloadBtns = document.querySelectorAll(".download-btn");
-  const templateBtns = document.querySelectorAll(".template-btn");
+  const canvas = document.getElementById('qr-canvas');
+  const qrText = document.getElementById('qr-text');
+  const fgColor = document.getElementById('fg-color');
+  const bgColor = document.getElementById('bg-color');
+  const qrSize = document.getElementById('qr-size');
+  const qrErrorLevel = document.getElementById('qr-error-level');
+  const sizeBadge = document.getElementById('qr-size-badge');
+  const downloadBtns = document.querySelectorAll('.download-btn');
+  const templateBtns = document.querySelectorAll('.template-btn');
 
-  let currentData = "https://opencode.ai";
-  let currentTemplate = "Website";
+  let currentData = 'https://opencode.ai';
+  let currentTemplate = 'Website';
 
   function getQRData() {
     switch (currentTemplate) {
-      case "WiFi": {
-        const ssid = document.getElementById("wifi-ssid").value || "network";
-        const pass = document.getElementById("wifi-pass").value || "";
+      case 'WiFi': {
+        const ssid = document.getElementById('wifi-ssid').value || 'network';
+        const pass = document.getElementById('wifi-pass').value || '';
         return `WIFI:S:${ssid};T:WPA;P:${pass};;`;
       }
-      case "Email": {
-        const to = document.getElementById("email-to").value || "";
-        const sub = document.getElementById("email-subject").value || "";
-        const body = document.getElementById("email-body").value || "";
+      case 'Email': {
+        const to = document.getElementById('email-to').value || '';
+        const sub = document.getElementById('email-subject').value || '';
+        const body = document.getElementById('email-body').value || '';
         return `mailto:${to}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
       }
-      case "Phone": return `tel:${document.getElementById("phone-number").value || "+1234567890"}`;
-      case "YouTube": return document.getElementById("youtube-url").value || "https://youtube.com";
-      default: return qrText.value || "https://opencode.ai";
+      case 'Phone':
+        return `tel:${document.getElementById('phone-number').value || '+1234567890'}`;
+      case 'YouTube':
+        return document.getElementById('youtube-url').value || 'https://youtube.com';
+      default:
+        return qrText.value || 'https://opencode.ai';
     }
   }
 
@@ -293,150 +537,292 @@ const useCases = [
       await QRCode.toCanvas(canvas, currentData, {
         width: size,
         color: { dark: fgColor.value, light: bgColor.value },
-        errorCorrectionLevel: "H",
+        errorCorrectionLevel: (document.getElementById('qr-error-level') as HTMLSelectElement)?.value || 'H',
       });
     } catch (e) {
-      console.error("QR generation error:", e);
+      console.error('QR generation error:', e);
     }
   }
 
   templateBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener('click', () => {
       templateBtns.forEach((b) => {
-        b.classList.remove("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
-        b.classList.add("bg-surface-2", "border-surface", "text-tertiary");
+        b.classList.remove('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
+        b.classList.add('bg-surface-2', 'border-surface', 'text-tertiary');
       });
-      btn.classList.remove("bg-surface-2", "border-surface", "text-tertiary");
-      btn.classList.add("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
+      btn.classList.remove('bg-surface-2', 'border-surface', 'text-tertiary');
+      btn.classList.add('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
       currentTemplate = btn.dataset.template;
-      document.querySelectorAll(".field-group").forEach((g) => g.classList.add("hidden"));
+      document.querySelectorAll('.field-group').forEach((g) => g.classList.add('hidden'));
       const field = document.getElementById(`field-${currentTemplate.toLowerCase()}`);
-      if (field) field.classList.remove("hidden");
+      if (field) field.classList.remove('hidden');
       generateQR();
     });
   });
 
-  qrText.addEventListener("input", generateQR);
-  fgColor.addEventListener("input", generateQR);
-  bgColor.addEventListener("input", generateQR);
-  qrSize.addEventListener("change", generateQR);
+  qrText.addEventListener('input', generateQR);
+  fgColor.addEventListener('input', generateQR);
+  bgColor.addEventListener('input', generateQR);
+  qrSize.addEventListener('change', generateQR);
+  qrErrorLevel.addEventListener('change', generateQR);
 
-  document.querySelectorAll("#input-fields input, #input-fields textarea").forEach((el) => {
-    el.addEventListener("input", generateQR);
+  document.querySelectorAll('#input-fields input, #input-fields textarea').forEach((el) => {
+    el.addEventListener('input', generateQR);
   });
 
-  function triggerToast(message: string, variant: "success" | "error" | "info" | "warning" = "success") {
+  function triggerToast(message: string, variant: 'success' | 'error' | 'info' | 'warning' = 'success') {
     if ((window as any).__showToast) {
       (window as any).__showToast({ message, variant });
     }
   }
 
   downloadBtns.forEach((btn) => {
-    btn.addEventListener("click", async () => {
+    btn.addEventListener('click', async () => {
       const fmt = btn.dataset.format.toLowerCase();
-      const link = document.createElement("a");
-      if (fmt === "svg") {
+      const link = document.createElement('a');
+      if (fmt === 'svg') {
         try {
           const svgStr = await QRCode.toString(currentData, {
-            type: "svg",
+            type: 'svg',
             color: { dark: fgColor.value, light: bgColor.value },
-            errorCorrectionLevel: "H",
+            errorCorrectionLevel: qrErrorLevel.value || 'H',
           });
-          const blob = new Blob([svgStr], { type: "image/svg+xml" });
+          const blob = new Blob([svgStr], { type: 'image/svg+xml' });
           link.href = URL.createObjectURL(blob);
           link.download = `qrcode.${fmt}`;
-        } catch (e) { console.error(e); return; }
+        } catch (e) {
+          console.error(e);
+          return;
+        }
       } else {
-        link.href = canvas.toDataURL(`image/${fmt === "jpg" ? "jpeg" : fmt}`);
+        link.href = canvas.toDataURL(`image/${fmt === 'jpg' ? 'jpeg' : fmt}`);
         link.download = `qrcode.${fmt}`;
       }
       link.click();
-      triggerToast(`QR code downloaded as ${fmt.toUpperCase()}`, "success");
+      triggerToast(`QR code downloaded as ${fmt.toUpperCase()}`, 'success');
     });
   });
 
-  document.getElementById("copy-btn")?.addEventListener("click", () => {
-    const text = document.getElementById("output-text")?.value || document.querySelector("[id$='result']")?.textContent || "";
+  document.getElementById('copy-btn')?.addEventListener('click', () => {
+    const text =
+      document.getElementById('output-text')?.value || document.querySelector("[id$='result']")?.textContent || '';
     if (!text) return;
-    navigator.clipboard.writeText(text).catch(()=>{});
-    const btn = document.getElementById("copy-btn");
-    const span = btn.querySelector("span");
-    span.textContent = "Copied!";
-    setTimeout(() => { span.textContent = "Copy"; }, 2000);
+    navigator.clipboard.writeText(text).catch(() => {});
+    const btn = document.getElementById('copy-btn');
+    const span = btn.querySelector('span');
+    span.textContent = 'Copied!';
+    setTimeout(() => {
+      span.textContent = 'Copy';
+    }, 2000);
   });
 
-  const emailBody = document.getElementById("email-body") as HTMLTextAreaElement;
+  const emailBody = document.getElementById('email-body') as HTMLTextAreaElement;
   function updateQRStats() {
     const val = emailBody.value;
-    document.getElementById("char-count").textContent = val.length;
-    document.getElementById("word-count").textContent = val.trim() ? val.trim().split(/\s+/).length : 0;
-    document.getElementById("line-count").textContent = val ? val.split("\n").length : 0;
+    document.getElementById('char-count').textContent = val.length;
+    document.getElementById('word-count').textContent = val.trim() ? val.trim().split(/\s+/).length : 0;
+    document.getElementById('line-count').textContent = val ? val.split('\n').length : 0;
   }
-  emailBody.addEventListener("input", updateQRStats);
+  emailBody.addEventListener('input', updateQRStats);
 
   // Init
-  templateBtns[0]?.classList.add("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
+  templateBtns[0]?.classList.add('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
   generateQR();
 
   // Fullscreen toggle
-  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-    const card = document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card = document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
     if (!card) return;
-    if (document.fullscreenElement) { document.exitFullscreen(); document.getElementById("fullscreen-btn").textContent = "⛶"; }
-    else { card.requestFullscreen?.() || card.webkitRequestFullscreen?.(); document.getElementById("fullscreen-btn").textContent = "✕"; }
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      document.getElementById('fullscreen-btn').textContent = '⛶';
+    } else {
+      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
+      document.getElementById('fullscreen-btn').textContent = '✕';
+    }
   });
-  document.addEventListener("fullscreenchange", () => {
-    const btn = document.getElementById("fullscreen-btn");
-    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
 
   // Auto-save draft
-  const DRAFT_KEY = "nt_draft_qr-generator";
-  (function() {
-    const input = document.getElementById("input-text") || document.querySelector("textarea:not([readonly])");
+  const DRAFT_KEY = 'nt_draft_qr-generator';
+  (function () {
+    const input = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');
     if (!input) return;
     try {
       const saved = localStorage.getItem(DRAFT_KEY);
-      if (saved && !input.value) { input.value = saved; input.dispatchEvent(new Event("input")); }
-    } catch(e) {}
+      if (saved && !input.value) {
+        input.value = saved;
+        input.dispatchEvent(new Event('input'));
+      }
+    } catch (e) {}
     let saveTimer;
-    input.addEventListener("input", () => {
+    input.addEventListener('input', () => {
       clearTimeout(saveTimer);
-      saveTimer = setTimeout(() => { try { localStorage.setItem(DRAFT_KEY, input.value); } catch(e) {} }, 500);
+      saveTimer = setTimeout(() => {
+        try {
+          localStorage.setItem(DRAFT_KEY, input.value);
+        } catch (e) {}
+      }, 500);
     });
   })();
 
   // Feature 1: Font size
-  document.querySelector(".font-inc")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.min(24,s+2)+"px";});});
-  document.querySelector(".font-dec")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.max(10,s-2)+"px";});});
-  try{const s=localStorage.getItem("nt_fs");if(s)document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px");}catch(e){}
+  document.querySelector('.font-inc')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.min(24, s + 2) + 'px';
+    });
+  });
+  document.querySelector('.font-dec')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.max(10, s - 2) + 'px';
+    });
+  });
+  try {
+    const s = localStorage.getItem('nt_fs');
+    if (s) document.querySelectorAll('textarea').forEach((t) => (t.style.fontSize = s + 'px'));
+  } catch (e) {}
 
   // Feature 2: Keyboard shortcuts
-  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      const clearBtn = document.getElementById('clear-btn') || document.querySelector("button[id*='clear']") || document.querySelector("button[id*='reset']");
+      if (clearBtn) clearBtn.click();
+      else {
+        const inputs = document.querySelectorAll('textarea, input:not([type="radio"]):not([type="checkbox"])');
+        inputs.forEach(i => i.value = '');
+        const evt = new Event('input', { bubbles: true });
+        inputs.forEach(i => i.dispatchEvent(evt));
+      }
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
 
   // Feature 3: Usage badge
-  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["qr-generator"])b.textContent="Used "+u["qr-generator"]+"×";}catch(e){}
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['qr-generator']) b.textContent = 'Used ' + u['qr-generator'] + '×';
+  } catch (e) {}
 
   // Feature 4: Share button
-  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("output-text")||document.querySelector("[id$='result']");const t=o?.value||o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof showToast==="function"){playPing();showToast("Link copied!");}});
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('output-text') || document.querySelector("[id$='result']");
+    const t = o?.value || o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof showToast === 'function') {
+      playPing();
+      showToast('Link copied!');
+    }
+  });
 
   // Feature 5: Reading time
-  const rt=document.getElementById("email-body");if(rt){rt.addEventListener("input",()=>{const w=rt.value?rt.value.trim().split(/\s+/).length:0;const e=document.getElementById("reading-time");if(e)e.textContent=Math.max(1,Math.round(w/200))+"m read · "+Math.max(1,Math.round(w/150))+"m speak";});rt.dispatchEvent(new Event("input"));}
+  const rt = document.getElementById('email-body');
+  if (rt) {
+    rt.addEventListener('input', () => {
+      const w = rt.value ? rt.value.trim().split(/\s+/).length : 0;
+      const e = document.getElementById('reading-time');
+      if (e)
+        e.textContent = Math.max(1, Math.round(w / 200)) + 'm read · ' + Math.max(1, Math.round(w / 150)) + 'm speak';
+    });
+    rt.dispatchEvent(new Event('input'));
+  }
 
   // Feature 6: Line numbers
-  (function(){const li=document.getElementById("email-body");if(li){const ul=()=>{const n=document.getElementById("line-nums");if(n)n.textContent=Array.from({length:li.value.split("\n").length},(_,i)=>i+1).join("\n");};li.addEventListener("input",ul);li.addEventListener("scroll",()=>{const n=document.getElementById("line-nums");if(n)n.scrollTop=li.scrollTop;});ul();}})();
+  (function () {
+    const li = document.getElementById('email-body');
+    if (li) {
+      const ul = () => {
+        const n = document.getElementById('line-nums');
+        if (n) n.textContent = Array.from({ length: li.value.split('\n').length }, (_, i) => i + 1).join('\n');
+      };
+      li.addEventListener('input', ul);
+      li.addEventListener('scroll', () => {
+        const n = document.getElementById('line-nums');
+        if (n) n.scrollTop = li.scrollTop;
+      });
+      ul();
+    }
+  })();
 
   // Feature 7: Sound effects
-  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
 
   // Feature 8: Export format
-  document.getElementById("export-format")?.addEventListener("change",function(){});
+  document.getElementById('export-format')?.addEventListener('change', function () {});
 
   // Feature 9: Letter frequency
-  (function(){const lf=document.getElementById("email-body");if(lf){lf.addEventListener("input",()=>{const t=lf.value.toLowerCase().replace(/[^a-z]/g,"");if(!t){document.getElementById("letter-freq")?.classList.add("hidden");return;}const f={};for(const c of t)f[c]=(f[c]||0)+1;const s=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,8);const m=s[0]?s[0][1]:1;const el=document.getElementById("letter-freq");el.classList.remove("hidden");el.innerHTML=s.map(([c,n])=>`<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n/m)*80+10}%"></div><span class="text-muted">${n}</span></div>`).join("");});}})();
+  (function () {
+    const lf = document.getElementById('email-body');
+    if (lf) {
+      lf.addEventListener('input', () => {
+        const t = lf.value.toLowerCase().replace(/[^a-z]/g, '');
+        if (!t) {
+          document.getElementById('letter-freq')?.classList.add('hidden');
+          return;
+        }
+        const f = {};
+        for (const c of t) f[c] = (f[c] || 0) + 1;
+        const s = Object.entries(f)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 8);
+        const m = s[0] ? s[0][1] : 1;
+        const el = document.getElementById('letter-freq');
+        el.classList.remove('hidden');
+        el.innerHTML = s
+          .map(
+            ([c, n]) =>
+              `<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n / m) * 80 + 10}%"></div><span class="text-muted">${n}</span></div>`,
+          )
+          .join('');
+      });
+    }
+  })();
 
   // Feature 10: Theme picker
-  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500");});try{localStorage.setItem("nt_theme",c);}catch(e){}});});
-  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
+  });
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>
-

@@ -1,0 +1,354 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'How do I specify which pages to extract?',
+    answer:
+      'You can use a comma-separated list of page numbers and ranges. For example: "1, 3, 5-8" will extract pages 1, 3, 5, 6, 7, and 8.',
+  },
+  {
+    question: 'Is this secure?',
+    answer:
+      'Yes, all processing is done locally in your browser using JavaScript. No files are uploaded to any server.',
+  },
+];
+const schema = {
+  name: 'PDF Splitter',
+  applicationCategory: 'Utility Tools',
+  description: 'Extract specific pages from a PDF document to create a new PDF. Secure and offline.',
+  featureList: [
+    'Extract specific pages',
+    'Support for page ranges',
+    '100% offline & client-side',
+    'Zero file uploads',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '✂️',
+    title: 'Precision Extraction',
+    desc: 'Extract exactly the pages you need by entering specific page numbers or continuous ranges.',
+  },
+  {
+    icon: '🔒',
+    title: '100% Client-Side',
+    desc: 'Your PDF is processed completely offline inside your browser. No data ever touches our servers.',
+  },
+  {
+    icon: '⚡',
+    title: 'Instant Processing',
+    desc: 'Generate your new, smaller PDF document in milliseconds without waiting for slow network uploads.',
+  },
+  {
+    icon: '🛡️',
+    title: 'Maintains Quality',
+    desc: 'Extracts the exact binary pages from your original file, preserving 100% of the original text and image quality.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Upload PDF',
+    desc: 'Drag and drop your PDF into the upload box, or click to select a file from your computer.',
+  },
+  {
+    num: '2',
+    title: 'Enter Pages',
+    desc: 'Type the pages you want to keep. Use commas for single pages (1, 3, 5) and hyphens for ranges (8-12).',
+  },
+  {
+    num: '3',
+    title: 'Split File',
+    desc: 'Click the "Split PDF" button. The tool will instantly create a new document containing only your selected pages.',
+  },
+  {
+    num: '4',
+    title: 'Download',
+    desc: 'Your new, trimmed PDF will automatically download directly to your device.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '⚖️',
+    title: 'Legal Professionals',
+    desc: 'Extract specific clauses or pages from massive legal contracts to share with clients.',
+  },
+  {
+    icon: '🎓',
+    title: 'Students & Academics',
+    desc: 'Pull out only the relevant textbook chapters or research paper sections you actually need.',
+  },
+  {
+    icon: '🧾',
+    title: 'Finance & Accounting',
+    desc: 'Separate individual monthly invoices from a massive yearly financial report PDF.',
+  },
+];
+---
+
+<MainLayout
+  title="Split PDF Files Online - Secure & Free PDF Splitter"
+  description="Extract specific pages from your PDF documents instantly. 100% secure, offline, and free online PDF splitter. No uploads required."
+  keywords="split pdf, extract pdf pages, pdf splitter, cut pdf, secure pdf split"
+  toolSchema={schema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Split PDF Files',
+    description: 'Step-by-step guide to extract PDF pages.',
+    steps: [],
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'PDF Splitter', url: '/tools/pdf-splitter/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="PDF"
+        gradient="Splitter"
+        desc="Extract specific pages from your PDF. 100% secure — processing happens locally on your device."
+        badge="✦ Secure Tool"
+        slug="pdf-splitter"
+      />
+      <ShareBar />
+      <div class="max-w-3xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 md:p-10 relative text-center">
+           <input type="file" id="file-input" accept="application/pdf" class="hidden" />
+           <div id="drop-zone" class="border-2 border-dashed border-surface-2 hover:border-red-500/50 rounded-2xl p-10 cursor-pointer transition-all mb-8">
+              <div class="text-4xl mb-4">✂️</div>
+              <h3 class="text-xl font-semibold text-white mb-2">Upload a PDF file</h3>
+              <p class="text-sm text-muted">Drag & Drop or click to browse</p>
+           </div>
+           
+           <div id="file-info" class="space-y-4 text-left mb-8 hidden">
+             <div class="flex items-center justify-between p-4 bg-surface border border-surface-2 rounded-xl">
+               <div class="flex items-center gap-3 overflow-hidden">
+                  <span class="text-2xl">📄</span>
+                  <div>
+                    <p id="file-name" class="text-sm text-white font-medium truncate"></p>
+                    <p id="page-count" class="text-xs text-muted"></p>
+                  </div>
+               </div>
+               <button id="change-file-btn" class="text-xs text-red-400 hover:text-red-300">Change</button>
+             </div>
+             
+             <div>
+               <label class="text-xs font-semibold text-muted uppercase tracking-wider mb-2 block">Pages to Extract</label>
+               <input
+                 id="page-ranges"
+                 type="text"
+                 class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-red-500/50 focus:outline-none transition-all"
+                 placeholder="e.g. 1-3, 5, 8-10"
+               />
+               <p class="text-[11px] text-muted mt-1.5">Use commas to separate pages or ranges.</p>
+             </div>
+           </div>
+
+           <button
+             id="split-btn"
+             class="w-full md:w-auto px-8 bg-red-600 hover:bg-red-500 text-white text-sm font-semibold py-3 rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hidden"
+           >
+             Split PDF
+           </button>
+           <p id="status-text" class="text-sm text-muted mt-4 hidden"></p>
+        </div>
+      </div>
+      <ToolContentSections
+        toolSlug="pdf-splitter"
+        toolName="PDF Splitter"
+        category="Utility Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="pdf-splitter" />
+    </div>
+  </main>
+</MainLayout>
+
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" is:inline></script>
+<script>
+  const dropZone = document.getElementById('drop-zone');
+  const fileInput = document.getElementById('file-input') as HTMLInputElement;
+  const fileInfo = document.getElementById('file-info');
+  const fileName = document.getElementById('file-name');
+  const pageCountText = document.getElementById('page-count');
+  const changeFileBtn = document.getElementById('change-file-btn');
+  const pageRangesInput = document.getElementById('page-ranges') as HTMLInputElement;
+  const splitBtn = document.getElementById('split-btn') as HTMLButtonElement;
+  const statusText = document.getElementById('status-text');
+
+  let selectedFile: File | null = null;
+  let totalPages = 0;
+  let pdfDoc: any = null;
+
+  dropZone?.addEventListener('click', () => fileInput.click());
+  changeFileBtn?.addEventListener('click', () => {
+    selectedFile = null;
+    fileInput.value = '';
+    dropZone?.classList.remove('hidden');
+    fileInfo?.classList.add('hidden');
+    splitBtn?.classList.add('hidden');
+  });
+
+  dropZone?.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('border-red-500/50', 'bg-surface-2');
+  });
+
+  dropZone?.addEventListener('dragleave', () => {
+    dropZone.classList.remove('border-red-500/50', 'bg-surface-2');
+  });
+
+  dropZone?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('border-red-500/50', 'bg-surface-2');
+    if (e.dataTransfer?.files && e.dataTransfer.files.length > 0) {
+      handleFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  fileInput?.addEventListener('change', (e) => {
+    if (fileInput.files && fileInput.files.length > 0) {
+      handleFile(fileInput.files[0]);
+    }
+  });
+
+  async function handleFile(file: File) {
+    if (file.type !== 'application/pdf') return;
+    
+    try {
+      selectedFile = file;
+      dropZone?.classList.add('hidden');
+      fileInfo?.classList.remove('hidden');
+      splitBtn?.classList.remove('hidden');
+      if (fileName) fileName.textContent = file.name;
+      
+      if (statusText) {
+        statusText.textContent = 'Analyzing PDF...';
+        statusText.classList.remove('hidden');
+        statusText.classList.replace('text-red-400', 'text-muted');
+      }
+      splitBtn.disabled = true;
+
+      const arrayBuffer = await file.arrayBuffer();
+      // @ts-ignore
+      pdfDoc = await window.PDFLib.PDFDocument.load(arrayBuffer);
+      totalPages = pdfDoc.getPageCount();
+      
+      if (pageCountText) pageCountText.textContent = `${totalPages} pages total`;
+      pageRangesInput.placeholder = `e.g. 1-${Math.min(3, totalPages)}`;
+      
+      if (statusText) statusText.classList.add('hidden');
+      splitBtn.disabled = false;
+      
+    } catch (e: any) {
+      if (statusText) {
+        statusText.textContent = 'Error reading PDF: ' + e.message;
+        statusText.classList.replace('text-muted', 'text-red-400');
+      }
+    }
+  }
+
+  function parseRanges(rangesStr: string, maxPages: number): number[] {
+    const pages = new Set<number>();
+    const parts = rangesStr.split(',');
+    
+    for (const part of parts) {
+      const p = part.trim();
+      if (!p) continue;
+      
+      if (p.includes('-')) {
+        const [start, end] = p.split('-').map(n => parseInt(n.trim()));
+        if (!isNaN(start) && !isNaN(end) && start <= end) {
+          for (let i = start; i <= end; i++) {
+             if (i >= 1 && i <= maxPages) pages.add(i - 1); // zero-indexed
+          }
+        }
+      } else {
+        const num = parseInt(p);
+        if (!isNaN(num) && num >= 1 && num <= maxPages) {
+          pages.add(num - 1);
+        }
+      }
+    }
+    
+    return Array.from(pages).sort((a, b) => a - b);
+  }
+
+  splitBtn?.addEventListener('click', async () => {
+    if (!pdfDoc || !selectedFile) return;
+    
+    const ranges = pageRangesInput.value.trim();
+    if (!ranges) {
+      if ((window as any).__showToast) (window as any).__showToast({ message: 'Please enter page ranges to extract', variant: 'warning' });
+      return;
+    }
+
+    const indicesToExtract = parseRanges(ranges, totalPages);
+    if (indicesToExtract.length === 0) {
+      if ((window as any).__showToast) (window as any).__showToast({ message: 'Invalid page ranges', variant: 'error' });
+      return;
+    }
+
+    try {
+      splitBtn.disabled = true;
+      splitBtn.textContent = 'Processing...';
+      if (statusText) {
+        statusText.textContent = `Extracting ${indicesToExtract.length} pages...`;
+        statusText.classList.remove('hidden');
+        statusText.classList.replace('text-red-400', 'text-muted');
+      }
+
+      // @ts-ignore
+      const { PDFDocument } = window.PDFLib;
+      const newPdf = await PDFDocument.create();
+      
+      const copiedPages = await newPdf.copyPages(pdfDoc, indicesToExtract);
+      copiedPages.forEach((page: any) => newPdf.addPage(page));
+
+      const pdfBytes = await newPdf.save();
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `extracted_${Date.now()}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      if (statusText) {
+        statusText.textContent = 'Split successfully!';
+        statusText.classList.replace('text-muted', 'text-emerald-400');
+      }
+      
+      if ((window as any).__showToast) {
+        (window as any).__showToast({ message: 'PDF split successfully!', variant: 'success' });
+      }
+
+    } catch (err: any) {
+      console.error(err);
+      if (statusText) {
+        statusText.textContent = 'Error splitting PDF: ' + err.message;
+        statusText.classList.replace('text-muted', 'text-red-400');
+      }
+    } finally {
+      splitBtn.disabled = false;
+      splitBtn.textContent = 'Split PDF';
+    }
+  });
+</script>

@@ -1,0 +1,125 @@
+---
+// HeroJarvis.astro
+// The ultimate ultra-advanced 3D hero section
+---
+
+<section
+  id="hero-jarvis"
+  class="relative w-full h-[85vh] min-h-[600px] overflow-hidden bg-transparent preserve-3d border-b border-white/5"
+>
+  <!-- The background canvas and ambient orbs are now handled globally in MainLayout.astro -->
+
+  <!-- Film Grain Overlay -->
+  <div class="absolute inset-0 z-10 opacity-20 mix-blend-overlay pointer-events-none bg-[url('/noise.png')]"></div>
+
+  <!-- Ambient Orbs -->
+  <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+    <div
+      class="absolute top-[20%] left-[20%] w-[50vw] h-[50vw] bg-amber-600/10 blur-[120px] rounded-full mix-blend-screen transform -translate-x-1/2 -translate-y-1/2"
+    >
+    </div>
+    <div
+      class="absolute bottom-[20%] right-[20%] w-[40vw] h-[40vw] bg-violet-600/10 blur-[120px] rounded-full mix-blend-screen transform translate-x-1/2 translate-y-1/2"
+    >
+    </div>
+  </div>
+
+  <!-- Content Layer -->
+  <div class="relative z-20 h-full flex flex-col items-center justify-center text-center px-4 max-w-5xl mx-auto pt-16">
+    <!-- Status Badge -->
+    <div
+      class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/5 bg-white/5 backdrop-blur-md mb-8 shadow-2xl"
+    >
+      <span id="ai-status-indicator" class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+      <span id="ai-status-text" class="text-[10px] font-mono font-bold text-zinc-400 tracking-widest uppercase"
+        >Initializing Neural Core</span
+      >
+    </div>
+
+    <!-- Cinematic Headline -->
+    <h1
+      class="text-6xl sm:text-8xl lg:text-[7rem] font-black tracking-tighter leading-none text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-200 to-zinc-600 mb-6 drop-shadow-2xl"
+    >
+      Think it.<br />
+      <span
+        class="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-peach-400 to-violet-400 animate-gradient-x"
+        >Build it.</span
+      >
+    </h1>
+
+    <p class="text-zinc-400 text-lg sm:text-xl max-w-2xl mx-auto font-medium mb-12">
+      The world's most advanced suite of client-side utilities. Zero latency. Zero servers. Absolute privacy.
+    </p>
+
+    <!-- Global Palette Trigger Button (Optional for hero, since they can use Navbar or Cmd+K) -->
+    <div class="flex gap-4">
+      <button
+        onclick="window.openGlobalSearch && window.openGlobalSearch()"
+        class="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full font-bold text-white tracking-widest backdrop-blur-md transition-all shadow-xl hover:shadow-2xl flex items-center gap-3 group"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="text-zinc-400 group-hover:text-amber-400 transition-colors"
+          ><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg
+        >
+        Search Tools
+      </button>
+      <button
+        onclick="window.startJarvisVoice && window.startJarvisVoice()"
+        class="px-8 py-4 bg-[#050505] hover:bg-[#0a0a0c] border border-amber-500/30 rounded-full font-bold text-amber-400 tracking-widest transition-all shadow-[0_0_15px_rgba(245,158,11,0.2)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] flex items-center gap-3"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"
+          ></path><line x1="12" x2="12" y1="19" y2="22"></line></svg
+        >
+        Jarvis Voice
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 5s ease infinite;
+  }
+  @keyframes gradient-x {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+</style>
+
+<script>
+  // Neural Core Initialization effect
+  const statusIndicator = document.getElementById('ai-status-indicator');
+  const statusText = document.getElementById('ai-status-text');
+  if (statusIndicator && statusText) {
+    setTimeout(() => {
+      statusText.textContent = 'Neural Core Active';
+      statusIndicator.classList.remove('bg-amber-500', 'animate-pulse');
+      statusIndicator.classList.add('bg-emerald-400', 'shadow-[0_0_10px_rgba(52,211,153,0.8)]');
+    }, 1500);
+  }
+</script>

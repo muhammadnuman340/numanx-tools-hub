@@ -1,0 +1,34 @@
+# ====================================================================
+# Antigravity Context Filtration Mask - Token & Quota Protection
+# ====================================================================
+
+# Rule 1: Block Heavy External Trees (Immediate Token Savers)
+node_modules/
+.pnpm-store/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Rule 2: Block Build Targets & Distribution Assets
+dist/
+build/
+out/
+.cloudflare/
+
+# Rule 3: Purge System Background Pollution
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+
+# Rule 4: Shield Secrets & Authentication Keys
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+.mcp_oauth_tokens.json
+
+# Rule 5: Ignore IDE Internal States
+.git/
+.antigravity/cache/

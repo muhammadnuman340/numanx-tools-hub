@@ -71,10 +71,7 @@ async function generateAuthorAvatar() {
   if (fs.existsSync(avatarPngPath)) {
     console.log('Converting existing author-numan.png to author-numan.webp...');
     try {
-      await sharp(avatarPngPath)
-        .resize(96, 96)
-        .webp({ quality: 90 })
-        .toFile(avatarWebpPath);
+      await sharp(avatarPngPath).resize(96, 96).webp({ quality: 90 }).toFile(avatarWebpPath);
       console.log('✓ Converted author-numan.png to 96x96 WebP.');
     } catch (err) {
       console.error('Failed to convert existing avatar. Falling back to SVG-generated avatar...', err);
@@ -211,7 +208,7 @@ const blogPosts = [
           <text x="60" y="85" font-family="system-ui" font-size="44" font-weight="900" fill="#ffffff" text-anchor="middle">🎂</text>
         </g>
       </g>
-    `
+    `,
   },
   {
     slug: 'best-ai-tools-for-students',
@@ -237,7 +234,7 @@ const blogPosts = [
           <text x="70" y="100" font-family="system-ui" font-size="28" text-anchor="middle">🤖</text>
         </g>
       </g>
-    `
+    `,
   },
   {
     slug: 'best-free-image-tools-2026',
@@ -262,7 +259,7 @@ const blogPosts = [
           <text x="110" y="110" font-family="system-ui" font-size="32">🎨</text>
         </g>
       </g>
-    `
+    `,
   },
   {
     slug: 'best-youtube-tools-for-creators',
@@ -281,7 +278,7 @@ const blogPosts = [
           <text x="115" y="45" font-family="system-ui" font-size="32">🎥</text>
         </g>
       </g>
-    `
+    `,
   },
   {
     slug: 'complete-guide-password-security',
@@ -304,7 +301,7 @@ const blogPosts = [
           <text x="90" y="113" font-family="system-ui" font-size="18" fill="#ffffff" font-weight="bold" text-anchor="middle">✓</text>
         </g>
       </g>
-    `
+    `,
   },
   {
     slug: 'cricket-run-rate-beginners-guide',
@@ -335,7 +332,7 @@ const blogPosts = [
           </g>
         </g>
       </g>
-    `
+    `,
   },
   {
     slug: 'hashtag-strategy-viral-growth',
@@ -355,7 +352,7 @@ const blogPosts = [
           <text x="95" y="105" font-family="system-ui" font-size="28">📈</text>
         </g>
       </g>
-    `
+    `,
   },
   {
     slug: 'how-to-compress-images',
@@ -382,7 +379,7 @@ const blogPosts = [
           <text x="70" y="130" font-family="system-ui" font-size="16" font-weight="bold" fill="#10b981" text-anchor="middle">→ 250KB</text>
         </g>
       </g>
-    `
+    `,
   },
   {
     slug: 'how-to-optimize-images-for-web',
@@ -409,7 +406,7 @@ const blogPosts = [
           <text x="115" y="120" font-family="system-ui" font-size="36">⚡</text>
         </g>
       </g>
-    `
+    `,
   },
   {
     slug: 'how-to-resize-images-social-media',
@@ -435,7 +432,7 @@ const blogPosts = [
           <text x="110" y="25" font-family="system-ui" font-size="24">🐦</text>
         </g>
       </g>
-    `
+    `,
   },
   {
     slug: 'image-compression-without-losing-quality',
@@ -462,7 +459,7 @@ const blogPosts = [
           <text x="105" y="84" font-family="system-ui" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle">KB</text>
         </g>
       </g>
-    `
+    `,
   },
   {
     slug: 'qr-codes-marketing-best-practices',
@@ -491,7 +488,7 @@ const blogPosts = [
           <text x="110" y="120" font-family="system-ui" font-size="36">📱</text>
         </g>
       </g>
-    `
+    `,
   },
   {
     slug: 'top-10-ai-tools-content-creators-2026',
@@ -525,7 +522,7 @@ const blogPosts = [
           <text x="75" y="93" font-family="system-ui" font-size="22" text-anchor="middle">🧠</text>
         </g>
       </g>
-    `
+    `,
   },
   {
     slug: 'webp-vs-png-vs-jpg-which-format-wins',
@@ -552,8 +549,8 @@ const blogPosts = [
           <text x="130" y="140" font-family="system-ui" font-size="11" font-weight="bold" fill="#f59e0b" text-anchor="middle">45KB</text>
         </g>
       </g>
-    `
-  }
+    `,
+  },
 ];
 
 async function generateBlogCovers() {
@@ -561,7 +558,7 @@ async function generateBlogCovers() {
     const titleLines = [];
     const words = post.title.split(' ');
     let currentLine = '';
-    
+
     // Split title into 2-3 readable lines
     for (const word of words) {
       if ((currentLine + ' ' + word).length > 22) {
@@ -576,10 +573,12 @@ async function generateBlogCovers() {
     }
 
     // Prepare SVG text elements for lines
-    const textElements = titleLines.map((line, idx) => {
-      const yOffset = 250 + (idx * 65) - ((titleLines.length - 1) * 30);
-      return `<text x="80" y="${yOffset}" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="900" fill="#ffffff" letter-spacing="-1.5">${line}</text>`;
-    }).join('\n');
+    const textElements = titleLines
+      .map((line, idx) => {
+        const yOffset = 250 + idx * 65 - (titleLines.length - 1) * 30;
+        return `<text x="80" y="${yOffset}" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="900" fill="#ffffff" letter-spacing="-1.5">${line}</text>`;
+      })
+      .join('\n');
 
     const svg = `
       <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">

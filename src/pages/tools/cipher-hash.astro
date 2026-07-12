@@ -1,0 +1,495 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'Is my private file or code text uploaded?',
+    answer:
+      'Never. NumanX functions entirely client-side. When you drag or select a file, the browser reads its contents locally as a binary ArrayBuffer and performs the mathematical digest using the CPU. No parts of your files are ever sent to an external server.',
+  },
+  {
+    question: 'Why should I verify a SHA-256 checksum?',
+    answer:
+      'Checksum hashes act as mathematical signatures for files. If even a single byte of a file changes during transit (or due to malicious tempering), the SHA-256 hash will change completely, helping to audit file integrity securely.',
+  },
+  {
+    question: 'What is the file size limit for hashing?',
+    answer:
+      'Since calculations occur inside browser RAM, we recommend keeping file sizes under 1GB to prevent browser tab out-of-memory states, though modern computers can typically handle larger streams easily.',
+  },
+];
+
+const chSchema = {
+  name: 'File & Text Checksum Hash Generator',
+  applicationCategory: 'Utilities',
+  description:
+    'Calculate secure SHA-1, SHA-256, and SHA-512 checksum indicators for passages of text or raw file attachments local-side.',
+  featureList: [
+    'Drag and Drop Binary Parser',
+    'Multi-hash Outputs (SHA-1/256/512)',
+    'Interactive Text inputs',
+    'Secure Local Sandbox WebCrypto APIS',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '🔒',
+    title: '100% Secure',
+    desc: 'Hashes are generated purely in your browser using WebCrypto APIs. Your files never leave your device.',
+  },
+  {
+    icon: '⚡',
+    title: 'Instant Calculation',
+    desc: 'Get immediate SHA-1, SHA-256, and SHA-512 checksums without waiting for server uploads.',
+  },
+  {
+    icon: '📁',
+    title: 'File & Text Support',
+    desc: 'Easily calculate checksums for raw text strings or binary file attachments of any type.',
+  },
+  {
+    icon: '✅',
+    title: 'Data Integrity',
+    desc: 'Verify file authenticity to ensure no data was corrupted or tampered with during transfer.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Select Input Mode',
+    desc: 'Choose whether you want to hash a "Text String" or a "File Checksum".',
+  },
+  {
+    num: '2',
+    title: 'Provide Input',
+    desc: 'Type or paste your secret text, or drag and drop a file into the upload zone.',
+  },
+  {
+    num: '3',
+    title: 'View Checksums',
+    desc: 'The tool will automatically calculate and display the SHA-1, SHA-256, and SHA-512 hashes.',
+  },
+  {
+    num: '4',
+    title: 'Copy Output',
+    desc: 'Click "Copy" next to the desired hash format to instantly copy it to your clipboard.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '🔐',
+    title: 'File Verification',
+    desc: 'Verify the integrity of a downloaded software installer by matching its SHA-256 hash.',
+  },
+  {
+    icon: '🛡️',
+    title: 'Password Hashing',
+    desc: 'Generate secure hashes of passwords or secrets for configuration files or databases.',
+  },
+  {
+    icon: '💼',
+    title: 'Digital Forensics',
+    desc: 'Create unique cryptographic fingerprints of evidence files to prove they haven\'t been altered.',
+  },
+];
+---
+
+<MainLayout
+  title="File & Text Checksum Hash Generator - Web Crypto Ciphers"
+  description="Generate SHA-1, SHA-256, and SHA-512 security ciphers of messages or files locally. Zero external servers, 100% secure in-browser verification."
+  keywords="checksum generator, file hash tool, sha256 checksum, sha512 calculator, file security audit, client side hash generator"
+  toolSchema={chSchema}
+  faq={faqItems}
+  howto={{
+    name: 'How to generate checksum hashes',
+    description: 'Guide to generate SHA ciphers of texts or binary files.',
+    steps: [
+      {
+        name: 'Choose Source Mode',
+        text: "Toggle the tab headers between 'Normal Text String' or 'Local File Attachment'.",
+      },
+      {
+        name: 'Attach your File or Text',
+        text: 'Input standard string or drop any local document into the dashed security frame.',
+      },
+      { name: 'Retrieve Hash Values', text: 'Instantly copy the generated SHA-1, SHA-256, or SHA-512 output lines.' },
+    ],
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Checksum Hash Generator', url: '/tools/cipher-hash/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="File & Text"
+        gradient="Hash Checksum"
+        desc="Audit fingerprints of secret code text strings or binary files locally in real time. Absolute privacy utilizing native WebCrypto layers."
+        badge="✦ Hidden Utility"
+        slug="cipher-hash"
+      />
+      <ShareBar />
+
+      <div class="max-w-2xl mx-auto mt-10">
+        <div class="glass-card rounded-[2rem] p-6 relative">
+          <!-- Mode Toggles: Text vs File -->
+          <div class="flex border-b border-surface mb-6">
+            <button
+              id="mode-text-btn"
+              class="flex-1 pb-3 text-center text-sm font-semibold text-rose-400 border-b-2 border-rose-500 transition-colors"
+            >
+              Text String
+            </button>
+            <button
+              id="mode-file-btn"
+              class="flex-1 pb-3 text-center text-sm font-semibold text-tertiary hover:text-white border-b-2 border-transparent transition-colors"
+            >
+              File Checksum
+            </button>
+          </div>
+
+          <!-- Section A: Text Input (Default) -->
+          <div id="text-input-field" class="space-y-4">
+            <label class="block text-xs font-semibold text-tertiary">Type or Paste Secret Strings</label>
+            <textarea
+              id="raw-hash-text"
+              class="w-full h-32 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-rose-500/50 focus:outline-none transition-all resize-none font-mono"
+              placeholder="Enter some secret text to compute SHA-256..."></textarea>
+
+            <div class="flex justify-end">
+              <button
+                id="clear-text-btn"
+                class="text-xs text-muted hover:text-white transition-colors bg-surface-2 border border-surface px-3 py-1.5 rounded-lg"
+              >
+                Clear Text
+              </button>
+            </div>
+          </div>
+
+          <!-- Section B: File Upload (Hidden by default) -->
+          <div id="file-input-field" class="space-y-4 hidden">
+            <label class="block text-xs font-semibold text-tertiary">Drop any Local File</label>
+
+            <!-- File Dropzone -->
+            <label
+              id="drag-dropzone"
+              class="flex flex-col items-center justify-center border-2 border-dashed border-zinc-800 hover:border-rose-500/40 bg-surface-1/40 rounded-2xl h-44 cursor-pointer transition-all p-6 group"
+            >
+              <input type="file" id="file-uploader" class="hidden" />
+
+              <div
+                class="w-12 h-12 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 group-hover:scale-110 group-hover:bg-purple-600/20 transition-all mb-3"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                </svg>
+              </div>
+              <p id="dropzone-header-text" class="text-sm font-semibold text-white text-center">
+                Click to browse or drag file
+              </p>
+              <p id="dropzone-sub-text" class="text-xs text-muted mt-1 text-center">
+                Recommended <span class="text-rose-400 font-mono">under 1GB</span> for browser safety. 100% processed locally.
+              </p>
+            </label>
+
+            <!-- Loading file state -->
+            <div
+              id="file-processing-state"
+              class="hidden bg-surface-1 border border-surface-2 rounded-xl p-4 flex items-center justify-between"
+            >
+              <div class="flex items-center gap-3">
+                <span class="relative flex h-3 w-3">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"
+                  ></span>
+                  <span class="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
+                </span>
+                <span id="active-filename" class="text-xs font-mono font-bold text-white max-w-xs truncate"
+                  >file.zip</span
+                >
+              </div>
+              <span id="active-filesize" class="text-xs text-muted font-mono">0.0 MB</span>
+            </div>
+          </div>
+
+          <!-- Output Arrays (Always Visible and Updating Live) -->
+          <div class="mt-8 pt-8 border-t border-surface space-y-4">
+            <h4 class="text-xs font-bold text-rose-400 uppercase tracking-widest mb-1">
+              Generated Cryptographic Hashes
+            </h4>
+
+            <div class="space-y-3">
+              <div class="bg-surface-1 border border-surface-2 rounded-xl p-3 relative">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] uppercase font-mono text-muted">SHA-256 Cipher (Most Secure)</span>
+                  <button class="text-[10px] text-purple-400 hover:text-white" data-copy-target="out-sha256"
+                    >Copy</button
+                  >
+                </div>
+                <div id="out-sha256" class="text-xs font-mono text-white mt-1 break-all select-all">
+                  e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+                </div>
+              </div>
+
+              <div class="bg-surface-1 border border-surface-2 rounded-xl p-3 relative">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] uppercase font-mono text-muted">SHA-512 Cipher</span>
+                  <button class="text-[10px] text-purple-400 hover:text-white" data-copy-target="out-sha512"
+                    >Copy</button
+                  >
+                </div>
+                <div id="out-sha512" class="text-xs font-mono text-white mt-1 break-all select-all">
+                  cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e
+                </div>
+              </div>
+
+              <div class="bg-surface-1 border border-surface-2 rounded-xl p-3 relative bg-surface-1/50">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] uppercase font-mono text-muted">SHA-1 Cipher (Legacy)</span>
+                  <button class="text-[10px] text-purple-400 hover:text-white" data-copy-target="out-sha1">Copy</button>
+                </div>
+                <div id="out-sha1" class="text-xs font-mono text-rose-300 mt-1 break-all select-all">
+                  adc83b19e793491b1c6ea0fd8b46cd9f32e592fc
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ToolContentSections
+        toolSlug="cipher-hash"
+        toolName="Checksum Hash Generator"
+        category="Utilities"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="cipher-hash" />
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 950;
+      g.gain.setValueAtTime(0.04, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.1);
+      o.start();
+      o.stop(a.currentTime + 0.1);
+    } catch (e) {}
+  }
+
+  // --- State toggles ---
+  const modeTextBtn = document.getElementById('mode-text-btn');
+  const modeFileBtn = document.getElementById('mode-file-btn');
+  const textField = document.getElementById('text-input-field');
+  const fileField = document.getElementById('file-input-field');
+
+  let activeMode: 'text' | 'file' = 'text';
+
+  modeTextBtn?.addEventListener('click', () => {
+    activeMode = 'text';
+    modeTextBtn.className =
+      'flex-1 pb-3 text-center text-sm font-semibold text-rose-400 border-b-2 border-rose-500 transition-colors';
+    modeFileBtn!.className =
+      'flex-1 pb-3 text-center text-sm font-semibold text-tertiary hover:text-white border-b-2 border-transparent transition-colors';
+    textField?.classList.remove('hidden');
+    fileField?.classList.add('hidden');
+    playPing();
+    recalculateText();
+  });
+
+  modeFileBtn?.addEventListener('click', () => {
+    activeMode = 'file';
+    modeFileBtn.className =
+      'flex-1 pb-3 text-center text-sm font-semibold text-rose-400 border-b-2 border-rose-500 transition-colors';
+    modeTextBtn!.className =
+      'flex-1 pb-3 text-center text-sm font-semibold text-tertiary hover:text-white border-b-2 border-transparent transition-colors';
+    fileField?.classList.remove('hidden');
+    textField?.classList.add('hidden');
+    playPing();
+    clearFileLayout();
+  });
+
+  // --- Hash Calculators ---
+  const rawText = document.getElementById('raw-hash-text') as HTMLTextAreaElement;
+  const outSha1 = document.getElementById('out-sha1');
+  const outSha256 = document.getElementById('out-sha256');
+  const outSha512 = document.getElementById('out-sha512');
+
+  async function calculateHashOfBuffer(buffer: ArrayBuffer, algo: 'SHA-1' | 'SHA-256' | 'SHA-512') {
+    const hashBuffer = await crypto.subtle.digest(algo, buffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  async function recalculateText() {
+    const textVal = rawText.value;
+    const encoder = new TextEncoder();
+    const data = encoder.encode(textVal || '');
+
+    const sha1Hex = await calculateHashOfBuffer(data.buffer, 'SHA-1');
+    const sha256Hex = await calculateHashOfBuffer(data.buffer, 'SHA-256');
+    const sha512Hex = await calculateHashOfBuffer(data.buffer, 'SHA-512');
+
+    if (outSha1) outSha1.textContent = sha1Hex;
+    if (outSha256) outSha256.textContent = sha256Hex;
+    if (outSha512) outSha512.textContent = sha512Hex;
+  }
+
+  rawText?.addEventListener('input', recalculateText);
+
+  document.getElementById('clear-text-btn')?.addEventListener('click', () => {
+    rawText.value = '';
+    recalculateText();
+    playPing();
+  });
+
+  // --- File processing logic ---
+  const fileUploader = document.getElementById('file-uploader') as HTMLInputElement;
+  const dropzone = document.getElementById('drag-dropzone');
+  const stateContainer = document.getElementById('file-processing-state');
+  const actName = document.getElementById('active-filename');
+  const actSize = document.getElementById('active-filesize');
+
+  function clearFileLayout() {
+    if (fileUploader) fileUploader.value = '';
+    stateContainer?.classList.add('hidden');
+    const header = document.getElementById('dropzone-header-text');
+    if (header) header.textContent = 'Click to browse or drag file';
+    const sub = document.getElementById('dropzone-sub-text');
+    if (sub) sub.textContent = 'Recommended under 1GB for browser safety. 100% processed locally.';
+  }
+
+  async function processSelectedFile(file: File) {
+    if (!file) return;
+
+    if (actName) actName.textContent = file.name;
+    const megabytes = (file.size / (1024 * 1024)).toFixed(2);
+    if (actSize) actSize.textContent = `${megabytes} MB`;
+
+    stateContainer?.classList.remove('hidden');
+
+    const header = document.getElementById('dropzone-header-text');
+    if (header) header.textContent = 'File selected!';
+
+    // Read file as ArrayBuffer
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const buffer = e.target?.result as ArrayBuffer;
+      if (!buffer) return;
+
+      try {
+        const h1 = await calculateHashOfBuffer(buffer, 'SHA-1');
+        const h256 = await calculateHashOfBuffer(buffer, 'SHA-256');
+        const h512 = await calculateHashOfBuffer(buffer, 'SHA-512');
+
+        if (outSha1) outSha1.textContent = h1;
+        if (outSha256) outSha256.textContent = h256;
+        if (outSha512) outSha512.textContent = h512;
+
+        playPing();
+        if ((window as any).__showToast)
+          (window as any).__showToast({ message: `Hashed ${file.name} successfully!`, variant: 'success' });
+      } catch (err) {
+        if ((window as any).__showToast)
+          (window as any).__showToast({ message: 'Error parsing cryptographic components.', variant: 'error' });
+      }
+    };
+
+    reader.onerror = (err) => {
+      console.error("FileReader error:", err);
+      if ((window as any).__showToast) {
+        (window as any).__showToast({ message: 'Failed to read file for hashing.', variant: 'error' });
+      }
+    };
+
+    reader.readAsArrayBuffer(file);
+  }
+
+  fileUploader?.addEventListener('change', (e) => {
+    const files = (e.target as HTMLInputElement).files;
+    if (files && files[0]) {
+      processSelectedFile(files[0]);
+    }
+  });
+
+  // Drag Support
+  dropzone?.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropzone.classList.add('border-rose-500/80', 'bg-rose-500/5');
+  });
+
+  dropzone?.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('border-rose-500/80', 'bg-rose-500/5');
+  });
+
+  dropzone?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('border-rose-500/80', 'bg-rose-500/5');
+    const tempDrag = e as DragEvent;
+    if (tempDrag.dataTransfer && tempDrag.dataTransfer.files[0]) {
+      processSelectedFile(tempDrag.dataTransfer.files[0]);
+    }
+  });
+
+  // Copy buttons
+  document.querySelectorAll('[data-copy-target]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const targetId = btn.getAttribute('data-copy-target');
+      const targetEl = document.getElementById(targetId || '');
+      if (targetEl && targetEl.textContent) {
+        await navigator.clipboard.writeText(targetEl.textContent.trim());
+        playPing();
+        if ((window as any).__showToast)
+          (window as any).__showToast({ message: 'Hash string copied!', variant: 'success' });
+      }
+    });
+  });
+
+  // Calculate default empty input initially
+  recalculateText();
+
+  // ─── Fullscreen ───
+  (function() {
+    var fsBtn = document.getElementById('fullscreen-btn');
+    if (fsBtn) {
+      fsBtn.addEventListener('click', function() {
+        var el = document.querySelector('main') || document.documentElement;
+        if (!document.fullscreenElement) { el.requestFullscreen && el.requestFullscreen(); }
+        else { document.exitFullscreen && document.exitFullscreen(); }
+      });
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'f' || e.key === 'F') { if (fsBtn) fsBtn.click(); }
+    });
+  })();</script>

@@ -41,7 +41,8 @@ const articleSchema = {
 >
   <!-- Reading progress indicator -->
   <div class="sticky top-[64px] left-0 w-full h-[2px] bg-white/[0.05] z-40">
-    <div id="progress-bar" class="h-full bg-gradient-to-r from-purple-500 to-indigo-500 w-0 transition-all duration-75"></div>
+    <div id="progress-bar" class="h-full bg-gradient-to-r from-purple-500 to-indigo-500 w-0 transition-all duration-75">
+    </div>
   </div>
   <main class="min-h-screen pt-8 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-6xl mx-auto">
@@ -78,7 +79,15 @@ const articleSchema = {
           {
             image && (
               <div class="mb-8 rounded-xl overflow-hidden border border-surface">
-                <img src={image} alt={title} class="w-full h-auto object-cover" loading="lazy" decoding="async" width="1200" height="630" />
+                <img
+                  src={image}
+                  alt={title}
+                  class="w-full h-auto object-cover"
+                  loading="lazy"
+                  decoding="async"
+                  width="1200"
+                  height="630"
+                />
               </div>
             )
           }
@@ -170,13 +179,13 @@ const articleSchema = {
                   >{author ? author.charAt(0).toUpperCase() : 'N'}</span
                 >
                 <img
-                src="/images/author-numan.webp"
-                alt={author || 'NumanX Tools'}
-                class="absolute inset-0 w-full h-full rounded-full object-cover z-10"
-                onerror="this.style.display='none'"
-                loading="lazy"
-                decoding="async"
-              />
+                  src="/images/author-numan.webp"
+                  alt={author || 'NumanX Tools'}
+                  class="absolute inset-0 w-full h-full rounded-full object-cover z-10"
+                  onerror="this.style.display='none'"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
               <div>
                 <p class="text-sm font-medium text-primary">{author || 'NumanX Tools'}</p>
@@ -279,15 +288,26 @@ const articleSchema = {
 
   <!-- Floating utility toolbar -->
   <div class="fixed bottom-20 right-6 flex flex-col gap-2 z-50">
-    <button onclick="navigator.clipboard.writeText(window.location.href); this.classList.add('text-emerald-400'); setTimeout(() => this.classList.remove('text-emerald-400'), 2000);"
-            class="p-3 bg-slate-900 border border-white/10 text-slate-400 rounded-full shadow-xl transition-all duration-200 hover:text-white hover:border-purple-500/40 hover:bg-slate-800 active:scale-95 group"
-            title="Copy Link">
-      <svg class="w-5 h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+    <button
+      onclick="navigator.clipboard.writeText(window.location.href); this.classList.add('text-emerald-400'); setTimeout(() => this.classList.remove('text-emerald-400'), 2000);"
+      class="p-3 bg-slate-900 border border-white/10 text-slate-400 rounded-full shadow-xl transition-all duration-200 hover:text-white hover:border-purple-500/40 hover:bg-slate-800 active:scale-95 group"
+      title="Copy Link"
+    >
+      <svg
+        class="w-5 h-5 transition-transform group-hover:rotate-12"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+        ></path>
       </svg>
     </button>
   </div>
-
 </MainLayout>
 
 <script>

@@ -1,57 +1,143 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import KeyboardHints from "../../components/KeyboardHints.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import KeyboardHints from '../../components/KeyboardHints.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
-  { question: "What is a good strike rate in T20 cricket?", answer: "A strike rate of 120–130 is good, 130–150 is excellent, and 150+ is world-class in T20 cricket." },
-  { question: "How is batting strike rate calculated?", answer: "Batting strike rate = (Runs ÷ Balls) × 100. For example, 85 runs off 55 balls = (85 ÷ 55) × 100 = 154.55." },
-  { question: "What is the difference between batting and bowling SR?", answer: "Batting SR measures runs per 100 balls (higher is better). Bowling SR measures balls per wicket (lower is better)." },
-  { question: "What is a good bowling strike rate?", answer: "In T20s, under 20 is excellent, 20–25 is good. In ODIs, under 35 is excellent." },
-  { question: "How is Impact Rating calculated?", answer: "Impact Rating combines strike rate and runs scored into a single 0–100 score. It normalizes SR against a baseline of 100 and weights it by total runs contribution." },
-  { question: "What is a good strike rate in ODI cricket?", answer: "In ODIs, a strike rate of 85–100 is competitive, 100–110 is excellent, and 110+ is world-class. The longer format allows more time to build an innings." },
-  { question: "How does the aggression meter work?", answer: "The aggression maps SR to 5 levels: Defensive (<85), Steady (85–110), Aggressive (110–140), Very Aggressive (140–170), and Explosive (170+). It provides a visual arrow indicator." },
-  { question: "Can I compare two players' strike rates?", answer: "Yes. Use the Player Comparison section below the main calculator. Enter runs and balls for Player A and Player B to see a side-by-side SR comparison with a winner highlight." },
+  {
+    question: 'What is a good strike rate in T20 cricket?',
+    answer: 'A strike rate of 120–130 is good, 130–150 is excellent, and 150+ is world-class in T20 cricket.',
+  },
+  {
+    question: 'How is batting strike rate calculated?',
+    answer: 'Batting strike rate = (Runs ÷ Balls) × 100. For example, 85 runs off 55 balls = (85 ÷ 55) × 100 = 154.55.',
+  },
+  {
+    question: 'What is the difference between batting and bowling SR?',
+    answer:
+      'Batting SR measures runs per 100 balls (higher is better). Bowling SR measures balls per wicket (lower is better).',
+  },
+  {
+    question: 'What is a good bowling strike rate?',
+    answer: 'In T20s, under 20 is excellent, 20–25 is good. In ODIs, under 35 is excellent.',
+  },
+  {
+    question: 'How is Impact Rating calculated?',
+    answer:
+      'Impact Rating combines strike rate and runs scored into a single 0–100 score. It normalizes SR against a baseline of 100 and weights it by total runs contribution.',
+  },
+  {
+    question: 'What is a good strike rate in ODI cricket?',
+    answer:
+      'In ODIs, a strike rate of 85–100 is competitive, 100–110 is excellent, and 110+ is world-class. The longer format allows more time to build an innings.',
+  },
+  {
+    question: 'How does the aggression meter work?',
+    answer:
+      'The aggression maps SR to 5 levels: Defensive (<85), Steady (85–110), Aggressive (110–140), Very Aggressive (140–170), and Explosive (170+). It provides a visual arrow indicator.',
+  },
+  {
+    question: "Can I compare two players' strike rates?",
+    answer:
+      'Yes. Use the Player Comparison section below the main calculator. Enter runs and balls for Player A and Player B to see a side-by-side SR comparison with a winner highlight.',
+  },
 ];
 
 const srSchema = {
-  "name": "Strike Rate Calculator Pro",
-  "applicationCategory": "Sports",
-  "description": "Calculate batting and bowling strike rates with impact rating, match influence score, and aggression meter.",
-  "featureList": [
-    "Batting strike rate and bowling strike rate calculator",
-    "Player comparison with preset cricket legends",
-    "Impact rating and match influence score (0–100)",
-    "Aggression meter based on balls-per-boundary ratio",
-    "Batting average and dot-ball percentage metrics"
+  name: 'Strike Rate Calculator Pro',
+  applicationCategory: 'Sports',
+  description:
+    'Calculate batting and bowling strike rates with impact rating, match influence score, and aggression meter.',
+  featureList: [
+    'Batting strike rate and bowling strike rate calculator',
+    'Player comparison with preset cricket legends',
+    'Impact rating and match influence score (0–100)',
+    'Aggression meter based on balls-per-boundary ratio',
+    'Batting average and dot-ball percentage metrics',
   ],
-}
+};
 
 const benefits = [
-  { icon: "🏏", title: "Batting Strike Rate Analysis", desc: "Calculate batting SR instantly with performance tier ratings from Poor to Explosive. Live updates as you type." },
-  { icon: "🎯", title: "Bowling Strike Rate Analysis", desc: "Track how many balls per wicket bowlers take. Lower bowling SR means consistent wicket-taking ability." },
-  { icon: "📊", title: "Player Comparison Tool", desc: "Compare two players side-by-side with identical inputs. See who has the better strike rate at a glance." },
-  { icon: "📈", title: "Impact Rating & Match Influence", desc: "Combined 0-100 score that normalizes SR against a baseline and weights it by total runs contribution." },
-  { icon: "⚡", title: "Aggression Meter Visualizer", desc: "5-level aggression meter maps strike rate from Defensive to Explosive with a dynamic arrow indicator." },
-  { icon: "🆓", title: "Free & No Sign-Up", desc: "All features including player comparison, impact rating, and download are completely free with no account required." },
+  {
+    icon: '🏏',
+    title: 'Batting Strike Rate Analysis',
+    desc: 'Calculate batting SR instantly with performance tier ratings from Poor to Explosive. Live updates as you type.',
+  },
+  {
+    icon: '🎯',
+    title: 'Bowling Strike Rate Analysis',
+    desc: 'Track how many balls per wicket bowlers take. Lower bowling SR means consistent wicket-taking ability.',
+  },
+  {
+    icon: '📊',
+    title: 'Player Comparison Tool',
+    desc: 'Compare two players side-by-side with identical inputs. See who has the better strike rate at a glance.',
+  },
+  {
+    icon: '📈',
+    title: 'Impact Rating & Match Influence',
+    desc: 'Combined 0-100 score that normalizes SR against a baseline and weights it by total runs contribution.',
+  },
+  {
+    icon: '⚡',
+    title: 'Aggression Meter Visualizer',
+    desc: '5-level aggression meter maps strike rate from Defensive to Explosive with a dynamic arrow indicator.',
+  },
+  {
+    icon: '🆓',
+    title: 'Free & No Sign-Up',
+    desc: 'All features including player comparison, impact rating, and download are completely free with no account required.',
+  },
 ];
 
 const howToSteps = [
-  { num: "1", title: "Enter Runs Scored", desc: "Input the total runs scored by the batter in the Runs Scored field. This is the numerator for strike rate calculation." },
-  { num: "2", title: "Enter Balls Faced", desc: "Input the number of balls faced by the batter. Strike rate = (Runs ÷ Balls) × 100." },
-  { num: "3", title: "Calculate Strike Rate", desc: "The calculator updates instantly as you type. View batting SR, performance tier, and impact rating." },
-  { num: "4", title: "Analyze Performance", desc: "Review aggression meter, match influence score, and compare with other players using the comparison tool." },
+  {
+    num: '1',
+    title: 'Enter Runs Scored',
+    desc: 'Input the total runs scored by the batter in the Runs Scored field. This is the numerator for strike rate calculation.',
+  },
+  {
+    num: '2',
+    title: 'Enter Balls Faced',
+    desc: 'Input the number of balls faced by the batter. Strike rate = (Runs ÷ Balls) × 100.',
+  },
+  {
+    num: '3',
+    title: 'Calculate Strike Rate',
+    desc: 'The calculator updates instantly as you type. View batting SR, performance tier, and impact rating.',
+  },
+  {
+    num: '4',
+    title: 'Analyze Performance',
+    desc: 'Review aggression meter, match influence score, and compare with other players using the comparison tool.',
+  },
 ];
 
 const useCases = [
-  { icon: "🏆", title: "Fantasy Cricket Selection", desc: "Evaluate player strike rates to pick the best fantasy XI. Compare batsmen across teams and tournaments for optimal picks." },
-  { icon: "👨‍🏫", title: "Cricket Coaching & Training", desc: "Teach young players about the importance of strike rate, scoring rate management, and batting efficiency across formats." },
-  { icon: "📺", title: "Live Match Analysis", desc: "Track strike rates in real-time during matches. Great for commentators, analysts, and passionate fans following the game." },
-  { icon: "📊", title: "Tournament Player Comparison", desc: "Compare strike rates of players across tournaments like IPL, PSL, BBL, and World Cup to identify top performers." },
+  {
+    icon: '🏆',
+    title: 'Fantasy Cricket Selection',
+    desc: 'Evaluate player strike rates to pick the best fantasy XI. Compare batsmen across teams and tournaments for optimal picks.',
+  },
+  {
+    icon: '👨‍🏫',
+    title: 'Cricket Coaching & Training',
+    desc: 'Teach young players about the importance of strike rate, scoring rate management, and batting efficiency across formats.',
+  },
+  {
+    icon: '📺',
+    title: 'Live Match Analysis',
+    desc: 'Track strike rates in real-time during matches. Great for commentators, analysts, and passionate fans following the game.',
+  },
+  {
+    icon: '📊',
+    title: 'Tournament Player Comparison',
+    desc: 'Compare strike rates of players across tournaments like IPL, PSL, BBL, and World Cup to identify top performers.',
+  },
 ];
 ---
 
@@ -62,15 +148,16 @@ const useCases = [
   toolSchema={srSchema}
   faq={faqItems}
   howto={{
-    name: "How to Calculate Cricket Strike Rate",
-    description: "Calculate batting and bowling strike rates with impact rating, aggression meter, and player comparison in 4 steps.",
-    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
-    totalTime: "PT1M",
+    name: 'How to Calculate Cricket Strike Rate',
+    description:
+      'Calculate batting and bowling strike rates with impact rating, aggression meter, and player comparison in 4 steps.',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
   }}
   breadcrumbs={[
-    { name: "Home", url: "/" },
-    { name: "Tools", url: "/tools/" },
-    { name: "Strike Rate Calculator", url: "/tools/strike-rate-calculator/" },
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Strike Rate Calculator', url: '/tools/strike-rate-calculator/' },
   ]}
 >
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
@@ -86,28 +173,49 @@ const useCases = [
       <ShareBar />
 
       <div class="max-w-xl mx-auto mt-8 space-y-4">
-
         <!-- Tab Switcher -->
         <div class="bg-zinc-950 p-1.5 rounded-xl border border-surface flex gap-2">
-          <button class="calc-tab flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5" data-tab="batting">
+          <button
+            class="calc-tab flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5"
+            data-tab="batting"
+          >
             🚀 Batting SR
           </button>
-          <button class="calc-tab flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all flex items-center justify-center gap-1.5" data-tab="bowling">
+          <button
+            class="calc-tab flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all flex items-center justify-center gap-1.5"
+            data-tab="bowling"
+          >
             🎯 Bowling SR
           </button>
         </div>
 
         <!-- Input Card -->
-        <div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6 relative">
-          <button id="fullscreen-btn" class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+        <div class="glass-card rounded-2xl p-5 md:p-6 relative">
+          <button
+            id="fullscreen-btn"
+            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+            title="Fullscreen">⛶</button
+          >
 
           <div class="flex items-center gap-2 mb-3">
             <span id="usage-badge" class="text-xs text-muted"></span>
             <div class="flex gap-1 ml-auto">
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="purple"
+                style="background:#a855f7"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="blue"
+                style="background:#3b82f6"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="green"
+                style="background:#22c55e"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="pink"
+                style="background:#ec4899"></button>
             </div>
           </div>
 
@@ -115,17 +223,33 @@ const useCases = [
           <div id="batting-panel" class="space-y-4">
             <div class="grid grid-cols-2 gap-3">
               <div class="space-y-2">
-                <label for="bat-runs" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Runs Scored</label>
-                <input type="number" id="bat-runs" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm" />
+                <label for="bat-runs" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
+                  >Runs Scored</label
+                >
+                <input
+                  type="number"
+                  id="bat-runs"
+                  placeholder="0"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                />
               </div>
               <div class="space-y-2">
-                <label for="bat-balls" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Balls Faced</label>
-                <input type="number" id="bat-balls" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm" />
+                <label for="bat-balls" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
+                  >Balls Faced</label
+                >
+                <input
+                  type="number"
+                  id="bat-balls"
+                  placeholder="0"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                />
               </div>
             </div>
-            <div class="bg-surface-1 border border-zinc-800/60 rounded-xl p-4 text-center space-y-1">
+            <div class="glass-card rounded-xl p-4 text-center space-y-1">
               <span class="text-[10px] uppercase font-semibold tracking-wider text-muted">Calculated Strike Rate</span>
-              <div class="text-3xl font-extrabold text-purple-400 tracking-tight tabular-nums"><span id="sr-output">0.00</span></div>
+              <div class="text-3xl font-extrabold text-purple-400 tracking-tight tabular-nums">
+                <span id="sr-output">0.00</span>
+              </div>
               <p id="sr-feedback" class="text-xs text-muted italic pt-1">Enter stats to see performance tier</p>
             </div>
           </div>
@@ -134,64 +258,104 @@ const useCases = [
           <div id="bowling-panel" class="space-y-4 hidden">
             <div class="grid grid-cols-2 gap-3">
               <div class="space-y-2">
-                <label for="bowl-balls" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Balls Bowled</label>
-                <input type="number" id="bowl-balls" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm" />
+                <label for="bowl-balls" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
+                  >Balls Bowled</label
+                >
+                <input
+                  type="number"
+                  id="bowl-balls"
+                  placeholder="0"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                />
               </div>
               <div class="space-y-2">
-                <label for="bowl-wkts" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Wickets Taken</label>
-                <input type="number" id="bowl-wkts" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm" />
+                <label for="bowl-wkts" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
+                  >Wickets Taken</label
+                >
+                <input
+                  type="number"
+                  id="bowl-wkts"
+                  placeholder="0"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                />
               </div>
             </div>
             <div class="bg-surface-1 border border-zinc-800/60 rounded-xl p-4 text-center space-y-1">
               <span class="text-[10px] uppercase font-semibold tracking-wider text-muted">Bowling Strike Rate</span>
-              <div class="text-3xl font-extrabold text-purple-400 tracking-tight tabular-nums"><span id="bowl-sr-output">0.00</span></div>
+              <div class="text-3xl font-extrabold text-purple-400 tracking-tight tabular-nums">
+                <span id="bowl-sr-output">0.00</span>
+              </div>
               <p id="bowl-sr-feedback" class="text-xs text-muted italic pt-1">Enter stats to see performance tier</p>
             </div>
           </div>
         </div>
 
         <!-- Player Presets (ESPN Cricinfo-style) -->
-        <div class="bg-surface-1 border border-surface rounded-2xl p-4">
-          <span class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-2.5 block">Famous Player Presets</span>
+        <div class="glass-card rounded-2xl p-4">
+          <span class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-2.5 block"
+            >Famous Player Presets</span
+          >
           <div class="grid grid-cols-4 gap-2" id="preset-btns">
-            {[
-              { name: "Babar Azam", runs: 72, balls: 50, emoji: "🇵🇰" },
-              { name: "Virat Kohli", runs: 115, balls: 62, emoji: "🇮🇳" },
-              { name: "AB de Villiers", runs: 133, balls: 57, emoji: "🇿🇦" },
-              { name: "Andre Russell", runs: 48, balls: 19, emoji: "🏝️" },
-            ].map((p) => (
-              <button class="preset-btn flex flex-col items-center gap-1 rounded-xl py-2.5 px-1 text-[10px] font-medium border transition-all bg-surface-1 border-surface text-tertiary hover:border-purple-500/40 hover:text-purple-300" data-runs={p.runs} data-balls={p.balls}>
-                <span class="text-sm">{p.emoji}</span>
-                <span>{p.name}</span>
-              </button>
-            ))}
+            {
+              [
+                { name: 'Babar Azam', runs: 72, balls: 50, emoji: '🇵🇰' },
+                { name: 'Virat Kohli', runs: 115, balls: 62, emoji: '🇮🇳' },
+                { name: 'AB de Villiers', runs: 133, balls: 57, emoji: '🇿🇦' },
+                { name: 'Andre Russell', runs: 48, balls: 19, emoji: '🏝️' },
+              ].map((p) => (
+                <button
+                  class="preset-btn flex flex-col items-center gap-1 rounded-xl py-2.5 px-1 text-[10px] font-medium border transition-all bg-surface-1 border-surface text-tertiary hover:border-purple-500/40 hover:text-purple-300"
+                  data-runs={p.runs}
+                  data-balls={p.balls}
+                >
+                  <span class="text-sm">{p.emoji}</span>
+                  <span>{p.name}</span>
+                </button>
+              ))
+            }
           </div>
         </div>
 
         <!-- ─── Performance Dashboard ─── -->
         <div id="results-section" class="hidden space-y-4">
-
           <!-- Key Stats -->
           <div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6">
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-[10px] font-semibold text-muted uppercase tracking-wider">Performance Dashboard</h3>
-              <span id="impact-badge" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all hidden"></span>
+              <span
+                id="impact-badge"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all hidden"
+              ></span>
             </div>
             <div class="grid grid-cols-2 gap-3">
-              <div class="rounded-xl bg-zinc-950/40 border border-surface p-4 text-center hover:border-surface-2 transition-all">
+              <div
+                class="rounded-xl bg-zinc-950/40 border border-surface p-4 text-center hover:border-surface-2 transition-all"
+              >
                 <span class="text-[9px] font-semibold text-dim uppercase tracking-wider">Batting SR</span>
-                <div class="mt-1 text-3xl font-black tabular-nums"><span id="bat-sr-value" class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span></div>
+                <div class="mt-1 text-3xl font-black tabular-nums">
+                  <span
+                    id="bat-sr-value"
+                    class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span
+                  >
+                </div>
               </div>
-              <div class="rounded-xl bg-zinc-950/40 border border-surface p-4 text-center hover:border-surface-2 transition-all">
+              <div
+                class="rounded-xl bg-zinc-950/40 border border-surface p-4 text-center hover:border-surface-2 transition-all"
+              >
                 <span class="text-[9px] font-semibold text-dim uppercase tracking-wider">Bowling SR</span>
-                <div class="mt-1 text-3xl font-black tabular-nums"><span id="bowl-sr-value" class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span></div>
+                <div class="mt-1 text-3xl font-black tabular-nums">
+                  <span
+                    id="bowl-sr-value"
+                    class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span
+                  >
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Impact Rating + Match Influence -->
           <div class="grid grid-cols-2 gap-3">
-            <div class="bg-surface-1 border border-surface rounded-xl p-4">
+            <div class="glass-card rounded-xl p-4">
               <span class="text-[9px] font-semibold text-dim uppercase tracking-wider">Impact Rating</span>
               <div class="flex items-baseline gap-2 mt-1">
                 <span id="impact-rating" class="text-2xl font-black text-primary tabular-nums">0</span>
@@ -219,7 +383,8 @@ const useCases = [
           <div class="bg-surface-1 border border-surface rounded-2xl p-5">
             <div class="flex items-center justify-between mb-3">
               <h3 class="text-[10px] font-semibold text-muted uppercase tracking-wider">Aggression Meter</h3>
-              <span id="aggression-label" class="text-xs font-bold font-mono px-2.5 py-0.5 rounded-full border hidden"></span>
+              <span id="aggression-label" class="text-xs font-bold font-mono px-2.5 py-0.5 rounded-full border hidden"
+              ></span>
             </div>
             <div class="flex items-center gap-0.5 h-4 rounded-full overflow-hidden">
               <div class="flex-1 h-full bg-blue-500/20" style="border-radius: 999px 0 0 999px"></div>
@@ -229,7 +394,9 @@ const useCases = [
               <div class="flex-1 h-full bg-red-500/20" style="border-radius: 0 999px 999px 0"></div>
             </div>
             <div id="aggression-arrow-wrap" class="relative h-6 mt-1">
-              <div id="aggression-arrow" class="absolute top-0 text-xs transition-all duration-700" style="left:0%">▼</div>
+              <div id="aggression-arrow" class="absolute top-0 text-xs transition-all duration-700" style="left:0%">
+                ▼
+              </div>
             </div>
             <div class="flex justify-between text-[9px] text-dim mt-0.5">
               <span>Defensive</span>
@@ -259,19 +426,54 @@ const useCases = [
               <span>Explosive</span>
             </div>
             <div class="mt-2 h-2 bg-zinc-800 rounded-full overflow-hidden">
-              <div id="meter-fill" class="h-full rounded-full transition-all duration-700 ease-out" style="width:0%"></div>
+              <div id="meter-fill" class="h-full rounded-full transition-all duration-700 ease-out" style="width:0%">
+              </div>
             </div>
           </div>
 
           <!-- Copy Results -->
           <div class="flex items-center justify-center gap-2">
-            <button id="share-btn" class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95" title="Share">🔗</button>
-            <button id="copy-sr-btn" class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <button
+              id="share-btn"
+              class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95"
+              title="Share">🔗</button
+            >
+            <button
+              id="copy-sr-btn"
+              class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg
+              >
               Copy Results
             </button>
-            <button id="download-btn" class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <button
+              id="download-btn"
+              class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"
+                ></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg
+              >
               Download
             </button>
           </div>
@@ -287,17 +489,32 @@ const useCases = [
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div class="rounded-xl bg-zinc-950/40 border border-surface p-4">
                 <div class="flex items-center gap-2 mb-3">
-                  <span class="w-6 h-6 rounded-full bg-purple-600/20 flex items-center justify-center text-[10px] font-bold text-purple-400">A</span>
+                  <span
+                    class="w-6 h-6 rounded-full bg-purple-600/20 flex items-center justify-center text-[10px] font-bold text-purple-400"
+                    >A</span
+                  >
                   <span class="text-xs font-semibold text-secondary">Player A</span>
                 </div>
                 <div class="grid grid-cols-2 gap-2 mb-2">
                   <div>
                     <label class="text-[9px] font-semibold text-dim uppercase tracking-wider">Runs</label>
-                    <input id="comp-a-runs" type="number" min="0" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" />
+                    <input
+                      id="comp-a-runs"
+                      type="number"
+                      min="0"
+                      placeholder="0"
+                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1"
+                    />
                   </div>
                   <div>
                     <label class="text-[9px] font-semibold text-dim uppercase tracking-wider">Balls</label>
-                    <input id="comp-a-balls" type="number" min="0" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" />
+                    <input
+                      id="comp-a-balls"
+                      type="number"
+                      min="0"
+                      placeholder="0"
+                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1"
+                    />
                   </div>
                 </div>
                 <div class="text-right">
@@ -307,17 +524,32 @@ const useCases = [
               </div>
               <div class="rounded-xl bg-zinc-950/40 border border-surface p-4">
                 <div class="flex items-center gap-2 mb-3">
-                  <span class="w-6 h-6 rounded-full bg-blue-600/20 flex items-center justify-center text-[10px] font-bold text-blue-400">B</span>
+                  <span
+                    class="w-6 h-6 rounded-full bg-blue-600/20 flex items-center justify-center text-[10px] font-bold text-blue-400"
+                    >B</span
+                  >
                   <span class="text-xs font-semibold text-secondary">Player B</span>
                 </div>
                 <div class="grid grid-cols-2 gap-2 mb-2">
                   <div>
                     <label class="text-[9px] font-semibold text-dim uppercase tracking-wider">Runs</label>
-                    <input id="comp-b-runs" type="number" min="0" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" />
+                    <input
+                      id="comp-b-runs"
+                      type="number"
+                      min="0"
+                      placeholder="0"
+                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1"
+                    />
                   </div>
                   <div>
                     <label class="text-[9px] font-semibold text-dim uppercase tracking-wider">Balls</label>
-                    <input id="comp-b-balls" type="number" min="0" placeholder="0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" />
+                    <input
+                      id="comp-b-balls"
+                      type="number"
+                      min="0"
+                      placeholder="0"
+                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1"
+                    />
                   </div>
                 </div>
                 <div class="text-right">
@@ -327,7 +559,7 @@ const useCases = [
               </div>
             </div>
             <div id="comp-result" class="mt-3 hidden">
-              <div class="rounded-xl border border-surface bg-surface-1 p-3 text-center">
+              <div class="glass-card rounded-xl p-3 text-center">
                 <p id="comp-text" class="text-xs font-medium"></p>
               </div>
             </div>
@@ -350,7 +582,10 @@ const useCases = [
               <span class="text-lg mt-0.5">📊</span>
               <div>
                 <h3 class="text-sm font-semibold text-primary mb-1">What Is Strike Rate?</h3>
-                <p class="text-xs text-muted leading-relaxed">Batting strike rate measures runs per 100 balls faced. Formula: (Runs ÷ Balls) × 100. A SR of 100 = 1 run per ball. Bowling strike rate measures balls per wicket — lower is better.</p>
+                <p class="text-xs text-muted leading-relaxed">
+                  Batting strike rate measures runs per 100 balls faced. Formula: (Runs ÷ Balls) × 100. A SR of 100 = 1
+                  run per ball. Bowling strike rate measures balls per wicket — lower is better.
+                </p>
               </div>
             </div>
           </div>
@@ -359,7 +594,11 @@ const useCases = [
               <span class="text-lg mt-0.5">🎯</span>
               <div>
                 <h3 class="text-sm font-semibold text-primary mb-1">Why Strike Rate Matters</h3>
-                <p class="text-xs text-muted leading-relaxed">SR determines a player's impact. In limited-overs cricket, high batting SR is essential for big totals. Low bowling SR means consistent wicket-taking. Both are key metrics in modern cricket analytics.</p>
+                <p class="text-xs text-muted leading-relaxed">
+                  SR determines a player's impact. In limited-overs cricket, high batting SR is essential for big
+                  totals. Low bowling SR means consistent wicket-taking. Both are key metrics in modern cricket
+                  analytics.
+                </p>
               </div>
             </div>
           </div>
@@ -368,7 +607,10 @@ const useCases = [
               <span class="text-lg mt-0.5">⚡</span>
               <div>
                 <h3 class="text-sm font-semibold text-primary mb-1">T20 Batting Strategy</h3>
-                <p class="text-xs text-muted leading-relaxed">In T20s, SR 130+ is excellent, 150+ is world-class. Powerplay overs demand positive intent, middle overs require smart rotation, and death overs need pure acceleration.</p>
+                <p class="text-xs text-muted leading-relaxed">
+                  In T20s, SR 130+ is excellent, 150+ is world-class. Powerplay overs demand positive intent, middle
+                  overs require smart rotation, and death overs need pure acceleration.
+                </p>
               </div>
             </div>
           </div>
@@ -377,18 +619,23 @@ const useCases = [
               <span class="text-lg mt-0.5">🏛️</span>
               <div>
                 <h3 class="text-sm font-semibold text-primary mb-1">ODI &amp; Bowling Strategy</h3>
-                <p class="text-xs text-muted leading-relaxed">In ODIs, SR 85-100 is competitive, 100+ excellent. Bowling SR under 35 in ODIs and under 20 in T20s is elite. Strike rates vary by format, conditions, and match situation.</p>
+                <p class="text-xs text-muted leading-relaxed">
+                  In ODIs, SR 85-100 is competitive, 100+ excellent. Bowling SR under 35 in ODIs and under 20 in T20s is
+                  elite. Strike rates vary by format, conditions, and match situation.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <KeyboardHints hints={[
-        { keys: "Enter", label: "Calculate strike rate" },
-        { keys: "⌘K", label: "Open search" },
-        { keys: "Tab", label: "Switch batting/bowling" },
-      ]} />
+      <KeyboardHints
+        hints={[
+          { keys: 'Enter', label: 'Calculate strike rate' },
+          { keys: '⌘K', label: 'Open search' },
+          { keys: 'Tab', label: 'Switch batting/bowling' },
+        ]}
+      />
 
       <RelatedTools current="strike-rate-calculator" />
 
@@ -397,7 +644,7 @@ const useCases = [
           Frequently Asked
           <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
         </h2>
-        <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
+        <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
 
       <ToolContentSections
@@ -410,19 +657,30 @@ const useCases = [
       />
 
       <section class="mt-16 text-center">
-        <div class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10">
+        <div
+          class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10"
+        >
           <h2 class="text-2xl md:text-3xl font-black tracking-tight">
             Master Cricket
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> Strike Rate Analysis</span>
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
+              Strike Rate Analysis</span
+            >
           </h2>
           <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
-            Analyze batting and bowling strike rates, compare players, and track performance. All free, no sign-up needed.
+            Analyze batting and bowling strike rates, compare players, and track performance. All free, no sign-up
+            needed.
           </p>
           <div class="mt-6 flex gap-3 justify-center flex-wrap">
-            <button onclick="document.querySelector('#bat-runs')?.focus()" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30">
+            <button
+              onclick="document.querySelector('#bat-runs')?.focus()"
+              class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30"
+            >
               Start Calculating
             </button>
-            <a href="/tools/run-rate-calculator/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700">
+            <a
+              href="/tools/run-rate-calculator/"
+              class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700"
+            >
               Try Run Rate Calculator
             </a>
           </div>
@@ -434,64 +692,146 @@ const useCases = [
 
 <script>
   // ─── Refs ───
-  const calcTabs = document.querySelectorAll(".calc-tab");
-  const battingPanel = document.getElementById("batting-panel");
-  const bowlingPanel = document.getElementById("bowling-panel");
-  const batRuns = document.getElementById("bat-runs");
-  const batBalls = document.getElementById("bat-balls");
-  const bowlBalls = document.getElementById("bowl-balls");
-  const bowlWkts = document.getElementById("bowl-wkts");
-  const srOutput = document.getElementById("sr-output");
-  const srFeedback = document.getElementById("sr-feedback");
-  const bowlSrOutput = document.getElementById("bowl-sr-output");
-  const bowlSrFeedback = document.getElementById("bowl-sr-feedback");
-  const resultsSection = document.getElementById("results-section");
-  const batSrValue = document.getElementById("bat-sr-value");
-  const bowlSrValue = document.getElementById("bowl-sr-value");
-  const impactBadge = document.getElementById("impact-badge");
-  const impactRating = document.getElementById("impact-rating");
-  const impactBar = document.getElementById("impact-bar");
-  const impactDesc = document.getElementById("impact-desc");
-  const influenceScore = document.getElementById("influence-score");
-  const influenceBar = document.getElementById("influence-bar");
-  const influenceDesc = document.getElementById("influence-desc");
-  const aggressionLabel = document.getElementById("aggression-label");
-  const aggressionArrow = document.getElementById("aggression-arrow");
-  const meterLabel = document.getElementById("meter-label");
-  const meterFill = document.getElementById("meter-fill");
-  const compARuns = document.getElementById("comp-a-runs");
-  const compABalls = document.getElementById("comp-a-balls");
-  const compBRuns = document.getElementById("comp-b-runs");
-  const compBBalls = document.getElementById("comp-b-balls");
-  const compASr = document.getElementById("comp-a-sr");
-  const compBSr = document.getElementById("comp-b-sr");
-  const compResult = document.getElementById("comp-result");
-  const compText = document.getElementById("comp-text");
-  const comparisonSection = document.getElementById("comparison-section");
+  const calcTabs = document.querySelectorAll('.calc-tab');
+  const battingPanel = document.getElementById('batting-panel');
+  const bowlingPanel = document.getElementById('bowling-panel');
+  const batRuns = document.getElementById('bat-runs');
+  const batBalls = document.getElementById('bat-balls');
+  const bowlBalls = document.getElementById('bowl-balls');
+  const bowlWkts = document.getElementById('bowl-wkts');
+  const srOutput = document.getElementById('sr-output');
+  const srFeedback = document.getElementById('sr-feedback');
+  const bowlSrOutput = document.getElementById('bowl-sr-output');
+  const bowlSrFeedback = document.getElementById('bowl-sr-feedback');
+  const resultsSection = document.getElementById('results-section');
+  const batSrValue = document.getElementById('bat-sr-value');
+  const bowlSrValue = document.getElementById('bowl-sr-value');
+  const impactBadge = document.getElementById('impact-badge');
+  const impactRating = document.getElementById('impact-rating');
+  const impactBar = document.getElementById('impact-bar');
+  const impactDesc = document.getElementById('impact-desc');
+  const influenceScore = document.getElementById('influence-score');
+  const influenceBar = document.getElementById('influence-bar');
+  const influenceDesc = document.getElementById('influence-desc');
+  const aggressionLabel = document.getElementById('aggression-label');
+  const aggressionArrow = document.getElementById('aggression-arrow');
+  const meterLabel = document.getElementById('meter-label');
+  const meterFill = document.getElementById('meter-fill');
+  const compARuns = document.getElementById('comp-a-runs');
+  const compABalls = document.getElementById('comp-a-balls');
+  const compBRuns = document.getElementById('comp-b-runs');
+  const compBBalls = document.getElementById('comp-b-balls');
+  const compASr = document.getElementById('comp-a-sr');
+  const compBSr = document.getElementById('comp-b-sr');
+  const compResult = document.getElementById('comp-result');
+  const compText = document.getElementById('comp-text');
+  const comparisonSection = document.getElementById('comparison-section');
 
   function formatSR(value) {
-    if (isNaN(value) || !isFinite(value)) return "0.00";
+    if (isNaN(value) || !isFinite(value)) return '0.00';
     return value.toFixed(2);
   }
 
   // ─── Batting levels ───
   function getBattingLevel(sr) {
-    if (sr >= 150) return { label: "Explosive! 🔥", color: "text-emerald-300", bg: "bg-emerald-600/15 border-emerald-500/30", pct: 100, bar: "bg-gradient-to-r from-emerald-500 to-emerald-400" };
-    if (sr >= 130) return { label: "Excellent ⚡", color: "text-lime-300", bg: "bg-lime-600/15 border-lime-500/30", pct: 80, bar: "bg-gradient-to-r from-lime-500 to-lime-400" };
-    if (sr >= 110) return { label: "Good", color: "text-blue-300", bg: "bg-blue-600/15 border-blue-500/30", pct: 60, bar: "bg-gradient-to-r from-blue-500 to-blue-400" };
-    if (sr >= 90) return { label: "Average", color: "text-yellow-300", bg: "bg-yellow-600/15 border-yellow-500/30", pct: 40, bar: "bg-gradient-to-r from-yellow-500 to-yellow-400" };
-    if (sr >= 70) return { label: "Below Average", color: "text-orange-300", bg: "bg-orange-600/15 border-orange-500/30", pct: 25, bar: "bg-gradient-to-r from-orange-500 to-orange-400" };
-    return { label: "Poor ⚠️", color: "text-red-300", bg: "bg-red-600/15 border-red-500/30", pct: 10, bar: "bg-gradient-to-r from-red-500 to-red-400" };
+    if (sr >= 150)
+      return {
+        label: 'Explosive! 🔥',
+        color: 'text-emerald-300',
+        bg: 'bg-emerald-600/15 border-emerald-500/30',
+        pct: 100,
+        bar: 'bg-gradient-to-r from-emerald-500 to-emerald-400',
+      };
+    if (sr >= 130)
+      return {
+        label: 'Excellent ⚡',
+        color: 'text-lime-300',
+        bg: 'bg-lime-600/15 border-lime-500/30',
+        pct: 80,
+        bar: 'bg-gradient-to-r from-lime-500 to-lime-400',
+      };
+    if (sr >= 110)
+      return {
+        label: 'Good',
+        color: 'text-blue-300',
+        bg: 'bg-blue-600/15 border-blue-500/30',
+        pct: 60,
+        bar: 'bg-gradient-to-r from-blue-500 to-blue-400',
+      };
+    if (sr >= 90)
+      return {
+        label: 'Average',
+        color: 'text-yellow-300',
+        bg: 'bg-yellow-600/15 border-yellow-500/30',
+        pct: 40,
+        bar: 'bg-gradient-to-r from-yellow-500 to-yellow-400',
+      };
+    if (sr >= 70)
+      return {
+        label: 'Below Average',
+        color: 'text-orange-300',
+        bg: 'bg-orange-600/15 border-orange-500/30',
+        pct: 25,
+        bar: 'bg-gradient-to-r from-orange-500 to-orange-400',
+      };
+    return {
+      label: 'Poor ⚠️',
+      color: 'text-red-300',
+      bg: 'bg-red-600/15 border-red-500/30',
+      pct: 10,
+      bar: 'bg-gradient-to-r from-red-500 to-red-400',
+    };
   }
 
   // ─── Bowling levels ───
   function getBowlingLevel(sr) {
-    if (sr > 0 && sr <= 15) return { label: "World Class 🐐", color: "text-emerald-300", bg: "bg-emerald-600/15 border-emerald-500/30", pct: 100, bar: "bg-gradient-to-r from-emerald-500 to-emerald-400" };
-    if (sr <= 20) return { label: "Excellent ⚡", color: "text-lime-300", bg: "bg-lime-600/15 border-lime-500/30", pct: 80, bar: "bg-gradient-to-r from-lime-500 to-lime-400" };
-    if (sr <= 25) return { label: "Good", color: "text-blue-300", bg: "bg-blue-600/15 border-blue-500/30", pct: 60, bar: "bg-gradient-to-r from-blue-500 to-blue-400" };
-    if (sr <= 30) return { label: "Average", color: "text-yellow-300", bg: "bg-yellow-600/15 border-yellow-500/30", pct: 40, bar: "bg-gradient-to-r from-yellow-500 to-yellow-400" };
-    if (sr <= 40) return { label: "Below Average", color: "text-orange-300", bg: "bg-orange-600/15 border-orange-500/30", pct: 25, bar: "bg-gradient-to-r from-orange-500 to-orange-400" };
-    return { label: "Poor ⚠️", color: "text-red-300", bg: "bg-red-600/15 border-red-500/30", pct: 10, bar: "bg-gradient-to-r from-red-500 to-red-400" };
+    if (sr > 0 && sr <= 15)
+      return {
+        label: 'World Class 🐐',
+        color: 'text-emerald-300',
+        bg: 'bg-emerald-600/15 border-emerald-500/30',
+        pct: 100,
+        bar: 'bg-gradient-to-r from-emerald-500 to-emerald-400',
+      };
+    if (sr <= 20)
+      return {
+        label: 'Excellent ⚡',
+        color: 'text-lime-300',
+        bg: 'bg-lime-600/15 border-lime-500/30',
+        pct: 80,
+        bar: 'bg-gradient-to-r from-lime-500 to-lime-400',
+      };
+    if (sr <= 25)
+      return {
+        label: 'Good',
+        color: 'text-blue-300',
+        bg: 'bg-blue-600/15 border-blue-500/30',
+        pct: 60,
+        bar: 'bg-gradient-to-r from-blue-500 to-blue-400',
+      };
+    if (sr <= 30)
+      return {
+        label: 'Average',
+        color: 'text-yellow-300',
+        bg: 'bg-yellow-600/15 border-yellow-500/30',
+        pct: 40,
+        bar: 'bg-gradient-to-r from-yellow-500 to-yellow-400',
+      };
+    if (sr <= 40)
+      return {
+        label: 'Below Average',
+        color: 'text-orange-300',
+        bg: 'bg-orange-600/15 border-orange-500/30',
+        pct: 25,
+        bar: 'bg-gradient-to-r from-orange-500 to-orange-400',
+      };
+    return {
+      label: 'Poor ⚠️',
+      color: 'text-red-300',
+      bg: 'bg-red-600/15 border-red-500/30',
+      pct: 10,
+      bar: 'bg-gradient-to-r from-red-500 to-red-400',
+    };
   }
 
   // ─── Impact Rating (0-100) ───
@@ -514,12 +854,14 @@ const useCases = [
 
   // ─── Aggression level ───
   function getAggression(sr) {
-    if (sr <= 0) return { level: "—", pct: 0, color: "" };
-    if (sr >= 170) return { level: "Explosive", pct: 95, color: "text-red-400 bg-red-500/10 border-red-500/30" };
-    if (sr >= 140) return { level: "Very Aggressive", pct: 75, color: "text-orange-400 bg-orange-500/10 border-orange-500/30" };
-    if (sr >= 110) return { level: "Aggressive", pct: 55, color: "text-yellow-400 bg-yellow-500/10 border-yellow-500/30" };
-    if (sr >= 85) return { level: "Steady", pct: 30, color: "text-green-400 bg-green-500/10 border-green-500/30" };
-    return { level: "Defensive", pct: 10, color: "text-blue-400 bg-blue-500/10 border-blue-500/30" };
+    if (sr <= 0) return { level: '—', pct: 0, color: '' };
+    if (sr >= 170) return { level: 'Explosive', pct: 95, color: 'text-red-400 bg-red-500/10 border-red-500/30' };
+    if (sr >= 140)
+      return { level: 'Very Aggressive', pct: 75, color: 'text-orange-400 bg-orange-500/10 border-orange-500/30' };
+    if (sr >= 110)
+      return { level: 'Aggressive', pct: 55, color: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/30' };
+    if (sr >= 85) return { level: 'Steady', pct: 30, color: 'text-green-400 bg-green-500/10 border-green-500/30' };
+    return { level: 'Defensive', pct: 10, color: 'text-blue-400 bg-blue-500/10 border-blue-500/30' };
   }
 
   // ─── Update all ───
@@ -533,13 +875,13 @@ const useCases = [
     let hasBowl = bowlB > 0 && bowlW > 0;
 
     if (!hasBat && !hasBowl) {
-      resultsSection.classList.add("hidden");
-      comparisonSection.classList.add("hidden");
+      resultsSection.classList.add('hidden');
+      comparisonSection.classList.add('hidden');
       return;
     }
 
-    resultsSection.classList.remove("hidden");
-    comparisonSection.classList.remove("hidden");
+    resultsSection.classList.remove('hidden');
+    comparisonSection.classList.remove('hidden');
 
     const batSr = hasBat ? (batR / batB) * 100 : 0;
     const bowlSr = hasBowl ? bowlB / bowlW : 0;
@@ -551,50 +893,60 @@ const useCases = [
       // Performance badge
       const level = getBattingLevel(batSr);
       impactBadge.textContent = level.label;
-      impactBadge.className = "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all " + level.color + " " + level.bg;
-      impactBadge.classList.remove("hidden");
+      impactBadge.className =
+        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all ' +
+        level.color +
+        ' ' +
+        level.bg;
+      impactBadge.classList.remove('hidden');
 
       // Performance meter
       meterLabel.textContent = level.label;
-      meterLabel.className = "text-xs font-bold " + level.color;
-      meterFill.style.width = level.pct + "%";
-      meterFill.className = "h-full rounded-full transition-all duration-700 ease-out " + level.bar;
+      meterLabel.className = 'text-xs font-bold ' + level.color;
+      meterFill.style.width = level.pct + '%';
+      meterFill.className = 'h-full rounded-full transition-all duration-700 ease-out ' + level.bar;
 
       // Impact Rating
       const impact = calcImpactRating(batSr, batR);
       impactRating.textContent = impact;
-      impactBar.style.width = impact + "%";
-      impactBar.style.background = impact >= 70 ? "#22c55e" : impact >= 45 ? "#f59e0b" : "#ef4444";
-      impactDesc.textContent = impact >= 70 ? "High impact performance" : impact >= 45 ? "Moderate impact" : "Low impact";
+      impactBar.style.width = impact + '%';
+      impactBar.style.background = impact >= 70 ? '#22c55e' : impact >= 45 ? '#f59e0b' : '#ef4444';
+      impactDesc.textContent =
+        impact >= 70 ? 'High impact performance' : impact >= 45 ? 'Moderate impact' : 'Low impact';
 
       // Match Influence
       const influence = calcMatchInfluence(batSr, batR, batB);
       influenceScore.textContent = influence;
-      influenceBar.style.width = influence + "%";
-      influenceBar.style.background = influence >= 70 ? "#22c55e" : influence >= 45 ? "#f59e0b" : "#ef4444";
-      influenceDesc.textContent = influence >= 70 ? "Match-winning influence" : influence >= 45 ? "Contributing player" : "Minor influence";
+      influenceBar.style.width = influence + '%';
+      influenceBar.style.background = influence >= 70 ? '#22c55e' : influence >= 45 ? '#f59e0b' : '#ef4444';
+      influenceDesc.textContent =
+        influence >= 70 ? 'Match-winning influence' : influence >= 45 ? 'Contributing player' : 'Minor influence';
 
       // Aggression Meter
       const aggro = getAggression(batSr);
       aggressionLabel.textContent = aggro.level;
-      aggressionLabel.className = "text-xs font-bold font-mono px-2.5 py-0.5 rounded-full border " + aggro.color;
-      aggressionLabel.classList.remove("hidden");
-      aggressionArrow.style.left = aggro.pct + "%";
+      aggressionLabel.className = 'text-xs font-bold font-mono px-2.5 py-0.5 rounded-full border ' + aggro.color;
+      aggressionLabel.classList.remove('hidden');
+      aggressionArrow.style.left = aggro.pct + '%';
     } else if (hasBowl) {
       const level = getBowlingLevel(bowlSr);
-      const bowlLabel = level.label.replace("🐐", "🎯").replace("⚡", "🎯").replace("⚠️", "⚠️");
+      const bowlLabel = level.label.replace('🐐', '🎯').replace('⚡', '🎯').replace('⚠️', '⚠️');
       impactBadge.textContent = bowlLabel;
-      impactBadge.className = "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all " + level.color + " " + level.bg;
-      impactBadge.classList.remove("hidden");
+      impactBadge.className =
+        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all ' +
+        level.color +
+        ' ' +
+        level.bg;
+      impactBadge.classList.remove('hidden');
 
-      meterLabel.textContent = "Bowling — " + level.label;
-      meterLabel.className = "text-xs font-bold " + level.color;
-      meterFill.style.width = level.pct + "%";
-      meterFill.className = "h-full rounded-full transition-all duration-700 ease-out " + level.bar;
+      meterLabel.textContent = 'Bowling — ' + level.label;
+      meterLabel.className = 'text-xs font-bold ' + level.color;
+      meterFill.style.width = level.pct + '%';
+      meterFill.className = 'h-full rounded-full transition-all duration-700 ease-out ' + level.bar;
 
       // No impact/influence/aggression for bowling
-      document.querySelectorAll("#impact-rating, #influence-score").forEach((el) => el.textContent = "—");
-      aggressionLabel.classList.add("hidden");
+      document.querySelectorAll('#impact-rating, #influence-score').forEach((el) => (el.textContent = '—'));
+      aggressionLabel.classList.add('hidden');
     }
   }
 
@@ -609,32 +961,32 @@ const useCases = [
     const bSr = bB > 0 ? (bR / bB) * 100 : 0;
 
     compASr.textContent = formatSR(aSr);
-    compASr.className = "text-sm font-black tabular-nums " + (aR > 0 && aB > 0 ? "text-white" : "text-muted");
+    compASr.className = 'text-sm font-black tabular-nums ' + (aR > 0 && aB > 0 ? 'text-white' : 'text-muted');
     compBSr.textContent = formatSR(bSr);
-    compBSr.className = "text-sm font-black tabular-nums " + (bR > 0 && bB > 0 ? "text-white" : "text-muted");
+    compBSr.className = 'text-sm font-black tabular-nums ' + (bR > 0 && bB > 0 ? 'text-white' : 'text-muted');
 
     if ((aR > 0 && aB > 0) || (bR > 0 && bB > 0)) {
-      compResult.classList.remove("hidden");
+      compResult.classList.remove('hidden');
       if (aSr > bSr && aR > 0 && aB > 0 && bR > 0 && bB > 0) {
         compText.textContent = `Player A leads with ${formatSR(aSr)} vs Player B's ${formatSR(bSr)}.`;
-        compText.className = "text-xs font-medium text-emerald-300";
+        compText.className = 'text-xs font-medium text-emerald-300';
       } else if (bSr > aSr && aR > 0 && aB > 0 && bR > 0 && bB > 0) {
         compText.textContent = `Player B leads with ${formatSR(bSr)} vs Player A's ${formatSR(aSr)}.`;
-        compText.className = "text-xs font-medium text-emerald-300";
+        compText.className = 'text-xs font-medium text-emerald-300';
       } else if (aSr === bSr && aR > 0 && aB > 0 && bR > 0 && bB > 0) {
         compText.textContent = `Both players have identical SR of ${formatSR(aSr)}.`;
-        compText.className = "text-xs font-medium text-secondary";
-      } else if (aR > 0 && aB > 0 && (!(bR > 0 && bB > 0))) {
+        compText.className = 'text-xs font-medium text-secondary';
+      } else if (aR > 0 && aB > 0 && !(bR > 0 && bB > 0)) {
         compText.textContent = `Player A: ${formatSR(aSr)}. Enter Player B's stats to compare.`;
-        compText.className = "text-xs font-medium text-secondary";
-      } else if (bR > 0 && bB > 0 && (!(aR > 0 && aB > 0))) {
+        compText.className = 'text-xs font-medium text-secondary';
+      } else if (bR > 0 && bB > 0 && !(aR > 0 && aB > 0)) {
         compText.textContent = `Player B: ${formatSR(bSr)}. Enter Player A's stats to compare.`;
-        compText.className = "text-xs font-medium text-secondary";
+        compText.className = 'text-xs font-medium text-secondary';
       } else {
-        compResult.classList.add("hidden");
+        compResult.classList.add('hidden');
       }
     } else {
-      compResult.classList.add("hidden");
+      compResult.classList.add('hidden');
     }
   }
 
@@ -645,13 +997,13 @@ const useCases = [
     const sr = b > 0 ? (r / b) * 100 : 0;
     srOutput.textContent = sr.toFixed(2);
     if (r > 0 && b > 0) {
-      if (sr >= 150) srFeedback.textContent = "World-Class! 🔥";
-      else if (sr >= 130) srFeedback.textContent = "Excellent! ⚡";
-      else if (sr >= 110) srFeedback.textContent = "Solid Strike Rate";
-      else if (sr >= 90) srFeedback.textContent = "Steady innings";
-      else srFeedback.textContent = "Need to accelerate";
+      if (sr >= 150) srFeedback.textContent = 'World-Class! 🔥';
+      else if (sr >= 130) srFeedback.textContent = 'Excellent! ⚡';
+      else if (sr >= 110) srFeedback.textContent = 'Solid Strike Rate';
+      else if (sr >= 90) srFeedback.textContent = 'Steady innings';
+      else srFeedback.textContent = 'Need to accelerate';
     } else {
-      srFeedback.textContent = "Enter stats to see performance tier";
+      srFeedback.textContent = 'Enter stats to see performance tier';
     }
   }
 
@@ -662,49 +1014,55 @@ const useCases = [
     const sr = w > 0 ? b / w : 0;
     bowlSrOutput.textContent = sr.toFixed(2);
     if (b > 0 && w > 0) {
-      if (sr <= 15) bowlSrFeedback.textContent = "World-Class! 🐐";
-      else if (sr <= 20) bowlSrFeedback.textContent = "Excellent! ⚡";
-      else if (sr <= 25) bowlSrFeedback.textContent = "Tight Bowling";
-      else if (sr <= 30) bowlSrFeedback.textContent = "Decent control";
-      else bowlSrFeedback.textContent = "Needs improvement";
+      if (sr <= 15) bowlSrFeedback.textContent = 'World-Class! 🐐';
+      else if (sr <= 20) bowlSrFeedback.textContent = 'Excellent! ⚡';
+      else if (sr <= 25) bowlSrFeedback.textContent = 'Tight Bowling';
+      else if (sr <= 30) bowlSrFeedback.textContent = 'Decent control';
+      else bowlSrFeedback.textContent = 'Needs improvement';
     } else {
-      bowlSrFeedback.textContent = "Enter stats to see performance tier";
+      bowlSrFeedback.textContent = 'Enter stats to see performance tier';
     }
   }
 
   // ─── Tab switching ───
   calcTabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
+    tab.addEventListener('click', () => {
       calcTabs.forEach((t) => {
-        t.classList.remove("bg-purple-600", "text-white");
-        t.classList.add("text-tertiary", "hover:text-primary");
+        t.classList.remove('bg-purple-600', 'text-white');
+        t.classList.add('text-tertiary', 'hover:text-primary');
       });
-      tab.classList.remove("text-tertiary", "hover:text-primary");
-      tab.classList.add("bg-purple-600", "text-white");
-      if (tab.dataset.tab === "batting") {
-        battingPanel.classList.remove("hidden");
-        bowlingPanel.classList.add("hidden");
+      tab.classList.remove('text-tertiary', 'hover:text-primary');
+      tab.classList.add('bg-purple-600', 'text-white');
+      if (tab.dataset.tab === 'batting') {
+        battingPanel.classList.remove('hidden');
+        bowlingPanel.classList.add('hidden');
       } else {
-        battingPanel.classList.add("hidden");
-        bowlingPanel.classList.remove("hidden");
+        battingPanel.classList.add('hidden');
+        bowlingPanel.classList.remove('hidden');
       }
     });
   });
 
   // ─── Event listeners ───
   [batRuns, batBalls].forEach((el) => {
-    el.addEventListener("input", () => { updateLiveBatting(); updateResults(); });
+    el.addEventListener('input', () => {
+      updateLiveBatting();
+      updateResults();
+    });
   });
   [bowlBalls, bowlWkts].forEach((el) => {
-    el.addEventListener("input", () => { updateLiveBowling(); updateResults(); });
+    el.addEventListener('input', () => {
+      updateLiveBowling();
+      updateResults();
+    });
   });
   [compARuns, compABalls, compBRuns, compBBalls].forEach((el) => {
-    el.addEventListener("input", updateComparison);
+    el.addEventListener('input', updateComparison);
   });
 
   // ─── Preset buttons ───
-  document.querySelectorAll(".preset-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
+  document.querySelectorAll('.preset-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
       const runs = parseInt(btn.dataset.runs);
       const balls = parseInt(btn.dataset.balls);
       batRuns.value = runs;
@@ -721,70 +1079,134 @@ const useCases = [
   });
 
   // ─── Copy Results ───
-  function triggerToast(message: string, variant: "success" | "error" | "info" | "warning" = "success") {
+  function triggerToast(message: string, variant: 'success' | 'error' | 'info' | 'warning' = 'success') {
     if ((window as any).__showToast) {
       (window as any).__showToast({ message, variant });
     }
   }
 
-  document.getElementById("copy-sr-btn")?.addEventListener("click", () => {
+  document.getElementById('copy-sr-btn')?.addEventListener('click', () => {
     const text = [
       `Batting SR: ${batSrValue.textContent}`,
       `Bowling SR: ${bowlSrValue.textContent}`,
       `Impact Rating: ${impactRating.textContent}/100`,
       `Match Influence: ${influenceScore.textContent}/100`,
-      `Aggression: ${aggressionLabel?.classList.contains("hidden") ? "N/A" : aggressionLabel?.textContent}`,
-      `Performance: ${meterLabel?.textContent || "N/A"}`,
-    ].join(" | ");
+      `Aggression: ${aggressionLabel?.classList.contains('hidden') ? 'N/A' : aggressionLabel?.textContent}`,
+      `Performance: ${meterLabel?.textContent || 'N/A'}`,
+    ].join(' | ');
     navigator.clipboard.writeText(text).catch(() => {});
-    triggerToast("Results copied!", "success");
+    triggerToast('Results copied!', 'success');
   });
 
   // ─── Download ───
-  document.getElementById("download-btn")?.addEventListener("click", () => {
+  document.getElementById('download-btn')?.addEventListener('click', () => {
     const text = [
       `Batting SR: ${batSrValue.textContent}`,
       `Bowling SR: ${bowlSrValue.textContent}`,
       `Impact Rating: ${impactRating.textContent}/100`,
       `Match Influence: ${influenceScore.textContent}/100`,
-      `Aggression: ${aggressionLabel?.classList.contains("hidden") ? "N/A" : aggressionLabel?.textContent}`,
-      `Performance: ${meterLabel?.textContent || "N/A"}`,
-    ].join(" | ");
+      `Aggression: ${aggressionLabel?.classList.contains('hidden') ? 'N/A' : aggressionLabel?.textContent}`,
+      `Performance: ${meterLabel?.textContent || 'N/A'}`,
+    ].join(' | ');
     if (!text) return;
-    const blob = new Blob([text], {type:"text/plain"});
-    const a = document.createElement("a");
+    const blob = new Blob([text], { type: 'text/plain' });
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = "strike-rate-results.txt";
+    a.download = 'strike-rate-results.txt';
     a.click();
     URL.revokeObjectURL(a.href);
   });
 
   // ─── Fullscreen ───
-  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-    const card = document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card = document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
     if (!card) return;
-    if (document.fullscreenElement) { document.exitFullscreen(); document.getElementById("fullscreen-btn").textContent = "⛶"; }
-    else { card.requestFullscreen?.() || card.webkitRequestFullscreen?.(); document.getElementById("fullscreen-btn").textContent = "✕"; }
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      document.getElementById('fullscreen-btn').textContent = '⛶';
+    } else {
+      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
+      document.getElementById('fullscreen-btn').textContent = '✕';
+    }
   });
-  document.addEventListener("fullscreenchange", () => {
-    const btn = document.getElementById("fullscreen-btn");
-    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
 
   // ─── Keyboard shortcuts ───
-  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      const clearBtn = document.getElementById('clear-btn') || document.querySelector("button[id*='clear']") || document.querySelector("button[id*='reset']");
+      if (clearBtn) clearBtn.click();
+      else {
+        const inputs = document.querySelectorAll('textarea, input:not([type="radio"]):not([type="checkbox"])');
+        inputs.forEach(i => i.value = '');
+        const evt = new Event('input', { bubbles: true });
+        inputs.forEach(i => i.dispatchEvent(evt));
+      }
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
 
   // ─── Usage badge ───
-  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["strike-rate-calculator"])b.textContent="Used "+u["strike-rate-calculator"]+"×";}catch(e){}
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['strike-rate-calculator']) b.textContent = 'Used ' + u['strike-rate-calculator'] + '×';
+  } catch (e) {}
 
   // ─── Share button ───
-  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("output-text")||document.querySelector("[id$='result']");const t=o?.value||o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof showToast==="function")showToast("Link copied!");});
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('output-text') || document.querySelector("[id$='result']");
+    const t = o?.value || o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof showToast === 'function') showToast('Link copied!');
+  });
 
   // ─── Sound effects ───
-  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
 
   // ─── Color theme picker ───
-  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500");});try{localStorage.setItem("nt_theme",c);}catch(e){}});});
-  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
+  });
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>
-

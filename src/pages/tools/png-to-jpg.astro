@@ -1,57 +1,146 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import HowToUse from "../../components/HowToUse.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import HowToUse from '../../components/HowToUse.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
-  { question: "Why convert PNG to JPG?", answer: "JPG files are significantly smaller than PNGs, making them ideal for web use, email attachments, and storage. Converting PNG to JPG can reduce file size by 50-80% with minimal quality loss." },
-  { question: "Will I lose quality when converting to JPG?", answer: "JPG uses lossy compression, so some quality may be lost. However, with the quality slider you can control the balance between file size and image quality. For web use, 80-90% quality is usually indistinguishable from the original." },
-  { question: "Does JPG support transparency?", answer: "No, JPG does not support transparency. If your PNG has transparent areas, they will be filled with white (or the background color you choose) when converted to JPG." },
-  { question: "Is this tool completely free?", answer: "Yes, entirely free. No watermarks, no file size limits, no sign-up required. All processing happens in your browser using the Canvas API." },
-  { question: "Are my images uploaded to a server?", answer: "No. All conversion happens entirely in your browser. Your images are never uploaded, stored, or transmitted over the network." },
-  { question: "What quality setting should I use?", answer: "85-90% is recommended for web use — it provides excellent compression with near-invisible quality loss. Use 95-100% for maximum quality when you need to preserve fine details. Use 50-70% for thumbnails or previews." },
-  { question: "Can I convert PNG with transparency to JPG?", answer: "Yes, but JPG does not support transparency. Transparent areas will be filled with white by default. This tool uses a white background fill to handle transparent PNG pixels during conversion." },
-  { question: "Is PNG to JPG conversion lossy?", answer: "Yes, JPG uses lossy compression which discards some image data to achieve smaller file sizes. The quality slider lets you control how much compression is applied — higher quality means less data loss but larger files." },
+  {
+    question: 'Why convert PNG to JPG?',
+    answer:
+      'JPG files are significantly smaller than PNGs, making them ideal for web use, email attachments, and storage. Converting PNG to JPG can reduce file size by 50-80% with minimal quality loss.',
+  },
+  {
+    question: 'Will I lose quality when converting to JPG?',
+    answer:
+      'JPG uses lossy compression, so some quality may be lost. However, with the quality slider you can control the balance between file size and image quality. For web use, 80-90% quality is usually indistinguishable from the original.',
+  },
+  {
+    question: 'Does JPG support transparency?',
+    answer:
+      'No, JPG does not support transparency. If your PNG has transparent areas, they will be filled with white (or the background color you choose) when converted to JPG.',
+  },
+  {
+    question: 'Is this tool completely free?',
+    answer:
+      'Yes, entirely free. No watermarks, no file size limits, no sign-up required. All processing happens in your browser using the Canvas API.',
+  },
+  {
+    question: 'Are my images uploaded to a server?',
+    answer:
+      'No. All conversion happens entirely in your browser. Your images are never uploaded, stored, or transmitted over the network.',
+  },
+  {
+    question: 'What quality setting should I use?',
+    answer:
+      '85-90% is recommended for web use — it provides excellent compression with near-invisible quality loss. Use 95-100% for maximum quality when you need to preserve fine details. Use 50-70% for thumbnails or previews.',
+  },
+  {
+    question: 'Can I convert PNG with transparency to JPG?',
+    answer:
+      'Yes, but JPG does not support transparency. Transparent areas will be filled with white by default. This tool uses a white background fill to handle transparent PNG pixels during conversion.',
+  },
+  {
+    question: 'Is PNG to JPG conversion lossy?',
+    answer:
+      'Yes, JPG uses lossy compression which discards some image data to achieve smaller file sizes. The quality slider lets you control how much compression is applied — higher quality means less data loss but larger files.',
+  },
 ];
 
 const pjSchema = {
-  name: "PNG to JPG Converter",
-  applicationCategory: "Multimedia",
-  description: "Convert PNG to JPG instantly in your browser with adjustable quality. Client-side conversion with instant download.",
+  name: 'PNG to JPG Converter',
+  applicationCategory: 'Multimedia',
+  description:
+    'Convert PNG to JPG instantly in your browser with adjustable quality. Client-side conversion with instant download.',
   featureList: [
-    "Instant PNG to JPG conversion via Canvas API",
-    "Adjustable quality slider (10-100%)",
-    "File size comparison before and after",
-    "Simple drag-and-drop interface",
-    "100% client-side — images never uploaded"
+    'Instant PNG to JPG conversion via Canvas API',
+    'Adjustable quality slider (10-100%)',
+    'File size comparison before and after',
+    'Simple drag-and-drop interface',
+    '100% client-side — images never uploaded',
   ],
 };
 
 const benefits = [
-  { icon: "📦", title: "Smaller File Size", desc: "JPG files are 50-80% smaller than PNGs. Save storage space and bandwidth while sharing images online." },
-  { icon: "⚡", title: "Faster Loading", desc: "Smaller JPG images load faster on websites and apps. Improve page speed and user experience instantly." },
-  { icon: "🎛️", title: "Quality Control", desc: "Adjust compression from 10-100% with the quality slider. Find the perfect balance between size and quality." },
-  { icon: "🔒", title: "100% Private", desc: "All conversion happens in your browser. Your images never leave your device." },
-  { icon: "📊", title: "Size Comparison", desc: "See original PNG size vs converted JPG size with savings percentage. Know exactly how much you saved." },
-  { icon: "🆓", title: "Free Forever", desc: "No sign-ups, no limits, no hidden charges. Unlimited conversions for everyone." },
+  {
+    icon: '📦',
+    title: 'Smaller File Size',
+    desc: 'JPG files are 50-80% smaller than PNGs. Save storage space and bandwidth while sharing images online.',
+  },
+  {
+    icon: '⚡',
+    title: 'Faster Loading',
+    desc: 'Smaller JPG images load faster on websites and apps. Improve page speed and user experience instantly.',
+  },
+  {
+    icon: '🎛️',
+    title: 'Quality Control',
+    desc: 'Adjust compression from 10-100% with the quality slider. Find the perfect balance between size and quality.',
+  },
+  {
+    icon: '🔒',
+    title: '100% Private',
+    desc: 'All conversion happens in your browser. Your images never leave your device.',
+  },
+  {
+    icon: '📊',
+    title: 'Size Comparison',
+    desc: 'See original PNG size vs converted JPG size with savings percentage. Know exactly how much you saved.',
+  },
+  {
+    icon: '🆓',
+    title: 'Free Forever',
+    desc: 'No sign-ups, no limits, no hidden charges. Unlimited conversions for everyone.',
+  },
 ];
 
 const howToSteps = [
-  { num: "1", title: "Upload PNG", desc: "Drag & drop or browse to select your PNG image. Single image conversion with instant processing." },
-  { num: "2", title: "Adjust Quality", desc: "Use the quality slider to control JPG compression. Higher quality = larger file, lower quality = smaller file." },
-  { num: "3", title: "Preview Result", desc: "Compare original PNG and converted JPG side-by-side. Toggle between original and result views." },
-  { num: "4", title: "Download JPG", desc: "Download your optimized JPG image with the file size and savings displayed for confirmation." },
+  {
+    num: '1',
+    title: 'Upload PNG',
+    desc: 'Drag & drop or browse to select your PNG image. Single image conversion with instant processing.',
+  },
+  {
+    num: '2',
+    title: 'Adjust Quality',
+    desc: 'Use the quality slider to control JPG compression. Higher quality = larger file, lower quality = smaller file.',
+  },
+  {
+    num: '3',
+    title: 'Preview Result',
+    desc: 'Compare original PNG and converted JPG side-by-side. Toggle between original and result views.',
+  },
+  {
+    num: '4',
+    title: 'Download JPG',
+    desc: 'Download your optimized JPG image with the file size and savings displayed for confirmation.',
+  },
 ];
 
 const useCases = [
-  { icon: "🌐", title: "Web Publishing", desc: "Convert PNG images to JPG for faster website loading. Ideal for blog posts, articles, and photo galleries." },
-  { icon: "📧", title: "Email Attachments", desc: "Reduce image file sizes for email attachments. Smaller JPGs send faster and stay under size limits." },
-  { icon: "📱", title: "Social Media", desc: "Convert high-res PNG photos to JPG before uploading to social platforms that recompress images anyway." },
-  { icon: "💾", title: "Storage Optimization", desc: "Free up disk space by converting large PNG files to space-efficient JPG format." },
+  {
+    icon: '🌐',
+    title: 'Web Publishing',
+    desc: 'Convert PNG images to JPG for faster website loading. Ideal for blog posts, articles, and photo galleries.',
+  },
+  {
+    icon: '📧',
+    title: 'Email Attachments',
+    desc: 'Reduce image file sizes for email attachments. Smaller JPGs send faster and stay under size limits.',
+  },
+  {
+    icon: '📱',
+    title: 'Social Media',
+    desc: 'Convert high-res PNG photos to JPG before uploading to social platforms that recompress images anyway.',
+  },
+  {
+    icon: '💾',
+    title: 'Storage Optimization',
+    desc: 'Free up disk space by converting large PNG files to space-efficient JPG format.',
+  },
 ];
 ---
 
@@ -62,9 +151,9 @@ const useCases = [
   toolSchema={pjSchema}
   faq={faqItems}
   breadcrumbs={[
-    { name: "Home", url: "/" },
-    { name: "Tools", url: "/tools/" },
-    { name: "PNG to JPG", url: "/tools/png-to-jpg/" },
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'PNG to JPG', url: '/tools/png-to-jpg/' },
   ]}
 >
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
@@ -78,30 +167,42 @@ const useCases = [
       />
 
       <div class="w-full max-w-xl mx-auto px-4 my-6">
-        <div class="bg-surface-1 border border-surface p-6 rounded-2xl shadow-xl relative">
-          <button id="fullscreen-btn" class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+        <div class="glass-card p-6 rounded-2xl shadow-xl relative">
+          <button
+            id="fullscreen-btn"
+            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+            title="Fullscreen">⛶</button
+          >
           <div
             id="dropzone"
             class="relative rounded-2xl border-2 border-dashed border-surface-3 bg-surface-1 p-10 md:p-16 text-center cursor-pointer hover:border-purple-500/50 hover:bg-surface-2 transition-all duration-300 group"
           >
             <input id="file-input" type="file" accept=".png,image/png" class="hidden" />
             <div id="dropzone-content">
-              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="17 8 12 3 7 8" />
-                  <line x1="12" y1="3" x2="12" y2="15" />
+              <div
+                class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#a855f7"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
                 </svg>
               </div>
-              <h3 class="text-lg font-semibold text-primary mb-2">
-                Drop your PNG image here
-              </h3>
+              <h3 class="text-lg font-semibold text-primary mb-2">Drop your PNG image here</h3>
               <p class="text-sm text-tertiary mb-4">
                 or <span class="text-purple-400 underline underline-offset-2 font-medium">browse files</span>
               </p>
-              <p class="text-xs text-tertiary">
-                Supports .png &mdash; converts to .jpg with quality control
-              </p>
+              <p class="text-xs text-tertiary">Supports .png &mdash; converts to .jpg with quality control</p>
             </div>
           </div>
 
@@ -111,33 +212,93 @@ const useCases = [
                 <span>Quality</span>
                 <span id="quality-label" class="font-semibold text-purple-400">85%</span>
               </label>
-              <input id="quality-slider" type="range" min="10" max="100" value="85" class="w-full h-1.5 rounded-full appearance-none bg-zinc-800 cursor-pointer accent-purple-500" />
+              <input
+                id="quality-slider"
+                type="range"
+                min="10"
+                max="100"
+                value="85"
+                class="w-full h-1.5 rounded-full appearance-none bg-zinc-800 cursor-pointer accent-purple-500"
+              />
               <div class="flex justify-between text-[9px] text-dim mt-1">
                 <span>Smaller</span>
                 <span>Larger</span>
               </div>
             </div>
             <div class="flex gap-3">
-              <button id="convert-btn" class="flex-1 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 px-6 py-3.5 text-white font-semibold hover:from-purple-500 hover:to-blue-500 transition-all duration-200 active:scale-[0.98]">
+              <button
+                id="convert-btn"
+                class="flex-1 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 px-6 py-3.5 text-white font-semibold hover:from-purple-500 hover:to-blue-500 transition-all duration-200 active:scale-[0.98]"
+              >
                 <span id="convert-btn-text">Convert to JPG</span>
               </button>
-              <button id="copy-btn" class="rounded-xl border border-surface-2 px-5 py-3.5 text-sm font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98] items-center justify-center gap-2" title="Copy text">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <button
+                id="copy-btn"
+                class="rounded-xl border border-surface-2 px-5 py-3.5 text-sm font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98] items-center justify-center gap-2"
+                title="Copy text"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="shrink-0"
+                  ><rect x="9" y="9" width="13" height="13" rx="2"></rect><path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg
+                >
                 <span>Copy</span>
               </button>
-              <button id="clear-btn" class="rounded-xl border border-surface-2 px-5 py-3.5 text-sm font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98] items-center justify-center gap-2" title="Clear all">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              <button
+                id="clear-btn"
+                class="rounded-xl border border-surface-2 px-5 py-3.5 text-sm font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98] items-center justify-center gap-2"
+                title="Clear all"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="shrink-0"
+                  ><polyline points="3 6 5 6 21 6"></polyline><path
+                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg
+                >
                 <span>Clear</span>
               </button>
             </div>
             <div class="flex items-center gap-2 mt-3">
               <span id="usage-badge" class="text-xs text-muted"></span>
-              <button id="share-btn" class="rounded-xl border border-surface-2 px-3 py-1.5 text-xs font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98] flex items-center gap-1.5" title="Share">🔗</button>
+              <button
+                id="share-btn"
+                class="rounded-xl border border-surface-2 px-3 py-1.5 text-xs font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98] flex items-center gap-1.5"
+                title="Share">🔗</button
+              >
               <div class="flex gap-1 ml-auto">
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="purple"
+                  style="background:#a855f7"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="blue"
+                  style="background:#3b82f6"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="green"
+                  style="background:#22c55e"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="pink"
+                  style="background:#ec4899"></button>
               </div>
             </div>
           </div>
@@ -145,7 +306,7 @@ const useCases = [
       </div>
 
       <div id="result-section" class="hidden mt-6 max-w-xl mx-auto px-4">
-        <div class="bg-surface-1 border border-surface rounded-2xl p-5">
+        <div class="glass-card rounded-2xl p-5">
           <div class="grid grid-cols-2 gap-4 mb-4">
             <div class="rounded-xl bg-zinc-950/40 border border-surface p-3 text-center">
               <span class="text-[9px] font-semibold text-dim uppercase tracking-wider block">Original PNG</span>
@@ -158,16 +319,40 @@ const useCases = [
           </div>
           <div class="flex items-center justify-between mb-3">
             <span id="result-saving" class="text-xs font-semibold text-emerald-400"></span>
-            <a id="download-link" href="#" download="converted.jpg" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs font-semibold hover:from-purple-500 hover:to-blue-500 active:scale-95 transition-all duration-200">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <a
+              id="download-link"
+              href="#"
+              download="converted.jpg"
+              class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs font-semibold hover:from-purple-500 hover:to-blue-500 active:scale-95 transition-all duration-200"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"
+                ></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg
+              >
               Download JPG
             </a>
           </div>
         </div>
         <div id="preview-section" class="mt-4 rounded-xl bg-zinc-950/40 border border-surface overflow-hidden">
           <div class="flex border-b border-surface">
-            <button id="preview-original-btn" class="flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors">Original</button>
-            <button id="preview-converted-btn" class="flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors">JPG Result</button>
+            <button
+              id="preview-original-btn"
+              class="flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors">Original</button
+            >
+            <button
+              id="preview-converted-btn"
+              class="flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors"
+              >JPG Result</button
+            >
           </div>
           <div class="p-4 flex items-center justify-center min-h-[200px] bg-zinc-900/30">
             <img id="preview-image" class="max-w-full max-h-[300px] object-contain rounded-lg" alt="Preview" />
@@ -179,9 +364,17 @@ const useCases = [
 
       <HowToUse
         steps={[
-          { num: "1", title: "Upload PNG", desc: "Drag & drop or browse to select your PNG image." },
-          { num: "2", title: "Adjust Quality", desc: "Use the quality slider to control JPG compression (higher = better quality, lower = smaller file)." },
-          { num: "3", title: "Download JPG", desc: "Click convert, preview the result, and download your optimized JPG image." },
+          { num: '1', title: 'Upload PNG', desc: 'Drag & drop or browse to select your PNG image.' },
+          {
+            num: '2',
+            title: 'Adjust Quality',
+            desc: 'Use the quality slider to control JPG compression (higher = better quality, lower = smaller file).',
+          },
+          {
+            num: '3',
+            title: 'Download JPG',
+            desc: 'Click convert, preview the result, and download your optimized JPG image.',
+          },
         ]}
       />
 
@@ -192,28 +385,28 @@ const useCases = [
           Frequently Asked
           <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
         </h2>
-        <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
+        <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
     </div>
   </main>
 </MainLayout>
 
 <script>
-  const dropzone = document.getElementById("dropzone");
-  const fileInput = document.getElementById("file-input");
-  const controlsSection = document.getElementById("controls-section");
-  const convertBtn = document.getElementById("convert-btn");
-  const convertBtnText = document.getElementById("convert-btn-text");
-  const resultSection = document.getElementById("result-section");
-  const qualitySlider = document.getElementById("quality-slider");
-  const qualityLabel = document.getElementById("quality-label");
-  const resultOriginal = document.getElementById("result-original");
-  const resultConverted = document.getElementById("result-converted");
-  const resultSaving = document.getElementById("result-saving");
-  const downloadLink = document.getElementById("download-link");
-  const previewImage = document.getElementById("preview-image");
-  const previewOriginalBtn = document.getElementById("preview-original-btn");
-  const previewConvertedBtn = document.getElementById("preview-converted-btn");
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('file-input');
+  const controlsSection = document.getElementById('controls-section');
+  const convertBtn = document.getElementById('convert-btn');
+  const convertBtnText = document.getElementById('convert-btn-text');
+  const resultSection = document.getElementById('result-section');
+  const qualitySlider = document.getElementById('quality-slider');
+  const qualityLabel = document.getElementById('quality-label');
+  const resultOriginal = document.getElementById('result-original');
+  const resultConverted = document.getElementById('result-converted');
+  const resultSaving = document.getElementById('result-saving');
+  const downloadLink = document.getElementById('download-link');
+  const previewImage = document.getElementById('preview-image');
+  const previewOriginalBtn = document.getElementById('preview-original-btn');
+  const previewConvertedBtn = document.getElementById('preview-converted-btn');
 
   let currentFile = null;
   let convertedBlobUrl = null;
@@ -221,52 +414,53 @@ const useCases = [
   let convertedSize = 0;
 
   function formatSize(bytes) {
-    if (bytes < 1024) return bytes + " B";
-    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + " KB";
-    return (bytes / 1048576).toFixed(1) + " MB";
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
   }
 
-  qualitySlider.addEventListener("input", () => {
-    qualityLabel.textContent = qualitySlider.value + "%";
+  qualitySlider.addEventListener('input', () => {
+    qualityLabel.textContent = qualitySlider.value + '%';
   });
 
   function handleFile(file) {
     if (!file.type.match(/^image\/png$/)) {
-      if ((window as any).__showToast) (window as any).__showToast({ message: "Please select a PNG file.", variant: "error" });
+      if ((window as any).__showToast)
+        (window as any).__showToast({ message: 'Please select a PNG file.', variant: 'error' });
       return;
     }
     currentFile = file;
-    controlsSection.classList.remove("hidden");
-    resultSection.classList.add("hidden");
-    convertBtnText.textContent = "Convert to JPG";
+    controlsSection.classList.remove('hidden');
+    resultSection.classList.add('hidden');
+    convertBtnText.textContent = 'Convert to JPG';
     convertBtn.disabled = false;
   }
 
-  dropzone.addEventListener("click", () => fileInput.click());
+  dropzone.addEventListener('click', () => fileInput.click());
 
-  dropzone.addEventListener("dragover", (e) => {
+  dropzone.addEventListener('dragover', (e) => {
     e.preventDefault();
-    dropzone.classList.add("border-purple-500/50", "bg-surface-2");
+    dropzone.classList.add('border-purple-500/50', 'bg-surface-2');
   });
 
-  dropzone.addEventListener("dragleave", () => {
-    dropzone.classList.remove("border-purple-500/50", "bg-surface-2");
+  dropzone.addEventListener('dragleave', () => {
+    dropzone.classList.remove('border-purple-500/50', 'bg-surface-2');
   });
 
-  dropzone.addEventListener("drop", (e) => {
+  dropzone.addEventListener('drop', (e) => {
     e.preventDefault();
-    dropzone.classList.remove("border-purple-500/50", "bg-surface-2");
+    dropzone.classList.remove('border-purple-500/50', 'bg-surface-2');
     if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
   });
 
-  fileInput.addEventListener("change", () => {
+  fileInput.addEventListener('change', () => {
     if (fileInput.files.length > 0) handleFile(fileInput.files[0]);
-    fileInput.value = "";
+    fileInput.value = '';
   });
 
-  convertBtn.addEventListener("click", () => {
+  convertBtn.addEventListener('click', () => {
     if (!currentFile) return;
-    convertBtnText.textContent = "Converting...";
+    convertBtnText.textContent = 'Converting...';
     convertBtn.disabled = true;
 
     const quality = parseInt(qualitySlider.value) / 100;
@@ -276,91 +470,177 @@ const useCases = [
       originalDataUrl = e.target.result;
       const img = new Image();
       img.onload = () => {
-        const canvas = document.createElement("canvas");
+        const canvas = document.createElement('canvas');
         canvas.width = img.width;
         canvas.height = img.height;
-        const ctx = canvas.getContext("2d");
-        ctx.fillStyle = "#FFFFFF";
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#FFFFFF';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 0, 0);
 
-        canvas.toBlob((blob) => {
-          convertedBlobUrl = URL.createObjectURL(blob);
-          convertedSize = blob.size;
+        canvas.toBlob(
+          (blob) => {
+            convertedBlobUrl = URL.createObjectURL(blob);
+            convertedSize = blob.size;
 
-          resultOriginal.textContent = formatSize(currentFile.size);
-          resultConverted.textContent = formatSize(convertedSize);
+            resultOriginal.textContent = formatSize(currentFile.size);
+            resultConverted.textContent = formatSize(convertedSize);
 
-          const saving = Math.round((1 - convertedSize / currentFile.size) * 100);
-          resultSaving.textContent = saving >= 0 ? `Save ${saving}%` : "Larger than original";
+            const saving = Math.round((1 - convertedSize / currentFile.size) * 100);
+            resultSaving.textContent = saving >= 0 ? `Save ${saving}%` : 'Larger than original';
 
-          downloadLink.href = convertedBlobUrl;
-          downloadLink.download = currentFile.name.replace(/\.[^.]+$/, "") + ".jpg";
+            downloadLink.href = convertedBlobUrl;
+            downloadLink.download = currentFile.name.replace(/\.[^.]+$/, '') + '.jpg';
 
-          previewImage.src = convertedBlobUrl;
+            previewImage.src = convertedBlobUrl;
 
-          previewOriginalBtn.className = "flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors";
-          previewConvertedBtn.className = "flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors";
+            previewOriginalBtn.className =
+              'flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors';
+            previewConvertedBtn.className =
+              'flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors';
 
-          resultSection.classList.remove("hidden");
-          convertBtnText.textContent = "Convert Again";
-          convertBtn.disabled = false;
+            resultSection.classList.remove('hidden');
+            convertBtnText.textContent = 'Convert Again';
+            convertBtn.disabled = false;
 
-          if ((window as any).__showToast) (window as any).__showToast({ message: "Conversion complete!", variant: "success" });
-        }, "image/jpeg", quality);
+            if ((window as any).__showToast)
+              (window as any).__showToast({ message: 'Conversion complete!', variant: 'success' });
+          },
+          'image/jpeg',
+          quality,
+        );
+      };
+      img.onerror = () => {
+        if ((window as any).__showToast) (window as any).__showToast({ message: 'Error decoding image.', variant: 'error' });
+        convertBtnText.textContent = 'Convert to JPG';
+        convertBtn.disabled = false;
       };
       img.src = e.target.result;
+    };
+    reader.onerror = () => {
+      if ((window as any).__showToast) (window as any).__showToast({ message: 'Error reading file.', variant: 'error' });
+      convertBtnText.textContent = 'Convert to JPG';
+      convertBtn.disabled = false;
     };
     reader.readAsDataURL(currentFile);
   });
 
-  previewOriginalBtn.addEventListener("click", () => {
+  previewOriginalBtn.addEventListener('click', () => {
     if (originalDataUrl) {
       previewImage.src = originalDataUrl;
-      previewOriginalBtn.className = "flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors";
-      previewConvertedBtn.className = "flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors";
+      previewOriginalBtn.className = 'flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors';
+      previewConvertedBtn.className =
+        'flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors';
     }
   });
 
-  previewConvertedBtn.addEventListener("click", () => {
+  previewConvertedBtn.addEventListener('click', () => {
     if (convertedBlobUrl) {
       previewImage.src = convertedBlobUrl;
-      previewConvertedBtn.className = "flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors";
-      previewOriginalBtn.className = "flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors";
+      previewConvertedBtn.className = 'flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors';
+      previewOriginalBtn.className =
+        'flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors';
     }
   });
 
-  document.getElementById("copy-btn")?.addEventListener("click", () => {
-    const text = document.getElementById("output-text")?.value || document.querySelector("[id$='result']")?.textContent || "";
+  document.getElementById('copy-btn')?.addEventListener('click', () => {
+    const text =
+      document.getElementById('output-text')?.value || document.querySelector("[id$='result']")?.textContent || '';
     if (!text) return;
-    navigator.clipboard.writeText(text).catch(()=>{});
-    const btn = document.getElementById("copy-btn");
-    const span = btn.querySelector("span");
-    span.textContent = "Copied!";
-    setTimeout(() => { span.textContent = "Copy"; }, 2000);
+    navigator.clipboard.writeText(text).catch(() => {});
+    const btn = document.getElementById('copy-btn');
+    const span = btn.querySelector('span');
+    span.textContent = 'Copied!';
+    setTimeout(() => {
+      span.textContent = 'Copy';
+    }, 2000);
   });
 
-  document.getElementById("clear-btn")?.addEventListener("click", () => {
-    document.querySelectorAll("textarea").forEach(t => t.value = "");
-    document.querySelectorAll("input[type=text], input[type=number], input[type=file]").forEach(i => { if(i.type==="file") i.value=""; else i.value=""; });
-    document.querySelectorAll("[id$='result'], [id$='output'], [id$='preview']").forEach(el => { if(el.tagName!=="IMG"&&el.tagName!=="CANVAS") el.textContent=""; el.classList.add("hidden"); });
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => (t.value = ''));
+    document.querySelectorAll('input[type=text], input[type=number], input[type=file]').forEach((i) => {
+      if (i.type === 'file') i.value = '';
+      else i.value = '';
+    });
+    document.querySelectorAll("[id$='result'], [id$='output'], [id$='preview']").forEach((el) => {
+      if (el.tagName !== 'IMG' && el.tagName !== 'CANVAS') el.textContent = '';
+      el.classList.add('hidden');
+    });
   });
 
   // Fullscreen toggle
-  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-    const card = document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card = document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
     if (!card) return;
-    if (document.fullscreenElement) { document.exitFullscreen(); document.getElementById("fullscreen-btn").textContent = "⛶"; }
-    else { card.requestFullscreen?.() || card.webkitRequestFullscreen?.(); document.getElementById("fullscreen-btn").textContent = "✕"; }
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      document.getElementById('fullscreen-btn').textContent = '⛶';
+    } else {
+      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
+      document.getElementById('fullscreen-btn').textContent = '✕';
+    }
   });
-  document.addEventListener("fullscreenchange", () => {
-    const btn = document.getElementById("fullscreen-btn");
-    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
-document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
-try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["png-to-jpg"])b.textContent="Used "+u["png-to-jpg"]+"×";}catch(e){}
-document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("output-text")||document.querySelector("[id$='result']");const t=o?.value||o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof showToast==="function"){playPing();showToast("Link copied!");}});
-function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
-document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500");});try{localStorage.setItem("nt_theme",c);}catch(e){}});});
-try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      document.getElementById('clear-btn')?.click();
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['png-to-jpg']) b.textContent = 'Used ' + u['png-to-jpg'] + '×';
+  } catch (e) {}
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const u = window.location.origin + window.location.pathname;
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof showToast === 'function') {
+      if (typeof playPing === 'function') playPing();
+      showToast('Link copied!');
+    }
+  });
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
+  });
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>

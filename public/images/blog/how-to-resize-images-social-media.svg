@@ -1,0 +1,50 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#05050a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d0d1a;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="glow1" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:0.25" />
+      <stop offset="100%" style="stop-color:transparent;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="glow2" cx="80%" cy="20%" r="40%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:transparent;stop-opacity:0" />
+    </radialGradient>
+    <linearGradient id="textgrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow1)"/>
+  <rect width="1200" height="630" fill="url(#glow2)"/>
+  <!-- Grid lines -->
+  <line x1="0" y1="210" x2="1200" y2="210" stroke="white" stroke-width="0.5" stroke-opacity="0.03"/>
+  <line x1="0" y1="420" x2="1200" y2="420" stroke="white" stroke-width="0.5" stroke-opacity="0.03"/>
+  <line x1="400" y1="0" x2="400" y2="630" stroke="white" stroke-width="0.5" stroke-opacity="0.03"/>
+  <line x1="800" y1="0" x2="800" y2="630" stroke="white" stroke-width="0.5" stroke-opacity="0.03"/>
+  <!-- Top accent bar -->
+  <rect x="0" y="0" width="1200" height="3" fill="url(#textgrad)"/>
+  <!-- Left accent line -->
+  <rect x="60" y="80" width="4" height="120" rx="2" fill="#a855f7" opacity="0.8"/>
+  <!-- Main title line 1 -->
+  <text x="88" y="155" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-size="72" fill="white" letter-spacing="-2">RESIZE IMAGES\nFOR SOCIAL MEDIA</text>
+  <!-- Main title line 2 -->
+  <text x="88" y="245" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-size="72" fill="url(#textgrad)" letter-spacing="-2"></text>
+  <!-- Divider -->
+  <rect x="88" y="275" width="300" height="3" rx="1.5" fill="#a855f7" opacity="0.6"/>
+  <!-- Subtitle -->
+  <text x="88" y="315" font-family="Arial, sans-serif" font-weight="400" font-size="22" fill="white" opacity="0.5" letter-spacing="3">NUMANX TOOLS — BLOG</text>
+  <!-- Big decorative icon -->
+  <text x="960" y="400" font-family="Arial, sans-serif" font-size="220" text-anchor="middle" opacity="0.07" fill="white">📐</text>
+  <!-- Bottom bar -->
+  <rect x="0" y="600" width="1200" height="30" fill="#a855f7" opacity="0.08"/>
+  <!-- NumanX branding -->
+  <text x="1140" y="621" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-size="16" fill="#a855f7" text-anchor="end" opacity="0.9" letter-spacing="2">NUMANX</text>
+  <!-- Corner decoration -->
+  <circle cx="1150" cy="80" r="120" fill="#6366f1" opacity="0.04"/>
+  <circle cx="1150" cy="80" r="80" fill="#a855f7" opacity="0.05"/>
+  <circle cx="1150" cy="80" r="40" fill="#a855f7" opacity="0.08"/>
+</svg>

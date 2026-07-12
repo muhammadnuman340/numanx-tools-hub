@@ -14,7 +14,7 @@ interface Props {
   publishedTime?: string;
   modifiedTime?: string;
   tags?: string[];
-  type?: "website" | "article" | "product";
+  type?: 'website' | 'article' | 'product';
   howto?: {
     name: string;
     description: string;
@@ -27,164 +27,195 @@ interface Props {
 }
 
 const {
-  title, description, keywords, canonical, image, noindex, nofollow,
-  faq, breadcrumbs, toolSchema, articleSchema,
-  publishedTime, modifiedTime, tags,
-  type = "website",
-  howto, guideSchema, itemList,
+  title,
+  description,
+  keywords,
+  canonical,
+  image,
+  noindex,
+  nofollow,
+  faq,
+  breadcrumbs,
+  toolSchema,
+  articleSchema,
+  publishedTime,
+  modifiedTime,
+  tags,
+  type = 'website',
+  howto,
+  guideSchema,
+  itemList,
 } = Astro.props;
 
-const siteName = "NumanX Tools";
-const orgName = "NumanX Studio";
-const siteDesc = description || "Build. Create. Analyze. Free online tools for creators, students, and developers — a product of NumanX Studio.";
-const siteKeywords = keywords || "free tools, online tools, file converters, cricket calculators, word counter, qr generator, image compressor";
+const siteName = 'NumanX Tools';
+const orgName = 'NumanX Studio';
+const siteDesc =
+  description ||
+  'Build. Create. Analyze. Free online tools for creators, students, and developers — a product of NumanX Studio.';
+const siteKeywords =
+  keywords ||
+  'free tools, online tools, file converters, cricket calculators, word counter, qr generator, image compressor';
 const siteUrl = canonical || Astro.url.href;
 
-const ogImage = image || "https://numanx-tools.pages.dev/og-default.svg";
+const ogImage = image || 'https://numanx-tools.pages.dev/og-default-1200.png';
 
-const orgUrl = "https://numanx-tools.pages.dev";
+const orgUrl = 'https://numanx-tools.pages.dev';
 
-const pageTitle = title
-  ? title.includes("NumanX") ? title : `${title} | ${siteName}`
-  : siteName;
+const pageTitle = title ? (title.includes('NumanX') ? title : `${title} | ${siteName}`) : siteName;
 
 // BreadcrumbList schema
-const breadcrumbsSchema = breadcrumbs && breadcrumbs.length > 0 ? {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": breadcrumbs.map((b, idx) => ({
-    "@type": "ListItem",
-    "position": idx + 1,
-    "name": b.name,
-    "item": b.url.startsWith("http") ? b.url : `https://numanx-tools.pages.dev${b.url}`
-  }))
-} : null;
+const breadcrumbsSchema =
+  breadcrumbs && breadcrumbs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((b, idx) => ({
+          '@type': 'ListItem',
+          position: idx + 1,
+          name: b.name,
+          item: b.url.startsWith('http') ? b.url : `https://numanx-tools.pages.dev${b.url}`,
+        })),
+      }
+    : null;
 
 // FAQ schema
-const faqSchema = faq && faq.length > 0 ? {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faq.map(item => ({
-    "@type": "Question",
-    "name": item.question,
-    "acceptedAnswer": { "@type": "Answer", "text": item.answer }
-  }))
-} : null;
+const faqSchema =
+  faq && faq.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faq.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: { '@type': 'Answer', text: item.answer },
+        })),
+      }
+    : null;
 
 // HowTo schema
-const howtoSchema = howto ? {
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  "name": howto.name,
-  "description": howto.description,
-  ...(howto.image ? { "image": howto.image } : {}),
-  ...(howto.totalTime ? { "totalTime": howto.totalTime } : {}),
-  "step": howto.steps.map((s, i) => ({
-    "@type": "HowToStep",
-    "position": i + 1,
-    "name": s.title,
-    "text": s.text,
-    ...(s.image ? { "image": s.image } : {}),
-  })),
-} : null;
+const howtoSchema = howto
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'HowTo',
+      name: howto.name,
+      description: howto.description,
+      ...(howto.image ? { image: howto.image } : {}),
+      ...(howto.totalTime ? { totalTime: howto.totalTime } : {}),
+      step: howto.steps.map((s, i) => ({
+        '@type': 'HowToStep',
+        position: i + 1,
+        name: s.title,
+        text: s.text,
+        ...(s.image ? { image: s.image } : {}),
+      })),
+    }
+  : null;
 
 // Guide/Article schema for guide pages
-const builtGuideSchema = guideSchema ? { "@context": "https://schema.org", ...guideSchema } : null;
+const builtGuideSchema = guideSchema ? { '@context': 'https://schema.org', ...guideSchema } : null;
 
 // ItemList schema for list pages
-const itemListSchema = itemList && itemList.length > 0 ? {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "itemListElement": itemList.map((item, idx) => ({
-    "@type": "ListItem",
-    "position": idx + 1,
-    "url": item.url.startsWith("http") ? item.url : `https://numanx-tools.pages.dev${item.url}`,
-    "name": item.name,
-    ...(item.description ? { "description": item.description } : {}),
-  }))
-} : null;
+const itemListSchema =
+  itemList && itemList.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        itemListElement: itemList.map((item, idx) => ({
+          '@type': 'ListItem',
+          position: idx + 1,
+          url: item.url.startsWith('http') ? item.url : `https://numanx-tools.pages.dev${item.url}`,
+          name: item.name,
+          ...(item.description ? { description: item.description } : {}),
+        })),
+      }
+    : null;
 
 // WebSite schema with site search
 const websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": siteName,
-  "url": orgUrl,
-  "description": siteDesc,
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": {
-      "@type": "EntryPoint",
-      "urlTemplate": `${orgUrl}/search/?q={search_term_string}`
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteName,
+  url: orgUrl,
+  description: siteDesc,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${orgUrl}/search/?q={search_term_string}`,
     },
-    "query-input": "required name=search_term_string"
+    'query-input': 'required name=search_term_string',
   },
-  "publisher": {
-    "@type": "Organization",
-    "name": orgName,
-    "url": orgUrl,
-    "logo": {
-      "@type": "ImageObject",
-      "url": `${orgUrl}/favicon.svg`,
-      "width": "512",
-      "height": "512"
+  publisher: {
+    '@type': 'Organization',
+    name: orgName,
+    url: orgUrl,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${orgUrl}/favicon.svg`,
+      width: '512',
+      height: '512',
     },
-    "sameAs": [
-      "https://github.com/numanxstudio",
-      "https://x.com/numanxstudio",
-      "https://instagram.com/numanxstudio",
-      "https://facebook.com/numanxstudio",
-      "https://tiktok.com/@numanxstudio",
-      "https://youtube.com/@numanxstudio"
-    ]
-  }
+    sameAs: [
+      'https://github.com/numanxstudio',
+      'https://x.com/numanxstudio',
+      'https://instagram.com/numanxstudio',
+      'https://facebook.com/numanxstudio',
+      'https://tiktok.com/@numanxstudio',
+      'https://youtube.com/@numanxstudio',
+    ],
+  },
 };
 
 // Article schema (if blog post)
-const builtArticleSchema = articleSchema ? { "@context": "https://schema.org", ...articleSchema } :
-  (type === "article" ? {
-  "@context": "https://schema.org",
-  "headline": pageTitle,
-  "description": siteDesc,
-  "author": {
-    "@type": "Person",
-    "name": "Muhammad Numan Usmani",
-    "url": `${orgUrl}/about/`
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": orgName,
-    "logo": { "@type": "ImageObject", "url": `${orgUrl}/favicon.svg` }
-  },
-  "datePublished": publishedTime || undefined,
-  "dateModified": modifiedTime || publishedTime || undefined,
-  "mainEntityOfPage": { "@type": "WebPage", "@id": siteUrl },
-  ...(tags ? { "keywords": tags.join(", ") } : {})
-} : null);
+const builtArticleSchema = articleSchema
+  ? { '@context': 'https://schema.org', ...articleSchema }
+  : type === 'article'
+    ? {
+        '@context': 'https://schema.org',
+        headline: pageTitle,
+        description: siteDesc,
+        author: {
+          '@type': 'Person',
+          name: 'Muhammad Numan Usmani',
+          url: `${orgUrl}/about/`,
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: orgName,
+          logo: { '@type': 'ImageObject', url: `${orgUrl}/favicon.svg` },
+        },
+        datePublished: publishedTime || undefined,
+        dateModified: modifiedTime || publishedTime || undefined,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': siteUrl },
+        ...(tags ? { keywords: tags.join(', ') } : {}),
+      }
+    : null;
 
 // Tool schema
-const builtToolSchema = toolSchema ? {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "applicationCategory": toolSchema.applicationCategory || "Utilities",
-  "operatingSystem": "All",
-  "browserRequirements": "Requires JavaScript",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "author": {
-    "@type": "Person",
-    "name": "Muhammad Numan Usmani"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": orgName,
-    "logo": { "@type": "ImageObject", "url": `${orgUrl}/favicon.svg` }
-  },
-  ...toolSchema
-} : null;
+const builtToolSchema = toolSchema
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      applicationCategory: toolSchema.applicationCategory || 'Utilities',
+      operatingSystem: 'All',
+      browserRequirements: 'Requires JavaScript',
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+      },
+      author: {
+        '@type': 'Person',
+        name: 'Muhammad Numan Usmani',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: orgName,
+        logo: { '@type': 'ImageObject', url: `${orgUrl}/favicon.svg` },
+      },
+      ...toolSchema,
+    }
+  : null;
 ---
 
 <meta charset="UTF-8" />
@@ -195,12 +226,19 @@ const builtToolSchema = toolSchema ? {
 <title>{pageTitle}</title>
 <meta name="description" content={siteDesc} />
 <meta name="keywords" content={siteKeywords} />
-<meta name="robots" content={noindex ? "noindex, nofollow" : nofollow ? "index, nofollow" : "index, follow, max-snippet:-1, max-image-preview:large"} />
+<meta
+  name="robots"
+  content={noindex
+    ? 'noindex, nofollow'
+    : nofollow
+      ? 'index, nofollow'
+      : 'index, follow, max-snippet:-1, max-image-preview:large'}
+/>
 <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large" />
-<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0b" />
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#05080f" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#05080f" />
 <meta name="application-name" content={siteName} />
-<meta name="msapplication-TileColor" content="#0a0a0b" />
+<meta name="msapplication-TileColor" content="#05080f" />
 
 <!-- Google Search Console -->
 <meta name="google-site-verification" content="google56b08745d0fdbc9e" />
@@ -219,7 +257,7 @@ const builtToolSchema = toolSchema ? {
 <meta property="og:locale" content="en_US" />
 {publishedTime && <meta property="article:published_time" content={publishedTime} />}
 {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
-{tags?.map(tag => <meta property="article:tag" content={tag} />)}
+{tags?.map((tag) => <meta property="article:tag" content={tag} />)}
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
@@ -230,32 +268,44 @@ const builtToolSchema = toolSchema ? {
 <meta name="twitter:creator" content="@numanxstudio" />
 
 <!-- Organization Schema -->
-<script type="application/ld+json" set:html={JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": orgName,
-  "url": orgUrl,
-  "logo": { "@type": "ImageObject", "url": `${orgUrl}/favicon.svg` },
-  "sameAs": ["https://github.com/numanxstudio","https://x.com/numanxstudio","https://instagram.com/numanxstudio","https://facebook.com/numanxstudio","https://youtube.com/@numanxstudio"],
-  "contactPoint": { "@type": "ContactPoint", "email": "hello@numanxstudio.com", "contactType": "customer service" },
-  "address": { "@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK" },
-  "foundingDate": "2024",
-  "founder": { "@type": "Person", "name": "Muhammad Numan Usmani" }
-})} />
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: orgName,
+    url: orgUrl,
+    logo: { '@type': 'ImageObject', url: `${orgUrl}/favicon.svg` },
+    sameAs: [
+      'https://github.com/numanxstudio',
+      'https://x.com/numanxstudio',
+      'https://instagram.com/numanxstudio',
+      'https://facebook.com/numanxstudio',
+      'https://youtube.com/@numanxstudio',
+    ],
+    contactPoint: { '@type': 'ContactPoint', email: 'hello@numanxstudio.com', contactType: 'customer service' },
+    address: { '@type': 'PostalAddress', addressLocality: 'Karachi', addressCountry: 'PK' },
+    foundingDate: '2024',
+    founder: { '@type': 'Person', name: 'Muhammad Numan Usmani' },
+  })}
+/>
 
 <!-- WebSite Schema -->
 <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
 <!-- WebPage Schema -->
-<script type="application/ld+json" set:html={JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": pageTitle,
-  "description": siteDesc,
-  "url": siteUrl,
-  "inLanguage": "en-US",
-  "isPartOf": { "@type": "WebSite", "url": orgUrl }
-})} />
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: pageTitle,
+    description: siteDesc,
+    url: siteUrl,
+    inLanguage: 'en-US',
+    isPartOf: { '@type': 'WebSite', url: orgUrl },
+  })}
+/>
 
 <!-- BreadcrumbList Schema -->
 {breadcrumbsSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsSchema)} />}
@@ -276,4 +326,8 @@ const builtToolSchema = toolSchema ? {
 {builtToolSchema && <script type="application/ld+json" set:html={JSON.stringify(builtToolSchema)} />}
 
 <!-- Article Schema -->
-{type === "article" && builtArticleSchema && <script type="application/ld+json" set:html={JSON.stringify(builtArticleSchema)} />}
+{
+  type === 'article' && builtArticleSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(builtArticleSchema)} />
+  )
+}

@@ -1,276 +1,878 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const benefits = [
-  { title: "Overall Sentiment Score", desc: "Get a clear positive, negative, or neutral classification for any text with percentage breakdowns" },
-  { title: "Emotion Breakdown", desc: "See detailed analysis of joy, anger, sadness, fear, and surprise levels in your text" },
-  { title: "Visual Charts", desc: "View donut chart and emotion bar graph for instant visual understanding of sentiment" },
-  { title: "Top Sentiment Words", desc: "Identify the specific positive and negative words driving the overall sentiment score" },
-  { title: "Privacy-First Processing", desc: "All analysis happens in your browser. Your text is never sent to any server" },
-  { title: "Completely Free", desc: "No sign-ups, no limits, no premium tiers — unlimited sentiment analysis" },
+  {
+    title: 'Overall Sentiment Score',
+    desc: 'Get a clear positive, negative, or neutral classification for any text with percentage breakdowns',
+  },
+  {
+    title: 'Emotion Breakdown',
+    desc: 'See detailed analysis of joy, anger, sadness, fear, and surprise levels in your text',
+  },
+  {
+    title: 'Visual Charts',
+    desc: 'View donut chart and emotion bar graph for instant visual understanding of sentiment',
+  },
+  {
+    title: 'Top Sentiment Words',
+    desc: 'Identify the specific positive and negative words driving the overall sentiment score',
+  },
+  {
+    title: 'Privacy-First Processing',
+    desc: 'All analysis happens in your browser. Your text is never sent to any server',
+  },
+  { title: 'Completely Free', desc: 'No sign-ups, no limits, no premium tiers — unlimited sentiment analysis' },
 ];
 
 const howToSteps = [
-  { title: "Paste your text", desc: "Copy and paste any text you want to analyze — reviews, comments, feedback, or social posts" },
-  { title: "Analyze sentiment", desc: "Click the analyze button to scan your text against extensive positive and negative word dictionaries" },
-  { title: "Review the results", desc: "See your overall sentiment score, emotion breakdown, and top driving words instantly" },
-  { title: "Export or copy", desc: "Copy the results to your clipboard or download them in your preferred format" },
+  {
+    title: 'Paste your text',
+    desc: 'Copy and paste any text you want to analyze — reviews, comments, feedback, or social posts',
+  },
+  {
+    title: 'Analyze sentiment',
+    desc: 'Click the analyze button to scan your text against extensive positive and negative word dictionaries',
+  },
+  {
+    title: 'Review the results',
+    desc: 'See your overall sentiment score, emotion breakdown, and top driving words instantly',
+  },
+  { title: 'Export or copy', desc: 'Copy the results to your clipboard or download them in your preferred format' },
 ];
 
 const useCases = [
-  { title: "Customer Feedback", desc: "Analyze customer reviews and feedback to understand overall satisfaction and pain points" },
-  { title: "Social Media Monitoring", desc: "Track sentiment of social media mentions, comments, and brand conversations" },
-  { title: "Product Reviews", desc: "Gauge how customers feel about your products by analyzing review sentiment" },
-  { title: "Survey Responses", desc: "Quickly assess the emotional tone of open-ended survey responses at scale" },
+  {
+    title: 'Customer Feedback',
+    desc: 'Analyze customer reviews and feedback to understand overall satisfaction and pain points',
+  },
+  {
+    title: 'Social Media Monitoring',
+    desc: 'Track sentiment of social media mentions, comments, and brand conversations',
+  },
+  { title: 'Product Reviews', desc: 'Gauge how customers feel about your products by analyzing review sentiment' },
+  { title: 'Survey Responses', desc: 'Quickly assess the emotional tone of open-ended survey responses at scale' },
 ];
 
 const faqItems = [
-  { question: "How does the sentiment analyzer determine emotions?", answer: "The analyzer uses keyword-based sentiment analysis with extensive dictionaries of positive and negative words, plus emotion-specific lexicons for joy, anger, sadness, fear, and surprise. Each word in your text is compared against these dictionaries, and the overall sentiment score is calculated by weighing positive vs negative matches." },
-  { question: "How accurate is the sentiment analysis?", answer: "For general-purpose text like social media posts, product reviews, and casual writing, the keyword-based approach provides good directional accuracy (typically 70-80%). However, it may miss context like sarcasm, irony, or nuanced language. It's best used as a quick sentiment indicator rather than a definitive analysis." },
-  { question: "What types of text work best with this analyzer?", answer: "The analyzer works well with product reviews, social media comments, customer feedback, survey responses, and general opinion text. Longer texts (50+ words) produce more reliable results. Very short texts or highly technical/specialized language may yield less accurate sentiment readings." },
-  { question: "Does the analyzer detect sarcasm or irony?", answer: "The keyword-based approach has limited ability to detect sarcasm and irony. These linguistic nuances often require more advanced context-aware AI. The tool provides a good directional indicator but may misinterpret sarcastic or ironic statements." },
-  { question: "Can I analyze text in different languages?", answer: "Currently, the sentiment analyzer is optimized for English text with comprehensive English sentiment dictionaries. Other languages may produce less accurate results due to limited word coverage." },
-  { question: "What is the minimum text length for reliable analysis?", answer: "We recommend at least 50 words for reliable sentiment analysis. Shorter texts may still produce results, but the confidence and accuracy will be lower due to limited data points." },
-  { question: "How are the emotion percentages calculated?", answer: "Emotion levels are calculated by counting emotion-specific word matches (joy, anger, sadness, fear, surprise) and normalizing them against the highest-scoring emotion. Results are shown as percentages relative to the dominant emotion." },
-  { question: "Can I export the sentiment analysis results?", answer: "Yes, you can copy the results to your clipboard or download them in TXT, JSON, CSV, or HTML formats for further analysis or reporting." },
+  {
+    question: 'How does the sentiment analyzer determine emotions?',
+    answer:
+      'The analyzer uses keyword-based sentiment analysis with extensive dictionaries of positive and negative words, plus emotion-specific lexicons for joy, anger, sadness, fear, and surprise. Each word in your text is compared against these dictionaries, and the overall sentiment score is calculated by weighing positive vs negative matches.',
+  },
+  {
+    question: 'How accurate is the sentiment analysis?',
+    answer:
+      "For general-purpose text like social media posts, product reviews, and casual writing, the keyword-based approach provides good directional accuracy (typically 70-80%). However, it may miss context like sarcasm, irony, or nuanced language. It's best used as a quick sentiment indicator rather than a definitive analysis.",
+  },
+  {
+    question: 'What types of text work best with this analyzer?',
+    answer:
+      'The analyzer works well with product reviews, social media comments, customer feedback, survey responses, and general opinion text. Longer texts (50+ words) produce more reliable results. Very short texts or highly technical/specialized language may yield less accurate sentiment readings.',
+  },
+  {
+    question: 'Does the analyzer detect sarcasm or irony?',
+    answer:
+      'The keyword-based approach has limited ability to detect sarcasm and irony. These linguistic nuances often require more advanced context-aware AI. The tool provides a good directional indicator but may misinterpret sarcastic or ironic statements.',
+  },
+  {
+    question: 'Can I analyze text in different languages?',
+    answer:
+      'Currently, the sentiment analyzer is optimized for English text with comprehensive English sentiment dictionaries. Other languages may produce less accurate results due to limited word coverage.',
+  },
+  {
+    question: 'What is the minimum text length for reliable analysis?',
+    answer:
+      'We recommend at least 50 words for reliable sentiment analysis. Shorter texts may still produce results, but the confidence and accuracy will be lower due to limited data points.',
+  },
+  {
+    question: 'How are the emotion percentages calculated?',
+    answer:
+      'Emotion levels are calculated by counting emotion-specific word matches (joy, anger, sadness, fear, surprise) and normalizing them against the highest-scoring emotion. Results are shown as percentages relative to the dominant emotion.',
+  },
+  {
+    question: 'Can I export the sentiment analysis results?',
+    answer:
+      'Yes, you can copy the results to your clipboard or download them in TXT, JSON, CSV, or HTML formats for further analysis or reporting.',
+  },
 ];
 
 const schema = {
-  name: "AI Sentiment Analyzer",
-  applicationCategory: "AI Tools",
-  description: "Analyze the sentiment of any text — detect positive, negative, and neutral emotions with detailed emotional breakdown and score visualization.",
-  featureList: ["Sentiment scoring with positive/negative/neutral classification", "Emotion breakdown (joy, anger, sadness, fear, surprise)", "Top positive and negative word extraction", "Visual sentiment bar with color-coded results", "Privacy-first browser processing"],
+  name: 'AI Sentiment Analyzer',
+  applicationCategory: 'AI Tools',
+  description:
+    'Analyze the sentiment of any text — detect positive, negative, and neutral emotions with detailed emotional breakdown and score visualization.',
+  featureList: [
+    'Sentiment scoring with positive/negative/neutral classification',
+    'Emotion breakdown (joy, anger, sadness, fear, surprise)',
+    'Top positive and negative word extraction',
+    'Visual sentiment bar with color-coded results',
+    'Privacy-first browser processing',
+  ],
 };
 ---
-<MainLayout title="AI Sentiment Analyzer - Free Online Sentiment Analysis Tool" description="Analyze text sentiment with AI-powered keyword analysis. Detect emotions, sentiment scores, and key emotional words in any text." keywords="sentiment analyzer, emotion detection, text analysis, sentiment score, opinion mining" toolSchema={schema} faq={faqItems} howto={{
-    name: "How to Analyze Sentiment with AI",
-    description: "Learn how to use our AI sentiment analyzer to detect emotions and opinions in any text",
-    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
-    totalTime: "PT1M",
-  }} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Sentiment Analyzer",url:"/tools/ai-sentiment-analyzer/"}]}>
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
-    <ToolHeader title="AI Sentiment" gradient="Analyzer Pro" desc="Detect the emotional tone of any text — positive, negative, or neutral. See a detailed breakdown of emotions and key sentiment-driving words." badge="✦ AI Powered" slug="ai-sentiment-analyzer" />
-    <ShareBar />
-    <div class="max-w-xl mx-auto mt-10">
-      <div class="bg-surface-1 border border-surface rounded-2xl p-6 space-y-4 relative">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
-            <span id="usage-badge" class="text-xs text-muted"></span>
+
+<MainLayout
+  title="AI Sentiment Analyzer - Free Online Sentiment Analysis Tool"
+  description="Analyze text sentiment with AI-powered keyword analysis. Detect emotions, sentiment scores, and key emotional words in any text."
+  keywords="sentiment analyzer, emotion detection, text analysis, sentiment score, opinion mining"
+  toolSchema={schema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Analyze Sentiment with AI',
+    description: 'Learn how to use our AI sentiment analyzer to detect emotions and opinions in any text',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'AI Sentiment Analyzer', url: '/tools/ai-sentiment-analyzer/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="AI Sentiment"
+        gradient="Analyzer Pro"
+        desc="Detect the emotional tone of any text — positive, negative, or neutral. See a detailed breakdown of emotions and key sentiment-driving words."
+        badge="✦ AI Powered"
+        slug="ai-sentiment-analyzer"
+      />
+      <ShareBar />
+      <div class="max-w-xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 space-y-4 relative">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+              <span id="usage-badge" class="text-xs text-muted"></span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="flex gap-1">
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="purple"
+                  style="background:#a855f7"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="blue"
+                  style="background:#3b82f6"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="green"
+                  style="background:#22c55e"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="pink"
+                  style="background:#ec4899"></button>
+              </div>
+              <button
+                id="fullscreen-btn"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                title="Fullscreen">⛶</button
+              >
+            </div>
           </div>
-          <div class="flex items-center gap-2">
-            <div class="flex gap-1">
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
-            </div>
-            <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+          <div class="flex items-center gap-1.5 mb-2">
+            <button
+              class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A−</button
+            >
+            <button
+              class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A+</button
+            >
+            <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
           </div>
-        </div>
-        <div class="flex items-center gap-1.5 mb-2">
-          <button class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A−</button>
-          <button class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A+</button>
-          <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
-        </div>
-        <div class="flex">
-          <div id="line-nums" class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3" style="min-width:2.5em">1</div>
-          <textarea id="input-text" rows="6" placeholder="Paste or type text to analyze sentiment..." class="flex-1 bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-none focus:outline-none focus:border-violet-500/60 transition-all"></textarea>
-        </div>
-        <div class="flex justify-between text-xs text-muted mt-1.5 px-1">
-          <span><span class="font-medium text-white" id="char-count">0</span> chars</span>
-          <span><span class="font-medium text-white" id="word-count">0</span> words</span>
-          <span><span class="font-medium text-white" id="line-count">0</span> lines</span>
-        </div>
-        <div id="reading-time" class="text-xs text-muted mt-1"></div>
-        <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
-        <button id="analyze-btn" class="w-full py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all">Analyze Sentiment</button>
-        <div class="flex gap-2">
-          <select id="export-format" class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5">
-            <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option>
-          </select>
-          <button id="copy-btn" class="px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Copy</button>
-          <button id="download-btn" class="px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Download</button>
-          <button id="share-btn" class="px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all" title="Copy share link">🔗</button>
-        </div>
-        <div id="results-area" class="hidden space-y-4">
-          <div class="bg-surface-2 border border-surface-3 rounded-xl p-5 space-y-4">
-            <div>
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-semibold text-dim uppercase tracking-wider">Overall Sentiment</span>
-                <span id="sentiment-label" class="text-sm font-bold"></span>
-              </div>
-              <div class="h-3 rounded-full bg-zinc-800 overflow-hidden flex">
-                <div id="negative-bar" class="h-full transition-all duration-700 ease-out" style="width:0%"></div>
-                <div id="neutral-bar" class="h-full transition-all duration-700 ease-out" style="width:0%"></div>
-                <div id="positive-bar" class="h-full transition-all duration-700 ease-out" style="width:0%"></div>
-              </div>
-              <div class="flex justify-between text-[10px] text-dim mt-1.5">
-                <span>Negative <span id="negative-pct">0</span>%</span>
-                <span>Neutral <span id="neutral-pct">0</span>%</span>
-                <span>Positive <span id="positive-pct">0</span>%</span>
-              </div>
+          <div class="flex">
+            <div
+              id="line-nums"
+              class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3"
+              style="min-width:2.5em"
+            >
+              1
             </div>
-            <div>
-              <span class="text-xs font-semibold text-dim uppercase tracking-wider mb-2 block">Emotion Breakdown</span>
-              <div id="emotion-breakdown" class="space-y-1.5"></div>
-            </div>
-            <canvas id="sentiment-donut" width="200" height="200" class="mx-auto mt-4"></canvas>
-            <div class="flex justify-center gap-4 mt-2 text-[10px]">
-              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Positive <span id="donut-pos-pct" class="text-muted">0%</span></span>
-              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-500"></span>Negative <span id="donut-neg-pct" class="text-muted">0%</span></span>
-              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-zinc-500"></span>Neutral <span id="donut-neut-pct" class="text-muted">0%</span></span>
-            </div>
-            <canvas id="emotion-chart" width="300" height="150" class="mx-auto mt-4"></canvas>
-            <div class="grid grid-cols-2 gap-3">
-              <div class="bg-surface-1 border border-surface rounded-lg p-3">
-                <span class="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider">Top Positive Words</span>
-                <div id="positive-words" class="mt-1.5 text-xs text-secondary"></div>
+            <textarea
+              id="input-text"
+              rows="6"
+              placeholder="Paste or type text to analyze sentiment..."
+              class="flex-1 bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-none focus:outline-none focus:border-violet-500/60 transition-all"
+            ></textarea>
+          </div>
+          <div class="flex justify-between text-xs text-muted mt-1.5 px-1">
+            <span><span class="font-medium text-white" id="char-count">0</span> chars</span>
+            <span><span class="font-medium text-white" id="word-count">0</span> words</span>
+            <span><span class="font-medium text-white" id="line-count">0</span> lines</span>
+          </div>
+          <div id="reading-time" class="text-xs text-muted mt-1"></div>
+          <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
+          <button
+            id="analyze-btn"
+            class="w-full py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all"
+            >Analyze Sentiment</button
+          >
+          <div class="flex gap-2">
+            <select
+              id="export-format"
+              class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
+            >
+              <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option
+                value="html">HTML</option
+              >
+            </select>
+            <button
+              id="copy-btn"
+              class="px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              >Copy</button
+            >
+            <button
+              id="download-btn"
+              class="px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              >Download</button
+            >
+            <button
+              id="share-btn"
+              class="px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              title="Copy share link">🔗</button
+            >
+          </div>
+          <div id="results-area" class="hidden space-y-4">
+            <div class="bg-surface-2 border border-surface-3 rounded-xl p-5 space-y-4">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-semibold text-dim uppercase tracking-wider">Overall Sentiment</span>
+                  <span id="sentiment-label" class="text-sm font-bold"></span>
+                </div>
+                <div class="h-3 rounded-full bg-zinc-800 overflow-hidden flex">
+                  <div id="negative-bar" class="h-full transition-all duration-700 ease-out" style="width:0%"></div>
+                  <div id="neutral-bar" class="h-full transition-all duration-700 ease-out" style="width:0%"></div>
+                  <div id="positive-bar" class="h-full transition-all duration-700 ease-out" style="width:0%"></div>
+                </div>
+                <div class="flex justify-between text-[10px] text-dim mt-1.5">
+                  <span>Negative <span id="negative-pct">0</span>%</span>
+                  <span>Neutral <span id="neutral-pct">0</span>%</span>
+                  <span>Positive <span id="positive-pct">0</span>%</span>
+                </div>
               </div>
-              <div class="bg-surface-1 border border-surface rounded-lg p-3">
-                <span class="text-[10px] font-semibold text-rose-400 uppercase tracking-wider">Top Negative Words</span>
-                <div id="negative-words" class="mt-1.5 text-xs text-secondary"></div>
+              <div>
+                <span class="text-xs font-semibold text-dim uppercase tracking-wider mb-2 block">Emotion Breakdown</span
+                >
+                <div id="emotion-breakdown" class="space-y-1.5"></div>
+              </div>
+              <canvas id="sentiment-donut" width="200" height="200" class="mx-auto mt-4"></canvas>
+              <div class="flex justify-center gap-4 mt-2 text-[10px]">
+                <span class="flex items-center gap-1"
+                  ><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Positive <span
+                    id="donut-pos-pct"
+                    class="text-muted">0%</span
+                  ></span
+                >
+                <span class="flex items-center gap-1"
+                  ><span class="w-2 h-2 rounded-full bg-rose-500"></span>Negative <span
+                    id="donut-neg-pct"
+                    class="text-muted">0%</span
+                  ></span
+                >
+                <span class="flex items-center gap-1"
+                  ><span class="w-2 h-2 rounded-full bg-zinc-500"></span>Neutral <span
+                    id="donut-neut-pct"
+                    class="text-muted">0%</span
+                  ></span
+                >
+              </div>
+              <canvas id="emotion-chart" width="300" height="150" class="mx-auto mt-4"></canvas>
+              <div class="grid grid-cols-2 gap-3">
+                <div class="glass-card rounded-lg p-3">
+                  <span class="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider"
+                    >Top Positive Words</span
+                  >
+                  <div id="positive-words" class="mt-1.5 text-xs text-secondary"></div>
+                </div>
+                <div class="bg-surface-1 border border-surface rounded-lg p-3">
+                  <span class="text-[10px] font-semibold text-rose-400 uppercase tracking-wider"
+                    >Top Negative Words</span
+                  >
+                  <div id="negative-words" class="mt-1.5 text-xs text-secondary"></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Sentiment Analyzer uses a <strong class="text-primary">lexicon-based approach</strong> to evaluate the emotional tone of your text. It maintains comprehensive dictionaries of sentiment-bearing words categorized by emotion type (joy, anger, sadness, fear, surprise) and polarity (positive, negative, neutral).</p><p>When you analyze text, the engine tokenizes the input and scores each word against these dictionaries. Words are weighted by intensity (e.g., "excellent" scores higher than "good"), and negations (like "not good") flip the polarity. The overall sentiment is calculated as a composite of positive, negative, and neutral scores, visualized in an easy-to-read bar.</p><p>The emotion breakdown reveals which emotional categories are most present in your text, helping you understand not just whether the sentiment is positive or negative, but the specific emotional drivers behind it.</p></div></section>
-    <ToolContentSections
-      toolSlug="ai-sentiment-analyzer"
-      toolName="AI Sentiment Analyzer"
-      category="AI Tools"
-      {benefits}
-      howToSteps={howToSteps}
-      useCases={useCases}
-    />
-    <RelatedTools current="ai-sentiment-analyzer" />
-    <div class="mt-20 max-w-3xl mx-auto px-4">
-      <div class="bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-fuchsia-500/10 border border-violet-500/20 rounded-2xl p-8 md:p-12 text-center">
-        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-4">Ready to <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Analyze</span> Sentiment?</h2>
-        <p class="text-tertiary text-sm max-w-lg mx-auto mb-6">Try our AI sentiment analyzer now — no sign-up required, completely free, and your data never leaves your device.</p>
-        <a href="#main-content" class="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all">Analyze Now</a>
+      <section class="mt-20 max-w-3xl mx-auto">
+        <div class="text-center mb-8">
+          <span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2
+            class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
+          >
+            How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+              >Works</span
+            >
+          </h2>
+        </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
+          <p>
+            The AI Sentiment Analyzer uses a <strong class="text-primary">lexicon-based approach</strong> to evaluate the
+            emotional tone of your text. It maintains comprehensive dictionaries of sentiment-bearing words categorized by
+            emotion type (joy, anger, sadness, fear, surprise) and polarity (positive, negative, neutral).
+          </p><p>
+            When you analyze text, the engine tokenizes the input and scores each word against these dictionaries. Words
+            are weighted by intensity (e.g., "excellent" scores higher than "good"), and negations (like "not good")
+            flip the polarity. The overall sentiment is calculated as a composite of positive, negative, and neutral
+            scores, visualized in an easy-to-read bar.
+          </p><p>
+            The emotion breakdown reveals which emotional categories are most present in your text, helping you
+            understand not just whether the sentiment is positive or negative, but the specific emotional drivers behind
+            it.
+          </p>
+        </div>
+      </section>
+      <ToolContentSections
+        toolSlug="ai-sentiment-analyzer"
+        toolName="AI Sentiment Analyzer"
+        category="AI Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="ai-sentiment-analyzer" />
+      <div class="mt-20 max-w-3xl mx-auto px-4">
+        <div
+          class="bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-fuchsia-500/10 border border-violet-500/20 rounded-2xl p-8 md:p-12 text-center"
+        >
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-4">
+            Ready to <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+              >Analyze</span
+            > Sentiment?
+          </h2>
+          <p class="text-tertiary text-sm max-w-lg mx-auto mb-6">
+            Try our AI sentiment analyzer now — no sign-up required, completely free, and your data never leaves your
+            device.
+          </p>
+          <a
+            href="#main-content"
+            class="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all"
+            >Analyze Now</a
+          >
+        </div>
       </div>
     </div>
-  </div></main>
+  </main>
 </MainLayout>
 
 <script>
-  function playPing(){ try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){} }
-  const inputEl = document.getElementById("input-text");
-  const analyzeBtn = document.getElementById("analyze-btn");
-  const resultsArea = document.getElementById("results-area");
-  const sentimentLabel = document.getElementById("sentiment-label");
-  const negativeBar = document.getElementById("negative-bar");
-  const neutralBar = document.getElementById("neutral-bar");
-  const positiveBar = document.getElementById("positive-bar");
-  const negativePct = document.getElementById("negative-pct");
-  const neutralPct = document.getElementById("neutral-pct");
-  const positivePct = document.getElementById("positive-pct");
-  const emotionBreakdown = document.getElementById("emotion-breakdown");
-  const positiveWordsEl = document.getElementById("positive-words");
-  const negativeWordsEl = document.getElementById("negative-words");
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
+  const inputEl = document.getElementById('input-text');
+  const analyzeBtn = document.getElementById('analyze-btn');
+  const resultsArea = document.getElementById('results-area');
+  const sentimentLabel = document.getElementById('sentiment-label');
+  const negativeBar = document.getElementById('negative-bar');
+  const neutralBar = document.getElementById('neutral-bar');
+  const positiveBar = document.getElementById('positive-bar');
+  const negativePct = document.getElementById('negative-pct');
+  const neutralPct = document.getElementById('neutral-pct');
+  const positivePct = document.getElementById('positive-pct');
+  const emotionBreakdown = document.getElementById('emotion-breakdown');
+  const positiveWordsEl = document.getElementById('positive-words');
+  const negativeWordsEl = document.getElementById('negative-words');
 
   function triggerToast(message, variant) {
     if (window.__showToast) window.__showToast({ message, variant });
   }
 
   const positiveWords = {
-    "excellent": 3, "amazing": 3, "wonderful": 3, "fantastic": 3, "great": 2, "good": 1,
-    "love": 3, "beautiful": 2, "brilliant": 3, "awesome": 3, "perfect": 3, "happy": 2,
-    "joy": 2, "joyful": 3, "delighted": 3, "pleased": 2, "glad": 1, "splendid": 3,
-    "marvelous": 3, "superb": 3, "terrific": 3, "outstanding": 3, "remarkable": 2,
-    "impressive": 2, "incredible": 3, "fabulous": 3, "nice": 1,
-    "lovely": 2, "charming": 2, "pleasant": 1, "enjoyable": 2, "delightful": 3,
-    "fun": 1, "exciting": 2, "thrilling": 3, "breathtaking": 3, "stunning": 2,
-    "gorgeous": 2, "magnificent": 3, "grand": 2, "satisfied": 1, "grateful": 2,
-    "thankful": 2, "appreciate": 2, "blessed": 2, "optimistic": 2, "hopeful": 1,
-    "positive": 1, "success": 2, "successful": 2, "win": 2, "winning": 2,
-    "achieve": 2, "achievement": 2, "celebrate": 2, "celebration": 2, "proud": 2,
-    "confidence": 2, "confident": 2, "inspire": 2, "inspired": 2, "inspiring": 3,
-    "motivate": 2, "motivated": 2, "motivating": 2, "encourage": 2, "encouraging": 2,
-    "recommend": 2, "worth": 1, "value": 1, "valuable": 2, "best": 2, "better": 1,
-    "improve": 1, "improvement": 1, "benefit": 1, "beneficial": 2, "helpful": 1,
-    "efficient": 1, "effective": 1, "reliable": 1, "quality": 1, "comfortable": 1,
-    "easy": 1, "simple": 1, "fast": 1, "smooth": 1, "seamless": 2, "intuitive": 1,
-    "friendly": 1, "kind": 1, "generous": 2, "thoughtful": 2, "caring": 1,
-    "compassionate": 2, "patient": 1, "polite": 1, "respectful": 1, "honest": 1,
-    "sincere": 1, "fair": 1, "reasonable": 1, "affordable": 1, "cheap": -1,
-    "interesting": 1, "fascinating": 2, "captivating": 3, "engaging": 1,
-    "entertaining": 1, "informative": 1, "useful": 1, "practical": 1, "innovative": 2,
-    "creative": 1, "unique": 1, "special": 2, "exceptional": 3, "extraordinary": 3,
+    excellent: 3,
+    amazing: 3,
+    wonderful: 3,
+    fantastic: 3,
+    great: 2,
+    good: 1,
+    love: 3,
+    beautiful: 2,
+    brilliant: 3,
+    awesome: 3,
+    perfect: 3,
+    happy: 2,
+    joy: 2,
+    joyful: 3,
+    delighted: 3,
+    pleased: 2,
+    glad: 1,
+    splendid: 3,
+    marvelous: 3,
+    superb: 3,
+    terrific: 3,
+    outstanding: 3,
+    remarkable: 2,
+    impressive: 2,
+    incredible: 3,
+    fabulous: 3,
+    nice: 1,
+    lovely: 2,
+    charming: 2,
+    pleasant: 1,
+    enjoyable: 2,
+    delightful: 3,
+    fun: 1,
+    exciting: 2,
+    thrilling: 3,
+    breathtaking: 3,
+    stunning: 2,
+    gorgeous: 2,
+    magnificent: 3,
+    grand: 2,
+    satisfied: 1,
+    grateful: 2,
+    thankful: 2,
+    appreciate: 2,
+    blessed: 2,
+    optimistic: 2,
+    hopeful: 1,
+    positive: 1,
+    success: 2,
+    successful: 2,
+    win: 2,
+    winning: 2,
+    achieve: 2,
+    achievement: 2,
+    celebrate: 2,
+    celebration: 2,
+    proud: 2,
+    confidence: 2,
+    confident: 2,
+    inspire: 2,
+    inspired: 2,
+    inspiring: 3,
+    motivate: 2,
+    motivated: 2,
+    motivating: 2,
+    encourage: 2,
+    encouraging: 2,
+    recommend: 2,
+    worth: 1,
+    value: 1,
+    valuable: 2,
+    best: 2,
+    better: 1,
+    improve: 1,
+    improvement: 1,
+    benefit: 1,
+    beneficial: 2,
+    helpful: 1,
+    efficient: 1,
+    effective: 1,
+    reliable: 1,
+    quality: 1,
+    comfortable: 1,
+    easy: 1,
+    simple: 1,
+    fast: 1,
+    smooth: 1,
+    seamless: 2,
+    intuitive: 1,
+    friendly: 1,
+    kind: 1,
+    generous: 2,
+    thoughtful: 2,
+    caring: 1,
+    compassionate: 2,
+    patient: 1,
+    polite: 1,
+    respectful: 1,
+    honest: 1,
+    sincere: 1,
+    fair: 1,
+    reasonable: 1,
+    affordable: 1,
+    cheap: -1,
+    interesting: 1,
+    fascinating: 2,
+    captivating: 3,
+    engaging: 1,
+    entertaining: 1,
+    informative: 1,
+    useful: 1,
+    practical: 1,
+    innovative: 2,
+    creative: 1,
+    unique: 1,
+    special: 2,
+    exceptional: 3,
+    extraordinary: 3,
   };
 
   const negativeWords = {
-    "terrible": 3, "horrible": 3, "awful": 3, "bad": 2, "worst": 3, "poor": 2,
-    "hate": 3, "ugly": 2, "disgusting": 3, "dreadful": 3, "atrocious": 3,
-    "appalling": 3, "shocking": 2, "disappointing": 2, "disappointed": 2,
-    "frustrating": 2, "frustrated": 2, "annoying": 2, "annoyed": 2, "irritating": 2,
-    "irritated": 2, "infuriating": 3, "mad": 2, "angry": 3, "furious": 3,
-    "sad": 2, "unhappy": 2, "miserable": 3, "depressing": 3, "depressed": 3,
-    "heartbreaking": 3, "heartbroken": 3, "devastating": 3, "devastated": 3,
-    "painful": 2, "hurt": 2, "suffering": 3, "tragic": 3, "horrific": 3,
-    "fearful": 2, "scared": 2, "afraid": 2, "terrified": 3, "frightened": 2,
-    "anxious": 2, "worried": 2, "nervous": 1, "stressed": 1, "overwhelmed": 2,
-    "nasty": 2, "mean": 1, "cruel": 3, "wicked": 2, "evil": 3,
-    "selfish": 2, "greedy": 2, "lazy": 1, "stupid": 2, "dumb": 1, "ridiculous": 2,
-    "absurd": 2, "laughable": 1, "pathetic": 3, "useless": 3, "worthless": 3,
-    "broken": 2, "damaged": 1, "defective": 2, "faulty": 2, "mediocre": 1,
-    "boring": 1, "dull": 1, "tedious": 1, "monotonous": 1, "tiresome": 1,
-    "slow": -1, "difficult": 0, "hard": 0, "complicated": -1, "confusing": 1,
-    "confused": 1, "unclear": 1, "ambiguous": 1, "problem": 1, "issue": 0,
-    "mistake": 1, "error": 1, "bug": 1, "crash": 2, "fail": 2, "failure": 3,
-    "loss": 2, "lost": 1, "missing": 1, "lack": 1, "lacking": 1, "incomplete": 1,
-    "insufficient": 1, "inadequate": 2, "unacceptable": 3, "unbearable": 3,
-    "intolerable": 3, "unpleasant": 2, "uncomfortable": 1, "inconvenient": 1,
-    "expensive": -1, "overpriced": 2, "cheap": -1, "waste": 2, "regret": 2,
-    "sorry": 1, "apologize": 1, "complaint": 2, "complain": 2, "criticism": 1,
-    "critical": 0, "negative": 1, "pessimistic": 2, "skeptical": 0, "doubt": 1,
-    "dislike": 1, "detest": 3, "despise": 3, "loath": 3, "abhor": 3,
+    terrible: 3,
+    horrible: 3,
+    awful: 3,
+    bad: 2,
+    worst: 3,
+    poor: 2,
+    hate: 3,
+    ugly: 2,
+    disgusting: 3,
+    dreadful: 3,
+    atrocious: 3,
+    appalling: 3,
+    shocking: 2,
+    disappointing: 2,
+    disappointed: 2,
+    frustrating: 2,
+    frustrated: 2,
+    annoying: 2,
+    annoyed: 2,
+    irritating: 2,
+    irritated: 2,
+    infuriating: 3,
+    mad: 2,
+    angry: 3,
+    furious: 3,
+    sad: 2,
+    unhappy: 2,
+    miserable: 3,
+    depressing: 3,
+    depressed: 3,
+    heartbreaking: 3,
+    heartbroken: 3,
+    devastating: 3,
+    devastated: 3,
+    painful: 2,
+    hurt: 2,
+    suffering: 3,
+    tragic: 3,
+    horrific: 3,
+    fearful: 2,
+    scared: 2,
+    afraid: 2,
+    terrified: 3,
+    frightened: 2,
+    anxious: 2,
+    worried: 2,
+    nervous: 1,
+    stressed: 1,
+    overwhelmed: 2,
+    nasty: 2,
+    mean: 1,
+    cruel: 3,
+    wicked: 2,
+    evil: 3,
+    selfish: 2,
+    greedy: 2,
+    lazy: 1,
+    stupid: 2,
+    dumb: 1,
+    ridiculous: 2,
+    absurd: 2,
+    laughable: 1,
+    pathetic: 3,
+    useless: 3,
+    worthless: 3,
+    broken: 2,
+    damaged: 1,
+    defective: 2,
+    faulty: 2,
+    mediocre: 1,
+    boring: 1,
+    dull: 1,
+    tedious: 1,
+    monotonous: 1,
+    tiresome: 1,
+    slow: -1,
+    difficult: 0,
+    hard: 0,
+    complicated: -1,
+    confusing: 1,
+    confused: 1,
+    unclear: 1,
+    ambiguous: 1,
+    problem: 1,
+    issue: 0,
+    mistake: 1,
+    error: 1,
+    bug: 1,
+    crash: 2,
+    fail: 2,
+    failure: 3,
+    loss: 2,
+    lost: 1,
+    missing: 1,
+    lack: 1,
+    lacking: 1,
+    incomplete: 1,
+    insufficient: 1,
+    inadequate: 2,
+    unacceptable: 3,
+    unbearable: 3,
+    intolerable: 3,
+    unpleasant: 2,
+    uncomfortable: 1,
+    inconvenient: 1,
+    expensive: -1,
+    overpriced: 2,
+    cheap: -1,
+    waste: 2,
+    regret: 2,
+    sorry: 1,
+    apologize: 1,
+    complaint: 2,
+    complain: 2,
+    criticism: 1,
+    critical: 0,
+    negative: 1,
+    pessimistic: 2,
+    skeptical: 0,
+    doubt: 1,
+    dislike: 1,
+    detest: 3,
+    despise: 3,
+    loath: 3,
+    abhor: 3,
   };
 
   const emotionWords = {
-    joy: { words: ["joy","happy","glad","delighted","pleased","wonderful","fantastic","amazing","excellent","love","beautiful","brilliant","awesome","perfect","celebration","celebrate","grateful","thankful","blessed","fun","exciting","thrilling","enjoy","enjoyable","cheerful","optimistic","hopeful","proud","happiness"], weight: 1 },
-    anger: { words: ["angry","furious","mad","outraged","infuriated","annoyed","irritated","frustrated","frustrating","hostile","rage","fury","wrath","irate","livid","enraged","indignant","resentful","bitter","aggressive"], weight: 1 },
-    sadness: { words: ["sad","unhappy","depressed","miserable","heartbroken","devastated","disappointed","disappointing","gloomy","melancholy","sorrow","grief","mourn","cry","tears","lonely","hopeless","despair","heartache","mournful"], weight: 1 },
-    fear: { words: ["afraid","scared","terrified","frightened","anxious","worried","nervous","panicked","horrified","fearful","terrifying","frightening","alarming","dread","dreadful","threatened","uneasy","paranoid","phobia","timid"], weight: 1 },
-    surprise: { words: ["surprised","amazed","astonished","shocked","stunned","astounded","startled","dumbfounded","flabbergasted","speechless","unexpected","unforeseen","sudden","remarkable","incredible","extraordinary","striking","notable","stunning","breathtaking"], weight: 1 },
+    joy: {
+      words: [
+        'joy',
+        'happy',
+        'glad',
+        'delighted',
+        'pleased',
+        'wonderful',
+        'fantastic',
+        'amazing',
+        'excellent',
+        'love',
+        'beautiful',
+        'brilliant',
+        'awesome',
+        'perfect',
+        'celebration',
+        'celebrate',
+        'grateful',
+        'thankful',
+        'blessed',
+        'fun',
+        'exciting',
+        'thrilling',
+        'enjoy',
+        'enjoyable',
+        'cheerful',
+        'optimistic',
+        'hopeful',
+        'proud',
+        'happiness',
+      ],
+      weight: 1,
+    },
+    anger: {
+      words: [
+        'angry',
+        'furious',
+        'mad',
+        'outraged',
+        'infuriated',
+        'annoyed',
+        'irritated',
+        'frustrated',
+        'frustrating',
+        'hostile',
+        'rage',
+        'fury',
+        'wrath',
+        'irate',
+        'livid',
+        'enraged',
+        'indignant',
+        'resentful',
+        'bitter',
+        'aggressive',
+      ],
+      weight: 1,
+    },
+    sadness: {
+      words: [
+        'sad',
+        'unhappy',
+        'depressed',
+        'miserable',
+        'heartbroken',
+        'devastated',
+        'disappointed',
+        'disappointing',
+        'gloomy',
+        'melancholy',
+        'sorrow',
+        'grief',
+        'mourn',
+        'cry',
+        'tears',
+        'lonely',
+        'hopeless',
+        'despair',
+        'heartache',
+        'mournful',
+      ],
+      weight: 1,
+    },
+    fear: {
+      words: [
+        'afraid',
+        'scared',
+        'terrified',
+        'frightened',
+        'anxious',
+        'worried',
+        'nervous',
+        'panicked',
+        'horrified',
+        'fearful',
+        'terrifying',
+        'frightening',
+        'alarming',
+        'dread',
+        'dreadful',
+        'threatened',
+        'uneasy',
+        'paranoid',
+        'phobia',
+        'timid',
+      ],
+      weight: 1,
+    },
+    surprise: {
+      words: [
+        'surprised',
+        'amazed',
+        'astonished',
+        'shocked',
+        'stunned',
+        'astounded',
+        'startled',
+        'dumbfounded',
+        'flabbergasted',
+        'speechless',
+        'unexpected',
+        'unforeseen',
+        'sudden',
+        'remarkable',
+        'incredible',
+        'extraordinary',
+        'striking',
+        'notable',
+        'stunning',
+        'breathtaking',
+      ],
+      weight: 1,
+    },
   };
 
-  const intensifiers = ["very","extremely","incredibly","really","so","absolutely","completely","totally","utterly","highly","deeply","truly"];
-  const diminishers = ["slightly","somewhat","barely","hardly","a bit","a little","kinda","kind of","fairly","rather"];
-  const negators = ["not","no","never","neither","nor","cannot","can't","don't","doesn't","didn't","won't","wouldn't","shouldn't","couldn't","isn't","aren't","wasn't","weren't","haven't","hasn't","hadn't"];
+  const intensifiers = [
+    'very',
+    'extremely',
+    'incredibly',
+    'really',
+    'so',
+    'absolutely',
+    'completely',
+    'totally',
+    'utterly',
+    'highly',
+    'deeply',
+    'truly',
+  ];
+  const diminishers = [
+    'slightly',
+    'somewhat',
+    'barely',
+    'hardly',
+    'a bit',
+    'a little',
+    'kinda',
+    'kind of',
+    'fairly',
+    'rather',
+  ];
+  const negators = [
+    'not',
+    'no',
+    'never',
+    'neither',
+    'nor',
+    'cannot',
+    "can't",
+    "don't",
+    "doesn't",
+    "didn't",
+    "won't",
+    "wouldn't",
+    "shouldn't",
+    "couldn't",
+    "isn't",
+    "aren't",
+    "wasn't",
+    "weren't",
+    "haven't",
+    "hasn't",
+    "hadn't",
+  ];
 
   function analyzeSentiment(text) {
-    const tokens = text.toLowerCase().replace(/[^a-z\s']/g, "").split(/\s+/).filter(w => w);
-    let posScore = 0, negScore = 0, neutralScore = 0;
-    let posCount = 0, negCount = 0;
-    let posWordsFound = [], negWordsFound = [];
+    const tokens = text
+      .toLowerCase()
+      .replace(/[^a-z\s']/g, '')
+      .split(/\s+/)
+      .filter((w) => w);
+    let posScore = 0,
+      negScore = 0,
+      neutralScore = 0;
+    let posCount = 0,
+      negCount = 0;
+    let posWordsFound = [],
+      negWordsFound = [];
     const emotions = { joy: 0, anger: 0, sadness: 0, fear: 0, surprise: 0 };
 
     for (let i = 0; i < tokens.length; i++) {
-      const token = tokens[i].replace(/'s$/, "");
+      const token = tokens[i].replace(/'s$/, '');
       let multiplier = 1;
 
       // Check for negator in previous 1-2 words
       for (let j = Math.max(0, i - 2); j < i; j++) {
-        if (negators.includes(tokens[j])) { multiplier = -1; break; }
+        if (negators.includes(tokens[j])) {
+          multiplier = -1;
+          break;
+        }
       }
 
       // Check for intensifier in previous 1-2 words
       for (let j = Math.max(0, i - 2); j < i; j++) {
-        if (intensifiers.includes(tokens[j])) { multiplier *= 1.5; break; }
+        if (intensifiers.includes(tokens[j])) {
+          multiplier *= 1.5;
+          break;
+        }
       }
 
       // Check for diminisher
       for (let j = Math.max(0, i - 2); j < i; j++) {
-        if (diminishers.includes(tokens[j])) { multiplier *= 0.5; break; }
+        if (diminishers.includes(tokens[j])) {
+          multiplier *= 0.5;
+          break;
+        }
       }
 
       if (positiveWords[token] !== undefined) {
@@ -313,15 +915,22 @@ const schema = {
     const neutPct = Math.max(0, 100 - posPct - negPct);
 
     let label, labelColor;
-    if (posScore > negScore * 1.2) { label = "Positive 😊"; labelColor = "text-emerald-400"; }
-    else if (negScore > posScore * 1.2) { label = "Negative 😟"; labelColor = "text-rose-400"; }
-    else { label = "Neutral 😐"; labelColor = "text-zinc-400"; }
+    if (posScore > negScore * 1.2) {
+      label = 'Positive 😊';
+      labelColor = 'text-emerald-400';
+    } else if (negScore > posScore * 1.2) {
+      label = 'Negative 😟';
+      labelColor = 'text-rose-400';
+    } else {
+      label = 'Neutral 😐';
+      labelColor = 'text-zinc-400';
+    }
 
     posWordsFound.sort((a, b) => b.score - a.score);
     negWordsFound.sort((a, b) => b.score - a.score);
 
-    const topPos = posWordsFound.slice(0, 10).filter((w, i, arr) => arr.findIndex(x => x.word === w.word) === i);
-    const topNeg = negWordsFound.slice(0, 10).filter((w, i, arr) => arr.findIndex(x => x.word === w.word) === i);
+    const topPos = posWordsFound.slice(0, 10).filter((w, i, arr) => arr.findIndex((x) => x.word === w.word) === i);
+    const topNeg = negWordsFound.slice(0, 10).filter((w, i, arr) => arr.findIndex((x) => x.word === w.word) === i);
 
     // Normalize emotions
     const maxEmotion = Math.max(...Object.values(emotions), 1);
@@ -335,17 +944,20 @@ const schema = {
   function drawDonutChart(canvasId, posPct, negPct, neutPct) {
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    const cx = 100, cy = 100, r = 80, w = 25;
+    const ctx = canvas.getContext('2d');
+    const cx = 100,
+      cy = 100,
+      r = 80,
+      w = 25;
     ctx.clearRect(0, 0, 200, 200);
     const total = posPct + negPct + neutPct || 100;
     const data = [
-      { pct: posPct / total * 100, color: "#22c55e" },
-      { pct: negPct / total * 100, color: "#f43f5e" },
-      { pct: neutPct / total * 100, color: "#71717a" },
+      { pct: (posPct / total) * 100, color: '#22c55e' },
+      { pct: (negPct / total) * 100, color: '#f43f5e' },
+      { pct: (neutPct / total) * 100, color: '#71717a' },
     ];
     let startAngle = -Math.PI / 2;
-    data.forEach(d => {
+    data.forEach((d) => {
       const angle = (d.pct / 100) * 2 * Math.PI;
       ctx.beginPath();
       ctx.arc(cx, cy, r, startAngle, startAngle + angle);
@@ -355,31 +967,32 @@ const schema = {
       ctx.fill();
       startAngle += angle;
     });
-    ctx.fillStyle = "#e4e4e7";
-    ctx.font = "bold 18px sans-serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(posPct + "%", cx, cy - 10);
-    ctx.fillStyle = "#a1a1aa";
-    ctx.font = "11px sans-serif";
-    ctx.fillText("Positive", cx, cy + 12);
+    ctx.fillStyle = '#e4e4e7';
+    ctx.font = 'bold 18px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(posPct + '%', cx, cy - 10);
+    ctx.fillStyle = '#a1a1aa';
+    ctx.font = '11px sans-serif';
+    ctx.fillText('Positive', cx, cy + 12);
   }
 
   function drawEmotionChart(canvasId, emotions) {
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    const w = 300, h = 150;
+    const ctx = canvas.getContext('2d');
+    const w = 300,
+      h = 150;
     ctx.clearRect(0, 0, w, h);
     const labels = Object.keys(emotions);
     const values = Object.values(emotions);
     const max = Math.max(...values, 1);
-    const colors = ["#22c55e", "#ef4444", "#3b82f6", "#a855f7", "#f59e0b"];
+    const colors = ['#22c55e', '#ef4444', '#3b82f6', '#a855f7', '#f59e0b'];
     const barW = 36;
     const gap = 16;
     const startX = 20;
-    ctx.font = "10px sans-serif";
-    ctx.textAlign = "center";
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'center';
     labels.forEach((label, i) => {
       const x = startX + i * (barW + gap) + barW / 2;
       const barH = (values[i] / max) * 100;
@@ -388,47 +1001,51 @@ const schema = {
       ctx.beginPath();
       ctx.roundRect(x - barW / 2, y, barW, barH, 3);
       ctx.fill();
-      ctx.fillStyle = "#a1a1aa";
+      ctx.fillStyle = '#a1a1aa';
       ctx.fillText(label[0].toUpperCase() + label.slice(1, 4), x, h - 12);
-      ctx.fillStyle = "#e4e4e7";
-      ctx.font = "bold 10px sans-serif";
-      ctx.fillText(values[i] + "%", x, y - 5);
-      ctx.font = "10px sans-serif";
+      ctx.fillStyle = '#e4e4e7';
+      ctx.font = 'bold 10px sans-serif';
+      ctx.fillText(values[i] + '%', x, y - 5);
+      ctx.font = '10px sans-serif';
     });
   }
 
-  analyzeBtn.addEventListener("click", () => {
+  analyzeBtn.addEventListener('click', () => {
     const text = inputEl.value.trim();
-    if (!text) { triggerToast("Please enter some text to analyze", "warning"); return; }
+    if (!text) {
+      triggerToast('Please enter some text to analyze', 'warning');
+      return;
+    }
 
     const result = analyzeSentiment(text);
-    resultsArea.classList.remove("hidden");
+    resultsArea.classList.remove('hidden');
 
     sentimentLabel.textContent = result.label;
     sentimentLabel.className = `text-sm font-bold ${result.labelColor}`;
 
-    positiveBar.style.width = result.posPct + "%";
-    positiveBar.className = "h-full bg-emerald-500 transition-all duration-700 ease-out";
-    negativeBar.style.width = result.negPct + "%";
-    negativeBar.className = "h-full bg-rose-500 transition-all duration-700 ease-out";
-    neutralBar.style.width = result.neutPct + "%";
-    neutralBar.className = "h-full bg-zinc-600 transition-all duration-700 ease-out";
+    positiveBar.style.width = result.posPct + '%';
+    positiveBar.className = 'h-full bg-emerald-500 transition-all duration-700 ease-out';
+    negativeBar.style.width = result.negPct + '%';
+    negativeBar.className = 'h-full bg-rose-500 transition-all duration-700 ease-out';
+    neutralBar.style.width = result.neutPct + '%';
+    neutralBar.className = 'h-full bg-zinc-600 transition-all duration-700 ease-out';
 
     positivePct.textContent = result.posPct;
     negativePct.textContent = result.negPct;
     neutralPct.textContent = result.neutPct;
 
     const emotionColors = {
-      joy: { color: "bg-emerald-500", text: "text-emerald-400", icon: "😊" },
-      anger: { color: "bg-red-500", text: "text-red-400", icon: "😠" },
-      sadness: { color: "bg-blue-500", text: "text-blue-400", icon: "😢" },
-      fear: { color: "bg-purple-500", text: "text-purple-400", icon: "😨" },
-      surprise: { color: "bg-amber-500", text: "text-amber-400", icon: "😲" },
+      joy: { color: 'bg-emerald-500', text: 'text-emerald-400', icon: '😊' },
+      anger: { color: 'bg-red-500', text: 'text-red-400', icon: '😠' },
+      sadness: { color: 'bg-blue-500', text: 'text-blue-400', icon: '😢' },
+      fear: { color: 'bg-purple-500', text: 'text-purple-400', icon: '😨' },
+      surprise: { color: 'bg-amber-500', text: 'text-amber-400', icon: '😲' },
     };
 
-    emotionBreakdown.innerHTML = Object.entries(result.emotions).map(([emotion, pct]) => {
-      const ec = emotionColors[emotion];
-      return `<div class="flex items-center gap-3">
+    emotionBreakdown.innerHTML = Object.entries(result.emotions)
+      .map(([emotion, pct]) => {
+        const ec = emotionColors[emotion];
+        return `<div class="flex items-center gap-3">
         <span class="w-6 text-center text-sm">${ec.icon}</span>
         <span class="text-xs capitalize text-secondary w-16">${emotion}</span>
         <div class="flex-1 h-2 rounded-full bg-zinc-800 overflow-hidden">
@@ -436,158 +1053,279 @@ const schema = {
         </div>
         <span class="text-xs text-dim w-8 text-right">${pct}%</span>
       </div>`;
-    }).join("");
+      })
+      .join('');
 
-    positiveWordsEl.innerHTML = result.topPos.length > 0
-      ? result.topPos.map(w => `<span class="inline-block px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/30 rounded text-emerald-300 mr-1 mb-1">${w.word}</span>`).join("")
-      : '<span class="text-dim">No strong positive words found</span>';
+    positiveWordsEl.innerHTML =
+      result.topPos.length > 0
+        ? result.topPos
+            .map(
+              (w) =>
+                `<span class="inline-block px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/30 rounded text-emerald-300 mr-1 mb-1">${w.word}</span>`,
+            )
+            .join('')
+        : '<span class="text-dim">No strong positive words found</span>';
 
-    negativeWordsEl.innerHTML = result.topNeg.length > 0
-      ? result.topNeg.map(w => `<span class="inline-block px-2 py-0.5 bg-rose-500/10 border border-rose-500/30 rounded text-rose-300 mr-1 mb-1">${w.word}</span>`).join("")
-      : '<span class="text-dim">No strong negative words found</span>';
+    negativeWordsEl.innerHTML =
+      result.topNeg.length > 0
+        ? result.topNeg
+            .map(
+              (w) =>
+                `<span class="inline-block px-2 py-0.5 bg-rose-500/10 border border-rose-500/30 rounded text-rose-300 mr-1 mb-1">${w.word}</span>`,
+            )
+            .join('')
+        : '<span class="text-dim">No strong negative words found</span>';
 
-    drawDonutChart("sentiment-donut", result.posPct, result.negPct, result.neutPct);
-    drawEmotionChart("emotion-chart", result.emotions);
+    drawDonutChart('sentiment-donut', result.posPct, result.negPct, result.neutPct);
+    drawEmotionChart('emotion-chart', result.emotions);
 
-    document.getElementById("donut-pos-pct").textContent = result.posPct + "%";
-    document.getElementById("donut-neg-pct").textContent = result.negPct + "%";
-    document.getElementById("donut-neut-pct").textContent = result.neutPct + "%";
+    document.getElementById('donut-pos-pct').textContent = result.posPct + '%';
+    document.getElementById('donut-neg-pct').textContent = result.negPct + '%';
+    document.getElementById('donut-neut-pct').textContent = result.neutPct + '%';
 
-    triggerToast("Sentiment analysis complete!", "success");
+    triggerToast('Sentiment analysis complete!', 'success');
   });
 
-  document.getElementById("copy-btn")?.addEventListener("click", () => {
-    const label = document.getElementById("sentiment-label")?.textContent || "";
-    const pos = document.getElementById("positive-pct")?.textContent || "";
-    const neg = document.getElementById("negative-pct")?.textContent || "";
-    const neut = document.getElementById("neutral-pct")?.textContent || "";
-    if (!label) { triggerToast("Nothing to copy!", "warning"); return; }
+  document.getElementById('copy-btn')?.addEventListener('click', () => {
+    const label = document.getElementById('sentiment-label')?.textContent || '';
+    const pos = document.getElementById('positive-pct')?.textContent || '';
+    const neg = document.getElementById('negative-pct')?.textContent || '';
+    const neut = document.getElementById('neutral-pct')?.textContent || '';
+    if (!label) {
+      triggerToast('Nothing to copy!', 'warning');
+      return;
+    }
     navigator.clipboard.writeText(`Sentiment: ${label}\nPositive: ${pos}% | Neutral: ${neut}% | Negative: ${neg}%`);
-    playPing(); const btn = document.getElementById("copy-btn");
-    btn.textContent = "Copied!";
-    setTimeout(() => { btn.textContent = "Copy"; }, 2000);
+    playPing();
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+    }, 2000);
   });
 
-  document.getElementById("download-btn")?.addEventListener("click", () => {
-    const label = document.getElementById("sentiment-label")?.textContent || "";
-    const pos = document.getElementById("positive-pct")?.textContent || "0";
-    const neg = document.getElementById("negative-pct")?.textContent || "0";
-    const neut = document.getElementById("neutral-pct")?.textContent || "0";
+  document.getElementById('download-btn')?.addEventListener('click', () => {
+    const label = document.getElementById('sentiment-label')?.textContent || '';
+    const pos = document.getElementById('positive-pct')?.textContent || '0';
+    const neg = document.getElementById('negative-pct')?.textContent || '0';
+    const neut = document.getElementById('neutral-pct')?.textContent || '0';
     const text = inputEl.value.trim();
-    if (!text) { triggerToast("Nothing to download!", "warning"); return; }
+    if (!text) {
+      triggerToast('Nothing to download!', 'warning');
+      return;
+    }
     const outputText = `Input Text:\n${text}\n\nSentiment: ${label}\nPositive: ${pos}% | Neutral: ${neut}% | Negative: ${neg}%`;
-    const fmt=document.getElementById("export-format")?.value||"txt";
+    const fmt = document.getElementById('export-format')?.value || 'txt';
     let content = outputText;
-    let mime = "text/plain";
-    let ext = "txt";
-    if(fmt==="json"){ content=JSON.stringify({result:outputText, tool:"ai-sentiment-analyzer", timestamp:new Date().toISOString()}); mime="application/json"; ext="json"; }
-    if(fmt==="csv"){ content="Result\n\""+outputText.replace(/"/g,'""')+"\""; mime="text/csv"; ext="csv"; }
-    if(fmt==="html"){ content="<!DOCTYPE html><html><body><pre>"+outputText.replace(/</g,"&lt;")+"</pre></body></html>"; mime="text/html"; ext="html"; }
-    const blob = new Blob([content], {type:mime});
-    const a = document.createElement("a");
+    let mime = 'text/plain';
+    let ext = 'txt';
+    if (fmt === 'json') {
+      content = JSON.stringify({
+        result: outputText,
+        tool: 'ai-sentiment-analyzer',
+        timestamp: new Date().toISOString(),
+      });
+      mime = 'application/json';
+      ext = 'json';
+    }
+    if (fmt === 'csv') {
+      content = 'Result\n"' + outputText.replace(/"/g, '""') + '"';
+      mime = 'text/csv';
+      ext = 'csv';
+    }
+    if (fmt === 'html') {
+      content = '<!DOCTYPE html><html><body><pre>' + outputText.replace(/</g, '&lt;') + '</pre></body></html>';
+      mime = 'text/html';
+      ext = 'html';
+    }
+    const blob = new Blob([content], { type: mime });
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = "sentiment-output."+ext;
+    a.download = 'sentiment-output.' + ext;
     a.click();
     URL.revokeObjectURL(a.href);
-    playPing(); triggerToast("Downloaded!", "success");
+    playPing();
+    triggerToast('Downloaded!', 'success');
   });
 
-  inputEl?.addEventListener("input", () => {
+  inputEl?.addEventListener('input', () => {
     const text = inputEl.value;
-    document.getElementById("char-count").textContent = text.length;
-    document.getElementById("word-count").textContent = text.trim() ? text.trim().split(/\s+/).filter(w => w).length : 0;
-    document.getElementById("line-count").textContent = text ? text.split("\n").length : 0;
+    document.getElementById('char-count').textContent = text.length;
+    document.getElementById('word-count').textContent = text.trim()
+      ? text
+          .trim()
+          .split(/\s+/)
+          .filter((w) => w).length
+      : 0;
+    document.getElementById('line-count').textContent = text ? text.split('\n').length : 0;
   });
 
-  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-    const card = document.getElementById("fullscreen-btn").closest(".bg-surface-1.border.border-surface.rounded-2xl") || document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card =
+      document.getElementById('fullscreen-btn').closest('.bg-surface-1.border.border-surface.rounded-2xl') ||
+      document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
     if (!card) return;
     if (document.fullscreenElement) {
       document.exitFullscreen();
-      document.getElementById("fullscreen-btn").textContent = "⛶";
+      document.getElementById('fullscreen-btn').textContent = '⛶';
     } else {
       card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
-      document.getElementById("fullscreen-btn").textContent = "✕";
+      document.getElementById('fullscreen-btn').textContent = '✕';
     }
   });
-  document.addEventListener("fullscreenchange", () => {
-    const btn = document.getElementById("fullscreen-btn");
-    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
 
-  const DRAFT_KEY = "nt_draft_ai-sentiment-analyzer";
-  (function() {
-    const input = document.getElementById("input-text") || document.querySelector("textarea:not([readonly])");
+  const DRAFT_KEY = 'nt_draft_ai-sentiment-analyzer';
+  (function () {
+    const input = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');
     if (!input) return;
     try {
       const saved = localStorage.getItem(DRAFT_KEY);
-      if (saved && !input.value) { input.value = saved; input.dispatchEvent(new Event("input")); }
-    } catch(e) {}
+      if (saved && !input.value) {
+        input.value = saved;
+        input.dispatchEvent(new Event('input'));
+      }
+    } catch (e) {}
     let saveTimer;
-    input.addEventListener("input", () => {
+    input.addEventListener('input', () => {
       clearTimeout(saveTimer);
       saveTimer = setTimeout(() => {
-        try { localStorage.setItem(DRAFT_KEY, input.value); } catch(e) {}
+        try {
+          localStorage.setItem(DRAFT_KEY, input.value);
+        } catch (e) {}
       }, 500);
     });
   })();
 
-  document.querySelector(".font-inc")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.min(24,s+2)+"px"; }); });
-  document.querySelector(".font-dec")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.max(10,s-2)+"px"; }); });
-  try { const s=localStorage.getItem("nt_fs"); if(s) document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px"); } catch(e){}
-
-  document.addEventListener("keydown", e => {
-    if(e.ctrlKey&&e.key==="Enter"){ e.preventDefault(); const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])")||document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])"); if(b) b.click(); }
-    if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){ e.preventDefault(); document.getElementById("clear-btn")?.click(); }
-    if(e.ctrlKey&&(e.key==="D"||e.key==="d")){ e.preventDefault(); document.getElementById("download-btn")?.click(); }
-  });
-
-  try { const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}"); const b=document.getElementById("usage-badge"); if(b&&u["ai-sentiment-analyzer"]) b.textContent="Used "+u["ai-sentiment-analyzer"]+"×"; } catch(e){}
-
-  document.getElementById("share-btn")?.addEventListener("click", () => {
-    const o=document.getElementById("sentiment-label")||document.querySelector("[id$='result']");
-    const t=o?.value||o?.textContent||"";
-    if(!t) return;
-    const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));
-    navigator.clipboard.writeText(u).catch(()=>{});
-    if(typeof triggerToast==="function") triggerToast("Link copied!");
-  });
-
-  const rtInput=document.getElementById("input-text")||document.querySelector("textarea:not([readonly])");
-  if(rtInput){
-    rtInput.addEventListener("input", ()=>{
-      const w=rtInput.value?rtInput.value.trim().split(/\s+/).length:0;
-      const e=document.getElementById("reading-time");
-      if(e) e.textContent=Math.max(1,Math.round(w/200))+" min read · "+Math.max(1,Math.round(w/150))+" min speak";
+  document.querySelector('.font-inc')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.min(24, s + 2) + 'px';
     });
-    rtInput.dispatchEvent(new Event("input"));
+  });
+  document.querySelector('.font-dec')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.max(10, s - 2) + 'px';
+    });
+  });
+  try {
+    const s = localStorage.getItem('nt_fs');
+    if (s) document.querySelectorAll('textarea').forEach((t) => (t.style.fontSize = s + 'px'));
+  } catch (e) {}
+
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b =
+        document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])") ||
+        document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      const clearBtn = document.getElementById('clear-btn') || document.querySelector("button[id*='clear']") || document.querySelector("button[id*='reset']");
+      if (clearBtn) clearBtn.click();
+      else {
+        const inputs = document.querySelectorAll('textarea, input:not([type="radio"]):not([type="checkbox"])');
+        inputs.forEach(i => i.value = '');
+        const evt = new Event('input', { bubbles: true });
+        inputs.forEach(i => i.dispatchEvent(evt));
+      }
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
+
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['ai-sentiment-analyzer']) b.textContent = 'Used ' + u['ai-sentiment-analyzer'] + '×';
+  } catch (e) {}
+
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('sentiment-label') || document.querySelector("[id$='result']");
+    const t = o?.value || o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof triggerToast === 'function') triggerToast('Link copied!');
+  });
+
+  const rtInput = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');
+  if (rtInput) {
+    rtInput.addEventListener('input', () => {
+      const w = rtInput.value ? rtInput.value.trim().split(/\s+/).length : 0;
+      const e = document.getElementById('reading-time');
+      if (e)
+        e.textContent =
+          Math.max(1, Math.round(w / 200)) + ' min read · ' + Math.max(1, Math.round(w / 150)) + ' min speak';
+    });
+    rtInput.dispatchEvent(new Event('input'));
   }
 
-  const lnInput=document.getElementById("input-text");
-  if(lnInput){
-    const updateLN=()=>{ const n=document.getElementById("line-nums"); if(n) n.textContent=Array.from({length:lnInput.value.split("\n").length},(_,i)=>i+1).join("\n"); };
-    lnInput.addEventListener("input", updateLN);
-    lnInput.addEventListener("scroll", ()=>{ const n=document.getElementById("line-nums"); if(n) n.scrollTop=lnInput.scrollTop; });
+  const lnInput = document.getElementById('input-text');
+  if (lnInput) {
+    const updateLN = () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.textContent = Array.from({ length: lnInput.value.split('\n').length }, (_, i) => i + 1).join('\n');
+    };
+    lnInput.addEventListener('input', updateLN);
+    lnInput.addEventListener('scroll', () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.scrollTop = lnInput.scrollTop;
+    });
     updateLN();
   }
 
-  const lfInput=document.getElementById("input-text");
-  if(lfInput){
-    lfInput.addEventListener("input", ()=>{
-      const t=lfInput.value.toLowerCase().replace(/[^a-z]/g,""); if(!t){ document.getElementById("letter-freq").classList.add("hidden"); return; }
-      const f={}; for(const c of t) f[c]=(f[c]||0)+1;
-      const s=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,8); const m=s[0]?s[0][1]:1;
-      const el=document.getElementById("letter-freq"); el.classList.remove("hidden");
-      el.innerHTML=s.map(([c,n])=>`<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n/m)*80+10}%"></div><span class="text-muted">${n}</span></div>`).join("");
+  const lfInput = document.getElementById('input-text');
+  if (lfInput) {
+    lfInput.addEventListener('input', () => {
+      const t = lfInput.value.toLowerCase().replace(/[^a-z]/g, '');
+      if (!t) {
+        document.getElementById('letter-freq').classList.add('hidden');
+        return;
+      }
+      const f = {};
+      for (const c of t) f[c] = (f[c] || 0) + 1;
+      const s = Object.entries(f)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+      const m = s[0] ? s[0][1] : 1;
+      const el = document.getElementById('letter-freq');
+      el.classList.remove('hidden');
+      el.innerHTML = s
+        .map(
+          ([c, n]) =>
+            `<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n / m) * 80 + 10}%"></div><span class="text-muted">${n}</span></div>`,
+        )
+        .join('');
     });
   }
 
-  document.querySelectorAll(".theme-swatch").forEach(s=>{
-    s.addEventListener("click",()=>{
-      const c=s.dataset.color; const map={purple:"#a855f7",blue:"#3b82f6",green:"#22c55e",pink:"#ec4899",orange:"#f97316"};
-      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach(b=>{ b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500").replace(/from-(purple|violet)-\d+/g,"from-"+c+"-500").replace(/to-purple-\d+/g,"to-"+c+"-600"); });
-      try{localStorage.setItem("nt_theme",c);}catch(e){}
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      const map = { purple: '#a855f7', blue: '#3b82f6', green: '#22c55e', pink: '#ec4899', orange: '#f97316' };
+      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500')
+          .replace(/from-(purple|violet)-\d+/g, 'from-' + c + '-500')
+          .replace(/to-purple-\d+/g, 'to-' + c + '-600');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
     });
   });
-  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>

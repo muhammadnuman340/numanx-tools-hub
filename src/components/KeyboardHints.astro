@@ -1,15 +1,26 @@
 ---
-interface Hint { keys: string; label: string }
-interface Props { hints: Hint[] }
+interface Hint {
+  keys: string;
+  label: string;
+}
+interface Props {
+  hints: Hint[];
+}
 
 const { hints } = Astro.props;
 ---
 
-<div class="flex flex-wrap items-center gap-3 px-1 text-[10px] text-dim mt-4" role="note" aria-label="Keyboard shortcuts">
-  {hints.map((h) => (
-    <span class="inline-flex items-center gap-1.5">
-      <kbd class="key-hint">{h.keys}</kbd>
-      <span>{h.label}</span>
-    </span>
-  ))}
+<div
+  class="flex flex-wrap items-center gap-3 px-1 text-[10px] text-dim mt-4"
+  role="note"
+  aria-label="Keyboard shortcuts"
+>
+  {
+    hints.map((h) => (
+      <span class="inline-flex items-center gap-1.5">
+        <kbd class="key-hint">{h.keys}</kbd>
+        <span>{h.label}</span>
+      </span>
+    ))
+  }
 </div>

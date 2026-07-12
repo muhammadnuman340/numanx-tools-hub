@@ -1,90 +1,424 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
-  { question: "What is a UUID?", answer: "A UUID (Universally Unique Identifier) is a 128-bit identifier standardized by RFC 4122. It's used to uniquely identify information in computer systems. The probability of duplication is extremely low." },
-  { question: "What is the difference between UUID v4 and v7?", answer: "UUID v4 is randomly generated. UUID v7 includes a Unix timestamp prefix, making them time-ordered and more efficient for database indexing." },
-  { question: "Are these truly random?", answer: "UUID v4 uses crypto.getRandomValues() for cryptographically strong random values. UUID v7 embeds the current timestamp with random entropy." },
+  {
+    question: 'What is a UUID?',
+    answer:
+      "A UUID (Universally Unique Identifier) is a 128-bit identifier standardized by RFC 4122. It's used to uniquely identify information in computer systems. The probability of duplication is extremely low.",
+  },
+  {
+    question: 'What is the difference between UUID v4 and v7?',
+    answer:
+      'UUID v4 is randomly generated. UUID v7 includes a Unix timestamp prefix, making them time-ordered and more efficient for database indexing.',
+  },
+  {
+    question: 'Are these truly random?',
+    answer:
+      'UUID v4 uses crypto.getRandomValues() for cryptographically strong random values. UUID v7 embeds the current timestamp with random entropy.',
+  },
 ];
-const uvSchema = { name: "UUID Generator", applicationCategory: "Utilities", description: "Generate UUID v4 and v7 identifiers instantly with bulk generation and copy/download.", featureList: ["UUID v4 and v7 support", "Bulk generation (1-100)", "Copy single UUID", "Download all as .txt"] };
+const uvSchema = {
+  name: 'UUID Generator',
+  applicationCategory: 'Utilities',
+  description: 'Generate UUID v4 and v7 identifiers instantly with bulk generation and copy/download.',
+  featureList: ['UUID v4 and v7 support', 'Bulk generation (1-100)', 'Copy single UUID', 'Download all as .txt'],
+};
+
+const benefits = [
+  {
+    icon: '⚡',
+    title: 'Instant Generation',
+    desc: 'Generate cryptographically secure UUIDs in milliseconds directly in your browser.',
+  },
+  {
+    icon: '⏱️',
+    title: 'Time-Sorted v7',
+    desc: 'Supports the newer UUID v7 standard, embedding timestamps for better database performance.',
+  },
+  {
+    icon: '📦',
+    title: 'Bulk Generation',
+    desc: 'Need 100 UUIDs? Generate them instantly and download as a single .txt or .csv file.',
+  },
+  {
+    icon: '🔒',
+    title: '100% Secure',
+    desc: 'No server tracking. All generation uses the native browser Crypto API locally.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Select Version',
+    desc: 'Choose between the completely random UUID v4 or the time-sorted UUID v7.',
+  },
+  {
+    num: '2',
+    title: 'Set Quantity',
+    desc: 'Adjust the counter to generate anywhere from 1 to 100 UUIDs at once.',
+  },
+  {
+    num: '3',
+    title: 'Generate',
+    desc: 'Click Generate or press Ctrl+Enter to instantly create your secure identifiers.',
+  },
+  {
+    num: '4',
+    title: 'Copy or Export',
+    desc: 'Click Copy All to copy to clipboard, or choose an export format and click Download.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '🗄️',
+    title: 'Database Keys',
+    desc: 'Generate UUID v7s to use as primary keys, ensuring they are both unique and sortable by time.',
+  },
+  {
+    icon: '🔑',
+    title: 'API Development',
+    desc: 'Mock API responses with real UUIDs, or use them as idempotent request IDs.',
+  },
+  {
+    icon: '🍪',
+    title: 'Session IDs',
+    desc: 'Generate cryptographically strong tokens for stateless session tracking.',
+  },
+  {
+    icon: '🏗️',
+    title: 'Distributed Systems',
+    desc: 'Create unique IDs across microservices without relying on a centralized database counter.',
+  },
+];
 ---
-<MainLayout title="UUID Generator - Generate UUIDs Online Free" description="Generate UUID v4 and v7 identifiers instantly. Bulk generate UUIDs with copy and download support." keywords="uuid generator, uuid, guid, unique id, developer tools" toolSchema={uvSchema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"UUID Generator",url:"/tools/uuid-generator/"}]}>
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
-    <ToolHeader title="UUID" gradient="Generator Pro" desc="Generate UUID v4 and v7 identifiers instantly. Bulk generate, copy, and download." badge="✦ New Tool" slug="uuid-generator" />
-    <ShareBar />
-    <div class="max-w-xl mx-auto mt-10">
-      <div class="bg-surface-1 border border-surface rounded-2xl p-6">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
-            <span id="usage-badge" class="text-xs text-muted"></span>
-          </div>
-          <div class="flex items-center gap-2">
-            <div class="flex gap-1">
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+
+<MainLayout
+  title="UUID Generator - Generate UUIDs Online Free"
+  description="Generate UUID v4 and v7 identifiers instantly. Bulk generate UUIDs with copy and download support."
+  keywords="uuid generator, uuid, guid, unique id, developer tools"
+  toolSchema={uvSchema}
+  faq={faqItems}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'UUID Generator', url: '/tools/uuid-generator/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="UUID"
+        gradient="Generator Pro"
+        desc="Generate UUID v4 and v7 identifiers instantly. Bulk generate, copy, and download."
+        badge="✦ New Tool"
+        slug="uuid-generator"
+      />
+      <ShareBar />
+      <div class="max-w-xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+              <span id="usage-badge" class="text-xs text-muted"></span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="flex gap-1">
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="purple"
+                  style="background:#a855f7"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="blue"
+                  style="background:#3b82f6"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="green"
+                  style="background:#22c55e"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="pink"
+                  style="background:#ec4899"></button>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex gap-2">
-            <button id="v4-btn" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-purple-600 text-white">UUID v4</button>
-            <button id="v7-btn" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary">UUID v7 (Timestamp)</button>
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex gap-2">
+              <button
+                id="v4-btn"
+                class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-purple-600 text-white"
+                >UUID v4</button
+              >
+              <button
+                id="v7-btn"
+                class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary"
+                >UUID v7 (Timestamp)</button
+              >
+            </div>
+            <div class="flex items-center gap-2">
+              <label class="text-xs text-tertiary">Count:</label>
+              <input
+                id="count-input"
+                type="number"
+                value="1"
+                min="1"
+                max="100"
+                class="w-16 px-2 py-1.5 rounded-lg border border-surface-2 bg-surface-1 text-white text-xs text-center focus:border-purple-500/50 focus:outline-none"
+              />
+            </div>
           </div>
-          <div class="flex items-center gap-2">
-            <label class="text-xs text-tertiary">Count:</label>
-            <input id="count-input" type="number" value="1" min="1" max="100" class="w-16 px-2 py-1.5 rounded-lg border border-surface-2 bg-surface-1 text-white text-xs text-center focus:border-purple-500/50 focus:outline-none" />
+          <div class="flex items-center gap-1.5 mb-2">
+            <span class="text-xs text-muted ml-auto">Ctrl+Enter to generate</span>
           </div>
-        </div>
-        <div class="flex items-center gap-1.5 mb-2">
-          <span class="text-xs text-muted ml-auto">Ctrl+Enter to generate</span>
-        </div>
-        <button id="generate-btn" class="w-full bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold py-2.5 rounded-xl transition-all mb-4">Generate</button>
-        <div id="uuid-list" class="space-y-1.5 max-h-64 overflow-y-auto">
-          <div class="text-center text-muted text-xs py-8">Click Generate to create UUIDs</div>
-        </div>
-        <div class="flex gap-2 mt-4 pt-4 border-t border-surface">
-          <button id="copy-all-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy All</button>
-          <button id="share-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all" title="Copy share link">🔗</button>
-          <button id="download-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Download .txt</button>
-          <button id="clear-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Clear</button>
-          <select id="export-format" class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5">
-            <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option>
-          </select>
+          <button
+            id="generate-btn"
+            class="w-full bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold py-2.5 rounded-xl transition-all mb-4"
+            >Generate</button
+          >
+          <div id="uuid-list" class="space-y-1.5 max-h-64 overflow-y-auto">
+            <div class="text-center text-muted text-xs py-8">Click Generate to create UUIDs</div>
+          </div>
+          <div class="flex gap-2 mt-4 pt-4 border-t border-surface">
+            <button
+              id="copy-all-btn"
+              class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+              >Copy All</button
+            >
+            <button
+              id="share-btn"
+              class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+              title="Copy share link">🔗</button
+            >
+            <button
+              id="download-btn"
+              class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+              >Download .txt</button
+            >
+            <button
+              id="clear-btn"
+              class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+              >Clear</button
+            >
+            <select
+              id="export-format"
+              class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
+            >
+              <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option
+                value="html">HTML</option
+              >
+            </select>
+          </div>
         </div>
       </div>
+      <ToolContentSections
+        toolSlug="uuid-generator"
+        toolName="UUID Generator"
+        category="Utility Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="uuid-generator" />
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"
+            >Questions</span
+          >
+        </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
+      </div>
     </div>
-    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Why Use a <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">UUID Generator?</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>UUIDs are essential for database primary keys, API resource identifiers, session tokens, and distributed systems where unique identifiers must be generated without coordination. UUID v7 with timestamp ordering is increasingly preferred for modern database systems.</p></div></section>
-    <RelatedTools current="uuid-generator" />
-    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
-  </div></main>
+  </main>
 </MainLayout>
 <script>
-  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
   let useV7 = false;
   let uuids = [];
-  document.getElementById("v4-btn").addEventListener("click", () => { useV7 = false; document.getElementById("v4-btn").classList.add("bg-purple-600","text-white"); document.getElementById("v4-btn").classList.remove("bg-surface-2","text-tertiary","hover:text-primary"); document.getElementById("v7-btn").classList.remove("bg-purple-600","text-white"); document.getElementById("v7-btn").classList.add("bg-surface-2","text-tertiary","hover:text-primary"); });
-  document.getElementById("v7-btn").addEventListener("click", () => { useV7 = true; document.getElementById("v7-btn").classList.add("bg-purple-600","text-white"); document.getElementById("v7-btn").classList.remove("bg-surface-2","text-tertiary","hover:text-primary"); document.getElementById("v4-btn").classList.remove("bg-purple-600","text-white"); document.getElementById("v4-btn").classList.add("bg-surface-2","text-tertiary","hover:text-primary"); });
-  function generateUUIDv4() { return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = crypto.getRandomValues(new Uint8Array(1))[0] / 256 | 0; return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16); }); }
-  function generateUUIDv7() { const t = Date.now(); const r = crypto.getRandomValues(new Uint8Array(10)); return `${t.toString(16).padStart(12,'0')}-${Array.from(r).map((b,i) => { if (i===0) return (b & 0x0f | 0x70).toString(16); if (i===1) return (b & 0x3f | 0x80).toString(16); return b.toString(16).padStart(2,'0'); }).join('').replace(/^(.{4})(.{4})(.{8})(.{4})$/,'$1-$2-$3-$4')}`; }
-  function render() { const el = document.getElementById("uuid-list"); if (uuids.length === 0) { el.innerHTML = '<div class="text-center text-muted text-xs py-8">Click Generate to create UUIDs</div>'; return; } el.innerHTML = uuids.map((u, i) => `<div class="flex items-center gap-2 bg-surface-1 rounded-lg px-3 py-1.5"><span class="text-xs text-muted w-5">${i+1}.</span><code class="flex-1 text-xs text-primary font-mono truncate">${u}</code><button class="copy-uuid text-[10px] text-purple-400 hover:text-purple-300 font-medium shrink-0" data-uuid="${u}">Copy</button></div>`).join(''); el.querySelectorAll(".copy-uuid").forEach(btn => btn.addEventListener("click", async () => { await navigator.clipboard.writeText(btn.dataset.uuid); playPing(); if ((window as any).__showToast) (window as any).__showToast({message:"Copied!",variant:"success"}); })); }
-  document.getElementById("generate-btn").addEventListener("click", () => { const n = Math.min(Math.max(parseInt((document.getElementById("count-input") as HTMLInputElement).value) || 1, 1), 100); uuids = Array.from({length: n}, () => useV7 ? generateUUIDv7() : generateUUIDv4()); render(); });
-  document.getElementById("copy-all-btn").addEventListener("click", async () => { if (!uuids.length) return; await navigator.clipboard.writeText(uuids.join('\n')); playPing(); if ((window as any).__showToast) (window as any).__showToast({message:"All copied!",variant:"success"}); });
-  document.getElementById("download-btn").addEventListener("click", () => { if (!uuids.length) return; const fmt = (document.getElementById("export-format") as HTMLSelectElement)?.value || "txt"; const mimes = {txt:"text/plain",json:"application/json",csv:"text/csv",html:"text/html"}; const data = fmt === "json" ? JSON.stringify(uuids) : fmt === "csv" ? uuids.join(",\n") : fmt === "html" ? "<pre>"+uuids.join("\n")+"</pre>" : uuids.join("\n"); const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([data], {type:mimes[fmt]||"text/plain"})); a.download = `uuids-${Date.now()}.${fmt}`; a.click(); playPing(); URL.revokeObjectURL(a.href); });
-  document.getElementById("clear-btn")?.addEventListener("click", () => { uuids = []; render(); (document.getElementById("count-input") as HTMLInputElement).value = "1"; playPing(); });
-  document.getElementById("share-btn")?.addEventListener("click",()=>{const t=uuids.length?uuids.join("\n"):"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof (window as any).__showToast==="function")(window as any).__showToast({message:"Link copied!",variant:"success"});});
-  document.querySelector(".font-inc")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.min(24,s+2)+"px";})});
-  document.querySelector(".font-dec")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.max(10,s-2)+"px";})});
-  try{const s=localStorage.getItem("nt_fs");if(s)document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px")}catch(e){}
-  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
-  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["uuid"])b.textContent="Used "+u["uuid"]+"×"}catch(e){}
-  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500")});try{localStorage.setItem("nt_theme",c)}catch(e){}})});
-  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click()}catch(e){}
-</script>
+  document.getElementById('v4-btn').addEventListener('click', () => {
+    useV7 = false;
+    document.getElementById('v4-btn').classList.add('bg-purple-600', 'text-white');
+    document.getElementById('v4-btn').classList.remove('bg-surface-2', 'text-tertiary', 'hover:text-primary');
+    document.getElementById('v7-btn').classList.remove('bg-purple-600', 'text-white');
+    document.getElementById('v7-btn').classList.add('bg-surface-2', 'text-tertiary', 'hover:text-primary');
+  });
+  document.getElementById('v7-btn').addEventListener('click', () => {
+    useV7 = true;
+    document.getElementById('v7-btn').classList.add('bg-purple-600', 'text-white');
+    document.getElementById('v7-btn').classList.remove('bg-surface-2', 'text-tertiary', 'hover:text-primary');
+    document.getElementById('v4-btn').classList.remove('bg-purple-600', 'text-white');
+    document.getElementById('v4-btn').classList.add('bg-surface-2', 'text-tertiary', 'hover:text-primary');
+  });
+  function generateUUIDv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = (crypto.getRandomValues(new Uint8Array(1))[0] / 256) | 0;
+      return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+    });
+  }
+  function generateUUIDv7() {
+    const t = Date.now();
+    const r = crypto.getRandomValues(new Uint8Array(10));
+    return `${t.toString(16).padStart(12, '0')}-${Array.from(r)
+      .map((b, i) => {
+        if (i === 0) return ((b & 0x0f) | 0x70).toString(16);
+        if (i === 1) return ((b & 0x3f) | 0x80).toString(16);
+        return b.toString(16).padStart(2, '0');
+      })
+      .join('')
+      .replace(/^(.{4})(.{4})(.{8})(.{4})$/, '$1-$2-$3-$4')}`;
+  }
+  function render() {
+    const el = document.getElementById('uuid-list');
+    if (uuids.length === 0) {
+      el.innerHTML = '<div class="text-center text-muted text-xs py-8">Click Generate to create UUIDs</div>';
+      return;
+    }
+    el.innerHTML = uuids
+      .map(
+        (u, i) =>
+          `<div class="flex items-center gap-2 bg-surface-1 rounded-lg px-3 py-1.5"><span class="text-xs text-muted w-5">${i + 1}.</span><code class="flex-1 text-xs text-primary font-mono truncate">${u}</code><button class="copy-uuid text-[10px] text-purple-400 hover:text-purple-300 font-medium shrink-0" data-uuid="${u}">Copy</button></div>`,
+      )
+      .join('');
+    el.querySelectorAll('.copy-uuid').forEach((btn) =>
+      btn.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(btn.dataset.uuid);
+        playPing();
+        if ((window as any).__showToast) (window as any).__showToast({ message: 'Copied!', variant: 'success' });
+      }),
+    );
+  }
+  document.getElementById('generate-btn').addEventListener('click', () => {
+    const n = Math.min(
+      Math.max(parseInt((document.getElementById('count-input') as HTMLInputElement).value) || 1, 1),
+      100,
+    );
+    uuids = Array.from({ length: n }, () => (useV7 ? generateUUIDv7() : generateUUIDv4()));
+    render();
+  });
+  document.getElementById('copy-all-btn').addEventListener('click', async () => {
+    if (!uuids.length) return;
+    await navigator.clipboard.writeText(uuids.join('\n'));
+    playPing();
+    if ((window as any).__showToast) (window as any).__showToast({ message: 'All copied!', variant: 'success' });
+  });
+  document.getElementById('download-btn').addEventListener('click', () => {
+    if (!uuids.length) return;
+    const fmt = (document.getElementById('export-format') as HTMLSelectElement)?.value || 'txt';
+    const mimes = { txt: 'text/plain', json: 'application/json', csv: 'text/csv', html: 'text/html' };
+    const data =
+      fmt === 'json'
+        ? JSON.stringify(uuids)
+        : fmt === 'csv'
+          ? uuids.join(',\n')
+          : fmt === 'html'
+            ? '<pre>' + uuids.join('\n') + '</pre>'
+            : uuids.join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([data], { type: mimes[fmt] || 'text/plain' }));
+    a.download = `uuids-${Date.now()}.${fmt}`;
+    a.click();
+    playPing();
+    URL.revokeObjectURL(a.href);
+  });
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    uuids = [];
+    render();
+    (document.getElementById('count-input') as HTMLInputElement).value = '1';
+    playPing();
+  });
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const t = uuids.length ? uuids.join('\n') : '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof (window as any).__showToast === 'function')
+      (window as any).__showToast({ message: 'Link copied!', variant: 'success' });
+  });
+  document.querySelector('.font-inc')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.min(24, s + 2) + 'px';
+    });
+  });
+  document.querySelector('.font-dec')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.max(10, s - 2) + 'px';
+    });
+  });
+  try {
+    const s = localStorage.getItem('nt_fs');
+    if (s) document.querySelectorAll('textarea').forEach((t) => (t.style.fontSize = s + 'px'));
+  } catch (e) {}
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      document.getElementById('clear-btn')?.click();
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['uuid']) b.textContent = 'Used ' + u['uuid'] + '×';
+  } catch (e) {}
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
+  });
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
+
+  // ─── Fullscreen ───
+  (function() {
+    var fsBtn = document.getElementById('fullscreen-btn');
+    if (fsBtn) {
+      fsBtn.addEventListener('click', function() {
+        var el = document.querySelector('main') || document.documentElement;
+        if (!document.fullscreenElement) { el.requestFullscreen && el.requestFullscreen(); }
+        else { document.exitFullscreen && document.exitFullscreen(); }
+      });
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'f' || e.key === 'F') { if (fsBtn) fsBtn.click(); }
+    });
+  })();</script>

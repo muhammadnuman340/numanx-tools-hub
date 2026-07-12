@@ -1,13 +1,13 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: "Complete Guide to Image Optimization for Web Performance"
-description: "Learn how to optimize images for the web — choose formats, compress effectively, resize for different devices, and implement lazy loading for faster page speed."
-date: "June 1, 2026"
-author: "Muhammad Numan Usmani"
-category: "Image Tools"
-tags: ["image optimization", "web performance", "SEO", "compression", "lazy loading", "responsive images"]
-readingTime: "12 min read"
-slug: "image-optimization-guide"
+title: 'Complete Guide to Image Optimization for Web Performance'
+description: 'Learn how to optimize images for the web — choose formats, compress effectively, resize for different devices, and implement lazy loading for faster page speed.'
+date: 'June 1, 2026'
+author: 'Muhammad Numan Usmani'
+category: 'Image Tools'
+tags: ['image optimization', 'web performance', 'SEO', 'compression', 'lazy loading', 'responsive images']
+readingTime: '12 min read'
+slug: 'image-optimization-guide'
 ---
 
 Image optimization is one of the highest-impact improvements you can make to your website. Images account for **50–70% of a typical page's weight**, and unoptimized images are the #1 cause of slow load times.
@@ -23,25 +23,28 @@ This guide covers everything you need to know: format selection, compression tec
 
 ## Step 1: Choose the Right Format
 
-| Format | Best For | Compression | Transparency | Animation |
-|--------|----------|-------------|-------------|-----------|
-| JPEG | Photos, complex scenes | Lossy | No | No |
-| PNG | Graphics, logos, screenshots | Lossless | Yes | No |
-| WebP | Modern web (all use cases) | Both lossy/lossless | Yes | Yes |
-| AVIF | Next-gen compression | Superior to WebP | Yes | Yes |
-| SVG | Icons, illustrations, logos | Vector | Yes | Yes |
+| Format | Best For                     | Compression         | Transparency | Animation |
+| ------ | ---------------------------- | ------------------- | ------------ | --------- |
+| JPEG   | Photos, complex scenes       | Lossy               | No           | No        |
+| PNG    | Graphics, logos, screenshots | Lossless            | Yes          | No        |
+| WebP   | Modern web (all use cases)   | Both lossy/lossless | Yes          | Yes       |
+| AVIF   | Next-gen compression         | Superior to WebP    | Yes          | Yes       |
+| SVG    | Icons, illustrations, logos  | Vector              | Yes          | Yes       |
 
 **Recommendation**: Use WebP as your primary format with JPEG/PNG fallback.
 
 ## Step 2: Compress Effectively
 
 ### Lossy Compression (JPEG, WebP)
+
 Removes non-visible data. Quality 80–85 is visually lossless for most images.
 
 ### Lossless Compression (PNG, WebP)
+
 Reduces file size without removing data. Ideal for graphics and screenshots.
 
 ### Compression Workflow
+
 1. Upload your image to the **Smart Image Compressor**
 2. Start with quality 80
 3. Preview the result side-by-side
@@ -50,10 +53,12 @@ Reduces file size without removing data. Ideal for graphics and screenshots.
 ## Step 3: Resize for Different Devices
 
 Common sizing mistakes:
+
 - Uploading 4000px-wide photos for 800px-wide containers
 - Not using `srcset` for responsive images
 
 ### Recommended Breakpoints
+
 - Mobile: 640px
 - Tablet: 1024px
 - Desktop: 1920px
@@ -74,6 +79,7 @@ The `loading="lazy"` attribute is supported in all modern browsers (2026).
 ## Step 5: Use a CDN with Image Optimization
 
 Cloudflare, Cloudinary, and imgix offer automatic optimization including:
+
 - Format conversion (auto WebP/AVIF)
 - Quality optimization
 - Responsive image generation
@@ -90,15 +96,19 @@ Cloudflare, Cloudinary, and imgix offer automatic optimization including:
 ## Frequently Asked Questions
 
 ### What is the best image format for web?
+
 WebP is the best all-around format — it supports both lossy and lossless compression, transparency, and animation, with 25–35% smaller files than PNG.
 
 ### How much can I compress an image without losing quality?
+
 Most images can be compressed 40–60% at quality 80 without visible quality loss. Text-heavy screenshots compress even more.
 
 ### Should I use WebP or AVIF?
+
 WebP has better browser support (95%+). AVIF offers 30% better compression but slightly less coverage. Use WebP as primary, AVIF as enhancement.
 
 ### Does image compression affect SEO?
+
 Yes. Page speed is a confirmed Google ranking factor. Compressed images improve Largest Contentful Paint (LCP), directly impacting SEO.
 
 ## Conclusion

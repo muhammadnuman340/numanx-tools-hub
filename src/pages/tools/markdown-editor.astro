@@ -1,57 +1,146 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import KeyboardHints from "../../components/KeyboardHints.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import KeyboardHints from '../../components/KeyboardHints.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
-  { question: "Is my markdown content saved anywhere?", answer: "Your content is saved to your browser's localStorage so it persists between sessions. Nothing is uploaded to any server." },
-  { question: "Can I export my markdown as HTML?", answer: "Yes. Click the 'Export HTML' button to download a complete HTML file with rendered content. You can also copy the markdown source or the rendered HTML." },
-  { question: "What markdown features are supported?", answer: "The editor supports headings (H1-H6), bold, italic, strikethrough, links, images, ordered/unordered lists, blockquotes, inline code, code blocks, horizontal rules, and tables." },
-  { question: "Does it support dark mode?", answer: "The preview automatically follows the site's dark theme. The rendered output uses the same dark styling for consistency." },
-  { question: "Can I use keyboard shortcuts?", answer: "Yes. Use the toolbar buttons or common shortcuts. The editor also supports tab for indentation and auto-closing of markdown syntax." },
-  { question: "Can I use markdown for GitHub README files?", answer: "Absolutely. This editor uses standard GitHub-flavored markdown syntax. Write your README here, preview it live, and copy the source directly to your repository." },
-  { question: "Does the editor support live preview?", answer: "Yes, the split-pane layout shows your raw markdown on the left and a fully rendered HTML preview on the right. Updates happen in real-time as you type." },
-  { question: "What is the difference between markdown and rich text?", answer: "Markdown uses plain text formatting syntax that is readable as-is, while rich text uses hidden formatting codes. Markdown is preferred for documentation because it's version-control friendly and portable." },
+  {
+    question: 'Is my markdown content saved anywhere?',
+    answer:
+      "Your content is saved to your browser's localStorage so it persists between sessions. Nothing is uploaded to any server.",
+  },
+  {
+    question: 'Can I export my markdown as HTML?',
+    answer:
+      "Yes. Click the 'Export HTML' button to download a complete HTML file with rendered content. You can also copy the markdown source or the rendered HTML.",
+  },
+  {
+    question: 'What markdown features are supported?',
+    answer:
+      'The editor supports headings (H1-H6), bold, italic, strikethrough, links, images, ordered/unordered lists, blockquotes, inline code, code blocks, horizontal rules, and tables.',
+  },
+  {
+    question: 'Does it support dark mode?',
+    answer:
+      "The preview automatically follows the site's dark theme. The rendered output uses the same dark styling for consistency.",
+  },
+  {
+    question: 'Can I use keyboard shortcuts?',
+    answer:
+      'Yes. Use the toolbar buttons or common shortcuts. The editor also supports tab for indentation and auto-closing of markdown syntax.',
+  },
+  {
+    question: 'Can I use markdown for GitHub README files?',
+    answer:
+      'Absolutely. This editor uses standard GitHub-flavored markdown syntax. Write your README here, preview it live, and copy the source directly to your repository.',
+  },
+  {
+    question: 'Does the editor support live preview?',
+    answer:
+      'Yes, the split-pane layout shows your raw markdown on the left and a fully rendered HTML preview on the right. Updates happen in real-time as you type.',
+  },
+  {
+    question: 'What is the difference between markdown and rich text?',
+    answer:
+      "Markdown uses plain text formatting syntax that is readable as-is, while rich text uses hidden formatting codes. Markdown is preferred for documentation because it's version-control friendly and portable.",
+  },
 ];
 const schema = {
-  name: "Markdown Editor Pro",
-  applicationCategory: "Web Application",
-  description: "Live markdown editor with split-pane preview, formatting toolbar, syntax highlighting, and one-click HTML export.",
+  name: 'Markdown Editor Pro',
+  applicationCategory: 'Web Application',
+  description:
+    'Live markdown editor with split-pane preview, formatting toolbar, syntax highlighting, and one-click HTML export.',
   featureList: [
-    "Real-time split-pane markdown preview",
-    "Formatting toolbar with common markdown actions",
-    "HTML export with styled output",
-    "Copy rendered HTML to clipboard",
-    "Auto-saves content to localStorage",
-    "Full markdown syntax support including tables and code blocks"
+    'Real-time split-pane markdown preview',
+    'Formatting toolbar with common markdown actions',
+    'HTML export with styled output',
+    'Copy rendered HTML to clipboard',
+    'Auto-saves content to localStorage',
+    'Full markdown syntax support including tables and code blocks',
   ],
 };
 
 const benefits = [
-  { icon: "⚡", title: "Real-Time Preview", desc: "See your markdown rendered instantly in a split-pane view. Type on the left, see the formatted result on the right with zero delay." },
-  { icon: "🎨", title: "Rich Formatting Toolbar", desc: "Bold, italic, headings, lists, tables, code blocks, and more — all available with one click from the toolbar. No need to remember syntax." },
-  { icon: "⬇️", title: "HTML Export", desc: "Export your markdown as a standalone HTML file with clean, responsive styling. Perfect for sharing rendered documents." },
-  { icon: "💾", title: "Auto-Save Draft", desc: "Your content is automatically saved to localStorage. Refresh the page or come back later — your work is always there." },
-  { icon: "🔧", title: "Full Syntax Support", desc: "Support for all GitHub-flavored markdown including tables, fenced code blocks, images, links, strikethrough, and horizontal rules." },
-  { icon: "🆓", title: "Completely Free", desc: "No sign-ups, no limits. Use the markdown editor as much as you need for docs, READMEs, notes, and more." },
+  {
+    icon: '⚡',
+    title: 'Real-Time Preview',
+    desc: 'See your markdown rendered instantly in a split-pane view. Type on the left, see the formatted result on the right with zero delay.',
+  },
+  {
+    icon: '🎨',
+    title: 'Rich Formatting Toolbar',
+    desc: 'Bold, italic, headings, lists, tables, code blocks, and more — all available with one click from the toolbar. No need to remember syntax.',
+  },
+  {
+    icon: '⬇️',
+    title: 'HTML Export',
+    desc: 'Export your markdown as a standalone HTML file with clean, responsive styling. Perfect for sharing rendered documents.',
+  },
+  {
+    icon: '💾',
+    title: 'Auto-Save Draft',
+    desc: 'Your content is automatically saved to localStorage. Refresh the page or come back later — your work is always there.',
+  },
+  {
+    icon: '🔧',
+    title: 'Full Syntax Support',
+    desc: 'Support for all GitHub-flavored markdown including tables, fenced code blocks, images, links, strikethrough, and horizontal rules.',
+  },
+  {
+    icon: '🆓',
+    title: 'Completely Free',
+    desc: 'No sign-ups, no limits. Use the markdown editor as much as you need for docs, READMEs, notes, and more.',
+  },
 ];
 
 const howToSteps = [
-  { num: "1", title: "Type Markdown", desc: "Start typing markdown in the left panel. Use the toolbar for quick formatting — bold, italic, headings, lists, and more." },
-  { num: "2", title: "Preview Live", desc: "Watch the right panel update in real-time as you type. The rendered preview shows exactly how your content will look." },
-  { num: "3", title: "Copy or Export", desc: "Copy the rendered HTML to clipboard or export a complete HTML file with built-in styling for sharing." },
-  { num: "4", title: "Come Back Anytime", desc: "Your content auto-saves to your browser. Close and return later — your markdown will be right where you left it." },
+  {
+    num: '1',
+    title: 'Type Markdown',
+    desc: 'Start typing markdown in the left panel. Use the toolbar for quick formatting — bold, italic, headings, lists, and more.',
+  },
+  {
+    num: '2',
+    title: 'Preview Live',
+    desc: 'Watch the right panel update in real-time as you type. The rendered preview shows exactly how your content will look.',
+  },
+  {
+    num: '3',
+    title: 'Copy or Export',
+    desc: 'Copy the rendered HTML to clipboard or export a complete HTML file with built-in styling for sharing.',
+  },
+  {
+    num: '4',
+    title: 'Come Back Anytime',
+    desc: 'Your content auto-saves to your browser. Close and return later — your markdown will be right where you left it.',
+  },
 ];
 
 const useCases = [
-  { icon: "📝", title: "Writing Documentation", desc: "Write project documentation, API guides, and technical docs with proper formatting. Export as HTML for your documentation site." },
-  { icon: "📖", title: "README Files", desc: "Craft polished README files for your GitHub repositories. Preview headings, code blocks, tables, and badges before committing." },
-  { icon: "📋", title: "Meeting Notes", desc: "Take structured meeting notes with headings, bullet points, and action items. The auto-save feature ensures you never lose notes." },
-  { icon: "✍️", title: "Blog Writing", desc: "Write blog posts in markdown format. Preview the rendered output and export HTML for direct publishing to your CMS." },
+  {
+    icon: '📝',
+    title: 'Writing Documentation',
+    desc: 'Write project documentation, API guides, and technical docs with proper formatting. Export as HTML for your documentation site.',
+  },
+  {
+    icon: '📖',
+    title: 'README Files',
+    desc: 'Craft polished README files for your GitHub repositories. Preview headings, code blocks, tables, and badges before committing.',
+  },
+  {
+    icon: '📋',
+    title: 'Meeting Notes',
+    desc: 'Take structured meeting notes with headings, bullet points, and action items. The auto-save feature ensures you never lose notes.',
+  },
+  {
+    icon: '✍️',
+    title: 'Blog Writing',
+    desc: 'Write blog posts in markdown format. Preview the rendered output and export HTML for direct publishing to your CMS.',
+  },
 ];
 ---
 
@@ -62,15 +151,15 @@ const useCases = [
   toolSchema={schema}
   faq={faqItems}
   howto={{
-    name: "How to Use Markdown Editor",
-    description: "Write and preview markdown in real-time with a rich toolbar and HTML export in 4 easy steps.",
-    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
-    totalTime: "PT1M",
+    name: 'How to Use Markdown Editor',
+    description: 'Write and preview markdown in real-time with a rich toolbar and HTML export in 4 easy steps.',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
   }}
   breadcrumbs={[
-    { name: "Home", url: "/" },
-    { name: "Tools", url: "/tools/" },
-    { name: "Markdown Editor", url: "/tools/markdown-editor/" },
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Markdown Editor', url: '/tools/markdown-editor/' },
   ]}
 >
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
@@ -87,38 +176,45 @@ const useCases = [
 
       <!-- Tool Interface -->
       <div class="mt-8 space-y-4">
-
         <!-- Toolbar -->
-        <div class="bg-surface-1 border border-surface rounded-2xl p-3">
+        <div class="glass-card rounded-2xl p-3">
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
-            <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+            <button
+              id="fullscreen-btn"
+              class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+              title="Fullscreen">⛶</button
+            >
           </div>
           <div class="flex flex-wrap gap-1">
-          {[
-            { cmd: "bold", label: "B", style: "font-bold" },
-            { cmd: "italic", label: "I", style: "italic" },
-            { cmd: "strike", label: "S", style: "line-through" },
-            { cmd: "|" },
-            { cmd: "h1", label: "H1" },
-            { cmd: "h2", label: "H2" },
-            { cmd: "h3", label: "H3" },
-            { cmd: "|" },
-            { cmd: "link", label: "🔗" },
-            { cmd: "img", label: "🖼" },
-            { cmd: "|" },
-            { cmd: "ul", label: "• List" },
-            { cmd: "ol", label: "1. List" },
-            { cmd: "quote", label: "❝" },
-            { cmd: "code", label: "<>" },
-            { cmd: "hr", label: "—" },
-            { cmd: "|" },
-            { cmd: "table", label: "⊞ Table" },
-          ].map((item) =>
-            item.cmd === "|"
-              ? `<span class="w-px h-6 bg-surface-3 mx-1 self-center"></span>`
-              : `<button class="toolbar-btn px-2.5 py-1.5 rounded-lg text-xs font-medium text-tertiary hover:text-white hover:bg-surface-3 transition-all active:scale-95" data-cmd="${item.cmd}">${item.label}</button>`
-          ).join("")}
+            {
+              [
+                { cmd: 'bold', label: 'B', style: 'font-bold' },
+                { cmd: 'italic', label: 'I', style: 'italic' },
+                { cmd: 'strike', label: 'S', style: 'line-through' },
+                { cmd: '|' },
+                { cmd: 'h1', label: 'H1' },
+                { cmd: 'h2', label: 'H2' },
+                { cmd: 'h3', label: 'H3' },
+                { cmd: '|' },
+                { cmd: 'link', label: '🔗' },
+                { cmd: 'img', label: '🖼' },
+                { cmd: '|' },
+                { cmd: 'ul', label: '• List' },
+                { cmd: 'ol', label: '1. List' },
+                { cmd: 'quote', label: '❝' },
+                { cmd: 'code', label: '<>' },
+                { cmd: 'hr', label: '—' },
+                { cmd: '|' },
+                { cmd: 'table', label: '⊞ Table' },
+              ]
+                .map((item) =>
+                  item.cmd === '|'
+                    ? `<span class="w-px h-6 bg-surface-3 mx-1 self-center"></span>`
+                    : `<button class="toolbar-btn px-2.5 py-1.5 rounded-lg text-xs font-medium text-tertiary hover:text-white hover:bg-surface-3 transition-all active:scale-95" data-cmd="${item.cmd}">${item.label}</button>`,
+                )
+                .join('')
+            }
           </div>
         </div>
 
@@ -129,27 +225,40 @@ const useCases = [
               <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Markdown</label>
               <div class="flex items-center gap-2">
                 <span id="md-stats" class="text-[10px] text-dim font-mono">0 words</span>
-                <button id="clear-btn" class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all">Clear</button>
+                <button
+                  id="clear-btn"
+                  class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all"
+                  >Clear</button
+                >
               </div>
             </div>
             <div class="flex items-center gap-1.5 mb-2">
-              <button class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40">A−</button>
-              <button class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40">A+</button>
+              <button
+                class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40"
+                >A−</button
+              >
+              <button
+                class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40"
+                >A+</button
+              >
               <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
             </div>
             <div class="flex">
-              <div id="line-nums" class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3" style="min-width:2.5em">1</div>
-              <textarea id="md-input" class="flex-1 w-full h-[500px] bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all font-mono resize-y" placeholder="Type your markdown here..."># Hello World
-
-Start typing **markdown** on the left, see the *rendered* preview on the right.
-
-## Features
-
-- Headings (H1-H6)
-- **Bold**, *italic*, ~~strikethrough~~
-- [Links](https://example.com)
-- Code blocks with `inline code`
-- Tables, lists, and more</textarea>
+              <div
+                id="line-nums"
+                class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3"
+                style="min-width:2.5em"
+              >
+                1
+              </div>
+              <textarea
+                id="md-input"
+                class="flex-1 w-full h-[500px] bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all font-mono resize-y"
+                placeholder="Type your markdown here..."
+                ># Hello World Start typing **markdown** on the left, see the *rendered* preview on the right. ##
+                Features - Headings (H1-H6) - **Bold**, *italic*, ~~strikethrough~~ - [Links](https://example.com) -
+                Code blocks with `inline code` - Tables, lists, and more</textarea
+              >
             </div>
             <div id="reading-time" class="text-xs text-muted mt-1"></div>
             <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
@@ -159,29 +268,62 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
               <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Preview</label>
               <div class="flex items-center gap-2">
                 <span id="usage-badge" class="text-xs text-muted"></span>
-                <button id="share-btn" class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all" title="Share">🔗</button>
-                <select id="export-format" class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5">
-                  <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option>
+                <button
+                  id="share-btn"
+                  class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all"
+                  title="Share">🔗</button
+                >
+                <select
+                  id="export-format"
+                  class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
+                >
+                  <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option
+                  ><option value="html">HTML</option>
                 </select>
-                <button id="copy-html-btn" class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all">Copy HTML</button>
-                <button id="export-html-btn" class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all">Export HTML</button>
+                <button
+                  id="copy-html-btn"
+                  class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all"
+                  >Copy HTML</button
+                >
+                <button
+                  id="export-html-btn"
+                  class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all"
+                  >Export HTML</button
+                >
                 <div class="flex gap-1">
-                  <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-                  <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-                  <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-                  <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+                  <button
+                    class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                    data-color="purple"
+                    style="background:#a855f7"></button>
+                  <button
+                    class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                    data-color="blue"
+                    style="background:#3b82f6"></button>
+                  <button
+                    class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                    data-color="green"
+                    style="background:#22c55e"></button>
+                  <button
+                    class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                    data-color="pink"
+                    style="background:#ec4899"></button>
                 </div>
               </div>
             </div>
-            <div id="md-preview" class="w-full h-[500px] overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm text-secondary prose prose-invert max-w-none"></div>
+            <div
+              id="md-preview"
+              class="w-full h-[500px] overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm text-secondary prose prose-invert max-w-none"
+            >
+            </div>
           </div>
         </div>
 
         <!-- Info -->
-        <div class="bg-surface-1 border border-surface rounded-2xl p-4 text-xs text-muted leading-relaxed">
-          <strong class="text-tertiary">Supports:</strong> H1-H6, bold, italic, strikethrough, links, images, ordered/unordered lists, blockquotes, inline code, fenced code blocks, horizontal rules, tables, and line breaks. Content auto-saves to your browser.
+        <div class="glass-card rounded-2xl p-4 text-xs text-muted leading-relaxed">
+          <strong class="text-tertiary">Supports:</strong> H1-H6, bold, italic, strikethrough, links, images, ordered/unordered
+          lists, blockquotes, inline code, fenced code blocks, horizontal rules, tables, and line breaks. Content auto-saves
+          to your browser.
         </div>
-
       </div>
 
       <!-- FAQ -->
@@ -190,14 +332,16 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
           Frequently Asked
           <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
         </h2>
-        <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
+        <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
 
-      <KeyboardHints hints={[
-        { keys: "Ctrl+B", label: "Bold" },
-        { keys: "Ctrl+I", label: "Italic" },
-        { keys: "⌘K", label: "Open search" },
-      ]} />
+      <KeyboardHints
+        hints={[
+          { keys: 'Ctrl+B', label: 'Bold' },
+          { keys: 'Ctrl+I', label: 'Italic' },
+          { keys: '⌘K', label: 'Open search' },
+        ]}
+      />
 
       <ToolContentSections
         toolSlug="markdown-editor"
@@ -210,19 +354,29 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
 
       <!-- ─── CTA Section ─── -->
       <section class="mt-16 text-center">
-        <div class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10">
+        <div
+          class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10"
+        >
           <h2 class="text-2xl md:text-3xl font-black tracking-tight">
             Start Writing
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> Markdown Free</span>
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
+              Markdown Free</span
+            >
           </h2>
           <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
             No sign-up required. No limits. Write, preview, and export markdown documents completely free.
           </p>
           <div class="mt-6 flex gap-3 justify-center flex-wrap">
-            <button onclick="document.querySelector('#md-input')?.focus()" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30">
+            <button
+              onclick="document.querySelector('#md-input')?.focus()"
+              class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30"
+            >
               Start Writing
             </button>
-            <a href="/tools/lorem-ipsum/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700">
+            <a
+              href="/tools/lorem-ipsum/"
+              class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700"
+            >
               Try Lorem Ipsum Generator
             </a>
           </div>
@@ -235,41 +389,43 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
 </MainLayout>
 
 <script>
-  const input = document.getElementById("md-input") as HTMLTextAreaElement;
-  const preview = document.getElementById("md-preview");
-  const statsEl = document.getElementById("md-stats");
-  const copyHtmlBtn = document.getElementById("copy-html-btn");
-  const exportHtmlBtn = document.getElementById("export-html-btn");
+  const input = document.getElementById('md-input') as HTMLTextAreaElement;
+  const preview = document.getElementById('md-preview');
+  const statsEl = document.getElementById('md-stats');
+  const copyHtmlBtn = document.getElementById('copy-html-btn');
+  const exportHtmlBtn = document.getElementById('export-html-btn');
 
   function escapeHtml(text: string): string {
-    return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
   function renderMarkdown(src: string): string {
-    let html = "";
+    let html = '';
 
     // Split into blocks, preserving order
-    const lines = src.split("\n");
+    const lines = src.split('\n');
     let inCodeBlock = false;
     let inTable = false;
     let tableRows: string[] = [];
     let codeContent: string[] = [];
-    let codeLang = "";
+    let codeLang = '';
 
     function flushTable() {
       if (tableRows.length > 0) {
-        const headerCells = tableRows[0].split("|").filter(Boolean);
+        const headerCells = tableRows[0].split('|').filter(Boolean);
         const isHeader = tableRows.length > 1 && tableRows[1].trim().match(/^[\|:\s\-]+$/);
         let start = 0;
         if (isHeader) start = 2;
-        html += "<table><thead><tr>";
-        headerCells.forEach((c) => { html += `<th>${inlineMd(c.trim())}</th>`; });
-        html += "</tr></thead><tbody>";
+        html += '<table><thead><tr>';
+        headerCells.forEach((c) => {
+          html += `<th>${inlineMd(c.trim())}</th>`;
+        });
+        html += '</tr></thead><tbody>';
         for (let i = start; i < tableRows.length; i++) {
-          const cells = tableRows[i].split("|").filter(Boolean);
-          html += "<tr>" + cells.map((c) => `<td>${inlineMd(c.trim())}</td>`).join("") + "</tr>";
+          const cells = tableRows[i].split('|').filter(Boolean);
+          html += '<tr>' + cells.map((c) => `<td>${inlineMd(c.trim())}</td>`).join('') + '</tr>';
         }
-        html += "</tbody></table>\n";
+        html += '</tbody></table>\n';
         tableRows = [];
       }
     }
@@ -279,7 +435,10 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
       // Images
       s = s.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="max-w-full rounded-lg my-2" />');
       // Links
-      s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-purple-400 hover:text-purple-300 underline">$1</a>');
+      s = s.replace(
+        /\[([^\]]+)\]\(([^)]+)\)/g,
+        '<a href="$2" class="text-purple-400 hover:text-purple-300 underline">$1</a>',
+      );
       // Bold+Italic
       s = s.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
       // Bold
@@ -299,7 +458,7 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
       const line = lines[i];
 
       // Code block
-      if (line.trim().startsWith("```")) {
+      if (line.trim().startsWith('```')) {
         if (!inCodeBlock) {
           flushTable();
           inCodeBlock = true;
@@ -307,7 +466,7 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
           codeContent = [];
           continue;
         } else {
-          const code = escapeHtml(codeContent.join("\n"));
+          const code = escapeHtml(codeContent.join('\n'));
           html += `<pre class="bg-zinc-900 rounded-xl p-4 my-3 overflow-x-auto"><code class="text-sm text-secondary font-mono">${code}</code></pre>\n`;
           inCodeBlock = false;
           continue;
@@ -319,7 +478,7 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
       }
 
       // Table
-      if (line.includes("|") && line.trim().startsWith("|")) {
+      if (line.includes('|') && line.trim().startsWith('|')) {
         inTable = true;
         tableRows.push(line);
         continue;
@@ -343,7 +502,7 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
       }
 
       // Blockquote
-      if (line.trim().startsWith("> ")) {
+      if (line.trim().startsWith('> ')) {
         const content = line.trim().slice(2);
         html += `<blockquote class="border-l-2 border-purple-500/50 pl-4 my-2 text-tertiary italic">${inlineMd(content)}</blockquote>\n`;
         continue;
@@ -364,8 +523,8 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
       }
 
       // Empty line
-      if (line.trim() === "") {
-        html += "\n";
+      if (line.trim() === '') {
+        html += '\n';
         continue;
       }
 
@@ -374,7 +533,7 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
     }
 
     if (inCodeBlock) {
-      const code = escapeHtml(codeContent.join("\n"));
+      const code = escapeHtml(codeContent.join('\n'));
       html += `<pre class="bg-zinc-900 rounded-xl p-4 my-3 overflow-x-auto"><code class="text-sm text-secondary font-mono">${code}</code></pre>\n`;
     }
     if (inTable) flushTable();
@@ -382,7 +541,7 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
     return html;
   }
 
-  function triggerToast(message: string, variant: "success" | "error" | "info" | "warning" = "success") {
+  function triggerToast(message: string, variant: 'success' | 'error' | 'info' | 'warning' = 'success') {
     if ((window as any).__showToast) {
       (window as any).__showToast({ message, variant });
     }
@@ -394,7 +553,9 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
     preview.innerHTML = html;
     const words = src.trim() ? src.trim().split(/\s+/).length : 0;
     statsEl.textContent = `${words} words`;
-    try { localStorage.setItem("nt_md_content", src); } catch {}
+    try {
+      localStorage.setItem('nt_md_content', src);
+    } catch {}
   }
 
   function getHtmlDocument(): string {
@@ -402,40 +563,82 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
     return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Markdown Export</title><style>body{max-width:800px;margin:0 auto;padding:2rem;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;line-height:1.6;color:#1a1a2e;background:#fff}h1,h2,h3{color:#111}code{background:#f0f0f0;padding:0.2em 0.4em;border-radius:3px;font-size:0.9em}pre{background:#f5f5f5;padding:1rem;border-radius:8px;overflow-x:auto}pre code{background:none;padding:0}img{max-width:100%;border-radius:8px}blockquote{border-left:3px solid #7c3aed;padding-left:1rem;color:#555;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:0.5rem;text-align:left}th{background:#f5f5f5}</style></head><body>${content}</body></html>`;
   }
 
-  input.addEventListener("input", updatePreview);
+  input.addEventListener('input', updatePreview);
 
   // Toolbar
-  document.querySelectorAll(".toolbar-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
+  document.querySelectorAll('.toolbar-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
       const cmd = (btn as HTMLElement).dataset.cmd;
       const start = input.selectionStart;
       const end = input.selectionEnd;
       const selected = input.value.substring(start, end);
-      const lineStart = input.value.lastIndexOf("\n", start - 1) + 1;
-      const lineEnd = input.value.indexOf("\n", end);
+      const lineStart = input.value.lastIndexOf('\n', start - 1) + 1;
+      const lineEnd = input.value.indexOf('\n', end);
       const fullLine = input.value.substring(lineStart, lineEnd === -1 ? input.value.length : lineEnd);
 
-      let replacement = "";
+      let replacement = '';
       let cursorOffset = 0;
 
       switch (cmd) {
-        case "bold": replacement = `**${selected || "bold"}**`; cursorOffset = selected ? 0 : 2; break;
-        case "italic": replacement = `*${selected || "italic"}*`; cursorOffset = selected ? 0 : 1; break;
-        case "strike": replacement = `~~${selected || "strikethrough"}~~`; cursorOffset = selected ? 0 : 2; break;
-        case "h1": replacement = `# ${fullLine.trim() || "Heading 1"}`; cursorOffset = 2; break;
-        case "h2": replacement = `## ${fullLine.trim() || "Heading 2"}`; cursorOffset = 3; break;
-        case "h3": replacement = `### ${fullLine.trim() || "Heading 3"}`; cursorOffset = 4; break;
-        case "link": replacement = `[${selected || "link text"}](url)`; cursorOffset = selected ? 0 : -1; break;
-        case "img": replacement = `![${selected || "alt text"}](image-url)`; cursorOffset = selected ? 0 : -1; break;
-        case "ul": replacement = `- ${selected || "list item"}`; cursorOffset = 2; break;
-        case "ol": replacement = `1. ${selected || "list item"}`; cursorOffset = 3; break;
-        case "quote": replacement = `> ${selected || "blockquote"}`; cursorOffset = 2; break;
-        case "code": replacement = "```\n" + (selected || "code") + "\n```"; cursorOffset = selected ? 0 : 1; break;
-        case "hr": replacement = "\n---\n"; cursorOffset = 1; break;
-        case "table": replacement = "| Header 1 | Header 2 | Header 3 |\n| --- | --- | --- |\n| Cell 1 | Cell 2 | Cell 3 |"; cursorOffset = 0; break;
+        case 'bold':
+          replacement = `**${selected || 'bold'}**`;
+          cursorOffset = selected ? 0 : 2;
+          break;
+        case 'italic':
+          replacement = `*${selected || 'italic'}*`;
+          cursorOffset = selected ? 0 : 1;
+          break;
+        case 'strike':
+          replacement = `~~${selected || 'strikethrough'}~~`;
+          cursorOffset = selected ? 0 : 2;
+          break;
+        case 'h1':
+          replacement = `# ${fullLine.trim() || 'Heading 1'}`;
+          cursorOffset = 2;
+          break;
+        case 'h2':
+          replacement = `## ${fullLine.trim() || 'Heading 2'}`;
+          cursorOffset = 3;
+          break;
+        case 'h3':
+          replacement = `### ${fullLine.trim() || 'Heading 3'}`;
+          cursorOffset = 4;
+          break;
+        case 'link':
+          replacement = `[${selected || 'link text'}](url)`;
+          cursorOffset = selected ? 0 : -1;
+          break;
+        case 'img':
+          replacement = `![${selected || 'alt text'}](image-url)`;
+          cursorOffset = selected ? 0 : -1;
+          break;
+        case 'ul':
+          replacement = `- ${selected || 'list item'}`;
+          cursorOffset = 2;
+          break;
+        case 'ol':
+          replacement = `1. ${selected || 'list item'}`;
+          cursorOffset = 3;
+          break;
+        case 'quote':
+          replacement = `> ${selected || 'blockquote'}`;
+          cursorOffset = 2;
+          break;
+        case 'code':
+          replacement = '```\n' + (selected || 'code') + '\n```';
+          cursorOffset = selected ? 0 : 1;
+          break;
+        case 'hr':
+          replacement = '\n---\n';
+          cursorOffset = 1;
+          break;
+        case 'table':
+          replacement = '| Header 1 | Header 2 | Header 3 |\n| --- | --- | --- |\n| Cell 1 | Cell 2 | Cell 3 |';
+          cursorOffset = 0;
+          break;
       }
 
-      if (cmd === "h1" || cmd === "h2" || cmd === "h3") {
+      if (cmd === 'h1' || cmd === 'h2' || cmd === 'h3') {
         const before = input.value.substring(0, lineStart);
         const after = input.value.substring(lineEnd === -1 ? input.value.length : lineEnd);
         input.value = before + replacement + after;
@@ -448,101 +651,231 @@ Start typing **markdown** on the left, see the *rendered* preview on the right.
       }
       input.focus();
       updatePreview();
-      triggerToast(`Applied: ${cmd.toUpperCase()}`, "info");
+      triggerToast(`Applied: ${cmd.toUpperCase()}`, 'info');
     });
   });
 
-  copyHtmlBtn.addEventListener("click", () => {
+  copyHtmlBtn.addEventListener('click', () => {
     const html = getHtmlDocument();
     navigator.clipboard.writeText(html).then(() => {
-      triggerToast("Rendered HTML copied to clipboard!", "success");
+      triggerToast('Rendered HTML copied to clipboard!', 'success');
     });
   });
 
-  exportHtmlBtn.addEventListener("click", () => {
+  exportHtmlBtn.addEventListener('click', () => {
     const html = getHtmlDocument();
-    const blob = new Blob([html], { type: "text/html" });
+    const blob = new Blob([html], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     a.href = url;
-    a.download = "markdown-export.html";
+    a.download = 'markdown-export.html';
     a.click();
     URL.revokeObjectURL(url);
-    triggerToast("HTML file exported successfully!", "success");
+    triggerToast('HTML file exported successfully!', 'success');
   });
 
-  document.getElementById("clear-btn")?.addEventListener("click", () => {
-    input.value = "";
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    input.value = '';
     updatePreview();
-    try { localStorage.removeItem("nt_md_content"); } catch {}
+    try {
+      localStorage.removeItem('nt_md_content');
+    } catch {}
   });
 
   // Load saved content
   try {
-    const saved = localStorage.getItem("nt_md_content");
+    const saved = localStorage.getItem('nt_md_content');
     if (saved) input.value = saved;
   } catch {}
   updatePreview();
 
   // Fullscreen toggle
-  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-    const card = document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card = document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
     if (!card) return;
-    if (document.fullscreenElement) { document.exitFullscreen(); document.getElementById("fullscreen-btn").textContent = "⛶"; }
-    else { card.requestFullscreen?.() || card.webkitRequestFullscreen?.(); document.getElementById("fullscreen-btn").textContent = "✕"; }
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      document.getElementById('fullscreen-btn').textContent = '⛶';
+    } else {
+      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
+      document.getElementById('fullscreen-btn').textContent = '✕';
+    }
   });
-  document.addEventListener("fullscreenchange", () => {
-    const btn = document.getElementById("fullscreen-btn");
-    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
 
   // Auto-save draft
-  const DRAFT_KEY = "nt_draft_markdown-editor";
-  (function() {
-    const input = document.getElementById("input-text") || document.querySelector("textarea:not([readonly])");
+  const DRAFT_KEY = 'nt_draft_markdown-editor';
+  (function () {
+    const input = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');
     if (!input) return;
     try {
       const saved = localStorage.getItem(DRAFT_KEY);
-      if (saved && !input.value) { input.value = saved; input.dispatchEvent(new Event("input")); }
-    } catch(e) {}
+      if (saved && !input.value) {
+        input.value = saved;
+        input.dispatchEvent(new Event('input'));
+      }
+    } catch (e) {}
     let saveTimer;
-    input.addEventListener("input", () => {
+    input.addEventListener('input', () => {
       clearTimeout(saveTimer);
-      saveTimer = setTimeout(() => { try { localStorage.setItem(DRAFT_KEY, input.value); } catch(e) {} }, 500);
+      saveTimer = setTimeout(() => {
+        try {
+          localStorage.setItem(DRAFT_KEY, input.value);
+        } catch (e) {}
+      }, 500);
     });
   })();
 
   // Feature 1: Font size
-  document.querySelector(".font-inc")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.min(24,s+2)+"px";});});
-  document.querySelector(".font-dec")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.max(10,s-2)+"px";});});
-  try{const s=localStorage.getItem("nt_fs");if(s)document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px");}catch(e){}
+  document.querySelector('.font-inc')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.min(24, s + 2) + 'px';
+    });
+  });
+  document.querySelector('.font-dec')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.max(10, s - 2) + 'px';
+    });
+  });
+  try {
+    const s = localStorage.getItem('nt_fs');
+    if (s) document.querySelectorAll('textarea').forEach((t) => (t.style.fontSize = s + 'px'));
+  } catch (e) {}
 
   // Feature 2: Keyboard shortcuts
-  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      document.getElementById('clear-btn')?.click();
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
 
   // Feature 3: Usage badge
-  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["markdown-editor"])b.textContent="Used "+u["markdown-editor"]+"×";}catch(e){}
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['markdown-editor']) b.textContent = 'Used ' + u['markdown-editor'] + '×';
+  } catch (e) {}
 
   // Feature 4: Share button
-  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("output-text")||document.querySelector("[id$='result']");const t=o?.value||o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof showToast==="function"){playPing();showToast("Link copied!");}});
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('output-text') || document.querySelector("[id$='result']");
+    const t = o?.value || o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof showToast === 'function') {
+      playPing();
+      showToast('Link copied!');
+    }
+  });
 
   // Feature 5: Reading time
-  const rt=document.getElementById("md-input");if(rt){rt.addEventListener("input",()=>{const w=rt.value?rt.value.trim().split(/\s+/).length:0;const e=document.getElementById("reading-time");if(e)e.textContent=Math.max(1,Math.round(w/200))+"m read · "+Math.max(1,Math.round(w/150))+"m speak";});rt.dispatchEvent(new Event("input"));}
+  const rt = document.getElementById('md-input');
+  if (rt) {
+    rt.addEventListener('input', () => {
+      const w = rt.value ? rt.value.trim().split(/\s+/).length : 0;
+      const e = document.getElementById('reading-time');
+      if (e)
+        e.textContent = Math.max(1, Math.round(w / 200)) + 'm read · ' + Math.max(1, Math.round(w / 150)) + 'm speak';
+    });
+    rt.dispatchEvent(new Event('input'));
+  }
 
   // Feature 6: Line numbers
-  (function(){const li=document.getElementById("md-input");if(li){const ul=()=>{const n=document.getElementById("line-nums");if(n)n.textContent=Array.from({length:li.value.split("\n").length},(_,i)=>i+1).join("\n");};li.addEventListener("input",ul);li.addEventListener("scroll",()=>{const n=document.getElementById("line-nums");if(n)n.scrollTop=li.scrollTop;});ul();}})();
+  (function () {
+    const li = document.getElementById('md-input');
+    if (li) {
+      const ul = () => {
+        const n = document.getElementById('line-nums');
+        if (n) n.textContent = Array.from({ length: li.value.split('\n').length }, (_, i) => i + 1).join('\n');
+      };
+      li.addEventListener('input', ul);
+      li.addEventListener('scroll', () => {
+        const n = document.getElementById('line-nums');
+        if (n) n.scrollTop = li.scrollTop;
+      });
+      ul();
+    }
+  })();
 
   // Feature 7: Sound effects
-  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
 
   // Feature 8: Export format
-  document.getElementById("export-format")?.addEventListener("change",function(){});
+  document.getElementById('export-format')?.addEventListener('change', function () {});
 
   // Feature 9: Letter frequency
-  (function(){const lf=document.getElementById("md-input");if(lf){lf.addEventListener("input",()=>{const t=lf.value.toLowerCase().replace(/[^a-z]/g,"");if(!t){document.getElementById("letter-freq")?.classList.add("hidden");return;}const f={};for(const c of t)f[c]=(f[c]||0)+1;const s=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,8);const m=s[0]?s[0][1]:1;const el=document.getElementById("letter-freq");el.classList.remove("hidden");el.innerHTML=s.map(([c,n])=>`<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n/m)*80+10}%"></div><span class="text-muted">${n}</span></div>`).join("");});}})();
+  (function () {
+    const lf = document.getElementById('md-input');
+    if (lf) {
+      lf.addEventListener('input', () => {
+        const t = lf.value.toLowerCase().replace(/[^a-z]/g, '');
+        if (!t) {
+          document.getElementById('letter-freq')?.classList.add('hidden');
+          return;
+        }
+        const f = {};
+        for (const c of t) f[c] = (f[c] || 0) + 1;
+        const s = Object.entries(f)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 8);
+        const m = s[0] ? s[0][1] : 1;
+        const el = document.getElementById('letter-freq');
+        el.classList.remove('hidden');
+        el.innerHTML = s
+          .map(
+            ([c, n]) =>
+              `<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n / m) * 80 + 10}%"></div><span class="text-muted">${n}</span></div>`,
+          )
+          .join('');
+      });
+    }
+  })();
 
   // Feature 10: Theme picker
-  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500");});try{localStorage.setItem("nt_theme",c);}catch(e){}});});
-  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
+  });
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>
-

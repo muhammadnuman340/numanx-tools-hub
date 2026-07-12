@@ -1,30 +1,50 @@
----
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import KeyboardHints from "../../components/KeyboardHints.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+﻿---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import KeyboardHints from '../../components/KeyboardHints.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
-  { question: "What does the JSON formatter do?", answer: "It takes raw, compact, or malformed JSON and formats it with proper indentation, line breaks, and syntax highlighting for readability." },
-  { question: "Is my JSON data sent to a server?", answer: "No. All formatting, validation, and minification happens entirely in your browser. Your data never leaves your device." },
-  { question: "What happens if my JSON is invalid?", answer: "The tool will display a clear error message showing the line and position of the issue, along with what was expected vs what was found." },
-  { question: "Can I minify JSON with this tool?", answer: "Yes. Click the 'Minify' button to compress your JSON into a single line — perfect for API payloads and storage optimization." },
-  { question: "What's the difference between format and validate?", answer: "Format beautifies the JSON with indentation. Validate checks if the JSON is structurally correct. Both run simultaneously — if it formats, it's valid." },
+  {
+    question: 'What does the JSON formatter do?',
+    answer:
+      'It takes raw, compact, or malformed JSON and formats it with proper indentation, line breaks, and syntax highlighting for readability.',
+  },
+  {
+    question: 'Is my JSON data sent to a server?',
+    answer:
+      'No. All formatting, validation, and minification happens entirely in your browser. Your data never leaves your device.',
+  },
+  {
+    question: 'What happens if my JSON is invalid?',
+    answer:
+      'The tool will display a clear error message showing the line and position of the issue, along with what was expected vs what was found.',
+  },
+  {
+    question: 'Can I minify JSON with this tool?',
+    answer:
+      "Yes. Click the 'Minify' button to compress your JSON into a single line — perfect for API payloads and storage optimization.",
+  },
+  {
+    question: "What's the difference between format and validate?",
+    answer:
+      "Format beautifies the JSON with indentation. Validate checks if the JSON is structurally correct. Both run simultaneously — if it formats, it's valid.",
+  },
 ];
 const schema = {
-  name: "JSON Formatter & Validator",
-  applicationCategory: "Developer Tools",
-  description: "Format, validate, and minify JSON data with syntax highlighting, error detection, and one-click copy.",
+  name: 'JSON Formatter & Validator',
+  applicationCategory: 'Developer Tools',
+  description: 'Format, validate, and minify JSON data with syntax highlighting, error detection, and one-click copy.',
   featureList: [
-    "Format JSON with proper indentation and line breaks",
-    "Validate JSON with detailed error messages",
-    "Minify JSON for API payloads",
-    "Syntax highlighting for readability",
-    "Copy formatted or minified output",
-    "100% client-side with zero data transfer"
+    'Format JSON with proper indentation and line breaks',
+    'Validate JSON with detailed error messages',
+    'Minify JSON for API payloads',
+    'Syntax highlighting for readability',
+    'Copy formatted or minified output',
+    '100% client-side with zero data transfer',
   ],
 };
 ---
@@ -36,9 +56,9 @@ const schema = {
   toolSchema={schema}
   faq={faqItems}
   breadcrumbs={[
-    { name: "Home", url: "/" },
-    { name: "Tools", url: "/tools/" },
-    { name: "JSON Formatter", url: "/tools/json-formatter/" },
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'JSON Formatter', url: '/tools/json-formatter/' },
   ]}
 >
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
@@ -55,7 +75,6 @@ const schema = {
 
       <!-- Tool Interface -->
       <div class="mt-8 space-y-4">
-
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
@@ -63,24 +82,72 @@ const schema = {
           </div>
           <div class="flex items-center gap-2">
             <div class="flex gap-1">
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="purple"
+                style="background:#a855f7"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="blue"
+                style="background:#3b82f6"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="green"
+                style="background:#22c55e"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="pink"
+                style="background:#ec4899"></button>
             </div>
           </div>
         </div>
 
         <!-- Action Buttons -->
         <div class="flex flex-wrap gap-2">
-          <button id="format-btn" class="bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Format</button>
-          <button id="minify-btn" class="bg-surface-2 hover:bg-surface-3 border border-surface text-secondary hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Minify</button>
-          <button id="copy-btn" class="bg-surface-2 hover:bg-surface-3 border border-surface text-secondary hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Copy Output</button>
-          <button id="clear-btn" class="bg-surface-2 hover:bg-surface-3 border border-surface text-muted hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Clear</button>
-          <button id="download-btn" class="bg-surface-2 hover:bg-surface-3 border border-surface text-muted hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95">Download</button>
-          <button id="share-btn" class="bg-surface-2 hover:bg-surface-3 border border-surface text-secondary hover:text-white text-sm font-medium px-3 py-2.5 rounded-xl transition-all active:scale-95" title="Copy share link">🔗</button>
-          <select id="export-format" class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5">
-            <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option>
+          <button
+            id="format-btn"
+            class="bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95"
+            >Format</button
+          >
+          <button
+            id="minify-btn"
+            class="bg-surface-2 hover:bg-surface-3 border border-surface text-secondary hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95"
+            >Minify</button
+          >
+          <select
+            id="indent-size"
+            class="bg-surface-2 hover:bg-surface-3 border border-surface text-secondary hover:text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-all"
+            title="Indentation Size"
+          >
+            <option value="2">2 Spaces</option>
+            <option value="4">4 Spaces</option>
+            <option value="\t">Tabs</option>
+          </select>
+          <button
+            id="copy-btn"
+            class="bg-surface-2 hover:bg-surface-3 border border-surface text-secondary hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95"
+            >Copy Output</button
+          >
+          <button
+            id="clear-btn"
+            class="bg-surface-2 hover:bg-surface-3 border border-surface text-muted hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95"
+            >Clear</button
+          >
+          <button
+            id="download-btn"
+            class="bg-surface-2 hover:bg-surface-3 border border-surface text-muted hover:text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95"
+            >Download</button
+          >
+          <button
+            id="share-btn"
+            class="bg-surface-2 hover:bg-surface-3 border border-surface text-secondary hover:text-white text-sm font-medium px-3 py-2.5 rounded-xl transition-all active:scale-95"
+            title="Copy share link">🔗</button
+          >
+          <select
+            id="export-format"
+            class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5 hidden"
+          >
+            <option value="json">JSON</option>
           </select>
         </div>
 
@@ -89,13 +156,29 @@ const schema = {
           <div>
             <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-2 block">Input JSON</label>
             <div class="flex items-center gap-1.5 mb-2">
-              <button class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A−</button>
-              <button class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A+</button>
+              <button
+                class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+                >A−</button
+              >
+              <button
+                class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+                >A+</button
+              >
               <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
             </div>
             <div class="flex">
-              <div id="line-nums" class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3" style="min-width:2.5em">1</div>
-              <textarea id="json-input" class="flex-1 h-[450px] bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all font-mono resize-y" placeholder="Paste your JSON here..." spellcheck="false"></textarea>
+              <div
+                id="line-nums"
+                class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3"
+                style="min-width:2.5em"
+              >
+                1
+              </div>
+              <textarea
+                id="json-input"
+                class="flex-1 h-[450px] bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all font-mono resize-y"
+                placeholder="Paste your JSON here..."
+                spellcheck="false"></textarea>
             </div>
             <div id="reading-time" class="text-xs text-muted mt-1"></div>
             <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
@@ -103,20 +186,24 @@ const schema = {
           <div>
             <div class="flex items-center justify-between mb-2">
               <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Output</label>
-              <span id="status-badge" class="text-[10px] font-mono text-dim px-2 py-0.5 rounded-full border border-surface">ready</span>
+              <span
+                id="status-badge"
+                class="text-[10px] font-mono text-dim px-2 py-0.5 rounded-full border border-surface">ready</span
+              >
             </div>
-            <pre id="json-output" class="w-full h-[450px] overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm font-mono text-muted whitespace-pre-wrap">Click "Format" to begin</pre>
+            <pre
+              id="json-output"
+              class="w-full h-[450px] overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm font-mono text-muted whitespace-pre-wrap">Click "Format" to begin</pre>
           </div>
         </div>
 
         <!-- Stats -->
-        <div id="json-stats" class="hidden bg-surface-1 border border-surface rounded-2xl p-3 flex flex-wrap gap-4 text-xs text-muted">
+        <div id="json-stats" class="hidden glass-card rounded-2xl p-3 flex flex-wrap gap-4 text-xs text-muted">
           <span><strong class="text-tertiary">Lines:</strong> <span id="stat-lines">0</span></span>
           <span><strong class="text-tertiary">Chars:</strong> <span id="stat-chars">0</span></span>
           <span><strong class="text-tertiary">Keys:</strong> <span id="stat-keys">0</span></span>
           <span><strong class="text-tertiary">Size:</strong> <span id="stat-size">0 B</span></span>
         </div>
-
       </div>
 
       <!-- FAQ -->
@@ -125,14 +212,16 @@ const schema = {
           Frequently Asked
           <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
         </h2>
-        <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
+        <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
 
-      <KeyboardHints hints={[
-        { keys: "Ctrl+Enter", label: "Format JSON" },
-        { keys: "⌘K", label: "Open search" },
-        { keys: "Ctrl+Z", label: "Undo" },
-      ]} />
+      <KeyboardHints
+        hints={[
+          { keys: 'Ctrl+Enter', label: 'Format JSON' },
+          { keys: '⌘K', label: 'Open search' },
+          { keys: 'Ctrl+Z', label: 'Undo' },
+        ]}
+      />
 
       <RelatedTools current="json-formatter" />
     </div>
@@ -140,44 +229,34 @@ const schema = {
 </MainLayout>
 
 <script>
-  const input = document.getElementById("json-input") as HTMLTextAreaElement;
-  const output = document.getElementById("json-output");
-  const formatBtn = document.getElementById("format-btn");
-  const minifyBtn = document.getElementById("minify-btn");
-  const copyBtn = document.getElementById("copy-btn");
-  const clearBtn = document.getElementById("clear-btn");
-  const statusBadge = document.getElementById("status-badge");
-  const statsPanel = document.getElementById("json-stats");
-  const statLines = document.getElementById("stat-lines");
-  const statChars = document.getElementById("stat-chars");
-  const statKeys = document.getElementById("stat-keys");
-  const statSize = document.getElementById("stat-size");
+  const input = document.getElementById('json-input') as HTMLTextAreaElement;
+  const output = document.getElementById('json-output');
+  const formatBtn = document.getElementById('format-btn');
+  const minifyBtn = document.getElementById('minify-btn');
+  const copyBtn = document.getElementById('copy-btn');
+  const clearBtn = document.getElementById('clear-btn');
+  const statusBadge = document.getElementById('status-badge');
+  const statsPanel = document.getElementById('json-stats');
+  const statLines = document.getElementById('stat-lines');
+  const statChars = document.getElementById('stat-chars');
+  const statKeys = document.getElementById('stat-keys');
+  const statSize = document.getElementById('stat-size');
 
   function escapeHtml(s: string): string {
-    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
   function syntaxHighlight(json: string): string {
-    return escapeHtml(json).replace(
-      /("(?:[^"\\]|\\.)*")\s*:/g,
-      '<span class="text-purple-300">$1</span>:'
-    ).replace(
-      /("(?:[^"\\]|\\.)*")/g,
-      '<span class="text-emerald-300">$1</span>'
-    ).replace(
-      /\b(-?\d+\.?\d*(?:[eE][+-]?\d+)?)\b/g,
-      '<span class="text-amber-300">$1</span>'
-    ).replace(
-      /\b(true|false)\b/g,
-      '<span class="text-blue-400">$1</span>'
-    ).replace(
-      /\b(null)\b/g,
-      '<span class="text-red-400">$1</span>'
-    );
+    return escapeHtml(json)
+      .replace(/("(?:[^"\\]|\\.)*")\s*:/g, '<span class="text-purple-300">$1</span>:')
+      .replace(/("(?:[^"\\]|\\.)*")/g, '<span class="text-emerald-300">$1</span>')
+      .replace(/\b(-?\d+\.?\d*(?:[eE][+-]?\d+)?)\b/g, '<span class="text-amber-300">$1</span>')
+      .replace(/\b(true|false)\b/g, '<span class="text-blue-400">$1</span>')
+      .replace(/\b(null)\b/g, '<span class="text-red-400">$1</span>');
   }
 
   function countKeys(obj: unknown): number {
-    if (typeof obj !== "object" || obj === null) return 0;
+    if (typeof obj !== 'object' || obj === null) return 0;
     let count = 0;
     for (const key of Object.keys(obj)) {
       count++;
@@ -186,123 +265,259 @@ const schema = {
     return count;
   }
 
-  function triggerToast(message: string, variant: "success" | "error" | "info" | "warning" = "success") {
+  function triggerToast(message: string, variant: 'success' | 'error' | 'info' | 'warning' = 'success') {
     if ((window as any).__showToast) {
       (window as any).__showToast({ message, variant });
     }
   }
 
-  function process(mode: "format" | "minify") {
+  function process(mode: 'format' | 'minify') {
     const raw = input.value.trim();
     if (!raw) {
       output.innerHTML = '<span class="text-dim">Paste some JSON to get started</span>';
-      statusBadge.textContent = "empty";
-      statusBadge.className = "text-[10px] font-mono text-dim px-2 py-0.5 rounded-full border border-surface";
-      statsPanel.classList.add("hidden");
+      statusBadge.textContent = 'empty';
+      statusBadge.className = 'text-[10px] font-mono text-dim px-2 py-0.5 rounded-full border border-surface';
+      statsPanel.classList.add('hidden');
       return;
     }
 
     try {
       const parsed = JSON.parse(raw);
-      const result = mode === "format" ? JSON.stringify(parsed, null, 2) : JSON.stringify(parsed);
-      output.innerHTML = mode === "format" ? syntaxHighlight(result) : escapeHtml(result);
-      statusBadge.textContent = "✓ valid";
-      statusBadge.className = "text-[10px] font-mono text-emerald-400 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20";
+      const indentStr = (document.getElementById('indent-size') as HTMLSelectElement)?.value || '2';
+      const indent = indentStr === '\\t' ? '\t' : parseInt(indentStr, 10);
+      const result = mode === 'format' ? JSON.stringify(parsed, null, indent) : JSON.stringify(parsed);
+      output.innerHTML = mode === 'format' ? syntaxHighlight(result) : escapeHtml(result);
+      statusBadge.textContent = '✓ valid';
+      statusBadge.className =
+        'text-[10px] font-mono text-emerald-400 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20';
 
       // Stats
       const keys = countKeys(parsed);
-      statLines.textContent = result.split("\n").length.toString();
+      statLines.textContent = result.split('\n').length.toString();
       statChars.textContent = result.length.toString();
       statKeys.textContent = keys.toString();
       const bytes = new TextEncoder().encode(result).length;
       statSize.textContent = bytes < 1024 ? `${bytes} B` : `${(bytes / 1024).toFixed(1)} KB`;
-      statsPanel.classList.remove("hidden");
+      statsPanel.classList.remove('hidden');
 
       // Store formatted for copy
       (output as HTMLElement).dataset.plainText = result;
-      triggerToast(mode === "format" ? "JSON beautified successfully!" : "JSON minified successfully!", "success");
+      triggerToast(mode === 'format' ? 'JSON beautified successfully!' : 'JSON minified successfully!', 'success');
     } catch (e) {
-      const msg = e instanceof SyntaxError ? e.message : "Invalid JSON";
+      const msg = e instanceof SyntaxError ? e.message : 'Invalid JSON';
       output.innerHTML = `<span class="text-red-400">✗ Error:</span> <span class="text-red-300">${escapeHtml(msg)}</span>`;
-      statusBadge.textContent = "✗ invalid";
-      statusBadge.className = "text-[10px] font-mono text-red-400 px-2 py-0.5 rounded-full bg-red-500/10 border border-red-500/20";
-      statsPanel.classList.add("hidden");
-      triggerToast("Invalid JSON syntax detected!", "error");
+      statusBadge.textContent = '✗ invalid';
+      statusBadge.className =
+        'text-[10px] font-mono text-red-400 px-2 py-0.5 rounded-full bg-red-500/10 border border-red-500/20';
+      statsPanel.classList.add('hidden');
+      triggerToast('Invalid JSON syntax detected!', 'error');
     }
   }
 
-  formatBtn.addEventListener("click", () => process("format"));
-  minifyBtn.addEventListener("click", () => process("minify"));
+  formatBtn.addEventListener('click', () => process('format'));
+  minifyBtn.addEventListener('click', () => process('minify'));
+  document.getElementById('indent-size')?.addEventListener('change', () => process('format'));
 
-  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
-  copyBtn.addEventListener("click", () => {
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
+  copyBtn.addEventListener('click', () => {
     const text = (output as HTMLElement).dataset.plainText || output.textContent;
-    if (text && text !== 'Click "Format" to begin' && !text.includes("Error")) {
+    if (text && text !== 'Click "Format" to begin' && !text.includes('Error')) {
       navigator.clipboard.writeText(text).then(() => {
         playPing();
-        triggerToast("JSON copied to clipboard!", "success");
+        triggerToast('JSON copied to clipboard!', 'success');
       });
     } else {
-      triggerToast("Nothing valid to copy!", "warning");
+      triggerToast('Nothing valid to copy!', 'warning');
     }
   });
 
-  document.getElementById("download-btn")?.addEventListener("click", () => {
-    const el = document.getElementById("json-output");
-    const text = (el as HTMLElement).dataset.plainText || el?.textContent || "";
-    if (!text || text === 'Click "Format" to begin' || text.includes("Error")) return;
-    const fmt = (document.getElementById("export-format") as HTMLSelectElement)?.value || "txt";
-    const mimes = {txt:"text/plain",json:"application/json",csv:"text/csv",html:"text/html"};
-    const data = fmt === "json" ? text : text;
-    const blob = new Blob([data], {type:mimes[fmt]||"text/plain"});
-    const a = document.createElement("a");
+  document.getElementById('download-btn')?.addEventListener('click', () => {
+    const el = document.getElementById('json-output');
+    const text = (el as HTMLElement).dataset.plainText || el?.textContent || '';
+    if (!text || text === 'Click "Format" to begin' || text.includes('Error')) return;
+    const fmt = (document.getElementById('export-format') as HTMLSelectElement)?.value || 'txt';
+    const mimes = { txt: 'text/plain', json: 'application/json', csv: 'text/csv', html: 'text/html' };
+    const data = fmt === 'json' ? text : text;
+    const blob = new Blob([data], { type: mimes[fmt] || 'text/plain' });
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = "formatted." + fmt;
+    a.download = 'formatted.' + fmt;
     a.click();
     playPing();
     URL.revokeObjectURL(a.href);
-    triggerToast("JSON downloaded!", "success");
+    triggerToast('JSON downloaded!', 'success');
   });
-  clearBtn.addEventListener("click", () => {
-    input.value = "";
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
     output.innerHTML = '<span class="text-dim">Paste some JSON to get started</span>';
-    statusBadge.textContent = "ready";
-    statusBadge.className = "text-[10px] font-mono text-dim px-2 py-0.5 rounded-full border border-surface";
-    statsPanel.classList.add("hidden");
+    statusBadge.textContent = 'ready';
+    statusBadge.className = 'text-[10px] font-mono text-dim px-2 py-0.5 rounded-full border border-surface';
+    statsPanel.classList.add('hidden');
     input.focus();
     playPing();
   });
 
   // Ctrl+Enter / Cmd+Enter to format
-  input.addEventListener("keydown", (e: KeyboardEvent) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+  input.addEventListener('keydown', (e: KeyboardEvent) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       e.preventDefault();
-      process("format");
+      process('format');
     }
   });
 
   // Load saved or set default
   try {
-    const saved = localStorage.getItem("nt_json_input");
-    if (saved) { input.value = saved; }
-    else {
-      input.value = '{\n  "name": "JSON Formatter",\n  "version": 1,\n  "features": ["format", "validate", "minify"],\n  "active": true\n}';
+    const saved = localStorage.getItem('nt_json_input');
+    if (saved) {
+      input.value = saved;
+    } else {
+      input.value =
+        '{\n  "name": "JSON Formatter",\n  "version": 1,\n  "features": ["format", "validate", "minify"],\n  "active": true\n}';
     }
   } catch {
     input.value = '{\n  "name": "JSON Formatter",\n  "version": 1\n}';
   }
-  input.addEventListener("input", () => {
-    try { localStorage.setItem("nt_json_input", input.value); } catch {}
+  input.addEventListener('input', () => {
+    try {
+      localStorage.setItem('nt_json_input', input.value);
+    } catch {}
   });
-  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("json-output");const t=o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof (window as any).__showToast==="function")(window as any).__showToast({message:"Link copied!",variant:"success"});});
-  document.querySelector(".font-inc")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.min(24,s+2)+"px";})});
-  document.querySelector(".font-dec")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.max(10,s-2)+"px";})});
-  try{const s=localStorage.getItem("nt_fs");if(s)document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px")}catch(e){}
-  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
-  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["json"])b.textContent="Used "+u["json"]+"×"}catch(e){}
-  const rt=document.getElementById("json-input");if(rt){rt.addEventListener("input",()=>{const w=rt.value?rt.value.trim().split(/\s+/).length:0;const e=document.getElementById("reading-time");if(e)e.textContent=Math.max(1,Math.round(w/200))+" min read · "+Math.max(1,Math.round(w/150))+" min speak"});rt.dispatchEvent(new Event("input"));}
-  const li=document.getElementById("json-input");if(li){const ul=()=>{const n=document.getElementById("line-nums");if(n)n.textContent=Array.from({length:li.value.split("\n").length},(_,i)=>i+1).join("\n")};li.addEventListener("input",ul);li.addEventListener("scroll",()=>{const n=document.getElementById("line-nums");if(n)n.scrollTop=li.scrollTop});ul();}
-  const lf=document.getElementById("json-input");if(lf){lf.addEventListener("input",()=>{const t=lf.value.toLowerCase().replace(/[^a-z]/g,"");if(!t){document.getElementById("letter-freq")?.classList.add("hidden");return;}const f={};for(const c of t)f[c]=(f[c]||0)+1;const s=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,8);const m=s[0]?s[0][1]:1;const el=document.getElementById("letter-freq");el.classList.remove("hidden");el.innerHTML=s.map(([c,n])=>`<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n/m)*80+10}%"></div><span class="text-muted">${n}</span></div>`).join("")})}
-  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500")});try{localStorage.setItem("nt_theme",c)}catch(e){}})});
-  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click()}catch(e){}
-</script>
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('json-output');
+    const t = o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof (window as any).__showToast === 'function')
+      (window as any).__showToast({ message: 'Link copied!', variant: 'success' });
+  });
+  document.querySelector('.font-inc')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.min(24, s + 2) + 'px';
+    });
+  });
+  document.querySelector('.font-dec')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.max(10, s - 2) + 'px';
+    });
+  });
+  try {
+    const s = localStorage.getItem('nt_fs');
+    if (s) document.querySelectorAll('textarea').forEach((t) => (t.style.fontSize = s + 'px'));
+  } catch (e) {}
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      document.getElementById('clear-btn')?.click();
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['json']) b.textContent = 'Used ' + u['json'] + '×';
+  } catch (e) {}
+  const rt = document.getElementById('json-input');
+  if (rt) {
+    rt.addEventListener('input', () => {
+      const w = rt.value ? rt.value.trim().split(/\s+/).length : 0;
+      const e = document.getElementById('reading-time');
+      if (e)
+        e.textContent =
+          Math.max(1, Math.round(w / 200)) + ' min read · ' + Math.max(1, Math.round(w / 150)) + ' min speak';
+    });
+    rt.dispatchEvent(new Event('input'));
+  }
+  const li = document.getElementById('json-input');
+  if (li) {
+    const ul = () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.textContent = Array.from({ length: li.value.split('\n').length }, (_, i) => i + 1).join('\n');
+    };
+    li.addEventListener('input', ul);
+    li.addEventListener('scroll', () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.scrollTop = li.scrollTop;
+    });
+    ul();
+  }
+  const lf = document.getElementById('json-input');
+  if (lf) {
+    lf.addEventListener('input', () => {
+      const t = lf.value.toLowerCase().replace(/[^a-z]/g, '');
+      if (!t) {
+        document.getElementById('letter-freq')?.classList.add('hidden');
+        return;
+      }
+      const f = {};
+      for (const c of t) f[c] = (f[c] || 0) + 1;
+      const s = Object.entries(f)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+      const m = s[0] ? s[0][1] : 1;
+      const el = document.getElementById('letter-freq');
+      el.classList.remove('hidden');
+      el.innerHTML = s
+        .map(
+          ([c, n]) =>
+            `<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n / m) * 80 + 10}%"></div><span class="text-muted">${n}</span></div>`,
+        )
+        .join('');
+    });
+  }
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
+  });
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
+
+  // ─── Fullscreen ───
+  (function() {
+    var fsBtn = document.getElementById('fullscreen-btn');
+    if (fsBtn) {
+      fsBtn.addEventListener('click', function() {
+        var el = document.querySelector('main') || document.documentElement;
+        if (!document.fullscreenElement) { el.requestFullscreen && el.requestFullscreen(); }
+        else { document.exitFullscreen && document.exitFullscreen(); }
+      });
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'f' || e.key === 'F') { if (fsBtn) fsBtn.click(); }
+    });
+  })();</script>

@@ -1,12 +1,14 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import AdUnit from "../../components/AdUnit.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import AdUnit from '../../components/AdUnit.astro';
 
-const comparisonModules = import.meta.glob("./*.md", { eager: true });
-const comparisons = Object.entries(comparisonModules).map(([path, mod]) => ({
-  ...mod,
-  slug: path.replace("./", "").replace(".md", ""),
-})).sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
+const comparisonModules = import.meta.glob('./*.md', { eager: true });
+const comparisons = Object.entries(comparisonModules)
+  .map(([path, mod]) => ({
+    ...mod,
+    slug: path.replace('./', '').replace('.md', ''),
+  }))
+  .sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
 ---
 
 <MainLayout
@@ -15,19 +17,23 @@ const comparisons = Object.entries(comparisonModules).map(([path, mod]) => ({
   keywords="comparisons, vs, format comparison, jpg vs png, webp vs png, tool comparison, image format comparison"
   canonical="https://numanx-tools.pages.dev/comparisons/"
   breadcrumbs={[
-    { name: "Home", url: "/" },
-    { name: "Comparisons", url: "/comparisons/" },
+    { name: 'Home', url: '/' },
+    { name: 'Comparisons', url: '/comparisons/' },
   ]}
 >
   <main class="min-h-screen pt-8 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-12">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6">
+        <div
+          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6"
+        >
           Comparisons
         </div>
         <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-none">
           Format & Tool
-          <span class="block mt-2 bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+          <span
+            class="block mt-2 bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent"
+          >
             Comparisons
           </span>
         </h1>
@@ -41,25 +47,34 @@ const comparisons = Object.entries(comparisonModules).map(([path, mod]) => ({
       </div>
 
       <div id="comparisons-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {comparisons.map((comparison) => (
-          <a href={"/comparisons/" + comparison.slug} class="group rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 hover:border-purple-500/40 hover:bg-zinc-900/60 transition-all duration-300 block">
-            <div class="flex items-center gap-4 mb-4">
-              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center text-lg font-black text-purple-400">
-                VS
+        {
+          comparisons.map((comparison) => (
+            <a
+              href={'/comparisons/' + comparison.slug}
+              class="group glass-card rounded-2xl p-6 hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-300 block"
+            >
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center text-lg font-black text-purple-400">
+                  VS
+                </div>
+                <div>
+                  <h2 class="text-lg font-bold text-white group-hover:text-purple-300 transition-colors duration-200">
+                    {comparison.frontmatter.title}
+                  </h2>
+                  <p class="text-xs text-dim mt-1">{comparison.frontmatter.date}</p>
+                </div>
               </div>
-              <div>
-                <h2 class="text-lg font-bold text-white group-hover:text-purple-300 transition-colors duration-200">{comparison.frontmatter.title}</h2>
-                <p class="text-xs text-dim mt-1">{comparison.frontmatter.date}</p>
+              <p class="text-sm text-tertiary leading-relaxed line-clamp-3">{comparison.frontmatter.description}</p>
+              <div class="flex items-center gap-2 mt-4">
+                {(comparison.frontmatter.tags || []).slice(0, 3).map((tag) => (
+                  <span class="px-2 py-0.5 rounded-md bg-zinc-800 border border-zinc-700 text-dim text-[10px] font-medium">
+                    {tag}
+                  </span>
+                ))}
               </div>
-            </div>
-            <p class="text-sm text-tertiary leading-relaxed line-clamp-3">{comparison.frontmatter.description}</p>
-            <div class="flex items-center gap-2 mt-4">
-              {(comparison.frontmatter.tags || []).slice(0, 3).map(tag => (
-                <span class="px-2 py-0.5 rounded-md bg-zinc-800 border border-zinc-700 text-dim text-[10px] font-medium">{tag}</span>
-              ))}
-            </div>
-          </a>
-        ))}
+            </a>
+          ))
+        }
       </div>
 
       <div class="max-w-4xl mx-auto my-8">
@@ -69,19 +84,30 @@ const comparisons = Object.entries(comparisonModules).map(([path, mod]) => ({
       <div class="mt-16 bg-zinc-900/30 border border-zinc-800/80 p-8 md:p-10 rounded-2xl text-center">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight">
           Try the Tools
-          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> Behind the Comparisons</span>
+          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
+            Behind the Comparisons</span
+          >
         </h2>
         <p class="text-tertiary mt-3 max-w-md mx-auto text-sm">
           Convert, compress, and compare formats yourself with our free online tools.
         </p>
         <div class="mt-6 flex gap-3 justify-center flex-wrap">
-          <a href="/tools/jpg-to-png/" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm active:scale-[0.97] transition-all duration-200">
+          <a
+            href="/tools/jpg-to-png/"
+            class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm active:scale-[0.97] transition-all duration-200"
+          >
             JPG to PNG
           </a>
-          <a href="/tools/png-to-webp/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm active:scale-[0.97] transition-all duration-200 border border-zinc-700">
+          <a
+            href="/tools/png-to-webp/"
+            class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm active:scale-[0.97] transition-all duration-200 border border-zinc-700"
+          >
             PNG to WebP
           </a>
-          <a href="/tools/image-compressor/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm active:scale-[0.97] transition-all duration-200 border border-zinc-700">
+          <a
+            href="/tools/image-compressor/"
+            class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm active:scale-[0.97] transition-all duration-200 border border-zinc-700"
+          >
             Image Compressor
           </a>
         </div>

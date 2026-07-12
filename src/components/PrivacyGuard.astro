@@ -1,0 +1,18 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div
+  class="mt-8 flex items-center gap-2 px-4 py-2.5 rounded-xl border border-emerald-500/15 bg-emerald-500/[0.02] max-w-max mx-auto {className || ''}"
+>
+  <span class="relative flex h-2 w-2 shrink-0">
+    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+  </span>
+  <span class="text-[11px] text-emerald-400/90 font-medium"
+    >Privacy Guard: All processing runs locally in your browser. Your data never leaves your device.</span
+  >
+</div>

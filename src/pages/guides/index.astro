@@ -1,14 +1,16 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import AdUnit from "../../components/AdUnit.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import AdUnit from '../../components/AdUnit.astro';
 
-const guideModules = import.meta.glob("./*.md", { eager: true });
-const guides = Object.entries(guideModules).map(([path, mod]) => ({
-  ...mod,
-  slug: path.replace("./", "").replace(".md", ""),
-})).sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
+const guideModules = import.meta.glob('./*.md', { eager: true });
+const guides = Object.entries(guideModules)
+  .map(([path, mod]) => ({
+    ...mod,
+    slug: path.replace('./', '').replace('.md', ''),
+  }))
+  .sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
 const featured = guides[0];
-const categories = [...new Set(guides.map(g => g.frontmatter.category))];
+const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
 ---
 
 <MainLayout
@@ -17,23 +19,27 @@ const categories = [...new Set(guides.map(g => g.frontmatter.category))];
   keywords="guides, tutorials, how-to, image optimization, password security, cricket guides, seo guides, web performance"
   canonical="https://numanx-tools.pages.dev/guides/"
   breadcrumbs={[
-    { name: "Home", url: "/" },
-    { name: "Guides", url: "/guides/" },
+    { name: 'Home', url: '/' },
+    { name: 'Guides', url: '/guides/' },
   ]}
 >
   <main class="min-h-screen pt-8 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-12">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6">
+        <div
+          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6"
+        >
           <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500" />
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
           </span>
           Guides
         </div>
         <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-none">
           NumanX Tools
-          <span class="block mt-2 bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+          <span
+            class="block mt-2 bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent"
+          >
             Guides
           </span>
         </h1>
@@ -46,47 +52,119 @@ const categories = [...new Set(guides.map(g => g.frontmatter.category))];
         <AdUnit format="horizontal" />
       </div>
 
-      {featured && (
-        <a href={"/guides/" + featured.slug} class="group block rounded-2xl border border-zinc-800 bg-zinc-900/40 hover:border-purple-500/40 transition-all duration-300 p-6 md:p-8 mb-10 overflow-hidden">
-          <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
-            <div class="w-full md:w-[280px] shrink-0 aspect-video md:aspect-[4/3] rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center border border-zinc-800 overflow-hidden">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="opacity-60"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-            </div>
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-3 mb-3">
-                <span class="inline-flex px-2.5 py-0.5 rounded-full bg-purple-600/15 border border-purple-500/30 text-purple-300 text-xs font-medium">{featured.frontmatter.category}</span>
-                <span class="text-xs text-dim">{featured.frontmatter.date}</span>
+      {
+        featured && (
+          <a
+            href={'/guides/' + featured.slug}
+            class="group block glass-card rounded-3xl hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-300 p-6 md:p-10 mb-12 overflow-hidden"
+          >
+            <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+              <div class="w-full md:w-[280px] shrink-0 aspect-video md:aspect-[4/3] rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center border border-zinc-800 overflow-hidden">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="40"
+                  height="40"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#a855f7"
+                  stroke-width="1"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="opacity-60"
+                >
+                  <>
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                  </>
+                </svg>
               </div>
-              <h2 class="text-xl md:text-2xl font-bold text-white group-hover:text-purple-300 transition-colors duration-200 leading-snug">{featured.frontmatter.title}</h2>
-              <p class="text-sm text-tertiary mt-2 leading-relaxed line-clamp-2">{featured.frontmatter.description}</p>
-              <div class="flex items-center gap-3 mt-4 text-sm text-muted">
-                <span>{featured.frontmatter.readingTime || "5 min read"}</span>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="inline-flex px-2.5 py-0.5 rounded-full bg-purple-600/15 border border-purple-500/30 text-purple-300 text-xs font-medium">
+                    {featured.frontmatter.category}
+                  </span>
+                  <span class="text-xs text-dim">{featured.frontmatter.date}</span>
+                </div>
+                <h2 class="text-xl md:text-2xl font-bold text-white group-hover:text-purple-300 transition-colors duration-200 leading-snug">
+                  {featured.frontmatter.title}
+                </h2>
+                <p class="text-sm text-tertiary mt-2 leading-relaxed line-clamp-2">
+                  {featured.frontmatter.description}
+                </p>
+                <div class="flex items-center gap-3 mt-4 text-sm text-muted">
+                  <span>{featured.frontmatter.readingTime || '5 min read'}</span>
+                </div>
+                <span class="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-purple-400 group-hover:text-purple-300 transition-colors">
+                  Read Guide
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="group-hover:translate-x-1 transition-transform"
+                  >
+                    <>
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </>
+                  </svg>
+                </span>
               </div>
-              <span class="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-purple-400 group-hover:text-purple-300 transition-colors">
-                Read Guide
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </span>
-            </div>
-          </div>
-        </a>
-      )}
-
-      <div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {guides.map((guide) => (
-          <a href={"/guides/" + guide.slug} class="group rounded-xl border border-zinc-800 bg-zinc-900/40 p-5 hover:border-purple-500/40 hover:bg-zinc-900/60 transition-all duration-300 block">
-            <div class="w-full aspect-video rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mb-4 border border-zinc-800">
-              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="opacity-60"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-            </div>
-            <span class="inline-flex px-2 py-0.5 rounded-full bg-purple-600/15 border border-purple-500/30 text-purple-300 text-[10px] font-medium mb-2.5">{guide.frontmatter.category || "General"}</span>
-            <h3 class="text-base font-bold text-white group-hover:text-purple-300 transition-colors duration-200 leading-snug">{guide.frontmatter.title}</h3>
-            <p class="text-xs text-tertiary mt-2 leading-relaxed line-clamp-2">{guide.frontmatter.description}</p>
-            <div class="flex items-center gap-2 mt-3 text-[11px] text-dim">
-              <span>{guide.frontmatter.date}</span>
-              <span>·</span>
-              <span>{guide.frontmatter.readingTime || "5 min read"}</span>
             </div>
           </a>
-        ))}
+        )
+      }
+
+      <div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {
+          guides.map((guide) => (
+            <a
+              href={'/guides/' + guide.slug}
+              class="group glass-card rounded-2xl p-6 hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-300 block"
+            >
+              <div class="w-full aspect-video rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mb-4 border border-zinc-800">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#a855f7"
+                  stroke-width="1"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="opacity-60"
+                >
+                  <>
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                  </>
+                </svg>
+              </div>
+              <span class="inline-flex px-2 py-0.5 rounded-full bg-purple-600/15 border border-purple-500/30 text-purple-300 text-[10px] font-medium mb-2.5">
+                {guide.frontmatter.category || 'General'}
+              </span>
+              <h3 class="text-base font-bold text-white group-hover:text-purple-300 transition-colors duration-200 leading-snug">
+                {guide.frontmatter.title}
+              </h3>
+              <p class="text-xs text-tertiary mt-2 leading-relaxed line-clamp-2">{guide.frontmatter.description}</p>
+              <div class="flex items-center gap-2 mt-3 text-[11px] text-dim">
+                <span>{guide.frontmatter.date}</span>
+                <span>·</span>
+                <span>{guide.frontmatter.readingTime || '5 min read'}</span>
+              </div>
+            </a>
+          ))
+        }
       </div>
 
       <div class="max-w-4xl mx-auto my-8">
@@ -96,16 +174,24 @@ const categories = [...new Set(guides.map(g => g.frontmatter.category))];
       <div class="mt-16 bg-zinc-900/30 border border-zinc-800/80 p-8 md:p-10 rounded-2xl text-center">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight">
           Need Help With
-          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> a Specific Tool?</span>
+          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
+            a Specific Tool?</span
+          >
         </h2>
         <p class="text-tertiary mt-3 max-w-md mx-auto text-sm">
           Browse our library of free online tools or contact us with your questions.
         </p>
         <div class="mt-6 flex gap-3 justify-center">
-          <a href="/tools/" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm active:scale-[0.97] transition-all duration-200">
+          <a
+            href="/tools/"
+            class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm active:scale-[0.97] transition-all duration-200"
+          >
             Browse Tools
           </a>
-          <a href="/blog/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm active:scale-[0.97] transition-all duration-200 border border-zinc-700">
+          <a
+            href="/blog/"
+            class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm active:scale-[0.97] transition-all duration-200 border border-zinc-700"
+          >
             Read Blog
           </a>
         </div>

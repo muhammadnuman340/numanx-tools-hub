@@ -1,21 +1,21 @@
 :root,
-html[data-theme="dark"] {
+html[data-theme='dark'] {
   /* ─── Brand Colors ─── */
-  --purple-50: #faf5ff;
-  --purple-100: #f3e8ff;
-  --purple-200: #e9d5ff;
-  --purple-300: #d8b4fe;
-  --purple-400: #c084fc;
-  --purple-500: #a855f7;
-  --purple-600: #7c3aed;
-  --purple-700: #6d28d9;
-  --purple-800: #5b21b6;
-  --purple-900: #4c1d95;
-  --purple-950: #2e1065;
+  --purple-50: #fff5f5;
+  --purple-100: #ffe3e3;
+  --purple-200: #ffc9c9;
+  --purple-300: #ffa3a3;
+  --purple-400: #fb7185; /* Sunset Rose */
+  --purple-500: #ff5a36; /* Glowing Orange-Red */
+  --purple-600: #f43f5e; /* Vivid Rose-Crimson */
+  --purple-700: #ea580c; /* High-intensity Orange */
+  --purple-800: #c2410c; /* Volcanic sunset */
+  --purple-900: #9a3412; /* Coals burn */
+  --purple-950: #431407; /* Volcano black */
 
-  --blue-400: #60a5fa;
-  --blue-500: #3b82f6;
-  --blue-600: #2563eb;
+  --blue-400: #fb923c;
+  --blue-500: #f97316;
+  --blue-600: #ea580c;
 
   --emerald-400: #34d399;
   --emerald-500: #10b981;
@@ -36,17 +36,17 @@ html[data-theme="dark"] {
   --border-subtle: rgba(39, 39, 42, 0.5);
   --border-default: rgba(39, 39, 42, 0.8);
   --border-hover: rgba(63, 63, 70, 0.9);
-  --border-accent: rgba(168, 85, 247, 0.3);
-  --border-accent-hover: rgba(168, 85, 247, 0.5);
+  --border-accent: rgba(251, 113, 133, 0.35);
+  --border-accent-hover: rgba(251, 113, 133, 0.55);
 
-  --surface-1: rgba(255,255,255,0.02);
-  --surface-2: rgba(255,255,255,0.04);
-  --surface-3: rgba(255,255,255,0.06);
-  --surface-nav: rgba(10,10,11,0.9);
-  --surface-search: rgba(0,0,0,0.85);
-  --border-surface: rgba(255,255,255,0.06);
-  --border-surface-2: rgba(255,255,255,0.08);
-  --border-surface-3: rgba(255,255,255,0.1);
+  --surface-1: rgba(255, 255, 255, 0.02);
+  --surface-2: rgba(255, 255, 255, 0.04);
+  --surface-3: rgba(255, 255, 255, 0.06);
+  --surface-nav: rgba(10, 10, 11, 0.9);
+  --surface-search: rgba(0, 0, 0, 0.85);
+  --border-surface: rgba(255, 255, 255, 0.06);
+  --border-surface-2: rgba(255, 255, 255, 0.08);
+  --border-surface-3: rgba(255, 255, 255, 0.1);
 
   --text-primary: #f4f4f5;
   --text-secondary: #d4d4d8;
@@ -83,26 +83,26 @@ html[data-theme="dark"] {
   --tracking-widest: 0.1em;
 
   /* ─── Shadows ─── */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.35);
-  --shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.4);
-  --shadow-2xl: 0 20px 64px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.5);
+  --shadow-2xl: 0 30px 80px rgba(0, 0, 0, 0.6);
 
-  --shadow-glow-purple: 0 0 30px rgba(168, 85, 247, 0.15);
-  --shadow-glow-blue: 0 0 30px rgba(59, 130, 246, 0.15);
-  --shadow-glow-emerald: 0 0 30px rgba(16, 185, 129, 0.15);
+  --shadow-glow-purple: 0 0 40px rgba(255, 90, 54, 0.22);
+  --shadow-glow-blue: 0 0 40px rgba(249, 115, 22, 0.22);
+  --shadow-glow-emerald: 0 0 40px rgba(16, 185, 129, 0.25);
 
-  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.02);
-  --shadow-card-hover: 0 8px 32px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(168, 85, 247, 0.1);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --shadow-card-hover: 0 10px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(251, 113, 133, 0.35);
 
   /* ─── Border Radius ─── */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.25rem;
-  --radius-3xl: 1.5rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 2.5rem;
   --radius-full: 9999px;
 
   /* ─── Transitions ─── */
@@ -185,7 +185,9 @@ html[data-theme="dark"] {
   border-radius: inherit;
   padding: 1px;
   background: linear-gradient(135deg, var(--purple-500), transparent, var(--blue-500));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -199,67 +201,145 @@ html[data-theme="dark"] {
 
 /* ─── Animations ─── */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideInRight {
-  from { opacity: 0; transform: translateX(100%); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes slideOutRight {
-  from { opacity: 1; transform: translateX(0); }
-  to { opacity: 0; transform: translateX(100%); }
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes float-3d {
+  0%,
+  100% {
+    transform: translateY(0px) rotateX(2deg) rotateY(-2deg);
+  }
+  50% {
+    transform: translateY(-15px) rotateX(-2deg) rotateY(2deg);
+  }
 }
 
 @keyframes subtle-float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 @keyframes ping {
-  75%, 100% { transform: scale(2); opacity: 0; }
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 @keyframes breathe {
-  0%, 100% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.05); opacity: 0.8; }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
 }
 
 /* ─── Scrollbar ─── */
@@ -281,7 +361,7 @@ html[data-theme="dark"] {
   background: var(--text-muted);
 }
 
-html[data-theme="light"] {
+html[data-theme='light'] {
   --bg-base: #ffffff;
   --bg-surface: #f8f8fa;
   --bg-elevated: #f0f0f3;
@@ -298,14 +378,14 @@ html[data-theme="light"] {
   --text-muted: #52525b;
   --text-dim: #71717a;
 
-  --surface-1: rgba(0,0,0,0.02);
-  --surface-2: rgba(0,0,0,0.04);
-  --surface-3: rgba(0,0,0,0.06);
-  --surface-nav: rgba(255,255,255,0.9);
-  --surface-search: rgba(255,255,255,0.95);
-  --border-surface: rgba(0,0,0,0.08);
-  --border-surface-2: rgba(0,0,0,0.12);
-  --border-surface-3: rgba(0,0,0,0.16);
+  --surface-1: rgba(0, 0, 0, 0.02);
+  --surface-2: rgba(0, 0, 0, 0.04);
+  --surface-3: rgba(0, 0, 0, 0.06);
+  --surface-nav: rgba(255, 255, 255, 0.9);
+  --surface-search: rgba(255, 255, 255, 0.95);
+  --border-surface: rgba(0, 0, 0, 0.08);
+  --border-surface-2: rgba(0, 0, 0, 0.12);
+  --border-surface-3: rgba(0, 0, 0, 0.16);
 
   /* ─── Inverted zinc palette so all bg-zinc-*, text-zinc-*, border-zinc-* work in light mode ─── */
   --color-zinc-50: oklch(14.1% 0.005 285.823);

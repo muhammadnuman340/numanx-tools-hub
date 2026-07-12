@@ -1,0 +1,550 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'What is Epoch Time?',
+    answer:
+      'Epoch time (also known as Unix time or POSIX time) represents the cumulative number of seconds elapsed since January 1st, 1970 at midnight (UTC), excluding leap seconds. It is widely used in computers to track records easily.',
+  },
+  {
+    question: 'How does this tool distinguish seconds and milliseconds?',
+    answer:
+      'A timestamp with 10 digits generally matches seconds (e.g., 1718192345), while a 13-digit timestamp implies milliseconds. Our converter automatically checks character lengths to parse with precise accuracy.',
+  },
+  {
+    question: 'What happens on January 19, 2038?',
+    answer:
+      'On this date, standard 32-bit integer Unix counters will overflow (the Year 2038 problem). Modern browsers, server runtimes, and our converters utilize 64-bit float numbers, meaning they are fully immune to 32-bit overflow.',
+  },
+];
+
+const ecSchema = {
+  name: 'Developer Epoch Unix Converter',
+  applicationCategory: 'Utilities',
+  description:
+    'Advanced programmer tool to transform Unix Epoch timestamps into human-readable UTC & local dates and reverse them.',
+  featureList: [
+    'Live Ticking Epoch Clock',
+    'Auto Mills vs Seconds Detection',
+    'Chronological String Parser',
+    'Double Copy Hooks',
+    '100% Client-Side Native',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '⏱️',
+    title: 'Real-Time Clock',
+    desc: 'View a live, ticking Unix epoch clock right on your screen to track the current timestamp.',
+  },
+  {
+    icon: '🔄',
+    title: 'Two-Way Conversion',
+    desc: 'Instantly convert from Unix timestamps to human dates, and from human dates back to Unix timestamps.',
+  },
+  {
+    icon: '🧠',
+    title: 'Auto-Detection',
+    desc: 'Automatically differentiates between seconds and milliseconds based on character length.',
+  },
+  {
+    icon: '🌍',
+    title: 'Timezone Aware',
+    desc: 'Outputs both your local browser timezone and standard GMT/UTC formatted dates simultaneously.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Convert to Date',
+    desc: 'Paste a 10-digit or 13-digit integer into the left panel to decode it into a readable date.',
+  },
+  {
+    num: '2',
+    title: 'Convert to Unix',
+    desc: 'Enter a specific year, month, day, and time in the right panel to generate its Unix equivalent.',
+  },
+  {
+    num: '3',
+    title: 'Use Current Time',
+    desc: 'Click the "Now" or "Set Now" buttons to quickly populate fields with the exact current time.',
+  },
+  {
+    num: '4',
+    title: 'Copy Results',
+    desc: 'Use the quick-copy buttons to grab the converted ISO strings or integer timestamps.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '🐛',
+    title: 'Debugging Logs',
+    desc: 'Quickly translate integer timestamps found in server error logs into readable dates.',
+  },
+  {
+    icon: '💾',
+    title: 'Database Queries',
+    desc: 'Generate exact Unix timestamps to use in SQL queries or NoSQL database filters.',
+  },
+  {
+    icon: '🔐',
+    title: 'API Development',
+    desc: 'Verify that authentication tokens (like JWTs) have correct expiration (exp) integer claims.',
+  },
+];
+---
+
+<MainLayout
+  title="Unix Epoch Timestamp Converter - Free Developer Utilities"
+  description="Translate Unix seconds or milliseconds since 1970 into localized Human dates and vice versa. Fully client-side with ticking system clocks."
+  keywords="epoch converter, unix timestamp, milliseconds since 1970, date to timestamp, programmer clock, UTC epoch converter"
+  toolSchema={ecSchema}
+  faq={faqItems}
+  howto={{
+    name: 'How to convert Unix timestamps',
+    description: 'Convert epoch timestamps of seconds or milliseconds into printable dates.',
+    steps: [
+      {
+        name: 'Input Epoch Value',
+        text: 'Provide a 10-digit (seconds) or 13-digit (milliseconds) integer value into the decoder card.',
+      },
+      {
+        name: 'Convert Date to Unix',
+        text: 'Select a Year, Month, and time configuration under the encoder section to calculate seconds.',
+      },
+      {
+        name: 'Track Current Clock',
+        text: 'Click to snapshot the current ticking browser clock to fill input values instantly.',
+      },
+    ],
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Epoch Converter', url: '/tools/epoch-converter/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="Developer Epoch"
+        gradient="Unix Converter"
+        desc="Convert Unix timestamps (seconds & milliseconds) into human-readable UTC/local date structures and vice versa."
+        badge="✦ Hidden Utility"
+        slug="epoch-converter"
+      />
+      <ShareBar />
+
+      <!-- Core Display: Ticking Unix Clock -->
+      <div class="glass-card rounded-[2rem] p-6 mt-10 relative overflow-hidden">
+        <div class="absolute -top-12 -right-12 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl"></div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <span class="text-xs font-semibold text-purple-400 uppercase tracking-widest">Active Unix Era Epoch</span>
+            <h2
+              class="text-3xl md:text-4xl font-extrabold text-white mt-1 font-mono tracking-tight"
+              id="live-epoch-seconds"
+            >
+              Loading...
+            </h2>
+            <p class="text-xs text-muted mt-1">Seconds since January 1, 1970 (UTC)</p>
+          </div>
+          <div class="border-t sm:border-t-0 sm:border-l border-surface pt-4 sm:pt-0 sm:pl-6 leading-relaxed">
+            <div class="text-xs text-muted">Active ISO Date-Time</div>
+            <div id="live-epoch-iso" class="text-sm font-semibold text-rose-300 font-mono mt-0.5">...</div>
+            <button
+              id="pause-clock-btn"
+              class="text-[10px] text-purple-400 hover:text-white transition-colors bg-purple-500/10 hover:bg-purple-500/20 px-2 py-0.5 rounded font-mono mt-2"
+              >Pause Ticker</button
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <!-- CARD A: Timestamp to Human Date -->
+        <div class="glass-card rounded-[2rem] p-6 flex flex-col justify-between">
+          <div>
+            <h3 class="text-sm font-bold text-rose-400 uppercase tracking-wider mb-4">Unix Timestamp ➔ Date</h3>
+
+            <div class="space-y-4">
+              <div>
+                <label class="block text-xs font-semibold text-tertiary mb-2">Input Integer Timestamp</label>
+                <div class="flex gap-2">
+                  <input
+                    id="input-timestamp-val"
+                    type="number"
+                    placeholder="e.g. 1718192345"
+                    class="flex-1 bg-surface-1 text-white border border-surface-2 rounded-xl px-4 py-3 text-sm font-mono focus:outline-none focus:border-rose-500/50"
+                  />
+                  <button
+                    id="fill-current-btn"
+                    class="bg-surface-2 hover:bg-rose-500/10 border border-surface-3 text-secondary hover:text-rose-300 text-xs font-medium px-3 rounded-xl transition-all"
+                    title="Fill with current time"
+                  >
+                    Now
+                  </button>
+                </div>
+              </div>
+
+              <div class="space-y-3 pt-2">
+                <div class="bg-surface-1 border border-surface-2 rounded-xl p-3 relative">
+                  <span class="text-[10px] uppercase font-mono text-muted block">ISO 8601 Date String</span>
+                  <div id="decoded-iso" class="text-[13px] font-bold font-mono text-white mt-1 break-all select-all">
+                    Enter integer to decode
+                  </div>
+                  <button
+                    class="absolute top-2.5 right-2 px-1.5 py-0.5 h-6 rounded bg-surface-2 text-[10px] text-muted hover:text-white border border-surface"
+                    data-copy-target="decoded-iso">Copy</button
+                  >
+                </div>
+
+                <div class="bg-surface-1 border border-surface-2 rounded-xl p-3 relative">
+                  <span class="text-[10px] uppercase font-mono text-muted block">Local Time Zone (Browser)</span>
+                  <div id="decoded-local" class="text-[13px] font-bold text-rose-200 mt-1 break-all select-all">
+                    Enter integer to decode
+                  </div>
+                </div>
+
+                <div class="bg-surface-1 border border-surface-2 rounded-xl p-3 relative">
+                  <span class="text-[10px] uppercase font-mono text-muted block">GMT/UTC Formatted Date</span>
+                  <div id="decoded-gmt" class="text-[13px] font-bold text-rose-200 mt-1 break-all select-all">
+                    Enter integer to decode
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-[10px] text-muted mt-4 leading-relaxed">
+            * Differentiates seconds and milliseconds automatically. Supports values up to year 100,000.
+          </div>
+        </div>
+
+        <!-- CARD B: Human Date to Timestamp -->
+        <div class="glass-card rounded-[2rem] p-6 flex flex-col justify-between">
+          <div>
+            <h3 class="text-sm font-bold text-rose-400 uppercase tracking-wider mb-4">Human Date ➔ Unix Epoch</h3>
+
+            <div class="space-y-4">
+              <div class="grid grid-cols-3 gap-2">
+                <div>
+                  <label class="block text-[10px] text-muted mb-1">Year</label>
+                  <input
+                    id="date-yr"
+                    type="number"
+                    value="2026"
+                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50"
+                  />
+                </div>
+                <div>
+                  <label class="block text-[10px] text-muted mb-1">Month (1-12)</label>
+                  <input
+                    id="date-mo"
+                    type="number"
+                    value="6"
+                    min="1"
+                    max="12"
+                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50"
+                  />
+                </div>
+                <div>
+                  <label class="block text-[10px] text-muted mb-1">Day</label>
+                  <input
+                    id="date-dy"
+                    type="number"
+                    value="12"
+                    min="1"
+                    max="31"
+                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-3 gap-2">
+                <div>
+                  <label class="block text-[10px] text-muted mb-1">Hour (24h)</label>
+                  <input
+                    id="date-hr"
+                    type="number"
+                    value="4"
+                    min="0"
+                    max="23"
+                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50"
+                  />
+                </div>
+                <div>
+                  <label class="block text-[10px] text-muted mb-1">Minute</label>
+                  <input
+                    id="date-mn"
+                    type="number"
+                    value="20"
+                    min="0"
+                    max="59"
+                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50"
+                  />
+                </div>
+                <div>
+                  <label class="block text-[10px] text-muted mb-1">Second</label>
+                  <input
+                    id="date-sc"
+                    type="number"
+                    value="0"
+                    min="0"
+                    max="59"
+                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50"
+                  />
+                </div>
+              </div>
+
+              <div class="flex gap-2">
+                <button
+                  id="calc-stamp-btn"
+                  class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs py-2.5 rounded-xl transition-all"
+                >
+                  Calculate Timestamp
+                </button>
+                <button
+                  id="set-now-btn"
+                  class="bg-surface-2 hover:bg-zinc-700 border border-surface-3 text-secondary hover:text-white text-xs font-medium px-4 rounded-xl transition-all"
+                >
+                  Set Now
+                </button>
+              </div>
+
+              <div class="space-y-2 pt-2">
+                <div class="bg-surface-1 border border-surface-2 rounded-xl p-3 relative">
+                  <span class="text-[10px] uppercase font-mono text-muted block">Epoch Seconds</span>
+                  <div id="output-epoch-sec" class="text-base font-bold font-mono text-rose-300 mt-1 select-all">
+                    1781238000
+                  </div>
+                  <button
+                    class="absolute top-2.5 right-2 px-1.5 py-0.5 h-6 rounded bg-surface-2 text-[10px] text-muted hover:text-white border border-surface"
+                    data-copy-target="output-epoch-sec">Copy</button
+                  >
+                </div>
+                <div class="bg-surface-1 border border-surface-2 rounded-xl p-3">
+                  <span class="text-[10px] uppercase font-mono text-muted block font-mono">Epoch Milliseconds</span>
+                  <div id="output-epoch-ms" class="text-[13px] font-bold font-mono text-white mt-1 select-all">
+                    1781238000000
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-[10px] text-muted mt-4 leading-relaxed">
+            * Parsed based on local user environment time coordinates. GMT translations align dynamically.
+          </div>
+        </div>
+      </div>
+
+      <ToolContentSections
+        toolSlug="epoch-converter"
+        toolName="Epoch Converter"
+        category="Developer Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="epoch-converter" />
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 1000;
+      g.gain.setValueAtTime(0.04, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.1);
+      o.start();
+      o.stop(a.currentTime + 0.1);
+    } catch (e) {}
+  }
+
+  // --- Real-time Clock ---
+  let isPaused = false;
+  const liveSec = document.getElementById('live-epoch-seconds');
+  const liveIso = document.getElementById('live-epoch-iso');
+  const pauseClockBtn = document.getElementById('pause-clock-btn');
+
+  function tickClock() {
+    if (isPaused) return;
+    const now = new Date();
+    if (liveSec) liveSec.textContent = Math.floor(now.getTime() / 1000).toLocaleString();
+    if (liveIso) liveIso.textContent = now.toISOString();
+  }
+
+  setInterval(tickClock, 1000);
+  tickClock();
+
+  pauseClockBtn?.addEventListener('click', () => {
+    isPaused = !isPaused;
+    if (pauseClockBtn) {
+      pauseClockBtn.textContent = isPaused ? 'Resume Ticker' : 'Pause Ticker';
+      pauseClockBtn.className = isPaused
+        ? 'text-[10px] text-green-400 hover:text-white transition-colors bg-green-500/10 hover:bg-green-500/20 px-2 py-0.5 rounded font-mono mt-2'
+        : 'text-[10px] text-purple-400 hover:text-white transition-colors bg-purple-500/10 hover:bg-purple-500/20 px-2 py-0.5 rounded font-mono mt-2';
+    }
+    playPing();
+  });
+
+  // --- Timestamp to Date Dec --
+  const stampInput = document.getElementById('input-timestamp-val') as HTMLInputElement;
+  const fillCurrentBtn = document.getElementById('fill-current-btn');
+
+  const decIso = document.getElementById('decoded-iso');
+  const decLocal = document.getElementById('decoded-local');
+  const decGmt = document.getElementById('decoded-gmt');
+
+  function decodeTimestamp() {
+    const valStr = stampInput.value.trim();
+    if (!valStr) {
+      if (decIso) decIso.textContent = 'Enter integer to decode';
+      if (decLocal) decLocal.textContent = 'Enter integer to decode';
+      if (decGmt) decGmt.textContent = 'Enter integer to decode';
+      return;
+    }
+
+    let val = parseFloat(valStr);
+    if (isNaN(val)) return;
+
+    // Detect if mills
+    if (valStr.length >= 12) {
+      // Milliseconds
+    } else {
+      // Seconds - scale to milliseconds
+      val = val * 1000;
+    }
+
+    try {
+      const d = new Date(val);
+      if (isNaN(d.getTime())) {
+        if (decIso) decIso.textContent = 'Invalid chronometric value';
+        return;
+      }
+      if (decIso) decIso.textContent = d.toISOString();
+      if (decLocal) decLocal.textContent = d.toLocaleString();
+      if (decGmt) decGmt.textContent = d.toUTCString();
+    } catch (e) {
+      if (decIso) decIso.textContent = 'Error decoding';
+    }
+  }
+
+  stampInput?.addEventListener('input', decodeTimestamp);
+
+  fillCurrentBtn?.addEventListener('click', () => {
+    playPing();
+    const curSec = Math.floor(Date.now() / 1000);
+    stampInput.value = String(curSec);
+    decodeTimestamp();
+    if ((window as any).__showToast)
+      (window as any).__showToast({ message: 'Loaded current Epoch!', variant: 'success' });
+  });
+
+  // --- Date to Timestamp ---
+  const dYr = document.getElementById('date-yr') as HTMLInputElement;
+  const dMo = document.getElementById('date-mo') as HTMLInputElement;
+  const dDy = document.getElementById('date-dy') as HTMLInputElement;
+  const dHr = document.getElementById('date-hr') as HTMLInputElement;
+  const dMn = document.getElementById('date-mn') as HTMLInputElement;
+  const dSc = document.getElementById('date-sc') as HTMLInputElement;
+
+  const bCalcStamp = document.getElementById('calc-stamp-btn');
+  const bSetNow = document.getElementById('set-now-btn');
+
+  const outSec = document.getElementById('output-epoch-sec');
+  const outMs = document.getElementById('output-epoch-ms');
+
+  function setInputsToNow() {
+    const d = new Date();
+    if (dYr) dYr.value = String(d.getFullYear());
+    if (dMo) dMo.value = String(d.getMonth() + 1);
+    if (dDy) dDy.value = String(d.getDate());
+    if (dHr) dHr.value = String(d.getHours());
+    if (dMn) dMn.value = String(d.getMinutes());
+    if (dSc) dSc.value = String(d.getSeconds());
+  }
+
+  function calculateTimestamp() {
+    const yr = parseInt(dYr.value) || 1970;
+    const mo = (parseInt(dMo.value) || 1) - 1;
+    const dy = parseInt(dDy.value) || 1;
+    const hr = parseInt(dHr.value) || 0;
+    const mn = parseInt(dMn.value) || 0;
+    const sc = parseInt(dSc.value) || 0;
+
+    const d = new Date(yr, mo, dy, hr, mn, sc);
+    const msVal = d.getTime();
+    const secVal = Math.floor(msVal / 1000);
+
+    if (outSec) outSec.textContent = String(secVal);
+    if (outMs) outMs.textContent = String(msVal);
+  }
+
+  bCalcStamp?.addEventListener('click', () => {
+    playPing();
+    calculateTimestamp();
+    if ((window as any).__showToast)
+      (window as any).__showToast({ message: 'Calculated Unix values!', variant: 'success' });
+  });
+
+  bSetNow?.addEventListener('click', () => {
+    playPing();
+    setInputsToNow();
+    calculateTimestamp();
+    if ((window as any).__showToast)
+      (window as any).__showToast({ message: 'Set form parameters to current!', variant: 'success' });
+  });
+
+  // Calculate once initially
+  setInputsToNow();
+  calculateTimestamp();
+
+  // Copy helpers
+  document.querySelectorAll('[data-copy-target]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const targetId = btn.getAttribute('data-copy-target');
+      const targetEl = document.getElementById(targetId || '');
+      if (targetEl && targetEl.textContent) {
+        let textToCopy = targetEl.textContent;
+        if (textToCopy.startsWith('Enter integer') || textToCopy.startsWith('Loading')) return;
+        await navigator.clipboard.writeText(textToCopy);
+        playPing();
+        if ((window as any).__showToast)
+          (window as any).__showToast({ message: 'Copied timestamp/date string!', variant: 'success' });
+      }
+    });
+  });
+
+  // ─── Fullscreen ───
+  (function() {
+    var fsBtn = document.getElementById('fullscreen-btn');
+    if (fsBtn) {
+      fsBtn.addEventListener('click', function() {
+        var el = document.querySelector('main') || document.documentElement;
+        if (!document.fullscreenElement) { el.requestFullscreen && el.requestFullscreen(); }
+        else { document.exitFullscreen && document.exitFullscreen(); }
+      });
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'f' || e.key === 'F') { if (fsBtn) fsBtn.click(); }
+    });
+  })();</script>

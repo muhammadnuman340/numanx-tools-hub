@@ -1,392 +1,1025 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const benefits = [
-  { title: "Smart Keyword Extraction", desc: "Automatically identifies the most important words and phrases from your content using frequency analysis" },
-  { title: "Relevance Scoring", desc: "Each tag includes a 0–100% relevance score so you can pick the most meaningful keywords for your content" },
-  { title: "Category Detection", desc: "Automatically detects content categories like Programming, Food, Technology, Health, Travel, and more" },
-  { title: "Hashtag Generation", desc: "Every tag comes with a ready-to-use hashtag variant optimized for social media platforms" },
-  { title: "Adjustable Count", desc: "Choose exactly how many tags you want — from 5 to 20 — with one simple selector" },
-  { title: "Privacy-First Processing", desc: "All tag generation happens locally in your browser. Your content is never sent to any server" },
+  {
+    title: 'Smart Keyword Extraction',
+    desc: 'Automatically identifies the most important words and phrases from your content using frequency analysis',
+  },
+  {
+    title: 'Relevance Scoring',
+    desc: 'Each tag includes a 0–100% relevance score so you can pick the most meaningful keywords for your content',
+  },
+  {
+    title: 'Category Detection',
+    desc: 'Automatically detects content categories like Programming, Food, Technology, Health, Travel, and more',
+  },
+  {
+    title: 'Hashtag Generation',
+    desc: 'Every tag comes with a ready-to-use hashtag variant optimized for social media platforms',
+  },
+  {
+    title: 'Adjustable Count',
+    desc: 'Choose exactly how many tags you want — from 5 to 20 — with one simple selector',
+  },
+  {
+    title: 'Privacy-First Processing',
+    desc: 'All tag generation happens locally in your browser. Your content is never sent to any server',
+  },
 ];
 
 const howToSteps = [
-  { title: "Paste your content", desc: "Copy and paste any article title, description, or body text into the input box" },
-  { title: "Choose tag count", desc: "Select how many tags you want to generate — 5 for precision, up to 20 for maximum coverage" },
-  { title: "Generate tags", desc: "Click the Generate Tags button and watch as the AI extracts the most relevant keywords" },
-  { title: "Copy and use", desc: "Review the scored tags, copy them all at once, and use them for SEO, social media, or categorization" },
+  {
+    title: 'Paste your content',
+    desc: 'Copy and paste any article title, description, or body text into the input box',
+  },
+  {
+    title: 'Choose tag count',
+    desc: 'Select how many tags you want to generate — 5 for precision, up to 20 for maximum coverage',
+  },
+  {
+    title: 'Generate tags',
+    desc: 'Click the Generate Tags button and watch as the AI extracts the most relevant keywords',
+  },
+  {
+    title: 'Copy and use',
+    desc: 'Review the scored tags, copy them all at once, and use them for SEO, social media, or categorization',
+  },
 ];
 
 const useCases = [
-  { title: "SEO Optimization", desc: "Generate targeted keywords and tags to improve search engine rankings and content discoverability" },
-  { title: "Social Media Posts", desc: "Create relevant hashtags for Instagram, Twitter, LinkedIn, and other social platforms instantly" },
-  { title: "Content Categorization", desc: "Automatically tag blog posts, articles, and products with accurate category labels" },
-  { title: "Blog & Article SEO", desc: "Extract the most relevant keywords from your writing to use as meta tags and SEO keywords" },
+  {
+    title: 'SEO Optimization',
+    desc: 'Generate targeted keywords and tags to improve search engine rankings and content discoverability',
+  },
+  {
+    title: 'Social Media Posts',
+    desc: 'Create relevant hashtags for Instagram, Twitter, LinkedIn, and other social platforms instantly',
+  },
+  {
+    title: 'Content Categorization',
+    desc: 'Automatically tag blog posts, articles, and products with accurate category labels',
+  },
+  {
+    title: 'Blog & Article SEO',
+    desc: 'Extract the most relevant keywords from your writing to use as meta tags and SEO keywords',
+  },
 ];
 
 const faqItems = [
-  { question: "How does AI tag generation work?", answer: "The AI Tag Generator analyzes your content by removing common stop words, counting word frequencies, and ranking the most significant terms. It then generates relevant single-word and multi-word tags, including hashtag variants. The tool also detects content categories (programming, food, etc.) to suggest contextually relevant tags." },
-  { question: "How many tags should I generate?", answer: "For most content, 5-10 highly relevant tags work best. Use 5 tags for focused precision, 10 for a balanced set, 15 for comprehensive coverage, and 20 for maximum reach. You can adjust the number using the selector. Each tag includes a relevance score to help you pick the best ones." },
-  { question: "Why are some tags marked with a score?", answer: "Each tag includes a relevance score (0-100%) showing how strongly it relates to your content. Higher scores mean the term appears more frequently or is more semantically relevant. Focus on tags with scores above 50% for the most accurate and effective content tagging." },
+  {
+    question: 'How does AI tag generation work?',
+    answer:
+      'The AI Tag Generator analyzes your content by removing common stop words, counting word frequencies, and ranking the most significant terms. It then generates relevant single-word and multi-word tags, including hashtag variants. The tool also detects content categories (programming, food, etc.) to suggest contextually relevant tags.',
+  },
+  {
+    question: 'How many tags should I generate?',
+    answer:
+      'For most content, 5-10 highly relevant tags work best. Use 5 tags for focused precision, 10 for a balanced set, 15 for comprehensive coverage, and 20 for maximum reach. You can adjust the number using the selector. Each tag includes a relevance score to help you pick the best ones.',
+  },
+  {
+    question: 'Why are some tags marked with a score?',
+    answer:
+      'Each tag includes a relevance score (0-100%) showing how strongly it relates to your content. Higher scores mean the term appears more frequently or is more semantically relevant. Focus on tags with scores above 50% for the most accurate and effective content tagging.',
+  },
 ];
 
 const schema = {
-  name: "AI Tag Generator Pro",
-  applicationCategory: "AI Tools",
-  description: "Generate relevant tags and hashtags from any content. AI-powered keyword extraction with category detection and relevance scoring.",
+  name: 'AI Tag Generator Pro',
+  applicationCategory: 'AI Tools',
+  description:
+    'Generate relevant tags and hashtags from any content. AI-powered keyword extraction with category detection and relevance scoring.',
 };
 ---
-<MainLayout title="AI Tag Generator - Free Online Tag & Hashtag Generator" description="Generate relevant tags and hashtags from your content using AI keyword extraction. Category detection and relevance scoring included." keywords="tag generator, hashtag generator, keyword extractor, content tags, AI tag generator, hashtag suggester" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Tag Generator",url:"/tools/ai-tag-generator/"}]}>
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
-    <ToolHeader title="AI Tag" gradient="Generator Pro" desc="Generate relevant tags, keywords, and hashtags from any content with AI-powered extraction and category detection." badge="✦ AI Powered" slug="ai-tag-generator" />
-    <ShareBar />
-    <div class="max-w-xl mx-auto mt-10"><div class="bg-surface-1 border border-surface rounded-2xl p-6 relative">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
-            <span id="usage-badge" class="text-xs text-muted"></span>
-          </div>
-          <div class="flex items-center gap-2">
-            <div class="flex gap-1">
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+
+<MainLayout
+  title="AI Tag Generator - Free Online Tag & Hashtag Generator"
+  description="Generate relevant tags and hashtags from your content using AI keyword extraction. Category detection and relevance scoring included."
+  keywords="tag generator, hashtag generator, keyword extractor, content tags, AI tag generator, hashtag suggester"
+  toolSchema={schema}
+  faq={faqItems}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'AI Tag Generator', url: '/tools/ai-tag-generator/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="AI Tag"
+        gradient="Generator Pro"
+        desc="Generate relevant tags, keywords, and hashtags from any content with AI-powered extraction and category detection."
+        badge="✦ AI Powered"
+        slug="ai-tag-generator"
+      />
+      <ShareBar />
+      <div class="max-w-xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 relative">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+              <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
-            <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+            <div class="flex items-center gap-2">
+              <div class="flex gap-1">
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="purple"
+                  style="background:#a855f7"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="blue"
+                  style="background:#3b82f6"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="green"
+                  style="background:#22c55e"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="pink"
+                  style="background:#ec4899"></button>
+              </div>
+              <button
+                id="fullscreen-btn"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                title="Fullscreen">⛶</button
+              >
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 mb-2">
+            <button
+              class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A−</button
+            >
+            <button
+              class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A+</button
+            >
+            <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
+          </div>
+          <div class="flex">
+            <div
+              id="line-nums"
+              class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3"
+              style="min-width:2.5em"
+            >
+              1
+            </div>
+            <textarea
+              id="input-text"
+              rows="5"
+              placeholder="Paste your content, article title, or description..."
+              class="flex-1 bg-transparent text-white placeholder-zinc-600 p-4 resize-none focus:outline-none text-sm leading-relaxed border border-surface-2 rounded-xl mb-4"
+            ></textarea>
+          </div>
+          <div id="reading-time" class="text-xs text-muted -mt-3 mb-2"></div>
+          <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
+          <div class="flex items-center gap-3 mb-4">
+            <label class="text-xs text-tertiary font-medium">Number of tags:</label>
+            <select
+              id="tag-count"
+              class="bg-surface-2 border border-surface-3 text-white text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-violet-500"
+            >
+              <option value="5">5</option>
+              <option value="10" selected>10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
+          </div>
+          <button
+            id="generate-btn"
+            class="w-full py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all duration-200 shadow-lg shadow-violet-600/20"
+            >Generate Tags</button
+          >
+          <div class="flex gap-2 mt-3">
+            <select
+              id="export-format"
+              class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
+            >
+              <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option
+                value="html">HTML</option
+              >
+            </select>
+            <button
+              id="download-btn"
+              class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              >Download</button
+            >
+            <button
+              id="share-btn"
+              class="px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              title="Copy share link">🔗</button
+            >
+            <button
+              id="clear-btn"
+              class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              >Clear</button
+            >
+          </div>
+          <div id="results" class="hidden mt-6 space-y-4">
+            <div id="category-badge" class="hidden">
+              <span
+                class="inline-block px-3 py-1 rounded-full text-[10px] font-bold bg-violet-600/20 text-violet-400 border border-violet-600/30"
+              ></span>
+            </div>
+            <div id="tags-container" class="flex flex-wrap gap-2"></div>
+            <button
+              id="copy-tags-btn"
+              class="w-full py-2 rounded-lg text-xs font-semibold bg-surface-2 border border-surface-3 text-tertiary hover:text-white transition-all"
+              >Copy All Tags</button
+            >
           </div>
         </div>
-      <div class="flex items-center gap-1.5 mb-2">
-        <button class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A−</button>
-        <button class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A+</button>
-        <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
       </div>
-      <div class="flex">
-        <div id="line-nums" class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3" style="min-width:2.5em">1</div>
-        <textarea id="input-text" rows="5" placeholder="Paste your content, article title, or description..." class="flex-1 bg-transparent text-white placeholder-zinc-600 p-4 resize-none focus:outline-none text-sm leading-relaxed border border-surface-2 rounded-xl mb-4"></textarea>
+      <section class="mt-20 max-w-3xl mx-auto">
+        <div class="text-center mb-8">
+          <span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2
+            class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
+          >
+            How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+              >Works</span
+            >
+          </h2>
+        </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
+          <p>
+            The AI Tag Generator processes your content in three steps. First, it removes common stop words (the, a, is,
+            etc.) and normalizes the remaining terms. Second, it counts word frequencies and bigram (two-word phrase)
+            frequencies, ranking them by importance. Third, it generates both plain tags and hashtag variants while
+            detecting the content's category.
+          </p><p>
+            Category detection uses keyword matching to identify topics like programming, food, technology, health,
+            travel, design, and more — adding contextually relevant suggested tags for each category.
+          </p>
+        </div>
+      </section>
+      <RelatedTools current="ai-tag-generator" />
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+            >Questions</span
+          >
+        </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
-      <div id="reading-time" class="text-xs text-muted -mt-3 mb-2"></div>
-      <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
-      <div class="flex items-center gap-3 mb-4">
-        <label class="text-xs text-tertiary font-medium">Number of tags:</label>
-        <select id="tag-count" class="bg-surface-2 border border-surface-3 text-white text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-violet-500">
-          <option value="5">5</option>
-          <option value="10" selected>10</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
-        </select>
-      </div>
-      <button id="generate-btn" class="w-full py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all duration-200 shadow-lg shadow-violet-600/20">Generate Tags</button>
-      <div class="flex gap-2 mt-3">
-        <select id="export-format" class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5">
-          <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option>
-        </select>
-        <button id="download-btn" class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Download</button>
-        <button id="share-btn" class="px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all" title="Copy share link">🔗</button>
-        <button id="clear-btn" class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Clear</button>
-      </div>
-      <div id="results" class="hidden mt-6 space-y-4">
-        <div id="category-badge" class="hidden"><span class="inline-block px-3 py-1 rounded-full text-[10px] font-bold bg-violet-600/20 text-violet-400 border border-violet-600/30"></span></div>
-        <div id="tags-container" class="flex flex-wrap gap-2"></div>
-        <button id="copy-tags-btn" class="w-full py-2 rounded-lg text-xs font-semibold bg-surface-2 border border-surface-3 text-tertiary hover:text-white transition-all">Copy All Tags</button>
-      </div>
-    </div></div>
-    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Tag Generator processes your content in three steps. First, it removes common stop words (the, a, is, etc.) and normalizes the remaining terms. Second, it counts word frequencies and bigram (two-word phrase) frequencies, ranking them by importance. Third, it generates both plain tags and hashtag variants while detecting the content's category.</p><p>Category detection uses keyword matching to identify topics like programming, food, technology, health, travel, design, and more — adding contextually relevant suggested tags for each category.</p></div></section>
-    <RelatedTools current="ai-tag-generator" />
-    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
-  </div></main>
+    </div>
+  </main>
 </MainLayout>
 <script>
-function playPing(){ try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){} }
-const stopWords = new Set([
-  "a", "an", "the", "and", "or", "but", "in", "on", "at", "to", "for",
-  "of", "by", "with", "from", "as", "is", "was", "are", "were", "be",
-  "been", "being", "have", "has", "had", "do", "does", "did", "will",
-  "would", "could", "should", "may", "might", "shall", "can", "need",
-  "it", "its", "this", "that", "these", "those", "i", "you", "he", "she",
-  "we", "they", "my", "your", "his", "her", "our", "their", "me", "him",
-  "us", "them", "not", "no", "nor", "so", "if", "then", "than", "too",
-  "very", "just", "about", "also", "more", "some", "such", "only", "other",
-  "into", "over", "after", "before", "between", "through", "during", "up",
-  "out", "off", "down", "all", "each", "every", "both", "few", "most",
-  "any", "much", "many", "how", "what", "which", "who", "whom", "when",
-  "where", "why", "here", "there", "again", "further", "once", "then",
-  "than", "because", "while", "although", "though", "since", "until",
-  "like", "well", "way", "even", "still", "already", "yet", "really",
-  "quite", "actually", "always", "never", "often", "sometimes", "now",
-  "here", "there", "around", "back", "go", "get", "make", "take", "come",
-  "see", "know", "think", "want", "give", "tell", "say", "find", "leave",
-  "work", "seem", "feel", "try", "call", "keep", "let", "begin", "show",
-  "hear", "play", "run", "move", "live", "believe", "hold", "bring",
-  "happen", "write", "provide", "sit", "stand", "lose", "set", "meet"
-]);
-
-const categoryKeywords = {
-  Programming: ["code", "programming", "software", "developer", "app", "api", "javascript", "python", "java", "react", "node", "html", "css", "web", "algorithm", "database", "debug", "function", "variable", "framework", "library", "frontend", "backend", "fullstack", "devops", "git", "deploy", "server", "client"],
-  Food: ["food", "recipe", "cooking", "baking", "ingredient", "chef", "meal", "dinner", "lunch", "breakfast", "snack", "dessert", "spice", "sauce", "grill", "roast", "bake", "steam", "fry", "saut\u00e9", "delicious", "tasty", "flavor", "cuisine", "gourmet", "organic", "vegan", "vegetarian", "gluten"],
-  Technology: ["tech", "technology", "digital", "innovation", "gadget", "device", "smart", "ai", "artificial intelligence", "machine learning", "blockchain", "cloud", "cyber", "data", "robot", "automation", "software", "hardware", "startup", "saas", "iot", "vr", "ar", "quantum", "neural"],
-  Health: ["health", "fitness", "exercise", "workout", "nutrition", "diet", "wellness", "yoga", "meditation", "mental", "doctor", "medical", "therapy", "sleep", "energy", "vitamin", "protein", "cardio", "strength", "recovery", "mindful", "selfcare"],
-  Travel: ["travel", "trip", "vacation", "holiday", "tour", "destination", "hotel", "flight", "beach", "mountain", "adventure", "explore", "wander", "journey", "backpack", "roadtrip", "culture", "sightseeing", "tourism", "safari", "cruise"],
-  Design: ["design", "ui", "ux", "interface", "graphic", "visual", "creative", "art", "typography", "color", "layout", "brand", "logo", "illustration", "animation", "prototype", "wireframe", "mockup", "figma", "sketch", "photoshop", "canva"],
-  Business: ["business", "startup", "marketing", "sales", "finance", "investment", "entrepreneur", "strategy", "management", "growth", "revenue", "profit", "brand", "market", "customer", "service", "product", "ecommerce", "seo", "socialmedia", "advertising"],
-  Education: ["education", "learning", "course", "study", "student", "teacher", "tutor", "lesson", "class", "school", "university", "college", "degree", "certificate", "skill", "training", "online", "elearning", "academic", "research", "knowledge"],
-};
-
-function extractWords(text) {
-  return text.toLowerCase().match(/[a-z]+(?:'[a-z]+)?/g) || [];
-}
-
-function getBigrams(words) {
-  const bigrams = [];
-  for (let i = 0; i < words.length - 1; i++) {
-    bigrams.push(words[i] + " " + words[i+1]);
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
   }
-  return bigrams;
-}
+  const stopWords = new Set([
+    'a',
+    'an',
+    'the',
+    'and',
+    'or',
+    'but',
+    'in',
+    'on',
+    'at',
+    'to',
+    'for',
+    'of',
+    'by',
+    'with',
+    'from',
+    'as',
+    'is',
+    'was',
+    'are',
+    'were',
+    'be',
+    'been',
+    'being',
+    'have',
+    'has',
+    'had',
+    'do',
+    'does',
+    'did',
+    'will',
+    'would',
+    'could',
+    'should',
+    'may',
+    'might',
+    'shall',
+    'can',
+    'need',
+    'it',
+    'its',
+    'this',
+    'that',
+    'these',
+    'those',
+    'i',
+    'you',
+    'he',
+    'she',
+    'we',
+    'they',
+    'my',
+    'your',
+    'his',
+    'her',
+    'our',
+    'their',
+    'me',
+    'him',
+    'us',
+    'them',
+    'not',
+    'no',
+    'nor',
+    'so',
+    'if',
+    'then',
+    'than',
+    'too',
+    'very',
+    'just',
+    'about',
+    'also',
+    'more',
+    'some',
+    'such',
+    'only',
+    'other',
+    'into',
+    'over',
+    'after',
+    'before',
+    'between',
+    'through',
+    'during',
+    'up',
+    'out',
+    'off',
+    'down',
+    'all',
+    'each',
+    'every',
+    'both',
+    'few',
+    'most',
+    'any',
+    'much',
+    'many',
+    'how',
+    'what',
+    'which',
+    'who',
+    'whom',
+    'when',
+    'where',
+    'why',
+    'here',
+    'there',
+    'again',
+    'further',
+    'once',
+    'then',
+    'than',
+    'because',
+    'while',
+    'although',
+    'though',
+    'since',
+    'until',
+    'like',
+    'well',
+    'way',
+    'even',
+    'still',
+    'already',
+    'yet',
+    'really',
+    'quite',
+    'actually',
+    'always',
+    'never',
+    'often',
+    'sometimes',
+    'now',
+    'here',
+    'there',
+    'around',
+    'back',
+    'go',
+    'get',
+    'make',
+    'take',
+    'come',
+    'see',
+    'know',
+    'think',
+    'want',
+    'give',
+    'tell',
+    'say',
+    'find',
+    'leave',
+    'work',
+    'seem',
+    'feel',
+    'try',
+    'call',
+    'keep',
+    'let',
+    'begin',
+    'show',
+    'hear',
+    'play',
+    'run',
+    'move',
+    'live',
+    'believe',
+    'hold',
+    'bring',
+    'happen',
+    'write',
+    'provide',
+    'sit',
+    'stand',
+    'lose',
+    'set',
+    'meet',
+  ]);
 
-function detectCategory(words) {
-  let bestCat = null, bestScore = 0;
-  for (const [cat, keywords] of Object.entries(categoryKeywords)) {
-    let score = 0;
-    for (const kw of keywords) {
-      const parts = kw.split(" ");
-      if (parts.length === 2) {
-        for (let i = 0; i < words.length - 1; i++) {
-          if (words[i] === parts[0] && words[i+1] === parts[1]) score += 3;
-        }
-      } else {
-        score += words.filter(w => w === parts[0]).length * 2;
-      }
-    }
-    if (score > bestScore) { bestScore = score; bestCat = cat; }
-  }
-  return bestScore > 0 ? bestCat : null;
-}
-
-function getCategoryTags(category) {
-  const suggestions = {
-    Programming: ["coding", "webdev", "programming", "softwareengineering", "tech"],
-    Food: ["cooking", "foodie", "recipe", "homemade", "delicious"],
-    Technology: ["tech", "innovation", "futuretech", "digital", "ai"],
-    Health: ["wellness", "healthyliving", "fitness", "selfcare", "nutrition"],
-    Travel: ["travelgram", "wanderlust", "adventure", "explore", "vacation"],
-    Design: ["designthinking", "creativity", "visualdesign", "uxdesign", "art"],
-    Business: ["entrepreneurship", "businessgrowth", "startup", "marketing", "success"],
-    Education: ["learning", "education", "knowledge", "studytips", "elearning"],
+  const categoryKeywords = {
+    Programming: [
+      'code',
+      'programming',
+      'software',
+      'developer',
+      'app',
+      'api',
+      'javascript',
+      'python',
+      'java',
+      'react',
+      'node',
+      'html',
+      'css',
+      'web',
+      'algorithm',
+      'database',
+      'debug',
+      'function',
+      'variable',
+      'framework',
+      'library',
+      'frontend',
+      'backend',
+      'fullstack',
+      'devops',
+      'git',
+      'deploy',
+      'server',
+      'client',
+    ],
+    Food: [
+      'food',
+      'recipe',
+      'cooking',
+      'baking',
+      'ingredient',
+      'chef',
+      'meal',
+      'dinner',
+      'lunch',
+      'breakfast',
+      'snack',
+      'dessert',
+      'spice',
+      'sauce',
+      'grill',
+      'roast',
+      'bake',
+      'steam',
+      'fry',
+      'saut\u00e9',
+      'delicious',
+      'tasty',
+      'flavor',
+      'cuisine',
+      'gourmet',
+      'organic',
+      'vegan',
+      'vegetarian',
+      'gluten',
+    ],
+    Technology: [
+      'tech',
+      'technology',
+      'digital',
+      'innovation',
+      'gadget',
+      'device',
+      'smart',
+      'ai',
+      'artificial intelligence',
+      'machine learning',
+      'blockchain',
+      'cloud',
+      'cyber',
+      'data',
+      'robot',
+      'automation',
+      'software',
+      'hardware',
+      'startup',
+      'saas',
+      'iot',
+      'vr',
+      'ar',
+      'quantum',
+      'neural',
+    ],
+    Health: [
+      'health',
+      'fitness',
+      'exercise',
+      'workout',
+      'nutrition',
+      'diet',
+      'wellness',
+      'yoga',
+      'meditation',
+      'mental',
+      'doctor',
+      'medical',
+      'therapy',
+      'sleep',
+      'energy',
+      'vitamin',
+      'protein',
+      'cardio',
+      'strength',
+      'recovery',
+      'mindful',
+      'selfcare',
+    ],
+    Travel: [
+      'travel',
+      'trip',
+      'vacation',
+      'holiday',
+      'tour',
+      'destination',
+      'hotel',
+      'flight',
+      'beach',
+      'mountain',
+      'adventure',
+      'explore',
+      'wander',
+      'journey',
+      'backpack',
+      'roadtrip',
+      'culture',
+      'sightseeing',
+      'tourism',
+      'safari',
+      'cruise',
+    ],
+    Design: [
+      'design',
+      'ui',
+      'ux',
+      'interface',
+      'graphic',
+      'visual',
+      'creative',
+      'art',
+      'typography',
+      'color',
+      'layout',
+      'brand',
+      'logo',
+      'illustration',
+      'animation',
+      'prototype',
+      'wireframe',
+      'mockup',
+      'figma',
+      'sketch',
+      'photoshop',
+      'canva',
+    ],
+    Business: [
+      'business',
+      'startup',
+      'marketing',
+      'sales',
+      'finance',
+      'investment',
+      'entrepreneur',
+      'strategy',
+      'management',
+      'growth',
+      'revenue',
+      'profit',
+      'brand',
+      'market',
+      'customer',
+      'service',
+      'product',
+      'ecommerce',
+      'seo',
+      'socialmedia',
+      'advertising',
+    ],
+    Education: [
+      'education',
+      'learning',
+      'course',
+      'study',
+      'student',
+      'teacher',
+      'tutor',
+      'lesson',
+      'class',
+      'school',
+      'university',
+      'college',
+      'degree',
+      'certificate',
+      'skill',
+      'training',
+      'online',
+      'elearning',
+      'academic',
+      'research',
+      'knowledge',
+    ],
   };
-  return suggestions[category] || [];
-}
 
-function generateTags(text, count) {
-  if (!text.trim()) return { tags: [], category: null };
-  const words = extractWords(text);
-  const filtered = words.filter(w => !stopWords.has(w) && w.length > 1);
-  if (filtered.length === 0) return { tags: [], category: null };
-
-  const freq = {};
-  for (const w of filtered) freq[w] = (freq[w] || 0) + 1;
-
-  const bigrams = getBigrams(filtered);
-  const biFreq = {};
-  for (const b of bigrams) biFreq[b] = (biFreq[b] || 0) + 1;
-
-  const scored = {};
-  for (const [word, f] of Object.entries(freq)) {
-    scored[word] = f / filtered.length;
-  }
-  for (const [bigram, f] of Object.entries(biFreq)) {
-    if (f > 1) scored[bigram] = f / filtered.length * 1.5;
+  function extractWords(text) {
+    return text.toLowerCase().match(/[a-z]+(?:'[a-z]+)?/g) || [];
   }
 
-  const sorted = Object.entries(scored).sort((a, b) => b[1] - a[1]);
-  const maxScore = sorted.length > 0 ? sorted[0][1] : 1;
-
-  const tags = [];
-  for (const [term, score] of sorted) {
-    if (tags.length >= count) break;
-    const pct = Math.min(100, Math.round((score / maxScore) * 100));
-    if (pct >= 10) {
-      const hashtag = "#" + term.replace(/\s+/g, "");
-      tags.push({ term, score: pct, hashtag });
+  function getBigrams(words) {
+    const bigrams = [];
+    for (let i = 0; i < words.length - 1; i++) {
+      bigrams.push(words[i] + ' ' + words[i + 1]);
     }
+    return bigrams;
   }
 
-  const category = detectCategory(filtered);
-  if (category) {
-    const catTags = getCategoryTags(category);
-    for (const ct of catTags) {
-      if (tags.length >= count) break;
-      if (!tags.find(t => t.hashtag === "#" + ct)) {
-        tags.push({ term: ct, score: 60 + Math.floor(Math.random() * 25), hashtag: "#" + ct });
+  function detectCategory(words) {
+    let bestCat = null,
+      bestScore = 0;
+    for (const [cat, keywords] of Object.entries(categoryKeywords)) {
+      let score = 0;
+      for (const kw of keywords) {
+        const parts = kw.split(' ');
+        if (parts.length === 2) {
+          for (let i = 0; i < words.length - 1; i++) {
+            if (words[i] === parts[0] && words[i + 1] === parts[1]) score += 3;
+          }
+        } else {
+          score += words.filter((w) => w === parts[0]).length * 2;
+        }
+      }
+      if (score > bestScore) {
+        bestScore = score;
+        bestCat = cat;
       }
     }
+    return bestScore > 0 ? bestCat : null;
   }
 
-  return { tags, category };
-}
-
-document.getElementById("generate-btn").addEventListener("click", () => {
-  const text = document.getElementById("input-text").value;
-  const count = parseInt(document.getElementById("tag-count").value);
-  const results = generateTags(text, count);
-
-  if (results.tags.length === 0) {
-    if (window.__showToast) window.__showToast({ message: "Please enter more content to generate tags", variant: "warning" });
-    return;
+  function getCategoryTags(category) {
+    const suggestions = {
+      Programming: ['coding', 'webdev', 'programming', 'softwareengineering', 'tech'],
+      Food: ['cooking', 'foodie', 'recipe', 'homemade', 'delicious'],
+      Technology: ['tech', 'innovation', 'futuretech', 'digital', 'ai'],
+      Health: ['wellness', 'healthyliving', 'fitness', 'selfcare', 'nutrition'],
+      Travel: ['travelgram', 'wanderlust', 'adventure', 'explore', 'vacation'],
+      Design: ['designthinking', 'creativity', 'visualdesign', 'uxdesign', 'art'],
+      Business: ['entrepreneurship', 'businessgrowth', 'startup', 'marketing', 'success'],
+      Education: ['learning', 'education', 'knowledge', 'studytips', 'elearning'],
+    };
+    return suggestions[category] || [];
   }
 
-  document.getElementById("results").classList.remove("hidden");
+  function generateTags(text, count) {
+    if (!text.trim()) return { tags: [], category: null };
+    const words = extractWords(text);
+    const filtered = words.filter((w) => !stopWords.has(w) && w.length > 1);
+    if (filtered.length === 0) return { tags: [], category: null };
 
-  const catBadge = document.getElementById("category-badge");
-  if (results.category) {
-    catBadge.classList.remove("hidden");
-    catBadge.querySelector("span").textContent = "\uD83C\uDFC6 " + results.category;
-  } else {
-    catBadge.classList.add("hidden");
+    const freq = {};
+    for (const w of filtered) freq[w] = (freq[w] || 0) + 1;
+
+    const bigrams = getBigrams(filtered);
+    const biFreq = {};
+    for (const b of bigrams) biFreq[b] = (biFreq[b] || 0) + 1;
+
+    const scored = {};
+    for (const [word, f] of Object.entries(freq)) {
+      scored[word] = f / filtered.length;
+    }
+    for (const [bigram, f] of Object.entries(biFreq)) {
+      if (f > 1) scored[bigram] = (f / filtered.length) * 1.5;
+    }
+
+    const sorted = Object.entries(scored).sort((a, b) => b[1] - a[1]);
+    const maxScore = sorted.length > 0 ? sorted[0][1] : 1;
+
+    const tags = [];
+    for (const [term, score] of sorted) {
+      if (tags.length >= count) break;
+      const pct = Math.min(100, Math.round((score / maxScore) * 100));
+      if (pct >= 10) {
+        const hashtag = '#' + term.replace(/\s+/g, '');
+        tags.push({ term, score: pct, hashtag });
+      }
+    }
+
+    const category = detectCategory(filtered);
+    if (category) {
+      const catTags = getCategoryTags(category);
+      for (const ct of catTags) {
+        if (tags.length >= count) break;
+        if (!tags.find((t) => t.hashtag === '#' + ct)) {
+          tags.push({ term: ct, score: 60 + Math.floor(Math.random() * 25), hashtag: '#' + ct });
+        }
+      }
+    }
+
+    return { tags, category };
   }
 
-  const container = document.getElementById("tags-container");
-  container.innerHTML = results.tags.map(t => {
-    let colorClass = "bg-violet-600/20 text-violet-400 border-violet-600/30";
-    if (t.score >= 80) colorClass = "bg-emerald-600/20 text-emerald-400 border-emerald-600/30";
-    else if (t.score >= 60) colorClass = "bg-violet-600/20 text-violet-400 border-violet-600/30";
-    else colorClass = "bg-zinc-600/20 text-zinc-400 border-zinc-600/30";
-    return `<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold border ${colorClass} transition-all hover:scale-105 cursor-default"><span>${t.term}</span><span class="text-[9px] opacity-70">${t.score}%</span><span class="text-[9px] opacity-50">${t.hashtag}</span></span>`;
-  }).join("");
-});
+  document.getElementById('generate-btn').addEventListener('click', () => {
+    const text = document.getElementById('input-text').value;
+    const count = parseInt(document.getElementById('tag-count').value);
+    const results = generateTags(text, count);
 
-document.getElementById("copy-tags-btn").addEventListener("click", async () => {
-  const tags = document.querySelectorAll("#tags-container span");
-  if (tags.length === 0) {
-    if (window.__showToast) window.__showToast({ message: "No tags to copy!", variant: "warning" });
-    return;
-  }
-  const text = Array.from(tags).map(t => t.textContent.trim()).join("\n");
-  await navigator.clipboard.writeText(text);
-  if (window.__showToast) window.__showToast({ message: "Tags copied!", variant: "success" });
-});
+    if (results.tags.length === 0) {
+      if (window.__showToast)
+        window.__showToast({ message: 'Please enter more content to generate tags', variant: 'warning' });
+      return;
+    }
 
-document.getElementById("download-btn")?.addEventListener("click", () => {
-  const tags = document.querySelectorAll("#tags-container span");
-  if (tags.length === 0) { if (window.__showToast) window.__showToast({ message: "Nothing to download!", variant: "warning" }); return; }
-  const outputText = Array.from(tags).map(t => t.textContent.trim()).join("\n");
-  const fmt=document.getElementById("export-format")?.value||"txt";
-  let content = outputText;
-  let mime = "text/plain";
-  let ext = "txt";
-  if(fmt==="json"){ content=JSON.stringify({result:outputText, tool:"ai-tag-generator", timestamp:new Date().toISOString()}); mime="application/json"; ext="json"; }
-  if(fmt==="csv"){ content="Result\n\""+outputText.replace(/"/g,'""')+"\""; mime="text/csv"; ext="csv"; }
-  if(fmt==="html"){ content="<!DOCTYPE html><html><body><pre>"+outputText.replace(/</g,"&lt;")+"</pre></body></html>"; mime="text/html"; ext="html"; }
-  const blob = new Blob([content], {type:mime});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "tags-output."+ext;
-  a.click();
-  URL.revokeObjectURL(a.href);
-  playPing(); if (window.__showToast) window.__showToast({ message: "Downloaded!", variant: "success" });
-});
+    document.getElementById('results').classList.remove('hidden');
 
-document.getElementById("clear-btn")?.addEventListener("click", () => {
-  document.getElementById("input-text").value = "";
-  document.getElementById("results").classList.add("hidden");
-  document.getElementById("input-text").focus();
-  playPing(); if (window.__showToast) window.__showToast({ message: "Cleared!", variant: "info" });
-});
+    const catBadge = document.getElementById('category-badge');
+    if (results.category) {
+      catBadge.classList.remove('hidden');
+      catBadge.querySelector('span').textContent = '\uD83C\uDFC6 ' + results.category;
+    } else {
+      catBadge.classList.add('hidden');
+    }
 
-document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-  const card = document.getElementById("fullscreen-btn").closest(".bg-surface-1.border.border-surface.rounded-2xl") || document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
-  if (!card) return;
-  if (document.fullscreenElement) {
-    document.exitFullscreen();
-    document.getElementById("fullscreen-btn").textContent = "⛶";
-  } else {
-    card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
-    document.getElementById("fullscreen-btn").textContent = "✕";
-  }
-});
-document.addEventListener("fullscreenchange", () => {
-  const btn = document.getElementById("fullscreen-btn");
-  if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
-});
+    const container = document.getElementById('tags-container');
+    container.innerHTML = results.tags
+      .map((t) => {
+        let colorClass = 'bg-violet-600/20 text-violet-400 border-violet-600/30';
+        if (t.score >= 80) colorClass = 'bg-emerald-600/20 text-emerald-400 border-emerald-600/30';
+        else if (t.score >= 60) colorClass = 'bg-violet-600/20 text-violet-400 border-violet-600/30';
+        else colorClass = 'bg-zinc-600/20 text-zinc-400 border-zinc-600/30';
+        return `<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold border ${colorClass} transition-all hover:scale-105 cursor-default"><span>${t.term}</span><span class="text-[9px] opacity-70">${t.score}%</span><span class="text-[9px] opacity-50">${t.hashtag}</span></span>`;
+      })
+      .join('');
+  });
 
-const DRAFT_KEY = "nt_draft_ai-tag-generator";
-(function() {
-  const input = document.getElementById("input-text") || document.querySelector("textarea:not([readonly])");
-  if (!input) return;
+  document.getElementById('copy-tags-btn').addEventListener('click', async () => {
+    const tags = document.querySelectorAll('#tags-container span');
+    if (tags.length === 0) {
+      if (window.__showToast) window.__showToast({ message: 'No tags to copy!', variant: 'warning' });
+      return;
+    }
+    const text = Array.from(tags)
+      .map((t) => t.textContent.trim())
+      .join('\n');
+    await navigator.clipboard.writeText(text);
+    if (window.__showToast) window.__showToast({ message: 'Tags copied!', variant: 'success' });
+  });
+
+  document.getElementById('download-btn')?.addEventListener('click', () => {
+    const tags = document.querySelectorAll('#tags-container span');
+    if (tags.length === 0) {
+      if (window.__showToast) window.__showToast({ message: 'Nothing to download!', variant: 'warning' });
+      return;
+    }
+    const outputText = Array.from(tags)
+      .map((t) => t.textContent.trim())
+      .join('\n');
+    const fmt = document.getElementById('export-format')?.value || 'txt';
+    let content = outputText;
+    let mime = 'text/plain';
+    let ext = 'txt';
+    if (fmt === 'json') {
+      content = JSON.stringify({ result: outputText, tool: 'ai-tag-generator', timestamp: new Date().toISOString() });
+      mime = 'application/json';
+      ext = 'json';
+    }
+    if (fmt === 'csv') {
+      content = 'Result\n"' + outputText.replace(/"/g, '""') + '"';
+      mime = 'text/csv';
+      ext = 'csv';
+    }
+    if (fmt === 'html') {
+      content = '<!DOCTYPE html><html><body><pre>' + outputText.replace(/</g, '&lt;') + '</pre></body></html>';
+      mime = 'text/html';
+      ext = 'html';
+    }
+    const blob = new Blob([content], { type: mime });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'tags-output.' + ext;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    playPing();
+    if (window.__showToast) window.__showToast({ message: 'Downloaded!', variant: 'success' });
+  });
+
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    document.getElementById('input-text').value = '';
+    document.getElementById('results').classList.add('hidden');
+    document.getElementById('input-text').focus();
+    playPing();
+    if (window.__showToast) window.__showToast({ message: 'Cleared!', variant: 'info' });
+  });
+
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card =
+      document.getElementById('fullscreen-btn').closest('.bg-surface-1.border.border-surface.rounded-2xl') ||
+      document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
+    if (!card) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      document.getElementById('fullscreen-btn').textContent = '⛶';
+    } else {
+      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
+      document.getElementById('fullscreen-btn').textContent = '✕';
+    }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
+  });
+
+  const DRAFT_KEY = 'nt_draft_ai-tag-generator';
+  (function () {
+    const input = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');
+    if (!input) return;
+    try {
+      const saved = localStorage.getItem(DRAFT_KEY);
+      if (saved && !input.value) {
+        input.value = saved;
+        input.dispatchEvent(new Event('input'));
+      }
+    } catch (e) {}
+    let saveTimer;
+    input.addEventListener('input', () => {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        try {
+          localStorage.setItem(DRAFT_KEY, input.value);
+        } catch (e) {}
+      }, 500);
+    });
+  })();
+
+  document.querySelector('.font-inc')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.min(24, s + 2) + 'px';
+    });
+  });
+  document.querySelector('.font-dec')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.max(10, s - 2) + 'px';
+    });
+  });
   try {
-    const saved = localStorage.getItem(DRAFT_KEY);
-    if (saved && !input.value) { input.value = saved; input.dispatchEvent(new Event("input")); }
-  } catch(e) {}
-  let saveTimer;
-  input.addEventListener("input", () => {
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(() => {
-      try { localStorage.setItem(DRAFT_KEY, input.value); } catch(e) {}
-    }, 500);
+    const s = localStorage.getItem('nt_fs');
+    if (s) document.querySelectorAll('textarea').forEach((t) => (t.style.fontSize = s + 'px'));
+  } catch (e) {}
+
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b =
+        document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])") ||
+        document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      document.getElementById('clear-btn')?.click();
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
   });
-})();
 
-document.querySelector(".font-inc")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.min(24,s+2)+"px"; }); });
-document.querySelector(".font-dec")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.max(10,s-2)+"px"; }); });
-try { const s=localStorage.getItem("nt_fs"); if(s) document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px"); } catch(e){}
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['ai-tag-generator']) b.textContent = 'Used ' + u['ai-tag-generator'] + '×';
+  } catch (e) {}
 
-document.addEventListener("keydown", e => {
-  if(e.ctrlKey&&e.key==="Enter"){ e.preventDefault(); const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])")||document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])"); if(b) b.click(); }
-  if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){ e.preventDefault(); document.getElementById("clear-btn")?.click(); }
-  if(e.ctrlKey&&(e.key==="D"||e.key==="d")){ e.preventDefault(); document.getElementById("download-btn")?.click(); }
-});
-
-try { const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}"); const b=document.getElementById("usage-badge"); if(b&&u["ai-tag-generator"]) b.textContent="Used "+u["ai-tag-generator"]+"×"; } catch(e){}
-
-document.getElementById("share-btn")?.addEventListener("click", () => {
-  const o=document.getElementById("tags-container")||document.querySelector("[id$='result']");
-  const t=o?.value||o?.textContent||"";
-  if(!t) return;
-  const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));
-  navigator.clipboard.writeText(u).catch(()=>{});
-  if(typeof window.__showToast==="function") window.__showToast({message:"Link copied!"});
-});
-
-const rtInput=document.getElementById("input-text")||document.querySelector("textarea:not([readonly])");
-if(rtInput){
-  rtInput.addEventListener("input", ()=>{
-    const w=rtInput.value?rtInput.value.trim().split(/\s+/).length:0;
-    const e=document.getElementById("reading-time");
-    if(e) e.textContent=Math.max(1,Math.round(w/200))+" min read · "+Math.max(1,Math.round(w/150))+" min speak";
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('tags-container') || document.querySelector("[id$='result']");
+    const t = o?.value || o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof window.__showToast === 'function') window.__showToast({ message: 'Link copied!' });
   });
-  rtInput.dispatchEvent(new Event("input"));
-}
 
-const lnInput=document.getElementById("input-text");
-if(lnInput){
-  const updateLN=()=>{ const n=document.getElementById("line-nums"); if(n) n.textContent=Array.from({length:lnInput.value.split("\n").length},(_,i)=>i+1).join("\n"); };
-  lnInput.addEventListener("input", updateLN);
-  lnInput.addEventListener("scroll", ()=>{ const n=document.getElementById("line-nums"); if(n) n.scrollTop=lnInput.scrollTop; });
-  updateLN();
-}
+  const rtInput = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');
+  if (rtInput) {
+    rtInput.addEventListener('input', () => {
+      const w = rtInput.value ? rtInput.value.trim().split(/\s+/).length : 0;
+      const e = document.getElementById('reading-time');
+      if (e)
+        e.textContent =
+          Math.max(1, Math.round(w / 200)) + ' min read · ' + Math.max(1, Math.round(w / 150)) + ' min speak';
+    });
+    rtInput.dispatchEvent(new Event('input'));
+  }
 
-const lfInput=document.getElementById("input-text");
-if(lfInput){
-  lfInput.addEventListener("input", ()=>{
-    const t=lfInput.value.toLowerCase().replace(/[^a-z]/g,""); if(!t){ document.getElementById("letter-freq").classList.add("hidden"); return; }
-    const f={}; for(const c of t) f[c]=(f[c]||0)+1;
-    const s=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,8); const m=s[0]?s[0][1]:1;
-    const el=document.getElementById("letter-freq"); el.classList.remove("hidden");
-    el.innerHTML=s.map(([c,n])=>`<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n/m)*80+10}%"></div><span class="text-muted">${n}</span></div>`).join("");
+  const lnInput = document.getElementById('input-text');
+  if (lnInput) {
+    const updateLN = () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.textContent = Array.from({ length: lnInput.value.split('\n').length }, (_, i) => i + 1).join('\n');
+    };
+    lnInput.addEventListener('input', updateLN);
+    lnInput.addEventListener('scroll', () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.scrollTop = lnInput.scrollTop;
+    });
+    updateLN();
+  }
+
+  const lfInput = document.getElementById('input-text');
+  if (lfInput) {
+    lfInput.addEventListener('input', () => {
+      const t = lfInput.value.toLowerCase().replace(/[^a-z]/g, '');
+      if (!t) {
+        document.getElementById('letter-freq').classList.add('hidden');
+        return;
+      }
+      const f = {};
+      for (const c of t) f[c] = (f[c] || 0) + 1;
+      const s = Object.entries(f)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+      const m = s[0] ? s[0][1] : 1;
+      const el = document.getElementById('letter-freq');
+      el.classList.remove('hidden');
+      el.innerHTML = s
+        .map(
+          ([c, n]) =>
+            `<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n / m) * 80 + 10}%"></div><span class="text-muted">${n}</span></div>`,
+        )
+        .join('');
+    });
+  }
+
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      const map = { purple: '#a855f7', blue: '#3b82f6', green: '#22c55e', pink: '#ec4899', orange: '#f97316' };
+      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500')
+          .replace(/from-(purple|violet)-\d+/g, 'from-' + c + '-500')
+          .replace(/to-purple-\d+/g, 'to-' + c + '-600');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
   });
-}
-
-document.querySelectorAll(".theme-swatch").forEach(s=>{
-  s.addEventListener("click",()=>{
-    const c=s.dataset.color; const map={purple:"#a855f7",blue:"#3b82f6",green:"#22c55e",pink:"#ec4899",orange:"#f97316"};
-    document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach(b=>{ b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500").replace(/from-(purple|violet)-\d+/g,"from-"+c+"-500").replace(/to-purple-\d+/g,"to-"+c+"-600"); });
-    try{localStorage.setItem("nt_theme",c);}catch(e){}
-  });
-});
-try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>

@@ -1,191 +1,89 @@
-# Cloudflare Deployment Guide — NumanX Tools
+# NumanX Tools — DevOps, CI/CD, & Edge Deployment Runbook
 
-## Prerequisites
-- Node.js >= 22.12.0
-- Git repository initialized
-- Cloudflare account (free tier)
-- Domain: `numanxtools.site` (or any custom domain)
+This document is the definitive Cloud Ops manual for NumanX Tools Hub. It defines how code moves from a developer's local machine to Cloudflare's global edge network in < 60 seconds.
 
 ---
 
-## Step 1: Build the Project
+## 1. Infrastructure Overview
 
-```bash
-npm run build
-```
-
-Output goes to `dist/` (configured as Astro default).  
-Build produces **25 static pages** with zero JavaScript framework overhead.
-
-**Expected output:**
-```
-25 page(s) built in ~6s
-✓ Complete!
-```
+- **Host Platform:** Cloudflare Pages
+- **Compute Layer:** Cloudflare Edge Network (Static Delivery)
+- **Build Engine:** Astro SSG (`npm run build`)
+- **DNS Registrar:** Cloudflare (Proxied `Orange Cloud` mode)
+- **Domain:** `numanxtools.site`
 
 ---
 
-## Step 2: Deploy to Cloudflare Pages
+## 2. Continuous Integration / Continuous Deployment (CI/CD)
 
-### Option A: Direct Upload (Quick Start)
+The deployment pipeline is fully automated via Cloudflare Pages GitHub Integration.
 
-1. Go to **Cloudflare Dashboard > Workers & Pages > Pages**
-2. Click **Create > Upload assets**
-3. Upload the entire `dist/` folder
-4. Set project name: `numanx-tools`
-5. No build command needed (pre-built)
-6. Deploy
+### 2.1 The Build Pipeline
+When a commit is pushed to the `main` branch, Cloudflare Pages automatically triggers the following environment:
+- **Node.js Version:** `v22.12.0` (Strictly enforced via environment variables)
+- **Install Command:** `npm ci` (Ensures deterministic installs from `package-lock.json`)
+- **Build Command:** `npm run build`
+- **Output Directory:** `dist`
 
-### Option B: Git Integration (Recommended)
-
-1. Push your repo to GitHub/GitLab
-2. In Cloudflare Pages, click **Create > Connect to Git**
-3. Select your repository
-4. Configure:
-
-| Setting | Value |
-|---------|-------|
-| **Framework preset** | Astro |
-| **Build command** | `npm run build` |
-| **Build output** | `dist` |
-| **Root directory** | `/` |
-| **Node.js version** | 22 |
-
-5. Click **Save and Deploy**
+### 2.2 Staging Environments (Preview Deployments)
+Any Pull Request or push to a branch other than `main` triggers a **Preview Deployment**.
+- Cloudflare generates a unique URL (e.g., `1a2b3c4d.numanx-tools.pages.dev`).
+- Use this URL to run automated Lighthouse tests before merging into production.
 
 ---
 
-## Step 3: Custom Domain Setup
+## 3. Edge Caching & Asset Optimization Rules
 
-### 3.1 Add Domain in Cloudflare
+To achieve a 100/100 Lighthouse Performance score, Cloudflare is configured with strict caching rules.
 
-1. In Cloudflare Pages > your project > **Custom domains**
-2. Click **Set up a custom domain**
-3. Enter: `numanxtools.site`
-4. Cloudflare will provide DNS records to add
+### 3.1 Immutable Asset Caching (`/_astro/*`)
+Astro automatically bundles and hashes all CSS and JS files (e.g., `main.8f7d9a.js`). 
+- **Rule:** Cache at the Edge for **1 Year** (`Cache-Control: public, max-age=31536000, immutable`).
+- **Why:** The file hash changes on every build, so users will never serve stale CSS/JS, but they will never re-download unchanged files.
 
-### 3.2 DNS Configuration
+### 3.2 HTML Caching
+- **Rule:** Cache at Edge with immediate invalidation on deployment.
+- **Why:** Allows TTFB (Time to First Byte) to remain < 50ms globally, while ensuring users see the newest tools the second a build finishes.
 
-At your domain registrar (e.g. Namecheap, GoDaddy):
+### 3.3 Compression Protocols
+- **Brotli:** Enabled by default on Cloudflare. 
+- **Gzip:** Fallback enabled for older browsers.
 
-| Type | Name | Value | Proxy |
-|------|------|-------|-------|
-| CNAME | `@` | `numanx-tools.pages.dev` | Proxied (orange cloud) |
-| CNAME | `www` | `numanx-tools.pages.dev` | Proxied (orange cloud) |
+---
 
-> **Important:** Cloudflare proxy (orange cloud) enables DDoS protection, SSL, and CDN caching.
+## 4. Environment Variables & Security Protocols
 
-### 3.3 SSL/TLS
+### 4.1 Production Environment Variables
+Set these strictly inside the Cloudflare Pages Dashboard (Settings > Environment Variables), never in the codebase.
 
-- Cloudflare Pages auto-provisions SSL certificates
-- Set SSL/TLS encryption mode to **Full** (not Flexible)
-- Wait ~1 minute for certificate provisioning
+| Variable | Usage | Environment |
+| --- | --- | --- |
+| `NODE_VERSION` | Forces Cloudflare to use Node 22+ for the Astro build. | All |
+| `PUBLIC_GA_ID` | Google Analytics 4 Measurement ID (`G-XXXXXXXXX`). | Production |
+| `SECRET_WEBHOOK_URL` | (Future) Triggers Discord notifications on build failure. | Production |
 
-### 3.4 Verify HTTPS
-
-```
-https://numanxtools.site    → should resolve
-https://www.numanxtools.site → should redirect to apex
+### 4.2 Security Headers (Cloudflare Page Rules)
+To prevent Clickjacking and MIME-type sniffing, Cloudflare Page Rules must inject the following headers on all `/*` responses:
+```http
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: strict-origin-when-cross-origin
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 ```
 
 ---
 
-## Step 4: Post-Deployment Verification
+## 5. Rollback & Disaster Recovery Procedures
 
-### 4.1 Check All Routes
+### 5.1 Instant Rollback (The "Oh Sh*t" Button)
+If a critical bug is merged into `main` and breaks the UI:
+1. Open Cloudflare Pages Dashboard > NumanX Tools > **Deployments**.
+2. Locate the previous successful deployment.
+3. Click **"Restore to this deployment"**.
+4. The global edge cache is instantly reverted (< 3 seconds) without requiring a new Astro build.
 
-```
-/                 → Homepage
-/tools/           → Tools listing
-/blog/            → Blog index
-/about/           → About page
-/contact/         → Contact page
-/dashboard/       → Dashboard
-/search/          → Search page
-/privacy-policy/  → Privacy Policy
-/terms-of-service/ → Terms
-/404/             → 404 page (test with /nonexistent)
-```
-
-### 4.2 Verify Technical SEO
-
-```
-/robots.txt       → Googlebot/Bingbot rules
-/sitemap.xml      → 25 URLs with priorities
-```
-
-### 4.3 Run Lighthouse Audit
-
-- Open Chrome DevTools > Lighthouse
-- Test on mobile and desktop
-- **Target:** Performance 95+, SEO 95+, Accessibility 95+
-
----
-
-## Step 5: Cloudflare Pages Configuration
-
-### 5.1 SPA Routing (Not needed — static SSG)
-
-Astro generates HTML files directly. No SPA fallback needed.
-
-### 5.2 Security Headers (Optional)
-
-To add security headers on Cloudflare Pages:
-
-1. Go to **Cloudflare Dashboard > Rules > Page Rules**
-2. Create rule for `numanxtools.site/*`
-3. Add header: `X-Content-Type-Options: nosniff`
-4. Add header: `X-Frame-Options: DENY`
-5. Add header: `Referrer-Policy: strict-origin-when-cross-origin`
-
-### 5.3 Compression
-
-Cloudflare auto-enables Brotli and Gzip compression. No configuration needed.
-
-### 5.4 Caching
-
-Static assets in `_astro/` have content-based hashes → cache forever.  
-HTML pages are served fresh via Cloudflare's default caching.
-
----
-
-## Step 6: Environment Variables
-
-For Analytics (optional):
-
-```
-PUBLIC_GA_ID=G-XXXXXXXXXX
-```
-
-Set this in Cloudflare Pages dashboard:
-1. Project > **Settings** > **Environment variables**
-2. Add variable: `PUBLIC_GA_ID`
-3. Apply to **Production** branch
-
----
-
-## Step 7: Ongoing Maintenance
-
-### Update Content
-
-1. Edit `.astro` files or `.md` blog posts
-2. Run `npm run build`
-3. Deploy updated `dist/` (or push to Git)
-
-### Monitor
-
-- **Cloudflare Analytics** — traffic, bandwidth, cache hit ratio
-- **Google Search Console** — indexing, crawl errors
-- **Lighthouse CI** — performance regression detection
-
----
-
-## Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| 404 on page routes | Ensure all routes are in `dist/` — Astro SSG generates folders |
-| SSL not working | Wait 1-2 minutes for Cloudflare cert provisioning |
-| Domain not resolving | Check DNS propagation (can take 5-30 mins) |
-| Build fails | Check Node.js version (22+), run `npm install` first |
-| Analytics not firing | Verify `PUBLIC_GA_ID` env var is set in Cloudflare dashboard |
+### 5.2 Build Failure Diagnostics
+If `npm run build` fails in CI/CD:
+1. **Check Node Version:** Ensure Cloudflare hasn't defaulted to an older Node environment.
+2. **Check TypeScript:** Astro strictly enforces TS. A missing type in `src/data/appsData.ts` will intentionally crash the build to prevent runtime errors. Fix locally with `npx astro check`.
+3. **Check Dynamic Routes:** Ensure `getStaticPaths()` in `[slug].astro` returns valid objects for every single tool listed in the matrix.

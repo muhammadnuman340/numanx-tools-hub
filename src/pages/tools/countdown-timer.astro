@@ -1,46 +1,141 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
-  { question: "Does the countdown timer work offline?", answer: "Yes, the countdown timer runs entirely in your browser using JavaScript's setInterval. No server connection is needed once the page is loaded. The timer calculates the difference between the target date and the current time." },
-  { question: "What timezone does the timer use?", answer: "The timer uses your device's local timezone. The target date and time are interpreted in the timezone of the user's browser. For precise coordination across timezones, ensure all participants are aware of the local time context." },
-  { question: "Can I set a countdown for days ahead?", answer: "Yes, you can set any future date and time. The timer supports dates up to the year 2099. It will display the remaining time in days, hours, minutes, and seconds, updating in real-time every second." },
-  { question: "Can I create multiple countdowns at once?", answer: "Currently, the tool supports one countdown at a time. You can reset and create a new one for a different event. Multiple simultaneous countdowns may be added in a future update." },
-  { question: "Does the timer continue if I close the browser?", answer: "No, the timer resets when you close or refresh the page because it runs in the browser's memory. Your event name and target date are not saved across sessions." },
-  { question: "Can I share a countdown with someone?", answer: "Yes, click the share button to copy a link with your countdown details. Anyone with the link can open it and see the remaining time from their own timezone." },
-  { question: "What happens when the countdown reaches zero?", answer: "The timer stops at 00:00:00:00 and displays zeros. There is no alert or animation when it hits zero, but the display clearly shows the countdown has ended." },
-  { question: "Can I count down to a specific time of day?", answer: "Yes, the datetime-local input lets you set both date and time down to the minute. The countdown then shows days, hours, minutes, and seconds remaining until that exact moment." },
+  {
+    question: 'Does the countdown timer work offline?',
+    answer:
+      "Yes, the countdown timer runs entirely in your browser using JavaScript's setInterval. No server connection is needed once the page is loaded. The timer calculates the difference between the target date and the current time.",
+  },
+  {
+    question: 'What timezone does the timer use?',
+    answer:
+      "The timer uses your device's local timezone. The target date and time are interpreted in the timezone of the user's browser. For precise coordination across timezones, ensure all participants are aware of the local time context.",
+  },
+  {
+    question: 'Can I set a countdown for days ahead?',
+    answer:
+      'Yes, you can set any future date and time. The timer supports dates up to the year 2099. It will display the remaining time in days, hours, minutes, and seconds, updating in real-time every second.',
+  },
+  {
+    question: 'Can I create multiple countdowns at once?',
+    answer:
+      'Currently, the tool supports one countdown at a time. You can reset and create a new one for a different event. Multiple simultaneous countdowns may be added in a future update.',
+  },
+  {
+    question: 'Does the timer continue if I close the browser?',
+    answer:
+      "No, the timer resets when you close or refresh the page because it runs in the browser's memory. Your event name and target date are not saved across sessions.",
+  },
+  {
+    question: 'Can I share a countdown with someone?',
+    answer:
+      'Yes, click the share button to copy a link with your countdown details. Anyone with the link can open it and see the remaining time from their own timezone.',
+  },
+  {
+    question: 'What happens when the countdown reaches zero?',
+    answer:
+      'The timer stops at 00:00:00:00 and displays zeros. There is no alert or animation when it hits zero, but the display clearly shows the countdown has ended.',
+  },
+  {
+    question: 'Can I count down to a specific time of day?',
+    answer:
+      'Yes, the datetime-local input lets you set both date and time down to the minute. The countdown then shows days, hours, minutes, and seconds remaining until that exact moment.',
+  },
 ];
-const schema = { name: "Countdown Timer", applicationCategory: "Utilities", description: "Set a countdown timer for any date and event. Live display of days, hours, minutes, and seconds remaining.", featureList: ["Custom date and time", "Event name support", "Live countdown display", "Reset functionality"] };
+const schema = {
+  name: 'Countdown Timer',
+  applicationCategory: 'Utilities',
+  description:
+    'Set a countdown timer for any date and event. Live display of days, hours, minutes, and seconds remaining.',
+  featureList: ['Custom date and time', 'Event name support', 'Live countdown display', 'Reset functionality'],
+};
 
 const benefits = [
-  { icon: "🎯", title: "Precise Countdown", desc: "Set an exact date and time down to the minute. The timer displays days, hours, minutes, and seconds remaining, updating every second." },
-  { icon: "🏷️", title: "Event Names", desc: "Give your countdown a custom event name like 'New Year 2027' or 'Product Launch' so you always know what you're counting down to." },
-  { icon: "📱", title: "Works Anywhere", desc: "Full responsive design works on desktop, tablet, and mobile. Perfect for embedding in presentations or displaying on secondary monitors." },
-  { icon: "🔗", title: "Shareable Links", desc: "Share your countdown with others via a link. Recipients see the remaining time calculated from their own timezone." },
-  { icon: "🔄", title: "Reset & Reuse", desc: "Reset the timer instantly to set a new countdown. No page refresh needed — just click reset and enter new details." },
-  { icon: "🆓", title: "Completely Free", desc: "No sign-ups, no limits. Create unlimited countdown timers for events, launches, deadlines, and special occasions." },
+  {
+    icon: '🎯',
+    title: 'Precise Countdown',
+    desc: 'Set an exact date and time down to the minute. The timer displays days, hours, minutes, and seconds remaining, updating every second.',
+  },
+  {
+    icon: '🏷️',
+    title: 'Event Names',
+    desc: "Give your countdown a custom event name like 'New Year 2027' or 'Product Launch' so you always know what you're counting down to.",
+  },
+  {
+    icon: '📱',
+    title: 'Works Anywhere',
+    desc: 'Full responsive design works on desktop, tablet, and mobile. Perfect for embedding in presentations or displaying on secondary monitors.',
+  },
+  {
+    icon: '🔗',
+    title: 'Shareable Links',
+    desc: 'Share your countdown with others via a link. Recipients see the remaining time calculated from their own timezone.',
+  },
+  {
+    icon: '🔄',
+    title: 'Reset & Reuse',
+    desc: 'Reset the timer instantly to set a new countdown. No page refresh needed — just click reset and enter new details.',
+  },
+  {
+    icon: '🆓',
+    title: 'Completely Free',
+    desc: 'No sign-ups, no limits. Create unlimited countdown timers for events, launches, deadlines, and special occasions.',
+  },
 ];
 
 const howToSteps = [
-  { num: "1", title: "Name Your Event", desc: "Enter a name for your countdown like 'Product Launch' or 'Summer Vacation'. This helps you identify the event at a glance." },
-  { num: "2", title: "Set Date & Time", desc: "Choose the target date and time using the datetime picker. The timer supports dates up to the year 2099." },
-  { num: "3", title: "Start Countdown", desc: "Click Start to begin the countdown. The timer displays days, hours, minutes, and seconds, updating in real-time every second." },
-  { num: "4", title: "Share or Reset", desc: "Share the countdown link with others, copy the remaining time, or reset to start a new countdown for a different event." },
+  {
+    num: '1',
+    title: 'Name Your Event',
+    desc: "Enter a name for your countdown like 'Product Launch' or 'Summer Vacation'. This helps you identify the event at a glance.",
+  },
+  {
+    num: '2',
+    title: 'Set Date & Time',
+    desc: 'Choose the target date and time using the datetime picker. The timer supports dates up to the year 2099.',
+  },
+  {
+    num: '3',
+    title: 'Start Countdown',
+    desc: 'Click Start to begin the countdown. The timer displays days, hours, minutes, and seconds, updating in real-time every second.',
+  },
+  {
+    num: '4',
+    title: 'Share or Reset',
+    desc: 'Share the countdown link with others, copy the remaining time, or reset to start a new countdown for a different event.',
+  },
 ];
 
 const useCases = [
-  { icon: "🚀", title: "Product Launches", desc: "Build anticipation for your product launch with a live countdown. Share it with your team and audience to create excitement." },
-  { icon: "🎉", title: "Event Planning", desc: "Track days until weddings, parties, conferences, and vacations. Keep everyone informed of how much time remains." },
-  { icon: "📅", title: "Project Deadlines", desc: "Monitor project milestones and delivery dates. A visible countdown helps teams stay focused on approaching deadlines." },
-  { icon: "🎊", title: "Holiday Countdowns", desc: "Count down to New Year, Christmas, birthdays, and other holidays. Share with friends and family for shared anticipation." },
+  {
+    icon: '🚀',
+    title: 'Product Launches',
+    desc: 'Build anticipation for your product launch with a live countdown. Share it with your team and audience to create excitement.',
+  },
+  {
+    icon: '🎉',
+    title: 'Event Planning',
+    desc: 'Track days until weddings, parties, conferences, and vacations. Keep everyone informed of how much time remains.',
+  },
+  {
+    icon: '📅',
+    title: 'Project Deadlines',
+    desc: 'Monitor project milestones and delivery dates. A visible countdown helps teams stay focused on approaching deadlines.',
+  },
+  {
+    icon: '🎊',
+    title: 'Holiday Countdowns',
+    desc: 'Count down to New Year, Christmas, birthdays, and other holidays. Share with friends and family for shared anticipation.',
+  },
 ];
 ---
+
 <MainLayout
   title="Countdown Timer - Free Online Countdown Timer"
   description="Set a countdown timer for any date and event. Live display of days, hours, minutes, and seconds remaining."
@@ -48,55 +143,158 @@ const useCases = [
   toolSchema={schema}
   faq={faqItems}
   howto={{
-    name: "How to Set a Countdown Timer",
-    description: "Set a countdown timer for any event with live display of days, hours, minutes, and seconds in 4 easy steps.",
-    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
-    totalTime: "PT1M",
+    name: 'How to Set a Countdown Timer',
+    description:
+      'Set a countdown timer for any event with live display of days, hours, minutes, and seconds in 4 easy steps.',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
   }}
   breadcrumbs={[
-    { name: "Home", url: "/" },
-    { name: "Tools", url: "/tools/" },
-    { name: "Countdown Timer", url: "/tools/countdown-timer/" },
-  ]}>
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
-    <ToolHeader title="Countdown" gradient="Timer Pro" desc="Set a countdown timer for any date and event. Live display of days, hours, minutes, and seconds remaining." badge="✦ New Tool" slug="countdown-timer" />
-    <ShareBar />
-    <div class="max-w-xl mx-auto mt-10">
-      <div class="bg-surface-1 border border-surface rounded-2xl p-6 relative">
-          <button id="fullscreen-btn" class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
-        <div class="flex items-center gap-2 mb-3">
-          <span id="usage-badge" class="text-xs text-muted"></span>
-          <div class="flex gap-1 ml-auto">
-            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-            <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Countdown Timer', url: '/tools/countdown-timer/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="Countdown"
+        gradient="Timer Pro"
+        desc="Set a countdown timer for any date and event. Live display of days, hours, minutes, and seconds remaining."
+        badge="✦ New Tool"
+        slug="countdown-timer"
+      />
+      <ShareBar />
+      <div class="max-w-xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 relative">
+          <button
+            id="fullscreen-btn"
+            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+            title="Fullscreen">⛶</button
+          >
+          <div class="flex items-center gap-2 mb-3">
+            <span id="usage-badge" class="text-xs text-muted"></span>
+            <div class="flex gap-1 ml-auto">
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="purple"
+                style="background:#a855f7"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="blue"
+                style="background:#3b82f6"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="green"
+                style="background:#22c55e"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="pink"
+                style="background:#ec4899"></button>
+            </div>
           </div>
-        </div>
-        <label class="block text-xs font-medium text-tertiary mb-1.5">Event Name</label>
-        <input id="event-input" type="text" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-rose-400/50 focus:outline-none transition-all mb-4" placeholder="e.g. New Year 2027" />
-        <label class="block text-xs font-medium text-tertiary mb-1.5">Target Date & Time</label>
-        <input id="datetime-input" type="datetime-local" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-rose-400/50 focus:outline-none transition-all mb-4" />
-        <div class="flex gap-2">
-          <button id="start-btn" class="flex-1 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all">Start</button>
-          <button id="share-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-3 rounded-xl border border-surface-3 transition-all" title="Share">🔗</button>
-          <button id="copy-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-3 rounded-xl border border-surface-3 transition-all">Copy</button>
-          <button id="download-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-3 rounded-xl border border-surface-3 transition-all">Download</button>
-          <button id="reset-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-4 py-3 rounded-xl border border-surface-3 transition-all">Reset</button>
-        </div>
-        <div id="countdown-display" class="mt-6 pt-6 border-t border-surface hidden">
-          <div id="event-name-display" class="text-sm text-tertiary text-center mb-4">Countdown to <span class="text-white font-semibold"></span></div>
-          <div class="grid grid-cols-4 gap-3 text-center">
-            <div class="bg-surface-2 rounded-xl py-4 px-2 border border-surface-3"><div class="text-3xl md:text-4xl font-black text-rose-400" id="days-val">00</div><div class="text-xs text-tertiary mt-1">Days</div></div>
-            <div class="bg-surface-2 rounded-xl py-4 px-2 border border-surface-3"><div class="text-3xl md:text-4xl font-black text-rose-400" id="hours-val">00</div><div class="text-xs text-tertiary mt-1">Hours</div></div>
-            <div class="bg-surface-2 rounded-xl py-4 px-2 border border-surface-3"><div class="text-3xl md:text-4xl font-black text-rose-400" id="mins-val">00</div><div class="text-xs text-tertiary mt-1">Minutes</div></div>
-            <div class="bg-surface-2 rounded-xl py-4 px-2 border border-surface-3"><div class="text-3xl md:text-4xl font-black text-rose-400" id="secs-val">00</div><div class="text-xs text-tertiary mt-1">Seconds</div></div>
+          <label class="block text-xs font-medium text-tertiary mb-1.5">Event Name</label>
+          <input
+            id="event-input"
+            type="text"
+            class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-rose-400/50 focus:outline-none transition-all mb-4"
+            placeholder="e.g. New Year 2027"
+          />
+          <label class="block text-xs font-medium text-tertiary mb-1.5">Target Date & Time</label>
+          <input
+            id="datetime-input"
+            type="datetime-local"
+            class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-rose-400/50 focus:outline-none transition-all mb-4"
+          />
+          <div class="flex gap-2">
+            <button
+              id="start-btn"
+              class="flex-1 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all"
+              >Start</button
+            >
+            <button
+              id="share-btn"
+              class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-3 rounded-xl border border-surface-3 transition-all"
+              title="Share">🔗</button
+            >
+            <button
+              id="copy-btn"
+              class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-3 rounded-xl border border-surface-3 transition-all"
+              >Copy</button
+            >
+            <button
+              id="download-btn"
+              class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-3 rounded-xl border border-surface-3 transition-all"
+              >Download</button
+            >
+            <button
+              id="reset-btn"
+              class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-4 py-3 rounded-xl border border-surface-3 transition-all"
+              >Reset</button
+            >
+          </div>
+          <div id="countdown-display" class="mt-6 pt-6 border-t border-surface hidden">
+            <div id="event-name-display" class="text-sm text-tertiary text-center mb-4">
+              Countdown to <span class="text-white font-semibold"></span>
+            </div>
+            <div class="grid grid-cols-4 gap-3 text-center">
+              <div class="bg-surface-2 rounded-xl py-4 px-2 border border-surface-3">
+                <div class="text-3xl md:text-4xl font-black text-rose-400" id="days-val">00</div><div
+                  class="text-xs text-tertiary mt-1"
+                >
+                  Days
+                </div>
+              </div>
+              <div class="bg-surface-2 rounded-xl py-4 px-2 border border-surface-3">
+                <div class="text-3xl md:text-4xl font-black text-rose-400" id="hours-val">00</div><div
+                  class="text-xs text-tertiary mt-1"
+                >
+                  Hours
+                </div>
+              </div>
+              <div class="bg-surface-2 rounded-xl py-4 px-2 border border-surface-3">
+                <div class="text-3xl md:text-4xl font-black text-rose-400" id="mins-val">00</div><div
+                  class="text-xs text-tertiary mt-1"
+                >
+                  Minutes
+                </div>
+              </div>
+              <div class="bg-surface-2 rounded-xl py-4 px-2 border border-surface-3">
+                <div class="text-3xl md:text-4xl font-black text-rose-400" id="secs-val">00</div><div
+                  class="text-xs text-tertiary mt-1"
+                >
+                  Seconds
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-rose-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Countdown <span class="bg-gradient-to-r from-rose-400 to-pink-500 bg-clip-text text-transparent">Timers</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>Countdown timers are perfect for tracking time until important events like product launches, project deadlines, holidays, or personal milestones. By calculating the difference between the current time and a target date, the timer provides a real-time update of days, hours, minutes, and seconds remaining, helping you stay aware of approaching deadlines and special occasions.</p></div></section>
-    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-rose-400 to-pink-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+      <section class="mt-20 max-w-3xl mx-auto">
+        <div class="text-center mb-8">
+          <span class="text-xs font-semibold text-rose-400 uppercase tracking-wider">Learn</span><h2
+            class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
+          >
+            Countdown <span class="bg-gradient-to-r from-rose-400 to-pink-500 bg-clip-text text-transparent"
+              >Timers</span
+            >
+          </h2>
+        </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
+          <p>
+            Countdown timers are perfect for tracking time until important events like product launches, project
+            deadlines, holidays, or personal milestones. By calculating the difference between the current time and a
+            target date, the timer provides a real-time update of days, hours, minutes, and seconds remaining, helping
+            you stay aware of approaching deadlines and special occasions.
+          </p>
+        </div>
+      </section>
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked <span class="bg-gradient-to-r from-rose-400 to-pink-500 bg-clip-text text-transparent"
+            >Questions</span
+          >
+        </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
+      </div>
 
       <ToolContentSections
         toolSlug="countdown-timer"
@@ -109,44 +307,56 @@ const useCases = [
 
       <!-- ─── CTA Section ─── -->
       <section class="mt-16 text-center">
-        <div class="max-w-2xl mx-auto bg-gradient-to-br from-rose-600/10 to-pink-600/5 border border-rose-500/20 rounded-2xl p-8 md:p-10">
+        <div
+          class="max-w-2xl mx-auto bg-gradient-to-br from-rose-600/10 to-pink-600/5 border border-rose-500/20 rounded-2xl p-8 md:p-10"
+        >
           <h2 class="text-2xl md:text-3xl font-black tracking-tight">
             Start Your
-            <span class="bg-gradient-to-r from-rose-400 to-pink-500 bg-clip-text text-transparent"> Countdown Free</span>
+            <span class="bg-gradient-to-r from-rose-400 to-pink-500 bg-clip-text text-transparent">
+              Countdown Free</span
+            >
           </h2>
           <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
-            No sign-up required. No limits. Create unlimited countdown timers for events, launches, and special occasions.
+            No sign-up required. No limits. Create unlimited countdown timers for events, launches, and special
+            occasions.
           </p>
           <div class="mt-6 flex gap-3 justify-center flex-wrap">
-            <button onclick="document.querySelector('#datetime-input')?.focus()" class="px-6 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-rose-900/30">
+            <button
+              onclick="document.querySelector('#datetime-input')?.focus()"
+              class="px-6 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-rose-900/30"
+            >
               Start Countdown
             </button>
-            <a href="/tools/word-counter/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700">
+            <a
+              href="/tools/word-counter/"
+              class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700"
+            >
               Try Word Counter
             </a>
           </div>
         </div>
       </section>
 
-    <RelatedTools current="countdown-timer" />
-  </div></main>
+      <RelatedTools current="countdown-timer" />
+    </div>
+  </main>
 </MainLayout>
 <script>
-  const eventInput = document.getElementById("event-input");
-  const datetimeInput = document.getElementById("datetime-input");
-  const startBtn = document.getElementById("start-btn");
-  const resetBtn = document.getElementById("reset-btn");
-  const countdownDisplay = document.getElementById("countdown-display");
-  const eventNameDisplay = document.getElementById("event-name-display");
-  const daysVal = document.getElementById("days-val");
-  const hoursVal = document.getElementById("hours-val");
-  const minsVal = document.getElementById("mins-val");
-  const secsVal = document.getElementById("secs-val");
+  const eventInput = document.getElementById('event-input');
+  const datetimeInput = document.getElementById('datetime-input');
+  const startBtn = document.getElementById('start-btn');
+  const resetBtn = document.getElementById('reset-btn');
+  const countdownDisplay = document.getElementById('countdown-display');
+  const eventNameDisplay = document.getElementById('event-name-display');
+  const daysVal = document.getElementById('days-val');
+  const hoursVal = document.getElementById('hours-val');
+  const minsVal = document.getElementById('mins-val');
+  const secsVal = document.getElementById('secs-val');
 
   let interval = null;
 
   function pad(n) {
-    return String(n).padStart(2, "0");
+    return String(n).padStart(2, '0');
   }
 
   function updateCountdown(target) {
@@ -154,10 +364,10 @@ const useCases = [
     const diff = target - now;
 
     if (diff <= 0) {
-      daysVal.textContent = "00";
-      hoursVal.textContent = "00";
-      minsVal.textContent = "00";
-      secsVal.textContent = "00";
+      daysVal.textContent = '00';
+      hoursVal.textContent = '00';
+      minsVal.textContent = '00';
+      secsVal.textContent = '00';
       if (interval) clearInterval(interval);
       return;
     }
@@ -173,74 +383,141 @@ const useCases = [
     secsVal.textContent = pad(secs);
   }
 
-  startBtn.addEventListener("click", () => {
+  startBtn.addEventListener('click', () => {
     if (interval) clearInterval(interval);
     const dateStr = datetimeInput.value;
-    const eventName = eventInput.value.trim() || "Event";
+    const eventName = eventInput.value.trim() || 'Event';
     if (!dateStr) return;
 
     const target = new Date(dateStr).getTime();
     eventNameDisplay.innerHTML = `Countdown to <span class="text-white font-semibold">${eventName}</span>`;
-    countdownDisplay.classList.remove("hidden");
+    countdownDisplay.classList.remove('hidden');
     updateCountdown(target);
     interval = setInterval(() => updateCountdown(target), 1000);
   });
 
-  resetBtn.addEventListener("click", () => {
+  resetBtn.addEventListener('click', () => {
     if (interval) clearInterval(interval);
     interval = null;
-    eventInput.value = "";
-    datetimeInput.value = "";
-    countdownDisplay.classList.add("hidden");
+    eventInput.value = '';
+    datetimeInput.value = '';
+    countdownDisplay.classList.add('hidden');
   });
 
   // ─── Copy ───
-  document.getElementById("copy-btn")?.addEventListener("click", () => {
-    const text = `${eventNameDisplay.querySelector("span")?.textContent || "Event"}: ${daysVal.textContent}d ${hoursVal.textContent}h ${minsVal.textContent}m ${secsVal.textContent}s`;
+  document.getElementById('copy-btn')?.addEventListener('click', () => {
+    const text = `${eventNameDisplay.querySelector('span')?.textContent || 'Event'}: ${daysVal.textContent}d ${hoursVal.textContent}h ${minsVal.textContent}m ${secsVal.textContent}s`;
     if (!text) return;
     navigator.clipboard.writeText(text).catch(() => {});
-    const btn = document.getElementById("copy-btn");
-    btn.textContent = "Copied!";
-    setTimeout(() => { btn.textContent = "Copy"; }, 2000);
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+    }, 2000);
   });
 
   // ─── Download ───
-  document.getElementById("download-btn")?.addEventListener("click", () => {
-    const text = `${eventNameDisplay.querySelector("span")?.textContent || "Event"}: ${daysVal.textContent}d ${hoursVal.textContent}h ${minsVal.textContent}m ${secsVal.textContent}s`;
+  document.getElementById('download-btn')?.addEventListener('click', () => {
+    const text = `${eventNameDisplay.querySelector('span')?.textContent || 'Event'}: ${daysVal.textContent}d ${hoursVal.textContent}h ${minsVal.textContent}m ${secsVal.textContent}s`;
     if (!text) return;
-    const blob = new Blob([text], {type:"text/plain"});
-    const a = document.createElement("a");
+    const blob = new Blob([text], { type: 'text/plain' });
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = "countdown-timer.txt";
+    a.download = 'countdown-timer.txt';
     a.click();
     URL.revokeObjectURL(a.href);
   });
 
   // ─── Fullscreen ───
-  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-    const card = document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card = document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
     if (!card) return;
-    if (document.fullscreenElement) { document.exitFullscreen(); document.getElementById("fullscreen-btn").textContent = "⛶"; }
-    else { card.requestFullscreen?.() || card.webkitRequestFullscreen?.(); document.getElementById("fullscreen-btn").textContent = "✕"; }
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      document.getElementById('fullscreen-btn').textContent = '⛶';
+    } else {
+      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
+      document.getElementById('fullscreen-btn').textContent = '✕';
+    }
   });
-  document.addEventListener("fullscreenchange", () => {
-    const btn = document.getElementById("fullscreen-btn");
-    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
 
   // ─── Keyboard shortcuts ───
-  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      const clearBtn = document.getElementById('clear-btn') || document.querySelector("button[id*='clear']") || document.querySelector("button[id*='reset']");
+      if (clearBtn) clearBtn.click();
+      else {
+        const inputs = document.querySelectorAll('textarea, input:not([type="radio"]):not([type="checkbox"])');
+        inputs.forEach(i => i.value = '');
+        const evt = new Event('input', { bubbles: true });
+        inputs.forEach(i => i.dispatchEvent(evt));
+      }
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
 
   // ─── Usage badge ───
-  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["countdown-timer"])b.textContent="Used "+u["countdown-timer"]+"×";}catch(e){}
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['countdown-timer']) b.textContent = 'Used ' + u['countdown-timer'] + '×';
+  } catch (e) {}
 
   // ─── Share button ───
-  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("output-text")||document.querySelector("[id$='result']");const t=o?.value||o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof showToast==="function")showToast("Link copied!");});
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('output-text') || document.querySelector("[id$='result']");
+    const t = o?.value || o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof showToast === 'function') showToast('Link copied!');
+  });
 
   // ─── Sound effects ───
-  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
 
   // ─── Color theme picker ───
-  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500");});try{localStorage.setItem("nt_theme",c);}catch(e){}});});
-  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
+  });
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>

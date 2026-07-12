@@ -1,94 +1,216 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
-  { question: "What regex flavors are supported?", answer: "This tester uses JavaScript's built-in RegExp engine, supporting standard patterns including groups, lookaheads, character classes, quantifiers, and flags (g, i, m, s, u, y)." },
-  { question: "Is my regex or test data stored or uploaded?", answer: "No. All regex testing happens entirely in your browser. Your patterns and test data never leave your device." },
-  { question: "How do I use flags?", answer: "Enter flags in the flags field: g (global - find all matches), i (case-insensitive), m (multiline - ^ and $ match line boundaries), s (dotall - . matches newlines), u (unicode), y (sticky)." },
+  {
+    question: 'What regex flavors are supported?',
+    answer:
+      "This tester uses JavaScript's built-in RegExp engine, supporting standard patterns including groups, lookaheads, character classes, quantifiers, and flags (g, i, m, s, u, y).",
+  },
+  {
+    question: 'Is my regex or test data stored or uploaded?',
+    answer:
+      'No. All regex testing happens entirely in your browser. Your patterns and test data never leave your device.',
+  },
+  {
+    question: 'How do I use flags?',
+    answer:
+      'Enter flags in the flags field: g (global - find all matches), i (case-insensitive), m (multiline - ^ and $ match line boundaries), s (dotall - . matches newlines), u (unicode), y (sticky).',
+  },
 ];
-const regexSchema = { name: "Regex Tester", applicationCategory: "Developer Tools", description: "Test and debug regular expressions in real-time. View match counts and highlighted results.", featureList: ["Real-time regex testing", "Multiple flag support", "Match count display", "100% client-side"] };
+const regexSchema = {
+  name: 'Regex Tester',
+  applicationCategory: 'Developer Tools',
+  description: 'Test and debug regular expressions in real-time. View match counts and highlighted results.',
+  featureList: ['Real-time regex testing', 'Multiple flag support', 'Match count display', '100% client-side'],
+};
 ---
-<MainLayout title="Regex Tester - Test Regular Expressions Online Free" description="Test and debug regular expressions in real-time. Supports flags, global matching, and match counting. Free online regex tester." keywords="regex tester, regular expression tester, regex debugger, regex matcher, regex online" toolSchema={regexSchema} faq={faqItems}
+
+<MainLayout
+  title="Regex Tester - Test Regular Expressions Online Free"
+  description="Test and debug regular expressions in real-time. Supports flags, global matching, and match counting. Free online regex tester."
+  keywords="regex tester, regular expression tester, regex debugger, regex matcher, regex online"
+  toolSchema={regexSchema}
+  faq={faqItems}
   howto={{
-    name: "How to Use Regex Tester",
-    description: "Step-by-step guide for using Regex Tester.",
+    name: 'How to Use Regex Tester',
+    description: 'Step-by-step guide for using Regex Tester.',
     steps: [],
-    totalTime: "PT1M",
+    totalTime: 'PT1M',
   }}
-  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"Regex Tester",url:"/tools/regex-tester/"}]}>
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
-    <ToolHeader title="Regex" gradient="Tester Pro" desc="Test and debug regular expressions in real-time. View match counts and highlighted results with full flag support." badge="✦ New Tool" slug="regex-tester" />
-    <ShareBar />
-    <div class="max-w-xl mx-auto mt-10">
-      <div class="bg-surface-1 border border-surface rounded-2xl p-6 relative">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
-            <span id="usage-badge" class="text-xs text-muted"></span>
-          </div>
-          <div class="flex items-center gap-2">
-            <div class="flex gap-1">
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Regex Tester', url: '/tools/regex-tester/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="Regex"
+        gradient="Tester Pro"
+        desc="Test and debug regular expressions in real-time. View match counts and highlighted results with full flag support."
+        badge="✦ New Tool"
+        slug="regex-tester"
+      />
+      <ShareBar />
+      <div class="max-w-xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 relative">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+              <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
-            <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+            <div class="flex items-center gap-2">
+              <div class="flex gap-1">
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="purple"
+                  style="background:#a855f7"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="blue"
+                  style="background:#3b82f6"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="green"
+                  style="background:#22c55e"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="pink"
+                  style="background:#ec4899"></button>
+              </div>
+              <button
+                id="fullscreen-btn"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                title="Fullscreen">⛶</button
+              >
+            </div>
           </div>
-        </div>
-        <div class="flex gap-3 mb-4">
-          <div class="flex-1">
-            <label class="block text-xs font-medium text-tertiary mb-1.5">Pattern</label>
-            <input id="regex-pattern" class="w-full px-4 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all font-mono" placeholder="Enter regex pattern..." />
+          <div class="flex gap-3 mb-4">
+            <div class="flex-1">
+              <label class="block text-xs font-medium text-tertiary mb-1.5">Pattern</label>
+              <input
+                id="regex-pattern"
+                class="w-full px-4 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all font-mono"
+                placeholder="Enter regex pattern..."
+              />
+            </div>
+            <div class="w-24">
+              <label class="block text-xs font-medium text-tertiary mb-1.5">Flags</label>
+              <input
+                id="regex-flags"
+                class="w-full px-4 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all font-mono"
+                placeholder="gim"
+              />
+            </div>
           </div>
-          <div class="w-24">
-            <label class="block text-xs font-medium text-tertiary mb-1.5">Flags</label>
-            <input id="regex-flags" class="w-full px-4 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all font-mono" placeholder="gim" />
+          <label class="block text-xs font-medium text-tertiary mb-1.5">Test Text</label>
+          <div class="flex items-center gap-1.5 mb-2">
+            <button
+              class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A−</button
+            >
+            <button
+              class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A+</button
+            >
+            <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
           </div>
-        </div>
-        <label class="block text-xs font-medium text-tertiary mb-1.5">Test Text</label>
-        <div class="flex items-center gap-1.5 mb-2">
-          <button class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A−</button>
-          <button class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A+</button>
-          <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
-        </div>
-        <div class="flex">
-          <div id="line-nums" class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3" style="min-width:2.5em">1</div>
-          <textarea id="input-text" class="flex-1 h-32 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all resize-none font-mono" placeholder="Enter text to test against your regex..."></textarea>
-        </div>
-        <div id="reading-time" class="text-xs text-muted mt-1"></div>
-        <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
-        <div class="mt-6 pt-6 border-t border-surface">
-          <label class="block text-xs font-medium text-tertiary mb-1.5">Match Results</label>
-          <div id="match-count" class="text-xs text-tertiary mb-2"></div>
-          <textarea id="output-text" class="w-full h-24 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:outline-none resize-none font-mono" readonly placeholder="Matches will appear here..."></textarea>
-          <button id="copy-btn" class="mt-2 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy Results</button>
-          <button id="share-btn" class="mt-2 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all" title="Copy share link">🔗</button>
-          <button id="download-btn" class="mt-2 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Download</button>
-          <button id="clear-btn" class="mt-2 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Clear</button>
-          <select id="export-format" class="mt-2 bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5">
-            <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option>
-          </select>
+          <div class="flex">
+            <div
+              id="line-nums"
+              class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3"
+              style="min-width:2.5em"
+            >
+              1
+            </div>
+            <textarea
+              id="input-text"
+              class="flex-1 h-32 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all resize-none font-mono"
+              placeholder="Enter text to test against your regex..."></textarea>
+          </div>
+          <div id="reading-time" class="text-xs text-muted mt-1"></div>
+          <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
+          <div class="mt-6 pt-6 border-t border-surface">
+            <label class="block text-xs font-medium text-tertiary mb-1.5">Match Results</label>
+            <div id="match-count" class="text-xs text-tertiary mb-2"></div>
+            <textarea
+              id="output-text"
+              class="w-full h-24 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:outline-none resize-none font-mono"
+              readonly
+              placeholder="Matches will appear here..."></textarea>
+            <button
+              id="copy-btn"
+              class="mt-2 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+              >Copy Results</button
+            >
+            <button
+              id="share-btn"
+              class="mt-2 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+              title="Copy share link">🔗</button
+            >
+            <button
+              id="download-btn"
+              class="mt-2 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+              >Download</button
+            >
+            <button
+              id="clear-btn"
+              class="mt-2 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+              >Clear</button
+            >
+            <select
+              id="export-format"
+              class="mt-2 bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
+            >
+              <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option
+                value="html">HTML</option
+              >
+            </select>
+          </div>
         </div>
       </div>
+      <section class="mt-20 max-w-3xl mx-auto">
+        <div class="text-center mb-8">
+          <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Learn</span><h2
+            class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
+          >
+            Why Use a <span class="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent"
+              >Regex Tester?</span
+            >
+          </h2>
+        </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
+          <p>
+            Regular expressions are powerful but tricky to get right. A regex tester gives you instant feedback on your
+            patterns, showing exactly what matches and what doesn't — so you can iterate quickly and avoid bugs in your
+            string processing logic.
+          </p>
+        </div>
+      </section>
+      <RelatedTools current="regex-tester" />
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked <span class="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent"
+            >Questions</span
+          >
+        </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
+      </div>
     </div>
-    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Why Use a <span class="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">Regex Tester?</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>Regular expressions are powerful but tricky to get right. A regex tester gives you instant feedback on your patterns, showing exactly what matches and what doesn't — so you can iterate quickly and avoid bugs in your string processing logic.</p></div></section>
-    <RelatedTools current="regex-tester" />
-    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
-  </div></main>
+  </main>
 </MainLayout>
 <script>
-  const patternInput = document.getElementById("regex-pattern");
-  const flagsInput = document.getElementById("regex-flags");
-  const inputText = document.getElementById("input-text");
-  const outputText = document.getElementById("output-text");
-  const matchCountEl = document.getElementById("match-count");
-  const copyBtn = document.getElementById("copy-btn");
+  const patternInput = document.getElementById('regex-pattern');
+  const flagsInput = document.getElementById('regex-flags');
+  const inputText = document.getElementById('input-text');
+  const outputText = document.getElementById('output-text');
+  const matchCountEl = document.getElementById('match-count');
+  const copyBtn = document.getElementById('copy-btn');
 
   function testRegex() {
     const pattern = patternInput.value;
@@ -96,8 +218,8 @@ const regexSchema = { name: "Regex Tester", applicationCategory: "Developer Tool
     const text = inputText.value;
 
     if (!pattern || !text) {
-      outputText.value = "";
-      matchCountEl.textContent = "";
+      outputText.value = '';
+      matchCountEl.textContent = '';
       return;
     }
 
@@ -105,60 +227,174 @@ const regexSchema = { name: "Regex Tester", applicationCategory: "Developer Tool
       const regex = new RegExp(pattern, flags);
       const matches = [...text.matchAll(regex)];
       if (matches.length === 0) {
-        outputText.value = "No matches found.";
-        matchCountEl.textContent = "0 matches";
+        outputText.value = 'No matches found.';
+        matchCountEl.textContent = '0 matches';
         return;
       }
-      const lines = matches.map((m, i) => `Match #${i + 1}: "${m[0]}"${m.index !== undefined ? ` at index ${m.index}` : ""}`);
-      outputText.value = lines.join("\n");
-      matchCountEl.textContent = `${matches.length} match${matches.length !== 1 ? "es" : ""} found`;
+      const lines = matches.map(
+        (m, i) => `Match #${i + 1}: "${m[0]}"${m.index !== undefined ? ` at index ${m.index}` : ''}`,
+      );
+      outputText.value = lines.join('\n');
+      matchCountEl.textContent = `${matches.length} match${matches.length !== 1 ? 'es' : ''} found`;
     } catch (e) {
       outputText.value = `Error: ${e.message}`;
-      matchCountEl.textContent = "Invalid regex";
+      matchCountEl.textContent = 'Invalid regex';
     }
   }
 
-  patternInput.addEventListener("input", testRegex);
-  flagsInput.addEventListener("input", testRegex);
-  inputText.addEventListener("input", testRegex);
+  patternInput.addEventListener('input', testRegex);
+  flagsInput.addEventListener('input', testRegex);
+  inputText.addEventListener('input', testRegex);
 
-  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
-  document.getElementById("download-btn")?.addEventListener("click", () => {
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
+  document.getElementById('download-btn')?.addEventListener('click', () => {
     if (!outputText.value) return;
-    const fmt = (document.getElementById("export-format") as HTMLSelectElement)?.value || "txt";
-    const mimes = {txt:"text/plain",json:"application/json",csv:"text/csv",html:"text/html"};
-    const content = fmt === "json" ? JSON.stringify(outputText.value) : outputText.value;
-    const blob = new Blob([content], {type:mimes[fmt]||"text/plain"});
-    const a = document.createElement("a");
+    const fmt = (document.getElementById('export-format') as HTMLSelectElement)?.value || 'txt';
+    const mimes = { txt: 'text/plain', json: 'application/json', csv: 'text/csv', html: 'text/html' };
+    const content = fmt === 'json' ? JSON.stringify(outputText.value) : outputText.value;
+    const blob = new Blob([content], { type: mimes[fmt] || 'text/plain' });
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = "regex-matches." + fmt;
+    a.download = 'regex-matches.' + fmt;
     a.click();
     playPing();
     URL.revokeObjectURL(a.href);
   });
-  document.getElementById("clear-btn")?.addEventListener("click", () => {
-    patternInput.value = "";
-    flagsInput.value = "";
-    inputText.value = "";
-    outputText.value = "";
-    matchCountEl.textContent = "";
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    patternInput.value = '';
+    flagsInput.value = '';
+    inputText.value = '';
+    outputText.value = '';
+    matchCountEl.textContent = '';
     playPing();
   });
-  copyBtn.addEventListener("click", async () => {
+  copyBtn.addEventListener('click', async () => {
     if (!outputText.value) return;
     await navigator.clipboard.writeText(outputText.value);
     playPing();
-    if (window.__showToast) window.__showToast({ message: "Copied!", variant: "success" });
+    if (window.__showToast) window.__showToast({ message: 'Copied!', variant: 'success' });
   });
-  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("output-text");const t=o?.value||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof (window as any).__showToast==="function")(window as any).__showToast({message:"Link copied!",variant:"success"});});
-  document.querySelector(".font-inc")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.min(24,s+2)+"px";})});
-  document.querySelector(".font-dec")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.max(10,s-2)+"px";})});
-  try{const s=localStorage.getItem("nt_fs");if(s)document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px")}catch(e){}
-  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
-  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["regex"])b.textContent="Used "+u["regex"]+"×"}catch(e){}
-  const rt=document.getElementById("input-text");if(rt){rt.addEventListener("input",()=>{const w=rt.value?rt.value.trim().split(/\s+/).length:0;const e=document.getElementById("reading-time");if(e)e.textContent=Math.max(1,Math.round(w/200))+" min read · "+Math.max(1,Math.round(w/150))+" min speak"});rt.dispatchEvent(new Event("input"));}
-  const li=document.getElementById("input-text");if(li){const ul=()=>{const n=document.getElementById("line-nums");if(n)n.textContent=Array.from({length:li.value.split("\n").length},(_,i)=>i+1).join("\n")};li.addEventListener("input",ul);li.addEventListener("scroll",()=>{const n=document.getElementById("line-nums");if(n)n.scrollTop=li.scrollTop});ul();}
-  const lf=document.getElementById("input-text");if(lf){lf.addEventListener("input",()=>{const t=lf.value.toLowerCase().replace(/[^a-z]/g,"");if(!t){document.getElementById("letter-freq")?.classList.add("hidden");return;}const f={};for(const c of t)f[c]=(f[c]||0)+1;const s=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,8);const m=s[0]?s[0][1]:1;const el=document.getElementById("letter-freq");el.classList.remove("hidden");el.innerHTML=s.map(([c,n])=>`<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n/m)*80+10}%"></div><span class="text-muted">${n}</span></div>`).join("")})}
-  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500")});try{localStorage.setItem("nt_theme",c)}catch(e){}})});
-  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click()}catch(e){}
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('output-text');
+    const t = o?.value || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof (window as any).__showToast === 'function')
+      (window as any).__showToast({ message: 'Link copied!', variant: 'success' });
+  });
+  document.querySelector('.font-inc')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.min(24, s + 2) + 'px';
+    });
+  });
+  document.querySelector('.font-dec')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.max(10, s - 2) + 'px';
+    });
+  });
+  try {
+    const s = localStorage.getItem('nt_fs');
+    if (s) document.querySelectorAll('textarea').forEach((t) => (t.style.fontSize = s + 'px'));
+  } catch (e) {}
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      document.getElementById('clear-btn')?.click();
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['regex']) b.textContent = 'Used ' + u['regex'] + '×';
+  } catch (e) {}
+  const rt = document.getElementById('input-text');
+  if (rt) {
+    rt.addEventListener('input', () => {
+      const w = rt.value ? rt.value.trim().split(/\s+/).length : 0;
+      const e = document.getElementById('reading-time');
+      if (e)
+        e.textContent =
+          Math.max(1, Math.round(w / 200)) + ' min read · ' + Math.max(1, Math.round(w / 150)) + ' min speak';
+    });
+    rt.dispatchEvent(new Event('input'));
+  }
+  const li = document.getElementById('input-text');
+  if (li) {
+    const ul = () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.textContent = Array.from({ length: li.value.split('\n').length }, (_, i) => i + 1).join('\n');
+    };
+    li.addEventListener('input', ul);
+    li.addEventListener('scroll', () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.scrollTop = li.scrollTop;
+    });
+    ul();
+  }
+  const lf = document.getElementById('input-text');
+  if (lf) {
+    lf.addEventListener('input', () => {
+      const t = lf.value.toLowerCase().replace(/[^a-z]/g, '');
+      if (!t) {
+        document.getElementById('letter-freq')?.classList.add('hidden');
+        return;
+      }
+      const f = {};
+      for (const c of t) f[c] = (f[c] || 0) + 1;
+      const s = Object.entries(f)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+      const m = s[0] ? s[0][1] : 1;
+      const el = document.getElementById('letter-freq');
+      el.classList.remove('hidden');
+      el.innerHTML = s
+        .map(
+          ([c, n]) =>
+            `<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n / m) * 80 + 10}%"></div><span class="text-muted">${n}</span></div>`,
+        )
+        .join('');
+    });
+  }
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
+  });
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>

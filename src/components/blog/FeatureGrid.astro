@@ -1,0 +1,45 @@
+---
+interface Feature {
+  label: string;
+  description?: string;
+}
+
+interface Props {
+  title: string;
+  features: Feature[];
+  columns?: 1 | 2;
+}
+
+const { title, features, columns = 2 } = Astro.props;
+---
+
+<div class="my-8 p-6 rounded-2xl bg-white/[0.01] border border-white/5 relative overflow-hidden">
+  <div class="absolute top-0 left-0 w-[2px] h-full bg-gradient-to-b from-purple-500 to-transparent"></div>
+
+  <h4 class="text-lg font-bold text-slate-100 mb-4 flex items-center gap-2">
+    <span class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse"></span>
+    {title}
+  </h4>
+
+  <ul class="grid grid-cols-1 gap-4" class:list={{ 'sm:grid-cols-2': columns === 2, 'sm:grid-cols-1': columns === 1 }}>
+    {
+      features.map((feature) => (
+        <li class="flex items-start gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.03]">
+          <svg
+            class="w-5 h-5 text-purple-400 mt-0.5 shrink-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2.5"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          <span class="text-sm text-slate-300 font-medium">
+            {feature.label}
+            {feature.description && <span class="text-xs text-slate-500 block">{feature.description}</span>}
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+</div>

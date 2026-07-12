@@ -1,6 +1,6 @@
 ---
-import FavoriteButton from "./FavoriteButton.astro";
-import AdUnit from "./AdUnit.astro";
+import FavoriteButton from './FavoriteButton.astro';
+import AdUnit from './AdUnit.astro';
 
 interface Props {
   title: string;
@@ -9,44 +9,71 @@ interface Props {
   badge?: string;
   slug?: string;
 }
-const { title, gradient, desc, badge = "Free Online Tool", slug } = Astro.props;
+const { title, gradient, desc, badge = 'Free Online Tool', slug } = Astro.props;
 ---
 
-<div class="text-center mb-8">
-  <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-surface bg-surface-1 backdrop-blur-sm text-tertiary text-xs font-semibold tracking-wider uppercase mb-6">
+<div class="text-center mb-8 reveal-text">
+  <div
+    class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-surface bg-surface-1 backdrop-blur-sm text-tertiary text-xs font-semibold tracking-wider uppercase mb-6"
+  >
     <span class="relative flex h-2 w-2">
-      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
-      <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500" />
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+      <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
     </span>
     {badge}
   </div>
-  <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-none">
+  <h1
+    class="text-5xl sm:text-6xl lg:text-[5.5rem] font-black tracking-tighter leading-none text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-200 to-zinc-600 mb-6 drop-shadow-2xl"
+  >
     {title}
-    <span class="block mt-2 bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+    <span
+      class="block mt-2 bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-peach-400 to-violet-400 animate-gradient-x"
+    >
       {gradient}
     </span>
   </h1>
   <p class="mt-6 text-tertiary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
     {desc}
   </p>
-  {slug && (
-    <div class="mt-6 flex items-center justify-center gap-3">
-      <FavoriteButton slug={slug} />
-    </div>
-  )}
+  {
+    slug && (
+      <div class="mt-6 flex items-center justify-center gap-3">
+        <FavoriteButton slug={slug} />
+      </div>
+    )
+  }
 </div>
 <AdUnit format="horizontal" class="mb-10" />
 
-{slug && <script>
-  try {
-    const slug = "{slug}";
-    let usage: Record<string, number> = JSON.parse(localStorage.getItem("nt_tool_usage") || "{}");
-    usage[slug] = (usage[slug] || 0) + 1;
-    localStorage.setItem("nt_tool_usage", JSON.stringify(usage));
-    let recent: string[] = JSON.parse(localStorage.getItem("nt_recently_used") || "[]");
-    recent = recent.filter((id) => id !== slug);
-    recent.unshift(slug);
-    if (recent.length > 20) recent = recent.slice(0, 20);
-    localStorage.setItem("nt_recently_used", JSON.stringify(recent));
-  } catch {}
-</script>}
+<script define:vars={{ slug }}>
+  if (slug) {
+    try {
+      var usage = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+      usage[slug] = (usage[slug] || 0) + 1;
+      localStorage.setItem('nt_tool_usage', JSON.stringify(usage));
+      var recent = JSON.parse(localStorage.getItem('nt_recently_used') || '[]');
+      recent = recent.filter(function (id) {
+        return id !== slug;
+      });
+      recent.unshift(slug);
+      if (recent.length > 20) recent = recent.slice(0, 20);
+      localStorage.setItem('nt_recently_used', JSON.stringify(recent));
+    } catch (e) {}
+  }
+</script>
+
+<style>
+  .animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 5s ease infinite;
+  }
+  @keyframes gradient-x {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+</style>

@@ -79,7 +79,9 @@ interface Props {
 
     if (progress) {
       progress.style.transition = `width ${duration}ms linear`;
-      requestAnimationFrame(() => { progress.style.width = '0%'; });
+      requestAnimationFrame(() => {
+        progress.style.width = '0%';
+      });
     }
 
     setTimeout(dismiss, duration);

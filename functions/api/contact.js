@@ -34,19 +34,24 @@ export async function onRequest(context) {
       timestamp: new Date().toISOString(),
     };
 
-    // Forward to Google Sheets webhook if configured
+    // Forward to Google Sheets webhook if configured with 4s timeout
     let sheetStored = false;
     const webhookUrl = env.CONTACT_WEBHOOK_URL;
     if (webhookUrl) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 4000);
       try {
         const resp = await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
+          signal: controller.signal,
         });
         sheetStored = resp.ok;
       } catch (_) {
-        // webhook unavailable — fall back to KV
+        // webhook unavailable or timed out — fall back to KV
+      } finally {
+        clearTimeout(timeoutId);
       }
     }
 

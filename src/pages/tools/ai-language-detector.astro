@@ -1,438 +1,1442 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const benefits = [
-  { title: "Multi-Language Support", desc: "Detects 28 languages including English, Spanish, French, German, Chinese, Arabic, Russian, Japanese, and more" },
-  { title: "Confidence Scoring", desc: "Each detection includes a confidence percentage so you know how reliable the result is" },
-  { title: "Real-Time Detection", desc: "Get instant language identification as you type with live character, word, and line counts" },
-  { title: "Script Identification", desc: "Not just the language — also identifies the writing script such as Latin, Cyrillic, Arabic, Devanagari, and others" },
-  { title: "Privacy-First Analysis", desc: "All text analysis happens locally in your browser. Nothing is sent to any server or stored" },
-  { title: "Completely Free", desc: "No sign-ups, no usage limits, no premium tiers — unlimited language detection" },
+  {
+    title: 'Multi-Language Support',
+    desc: 'Detects 28 languages including English, Spanish, French, German, Chinese, Arabic, Russian, Japanese, and more',
+  },
+  {
+    title: 'Confidence Scoring',
+    desc: 'Each detection includes a confidence percentage so you know how reliable the result is',
+  },
+  {
+    title: 'Real-Time Detection',
+    desc: 'Get instant language identification as you type with live character, word, and line counts',
+  },
+  {
+    title: 'Script Identification',
+    desc: 'Not just the language — also identifies the writing script such as Latin, Cyrillic, Arabic, Devanagari, and others',
+  },
+  {
+    title: 'Privacy-First Analysis',
+    desc: 'All text analysis happens locally in your browser. Nothing is sent to any server or stored',
+  },
+  { title: 'Completely Free', desc: 'No sign-ups, no usage limits, no premium tiers — unlimited language detection' },
 ];
 
 const howToSteps = [
-  { title: "Paste your text", desc: "Copy and paste any text you want to identify into the input box — works with any length" },
-  { title: "Click detect", desc: "Press the Detect Language button and the AI will analyze n-gram patterns to find the best match" },
-  { title: "Review results", desc: "View the detected language, confidence score, and writing script in the results panel" },
-  { title: "Copy or export", desc: "Copy the results to clipboard, download as TXT/JSON/CSV/HTML, or share with a link" },
+  {
+    title: 'Paste your text',
+    desc: 'Copy and paste any text you want to identify into the input box — works with any length',
+  },
+  {
+    title: 'Click detect',
+    desc: 'Press the Detect Language button and the AI will analyze n-gram patterns to find the best match',
+  },
+  {
+    title: 'Review results',
+    desc: 'View the detected language, confidence score, and writing script in the results panel',
+  },
+  {
+    title: 'Copy or export',
+    desc: 'Copy the results to clipboard, download as TXT/JSON/CSV/HTML, or share with a link',
+  },
 ];
 
 const useCases = [
-  { title: "Content Localization", desc: "Quickly identify the language of user-generated content to route it to the right translation workflow" },
-  { title: "International Research", desc: "Determine the language of foreign language documents and articles before deciding how to process them" },
-  { title: "Customer Support", desc: "Automatically detect the language of incoming support tickets to assign them to the right team" },
-  { title: "Data Cleaning", desc: "Sort and categorize multilingual datasets by detecting and tagging the language of each entry" },
+  {
+    title: 'Content Localization',
+    desc: 'Quickly identify the language of user-generated content to route it to the right translation workflow',
+  },
+  {
+    title: 'International Research',
+    desc: 'Determine the language of foreign language documents and articles before deciding how to process them',
+  },
+  {
+    title: 'Customer Support',
+    desc: 'Automatically detect the language of incoming support tickets to assign them to the right team',
+  },
+  {
+    title: 'Data Cleaning',
+    desc: 'Sort and categorize multilingual datasets by detecting and tagging the language of each entry',
+  },
 ];
 
 const faqItems = [
-  { question: "How does AI language detection work?", answer: "Language detection uses character n-gram frequency analysis. Every language has unique patterns of letter combinations (n-grams). By comparing the n-gram profile of your input text against pre-computed profiles for 28 languages, the tool identifies the closest match and provides a confidence score." },
-  { question: "How accurate is the language detector?", answer: "Accuracy depends on text length and quality. For text longer than 50 characters, accuracy is very high. Very short texts (under 20 characters) or texts with mixed languages may produce less reliable results. The confidence score helps you gauge reliability." },
-  { question: "Can it detect multiple languages in one text?", answer: "Currently, the detector identifies the primary language of the entire text. For multilingual content, the dominant language (the one with the most matching n-gram patterns) is reported. We recommend testing each language segment separately for best results." },
-  { question: "What languages does the detector support?", answer: "The AI Language Detector supports 28 languages: English, Spanish, French, German, Italian, Portuguese, Dutch, Russian, Chinese, Japanese, Arabic, Hindi, Turkish, Swedish, Polish, Danish, Finnish, Norwegian, Czech, Greek, Korean, Thai, Vietnamese, Indonesian, Malay, Romanian, Hungarian, Ukrainian, and Hebrew. More languages are added regularly." },
-  { question: "Why do short texts give less accurate results?", answer: "Short texts (under 20 characters) provide fewer n-gram samples for comparison, making it harder to distinguish between similar languages. For best accuracy, use text that is at least 50 characters long. The confidence score will automatically reflect lower reliability for short inputs." },
-  { question: "Can I use the language detector for SEO?", answer: "Yes. Identifying the language of your content helps with hreflang tags, multilingual SEO strategies, and ensuring your content reaches the right audience in search results." },
-  { question: "Is there a limit on how many texts I can analyze?", answer: "No. There are no usage limits or restrictions. You can analyze as many texts as you want, completely free. All processing is done locally in your browser." },
-  { question: "How is my data protected when using this tool?", answer: "Your privacy is fully protected. All language detection processing happens entirely in your browser using JavaScript. Your text is never transmitted over the internet, stored on any server, or accessible to third parties." },
+  {
+    question: 'How does AI language detection work?',
+    answer:
+      'Language detection uses character n-gram frequency analysis. Every language has unique patterns of letter combinations (n-grams). By comparing the n-gram profile of your input text against pre-computed profiles for 28 languages, the tool identifies the closest match and provides a confidence score.',
+  },
+  {
+    question: 'How accurate is the language detector?',
+    answer:
+      'Accuracy depends on text length and quality. For text longer than 50 characters, accuracy is very high. Very short texts (under 20 characters) or texts with mixed languages may produce less reliable results. The confidence score helps you gauge reliability.',
+  },
+  {
+    question: 'Can it detect multiple languages in one text?',
+    answer:
+      'Currently, the detector identifies the primary language of the entire text. For multilingual content, the dominant language (the one with the most matching n-gram patterns) is reported. We recommend testing each language segment separately for best results.',
+  },
+  {
+    question: 'What languages does the detector support?',
+    answer:
+      'The AI Language Detector supports 28 languages: English, Spanish, French, German, Italian, Portuguese, Dutch, Russian, Chinese, Japanese, Arabic, Hindi, Turkish, Swedish, Polish, Danish, Finnish, Norwegian, Czech, Greek, Korean, Thai, Vietnamese, Indonesian, Malay, Romanian, Hungarian, Ukrainian, and Hebrew. More languages are added regularly.',
+  },
+  {
+    question: 'Why do short texts give less accurate results?',
+    answer:
+      'Short texts (under 20 characters) provide fewer n-gram samples for comparison, making it harder to distinguish between similar languages. For best accuracy, use text that is at least 50 characters long. The confidence score will automatically reflect lower reliability for short inputs.',
+  },
+  {
+    question: 'Can I use the language detector for SEO?',
+    answer:
+      'Yes. Identifying the language of your content helps with hreflang tags, multilingual SEO strategies, and ensuring your content reaches the right audience in search results.',
+  },
+  {
+    question: 'Is there a limit on how many texts I can analyze?',
+    answer:
+      'No. There are no usage limits or restrictions. You can analyze as many texts as you want, completely free. All processing is done locally in your browser.',
+  },
+  {
+    question: 'How is my data protected when using this tool?',
+    answer:
+      'Your privacy is fully protected. All language detection processing happens entirely in your browser using JavaScript. Your text is never transmitted over the internet, stored on any server, or accessible to third parties.',
+  },
 ];
 
 const schema = {
-  name: "AI Language Detector Pro",
-  applicationCategory: "AI Tools",
-  description: "Detect the language of any text using AI-powered n-gram frequency analysis. Supports 28 languages including English, Spanish, French, German, Chinese, Arabic, and more.",
+  name: 'AI Language Detector Pro',
+  applicationCategory: 'AI Tools',
+  description:
+    'Detect the language of any text using AI-powered n-gram frequency analysis. Supports 28 languages including English, Spanish, French, German, Chinese, Arabic, and more.',
 };
 ---
-<MainLayout title="AI Language Detector - Free Online Language Identifier" description="Detect the language of any text instantly using AI-powered analysis. Supports 28 languages with confidence scoring." keywords="language detector, language identifier, text language detection, what language is this, language recognition, AI language detector" toolSchema={schema} faq={faqItems} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Language Detector",url:"/tools/ai-language-detector/"}]}>
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
-    <ToolHeader title="AI Language" gradient="Detector Pro" desc="Identify the language of any text instantly with AI-powered n-gram frequency analysis across 28 languages." badge="✦ AI Powered" slug="ai-language-detector" />
-    <ShareBar />
-    <div class="max-w-xl mx-auto mt-10"><div class="bg-surface-1 border border-surface rounded-2xl p-6 relative">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
-            <span id="usage-badge" class="text-xs text-muted"></span>
-          </div>
-          <div class="flex items-center gap-2">
-            <div class="flex gap-1">
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+
+<MainLayout
+  title="AI Language Detector - Free Online Language Identifier"
+  description="Detect the language of any text instantly using AI-powered analysis. Supports 28 languages with confidence scoring."
+  keywords="language detector, language identifier, text language detection, what language is this, language recognition, AI language detector"
+  toolSchema={schema}
+  faq={faqItems}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'AI Language Detector', url: '/tools/ai-language-detector/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="AI Language"
+        gradient="Detector Pro"
+        desc="Identify the language of any text instantly with AI-powered n-gram frequency analysis across 28 languages."
+        badge="✦ AI Powered"
+        slug="ai-language-detector"
+      />
+      <ShareBar />
+      <div class="max-w-xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 relative">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+              <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
-            <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+            <div class="flex items-center gap-2">
+              <div class="flex gap-1">
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="purple"
+                  style="background:#a855f7"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="blue"
+                  style="background:#3b82f6"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="green"
+                  style="background:#22c55e"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="pink"
+                  style="background:#ec4899"></button>
+              </div>
+              <button
+                id="fullscreen-btn"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                title="Fullscreen">⛶</button
+              >
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 mb-2">
+            <button
+              class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A−</button
+            >
+            <button
+              class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A+</button
+            >
+            <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
+          </div>
+          <div class="flex">
+            <div
+              id="line-nums"
+              class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3"
+              style="min-width:2.5em"
+            >
+              1
+            </div>
+            <textarea
+              id="input-text"
+              rows="6"
+              placeholder="Type text in any language..."
+              class="flex-1 bg-transparent text-white placeholder-zinc-600 p-4 resize-none focus:outline-none text-sm leading-relaxed border border-surface-2 rounded-xl mb-4"
+            ></textarea>
+          </div>
+          <div class="flex justify-between text-xs text-muted mb-4 px-1">
+            <span><span class="font-medium text-white" id="char-count">0</span> chars</span>
+            <span><span class="font-medium text-white" id="word-count">0</span> words</span>
+            <span><span class="font-medium text-white" id="line-count">0</span> lines</span>
+          </div>
+          <div id="reading-time" class="text-xs text-muted -mt-2 mb-2"></div>
+          <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
+          <button
+            id="detect-btn"
+            class="w-full py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all duration-200 shadow-lg shadow-violet-600/20"
+            >Detect Language</button
+          >
+          <div class="flex gap-2 mt-3">
+            <select
+              id="export-format"
+              class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
+            >
+              <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option
+                value="html">HTML</option
+              >
+            </select>
+            <button
+              id="copy-btn"
+              class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              >Copy</button
+            >
+            <button
+              id="download-btn"
+              class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              >Download</button
+            >
+            <button
+              id="share-btn"
+              class="px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              title="Copy share link">🔗</button
+            >
+            <button
+              id="clear-btn"
+              class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              >Clear</button
+            >
+          </div>
+          <div id="result" class="hidden mt-6 space-y-3">
+            <div class="glass-card rounded-xl p-4 flex items-center justify-between">
+              <span class="text-sm text-tertiary">Language</span><span
+                id="detected-lang"
+                class="text-lg font-bold text-white"></span>
+            </div>
+            <div class="bg-surface-1 border border-surface rounded-xl p-4 flex items-center justify-between">
+              <span class="text-sm text-tertiary">Confidence</span><div class="flex items-center gap-2">
+                <span id="confidence-score" class="text-lg font-bold text-white"></span><span
+                  id="confidence-bar"
+                  class="block w-20 h-2 rounded-full bg-surface-2 overflow-hidden"
+                  ><span
+                    id="confidence-fill"
+                    class="block h-full rounded-full bg-gradient-to-r from-violet-500 to-purple-500 transition-all duration-500"
+                    style="width:0%"></span></span
+                >
+              </div>
+            </div>
+            <div class="bg-surface-1 border border-surface rounded-xl p-4 flex items-center justify-between">
+              <span class="text-sm text-tertiary">Script</span><span
+                id="detected-script"
+                class="text-lg font-bold text-white"></span>
+            </div>
           </div>
         </div>
-      <div class="flex items-center gap-1.5 mb-2">
-        <button class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A−</button>
-        <button class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A+</button>
-        <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
       </div>
-      <div class="flex">
-        <div id="line-nums" class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3" style="min-width:2.5em">1</div>
-        <textarea id="input-text" rows="6" placeholder="Type text in any language..." class="flex-1 bg-transparent text-white placeholder-zinc-600 p-4 resize-none focus:outline-none text-sm leading-relaxed border border-surface-2 rounded-xl mb-4"></textarea>
+      <section class="mt-20 max-w-3xl mx-auto">
+        <div class="text-center mb-8">
+          <span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2
+            class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
+          >
+            How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+              >Works</span
+            >
+          </h2>
+        </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
+          <p>
+            The AI Language Detector uses <strong class="text-primary">character n-gram frequency analysis</strong> to identify
+            languages. Every language has a unique fingerprint of common letter pairs and triples. By extracting n-grams from
+            your input and comparing them against pre-computed frequency profiles for 28 languages, the tool finds the closest
+            statistical match.
+          </p><p>
+            The confidence score reflects how strongly the input matches the top language versus the runner-up. Longer
+            texts produce more reliable results as more n-gram data is available for comparison.
+          </p>
+        </div>
+      </section>
+      <RelatedTools current="ai-language-detector" />
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+            >Questions</span
+          >
+        </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
-      <div class="flex justify-between text-xs text-muted mb-4 px-1">
-        <span><span class="font-medium text-white" id="char-count">0</span> chars</span>
-        <span><span class="font-medium text-white" id="word-count">0</span> words</span>
-        <span><span class="font-medium text-white" id="line-count">0</span> lines</span>
-      </div>
-      <div id="reading-time" class="text-xs text-muted -mt-2 mb-2"></div>
-      <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
-      <button id="detect-btn" class="w-full py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white transition-all duration-200 shadow-lg shadow-violet-600/20">Detect Language</button>
-      <div class="flex gap-2 mt-3">
-        <select id="export-format" class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5">
-          <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option>
-        </select>
-        <button id="copy-btn" class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Copy</button>
-        <button id="download-btn" class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Download</button>
-        <button id="share-btn" class="px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all" title="Copy share link">🔗</button>
-        <button id="clear-btn" class="flex-1 px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Clear</button>
-      </div>
-      <div id="result" class="hidden mt-6 space-y-3">
-        <div class="bg-surface-1 border border-surface rounded-xl p-4 flex items-center justify-between"><span class="text-sm text-tertiary">Language</span><span id="detected-lang" class="text-lg font-bold text-white"></span></div>
-        <div class="bg-surface-1 border border-surface rounded-xl p-4 flex items-center justify-between"><span class="text-sm text-tertiary">Confidence</span><div class="flex items-center gap-2"><span id="confidence-score" class="text-lg font-bold text-white"></span><span id="confidence-bar" class="block w-20 h-2 rounded-full bg-surface-2 overflow-hidden"><span id="confidence-fill" class="block h-full rounded-full bg-gradient-to-r from-violet-500 to-purple-500 transition-all duration-500" style="width:0%"></span></span></div></div>
-        <div class="bg-surface-1 border border-surface rounded-xl p-4 flex items-center justify-between"><span class="text-sm text-tertiary">Script</span><span id="detected-script" class="text-lg font-bold text-white"></span></div>
-      </div>
-    </div></div>
-    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Language Detector uses <strong class="text-primary">character n-gram frequency analysis</strong> to identify languages. Every language has a unique fingerprint of common letter pairs and triples. By extracting n-grams from your input and comparing them against pre-computed frequency profiles for 28 languages, the tool finds the closest statistical match.</p><p>The confidence score reflects how strongly the input matches the top language versus the runner-up. Longer texts produce more reliable results as more n-gram data is available for comparison.</p></div></section>
-    <RelatedTools current="ai-language-detector" />
-    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
-  </div></main>
+    </div>
+  </main>
 </MainLayout>
 <script>
-function playPing(){ try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){} }
-const langProfiles = {
-  en: {
-    name: "English", script: "Latin",
-    freq: {th: 1.52, he: 1.28, in: 0.94, er: 0.94, an: 0.82, re: 0.68, nd: 0.63, on: 0.57, ent: 0.42, ion: 0.42, ing: 0.38, and: 0.33, the: 0.31, tio: 0.31, for: 0.27, e: 12.7, t: 9.1, a: 8.2, o: 7.5, i: 7.0, n: 6.7, s: 6.3, h: 6.1, r: 6.0}
-  },
-  es: {
-    name: "Spanish", script: "Latin",
-    freq: {de: 1.68, la: 1.26, que: 0.86, el: 0.82, en: 0.78, los: 0.61, se: 0.58, del: 0.52, por: 0.46, con: 0.44, las: 0.41, una: 0.37, para: 0.35, e: 12.1, a: 11.7, o: 8.4, l: 5.5, s: 5.4, n: 5.0, d: 4.8, r: 4.6, u: 4.0, i: 3.8, t: 3.1}
-  },
-  fr: {
-    name: "French", script: "Latin",
-    freq: {de: 1.69, le: 1.08, la: 0.81, les: 0.73, des: 0.70, que: 0.65, dans: 0.45, pour: 0.44, est: 0.43, une: 0.42, par: 0.38, sur: 0.35, e: 14.7, a: 7.6, i: 7.5, s: 7.0, n: 6.8, t: 6.4, r: 5.5, l: 5.1, u: 4.8, o: 4.7, d: 3.7, c: 3.1}
-  },
-  de: {
-    name: "German", script: "Latin",
-    freq: {en: 1.42, er: 1.30, der: 0.99, die: 0.95, und: 0.93, den: 0.78, ein: 0.67, che: 0.63, ich: 0.62, ste: 0.58, mit: 0.54, aus: 0.49, e: 16.4, n: 9.8, i: 7.6, r: 7.0, s: 6.7, t: 6.2, a: 5.2, d: 5.0, h: 4.4, u: 4.0, l: 3.4, c: 3.0}
-  },
-  it: {
-    name: "Italian", script: "Latin",
-    freq: {di: 1.38, de: 1.06, la: 0.99, il: 0.88, che: 0.78, del: 0.66, una: 0.59, per: 0.58, con: 0.53, gli: 0.50, nel: 0.47, e: 11.8, a: 10.8, i: 10.3, o: 8.5, l: 6.5, n: 6.0, t: 5.6, r: 5.5, s: 4.9, c: 4.5, d: 3.7, u: 3.2}
-  },
-  pt: {
-    name: "Portuguese", script: "Latin",
-    freq: {de: 1.82, que: 1.25, do: 0.86, da: 0.82, em: 0.70, para: 0.56, com: 0.55, os: 0.50, um: 0.48, no: 0.46, a: 13.0, e: 11.5, o: 9.0, s: 6.5, d: 4.4, r: 4.2, n: 4.1, m: 3.9, t: 3.8, u: 3.4, l: 3.2, c: 3.1}
-  },
-  nl: {
-    name: "Dutch", script: "Latin",
-    freq: {en: 1.59, van: 1.06, de: 1.04, het: 0.88, een: 0.81, in: 0.74, te: 0.64, dat: 0.56, voor: 0.53, met: 0.49, op: 0.47, zijn: 0.44, e: 18.9, n: 10.0, a: 7.5, t: 6.8, i: 6.5, r: 6.4, o: 5.7, d: 5.3, s: 4.6, l: 3.8, h: 3.4, g: 3.2}
-  },
-  ru: {
-    name: "Russian", script: "Cyrillic",
-    freq: {"ст": 0.82, "но": 0.78, "то": 0.74, "по": 0.72, "не": 0.70, "на": 0.68, "ра": 0.64, "ов": 0.62, "про": 0.48, "при": 0.44, "что": 0.42, "все": 0.40, о: 10.9, е: 8.5, а: 8.0, и: 7.4, н: 6.8, т: 6.5, с: 5.7, р: 5.5, в: 4.8, л: 4.4, к: 3.6, м: 3.4}
-  },
-  zh: {
-    name: "Chinese", script: "Han (Chinese)",
-    freq: {"的": 3.82, "一": 2.14, "是": 1.84, "了": 1.72, "不": 1.68, "在": 1.58, "有": 1.52, "我": 1.45, "这": 1.38, "他": 1.32, "个": 1.25, "上": 1.18, "人": 1.12, "大": 1.05, "中": 0.98}
-  },
-  ja: {
-    name: "Japanese", script: "Japanese (Kanji + Kana)",
-    freq: {"の": 2.82, "に": 2.15, "を": 1.98, "た": 1.85, "が": 1.78, "で": 1.65, "は": 1.58, "て": 1.52, "し": 1.42, "か": 1.35, "い": 1.28, "あ": 1.22, "る": 1.18, "と": 1.12, "な": 1.05}
-  },
-  ar: {
-    name: "Arabic", script: "Arabic",
-    freq: {"أن": 1.52, "في": 1.48, "من": 1.42, "عىل": 1.35, "كان": 1.28, "هذا": 1.22, "التي": 1.18, "ما": 1.12, "عن": 1.08, "هو": 1.02, "ليس": 0.98, "علي": 0.92, "كانت": 0.88, "فقد": 0.82, "حتى": 0.78}
-  },
-  hi: {
-    name: "Hindi", script: "Devanagari",
-    freq: {"का": 1.62, "में": 1.58, "है": 1.52, "से": 1.45, "के": 1.38, "या": 1.32, "को": 1.28, "की": 1.22, "पर": 1.18, "एक": 1.12, "हैं": 1.05, "भी": 0.98, "यह": 0.92, "ने": 0.88, "था": 0.82}
-  },
-  tr: {
-    name: "Turkish", script: "Latin",
-    freq: {ve: 1.72, bir: 1.45, de: 1.22, ol: 1.18, ile: 1.12, bu: 1.08, ar: 0.92, da: 0.88, ya: 0.85, la: 0.82, ma: 0.78, a: 11.7, e: 9.2, i: 8.5, n: 7.2, r: 6.8, l: 6.1, d: 5.5, k: 5.2, m: 5.0, t: 4.8, u: 4.2, s: 4.0}
-  },
-  sv: {
-    name: "Swedish", script: "Latin",
-    freq: {en: 2.12, och: 1.78, att: 1.45, de: 1.22, som: 1.18, det: 1.12, av: 1.05, för: 0.98, på: 0.92, med: 0.88, ett: 0.82, om: 0.78, a: 9.4, e: 9.0, n: 8.5, r: 7.5, s: 7.0, t: 6.8, l: 6.1, d: 5.2, o: 5.0, m: 4.5, k: 4.2, g: 3.8}
-  },
-  pl: {
-    name: "Polish", script: "Latin",
-    freq: {nie: 1.52, się: 1.25, na: 1.12, do: 1.05, że: 0.92, po: 0.88, to: 0.82, je: 0.78, za: 0.72, w: 0.68, a: 10.5, i: 8.2, e: 7.8, o: 7.2, n: 6.5, t: 5.8, r: 5.5, s: 5.2, c: 4.8, d: 4.5, z: 4.2, p: 4.0}
-  },
-  da: {
-    name: "Danish", script: "Latin",
-    freq: {en: 2.35, og: 2.12, er: 1.65, det: 1.42, til: 1.28, de: 1.18, som: 1.12, af: 1.05, for: 0.98, med: 0.92, på: 0.85, et: 0.82, e: 9.8, r: 9.2, n: 8.5, a: 7.8, d: 7.2, t: 6.8, l: 6.2, s: 6.0, o: 5.5, g: 5.0, m: 4.5, k: 4.0}
-  },
-  fi: {
-    name: "Finnish", script: "Latin",
-    freq: {"en": 2.45, "ja": 2.12, "on": 1.85, "ei": 1.52, "se": 1.35, "tä": 1.22, "ssa": 1.12, "tta": 1.05, "sta": 0.98, "ksi": 0.92, "han": 0.88, "si": 0.82, a: 11.5, i: 9.8, n: 8.2, t: 8.0, e: 7.5, s: 6.8, l: 5.5, o: 5.2, u: 5.0, k: 4.8, ä: 4.5, m: 4.0}
-  },
-  no: {
-    name: "Norwegian", script: "Latin",
-    freq: {en: 2.32, og: 2.08, er: 1.62, det: 1.38, til: 1.25, de: 1.15, som: 1.10, av: 1.02, for: 0.95, med: 0.90, på: 0.82, et: 0.80, e: 10.2, r: 9.5, n: 8.2, a: 7.5, t: 7.0, l: 6.5, d: 6.0, s: 5.8, o: 5.2, g: 4.8, m: 4.2, k: 3.8}
-  },
-  cs: {
-    name: "Czech", script: "Latin",
-    freq: {ne: 1.82, se: 1.28, na: 1.18, že: 1.12, to: 1.05, je: 0.98, po: 0.92, do: 0.88, ve: 0.82, pro: 0.72, e: 9.8, a: 9.2, o: 8.5, n: 7.2, t: 6.8, v: 6.2, l: 5.8, s: 5.5, i: 5.2, d: 4.8, k: 4.5, r: 4.2}
-  },
-  el: {
-    name: "Greek", script: "Greek",
-    freq: {"κα": 1.82, "το": 1.65, "να": 1.52, "τη": 1.38, "αι": 1.25, "τα": 1.12, "στ": 1.05, "πο": 0.98, "ει": 0.92, "με": 0.88, "αν": 0.82, α: 11.8, ο: 8.5, τ: 7.8, ε: 7.5, ι: 7.0, ν: 6.8, σ: 6.2, π: 5.5, ρ: 5.2, υ: 4.8, μ: 4.5, λ: 4.0}
-  },
-  ko: {
-    name: "Korean", script: "Hangul",
-    freq: {"의": 1.85, "에": 1.72, "는": 1.65, "이": 1.52, "가": 1.45, "을": 1.38, "를": 1.32, "다": 1.25, "한": 1.18, "에서": 1.12, "으로": 1.05, "고": 0.98, "하": 0.92, "들": 0.88, "있": 0.82}
-  },
-  th: {
-    name: "Thai", script: "Thai",
-    freq: {"การ": 1.82, "ที่": 1.65, "และ": 1.52, "ใน": 1.38, "ของ": 1.25, "กับ": 1.18, "มี": 1.12, "เป็น": 1.05, "ไม่": 0.98, "ให้": 0.92, "ได้": 0.88, "จะ": 0.82, "กา": 0.78, "าม": 0.72, "ที": 0.68}
-  },
-  vi: {
-    name: "Vietnamese", script: "Latin (with diacritics)",
-    freq: {"ng": 2.85, "nh": 2.12, "anh": 1.15, "các": 1.82, "và": 1.65, "của": 1.52, "trong": 1.42, "không": 1.35, "một": 1.28, "được": 1.22, "cho": 1.18, "với": 1.12, "người": 1.05, "này": 0.98, "khi": 0.92}
-  },
-  id: {
-    name: "Indonesian", script: "Latin",
-    freq: {an: 2.12, me: 1.85, di: 1.62, ber: 1.35, kan: 1.28, dan: 1.22, yang: 1.18, men: 1.12, per: 1.05, ter: 0.98, meng: 0.92, untuk: 0.88, a: 11.2, n: 8.5, e: 7.8, i: 7.2, r: 6.8, t: 6.2, k: 5.8, u: 5.5, s: 5.2, l: 4.8, m: 4.5, d: 4.2}
-  },
-  ms: {
-    name: "Malay", script: "Latin",
-    freq: {an: 2.35, dan: 1.72, yang: 1.52, me: 1.22, di: 1.08, kan: 0.95, ber: 0.88, men: 0.82, per: 0.78, ter: 0.72, meng: 0.68, untuk: 0.62, a: 11.8, n: 8.2, e: 7.5, i: 7.0, r: 6.5, k: 6.0, u: 5.8, t: 5.5, s: 5.2, m: 5.0, l: 4.5, d: 4.0}
-  },
-  ro: {
-    name: "Romanian", script: "Latin",
-    freq: {de: 1.92, si: 1.58, in: 1.35, se: 1.05, pe: 0.98, cu: 0.92, la: 0.88, care: 0.82, din: 0.78, pentru: 0.72, peste: 0.68, e: 11.5, a: 10.8, i: 8.2, r: 7.5, n: 7.0, t: 6.8, l: 6.2, c: 5.8, o: 5.5, s: 5.2, d: 5.0, p: 4.5}
-  },
-  hu: {
-    name: "Hungarian", script: "Latin",
-    freq: {"en": 2.25, "az": 1.85, "a ": 1.72, "as": 1.58, "sz": 1.45, "el": 1.32, "es": 1.28, "me": 1.22, "ett": 1.15, "meg": 1.08, "nem": 1.02, "hoz": 0.95, a: 11.2, e: 9.8, t: 8.5, n: 7.2, l: 6.5, s: 6.2, k: 5.8, z: 5.5, r: 5.2, i: 5.0, o: 4.8, m: 4.5}
-  },
-  uk: {
-    name: "Ukrainian", script: "Cyrillic",
-    freq: {"не": 1.62, "на": 1.48, "то": 1.35, "по": 1.28, "ві": 1.22, "за": 1.18, "пр": 1.12, "ст": 1.05, "при": 0.92, "від": 0.88, "про": 0.82, "як": 0.78, о: 9.5, а: 8.8, і: 7.5, н: 7.0, т: 6.5, е: 6.2, в: 5.8, с: 5.5, р: 5.2, л: 5.0, к: 4.5, м: 4.2}
-  },
-  he: {
-    name: "Hebrew", script: "Hebrew",
-    freq: {"את": 1.72, "כי": 1.48, "לא": 1.35, "על": 1.28, "היה": 1.22, "זה": 1.18, "אני": 1.12, "לו": 1.05, "או": 0.98, "יש": 0.92, "כל": 0.88, "אשר": 0.82, ו: 10.2, א: 7.5, ת: 6.8, ה: 6.5, י: 6.0, ל: 5.5, מ: 5.2, ר: 5.0, ב: 4.8, נ: 4.5, ש: 4.2, ד: 4.0}
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
   }
-};
+  const langProfiles = {
+    en: {
+      name: 'English',
+      script: 'Latin',
+      freq: {
+        th: 1.52,
+        he: 1.28,
+        in: 0.94,
+        er: 0.94,
+        an: 0.82,
+        re: 0.68,
+        nd: 0.63,
+        on: 0.57,
+        ent: 0.42,
+        ion: 0.42,
+        ing: 0.38,
+        and: 0.33,
+        the: 0.31,
+        tio: 0.31,
+        for: 0.27,
+        e: 12.7,
+        t: 9.1,
+        a: 8.2,
+        o: 7.5,
+        i: 7.0,
+        n: 6.7,
+        s: 6.3,
+        h: 6.1,
+        r: 6.0,
+      },
+    },
+    es: {
+      name: 'Spanish',
+      script: 'Latin',
+      freq: {
+        de: 1.68,
+        la: 1.26,
+        que: 0.86,
+        el: 0.82,
+        en: 0.78,
+        los: 0.61,
+        se: 0.58,
+        del: 0.52,
+        por: 0.46,
+        con: 0.44,
+        las: 0.41,
+        una: 0.37,
+        para: 0.35,
+        e: 12.1,
+        a: 11.7,
+        o: 8.4,
+        l: 5.5,
+        s: 5.4,
+        n: 5.0,
+        d: 4.8,
+        r: 4.6,
+        u: 4.0,
+        i: 3.8,
+        t: 3.1,
+      },
+    },
+    fr: {
+      name: 'French',
+      script: 'Latin',
+      freq: {
+        de: 1.69,
+        le: 1.08,
+        la: 0.81,
+        les: 0.73,
+        des: 0.7,
+        que: 0.65,
+        dans: 0.45,
+        pour: 0.44,
+        est: 0.43,
+        une: 0.42,
+        par: 0.38,
+        sur: 0.35,
+        e: 14.7,
+        a: 7.6,
+        i: 7.5,
+        s: 7.0,
+        n: 6.8,
+        t: 6.4,
+        r: 5.5,
+        l: 5.1,
+        u: 4.8,
+        o: 4.7,
+        d: 3.7,
+        c: 3.1,
+      },
+    },
+    de: {
+      name: 'German',
+      script: 'Latin',
+      freq: {
+        en: 1.42,
+        er: 1.3,
+        der: 0.99,
+        die: 0.95,
+        und: 0.93,
+        den: 0.78,
+        ein: 0.67,
+        che: 0.63,
+        ich: 0.62,
+        ste: 0.58,
+        mit: 0.54,
+        aus: 0.49,
+        e: 16.4,
+        n: 9.8,
+        i: 7.6,
+        r: 7.0,
+        s: 6.7,
+        t: 6.2,
+        a: 5.2,
+        d: 5.0,
+        h: 4.4,
+        u: 4.0,
+        l: 3.4,
+        c: 3.0,
+      },
+    },
+    it: {
+      name: 'Italian',
+      script: 'Latin',
+      freq: {
+        di: 1.38,
+        de: 1.06,
+        la: 0.99,
+        il: 0.88,
+        che: 0.78,
+        del: 0.66,
+        una: 0.59,
+        per: 0.58,
+        con: 0.53,
+        gli: 0.5,
+        nel: 0.47,
+        e: 11.8,
+        a: 10.8,
+        i: 10.3,
+        o: 8.5,
+        l: 6.5,
+        n: 6.0,
+        t: 5.6,
+        r: 5.5,
+        s: 4.9,
+        c: 4.5,
+        d: 3.7,
+        u: 3.2,
+      },
+    },
+    pt: {
+      name: 'Portuguese',
+      script: 'Latin',
+      freq: {
+        de: 1.82,
+        que: 1.25,
+        do: 0.86,
+        da: 0.82,
+        em: 0.7,
+        para: 0.56,
+        com: 0.55,
+        os: 0.5,
+        um: 0.48,
+        no: 0.46,
+        a: 13.0,
+        e: 11.5,
+        o: 9.0,
+        s: 6.5,
+        d: 4.4,
+        r: 4.2,
+        n: 4.1,
+        m: 3.9,
+        t: 3.8,
+        u: 3.4,
+        l: 3.2,
+        c: 3.1,
+      },
+    },
+    nl: {
+      name: 'Dutch',
+      script: 'Latin',
+      freq: {
+        en: 1.59,
+        van: 1.06,
+        de: 1.04,
+        het: 0.88,
+        een: 0.81,
+        in: 0.74,
+        te: 0.64,
+        dat: 0.56,
+        voor: 0.53,
+        met: 0.49,
+        op: 0.47,
+        zijn: 0.44,
+        e: 18.9,
+        n: 10.0,
+        a: 7.5,
+        t: 6.8,
+        i: 6.5,
+        r: 6.4,
+        o: 5.7,
+        d: 5.3,
+        s: 4.6,
+        l: 3.8,
+        h: 3.4,
+        g: 3.2,
+      },
+    },
+    ru: {
+      name: 'Russian',
+      script: 'Cyrillic',
+      freq: {
+        ст: 0.82,
+        но: 0.78,
+        то: 0.74,
+        по: 0.72,
+        не: 0.7,
+        на: 0.68,
+        ра: 0.64,
+        ов: 0.62,
+        про: 0.48,
+        при: 0.44,
+        что: 0.42,
+        все: 0.4,
+        о: 10.9,
+        е: 8.5,
+        а: 8.0,
+        и: 7.4,
+        н: 6.8,
+        т: 6.5,
+        с: 5.7,
+        р: 5.5,
+        в: 4.8,
+        л: 4.4,
+        к: 3.6,
+        м: 3.4,
+      },
+    },
+    zh: {
+      name: 'Chinese',
+      script: 'Han (Chinese)',
+      freq: {
+        的: 3.82,
+        一: 2.14,
+        是: 1.84,
+        了: 1.72,
+        不: 1.68,
+        在: 1.58,
+        有: 1.52,
+        我: 1.45,
+        这: 1.38,
+        他: 1.32,
+        个: 1.25,
+        上: 1.18,
+        人: 1.12,
+        大: 1.05,
+        中: 0.98,
+      },
+    },
+    ja: {
+      name: 'Japanese',
+      script: 'Japanese (Kanji + Kana)',
+      freq: {
+        の: 2.82,
+        に: 2.15,
+        を: 1.98,
+        た: 1.85,
+        が: 1.78,
+        で: 1.65,
+        は: 1.58,
+        て: 1.52,
+        し: 1.42,
+        か: 1.35,
+        い: 1.28,
+        あ: 1.22,
+        る: 1.18,
+        と: 1.12,
+        な: 1.05,
+      },
+    },
+    ar: {
+      name: 'Arabic',
+      script: 'Arabic',
+      freq: {
+        أن: 1.52,
+        في: 1.48,
+        من: 1.42,
+        عىل: 1.35,
+        كان: 1.28,
+        هذا: 1.22,
+        التي: 1.18,
+        ما: 1.12,
+        عن: 1.08,
+        هو: 1.02,
+        ليس: 0.98,
+        علي: 0.92,
+        كانت: 0.88,
+        فقد: 0.82,
+        حتى: 0.78,
+      },
+    },
+    hi: {
+      name: 'Hindi',
+      script: 'Devanagari',
+      freq: {
+        का: 1.62,
+        में: 1.58,
+        है: 1.52,
+        से: 1.45,
+        के: 1.38,
+        या: 1.32,
+        को: 1.28,
+        की: 1.22,
+        पर: 1.18,
+        एक: 1.12,
+        हैं: 1.05,
+        भी: 0.98,
+        यह: 0.92,
+        ने: 0.88,
+        था: 0.82,
+      },
+    },
+    tr: {
+      name: 'Turkish',
+      script: 'Latin',
+      freq: {
+        ve: 1.72,
+        bir: 1.45,
+        de: 1.22,
+        ol: 1.18,
+        ile: 1.12,
+        bu: 1.08,
+        ar: 0.92,
+        da: 0.88,
+        ya: 0.85,
+        la: 0.82,
+        ma: 0.78,
+        a: 11.7,
+        e: 9.2,
+        i: 8.5,
+        n: 7.2,
+        r: 6.8,
+        l: 6.1,
+        d: 5.5,
+        k: 5.2,
+        m: 5.0,
+        t: 4.8,
+        u: 4.2,
+        s: 4.0,
+      },
+    },
+    sv: {
+      name: 'Swedish',
+      script: 'Latin',
+      freq: {
+        en: 2.12,
+        och: 1.78,
+        att: 1.45,
+        de: 1.22,
+        som: 1.18,
+        det: 1.12,
+        av: 1.05,
+        för: 0.98,
+        på: 0.92,
+        med: 0.88,
+        ett: 0.82,
+        om: 0.78,
+        a: 9.4,
+        e: 9.0,
+        n: 8.5,
+        r: 7.5,
+        s: 7.0,
+        t: 6.8,
+        l: 6.1,
+        d: 5.2,
+        o: 5.0,
+        m: 4.5,
+        k: 4.2,
+        g: 3.8,
+      },
+    },
+    pl: {
+      name: 'Polish',
+      script: 'Latin',
+      freq: {
+        nie: 1.52,
+        się: 1.25,
+        na: 1.12,
+        do: 1.05,
+        że: 0.92,
+        po: 0.88,
+        to: 0.82,
+        je: 0.78,
+        za: 0.72,
+        w: 0.68,
+        a: 10.5,
+        i: 8.2,
+        e: 7.8,
+        o: 7.2,
+        n: 6.5,
+        t: 5.8,
+        r: 5.5,
+        s: 5.2,
+        c: 4.8,
+        d: 4.5,
+        z: 4.2,
+        p: 4.0,
+      },
+    },
+    da: {
+      name: 'Danish',
+      script: 'Latin',
+      freq: {
+        en: 2.35,
+        og: 2.12,
+        er: 1.65,
+        det: 1.42,
+        til: 1.28,
+        de: 1.18,
+        som: 1.12,
+        af: 1.05,
+        for: 0.98,
+        med: 0.92,
+        på: 0.85,
+        et: 0.82,
+        e: 9.8,
+        r: 9.2,
+        n: 8.5,
+        a: 7.8,
+        d: 7.2,
+        t: 6.8,
+        l: 6.2,
+        s: 6.0,
+        o: 5.5,
+        g: 5.0,
+        m: 4.5,
+        k: 4.0,
+      },
+    },
+    fi: {
+      name: 'Finnish',
+      script: 'Latin',
+      freq: {
+        en: 2.45,
+        ja: 2.12,
+        on: 1.85,
+        ei: 1.52,
+        se: 1.35,
+        tä: 1.22,
+        ssa: 1.12,
+        tta: 1.05,
+        sta: 0.98,
+        ksi: 0.92,
+        han: 0.88,
+        si: 0.82,
+        a: 11.5,
+        i: 9.8,
+        n: 8.2,
+        t: 8.0,
+        e: 7.5,
+        s: 6.8,
+        l: 5.5,
+        o: 5.2,
+        u: 5.0,
+        k: 4.8,
+        ä: 4.5,
+        m: 4.0,
+      },
+    },
+    no: {
+      name: 'Norwegian',
+      script: 'Latin',
+      freq: {
+        en: 2.32,
+        og: 2.08,
+        er: 1.62,
+        det: 1.38,
+        til: 1.25,
+        de: 1.15,
+        som: 1.1,
+        av: 1.02,
+        for: 0.95,
+        med: 0.9,
+        på: 0.82,
+        et: 0.8,
+        e: 10.2,
+        r: 9.5,
+        n: 8.2,
+        a: 7.5,
+        t: 7.0,
+        l: 6.5,
+        d: 6.0,
+        s: 5.8,
+        o: 5.2,
+        g: 4.8,
+        m: 4.2,
+        k: 3.8,
+      },
+    },
+    cs: {
+      name: 'Czech',
+      script: 'Latin',
+      freq: {
+        ne: 1.82,
+        se: 1.28,
+        na: 1.18,
+        že: 1.12,
+        to: 1.05,
+        je: 0.98,
+        po: 0.92,
+        do: 0.88,
+        ve: 0.82,
+        pro: 0.72,
+        e: 9.8,
+        a: 9.2,
+        o: 8.5,
+        n: 7.2,
+        t: 6.8,
+        v: 6.2,
+        l: 5.8,
+        s: 5.5,
+        i: 5.2,
+        d: 4.8,
+        k: 4.5,
+        r: 4.2,
+      },
+    },
+    el: {
+      name: 'Greek',
+      script: 'Greek',
+      freq: {
+        κα: 1.82,
+        το: 1.65,
+        να: 1.52,
+        τη: 1.38,
+        αι: 1.25,
+        τα: 1.12,
+        στ: 1.05,
+        πο: 0.98,
+        ει: 0.92,
+        με: 0.88,
+        αν: 0.82,
+        α: 11.8,
+        ο: 8.5,
+        τ: 7.8,
+        ε: 7.5,
+        ι: 7.0,
+        ν: 6.8,
+        σ: 6.2,
+        π: 5.5,
+        ρ: 5.2,
+        υ: 4.8,
+        μ: 4.5,
+        λ: 4.0,
+      },
+    },
+    ko: {
+      name: 'Korean',
+      script: 'Hangul',
+      freq: {
+        의: 1.85,
+        에: 1.72,
+        는: 1.65,
+        이: 1.52,
+        가: 1.45,
+        을: 1.38,
+        를: 1.32,
+        다: 1.25,
+        한: 1.18,
+        에서: 1.12,
+        으로: 1.05,
+        고: 0.98,
+        하: 0.92,
+        들: 0.88,
+        있: 0.82,
+      },
+    },
+    th: {
+      name: 'Thai',
+      script: 'Thai',
+      freq: {
+        การ: 1.82,
+        ที่: 1.65,
+        และ: 1.52,
+        ใน: 1.38,
+        ของ: 1.25,
+        กับ: 1.18,
+        มี: 1.12,
+        เป็น: 1.05,
+        ไม่: 0.98,
+        ให้: 0.92,
+        ได้: 0.88,
+        จะ: 0.82,
+        กา: 0.78,
+        าม: 0.72,
+        ที: 0.68,
+      },
+    },
+    vi: {
+      name: 'Vietnamese',
+      script: 'Latin (with diacritics)',
+      freq: {
+        ng: 2.85,
+        nh: 2.12,
+        anh: 1.15,
+        các: 1.82,
+        và: 1.65,
+        của: 1.52,
+        trong: 1.42,
+        không: 1.35,
+        một: 1.28,
+        được: 1.22,
+        cho: 1.18,
+        với: 1.12,
+        người: 1.05,
+        này: 0.98,
+        khi: 0.92,
+      },
+    },
+    id: {
+      name: 'Indonesian',
+      script: 'Latin',
+      freq: {
+        an: 2.12,
+        me: 1.85,
+        di: 1.62,
+        ber: 1.35,
+        kan: 1.28,
+        dan: 1.22,
+        yang: 1.18,
+        men: 1.12,
+        per: 1.05,
+        ter: 0.98,
+        meng: 0.92,
+        untuk: 0.88,
+        a: 11.2,
+        n: 8.5,
+        e: 7.8,
+        i: 7.2,
+        r: 6.8,
+        t: 6.2,
+        k: 5.8,
+        u: 5.5,
+        s: 5.2,
+        l: 4.8,
+        m: 4.5,
+        d: 4.2,
+      },
+    },
+    ms: {
+      name: 'Malay',
+      script: 'Latin',
+      freq: {
+        an: 2.35,
+        dan: 1.72,
+        yang: 1.52,
+        me: 1.22,
+        di: 1.08,
+        kan: 0.95,
+        ber: 0.88,
+        men: 0.82,
+        per: 0.78,
+        ter: 0.72,
+        meng: 0.68,
+        untuk: 0.62,
+        a: 11.8,
+        n: 8.2,
+        e: 7.5,
+        i: 7.0,
+        r: 6.5,
+        k: 6.0,
+        u: 5.8,
+        t: 5.5,
+        s: 5.2,
+        m: 5.0,
+        l: 4.5,
+        d: 4.0,
+      },
+    },
+    ro: {
+      name: 'Romanian',
+      script: 'Latin',
+      freq: {
+        de: 1.92,
+        si: 1.58,
+        in: 1.35,
+        se: 1.05,
+        pe: 0.98,
+        cu: 0.92,
+        la: 0.88,
+        care: 0.82,
+        din: 0.78,
+        pentru: 0.72,
+        peste: 0.68,
+        e: 11.5,
+        a: 10.8,
+        i: 8.2,
+        r: 7.5,
+        n: 7.0,
+        t: 6.8,
+        l: 6.2,
+        c: 5.8,
+        o: 5.5,
+        s: 5.2,
+        d: 5.0,
+        p: 4.5,
+      },
+    },
+    hu: {
+      name: 'Hungarian',
+      script: 'Latin',
+      freq: {
+        en: 2.25,
+        az: 1.85,
+        'a ': 1.72,
+        as: 1.58,
+        sz: 1.45,
+        el: 1.32,
+        es: 1.28,
+        me: 1.22,
+        ett: 1.15,
+        meg: 1.08,
+        nem: 1.02,
+        hoz: 0.95,
+        a: 11.2,
+        e: 9.8,
+        t: 8.5,
+        n: 7.2,
+        l: 6.5,
+        s: 6.2,
+        k: 5.8,
+        z: 5.5,
+        r: 5.2,
+        i: 5.0,
+        o: 4.8,
+        m: 4.5,
+      },
+    },
+    uk: {
+      name: 'Ukrainian',
+      script: 'Cyrillic',
+      freq: {
+        не: 1.62,
+        на: 1.48,
+        то: 1.35,
+        по: 1.28,
+        ві: 1.22,
+        за: 1.18,
+        пр: 1.12,
+        ст: 1.05,
+        при: 0.92,
+        від: 0.88,
+        про: 0.82,
+        як: 0.78,
+        о: 9.5,
+        а: 8.8,
+        і: 7.5,
+        н: 7.0,
+        т: 6.5,
+        е: 6.2,
+        в: 5.8,
+        с: 5.5,
+        р: 5.2,
+        л: 5.0,
+        к: 4.5,
+        м: 4.2,
+      },
+    },
+    he: {
+      name: 'Hebrew',
+      script: 'Hebrew',
+      freq: {
+        את: 1.72,
+        כי: 1.48,
+        לא: 1.35,
+        על: 1.28,
+        היה: 1.22,
+        זה: 1.18,
+        אני: 1.12,
+        לו: 1.05,
+        או: 0.98,
+        יש: 0.92,
+        כל: 0.88,
+        אשר: 0.82,
+        ו: 10.2,
+        א: 7.5,
+        ת: 6.8,
+        ה: 6.5,
+        י: 6.0,
+        ל: 5.5,
+        מ: 5.2,
+        ר: 5.0,
+        ב: 4.8,
+        נ: 4.5,
+        ש: 4.2,
+        ד: 4.0,
+      },
+    },
+  };
 
-function getNgrams(text, n) {
-  const cleaned = text.toLowerCase().replace(/[^a-z\u00C0-\u024F\u0400-\u04FF\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF\u0600-\u06FF\u0900-\u097F\u0E00-\u0E7F\uAC00-\uD7AF\u0590-\u05FF\u1F00-\u1FFF]/g, " ");
-  const ngrams = {};
-  for (let i = 0; i <= cleaned.length - n; i++) {
-    const gram = cleaned.substring(i, i + n);
-    if (gram.includes(" ")) continue;
-    ngrams[gram] = (ngrams[gram] || 0) + 1;
-  }
-  return ngrams;
-}
-
-function cosineSimilarity(a, b) {
-  let dot = 0, normA = 0, normB = 0;
-  for (const key in a) {
-    const va = a[key], vb = b[key] || 0;
-    dot += va * vb;
-    normA += va * va;
-  }
-  for (const key in b) normB += b[key] * b[key];
-  if (normA === 0 || normB === 0) return 0;
-  return dot / (Math.sqrt(normA) * Math.sqrt(normB));
-}
-
-function detectLanguage(text) {
-  if (!text.trim()) return null;
-  const triGrams = getNgrams(text, 3);
-  const biGrams = getNgrams(text, 2);
-  const combined = {};
-  for (const k in triGrams) combined[k] = triGrams[k];
-  for (const k in biGrams) combined[k] = (combined[k] || 0) + biGrams[k] * 0.5;
-
-  let best = null, bestScore = -1, secondScore = -1;
-  for (const code in langProfiles) {
-    const profile = langProfiles[code].freq;
-    const score = cosineSimilarity(combined, profile);
-    if (score > bestScore) {
-      secondScore = bestScore;
-      bestScore = score;
-      best = code;
-    } else if (score > secondScore) {
-      secondScore = score;
+  function getNgrams(text, n) {
+    const cleaned = text
+      .toLowerCase()
+      .replace(
+        /[^a-z\u00C0-\u024F\u0400-\u04FF\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF\u0600-\u06FF\u0900-\u097F\u0E00-\u0E7F\uAC00-\uD7AF\u0590-\u05FF\u1F00-\u1FFF]/g,
+        ' ',
+      );
+    const ngrams = {};
+    for (let i = 0; i <= cleaned.length - n; i++) {
+      const gram = cleaned.substring(i, i + n);
+      if (gram.includes(' ')) continue;
+      ngrams[gram] = (ngrams[gram] || 0) + 1;
     }
+    return ngrams;
   }
 
-  const confidence = bestScore > 0 ? Math.min(100, Math.round((1 - secondScore / (bestScore || 1)) * 100)) : 0;
-  return { ...langProfiles[best], code: best, confidence };
-}
-
-document.getElementById("detect-btn").addEventListener("click", () => {
-  const text = document.getElementById("input-text").value;
-  const result = detectLanguage(text);
-  const resultDiv = document.getElementById("result");
-  if (!result) {
-    resultDiv.classList.add("hidden");
-    if (window.__showToast) window.__showToast({ message: "Please enter some text to analyze", variant: "warning" });
-    return;
+  function cosineSimilarity(a, b) {
+    let dot = 0,
+      normA = 0,
+      normB = 0;
+    for (const key in a) {
+      const va = a[key],
+        vb = b[key] || 0;
+      dot += va * vb;
+      normA += va * va;
+    }
+    for (const key in b) normB += b[key] * b[key];
+    if (normA === 0 || normB === 0) return 0;
+    return dot / (Math.sqrt(normA) * Math.sqrt(normB));
   }
-  resultDiv.classList.remove("hidden");
-  document.getElementById("detected-lang").textContent = result.name;
-  document.getElementById("confidence-score").textContent = result.confidence + "%";
-  document.getElementById("confidence-fill").style.width = result.confidence + "%";
-  document.getElementById("detected-script").textContent = result.script;
 
-  if (result.confidence < 50) {
-    document.getElementById("confidence-fill").className = "block h-full rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 transition-all duration-500";
-  } else if (result.confidence < 80) {
-    document.getElementById("confidence-fill").className = "block h-full rounded-full bg-gradient-to-r from-violet-500 to-purple-500 transition-all duration-500";
-  } else {
-    document.getElementById("confidence-fill").className = "block h-full rounded-full bg-gradient-to-r from-emerald-500 to-green-500 transition-all duration-500";
+  function detectLanguage(text) {
+    if (!text.trim()) return null;
+    const triGrams = getNgrams(text, 3);
+    const biGrams = getNgrams(text, 2);
+    const combined = {};
+    for (const k in triGrams) combined[k] = triGrams[k];
+    for (const k in biGrams) combined[k] = (combined[k] || 0) + biGrams[k] * 0.5;
+
+    let best = null,
+      bestScore = -1,
+      secondScore = -1;
+    for (const code in langProfiles) {
+      const profile = langProfiles[code].freq;
+      const score = cosineSimilarity(combined, profile);
+      if (score > bestScore) {
+        secondScore = bestScore;
+        bestScore = score;
+        best = code;
+      } else if (score > secondScore) {
+        secondScore = score;
+      }
+    }
+
+    const confidence = bestScore > 0 ? Math.min(100, Math.round((1 - secondScore / (bestScore || 1)) * 100)) : 0;
+    return { ...langProfiles[best], code: best, confidence };
   }
-});
 
-document.getElementById("copy-btn")?.addEventListener("click", () => {
-  const lang = document.getElementById("detected-lang")?.textContent || "";
-  const conf = document.getElementById("confidence-score")?.textContent || "";
-  const script = document.getElementById("detected-script")?.textContent || "";
-  if (!lang) { if (window.__showToast) window.__showToast({ message: "Nothing to copy!", variant: "warning" }); return; }
-  navigator.clipboard.writeText(`Language: ${lang}\nConfidence: ${conf}\nScript: ${script}`);
-  playPing(); if (window.__showToast) window.__showToast({ message: "Copied!", variant: "success" });
-});
+  document.getElementById('detect-btn').addEventListener('click', () => {
+    const text = document.getElementById('input-text').value;
+    const result = detectLanguage(text);
+    const resultDiv = document.getElementById('result');
+    if (!result) {
+      resultDiv.classList.add('hidden');
+      if (window.__showToast) window.__showToast({ message: 'Please enter some text to analyze', variant: 'warning' });
+      return;
+    }
+    resultDiv.classList.remove('hidden');
+    document.getElementById('detected-lang').textContent = result.name;
+    document.getElementById('confidence-score').textContent = result.confidence + '%';
+    document.getElementById('confidence-fill').style.width = result.confidence + '%';
+    document.getElementById('detected-script').textContent = result.script;
 
-document.getElementById("download-btn")?.addEventListener("click", () => {
-  const lang = document.getElementById("detected-lang")?.textContent || "";
-  const conf = document.getElementById("confidence-score")?.textContent || "";
-  const script = document.getElementById("detected-script")?.textContent || "";
-  const input = document.getElementById("input-text").value;
-  if (!lang && !input) { if (window.__showToast) window.__showToast({ message: "Nothing to download!", variant: "warning" }); return; }
-  const outputText = `Input Text:\n${input}\n\nDetection Results:\nLanguage: ${lang}\nConfidence: ${conf}\nScript: ${script}`;
-  const fmt=document.getElementById("export-format")?.value||"txt";
-  let content = outputText;
-  let mime = "text/plain";
-  let ext = "txt";
-  if(fmt==="json"){ content=JSON.stringify({result:outputText, tool:"ai-language-detector", timestamp:new Date().toISOString()}); mime="application/json"; ext="json"; }
-  if(fmt==="csv"){ content="Result\n\""+outputText.replace(/"/g,'""')+"\""; mime="text/csv"; ext="csv"; }
-  if(fmt==="html"){ content="<!DOCTYPE html><html><body><pre>"+outputText.replace(/</g,"&lt;")+"</pre></body></html>"; mime="text/html"; ext="html"; }
-  const blob = new Blob([content], {type:mime});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "language-detection-output."+ext;
-  a.click();
-  URL.revokeObjectURL(a.href);
-  playPing(); if (window.__showToast) window.__showToast({ message: "Downloaded!", variant: "success" });
-});
+    if (result.confidence < 50) {
+      document.getElementById('confidence-fill').className =
+        'block h-full rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 transition-all duration-500';
+    } else if (result.confidence < 80) {
+      document.getElementById('confidence-fill').className =
+        'block h-full rounded-full bg-gradient-to-r from-violet-500 to-purple-500 transition-all duration-500';
+    } else {
+      document.getElementById('confidence-fill').className =
+        'block h-full rounded-full bg-gradient-to-r from-emerald-500 to-green-500 transition-all duration-500';
+    }
+  });
 
-document.getElementById("clear-btn")?.addEventListener("click", () => {
-  document.getElementById("input-text").value = "";
-  document.getElementById("result").classList.add("hidden");
-  document.querySelectorAll("textarea").forEach(t => t.value = "");
-  document.querySelectorAll("input[type=text], input[type=number]").forEach(i => i.value = "");
-  document.getElementById("input-text").focus();
-  playPing(); if (window.__showToast) window.__showToast({ message: "Cleared!", variant: "info" });
-});
+  document.getElementById('copy-btn')?.addEventListener('click', () => {
+    const lang = document.getElementById('detected-lang')?.textContent || '';
+    const conf = document.getElementById('confidence-score')?.textContent || '';
+    const script = document.getElementById('detected-script')?.textContent || '';
+    if (!lang) {
+      if (window.__showToast) window.__showToast({ message: 'Nothing to copy!', variant: 'warning' });
+      return;
+    }
+    navigator.clipboard.writeText(`Language: ${lang}\nConfidence: ${conf}\nScript: ${script}`);
+    playPing();
+    if (window.__showToast) window.__showToast({ message: 'Copied!', variant: 'success' });
+  });
 
-document.getElementById("input-text")?.addEventListener("input", () => {
-  const text = document.getElementById("input-text").value;
-  document.getElementById("char-count").textContent = text.length;
-  document.getElementById("word-count").textContent = text.trim() ? text.trim().split(/\s+/).filter(w => w).length : 0;
-  document.getElementById("line-count").textContent = text ? text.split("\n").length : 0;
-});
+  document.getElementById('download-btn')?.addEventListener('click', () => {
+    const lang = document.getElementById('detected-lang')?.textContent || '';
+    const conf = document.getElementById('confidence-score')?.textContent || '';
+    const script = document.getElementById('detected-script')?.textContent || '';
+    const input = document.getElementById('input-text').value;
+    if (!lang && !input) {
+      if (window.__showToast) window.__showToast({ message: 'Nothing to download!', variant: 'warning' });
+      return;
+    }
+    const outputText = `Input Text:\n${input}\n\nDetection Results:\nLanguage: ${lang}\nConfidence: ${conf}\nScript: ${script}`;
+    const fmt = document.getElementById('export-format')?.value || 'txt';
+    let content = outputText;
+    let mime = 'text/plain';
+    let ext = 'txt';
+    if (fmt === 'json') {
+      content = JSON.stringify({
+        result: outputText,
+        tool: 'ai-language-detector',
+        timestamp: new Date().toISOString(),
+      });
+      mime = 'application/json';
+      ext = 'json';
+    }
+    if (fmt === 'csv') {
+      content = 'Result\n"' + outputText.replace(/"/g, '""') + '"';
+      mime = 'text/csv';
+      ext = 'csv';
+    }
+    if (fmt === 'html') {
+      content = '<!DOCTYPE html><html><body><pre>' + outputText.replace(/</g, '&lt;') + '</pre></body></html>';
+      mime = 'text/html';
+      ext = 'html';
+    }
+    const blob = new Blob([content], { type: mime });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'language-detection-output.' + ext;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    playPing();
+    if (window.__showToast) window.__showToast({ message: 'Downloaded!', variant: 'success' });
+  });
 
-document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-  const card = document.getElementById("fullscreen-btn").closest(".bg-surface-1.border.border-surface.rounded-2xl") || document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
-  if (!card) return;
-  if (document.fullscreenElement) {
-    document.exitFullscreen();
-    document.getElementById("fullscreen-btn").textContent = "⛶";
-  } else {
-    card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
-    document.getElementById("fullscreen-btn").textContent = "✕";
-  }
-});
-document.addEventListener("fullscreenchange", () => {
-  const btn = document.getElementById("fullscreen-btn");
-  if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
-});
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    document.getElementById('input-text').value = '';
+    document.getElementById('result').classList.add('hidden');
+    document.querySelectorAll('textarea').forEach((t) => (t.value = ''));
+    document.querySelectorAll('input[type=text], input[type=number]').forEach((i) => (i.value = ''));
+    document.getElementById('input-text').focus();
+    playPing();
+    if (window.__showToast) window.__showToast({ message: 'Cleared!', variant: 'info' });
+  });
 
-const DRAFT_KEY = "nt_draft_ai-language-detector";
-(function() {
-  const input = document.getElementById("input-text") || document.querySelector("textarea:not([readonly])");
-  if (!input) return;
+  document.getElementById('input-text')?.addEventListener('input', () => {
+    const text = document.getElementById('input-text').value;
+    document.getElementById('char-count').textContent = text.length;
+    document.getElementById('word-count').textContent = text.trim()
+      ? text
+          .trim()
+          .split(/\s+/)
+          .filter((w) => w).length
+      : 0;
+    document.getElementById('line-count').textContent = text ? text.split('\n').length : 0;
+  });
+
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card =
+      document.getElementById('fullscreen-btn').closest('.bg-surface-1.border.border-surface.rounded-2xl') ||
+      document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
+    if (!card) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      document.getElementById('fullscreen-btn').textContent = '⛶';
+    } else {
+      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
+      document.getElementById('fullscreen-btn').textContent = '✕';
+    }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
+  });
+
+  const DRAFT_KEY = 'nt_draft_ai-language-detector';
+  (function () {
+    const input = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');
+    if (!input) return;
+    try {
+      const saved = localStorage.getItem(DRAFT_KEY);
+      if (saved && !input.value) {
+        input.value = saved;
+        input.dispatchEvent(new Event('input'));
+      }
+    } catch (e) {}
+    let saveTimer;
+    input.addEventListener('input', () => {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        try {
+          localStorage.setItem(DRAFT_KEY, input.value);
+        } catch (e) {}
+      }, 500);
+    });
+  })();
+
+  document.querySelector('.font-inc')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.min(24, s + 2) + 'px';
+    });
+  });
+  document.querySelector('.font-dec')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.max(10, s - 2) + 'px';
+    });
+  });
   try {
-    const saved = localStorage.getItem(DRAFT_KEY);
-    if (saved && !input.value) { input.value = saved; input.dispatchEvent(new Event("input")); }
-  } catch(e) {}
-  let saveTimer;
-  input.addEventListener("input", () => {
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(() => {
-      try { localStorage.setItem(DRAFT_KEY, input.value); } catch(e) {}
-    }, 500);
+    const s = localStorage.getItem('nt_fs');
+    if (s) document.querySelectorAll('textarea').forEach((t) => (t.style.fontSize = s + 'px'));
+  } catch (e) {}
+
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b =
+        document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])") ||
+        document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      document.getElementById('clear-btn')?.click();
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
   });
-})();
 
-document.querySelector(".font-inc")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.min(24,s+2)+"px"; }); });
-document.querySelector(".font-dec")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.max(10,s-2)+"px"; }); });
-try { const s=localStorage.getItem("nt_fs"); if(s) document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px"); } catch(e){}
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['ai-language-detector']) b.textContent = 'Used ' + u['ai-language-detector'] + '×';
+  } catch (e) {}
 
-document.addEventListener("keydown", e => {
-  if(e.ctrlKey&&e.key==="Enter"){ e.preventDefault(); const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])")||document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])"); if(b) b.click(); }
-  if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){ e.preventDefault(); document.getElementById("clear-btn")?.click(); }
-  if(e.ctrlKey&&(e.key==="D"||e.key==="d")){ e.preventDefault(); document.getElementById("download-btn")?.click(); }
-});
-
-try { const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}"); const b=document.getElementById("usage-badge"); if(b&&u["ai-language-detector"]) b.textContent="Used "+u["ai-language-detector"]+"×"; } catch(e){}
-
-document.getElementById("share-btn")?.addEventListener("click", () => {
-  const o=document.getElementById("detected-lang")||document.querySelector("[id$='result']");
-  const t=o?.value||o?.textContent||"";
-  if(!t) return;
-  const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));
-  navigator.clipboard.writeText(u).catch(()=>{});
-  if(typeof window.__showToast==="function") window.__showToast({message:"Link copied!"});
-});
-
-const rtInput=document.getElementById("input-text")||document.querySelector("textarea:not([readonly])");
-if(rtInput){
-  rtInput.addEventListener("input", ()=>{
-    const w=rtInput.value?rtInput.value.trim().split(/\s+/).length:0;
-    const e=document.getElementById("reading-time");
-    if(e) e.textContent=Math.max(1,Math.round(w/200))+" min read · "+Math.max(1,Math.round(w/150))+" min speak";
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('detected-lang') || document.querySelector("[id$='result']");
+    const t = o?.value || o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof window.__showToast === 'function') window.__showToast({ message: 'Link copied!' });
   });
-  rtInput.dispatchEvent(new Event("input"));
-}
 
-const lnInput=document.getElementById("input-text");
-if(lnInput){
-  const updateLN=()=>{ const n=document.getElementById("line-nums"); if(n) n.textContent=Array.from({length:lnInput.value.split("\n").length},(_,i)=>i+1).join("\n"); };
-  lnInput.addEventListener("input", updateLN);
-  lnInput.addEventListener("scroll", ()=>{ const n=document.getElementById("line-nums"); if(n) n.scrollTop=lnInput.scrollTop; });
-  updateLN();
-}
+  const rtInput = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');
+  if (rtInput) {
+    rtInput.addEventListener('input', () => {
+      const w = rtInput.value ? rtInput.value.trim().split(/\s+/).length : 0;
+      const e = document.getElementById('reading-time');
+      if (e)
+        e.textContent =
+          Math.max(1, Math.round(w / 200)) + ' min read · ' + Math.max(1, Math.round(w / 150)) + ' min speak';
+    });
+    rtInput.dispatchEvent(new Event('input'));
+  }
 
-const lfInput=document.getElementById("input-text");
-if(lfInput){
-  lfInput.addEventListener("input", ()=>{
-    const t=lfInput.value.toLowerCase().replace(/[^a-z]/g,""); if(!t){ document.getElementById("letter-freq").classList.add("hidden"); return; }
-    const f={}; for(const c of t) f[c]=(f[c]||0)+1;
-    const s=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,8); const m=s[0]?s[0][1]:1;
-    const el=document.getElementById("letter-freq"); el.classList.remove("hidden");
-    el.innerHTML=s.map(([c,n])=>`<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n/m)*80+10}%"></div><span class="text-muted">${n}</span></div>`).join("");
+  const lnInput = document.getElementById('input-text');
+  if (lnInput) {
+    const updateLN = () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.textContent = Array.from({ length: lnInput.value.split('\n').length }, (_, i) => i + 1).join('\n');
+    };
+    lnInput.addEventListener('input', updateLN);
+    lnInput.addEventListener('scroll', () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.scrollTop = lnInput.scrollTop;
+    });
+    updateLN();
+  }
+
+  const lfInput = document.getElementById('input-text');
+  if (lfInput) {
+    lfInput.addEventListener('input', () => {
+      const t = lfInput.value.toLowerCase().replace(/[^a-z]/g, '');
+      if (!t) {
+        document.getElementById('letter-freq').classList.add('hidden');
+        return;
+      }
+      const f = {};
+      for (const c of t) f[c] = (f[c] || 0) + 1;
+      const s = Object.entries(f)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+      const m = s[0] ? s[0][1] : 1;
+      const el = document.getElementById('letter-freq');
+      el.classList.remove('hidden');
+      el.innerHTML = s
+        .map(
+          ([c, n]) =>
+            `<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n / m) * 80 + 10}%"></div><span class="text-muted">${n}</span></div>`,
+        )
+        .join('');
+    });
+  }
+
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      const map = { purple: '#a855f7', blue: '#3b82f6', green: '#22c55e', pink: '#ec4899', orange: '#f97316' };
+      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500')
+          .replace(/from-(purple|violet)-\d+/g, 'from-' + c + '-500')
+          .replace(/to-purple-\d+/g, 'to-' + c + '-600');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
   });
-}
-
-document.querySelectorAll(".theme-swatch").forEach(s=>{
-  s.addEventListener("click",()=>{
-    const c=s.dataset.color; const map={purple:"#a855f7",blue:"#3b82f6",green:"#22c55e",pink:"#ec4899",orange:"#f97316"};
-    document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach(b=>{ b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500").replace(/from-(purple|violet)-\d+/g,"from-"+c+"-500").replace(/to-purple-\d+/g,"to-"+c+"-600"); });
-    try{localStorage.setItem("nt_theme",c);}catch(e){}
-  });
-});
-try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>

@@ -1,0 +1,36 @@
+---
+import AspectCard from './AspectCard.astro';
+
+interface Preset {
+  ratio: string;
+  label: string;
+  dimensions: string;
+  cardClass?: string;
+}
+
+interface Props {
+  presets: Preset[];
+  columns?: 2 | 3 | 4;
+}
+
+const { presets, columns = 4 } = Astro.props;
+
+const colClass: Record<number, string> = {
+  2: 'sm:grid-cols-2',
+  3: 'sm:grid-cols-3',
+  4: 'sm:grid-cols-4',
+};
+---
+
+<div class="my-6 grid grid-cols-2 gap-3" class:list={[colClass[columns]]}>
+  {
+    presets.map((preset) => (
+      <AspectCard
+        ratio={preset.ratio}
+        label={preset.label}
+        dimensions={preset.dimensions}
+        cardClass={preset.cardClass}
+      />
+    ))
+  }
+</div>

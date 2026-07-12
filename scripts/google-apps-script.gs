@@ -23,10 +23,7 @@ function doPost(e) {
 
     // Auto-create headers if empty
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow([
-        'Timestamp', 'Type', 'Name', 'Email', 'Subject / Rating',
-        'Message', 'Page', 'Status',
-      ]);
+      sheet.appendRow(['Timestamp', 'Type', 'Name', 'Email', 'Subject / Rating', 'Message', 'Page', 'Status']);
     }
 
     const type = data.type || 'contact';
@@ -57,18 +54,16 @@ function doPost(e) {
       ]);
     }
 
-    return ContentService
-      .createTextOutput(JSON.stringify({ success: true }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return ContentService.createTextOutput(JSON.stringify({ success: true })).setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ success: false, error: err.message }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return ContentService.createTextOutput(JSON.stringify({ success: false, error: err.message })).setMimeType(
+      ContentService.MimeType.JSON,
+    );
   }
 }
 
 function doGet() {
-  return ContentService
-    .createTextOutput(JSON.stringify({ status: 'ok', message: 'NumanX Tools Sheets Webhook is running.' }))
-    .setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(
+    JSON.stringify({ status: 'ok', message: 'NumanX Tools Sheets Webhook is running.' }),
+  ).setMimeType(ContentService.MimeType.JSON);
 }

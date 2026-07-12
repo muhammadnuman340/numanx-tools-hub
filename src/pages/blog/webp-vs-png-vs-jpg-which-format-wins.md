@@ -1,4 +1,4 @@
----
+﻿---
 layout: ../../layouts/BlogLayout.astro
 title: 'WebP vs PNG vs JPG: Which Image Format Wins in 2026?'
 description: 'Compare the pros and cons of WebP, PNG, and JPG formats to choose the best one for any use case.'
@@ -8,7 +8,7 @@ category: 'Image Tools'
 tags: ['WebP', 'PNG', 'JPG', 'image formats', 'web optimization', 'comparison']
 readingTime: '7 min read'
 slug: 'webp-vs-png-vs-jpg-which-format-wins'
-image: '/images/blog/webp-vs-png-vs-jpg-which-format-wins.webp'
+image: '/images/blog/webp-vs-png-vs-jpg-which-format-wins.svg'
 ---
 
 Choosing the right image format is one of the most impactful decisions you can make for web performance. JPG has been the standard for decades. PNG dominates for graphics and transparency. WebP promises the best of both worlds. In 2026, here is how they compare.
@@ -78,7 +78,7 @@ JPEG is still the best choice in specific scenarios.
 
 ### JPEG Strengths
 
-- Universal browser support — works everywhere
+- Universal browser support â€” works everywhere
 - Excellent for photographs with smooth gradients
 - Small file sizes at reasonable quality
 - Supported by every image editor and device
@@ -110,7 +110,7 @@ PNG excels where accuracy matters more than file size.
 
 ### PNG Weaknesses
 
-- Large file sizes (often 2–5x larger than JPEG)
+- Large file sizes (often 2â€“5x larger than JPEG)
 - Not suitable for photographs at high resolution
 - No animation support
 - No lossy compression option
@@ -193,8 +193,8 @@ Converting between formats is simple with the right tools.
 
 | Tool               | Formats     | Batch |
 | ------------------ | ----------- | ----- |
-| NumanX JPG to PNG  | JPG ↔ PNG   | Yes   |
-| NumanX PNG to WebP | PNG → WebP  | Yes   |
+| NumanX JPG to PNG  | JPG â†” PNG   | Yes   |
+| NumanX PNG to WebP | PNG â†’ WebP  | Yes   |
 | Squoosh            | All formats | No    |
 | CloudConvert       | All formats | Yes   |
 

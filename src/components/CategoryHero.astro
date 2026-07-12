@@ -1,6 +1,6 @@
 ---
-import type { CategoryInfo } from "../data/tools";
-import ToolIcon from "../components/icons/ToolIcon.astro";
+import type { CategoryInfo } from '../data/tools';
+import ToolIcon from '../components/icons/ToolIcon.astro';
 
 interface Props {
   category: CategoryInfo;
@@ -10,7 +10,9 @@ const { category } = Astro.props;
 ---
 
 <div class="text-center mb-12 pt-8">
-  <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-surface bg-surface-1 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6">
+  <div
+    class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-surface bg-surface-1 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6"
+  >
     <ToolIcon name={category.icon} />
     {category.count} Tools
   </div>
@@ -21,4 +23,3 @@ const { category } = Astro.props;
     {category.description}
   </p>
 </div>
-

@@ -1,0 +1,200 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'Why do my Instagram captions lose line breaks?',
+    answer:
+      'Instagram automatically removes empty lines and spaces in captions, causing paragraphs to collapse into a single block of text.',
+  },
+  {
+    question: 'How does this tool fix Instagram formatting?',
+    answer:
+      'This tool inserts an invisible zero-width character on empty lines, forcing Instagram to recognize and preserve the line breaks in your caption.',
+  },
+  {
+    question: 'Is this safe to use?',
+    answer:
+      'Yes! The inserted character is completely invisible to users and will not affect the appearance or searchability of your post.',
+  },
+];
+const schema = {
+  name: 'Instagram Line Break Generator',
+  applicationCategory: 'Social Media Tools',
+  description: 'Fix Instagram caption formatting by adding invisible spaces to preserve line breaks and paragraphs.',
+  featureList: [
+    'Preserves empty lines in IG captions',
+    'Uses invisible zero-width spaces',
+    'One-click copy to clipboard',
+    '100% client-side text processing',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '✨',
+    title: 'Clean Formatting',
+    desc: 'Keep your Instagram captions looking professional with perfect paragraphs and distinct line breaks.',
+  },
+  {
+    icon: '👻',
+    title: 'Invisible Characters',
+    desc: 'Uses a special zero-width space that Instagram respects but your followers will never see.',
+  },
+  {
+    icon: '⚡',
+    title: 'Instant Copy',
+    desc: 'Type your caption and copy the perfectly formatted result with a single click.',
+  },
+  {
+    icon: '🔒',
+    title: '100% Private',
+    desc: 'Your captions are processed entirely in your browser. We never read or store your content.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Write Caption',
+    desc: 'Type or paste your drafted Instagram caption into the large text area, using standard enter/return for line breaks.',
+  },
+  {
+    num: '2',
+    title: 'Format & Copy',
+    desc: 'Click the "Copy and Format" button. The tool instantly injects invisible spaces to preserve your blank lines.',
+  },
+  {
+    num: '3',
+    title: 'Paste to Instagram',
+    desc: 'Open the Instagram app and paste the copied text directly into the caption field.',
+  },
+  {
+    num: '4',
+    title: 'Post',
+    desc: 'Publish your photo or reel. Your paragraphs and line breaks will render exactly as you intended!',
+  },
+];
+
+const useCases = [
+  {
+    icon: '📸',
+    title: 'Social Media Managers',
+    desc: 'Ensure consistent and highly readable formatting for client brand accounts.',
+  },
+  {
+    icon: '✍️',
+    title: 'Influencers & Creators',
+    desc: 'Write longer, engaging micro-blogs without the text turning into a massive, unreadable block.',
+  },
+  {
+    icon: '📝',
+    title: 'Listicles',
+    desc: 'Perfectly format recipe ingredients, workout steps, or top 10 lists directly in your captions.',
+  },
+];
+---
+
+<MainLayout
+  title="Instagram Line Break Generator - Fix Caption Formatting"
+  description="Easily fix your Instagram caption formatting. Add invisible spaces to keep your paragraphs, lists, and line breaks perfectly intact."
+  keywords="instagram line break, ig caption formatter, instagram spaces, instagram caption maker, fix instagram formatting"
+  toolSchema={schema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Add Line Breaks to Instagram Captions',
+    description: 'Step-by-step guide for formatting IG captions.',
+    steps: [],
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Instagram Line Break', url: '/tools/instagram-line-break/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="IG Line Break"
+        gradient="Generator"
+        desc="Write your caption with line breaks below, and we'll format it perfectly for Instagram."
+        badge="✦ New Tool"
+        slug="instagram-line-break"
+      />
+      <ShareBar />
+      <div class="max-w-xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 relative">
+          <label class="text-xs font-semibold text-muted uppercase tracking-wider mb-2 block">Your Caption</label>
+          <textarea
+            id="caption-input"
+            class="w-full h-64 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all resize-y mb-4"
+            placeholder="Write or paste your caption here...&#10;&#10;Like this!"
+          ></textarea>
+          
+          <button
+            id="copy-btn"
+            class="w-full bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold py-3 rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2"
+          >
+            Copy and Format
+          </button>
+        </div>
+      </div>
+      <ToolContentSections
+        toolSlug="instagram-line-break"
+        toolName="Instagram Line Break Generator"
+        category="Social Media Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="instagram-line-break" />
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  const input = document.getElementById('caption-input') as HTMLTextAreaElement;
+  const copyBtn = document.getElementById('copy-btn');
+
+  copyBtn?.addEventListener('click', async () => {
+    let text = input.value;
+    
+    if (!text.trim()) {
+      if ((window as any).__showToast) {
+        (window as any).__showToast({ message: 'Please enter a caption first!', variant: 'warning' });
+      }
+      return;
+    }
+
+    // Replace empty lines with the invisible separator \u2063
+    text = text.replace(/(?:\r\n|\r|\n)/g, '\n').replace(/\n(\s*)\n/g, '\n\u2063\n');
+    
+    try {
+      await navigator.clipboard.writeText(text);
+      const originalText = copyBtn.textContent;
+      copyBtn.textContent = 'Copied!';
+      copyBtn.classList.remove('bg-purple-600', 'hover:bg-purple-500');
+      copyBtn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
+      
+      if ((window as any).__showToast) {
+        (window as any).__showToast({ message: 'Formatted caption copied!', variant: 'success' });
+      }
+
+      setTimeout(() => {
+        copyBtn.textContent = originalText;
+        copyBtn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
+        copyBtn.classList.add('bg-purple-600', 'hover:bg-purple-500');
+      }, 2000);
+    } catch (err) {
+      if ((window as any).__showToast) {
+        (window as any).__showToast({ message: 'Failed to copy to clipboard', variant: 'error' });
+      }
+    }
+  });
+</script>

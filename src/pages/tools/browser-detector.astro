@@ -1,0 +1,602 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'Is any client data transmitted to servers?',
+    answer:
+      'Zero. Under our privacy policies, all diagnostic calculations, user agent parsing, layout metrics, and browser storage estimates are fetched from native client APIs in real time. Absolute 100% client-side privacy.',
+  },
+  {
+    question: 'What is the Canvas Fingerprint?',
+    answer:
+      'It is a SHA-256 hash representation of a tiny hidden canvas rendered dynamically with text, gradients, and custom overlays. Different graphics cards, rendering engines, and drivers draw pixels differently, highlighting privacy exposures.',
+  },
+  {
+    question: 'How does the Storage Estimate find limits?',
+    answer:
+      'It utilizes modern asynchronous web storage APIs to inspect how much disk space your browser allows NumanX sites to allocate before eviction triggers. This reflects active partitions on your persistent drive.',
+  },
+];
+
+const bdSchema = {
+  name: 'Client Hardware & API Inspector',
+  applicationCategory: 'Utilities',
+  description:
+    'Advanced diagnostic tool to audit browser User Agent, connection status, screen parameters, GPU/graphics features, and Web APIs.',
+  featureList: [
+    'Interactive Hardware Metrics',
+    'Canvas Cryptographic Fingerprint',
+    'Active Storage Quotas',
+    'Device memory capabilities',
+    '100% Secure Client Scope',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '🕵️',
+    title: 'Deep Diagnostics',
+    desc: 'Uncover hidden browser parameters and hardware capabilities that websites can see.',
+  },
+  {
+    icon: '🔒',
+    title: 'Privacy Focused',
+    desc: 'All detection runs locally. No data is ever transmitted to an external server.',
+  },
+  {
+    icon: '🎨',
+    title: 'Canvas Fingerprinting',
+    desc: 'See exactly how your graphics stack generates a unique identifier used by trackers.',
+  },
+  {
+    icon: '💾',
+    title: 'Storage Insights',
+    desc: 'Check your active storage quotas and find out how much data websites can store locally.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Open Detector',
+    desc: 'Simply visit the page to automatically trigger the client-side diagnostic hooks.',
+  },
+  {
+    num: '2',
+    title: 'Review Network & Hardware',
+    desc: 'Inspect your browser engine, OS platform, CPU cores, and connection latency.',
+  },
+  {
+    num: '3',
+    title: 'Check Graphics Signature',
+    desc: 'Look at the generated Canvas Fingerprint to see your device\'s unique rendering signature.',
+  },
+  {
+    num: '4',
+    title: 'Export Report',
+    desc: 'Click "Copy Report" or "Download .txt" to save a comprehensive snapshot of your hardware.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '🛡️',
+    title: 'Privacy Auditing',
+    desc: 'Check if your browser is leaking too much unique information to tracking scripts.',
+  },
+  {
+    icon: '💻',
+    title: 'Web Development',
+    desc: 'Debug browser-specific issues by verifying User Agent strings and supported APIs.',
+  },
+  {
+    icon: '🔧',
+    title: 'Tech Support',
+    desc: 'Quickly generate a hardware and browser report to send to IT or customer support.',
+  },
+];
+---
+
+<MainLayout
+  title="Client Hardware & API Inspector - Advanced Browser Diagnostics"
+  description="Scan your device to audit User Agent headers, CPU cores, graphics pipelines, HTML5 API quotas, and visual canvas fingerprinting parameters."
+  keywords="browser detector, user agent parser, canvas fingerprinting, screen debugger, cookie checker, GPU inspector, device memory meter"
+  toolSchema={bdSchema}
+  faq={faqItems}
+  howto={{
+    name: 'How to use Client Hardware & API Inspector',
+    description: 'Audit client diagnostics and API parameters securely.',
+    steps: [
+      {
+        name: 'Execute Diagnostic',
+        text: 'Open the page and watch the system automatically trigger internal client hooks to fetch parameters.',
+      },
+      {
+        name: 'Check Storage and RAM',
+        text: 'Inspect persistent storage limitations, available processor threads, and memory arrays.',
+      },
+      {
+        name: 'Generate Canvas Hash',
+        text: 'Verify the graphic device signature via the live canvas fingerprint parser.',
+      },
+    ],
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Hardware Inspector', url: '/tools/browser-detector/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="Client Hardware"
+        gradient="& API Inspector"
+        desc="Inspect client parameters, storage limits, security fingerprints, and available CPU thread profiles securely."
+        badge="✦ Hidden Utility"
+        slug="browser-detector"
+      />
+      <ShareBar />
+
+      <!-- ─── Action Toolbar ─── -->
+      <div id="bd-card" class="grid grid-cols-1 md:grid-cols-12 gap-6 mt-10">
+        <div class="md:col-span-12 flex flex-wrap items-center gap-2 mb-2">
+          <button id="copy-report-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-2 border border-surface text-xs font-semibold text-tertiary hover:text-white hover:border-purple-500/40 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy Report
+          </button>
+          <button id="download-report-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-2 border border-surface text-xs font-semibold text-tertiary hover:text-white hover:border-purple-500/40 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download .txt
+          </button>
+          <button id="fullscreen-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-2 border border-surface text-xs font-semibold text-tertiary hover:text-white hover:border-purple-500/40 transition-all ml-auto" title="Fullscreen (F)">
+            ⛶ Fullscreen
+          </button>
+          <span class="text-[10px] text-muted hidden sm:inline">Press <kbd class="px-1.5 py-0.5 rounded bg-surface-2 border border-surface font-mono">C</kbd> to copy · <kbd class="px-1.5 py-0.5 rounded bg-surface-2 border border-surface font-mono">F</kbd> fullscreen</span>
+        </div>
+
+        <!-- Left Column: Core Parameters and Live Audit -->
+        <div class="md:col-span-8 space-y-6">
+          <div class="glass-card rounded-[2rem] p-6 relative">
+            <h2 class="text-sm font-semibold text-rose-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+              Browser Details &amp; Connection
+            </h2>
+
+            <div class="space-y-4">
+              <div>
+                <label class="block text-xs font-medium text-tertiary mb-1">User Agent Header</label>
+                <div
+                  id="user-agent-text"
+                  class="w-full bg-surface-1 rounded-xl border border-surface-2 px-4 py-3 text-xs font-mono text-rose-300 break-all select-all leading-relaxed"
+                >
+                  Fetching raw browser strings...
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-surface-1 border border-surface-2 rounded-xl p-4">
+                  <div class="text-xs text-muted">Core Engine Platform</div>
+                  <div id="os-platform" class="text-base font-bold text-white mt-1">Detecting...</div>
+                </div>
+                <div class="bg-surface-1 border border-surface-2 rounded-xl p-4">
+                  <div class="text-xs text-muted">Cookies Enabled</div>
+                  <div id="cookies-status" class="text-base font-bold text-white mt-1">Detecting...</div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-surface-1 border border-surface-2 rounded-xl p-4">
+                  <div class="text-xs text-muted">Network Type</div>
+                  <div id="network-type" class="text-base font-bold text-white mt-1">Not available</div>
+                </div>
+                <div class="bg-surface-1 border border-surface-2 rounded-xl p-4">
+                  <div class="text-xs text-muted">Round Trip Time (RTT)</div>
+                  <div id="network-rtt" class="text-base font-bold text-white mt-1">Not available</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Graphics and Sandbox Profile -->
+          <div class="glass-card rounded-[2rem] p-6">
+            <h2 class="text-sm font-semibold text-rose-400 uppercase tracking-wider mb-4">
+              Graphics &amp; Privacy Signature
+            </h2>
+
+            <div class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-surface-1 border border-surface-2 rounded-xl p-4">
+                  <div class="text-xs text-muted">Display Resolution</div>
+                  <div id="screen-res" class="text-base font-bold text-white mt-1">0 × 0</div>
+                </div>
+                <div class="bg-surface-1 border border-surface-2 rounded-xl p-4">
+                  <div class="text-xs text-muted font-mono">Viewport Dimensions</div>
+                  <div id="viewport-res" class="text-base font-bold text-white mt-1">0 × 0</div>
+                </div>
+              </div>
+
+              <div class="bg-surface-1 border border-surface-2 rounded-xl p-4">
+                <div class="flex items-center justify-between">
+                  <div class="text-xs text-muted">WebGL/GPU Renderer</div>
+                  <span class="text-[10px] text-green-400 bg-green-500/10 px-1.5 py-0.5 rounded font-bold font-mono"
+                    >HTML5 ACTIVE</span
+                  >
+                </div>
+                <div id="gpu-renderer" class="text-sm font-semibold text-rose-100 mt-2 leading-relaxed">
+                  Initializing graphics stack...
+                </div>
+              </div>
+
+              <div class="bg-surface-1 border border-surface-2 rounded-xl p-4">
+                <div class="flex items-center justify-between mb-1">
+                  <div class="text-xs text-muted">Canvas Graphic Fingerprint (SHA-256 Signature)</div>
+                  <button id="regen-fingerprint" class="text-xs text-purple-400 hover:text-white transition-colors"
+                    >Re-evaluate</button
+                  >
+                </div>
+                <div id="canvas-fingerprint-val" class="text-xs font-mono text-rose-300 break-all select-all py-1">
+                  Computing mathematical canvas matrix...
+                </div>
+                <p class="text-[10px] text-muted mt-2 leading-relaxed">
+                  Calculated by generating a silent, offscreen canvas layout. Different graphic processors process these
+                  parameters uniquely.
+                </p>
+                <!-- Hidden Canvas -->
+                <canvas id="hidden-fingerprint-canvas" width="220" height="30" class="hidden"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: CPU, Storage estimates & system alerts -->
+        <div class="md:col-span-4 space-y-6">
+          <div class="glass-card rounded-[2rem] p-6">
+            <h2 class="text-sm font-semibold text-rose-400 uppercase tracking-wider mb-4">Hardware Cores</h2>
+
+            <div class="space-y-4">
+              <div class="text-center py-6 bg-surface-1 border border-surface-2 rounded-2xl relative overflow-hidden">
+                <div class="text-xs text-muted uppercase font-mono mb-2">Simultaneous CPU Threads</div>
+                <div id="cpu-cores" class="text-5xl font-black text-rose-400">...</div>
+                <div class="text-[10px] text-muted mt-2">Maximum hardware concurrency</div>
+              </div>
+
+              <div class="grid grid-cols-1 gap-3">
+                <div class="bg-surface-1 border border-surface-2 rounded-xl p-4 flex items-center justify-between">
+                  <span class="text-xs text-muted">Device Memory Limit</span>
+                  <span id="ram-limit" class="text-sm font-bold text-white">Detecting...</span>
+                </div>
+                <div class="bg-surface-1 border border-surface-2 rounded-xl p-4 flex items-center justify-between">
+                  <span class="text-xs text-muted">Color Capabilities</span>
+                  <span id="color-depth" class="text-sm font-bold text-white">Detecting...</span>
+                </div>
+                <div class="bg-surface-1 border border-surface-2 rounded-xl p-4 flex items-center justify-between">
+                  <span class="text-xs text-muted">Touch Support</span>
+                  <span id="touch-supported" class="text-sm font-bold text-white">No</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card rounded-[2rem] p-6">
+            <h2 class="text-sm font-semibold text-rose-400 uppercase tracking-wider mb-4">Storage Quotas</h2>
+            <div class="space-y-4">
+              <div class="bg-surface-1 border border-surface-2 rounded-xl p-4">
+                <div class="text-xs text-muted">Total Allowed Storage</div>
+                <div id="storage-limit" class="text-base font-bold text-white mt-1">3.1 GB</div>
+                <div class="w-full bg-zinc-800 rounded-full h-1.5 mt-3 overflow-hidden">
+                  <div id="storage-bar" class="bg-rose-500 h-1.5 rounded-full" style="width: 0.1%"></div>
+                </div>
+                <div class="flex justify-between text-[10px] text-muted mt-2">
+                  <span id="storage-used">Used: 0 MB</span>
+                  <span id="storage-percentage">0.1% matches</span>
+                </div>
+              </div>
+
+              <div class="bg-surface-1 border border-surface-2 rounded-xl p-4">
+                <div class="text-xs text-muted mb-2">Active Framework Stack</div>
+                <div class="space-y-1.5 font-mono text-[11px]">
+                  <div class="flex justify-between p-1 border-b border-surface">
+                    <span class="text-tertiary">IndexedDB</span>
+                    <span class="text-green-400 font-semibold">Ready</span>
+                  </div>
+                  <div class="flex justify-between p-1 border-b border-surface">
+                    <span class="text-tertiary">LocalStorage</span>
+                    <span class="text-green-400 font-semibold">Active</span>
+                  </div>
+                  <div class="flex justify-between p-1">
+                    <span class="text-tertiary">SessionStorage</span>
+                    <span class="text-green-400 font-semibold">Active</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card rounded-[2rem] p-6">
+            <h2 class="text-sm font-semibold text-rose-400 uppercase tracking-wider mb-3">Diagnostic Advice</h2>
+            <p class="text-xs text-tertiary leading-relaxed">
+              If your Canvas Fingerprint is constant, advertisers can build models matching your machine
+              characteristics. We recommend browser updates or security shields if tracking exposure is a concern.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <ToolContentSections
+        toolSlug="browser-detector"
+        toolName="Hardware Inspector"
+        category="Utilities"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="browser-detector" />
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 1100;
+      g.gain.setValueAtTime(0.05, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.1);
+      o.start();
+      o.stop(a.currentTime + 0.1);
+    } catch (e) {}
+  }
+
+  async function inspectClient() {
+    // 1. User Agent
+    const ua = navigator.userAgent;
+    const uaContainer = document.getElementById('user-agent-text');
+    if (uaContainer) uaContainer.textContent = ua;
+
+    // 2. OS / Engine detect
+    const osPlatform = document.getElementById('os-platform');
+    if (osPlatform) {
+      let plat = (navigator as any).platform || 'Unknown OS';
+      if (ua.includes('Windows')) plat = 'Windows Platform';
+      else if (ua.includes('Macintosh')) plat = 'MacOS Desktop';
+      else if (ua.includes('Andr')) plat = 'Android Mobile';
+      else if (ua.includes('iPhone') || ua.includes('iPad')) plat = 'iOS Mobile Device';
+      else if (ua.includes('Linux')) plat = 'Linux System';
+      osPlatform.textContent = plat;
+    }
+
+    // 3. Cookies
+    const cookiesStatus = document.getElementById('cookies-status');
+    if (cookiesStatus) {
+      cookiesStatus.textContent = navigator.cookieEnabled ? 'Enabled (Allow)' : 'Disabled (Blocked)';
+      cookiesStatus.className = navigator.cookieEnabled
+        ? 'text-base font-bold text-green-400 mt-1'
+        : 'text-base font-bold text-red-400 mt-1';
+    }
+
+    // 4. Hardware concurrency & memory
+    const cpuCores = document.getElementById('cpu-cores');
+    if (cpuCores) {
+      cpuCores.textContent = String(navigator.hardwareConcurrency || 'N/A');
+    }
+
+    const ramLimit = document.getElementById('ram-limit');
+    if (ramLimit) {
+      const mem = (navigator as any).deviceMemory;
+      ramLimit.textContent = mem ? `~ ${mem} GB RAM` : 'Not permitted';
+    }
+
+    // Touch
+    const touchSupported = document.getElementById('touch-supported');
+    if (touchSupported) {
+      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      touchSupported.textContent = isTouch ? 'Yes (Active)' : 'No touch sensor';
+      touchSupported.className = isTouch ? 'text-sm font-bold text-green-400' : 'text-sm font-bold text-white';
+    }
+
+    // Color depth
+    const colorDepth = document.getElementById('color-depth');
+    if (colorDepth) {
+      colorDepth.textContent = `${window.screen.colorDepth}-bit spectrum`;
+    }
+
+    // 5. Network properties
+    const conn =
+      (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
+    const netType = document.getElementById('network-type');
+    const netRtt = document.getElementById('network-rtt');
+    if (conn) {
+      if (netType) netType.textContent = conn.effectiveType ? conn.effectiveType.toUpperCase() : 'Unknown';
+      if (netRtt) netRtt.textContent = conn.rtt ? `${conn.rtt} ms` : 'Unknown latency';
+    }
+
+    // 6. Dimensions
+    const screenRes = document.getElementById('screen-res');
+    if (screenRes) {
+      screenRes.textContent = `${window.screen.width} × ${window.screen.height} px`;
+    }
+
+    function updateViewport() {
+      const vRes = document.getElementById('viewport-res');
+      if (vRes) {
+        vRes.textContent = `${window.innerWidth} × ${window.innerHeight} px`;
+      }
+    }
+    updateViewport();
+    window.addEventListener('resize', updateViewport);
+
+    // 7. GPU WebGL Renderer
+    const gpuRenderer = document.getElementById('gpu-renderer');
+    if (gpuRenderer) {
+      try {
+        const d = document.createElement('canvas');
+        const gl = d.getContext('webgl') || d.getContext('experimental-webgl');
+        if (gl) {
+          const debugInfo = (gl as WebGLRenderingContext).getExtension('WEBGL_debug_renderer_info');
+          if (debugInfo) {
+            gpuRenderer.textContent = (gl as WebGLRenderingContext).getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+          } else {
+            gpuRenderer.textContent =
+              (gl as WebGLRenderingContext).getParameter((gl as WebGLRenderingContext).RENDERER) ||
+              'Generic WebGL Device';
+          }
+        } else {
+          gpuRenderer.textContent = 'WebGL blocked or unsupported on card hardware.';
+        }
+      } catch (e) {
+        gpuRenderer.textContent = 'Error mapping WebGL components.';
+      }
+    }
+
+    // 8. Storage quotas
+    if (navigator.storage && navigator.storage.estimate) {
+      try {
+        const est = await navigator.storage.estimate();
+        const quota = est.quota || 0;
+        const usage = est.usage || 0;
+
+        const quotaGB = (quota / (1024 * 1024 * 1024)).toFixed(1);
+        const usageMB = (usage / (1024 * 1024)).toFixed(1);
+
+        const storageLimit = document.getElementById('storage-limit');
+        if (storageLimit) storageLimit.textContent = `${quotaGB} GB`;
+
+        const storageUsed = document.getElementById('storage-used');
+        if (storageUsed) storageUsed.textContent = `Used: ${usageMB} MB`;
+
+        const pct = quota > 0 ? (usage / quota) * 100 : 0.1;
+        const pctStr = `${Math.max(0.1, parseFloat(pct.toFixed(2)))}%`;
+
+        const storagePct = document.getElementById('storage-percentage');
+        if (storagePct) storagePct.textContent = pctStr;
+
+        const storageBar = document.getElementById('storage-bar');
+        if (storageBar) storageBar.style.width = pctStr;
+      } catch (e) {}
+    }
+
+    // 9. Canvas Fingerprint calculation (SHA-256)
+    calculateFingerprint();
+  }
+
+  async function calculateFingerprint() {
+    const canvas = document.getElementById('hidden-fingerprint-canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+    try {
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      ctx.textBaseline = 'top';
+      ctx.font = "14px 'Arial'";
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillStyle = '#f60';
+      ctx.fillRect(125, 1, 62, 20);
+      ctx.fillStyle = '#069';
+      ctx.fillText('NumanX, <canvas> diagnostic', 2, 17);
+      ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+      ctx.fillText('NumanX, <canvas> diagnostic', 4, 17);
+
+      const src = canvas.toDataURL();
+
+      // Hash via WebCrypto subtlegroup
+      const encoder = new TextEncoder();
+      const data = encoder.encode(src);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+
+      const fingerVal = document.getElementById('canvas-fingerprint-val');
+      if (fingerVal) fingerVal.textContent = hashHex;
+    } catch (e) {
+      const fingerVal = document.getElementById('canvas-fingerprint-val');
+      if (fingerVal) fingerVal.textContent = 'Error computing crypto signature.';
+    }
+  }
+
+  // Initial trigger
+  inspectClient();
+
+  document.getElementById('regen-fingerprint')?.addEventListener('click', () => {
+    playPing();
+    calculateFingerprint();
+    if ((window as any).__showToast)
+      (window as any).__showToast({ message: 'Canvas signature re-evaluated!', variant: 'success' });
+  });
+
+  // Track page usage
+  const DRAFT_KEY = 'nt_usage_browser_detector';
+  try {
+    const usages = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    usages['browser-detector'] = (usages['browser-detector'] || 0) + 1;
+    localStorage.setItem('nt_tool_usage', JSON.stringify(usages));
+  } catch (e) {}
+
+  // ─── Copy Report ───
+  function buildReport() {
+    const fields = [
+      ['User Agent', document.getElementById('user-agent-text')?.textContent],
+      ['Platform', document.getElementById('os-platform')?.textContent],
+      ['Cookies', document.getElementById('cookies-status')?.textContent],
+      ['Network Type', document.getElementById('network-type')?.textContent],
+      ['RTT', document.getElementById('network-rtt')?.textContent],
+      ['Resolution', document.getElementById('screen-res')?.textContent],
+      ['Viewport', document.getElementById('viewport-res')?.textContent],
+      ['GPU', document.getElementById('gpu-renderer')?.textContent],
+      ['Canvas Fingerprint', document.getElementById('canvas-fingerprint-val')?.textContent],
+      ['CPU Cores', document.getElementById('cpu-cores')?.textContent],
+      ['RAM', document.getElementById('ram-limit')?.textContent],
+      ['Color Depth', document.getElementById('color-depth')?.textContent],
+      ['Touch Support', document.getElementById('touch-supported')?.textContent],
+      ['Storage', document.getElementById('storage-limit')?.textContent],
+    ];
+    return '=== Browser & Hardware Report ===\n' + fields.map(([k, v]) => `${k}: ${(v || '').trim()}`).join('\n');
+  }
+
+  document.getElementById('copy-report-btn')?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(buildReport());
+      const btn = document.getElementById('copy-report-btn');
+      if (btn) { btn.textContent = '✓ Copied!'; btn.classList.add('text-emerald-400'); }
+      setTimeout(() => { if (btn) { btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Report'; btn.classList.remove('text-emerald-400'); } }, 2000);
+    } catch {}
+  });
+
+  // ─── Download Report ───
+  document.getElementById('download-report-btn')?.addEventListener('click', () => {
+    const blob = new Blob([buildReport()], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'browser-report.txt';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  // ─── Fullscreen ───
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card = document.getElementById('bd-card');
+    if (!document.fullscreenElement) {
+      card?.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  });
+
+  // ─── Keyboard Shortcuts ───
+  document.addEventListener('keydown', (e) => {
+    if ((e.target as HTMLElement).tagName === 'INPUT' || (e.target as HTMLElement).tagName === 'TEXTAREA') return;
+    if (e.key === 'c' || e.key === 'C') document.getElementById('copy-report-btn')?.click();
+    if (e.key === 'f' || e.key === 'F') document.getElementById('fullscreen-btn')?.click();
+  });
+</script>
+

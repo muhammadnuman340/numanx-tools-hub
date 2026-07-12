@@ -1,8 +1,8 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
-import { tools, categories } from "../data/tools";
-import ToolIcon from "../components/icons/ToolIcon.astro";
-import AdUnit from "../components/AdUnit.astro";
+import MainLayout from '../layouts/MainLayout.astro';
+import { tools, categories } from '../data/tools';
+import ToolIcon from '../components/icons/ToolIcon.astro';
+import AdUnit from '../components/AdUnit.astro';
 
 const searchTools = tools.map((t) => ({
   name: t.name,
@@ -13,28 +13,73 @@ const searchTools = tools.map((t) => ({
 }));
 
 const blogEntries = [
-  { name: "Best AI Tools for Students", desc: "Top AI tools every student should use in 2026 for studying, writing, and research.", cat: "Blog", icon: "article", url: "/blog/best-ai-tools-for-students/" },
-  { name: "Best Free Image Tools 2026", desc: "The best free image editing and conversion tools available online in 2026.", cat: "Blog", icon: "article", url: "/blog/best-free-image-tools-2026/" },
-  { name: "Best YouTube Tools for Creators", desc: "Essential tools for YouTube creators to grow channels and edit videos.", cat: "Blog", icon: "article", url: "/blog/best-youtube-tools-for-creators/" },
-  { name: "How to Compress Images", desc: "Learn how to compress images without losing quality using free online tools.", cat: "Blog", icon: "article", url: "/blog/how-to-compress-images/" },
+  {
+    name: 'Best AI Tools for Students',
+    desc: 'Top AI tools every student should use in 2026 for studying, writing, and research.',
+    cat: 'Blog',
+    icon: 'article',
+    url: '/blog/best-ai-tools-for-students/',
+  },
+  {
+    name: 'Best Free Image Tools 2026',
+    desc: 'The best free image editing and conversion tools available online in 2026.',
+    cat: 'Blog',
+    icon: 'article',
+    url: '/blog/best-free-image-tools-2026/',
+  },
+  {
+    name: 'Best YouTube Tools for Creators',
+    desc: 'Essential tools for YouTube creators to grow channels and edit videos.',
+    cat: 'Blog',
+    icon: 'article',
+    url: '/blog/best-youtube-tools-for-creators/',
+  },
+  {
+    name: 'How to Compress Images',
+    desc: 'Learn how to compress images without losing quality using free online tools.',
+    cat: 'Blog',
+    icon: 'article',
+    url: '/blog/how-to-compress-images/',
+  },
 ];
 
 const allItems = [...searchTools, ...blogEntries];
-const searchCategories = ["All", ...categories.map((c) => c.title), "Blog"];
+const searchCategories = ['All', ...categories.map((c) => c.title), 'Blog'];
 const popular = allItems.slice(0, 5);
 ---
 
-<MainLayout title="Search Tools - NumanX Tools" description="Find online tools, calculators, creator utilities, and cricket analytics tools." noindex={true}>
+<MainLayout
+  title="Search Tools - NumanX Tools"
+  description="Find online tools, calculators, creator utilities, and cricket analytics tools."
+  keywords="search tools, find tools, numanx search, free online tools"
+  noindex={true}
+>
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-6xl mx-auto">
       <section class="text-center mb-12 pt-8">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-tertiary text-xs font-semibold tracking-wider uppercase mb-8">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <div
+          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-tertiary text-xs font-semibold tracking-wider uppercase mb-8"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="text-purple-400"
+            ><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg
+          >
           Global Search
         </div>
         <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-none">
           Find Any
-          <span class="block mt-2 bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+          <span
+            class="block mt-2 bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent"
+          >
             Tool or Article
           </span>
         </h1>
@@ -42,11 +87,44 @@ const popular = allItems.slice(0, 5);
           Search across all tools, blog posts, and categories instantly.
         </p>
         <div class="mt-8 max-w-xl mx-auto relative">
-          <div class="flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-zinc-700 bg-zinc-900/80 focus-within:border-purple-500/50 focus-within:shadow-lg focus-within:shadow-purple-900/10 transition-all duration-300">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted shrink-0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input id="search-page-input" type="text" placeholder="Search tools, blogs, calculators..." autocomplete="off" class="flex-1 bg-transparent text-white placeholder-zinc-500 text-base focus:outline-none" />
-            <kbd class="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-zinc-800 text-muted text-[11px] font-mono border border-zinc-700 shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg>
+          <div
+            class="flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-zinc-700 bg-zinc-900/80 focus-within:border-purple-500/50 focus-within:shadow-lg focus-within:shadow-purple-900/10 transition-all duration-300"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-muted shrink-0"
+              ><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg
+            >
+            <input
+              id="search-page-input"
+              type="text"
+              placeholder="Search tools, blogs, calculators..."
+              autocomplete="off"
+              class="flex-1 bg-transparent text-white placeholder-zinc-500 text-base focus:outline-none"
+            />
+            <kbd
+              class="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-zinc-800 text-muted text-[11px] font-mono border border-zinc-700 shrink-0"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"></path></svg
+              >
               K
             </kbd>
           </div>
@@ -59,37 +137,72 @@ const popular = allItems.slice(0, 5);
 
       <section class="mb-10">
         <div class="flex flex-wrap justify-center gap-2" id="page-categories">
-          {searchCategories.map((cat) => (
-            <button class="page-cat-btn rounded-lg px-4 py-2 text-sm font-medium transition-all whitespace-nowrap {cat === 'All' ? 'bg-purple-600 text-white' : 'bg-zinc-800/60 text-tertiary hover:text-primary hover:bg-zinc-800'}" data-cat="{cat}">{cat}</button>
-          ))}
+          {
+            searchCategories.map((cat) => (
+              <button
+                class="page-cat-btn rounded-lg px-4 py-2 text-sm font-medium transition-all whitespace-nowrap {cat === 'All' ? 'bg-purple-600 text-white' : 'bg-zinc-800/60 text-tertiary hover:text-primary hover:bg-zinc-800'}"
+                data-cat="{cat}"
+              >
+                {cat}
+              </button>
+            ))
+          }
         </div>
       </section>
 
       <section>
         <div id="page-results" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {allItems.map((item) => (
-            <a href={item.url} class="search-page-card rounded-xl border border-zinc-800 bg-zinc-900/40 p-5 hover:border-zinc-700 hover:bg-zinc-900/60 transition-all duration-300 group">
-              <div class="flex items-center gap-3 mb-3">
-                <span class="w-8 h-8 rounded-lg bg-purple-600/10 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-110 transition-transform duration-200"><ToolIcon name={item.icon} /></span>
-                <div>
-                  <h3 class="text-sm font-semibold text-primary group-hover:text-white transition-colors">{item.name}</h3>
-                  <span class="text-[10px] text-dim">{item.cat}</span>
+          {
+            allItems.map((item) => (
+              <a
+                href={item.url}
+                class="search-page-card glass-card rounded-2xl p-5 hover:border-purple-500/30 hover:-translate-y-1 transition-all duration-300 group"
+              >
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="w-8 h-8 rounded-lg bg-purple-600/10 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-110 transition-transform duration-200">
+                    <ToolIcon name={item.icon} />
+                  </span>
+                  <div>
+                    <h3 class="text-sm font-semibold text-primary group-hover:text-white transition-colors">
+                      {item.name}
+                    </h3>
+                    <span class="text-[10px] text-dim">{item.cat}</span>
+                  </div>
                 </div>
-              </div>
-              <p class="text-xs text-muted leading-relaxed">{item.desc}</p>
-            </a>
-          ))}
+                <p class="text-xs text-muted leading-relaxed">{item.desc}</p>
+              </a>
+            ))
+          }
         </div>
         <div id="page-empty" class="hidden py-20 text-center">
           <div class="w-14 h-14 rounded-2xl bg-zinc-800/60 flex items-center justify-center mx-auto mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-muted"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-muted"
+              ><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg
+            >
           </div>
           <p class="text-base text-tertiary font-medium">No results found</p>
           <p class="text-sm text-dim mt-1">Try a different search term or browse all tools.</p>
           <div class="mt-6 flex flex-wrap justify-center gap-3">
-            {popular.map((p) => (
-              <a href={p.url} class="px-4 py-2 rounded-xl bg-zinc-800/60 border border-zinc-700 text-xs text-tertiary hover:text-primary hover:border-zinc-500 transition-all">{p.name}</a>
-            ))}
+            {
+              popular.map((p) => (
+                <a
+                  href={p.url}
+                  class="px-4 py-2 rounded-xl bg-zinc-800/60 border border-zinc-700 text-xs text-tertiary hover:text-primary hover:border-zinc-500 transition-all"
+                >
+                  {p.name}
+                </a>
+              ))
+            }
           </div>
         </div>
       </section>
@@ -98,39 +211,151 @@ const popular = allItems.slice(0, 5);
 </MainLayout>
 
 <script>
-  import { getIconSvg } from "../lib/iconSvgs";
+  import { getIconSvg } from '../lib/iconSvgs';
   const searchData = [
-    { name: "Platform Dashboard", desc: "Track live tool compilations, metrics, milestones, and development roadmap.", cat: "Utility", searchCat: "Utility Tools", icon: "utility", url: "/dashboard/" },
-    { name: "QR Generator", desc: "Generate QR codes from URLs, text, and messages instantly.", cat: "Generator", searchCat: "Creator Tools", icon: "qr", url: "/tools/qr-generator/" },
-    { name: "Word Counter", desc: "Count words, characters, sentences, and paragraphs in your text.", cat: "Text", searchCat: "Utility Tools", icon: "word", url: "/tools/word-counter/" },
-    { name: "Age Calculator", desc: "Calculate exact age in years, months, days, hours, and minutes.", cat: "Calculator", searchCat: "Utility Tools", icon: "age", url: "/tools/age-calculator/" },
-    { name: "Password Generator", desc: "Generate strong, secure passwords with custom length and options.", cat: "Generator", searchCat: "Utility Tools", icon: "password", url: "/tools/password-generator/" },
-    { name: "Hashtag Generator", desc: "Generate trending hashtags for social media posts.", cat: "Generator", searchCat: "Creator Tools", icon: "hashtag", url: "/tools/hashtag-generator/" },
-    { name: "Run Rate Calculator", desc: "Calculate cricket run rates and required run rates for matches.", cat: "Cricket", searchCat: "Cricket Tools", icon: "runrate", url: "/tools/run-rate-calculator/" },
-    { name: "Strike Rate Calculator", desc: "Calculate batting and bowling strike rates in cricket.", cat: "Cricket", searchCat: "Cricket Tools", icon: "strikerate", url: "/tools/strike-rate-calculator/" },
-    { name: "JPG to PNG", desc: "Convert JPG images to PNG format with high quality preservation.", cat: "Image", searchCat: "Image Tools", icon: "jpg2png", url: "/tools/jpg-to-png/" },
-    { name: "Image Compressor", desc: "Compress images without losing quality, with batch processing.", cat: "Image", searchCat: "Image Tools", icon: "compress", url: "/tools/image-compressor/" },
-    { name: "PNG to WebP", desc: "Convert PNG images to WebP format for smaller file sizes.", cat: "Image", searchCat: "Image Tools", icon: "webp", url: "/tools/png-to-webp/" },
-    { name: "Image Resizer", desc: "Resize images to any dimension with aspect ratio lock and presets.", cat: "Image", searchCat: "Image Tools", icon: "resize", url: "/tools/image-resizer/" },
-    { name: "Best AI Tools for Students", desc: "Top AI tools every student should use in 2026 for studying, writing, and research.", cat: "Blog", searchCat: "Blog", icon: "creator", url: "/blog/best-ai-tools-for-students/" },
-    { name: "Best Free Image Tools 2026", desc: "The best free image editing and conversion tools available online in 2026.", cat: "Blog", searchCat: "Blog", icon: "creator", url: "/blog/best-free-image-tools-2026/" },
-    { name: "Best YouTube Tools for Creators", desc: "Essential tools for YouTube creators to grow channels and edit videos.", cat: "Blog", searchCat: "Blog", icon: "creator", url: "/blog/best-youtube-tools-for-creators/" },
-    { name: "How to Compress Images", desc: "Learn how to compress images without losing quality using free online tools.", cat: "Blog", searchCat: "Blog", icon: "creator", url: "/blog/how-to-compress-images/" },
+    {
+      name: 'Platform Dashboard',
+      desc: 'Track live tool compilations, metrics, milestones, and development roadmap.',
+      cat: 'Utility',
+      searchCat: 'Utility Tools',
+      icon: 'utility',
+      url: '/dashboard/',
+    },
+    {
+      name: 'QR Generator',
+      desc: 'Generate QR codes from URLs, text, and messages instantly.',
+      cat: 'Generator',
+      searchCat: 'Creator Tools',
+      icon: 'qr',
+      url: '/tools/qr-generator/',
+    },
+    {
+      name: 'Word Counter',
+      desc: 'Count words, characters, sentences, and paragraphs in your text.',
+      cat: 'Text',
+      searchCat: 'Utility Tools',
+      icon: 'word',
+      url: '/tools/word-counter/',
+    },
+    {
+      name: 'Age Calculator',
+      desc: 'Calculate exact age in years, months, days, hours, and minutes.',
+      cat: 'Calculator',
+      searchCat: 'Utility Tools',
+      icon: 'age',
+      url: '/tools/age-calculator/',
+    },
+    {
+      name: 'Password Generator',
+      desc: 'Generate strong, secure passwords with custom length and options.',
+      cat: 'Generator',
+      searchCat: 'Utility Tools',
+      icon: 'password',
+      url: '/tools/password-generator/',
+    },
+    {
+      name: 'Hashtag Generator',
+      desc: 'Generate trending hashtags for social media posts.',
+      cat: 'Generator',
+      searchCat: 'Creator Tools',
+      icon: 'hashtag',
+      url: '/tools/hashtag-generator/',
+    },
+    {
+      name: 'Run Rate Calculator',
+      desc: 'Calculate cricket run rates and required run rates for matches.',
+      cat: 'Cricket',
+      searchCat: 'Cricket Tools',
+      icon: 'runrate',
+      url: '/tools/run-rate-calculator/',
+    },
+    {
+      name: 'Strike Rate Calculator',
+      desc: 'Calculate batting and bowling strike rates in cricket.',
+      cat: 'Cricket',
+      searchCat: 'Cricket Tools',
+      icon: 'strikerate',
+      url: '/tools/strike-rate-calculator/',
+    },
+    {
+      name: 'JPG to PNG',
+      desc: 'Convert JPG images to PNG format with high quality preservation.',
+      cat: 'Image',
+      searchCat: 'Image Tools',
+      icon: 'jpg2png',
+      url: '/tools/jpg-to-png/',
+    },
+    {
+      name: 'Image Compressor',
+      desc: 'Compress images without losing quality, with batch processing.',
+      cat: 'Image',
+      searchCat: 'Image Tools',
+      icon: 'compress',
+      url: '/tools/image-compressor/',
+    },
+    {
+      name: 'PNG to WebP',
+      desc: 'Convert PNG images to WebP format for smaller file sizes.',
+      cat: 'Image',
+      searchCat: 'Image Tools',
+      icon: 'webp',
+      url: '/tools/png-to-webp/',
+    },
+    {
+      name: 'Image Resizer',
+      desc: 'Resize images to any dimension with aspect ratio lock and presets.',
+      cat: 'Image',
+      searchCat: 'Image Tools',
+      icon: 'resize',
+      url: '/tools/image-resizer/',
+    },
+    {
+      name: 'Best AI Tools for Students',
+      desc: 'Top AI tools every student should use in 2026 for studying, writing, and research.',
+      cat: 'Blog',
+      searchCat: 'Blog',
+      icon: 'creator',
+      url: '/blog/best-ai-tools-for-students/',
+    },
+    {
+      name: 'Best Free Image Tools 2026',
+      desc: 'The best free image editing and conversion tools available online in 2026.',
+      cat: 'Blog',
+      searchCat: 'Blog',
+      icon: 'creator',
+      url: '/blog/best-free-image-tools-2026/',
+    },
+    {
+      name: 'Best YouTube Tools for Creators',
+      desc: 'Essential tools for YouTube creators to grow channels and edit videos.',
+      cat: 'Blog',
+      searchCat: 'Blog',
+      icon: 'creator',
+      url: '/blog/best-youtube-tools-for-creators/',
+    },
+    {
+      name: 'How to Compress Images',
+      desc: 'Learn how to compress images without losing quality using free online tools.',
+      cat: 'Blog',
+      searchCat: 'Blog',
+      icon: 'creator',
+      url: '/blog/how-to-compress-images/',
+    },
   ];
 
-  const input = document.getElementById("search-page-input");
-  const results = document.getElementById("page-results");
-  const empty = document.getElementById("page-empty");
-  const catBtns = document.querySelectorAll(".page-cat-btn");
+  const input = document.getElementById('search-page-input');
+  const results = document.getElementById('page-results');
+  const empty = document.getElementById('page-empty');
+  const catBtns = document.querySelectorAll('.page-cat-btn');
 
-  let activeCat = "All";
+  let activeCat = 'All';
 
   function filter() {
     const q = input.value.toLowerCase().trim();
     const hasQuery = q.length > 0;
 
     let filtered = searchData;
-    if (activeCat !== "All") {
+    if (activeCat !== 'All') {
       filtered = filtered.filter((item) => item.searchCat === activeCat);
     }
     if (hasQuery) {
@@ -138,13 +363,15 @@ const popular = allItems.slice(0, 5);
     }
 
     if (filtered.length === 0) {
-      results.classList.add("hidden");
-      empty.classList.remove("hidden");
+      results.classList.add('hidden');
+      empty.classList.remove('hidden');
     } else {
-      results.classList.remove("hidden");
-      empty.classList.add("hidden");
-      results.innerHTML = filtered.map((item) => `
-        <a href="${item.url}" class="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5 hover:border-zinc-700 hover:bg-zinc-900/60 transition-all duration-300 group">
+      results.classList.remove('hidden');
+      empty.classList.add('hidden');
+      results.innerHTML = filtered
+        .map(
+          (item) => `
+        <a href="${item.url}" class="search-page-card glass-card rounded-2xl p-5 hover:border-purple-500/30 hover:-translate-y-1 transition-all duration-300 group">
           <div class="flex items-center gap-3 mb-3">
             <span class="w-8 h-8 rounded-lg bg-purple-600/10 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-110 transition-transform duration-200">${getIconSvg(item.icon)}</span>
             <div>
@@ -154,20 +381,22 @@ const popular = allItems.slice(0, 5);
           </div>
           <p class="text-xs text-muted leading-relaxed">${item.desc}</p>
         </a>
-      `).join("");
+      `,
+        )
+        .join('');
     }
   }
 
-  input.addEventListener("input", filter);
+  input.addEventListener('input', filter);
 
   catBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener('click', () => {
       catBtns.forEach((b) => {
-        b.classList.remove("bg-purple-600", "text-white");
-        b.classList.add("bg-zinc-800/60", "text-tertiary", "hover:text-primary", "hover:bg-zinc-800");
+        b.classList.remove('bg-purple-600', 'text-white');
+        b.classList.add('bg-zinc-800/60', 'text-tertiary', 'hover:text-primary', 'hover:bg-zinc-800');
       });
-      btn.classList.remove("bg-zinc-800/60", "text-tertiary", "hover:text-primary", "hover:bg-zinc-800");
-      btn.classList.add("bg-purple-600", "text-white");
+      btn.classList.remove('bg-zinc-800/60', 'text-tertiary', 'hover:text-primary', 'hover:bg-zinc-800');
+      btn.classList.add('bg-purple-600', 'text-white');
       activeCat = btn.dataset.cat;
       filter();
     });

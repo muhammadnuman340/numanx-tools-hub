@@ -1,31 +1,38 @@
 ---
-import { categories } from "../data/tools";
-import ToolIcon from "./icons/ToolIcon.astro";
+import { categories } from '../data/tools';
+import ToolIcon from './icons/ToolIcon.astro';
 
 interface Props {
   currentCategory?: string;
 }
 
 const { currentCategory } = Astro.props;
-const filtered = currentCategory
-  ? categories.filter(c => c.id !== currentCategory)
-  : categories;
+const filtered = currentCategory ? categories.filter((c) => c.id !== currentCategory) : categories;
 const display = filtered.slice(0, 4);
 ---
 
 <div class="rounded-xl border border-surface bg-surface-1 p-5">
   <h3 class="text-xs font-semibold text-muted uppercase tracking-wider mb-4">Explore More Tools</h3>
   <div class="grid grid-cols-2 gap-2">
-    {display.map((cat) => (
-      <a href={`/category/${cat.id}/`} class="group rounded-lg border border-surface bg-surface-2/50 p-3 hover:border-purple-500/40 hover:bg-surface-2 transition-all duration-200">
-        <div class="flex items-center gap-2">
-          <span class="w-6 h-6 rounded-lg flex items-center justify-center text-purple-400 shrink-0"><ToolIcon name={cat.icon} /></span>
-          <div class="min-w-0">
-            <p class="text-[11px] font-medium text-primary group-hover:text-white transition-colors truncate">{cat.title}</p>
-            <p class="text-[9px] text-dim">{cat.count} tools</p>
+    {
+      display.map((cat) => (
+        <a
+          href={`/category/${cat.id}/`}
+          class="group rounded-lg border border-surface bg-surface-2/50 p-3 hover:border-purple-500/40 hover:bg-surface-2 transition-all duration-200"
+        >
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-lg flex items-center justify-center text-purple-400 shrink-0">
+              <ToolIcon name={cat.icon} />
+            </span>
+            <div class="min-w-0">
+              <p class="text-[11px] font-medium text-primary group-hover:text-white transition-colors truncate">
+                {cat.title}
+              </p>
+              <p class="text-[9px] text-dim">{cat.count} tools</p>
+            </div>
           </div>
-        </div>
-      </a>
-    ))}
+        </a>
+      ))
+    }
   </div>
 </div>

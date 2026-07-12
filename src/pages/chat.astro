@@ -1,0 +1,350 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const mockMessages = [
+  {
+    sender: 'ai',
+    text: 'Welcome to NumanX AI Chat. I am Jarvis, your assistant for the NumanX Operating Brain. How can I help you Build, Create, or Analyze today?',
+    time: '10:00 AM',
+  },
+  {
+    sender: 'user',
+    text: 'What tools are currently available in the NumanX Tools ecosystem?',
+    time: '10:02 AM',
+  },
+  {
+    sender: 'ai',
+    text: 'We currently have over 11 free, privacy-first tools including the Image Compressor, QR Code Generator, AI Prompt Generator, Word Counter, JSON Formatter, and specific Cricket Calculators. All processing runs 100% locally in your browser.',
+    time: '10:03 AM',
+  },
+];
+---
+
+<MainLayout
+  title="AI Chat Assistant - NumanX Studio"
+  description="Experience Jarvis, the premium NumanX AI Chatbot prototype. Ask questions about NumanX Tools, Creator Hub, and Cricket Analytics."
+  keywords="ai chat, jarvis, numanx assistant, artificial intelligence, numanx studio, virtual assistant"
+  canonical="https://numanx-tools.pages.dev/chat/"
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'AI Chat', url: '/chat/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden bg-[#050505]">
+    <!-- Ambient Background Glows -->
+    <div
+      class="absolute top-[10%] left-[5%] w-[400px] h-[400px] rounded-full bg-purple-600/5 blur-[120px] pointer-events-none -z-10 animate-pulse"
+    >
+    </div>
+    <div
+      class="absolute bottom-[10%] right-[5%] w-[450px] h-[450px] rounded-full bg-amber-500/5 blur-[120px] pointer-events-none -z-10 animate-pulse"
+    >
+    </div>
+
+    <!-- Retro Screen Grid Overlay -->
+    <div
+      class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[size:100%_4px,3px_100%] pointer-events-none opacity-20 -z-5"
+    >
+    </div>
+
+    <div class="max-w-4xl mx-auto">
+      <!-- Hero -->
+      <section class="text-center mb-10 pt-8 animate-[fadeInUp_0.6s_ease-out] group-section">
+        <div
+          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-surface bg-surface-1 backdrop-blur-sm text-tertiary text-xs font-semibold tracking-wider uppercase mb-6 audio-trigger"
+        >
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          Jarvis AI v1.0
+        </div>
+        <h1 class="text-5xl md:text-7xl font-black tracking-tighter leading-none reveal-text">
+          Neural
+          <span
+            class="block mt-2 bg-gradient-to-r from-purple-400 via-purple-500 to-amber-500 bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(234,88,12,0.15)]"
+          >
+            Chat Interface
+          </span>
+        </h1>
+        <p class="mt-4 text-tertiary text-sm md:text-base max-w-xl mx-auto leading-relaxed reveal-text">
+          Interact with the operating brain prototype. Ask anything about our productivity tools, cricket analytics, or
+          future roadmap.
+        </p>
+      </section>
+
+      <!-- Chat Container Grid -->
+      <div id="cards-container-chat" class="w-full mb-12 group-section preserve-3d">
+        <!-- Premium Chat Box -->
+        <div
+          class="card-spotlight bg-[#0a0a0c]/90 border border-white/10 rounded-3xl p-6 shadow-2xl relative overflow-hidden min-h-[550px] flex flex-col justify-between transition-all duration-300"
+        >
+          <div
+            class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
+          >
+          </div>
+
+          <!-- Top Bar -->
+          <div class="flex items-center justify-between pb-4 border-b border-white/5 relative z-10">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 relative overflow-hidden"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="animate-pulse"
+                  ><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg
+                >
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-white font-mono tracking-tight">Jarvis Brain</h3>
+                <p class="text-[10px] text-emerald-400 flex items-center gap-1 font-mono uppercase">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                  Online
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button
+                id="btn-clear-chat"
+                class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 text-[10px] font-mono text-zinc-400 hover:text-white transition-all audio-trigger"
+              >
+                CLEAR HISTORY
+              </button>
+            </div>
+          </div>
+
+          <!-- Message Thread -->
+          <div
+            id="chat-thread"
+            class="flex-1 overflow-y-auto my-4 space-y-4 pr-2 max-h-[360px] scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent relative z-10"
+          >
+            {
+              mockMessages.map((msg) => (
+                <div class={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
+                  <div
+                    class={`max-w-[80%] rounded-2xl p-4 text-xs leading-relaxed ${
+                      msg.sender === 'user'
+                        ? 'bg-purple-600/20 border border-purple-500/30 text-white rounded-tr-none'
+                        : 'bg-zinc-900/80 border border-zinc-800 text-zinc-300 rounded-tl-none'
+                    }`}
+                  >
+                    <p>{msg.text}</p>
+                  </div>
+                  <span class="text-[9px] text-zinc-550 mt-1 px-1 font-mono">{msg.time}</span>
+                </div>
+              ))
+            }
+          </div>
+
+          <!-- Bottom Text Input Bar -->
+          <div class="pt-4 border-t border-white/5 relative z-10">
+            <form id="chat-form" class="flex items-center gap-3">
+              <button
+                type="button"
+                id="btn-voice-chat"
+                class="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/5 flex items-center justify-center text-zinc-400 hover:text-amber-400 hover:bg-amber-500/10 hover:border-amber-500/20 transition-all shrink-0 audio-trigger"
+                title="Voice Assistant"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  ><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path
+                    d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg
+                >
+              </button>
+
+              <div class="relative flex-1">
+                <input
+                  id="chat-input"
+                  type="text"
+                  placeholder="Type a message or command..."
+                  required
+                  class="w-full bg-[#050507] text-white placeholder-zinc-550 px-5 py-3.5 pr-12 rounded-2xl border border-white/10 focus:outline-none focus:border-purple-500/50 transition-all text-xs shadow-inner audio-trigger"
+                />
+                <button
+                  type="submit"
+                  class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl bg-purple-600 hover:bg-purple-500 text-white flex items-center justify-center transition-all hover:scale-105 active:scale-95 audio-trigger"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    ><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"
+                    ></polygon></svg
+                  >
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  const handleOnMouseMove = (e: MouseEvent, containerId: string) => {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const cards = container.getElementsByClassName('card-spotlight');
+    for (const card of cards as any) {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+      if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -3;
+        const rotateY = ((x - centerX) / centerX) * 3;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(12px) scale(1.01)`;
+        card.style.zIndex = '50';
+      } else {
+        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
+        card.style.zIndex = '1';
+      }
+    }
+  };
+
+  const initChatPage = () => {
+    const container = document.getElementById('cards-container-chat');
+    if (container) {
+      container.addEventListener('mousemove', (e) => handleOnMouseMove(e, 'cards-container-chat'));
+      container.addEventListener('mouseleave', () => {
+        const cards = container.getElementsByClassName('card-spotlight');
+        for (const card of cards as any) {
+          card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
+          card.style.zIndex = '1';
+        }
+      });
+    }
+
+    const form = document.getElementById('chat-form') as HTMLFormElement | null;
+    const input = document.getElementById('chat-input') as HTMLInputElement | null;
+    const thread = document.getElementById('chat-thread');
+    const clearBtn = document.getElementById('btn-clear-chat');
+    const voiceBtn = document.getElementById('btn-voice-chat');
+
+    const scrollToBottom = () => {
+      if (thread) {
+        thread.scrollTop = thread.scrollHeight;
+      }
+    };
+    scrollToBottom();
+
+    if (form && input && thread) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const text = input.value.trim();
+        if (!text) return;
+
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        // Add user message bubble
+        const userMsg = document.createElement('div');
+        userMsg.className = 'flex flex-col items-end';
+        userMsg.innerHTML = `
+          <div class="max-w-[80%] rounded-2xl p-4 text-xs leading-relaxed bg-purple-600/20 border border-purple-500/30 text-white rounded-tr-none">
+            <p>${text}</p>
+          </div>
+          <span class="text-[9px] text-zinc-555 mt-1 px-1 font-mono">${time}</span>
+        `;
+        thread.appendChild(userMsg);
+        input.value = '';
+        scrollToBottom();
+
+        // Simulate AI response delay
+        setTimeout(() => {
+          const aiResponseText = getJarvisResponse(text);
+          const aiMsg = document.createElement('div');
+          aiMsg.className = 'flex flex-col items-start';
+          aiMsg.innerHTML = `
+            <div class="max-w-[80%] rounded-2xl p-4 text-xs leading-relaxed bg-zinc-900/80 border border-zinc-800 text-zinc-300 rounded-tl-none">
+              <p>${aiResponseText}</p>
+            </div>
+            <span class="text-[9px] text-zinc-550 mt-1 px-1 font-mono">${time}</span>
+          `;
+          thread.appendChild(aiMsg);
+          scrollToBottom();
+          if (window.playTick) window.playTick();
+        }, 800);
+      });
+    }
+
+    if (clearBtn && thread) {
+      clearBtn.addEventListener('click', () => {
+        thread.innerHTML = '';
+      });
+    }
+
+    // Voice integration prototype
+    if (voiceBtn && input) {
+      voiceBtn.addEventListener('click', () => {
+        const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+        if (SpeechRecognition) {
+          const recognition = new SpeechRecognition();
+          recognition.onstart = () => {
+            voiceBtn.classList.add('text-amber-400', 'bg-white/10');
+            input.placeholder = 'Listening...';
+          };
+          recognition.onresult = (event: any) => {
+            const transcript = event.results[0][0].transcript;
+            input.value = transcript;
+          };
+          recognition.onend = () => {
+            voiceBtn.classList.remove('text-amber-400', 'bg-white/10');
+            input.placeholder = 'Type a message or command...';
+          };
+          try {
+            recognition.start();
+          } catch (e) {}
+        } else {
+          alert('Speech recognition is not supported in this browser.');
+        }
+      });
+    }
+  };
+
+  const getJarvisResponse = (input: string): string => {
+    const lower = input.toLowerCase();
+    if (lower.includes('hello') || lower.includes('hi')) {
+      return 'Hello! How can I assist you with the NumanX Tools Hub today?';
+    }
+    if (lower.includes('roadmap') || lower.includes('phases') || lower.includes('future')) {
+      return 'Our upcoming roadmap consists of: Phase 2 - NumanX Creator Hub, Phase 3 - MatchPulse Cricket Analytics, Phase 4 - Browser AI Integration, and Phase 5 - Unified NumanX Operating Brain.';
+    }
+    if (lower.includes('tools') || lower.includes('list')) {
+      return 'Current tools include: Image Compressor, QR Code Generator, AI Prompt Generator, Word Counter, JSON Formatter, Password Generator, and Cricket calculators.';
+    }
+    if (lower.includes('owner') || lower.includes('creator') || lower.includes('numan')) {
+      return 'NumanX Tools was architected and built by Muhammad Numan Usmani, an IT student and digital ecosystem builder.';
+    }
+    return 'I have received your neural transmission. This prototype is configured to respond to queries about NumanX Tools, Creator Hub, and general roadmap phases.';
+  };
+
+  document.addEventListener('astro:page-load', initChatPage);
+</script>

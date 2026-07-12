@@ -1,0 +1,373 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'How are the images generated?',
+    answer:
+      'This tool renders each page of your PDF into an image within your browser, then packages them into a ZIP file for easy downloading.',
+  },
+  {
+    question: 'Are my files uploaded to the cloud?',
+    answer:
+      'No. The entire conversion process happens locally on your device. Your PDF files never leave your browser.',
+  },
+  {
+    question: 'What format are the extracted images?',
+    answer:
+      'The extracted images are saved in high-quality JPEG format, making them compatible with almost every device and software.',
+  },
+];
+const schema = {
+  name: 'PDF to Image Converter',
+  applicationCategory: 'Utility Tools',
+  description: 'Convert PDF pages into high-quality JPEG images securely in your browser.',
+  featureList: [
+    'Convert PDF to JPEG',
+    'High-quality rendering',
+    'Downloads as a single ZIP file',
+    '100% offline & client-side',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '🖼️',
+    title: 'High-Res JPEGs',
+    desc: 'Converts your PDF pages into crisp, high-quality JPEG images perfectly suited for sharing or web use.',
+  },
+  {
+    icon: '📦',
+    title: 'Bulk ZIP Download',
+    desc: 'Automatically packages all your generated images into a single ZIP file for quick and easy downloading.',
+  },
+  {
+    icon: '🔒',
+    title: 'Offline Security',
+    desc: 'Your private documents are rendered locally in your browser. No files are ever sent to a remote server.',
+  },
+  {
+    icon: '🚀',
+    title: 'Fast Processing',
+    desc: 'Leverages your device\'s local processing power to convert pages rapidly without waiting in server queues.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Upload Document',
+    desc: 'Drag and drop a PDF file into the designated area or click to select a file from your device.',
+  },
+  {
+    num: '2',
+    title: 'Start Conversion',
+    desc: 'Click the "Convert to Images" button. A progress bar will appear as it processes each page.',
+  },
+  {
+    num: '3',
+    title: 'Local Rendering',
+    desc: 'The tool uses your browser\'s graphics engine to draw each PDF page onto a hidden canvas and save it as a JPEG.',
+  },
+  {
+    num: '4',
+    title: 'Save ZIP File',
+    desc: 'Once complete, a ZIP file containing all your page images will automatically download to your computer.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '📱',
+    title: 'Social Media Sharing',
+    desc: 'Convert PDF infographics or flyers into image formats that can be easily posted on Instagram or Twitter.',
+  },
+  {
+    icon: '💻',
+    title: 'Web Design',
+    desc: 'Extract pages from a PDF brochure to display them as an image gallery on a website.',
+  },
+  {
+    icon: '📊',
+    title: 'Presentations',
+    desc: 'Turn PDF reports into images so you can easily drop them into PowerPoint or Google Slides presentations.',
+  },
+];
+---
+
+<MainLayout
+  title="PDF to Image - Convert PDF Pages to JPG Securely"
+  description="Convert your PDF pages into high-quality JPEG images instantly. 100% secure, offline, and free online PDF to image converter."
+  keywords="pdf to image, pdf to jpg, extract pdf images, convert pdf, secure pdf convert"
+  toolSchema={schema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Convert PDF to Images',
+    description: 'Step-by-step guide to extract images from PDF.',
+    steps: [],
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'PDF to Image', url: '/tools/pdf-to-image/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="PDF to"
+        gradient="Image"
+        desc="Convert every page of your PDF into high-quality JPEGs. Secure and processed entirely on your device."
+        badge="✦ Secure Tool"
+        slug="pdf-to-image"
+      />
+      <ShareBar />
+      <div class="max-w-3xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 md:p-10 relative text-center">
+           <input type="file" id="file-input" accept="application/pdf" class="hidden" />
+           <div id="drop-zone" class="border-2 border-dashed border-surface-2 hover:border-red-500/50 rounded-2xl p-10 cursor-pointer transition-all mb-8">
+              <div class="text-4xl mb-4">🖼️</div>
+              <h3 class="text-xl font-semibold text-white mb-2">Upload a PDF file</h3>
+              <p class="text-sm text-muted">Drag & Drop or click to browse</p>
+           </div>
+           
+           <div id="file-info" class="space-y-4 text-left mb-8 hidden">
+             <div class="flex items-center justify-between p-4 bg-surface border border-surface-2 rounded-xl">
+               <div class="flex items-center gap-3 overflow-hidden">
+                  <span class="text-2xl">📄</span>
+                  <div>
+                    <p id="file-name" class="text-sm text-white font-medium truncate"></p>
+                    <p id="page-count" class="text-xs text-muted"></p>
+                  </div>
+               </div>
+               <button id="change-file-btn" class="text-xs text-red-400 hover:text-red-300">Change</button>
+             </div>
+             
+             <div id="progress-container" class="hidden">
+                <div class="flex justify-between text-xs text-muted mb-1">
+                  <span>Converting pages...</span>
+                  <span id="progress-text">0%</span>
+                </div>
+                <div class="h-2 w-full bg-surface-2 rounded-full overflow-hidden">
+                  <div id="progress-bar" class="h-full bg-red-500 transition-all duration-300" style="width: 0%"></div>
+                </div>
+             </div>
+           </div>
+
+           <button
+             id="convert-btn"
+             class="w-full md:w-auto px-8 bg-red-600 hover:bg-red-500 text-white text-sm font-semibold py-3 rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hidden"
+           >
+             Convert to Images (ZIP)
+           </button>
+           <p id="status-text" class="text-sm text-muted mt-4 hidden"></p>
+        </div>
+      </div>
+      <ToolContentSections
+        toolSlug="pdf-to-image"
+        toolName="PDF to Image Converter"
+        category="Utility Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="pdf-to-image" />
+    </div>
+  </main>
+</MainLayout>
+
+<!-- Load pdf.js for rendering and fflate for zipping -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" is:inline></script>
+<script src="https://unpkg.com/fflate@0.8.2/umd/index.js" is:inline></script>
+
+<script>
+  // @ts-ignore
+  const pdfjsLib = window['pdfjs-dist/build/pdf'];
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  const dropZone = document.getElementById('drop-zone');
+  const fileInput = document.getElementById('file-input') as HTMLInputElement;
+  const fileInfo = document.getElementById('file-info');
+  const fileName = document.getElementById('file-name');
+  const pageCountText = document.getElementById('page-count');
+  const changeFileBtn = document.getElementById('change-file-btn');
+  const convertBtn = document.getElementById('convert-btn') as HTMLButtonElement;
+  const statusText = document.getElementById('status-text');
+  
+  const progressContainer = document.getElementById('progress-container');
+  const progressBar = document.getElementById('progress-bar');
+  const progressText = document.getElementById('progress-text');
+
+  let selectedFile: File | null = null;
+  let pdfDoc: any = null;
+  let totalPages = 0;
+
+  dropZone?.addEventListener('click', () => fileInput.click());
+  changeFileBtn?.addEventListener('click', () => {
+    selectedFile = null;
+    pdfDoc = null;
+    fileInput.value = '';
+    dropZone?.classList.remove('hidden');
+    fileInfo?.classList.add('hidden');
+    convertBtn?.classList.add('hidden');
+    progressContainer?.classList.add('hidden');
+  });
+
+  dropZone?.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('border-red-500/50', 'bg-surface-2');
+  });
+
+  dropZone?.addEventListener('dragleave', () => {
+    dropZone.classList.remove('border-red-500/50', 'bg-surface-2');
+  });
+
+  dropZone?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('border-red-500/50', 'bg-surface-2');
+    if (e.dataTransfer?.files && e.dataTransfer.files.length > 0) {
+      handleFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  fileInput?.addEventListener('change', (e) => {
+    if (fileInput.files && fileInput.files.length > 0) {
+      handleFile(fileInput.files[0]);
+    }
+  });
+
+  async function handleFile(file: File) {
+    if (file.type !== 'application/pdf') return;
+    
+    try {
+      selectedFile = file;
+      dropZone?.classList.add('hidden');
+      fileInfo?.classList.remove('hidden');
+      convertBtn?.classList.remove('hidden');
+      if (fileName) fileName.textContent = file.name;
+      
+      convertBtn.disabled = true;
+      convertBtn.textContent = 'Loading PDF...';
+
+      const arrayBuffer = await file.arrayBuffer();
+      
+      pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      totalPages = pdfDoc.numPages;
+      
+      if (pageCountText) pageCountText.textContent = `${totalPages} pages total`;
+      
+      convertBtn.disabled = false;
+      convertBtn.textContent = 'Convert to Images (ZIP)';
+      
+    } catch (e: any) {
+      if (statusText) {
+        statusText.textContent = 'Error reading PDF: ' + e.message;
+        statusText.classList.remove('hidden');
+        statusText.classList.replace('text-muted', 'text-red-400');
+      }
+    }
+  }
+
+  function getCanvasBlob(canvas: HTMLCanvasElement): Promise<Uint8Array> {
+    return new Promise((resolve, reject) => {
+      canvas.toBlob((blob) => {
+        if (!blob) return reject(new Error('Canvas to Blob failed'));
+        blob.arrayBuffer().then(buffer => resolve(new Uint8Array(buffer))).catch(reject);
+      }, 'image/jpeg', 0.95);
+    });
+  }
+
+  convertBtn?.addEventListener('click', async () => {
+    if (!pdfDoc || !selectedFile) return;
+    
+    try {
+      convertBtn.disabled = true;
+      convertBtn.textContent = 'Converting...';
+      progressContainer?.classList.remove('hidden');
+      if (statusText) statusText.classList.add('hidden');
+
+      const zipData: Record<string, Uint8Array> = {};
+      
+      for (let i = 1; i <= totalPages; i++) {
+        // Update progress
+        const percent = Math.round(((i - 1) / totalPages) * 100);
+        if (progressBar) progressBar.style.width = `${percent}%`;
+        if (progressText) progressText.textContent = `${percent}%`;
+
+        const page = await pdfDoc.getPage(i);
+        const viewport = page.getViewport({ scale: 2.0 }); // 2.0 scale for high quality
+        
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx) throw new Error('Canvas 2D context not supported');
+        
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        
+        // Fill white background (PDFs might be transparent)
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const renderContext = {
+          canvasContext: ctx,
+          viewport: viewport,
+        };
+        
+        await page.render(renderContext).promise;
+        const imgBytes = await getCanvasBlob(canvas);
+        
+        const pageNum = i.toString().padStart(3, '0');
+        zipData[`page_${pageNum}.jpg`] = imgBytes;
+      }
+
+      // Final progress
+      if (progressBar) progressBar.style.width = '100%';
+      if (progressText) progressText.textContent = '100%';
+      convertBtn.textContent = 'Zipping files...';
+
+      // @ts-ignore
+      const { zipSync } = window.fflate;
+      const zippedBlob = new Blob([zipSync(zipData)], { type: 'application/zip' });
+      
+      const url = URL.createObjectURL(zippedBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${selectedFile.name.replace('.pdf', '')}_images.zip`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      if (statusText) {
+        statusText.textContent = 'Converted successfully!';
+        statusText.classList.remove('hidden');
+        statusText.classList.replace('text-red-400', 'text-emerald-400');
+      }
+      
+      if ((window as any).__showToast) {
+        (window as any).__showToast({ message: 'PDF converted to images successfully!', variant: 'success' });
+      }
+
+    } catch (err: any) {
+      console.error(err);
+      if (statusText) {
+        statusText.textContent = 'Error converting PDF: ' + err.message;
+        statusText.classList.remove('hidden');
+        statusText.classList.replace('text-muted', 'text-red-400');
+      }
+    } finally {
+      convertBtn.disabled = false;
+      convertBtn.textContent = 'Convert to Images (ZIP)';
+      setTimeout(() => {
+        progressContainer?.classList.add('hidden');
+        if (progressBar) progressBar.style.width = '0%';
+      }, 2000);
+    }
+  });
+</script>

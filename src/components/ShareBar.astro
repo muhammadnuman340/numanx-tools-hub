@@ -1,36 +1,74 @@
 <div class="flex items-center gap-3 mt-8 justify-center">
-  <button id="share-tool" class="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-surface bg-surface-1 hover:bg-surface-3 text-tertiary hover:text-primary text-xs font-medium transition-all" aria-label="Share this tool">
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+  <button
+    id="share-tool"
+    class="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-surface bg-surface-1 hover:bg-surface-3 text-tertiary hover:text-primary text-xs font-medium transition-all"
+    aria-label="Share this tool"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      ><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"
+      ></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"
+      ></line></svg
+    >
     Share
   </button>
-  <button id="copy-tool-link" class="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-surface bg-surface-1 hover:bg-surface-3 text-tertiary hover:text-primary text-xs font-medium transition-all" aria-label="Copy link">
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+  <button
+    id="copy-tool-link"
+    class="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-surface bg-surface-1 hover:bg-surface-3 text-tertiary hover:text-primary text-xs font-medium transition-all"
+    aria-label="Copy link"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      ><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path
+        d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg
+    >
     <span id="copy-label">Copy Link</span>
   </button>
 </div>
 
 <script>
-  const shareBtn = document.getElementById("share-tool");
-  const copyBtn = document.getElementById("copy-tool-link");
-  const copyLabel = document.getElementById("copy-label");
+  const shareBtn = document.getElementById('share-tool');
+  const copyBtn = document.getElementById('copy-tool-link');
+  const copyLabel = document.getElementById('copy-label');
   const url = window.location.href;
 
   if (shareBtn) {
-    shareBtn.addEventListener("click", async () => {
+    shareBtn.addEventListener('click', async () => {
       if (navigator.share) {
         await navigator.share({ title: document.title, url });
       } else {
         await navigator.clipboard.writeText(url);
         shareBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
-        setTimeout(() => { shareBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share`; }, 2000); }
+        setTimeout(() => {
+          shareBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share`;
+        }, 2000);
+      }
     });
   }
 
   if (copyBtn && copyLabel) {
-    copyBtn.addEventListener("click", async () => {
+    copyBtn.addEventListener('click', async () => {
       await navigator.clipboard.writeText(url);
-      copyLabel.textContent = "Copied!";
-      setTimeout(() => { copyLabel.textContent = "Copy Link"; }, 2000);
+      copyLabel.textContent = 'Copied!';
+      setTimeout(() => {
+        copyLabel.textContent = 'Copy Link';
+      }, 2000);
     });
   }
 </script>

@@ -15,7 +15,7 @@ function doPost(e) {
         data.rating || '',
         data.message || '',
         data.email || '',
-        data.page || ''
+        data.page || '',
       ]);
     } else {
       // ─── Contact tab (default) ───
@@ -28,14 +28,14 @@ function doPost(e) {
         data.name || '',
         data.email || '',
         data.subject || 'General',
-        data.message || ''
+        data.message || '',
       ]);
     }
 
-    return ContentService.createTextOutput(JSON.stringify({ success: true }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return ContentService.createTextOutput(JSON.stringify({ success: true })).setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({ success: false, error: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return ContentService.createTextOutput(JSON.stringify({ success: false, error: err.toString() })).setMimeType(
+      ContentService.MimeType.JSON,
+    );
   }
 }

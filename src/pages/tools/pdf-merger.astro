@@ -1,0 +1,311 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'Are my PDF files uploaded to a server?',
+    answer:
+      'Absolutely not. This tool uses WebAssembly and JavaScript to merge your PDFs directly inside your browser. Your files never leave your device.',
+  },
+  {
+    question: 'Is there a file size limit?',
+    answer:
+      'The only limit is your browser\'s available memory. You can generally merge files up to 100MB without issues.',
+  },
+  {
+    question: 'Does this tool preserve the quality of the PDFs?',
+    answer:
+      'Yes! The files are merged at a binary level without re-rendering or compressing, preserving 100% of the original quality.',
+  },
+];
+const schema = {
+  name: 'PDF Merger',
+  applicationCategory: 'Utility Tools',
+  description: 'Merge multiple PDF files into a single document instantly and securely in your browser.',
+  featureList: [
+    'Merge unlimited PDFs',
+    'Drag and drop reordering',
+    '100% offline & client-side',
+    'Zero file uploads',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '🔒',
+    title: '100% Secure & Private',
+    desc: 'Your PDFs are merged directly inside your browser. Your sensitive documents are never uploaded to any server.',
+  },
+  {
+    icon: '⚡',
+    title: 'Lightning Fast',
+    desc: 'Because there are no uploads or downloads, the merging process happens almost instantly using local processing power.',
+  },
+  {
+    icon: '🔄',
+    title: 'Drag & Drop Reordering',
+    desc: 'Easily select multiple files at once or drag and drop them into the exact order you want them merged.',
+  },
+  {
+    icon: '💎',
+    title: 'No Quality Loss',
+    desc: 'Files are combined at the binary level, ensuring that your text, images, and formatting remain in perfect original quality.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Add PDF Files',
+    desc: 'Drag and drop multiple PDF files into the dashed upload zone, or click it to browse your computer.',
+  },
+  {
+    num: '2',
+    title: 'Review Order',
+    desc: 'Check the list of selected files. The PDFs will be merged in the exact top-to-bottom order shown on the screen.',
+  },
+  {
+    num: '3',
+    title: 'Remove Mistakes',
+    desc: 'If you accidentally added the wrong file, simply click the "Remove" button next to its name.',
+  },
+  {
+    num: '4',
+    title: 'Merge & Download',
+    desc: 'Click "Merge PDFs". The tool will combine them instantly and automatically trigger a download of the final document.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '📑',
+    title: 'Document Management',
+    desc: 'Combine scanned pages, invoices, or separate report chapters into a single cohesive PDF.',
+  },
+  {
+    icon: '🎓',
+    title: 'Students & Teachers',
+    desc: 'Merge assignment pages, lecture slides, or research papers into one file before submission.',
+  },
+  {
+    icon: '💼',
+    title: 'Legal & Business',
+    desc: 'Securely combine sensitive contracts or financial records without risking data leaks to third-party servers.',
+  },
+];
+---
+
+<MainLayout
+  title="Merge PDF Files Online - Secure & Free PDF Merger"
+  description="Combine multiple PDF files into a single document instantly. 100% secure, offline, and free online PDF merger. No uploads required."
+  keywords="merge pdf, combine pdf, pdf merger, join pdf files, secure pdf merge"
+  toolSchema={schema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Merge PDF Files',
+    description: 'Step-by-step guide to merge PDFs.',
+    steps: [],
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'PDF Merger', url: '/tools/pdf-merger/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="PDF"
+        gradient="Merger"
+        desc="Combine multiple PDF files into one. 100% secure — processing happens locally on your device."
+        badge="✦ Secure Tool"
+        slug="pdf-merger"
+      />
+      <ShareBar />
+      <div class="max-w-3xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 md:p-10 relative text-center">
+           <input type="file" id="file-input" multiple accept="application/pdf" class="hidden" />
+           <div id="drop-zone" class="border-2 border-dashed border-surface-2 hover:border-red-500/50 rounded-2xl p-10 cursor-pointer transition-all mb-8">
+              <div class="text-4xl mb-4">📄</div>
+              <h3 class="text-xl font-semibold text-white mb-2">Drag & Drop PDF files here</h3>
+              <p class="text-sm text-muted">Or click to browse from your device</p>
+           </div>
+           
+           <div id="file-list" class="space-y-3 text-left mb-8 hidden">
+             <label class="text-xs font-semibold text-muted uppercase tracking-wider mb-2 block">Files to Merge (in order)</label>
+             <div id="files-container" class="space-y-2"></div>
+           </div>
+
+           <button
+             id="merge-btn"
+             class="w-full md:w-auto px-8 bg-red-600 hover:bg-red-500 text-white text-sm font-semibold py-3 rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hidden"
+           >
+             Merge PDFs
+           </button>
+           <p id="status-text" class="text-sm text-muted mt-4 hidden"></p>
+        </div>
+      </div>
+      <ToolContentSections
+        toolSlug="pdf-merger"
+        toolName="PDF Merger"
+        category="Utility Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="pdf-merger" />
+    </div>
+  </main>
+</MainLayout>
+
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" is:inline></script>
+<script>
+  const dropZone = document.getElementById('drop-zone');
+  const fileInput = document.getElementById('file-input') as HTMLInputElement;
+  const fileList = document.getElementById('file-list');
+  const filesContainer = document.getElementById('files-container');
+  const mergeBtn = document.getElementById('merge-btn') as HTMLButtonElement;
+  const statusText = document.getElementById('status-text');
+
+  let selectedFiles: File[] = [];
+
+  dropZone?.addEventListener('click', () => fileInput.click());
+
+  dropZone?.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('border-red-500/50', 'bg-surface-2');
+  });
+
+  dropZone?.addEventListener('dragleave', () => {
+    dropZone.classList.remove('border-red-500/50', 'bg-surface-2');
+  });
+
+  dropZone?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('border-red-500/50', 'bg-surface-2');
+    if (e.dataTransfer?.files) handleFiles(e.dataTransfer.files);
+  });
+
+  fileInput?.addEventListener('change', (e) => {
+    if (fileInput.files) handleFiles(fileInput.files);
+  });
+
+  function handleFiles(files: FileList) {
+    for (let i = 0; i < files.length; i++) {
+      if (files[i].type === 'application/pdf') {
+        selectedFiles.push(files[i]);
+      }
+    }
+    renderFileList();
+  }
+
+  function removeFile(index: number) {
+    selectedFiles.splice(index, 1);
+    renderFileList();
+  }
+
+  function renderFileList() {
+    if (selectedFiles.length > 0) {
+      fileList?.classList.remove('hidden');
+      mergeBtn?.classList.remove('hidden');
+      dropZone?.classList.add('p-6');
+      dropZone?.classList.remove('p-10');
+      if (dropZone) dropZone.innerHTML = '<p class="text-sm text-muted">+ Add more PDFs</p>';
+    } else {
+      fileList?.classList.add('hidden');
+      mergeBtn?.classList.add('hidden');
+      dropZone?.classList.add('p-10');
+      dropZone?.classList.remove('p-6');
+      if (dropZone) dropZone.innerHTML = `
+        <div class="text-4xl mb-4">📄</div>
+        <h3 class="text-xl font-semibold text-white mb-2">Drag & Drop PDF files here</h3>
+        <p class="text-sm text-muted">Or click to browse from your device</p>
+      `;
+    }
+
+    if (filesContainer) {
+      filesContainer.innerHTML = selectedFiles.map((file, i) => `
+        <div class="flex items-center justify-between p-3 bg-surface border border-surface-2 rounded-lg">
+           <div class="flex items-center gap-3 overflow-hidden">
+              <span class="text-xl">📄</span>
+              <span class="text-sm text-white truncate">${file.name}</span>
+           </div>
+           <button class="remove-btn text-xs text-red-400 hover:text-red-300 px-2" data-index="${i}">Remove</button>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt((e.currentTarget as HTMLElement).getAttribute('data-index') || '0');
+          removeFile(idx);
+        });
+      });
+    }
+
+    if (mergeBtn) {
+      mergeBtn.disabled = selectedFiles.length < 2;
+      mergeBtn.textContent = selectedFiles.length < 2 ? 'Add at least 2 PDFs' : 'Merge PDFs';
+    }
+  }
+
+  mergeBtn?.addEventListener('click', async () => {
+    if (selectedFiles.length < 2) return;
+    
+    try {
+      mergeBtn.disabled = true;
+      mergeBtn.textContent = 'Processing...';
+      if (statusText) {
+        statusText.textContent = 'Merging PDFs... This might take a moment.';
+        statusText.classList.remove('hidden');
+      }
+
+      // @ts-ignore
+      const { PDFDocument } = window.PDFLib;
+      const mergedPdf = await PDFDocument.create();
+
+      for (const file of selectedFiles) {
+        const arrayBuffer = await file.arrayBuffer();
+        const pdfDoc = await PDFDocument.load(arrayBuffer);
+        const copiedPages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
+        copiedPages.forEach((page: any) => mergedPdf.addPage(page));
+      }
+
+      const mergedPdfBytes = await mergedPdf.save();
+      const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `merged_${Date.now()}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      if (statusText) {
+        statusText.textContent = 'Merged successfully!';
+        statusText.classList.replace('text-muted', 'text-emerald-400');
+      }
+      
+      if ((window as any).__showToast) {
+        (window as any).__showToast({ message: 'PDFs merged successfully!', variant: 'success' });
+      }
+
+    } catch (err: any) {
+      console.error(err);
+      if (statusText) {
+        statusText.textContent = 'Error merging PDFs: ' + err.message;
+        statusText.classList.replace('text-muted', 'text-red-400');
+      }
+    } finally {
+      mergeBtn.disabled = false;
+      mergeBtn.textContent = 'Merge PDFs';
+    }
+  });
+</script>

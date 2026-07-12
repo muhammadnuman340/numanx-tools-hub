@@ -1,57 +1,145 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import KeyboardHints from "../../components/KeyboardHints.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import KeyboardHints from '../../components/KeyboardHints.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
-  { question: "How many unit categories are supported?", answer: "The converter covers 8 categories: Length, Mass, Volume, Temperature, Area, Speed, Time, and Data Storage — over 100 units total." },
-  { question: "Is the conversion done on my device?", answer: "Yes. All calculations happen locally in your browser with zero server uploads. Your data never leaves your device." },
-  { question: "How precise are the conversions?", answer: "Conversions use standard international conversion factors with up to 10 decimal places of precision for maximum accuracy." },
-  { question: "Can I swap the from/to units quickly?", answer: "Yes. Click the swap button (⇄) between the unit fields to instantly exchange the from and to values." },
-  { question: "Does it support imperial and metric?", answer: "Absolutely. Every category includes both metric and imperial/US customary units so you can convert between systems seamlessly." },
-  { question: "Can I convert temperature between Celsius, Fahrenheit, and Kelvin?", answer: "Yes, the Temperature category supports conversions between Celsius, Fahrenheit, and Kelvin using the standard conversion formulas. Results are precise to 2 decimal places." },
-  { question: "What data storage units are supported?", answer: "Data storage covers bytes, kilobytes, megabytes, gigabytes, terabytes, petabytes, kibibytes, mebibytes, gibibytes, tebibytes, bits, kilobits, and megabits — both decimal and binary." },
-  { question: "How do I convert speed units like Mach and light speed?", answer: "The Speed category includes meters/second, km/h, mph, knots, foot/second, Mach (sea level), and even light speed. Use it for physics, aviation, or everyday speed conversions." },
+  {
+    question: 'How many unit categories are supported?',
+    answer:
+      'The converter covers 8 categories: Length, Mass, Volume, Temperature, Area, Speed, Time, and Data Storage — over 100 units total.',
+  },
+  {
+    question: 'Is the conversion done on my device?',
+    answer:
+      'Yes. All calculations happen locally in your browser with zero server uploads. Your data never leaves your device.',
+  },
+  {
+    question: 'How precise are the conversions?',
+    answer:
+      'Conversions use standard international conversion factors with up to 10 decimal places of precision for maximum accuracy.',
+  },
+  {
+    question: 'Can I swap the from/to units quickly?',
+    answer: 'Yes. Click the swap button (⇄) between the unit fields to instantly exchange the from and to values.',
+  },
+  {
+    question: 'Does it support imperial and metric?',
+    answer:
+      'Absolutely. Every category includes both metric and imperial/US customary units so you can convert between systems seamlessly.',
+  },
+  {
+    question: 'Can I convert temperature between Celsius, Fahrenheit, and Kelvin?',
+    answer:
+      'Yes, the Temperature category supports conversions between Celsius, Fahrenheit, and Kelvin using the standard conversion formulas. Results are precise to 2 decimal places.',
+  },
+  {
+    question: 'What data storage units are supported?',
+    answer:
+      'Data storage covers bytes, kilobytes, megabytes, gigabytes, terabytes, petabytes, kibibytes, mebibytes, gibibytes, tebibytes, bits, kilobits, and megabits — both decimal and binary.',
+  },
+  {
+    question: 'How do I convert speed units like Mach and light speed?',
+    answer:
+      'The Speed category includes meters/second, km/h, mph, knots, foot/second, Mach (sea level), and even light speed. Use it for physics, aviation, or everyday speed conversions.',
+  },
 ];
 const schema = {
-  name: "Unit Converter Pro",
-  applicationCategory: "Utilities",
-  description: "Convert 100+ units across 8 categories including length, mass, volume, temperature, area, speed, time, and data storage.",
+  name: 'Unit Converter Pro',
+  applicationCategory: 'Utilities',
+  description:
+    'Convert 100+ units across 8 categories including length, mass, volume, temperature, area, speed, time, and data storage.',
   featureList: [
-    "100+ units across 8 measurement categories",
-    "Real-time conversion as you type",
-    "Smart category and unit detection",
-    "One-click swap between from/to units",
-    "Copy results to clipboard instantly",
-    "100% client-side with no server uploads"
+    '100+ units across 8 measurement categories',
+    'Real-time conversion as you type',
+    'Smart category and unit detection',
+    'One-click swap between from/to units',
+    'Copy results to clipboard instantly',
+    '100% client-side with no server uploads',
   ],
 };
 
 const benefits = [
-  { icon: "📏", title: "100+ Units", desc: "Convert across 8 categories including length, mass, volume, temperature, area, speed, time, and data storage. Over 100 units total." },
-  { icon: "⚡", title: "Real-Time Results", desc: "Conversions update instantly as you type. No buttons to click — just enter a value and see the result immediately." },
-  { icon: "🔄", title: "Smart Category Detection", desc: "Switch between categories with one click. The converter remembers your last used units within each category for faster workflows." },
-  { icon: "🔁", title: "One-Click Swap", desc: "Swap the from and to units with a single click. Perfect for reverse conversions without re-entering values." },
-  { icon: "📋", title: "Copy & Download", desc: "Copy individual conversion results to clipboard or download as text. Each result includes the full conversion detail." },
-  { icon: "🆓", title: "Completely Free", desc: "No sign-ups, no limits. Convert unlimited values across all 8 categories with 100+ units completely free." },
+  {
+    icon: '📏',
+    title: '100+ Units',
+    desc: 'Convert across 8 categories including length, mass, volume, temperature, area, speed, time, and data storage. Over 100 units total.',
+  },
+  {
+    icon: '⚡',
+    title: 'Real-Time Results',
+    desc: 'Conversions update instantly as you type. No buttons to click — just enter a value and see the result immediately.',
+  },
+  {
+    icon: '🔄',
+    title: 'Smart Category Detection',
+    desc: 'Switch between categories with one click. The converter remembers your last used units within each category for faster workflows.',
+  },
+  {
+    icon: '🔁',
+    title: 'One-Click Swap',
+    desc: 'Swap the from and to units with a single click. Perfect for reverse conversions without re-entering values.',
+  },
+  {
+    icon: '📋',
+    title: 'Copy & Download',
+    desc: 'Copy individual conversion results to clipboard or download as text. Each result includes the full conversion detail.',
+  },
+  {
+    icon: '🆓',
+    title: 'Completely Free',
+    desc: 'No sign-ups, no limits. Convert unlimited values across all 8 categories with 100+ units completely free.',
+  },
 ];
 
 const howToSteps = [
-  { num: "1", title: "Pick a Category", desc: "Choose from Length, Mass, Volume, Temperature, Area, Speed, Time, or Data. Each category has its own set of units." },
-  { num: "2", title: "Enter a Value", desc: "Type or paste the value you want to convert. The result updates in real-time as you type." },
-  { num: "3", title: "Select Units", desc: "Choose the source and target units from the dropdown menus. Use the swap button to quickly reverse the conversion." },
-  { num: "4", title: "Copy the Result", desc: "Click the result to copy it to your clipboard. Use the quick reference table to see common conversions at a glance." },
+  {
+    num: '1',
+    title: 'Pick a Category',
+    desc: 'Choose from Length, Mass, Volume, Temperature, Area, Speed, Time, or Data. Each category has its own set of units.',
+  },
+  {
+    num: '2',
+    title: 'Enter a Value',
+    desc: 'Type or paste the value you want to convert. The result updates in real-time as you type.',
+  },
+  {
+    num: '3',
+    title: 'Select Units',
+    desc: 'Choose the source and target units from the dropdown menus. Use the swap button to quickly reverse the conversion.',
+  },
+  {
+    num: '4',
+    title: 'Copy the Result',
+    desc: 'Click the result to copy it to your clipboard. Use the quick reference table to see common conversions at a glance.',
+  },
 ];
 
 const useCases = [
-  { icon: "👨‍🍳", title: "Cooking & Baking", desc: "Convert between cups, tablespoons, milliliters, and grams for recipes. Switch between metric and imperial effortlessly." },
-  { icon: "🔧", title: "DIY & Construction", desc: "Convert length, area, and volume for home improvement projects. Switch between metric and imperial measurements." },
-  { icon: "🌍", title: "Travel & Navigation", desc: "Convert speed limits, distances, and temperatures when traveling between countries that use different measurement systems." },
-  { icon: "💻", title: "Data & Technology", desc: "Convert between bytes, bits, and their multiples for storage planning, bandwidth calculations, and data transfer estimates." },
+  {
+    icon: '👨‍🍳',
+    title: 'Cooking & Baking',
+    desc: 'Convert between cups, tablespoons, milliliters, and grams for recipes. Switch between metric and imperial effortlessly.',
+  },
+  {
+    icon: '🔧',
+    title: 'DIY & Construction',
+    desc: 'Convert length, area, and volume for home improvement projects. Switch between metric and imperial measurements.',
+  },
+  {
+    icon: '🌍',
+    title: 'Travel & Navigation',
+    desc: 'Convert speed limits, distances, and temperatures when traveling between countries that use different measurement systems.',
+  },
+  {
+    icon: '💻',
+    title: 'Data & Technology',
+    desc: 'Convert between bytes, bits, and their multiples for storage planning, bandwidth calculations, and data transfer estimates.',
+  },
 ];
 ---
 
@@ -62,15 +150,16 @@ const useCases = [
   toolSchema={schema}
   faq={faqItems}
   howto={{
-    name: "How to Convert Units",
-    description: "Convert 100+ units across 8 categories including length, mass, volume, and temperature in 4 easy steps.",
-    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
-    totalTime: "PT1M",
+    name: 'How to Convert Units',
+    description:
+      'Convert 100+ units across 8 categories including length, mass, volume, and temperature in 4 easy steps.',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
   }}
   breadcrumbs={[
-    { name: "Home", url: "/" },
-    { name: "Tools", url: "/tools/" },
-    { name: "Unit Converter", url: "/tools/unit-converter/" },
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Unit Converter', url: '/tools/unit-converter/' },
   ]}
 >
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
@@ -87,219 +176,262 @@ const useCases = [
 
       <!-- Tool Interface -->
       <div class="mt-8 max-w-2xl mx-auto space-y-4">
-
         <!-- Category Selector -->
         <div class="bg-surface-1 border border-surface rounded-2xl p-5">
           <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3 block">Category</label>
           <div class="grid grid-cols-4 gap-2" id="category-tabs">
-            {["Length","Mass","Volume","Temp","Area","Speed","Time","Data"].map((c) => (
-              <button class="cat-btn rounded-xl py-2.5 px-2 text-[11px] font-medium border transition-all flex flex-col items-center gap-1" data-cat={c}>
-                <span class="text-base">
-                  {c === "Length" ? "↔" : c === "Mass" ? "⚖" : c === "Volume" ? "🧪" : c === "Temp" ? "🌡" : c === "Area" ? "▣" : c === "Speed" ? "⚡" : c === "Time" ? "⏱" : "💾"}
-                </span>
-                <span>{c === "Temp" ? "Temp" : c === "Data" ? "Data" : c}</span>
-              </button>
-            ))}
-            </div>
-            <div class="flex items-center gap-2 mt-3">
-              <span id="usage-badge" class="text-xs text-muted"></span>
-              <button id="share-btn" class="rounded-xl border border-surface-2 px-3 py-1.5 text-xs font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98] flex items-center gap-1.5" title="Share">🔗</button>
-              <div class="flex gap-1 ml-auto">
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
-              </div>
-            </div>
+            {
+              ['Length', 'Mass', 'Volume', 'Temp', 'Area', 'Speed', 'Time', 'Data'].map((c) => (
+                <button
+                  class="cat-btn rounded-xl py-2.5 px-2 text-[11px] font-medium border transition-all flex flex-col items-center gap-1"
+                  data-cat={c}
+                >
+                  <span class="text-base">
+                    {c === 'Length'
+                      ? '↔'
+                      : c === 'Mass'
+                        ? '⚖'
+                        : c === 'Volume'
+                          ? '🧪'
+                          : c === 'Temp'
+                            ? '🌡'
+                            : c === 'Area'
+                              ? '▣'
+                              : c === 'Speed'
+                                ? '⚡'
+                                : c === 'Time'
+                                  ? '⏱'
+                                  : '💾'}
+                  </span>
+                  <span>{c === 'Temp' ? 'Temp' : c === 'Data' ? 'Data' : c}</span>
+                </button>
+              ))
+            }
           </div>
-        </div>
-
-        <!-- Quick Reference Table -->
-        <div class="bg-surface-1 border border-surface rounded-2xl p-5">
-          <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3 block">Quick Reference</label>
-          <div id="ref-table" class="overflow-x-auto">
-            <table class="w-full text-xs text-tertiary">
-              <thead>
-                <tr class="text-dim border-b border-surface">
-                  <th class="text-left py-2 pr-4">Unit</th>
-                  <th class="text-right py-2">Value</th>
-                </tr>
-              </thead>
-              <tbody id="ref-body"></tbody>
-            </table>
+          <div class="flex items-center gap-2 mt-3">
+            <span id="usage-badge" class="text-xs text-muted"></span>
+            <button
+              id="share-btn"
+              class="rounded-xl border border-surface-2 px-3 py-1.5 text-xs font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98] flex items-center gap-1.5"
+              title="Share">🔗</button
+            >
+            <div class="flex gap-1 ml-auto">
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="purple"
+                style="background:#a855f7"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="blue"
+                style="background:#3b82f6"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="green"
+                style="background:#22c55e"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="pink"
+                style="background:#ec4899"></button>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- FAQ -->
-      <div class="mt-20 max-w-3xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
-          Frequently Asked
-          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
-        </h2>
-        <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
-      </div>
-
-      <KeyboardHints hints={[
-        { keys: "Enter", label: "Convert" },
-        { keys: "⌘K", label: "Open search" },
-        { keys: "Tab", label: "Next field" },
-      ]} />
-
-      <ToolContentSections
-        toolSlug="unit-converter"
-        toolName="Unit Converter"
-        category="Utility Tools"
-        {benefits}
-        howToSteps={howToSteps}
-        useCases={useCases}
-      />
-
-      <!-- ─── CTA Section ─── -->
-      <section class="mt-16 text-center">
-        <div class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10">
-          <h2 class="text-2xl md:text-3xl font-black tracking-tight">
-            Start Converting
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> Units Free</span>
-          </h2>
-          <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
-            No sign-up required. No limits. Convert 100+ units across 8 categories completely free.
-          </p>
-          <div class="mt-6 flex gap-3 justify-center flex-wrap">
-            <button onclick="document.querySelector('#input-value')?.focus()" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30">
-              Convert Now
-            </button>
-            <a href="/tools/character-counter/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700">
-              Try Character Counter
-            </a>
-          </div>
+      <!-- Quick Reference Table -->
+      <div class="bg-surface-1 border border-surface rounded-2xl p-5">
+        <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3 block">Quick Reference</label>
+        <div id="ref-table" class="overflow-x-auto">
+          <table class="w-full text-xs text-tertiary">
+            <thead>
+              <tr class="text-dim border-b border-surface">
+                <th class="text-left py-2 pr-4">Unit</th>
+                <th class="text-right py-2">Value</th>
+              </tr>
+            </thead>
+            <tbody id="ref-body"></tbody>
+          </table>
         </div>
-      </section>
-
-      <RelatedTools current="unit-converter" />
+      </div>
     </div>
+
+    <!-- FAQ -->
+    <div class="mt-20 max-w-3xl mx-auto">
+      <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+        Frequently Asked
+        <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+      </h2>
+      <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
+    </div>
+
+    <KeyboardHints
+      hints={[
+        { keys: 'Enter', label: 'Convert' },
+        { keys: '⌘K', label: 'Open search' },
+        { keys: 'Tab', label: 'Next field' },
+      ]}
+    />
+
+    <ToolContentSections
+      toolSlug="unit-converter"
+      toolName="Unit Converter"
+      category="Utility Tools"
+      {benefits}
+      howToSteps={howToSteps}
+      useCases={useCases}
+    />
+
+    <!-- ─── CTA Section ─── -->
+    <section class="mt-16 text-center">
+      <div
+        class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10"
+      >
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight">
+          Start Converting
+          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> Units Free</span>
+        </h2>
+        <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
+          No sign-up required. No limits. Convert 100+ units across 8 categories completely free.
+        </p>
+        <div class="mt-6 flex gap-3 justify-center flex-wrap">
+          <button
+            onclick="document.querySelector('#input-value')?.focus()"
+            class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30"
+          >
+            Convert Now
+          </button>
+          <a
+            href="/tools/character-counter/"
+            class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700"
+          >
+            Try Character Counter
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <RelatedTools current="unit-converter" />
   </main>
 </MainLayout>
 
 <script>
   const units: Record<string, { label: string; factor: number; offset?: number }[]> = {
     Length: [
-      { label: "Meter (m)", factor: 1 },
-      { label: "Kilometer (km)", factor: 1000 },
-      { label: "Centimeter (cm)", factor: 0.01 },
-      { label: "Millimeter (mm)", factor: 0.001 },
-      { label: "Micrometer (µm)", factor: 1e-6 },
-      { label: "Nanometer (nm)", factor: 1e-9 },
-      { label: "Mile (mi)", factor: 1609.344 },
-      { label: "Yard (yd)", factor: 0.9144 },
-      { label: "Foot (ft)", factor: 0.3048 },
-      { label: "Inch (in)", factor: 0.0254 },
-      { label: "Nautical Mile (nmi)", factor: 1852 },
+      { label: 'Meter (m)', factor: 1 },
+      { label: 'Kilometer (km)', factor: 1000 },
+      { label: 'Centimeter (cm)', factor: 0.01 },
+      { label: 'Millimeter (mm)', factor: 0.001 },
+      { label: 'Micrometer (µm)', factor: 1e-6 },
+      { label: 'Nanometer (nm)', factor: 1e-9 },
+      { label: 'Mile (mi)', factor: 1609.344 },
+      { label: 'Yard (yd)', factor: 0.9144 },
+      { label: 'Foot (ft)', factor: 0.3048 },
+      { label: 'Inch (in)', factor: 0.0254 },
+      { label: 'Nautical Mile (nmi)', factor: 1852 },
     ],
     Mass: [
-      { label: "Kilogram (kg)", factor: 1 },
-      { label: "Gram (g)", factor: 0.001 },
-      { label: "Milligram (mg)", factor: 1e-6 },
-      { label: "Metric Ton (t)", factor: 1000 },
-      { label: "Pound (lb)", factor: 0.45359237 },
-      { label: "Ounce (oz)", factor: 0.028349523125 },
-      { label: "Stone (st)", factor: 6.35029318 },
-      { label: "US Ton", factor: 907.18474 },
+      { label: 'Kilogram (kg)', factor: 1 },
+      { label: 'Gram (g)', factor: 0.001 },
+      { label: 'Milligram (mg)', factor: 1e-6 },
+      { label: 'Metric Ton (t)', factor: 1000 },
+      { label: 'Pound (lb)', factor: 0.45359237 },
+      { label: 'Ounce (oz)', factor: 0.028349523125 },
+      { label: 'Stone (st)', factor: 6.35029318 },
+      { label: 'US Ton', factor: 907.18474 },
     ],
     Volume: [
-      { label: "Liter (L)", factor: 1 },
-      { label: "Milliliter (mL)", factor: 0.001 },
-      { label: "Cubic Meter (m³)", factor: 1000 },
-      { label: "Cubic Centimeter (cm³)", factor: 0.001 },
-      { label: "Gallon (US)", factor: 3.785411784 },
-      { label: "Quart (US)", factor: 0.946352946 },
-      { label: "Pint (US)", factor: 0.473176473 },
-      { label: "Cup (US)", factor: 0.2365882365 },
-      { label: "Fluid Ounce (US)", factor: 0.0295735295625 },
-      { label: "Tablespoon (US)", factor: 0.01478676478125 },
-      { label: "Teaspoon (US)", factor: 0.00492892159375 },
+      { label: 'Liter (L)', factor: 1 },
+      { label: 'Milliliter (mL)', factor: 0.001 },
+      { label: 'Cubic Meter (m³)', factor: 1000 },
+      { label: 'Cubic Centimeter (cm³)', factor: 0.001 },
+      { label: 'Gallon (US)', factor: 3.785411784 },
+      { label: 'Quart (US)', factor: 0.946352946 },
+      { label: 'Pint (US)', factor: 0.473176473 },
+      { label: 'Cup (US)', factor: 0.2365882365 },
+      { label: 'Fluid Ounce (US)', factor: 0.0295735295625 },
+      { label: 'Tablespoon (US)', factor: 0.01478676478125 },
+      { label: 'Teaspoon (US)', factor: 0.00492892159375 },
     ],
     Temp: [
-      { label: "Celsius (°C)", factor: 1, offset: 0 },
-      { label: "Fahrenheit (°F)", factor: 1, offset: 0 },
-      { label: "Kelvin (K)", factor: 1, offset: 0 },
+      { label: 'Celsius (°C)', factor: 1, offset: 0 },
+      { label: 'Fahrenheit (°F)', factor: 1, offset: 0 },
+      { label: 'Kelvin (K)', factor: 1, offset: 0 },
     ],
     Area: [
-      { label: "Square Meter (m²)", factor: 1 },
-      { label: "Square Kilometer (km²)", factor: 1e6 },
-      { label: "Square Centimeter (cm²)", factor: 0.0001 },
-      { label: "Square Millimeter (mm²)", factor: 1e-6 },
-      { label: "Hectare (ha)", factor: 10000 },
-      { label: "Acre (ac)", factor: 4046.8564224 },
-      { label: "Square Mile (mi²)", factor: 2589988.110336 },
-      { label: "Square Foot (ft²)", factor: 0.09290304 },
-      { label: "Square Inch (in²)", factor: 0.00064516 },
+      { label: 'Square Meter (m²)', factor: 1 },
+      { label: 'Square Kilometer (km²)', factor: 1e6 },
+      { label: 'Square Centimeter (cm²)', factor: 0.0001 },
+      { label: 'Square Millimeter (mm²)', factor: 1e-6 },
+      { label: 'Hectare (ha)', factor: 10000 },
+      { label: 'Acre (ac)', factor: 4046.8564224 },
+      { label: 'Square Mile (mi²)', factor: 2589988.110336 },
+      { label: 'Square Foot (ft²)', factor: 0.09290304 },
+      { label: 'Square Inch (in²)', factor: 0.00064516 },
     ],
     Speed: [
-      { label: "Meter/second (m/s)", factor: 1 },
-      { label: "Kilometer/hour (km/h)", factor: 0.2777777778 },
-      { label: "Miles/hour (mph)", factor: 0.44704 },
-      { label: "Knot (kn)", factor: 0.5144444444 },
-      { label: "Foot/second (ft/s)", factor: 0.3048 },
-      { label: "Mach (sea level)", factor: 340.29 },
-      { label: "Light speed (c)", factor: 299792458 },
+      { label: 'Meter/second (m/s)', factor: 1 },
+      { label: 'Kilometer/hour (km/h)', factor: 0.2777777778 },
+      { label: 'Miles/hour (mph)', factor: 0.44704 },
+      { label: 'Knot (kn)', factor: 0.5144444444 },
+      { label: 'Foot/second (ft/s)', factor: 0.3048 },
+      { label: 'Mach (sea level)', factor: 340.29 },
+      { label: 'Light speed (c)', factor: 299792458 },
     ],
     Time: [
-      { label: "Second (s)", factor: 1 },
-      { label: "Millisecond (ms)", factor: 0.001 },
-      { label: "Microsecond (µs)", factor: 1e-6 },
-      { label: "Nanosecond (ns)", factor: 1e-9 },
-      { label: "Minute (min)", factor: 60 },
-      { label: "Hour (h)", factor: 3600 },
-      { label: "Day (d)", factor: 86400 },
-      { label: "Week (wk)", factor: 604800 },
-      { label: "Month (avg)", factor: 2629800 },
-      { label: "Year (avg)", factor: 31557600 },
+      { label: 'Second (s)', factor: 1 },
+      { label: 'Millisecond (ms)', factor: 0.001 },
+      { label: 'Microsecond (µs)', factor: 1e-6 },
+      { label: 'Nanosecond (ns)', factor: 1e-9 },
+      { label: 'Minute (min)', factor: 60 },
+      { label: 'Hour (h)', factor: 3600 },
+      { label: 'Day (d)', factor: 86400 },
+      { label: 'Week (wk)', factor: 604800 },
+      { label: 'Month (avg)', factor: 2629800 },
+      { label: 'Year (avg)', factor: 31557600 },
     ],
     Data: [
-      { label: "Byte (B)", factor: 1 },
-      { label: "Kilobyte (KB)", factor: 1000 },
-      { label: "Megabyte (MB)", factor: 1e6 },
-      { label: "Gigabyte (GB)", factor: 1e9 },
-      { label: "Terabyte (TB)", factor: 1e12 },
-      { label: "Petabyte (PB)", factor: 1e15 },
-      { label: "Kibibyte (KiB)", factor: 1024 },
-      { label: "Mebibyte (MiB)", factor: 1048576 },
-      { label: "Gibibyte (GiB)", factor: 1073741824 },
-      { label: "Tebibyte (TiB)", factor: 1099511627776 },
-      { label: "Bit (b)", factor: 0.125 },
-      { label: "Kilobit (Kb)", factor: 125 },
-      { label: "Megabit (Mb)", factor: 125000 },
+      { label: 'Byte (B)', factor: 1 },
+      { label: 'Kilobyte (KB)', factor: 1000 },
+      { label: 'Megabyte (MB)', factor: 1e6 },
+      { label: 'Gigabyte (GB)', factor: 1e9 },
+      { label: 'Terabyte (TB)', factor: 1e12 },
+      { label: 'Petabyte (PB)', factor: 1e15 },
+      { label: 'Kibibyte (KiB)', factor: 1024 },
+      { label: 'Mebibyte (MiB)', factor: 1048576 },
+      { label: 'Gibibyte (GiB)', factor: 1073741824 },
+      { label: 'Tebibyte (TiB)', factor: 1099511627776 },
+      { label: 'Bit (b)', factor: 0.125 },
+      { label: 'Kilobit (Kb)', factor: 125 },
+      { label: 'Megabit (Mb)', factor: 125000 },
     ],
   };
 
   function convertTemp(value: number, from: string, to: string): number {
     let celsius: number;
-    if (from.startsWith("Celsius")) celsius = value;
-    else if (from.startsWith("Fahrenheit")) celsius = (value - 32) * 5 / 9;
+    if (from.startsWith('Celsius')) celsius = value;
+    else if (from.startsWith('Fahrenheit')) celsius = ((value - 32) * 5) / 9;
     else celsius = value - 273.15;
-    if (to.startsWith("Celsius")) return celsius;
-    if (to.startsWith("Fahrenheit")) return celsius * 9 / 5 + 32;
+    if (to.startsWith('Celsius')) return celsius;
+    if (to.startsWith('Fahrenheit')) return (celsius * 9) / 5 + 32;
     return celsius + 273.15;
   }
 
-  const categoryTabs = document.querySelectorAll(".cat-btn");
-  const unitFrom = document.getElementById("unit-from") as HTMLSelectElement;
-  const unitTo = document.getElementById("unit-to") as HTMLSelectElement;
-  const inputVal = document.getElementById("input-value") as HTMLInputElement;
-  const resultDisplay = document.getElementById("result-display");
-  const copyBtn = document.getElementById("copy-btn");
-  const swapBtn = document.getElementById("swap-btn");
-  const refBody = document.getElementById("ref-body");
-  const detailEl = document.getElementById("conversion-detail");
+  const categoryTabs = document.querySelectorAll('.cat-btn');
+  const unitFrom = document.getElementById('unit-from') as HTMLSelectElement;
+  const unitTo = document.getElementById('unit-to') as HTMLSelectElement;
+  const inputVal = document.getElementById('input-value') as HTMLInputElement;
+  const resultDisplay = document.getElementById('result-display');
+  const copyBtn = document.getElementById('copy-btn');
+  const swapBtn = document.getElementById('swap-btn');
+  const refBody = document.getElementById('ref-body');
+  const detailEl = document.getElementById('conversion-detail');
 
-  let currentCategory = "Length";
+  let currentCategory = 'Length';
 
   function populateUnits(category: string) {
     const unitList = units[category] || [];
-    unitFrom.innerHTML = unitList.map((u, i) => `<option value="${i}">${u.label}</option>`).join("");
-    unitTo.innerHTML = unitList.map((u, i) => `<option value="${i}">${u.label}</option>`).join("");
-    if (unitList.length > 1) unitTo.value = "1";
+    unitFrom.innerHTML = unitList.map((u, i) => `<option value="${i}">${u.label}</option>`).join('');
+    unitTo.innerHTML = unitList.map((u, i) => `<option value="${i}">${u.label}</option>`).join('');
+    if (unitList.length > 1) unitTo.value = '1';
     generateRef(category);
     convert();
   }
@@ -308,16 +440,22 @@ const useCases = [
     if (!refBody) return;
     const unitList = units[category] || [];
     const base = unitList[0];
-    if (!base) { refBody.innerHTML = ""; return; }
-    refBody.innerHTML = unitList.slice(0, 8).map((u) => {
-      let val: string;
-      if (category === "Temp") {
-        val = u.label === base.label ? "1.000" : "—";
-      } else {
-        val = (u.factor / base.factor).toFixed(4);
-      }
-      return `<tr class="border-b border-surface"><td class="py-1.5 pr-4">${u.label}</td><td class="text-right py-1.5 font-mono">${val}</td></tr>`;
-    }).join("");
+    if (!base) {
+      refBody.innerHTML = '';
+      return;
+    }
+    refBody.innerHTML = unitList
+      .slice(0, 8)
+      .map((u) => {
+        let val: string;
+        if (category === 'Temp') {
+          val = u.label === base.label ? '1.000' : '—';
+        } else {
+          val = (u.factor / base.factor).toFixed(4);
+        }
+        return `<tr class="border-b border-surface"><td class="py-1.5 pr-4">${u.label}</td><td class="text-right py-1.5 font-mono">${val}</td></tr>`;
+      })
+      .join('');
   }
 
   function convert() {
@@ -330,32 +468,32 @@ const useCases = [
     if (!fromUnit || !toUnit) return;
 
     let result: number;
-    if (currentCategory === "Temp") {
+    if (currentCategory === 'Temp') {
       result = convertTemp(value, fromUnit.label, toUnit.label);
     } else {
       const baseVal = value * fromUnit.factor;
       result = baseVal / toUnit.factor;
     }
     resultDisplay.textContent = formatResult(result);
-    resultDisplay.classList.remove("hidden");
+    resultDisplay.classList.remove('hidden');
     if (detailEl) {
-      detailEl.textContent = `${value} ${fromUnit.label.split(" (")[0]} = ${formatResult(result)} ${toUnit.label.split(" (")[0]}`;
-      detailEl.classList.remove("hidden");
+      detailEl.textContent = `${value} ${fromUnit.label.split(' (')[0]} = ${formatResult(result)} ${toUnit.label.split(' (')[0]}`;
+      detailEl.classList.remove('hidden');
     }
-    localStorage.setItem("nt_last_unit_cat", currentCategory);
-    localStorage.setItem("nt_last_unit_from", unitFrom.value);
-    localStorage.setItem("nt_last_unit_to", unitTo.value);
+    localStorage.setItem('nt_last_unit_cat', currentCategory);
+    localStorage.setItem('nt_last_unit_from', unitFrom.value);
+    localStorage.setItem('nt_last_unit_to', unitTo.value);
   }
 
   function formatResult(v: number): string {
-    if (!isFinite(v)) return "—";
+    if (!isFinite(v)) return '—';
     if (Math.abs(v) >= 1e9 || (Math.abs(v) < 1e-6 && v !== 0)) return v.toExponential(6);
     const s = v.toPrecision(10);
     const n = parseFloat(s);
-    return n % 1 === 0 ? n.toString() : n.toFixed(Math.min(6, s.split(".")[1]?.length || 0));
+    return n % 1 === 0 ? n.toString() : n.toFixed(Math.min(6, s.split('.')[1]?.length || 0));
   }
 
-  function triggerToast(message: string, variant: "success" | "error" | "info" | "warning" = "info") {
+  function triggerToast(message: string, variant: 'success' | 'error' | 'info' | 'warning' = 'info') {
     if ((window as any).__showToast) {
       (window as any).__showToast({ message, variant });
     }
@@ -366,94 +504,164 @@ const useCases = [
     unitFrom.value = unitTo.value;
     unitTo.value = tmp;
     convert();
-    triggerToast("Units swapped!", "info");
+    triggerToast('Units swapped!', 'info');
   }
 
   categoryTabs.forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener('click', () => {
       categoryTabs.forEach((b) => {
-        b.classList.remove("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
-        b.classList.add("bg-surface-2", "border-surface", "text-tertiary");
+        b.classList.remove('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
+        b.classList.add('bg-surface-2', 'border-surface', 'text-tertiary');
       });
-      btn.classList.remove("bg-surface-2", "border-surface", "text-tertiary");
-      btn.classList.add("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
+      btn.classList.remove('bg-surface-2', 'border-surface', 'text-tertiary');
+      btn.classList.add('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
       currentCategory = btn.dataset.cat;
       populateUnits(currentCategory);
     });
   });
 
-  inputVal.addEventListener("input", convert);
-  unitFrom.addEventListener("change", convert);
-  unitTo.addEventListener("change", convert);
-  swapBtn.addEventListener("click", swap);
+  inputVal.addEventListener('input', convert);
+  unitFrom.addEventListener('change', convert);
+  unitTo.addEventListener('change', convert);
+  swapBtn.addEventListener('click', swap);
 
-  copyBtn.addEventListener("click", () => {
+  copyBtn.addEventListener('click', () => {
     const txt = resultDisplay.textContent;
-    if (txt && txt !== "--") {
+    if (txt && txt !== '--') {
       navigator.clipboard.writeText(txt).then(() => {
-        triggerToast("Result copied to clipboard!", "success");
+        triggerToast('Result copied to clipboard!', 'success');
       });
     }
   });
 
-  resultDisplay.addEventListener("click", () => {
+  resultDisplay.addEventListener('click', () => {
     const txt = resultDisplay.textContent;
-    if (txt && txt !== "--") {
+    if (txt && txt !== '--') {
       navigator.clipboard.writeText(txt);
-      triggerToast("Result copied!", "success");
+      triggerToast('Result copied!', 'success');
     }
   });
 
-  document.getElementById("download-btn")?.addEventListener("click", () => {
-    const content = `${inputVal.value} ${unitFrom.options[unitFrom.selectedIndex]?.textContent || ""} = ${resultDisplay.textContent} ${unitTo.options[unitTo.selectedIndex]?.textContent || ""}`;
-    const blob = new Blob([content], {type:"text/plain"});
-    const a = document.createElement("a");
+  document.getElementById('download-btn')?.addEventListener('click', () => {
+    const content = `${inputVal.value} ${unitFrom.options[unitFrom.selectedIndex]?.textContent || ''} = ${resultDisplay.textContent} ${unitTo.options[unitTo.selectedIndex]?.textContent || ''}`;
+    const blob = new Blob([content], { type: 'text/plain' });
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = "conversion-result.txt";
+    a.download = 'conversion-result.txt';
     a.click();
     URL.revokeObjectURL(a.href);
   });
 
-  document.getElementById("clear-btn")?.addEventListener("click", () => {
-    inputVal.value = "1";
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    inputVal.value = '1';
     convert();
   });
 
   // Restore last state
   try {
-    const lastCat = localStorage.getItem("nt_last_unit_cat");
+    const lastCat = localStorage.getItem('nt_last_unit_cat');
     if (lastCat && units[lastCat]) {
       currentCategory = lastCat;
       const btn = [...categoryTabs].find((b) => b.dataset.cat === lastCat);
       if (btn) btn.click();
       else populateUnits(currentCategory);
-      const lastFrom = localStorage.getItem("nt_last_unit_from");
-      const lastTo = localStorage.getItem("nt_last_unit_to");
+      const lastFrom = localStorage.getItem('nt_last_unit_from');
+      const lastTo = localStorage.getItem('nt_last_unit_to');
       if (lastFrom) unitFrom.value = lastFrom;
       if (lastTo) unitTo.value = lastTo;
       convert();
     } else {
-      populateUnits("Length");
-      categoryTabs[0]?.classList.add("bg-purple-600/15", "border-purple-500/50", "text-purple-300");
+      populateUnits('Length');
+      categoryTabs[0]?.classList.add('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
     }
-  } catch { populateUnits("Length"); categoryTabs[0]?.classList.add("bg-purple-600/15", "border-purple-500/50", "text-purple-300"); }
+  } catch {
+    populateUnits('Length');
+    categoryTabs[0]?.classList.add('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
+  }
 
   // Fullscreen toggle
-  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-    const card = document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card = document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
     if (!card) return;
-    if (document.fullscreenElement) { document.exitFullscreen(); document.getElementById("fullscreen-btn").textContent = "⛶"; }
-    else { card.requestFullscreen?.() || card.webkitRequestFullscreen?.(); document.getElementById("fullscreen-btn").textContent = "✕"; }
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      document.getElementById('fullscreen-btn').textContent = '⛶';
+    } else {
+      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
+      document.getElementById('fullscreen-btn').textContent = '✕';
+    }
   });
-  document.addEventListener("fullscreenchange", () => {
-    const btn = document.getElementById("fullscreen-btn");
-    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
-document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
-try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["unit-converter"])b.textContent="Used "+u["unit-converter"]+"×";}catch(e){}
-document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("output-text")||document.querySelector("[id$='result']");const t=o?.value||o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof showToast==="function"){playPing();showToast("Link copied!");}});
-function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
-document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500");});try{localStorage.setItem("nt_theme",c);}catch(e){}});});
-try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      const clearBtn = document.getElementById('clear-btn') || document.querySelector("button[id*='clear']") || document.querySelector("button[id*='reset']");
+      if (clearBtn) clearBtn.click();
+      else {
+        const inputs = document.querySelectorAll('textarea, input:not([type="radio"]):not([type="checkbox"])');
+        inputs.forEach(i => i.value = '');
+        const evt = new Event('input', { bubbles: true });
+        inputs.forEach(i => i.dispatchEvent(evt));
+      }
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['unit-converter']) b.textContent = 'Used ' + u['unit-converter'] + '×';
+  } catch (e) {}
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('output-text') || document.querySelector("[id$='result']");
+    const t = o?.value || o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof showToast === 'function') {
+      playPing();
+      showToast('Link copied!');
+    }
+  });
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
+  });
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>
-

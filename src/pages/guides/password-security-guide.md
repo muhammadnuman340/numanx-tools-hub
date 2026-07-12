@@ -1,13 +1,13 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: "Complete Guide to Password Security in 2026"
-description: "Master password security — learn how to create strong passwords, use password managers, enable 2FA, and protect your online accounts from breaches."
-date: "June 2, 2026"
-author: "Muhammad Numan Usmani"
-category: "Security"
-tags: ["password security", "cybersecurity", "2FA", "password manager", "online safety", "data breach"]
-readingTime: "10 min read"
-slug: "password-security-guide"
+title: 'Complete Guide to Password Security in 2026'
+description: 'Master password security — learn how to create strong passwords, use password managers, enable 2FA, and protect your online accounts from breaches.'
+date: 'June 2, 2026'
+author: 'Muhammad Numan Usmani'
+category: 'Security'
+tags: ['password security', 'cybersecurity', '2FA', 'password manager', 'online safety', 'data breach']
+readingTime: '10 min read'
+slug: 'password-security-guide'
 ---
 
 Password security is more important than ever. With data breaches affecting billions of accounts each year, a weak password can compromise your email, banking, social media, and more.
@@ -24,12 +24,14 @@ This guide covers how to create, manage, and protect your passwords in 2026.
 ## Step 1: Create Strong Passwords
 
 A strong password is:
+
 - **Long**: 12+ characters minimum (16+ recommended)
 - **Complex**: Uppercase, lowercase, numbers, symbols
 - **Unique**: Never reuse passwords across sites
 - **Random**: No dictionary words, names, or patterns
 
 ### The Passphrase Method
+
 Instead of `P@ssw0rd123!`, use a passphrase:
 
 `correct-horse-battery-staple-giraffe`
@@ -37,7 +39,9 @@ Instead of `P@ssw0rd123!`, use a passphrase:
 Passphrases are easier to remember and harder to crack.
 
 ### Password Entropy
+
 Entropy measures password strength in bits. Each bit doubles the difficulty of cracking:
+
 - < 28 bits: Very weak (cracked instantly)
 - 28–35 bits: Weak
 - 36–59 bits: Moderate
@@ -51,12 +55,14 @@ Use the **Password Strength Analyzer** to check your password's entropy.
 Password managers generate, store, and autofill strong passwords for every site.
 
 ### Top Password Managers (2026)
+
 - **Bitwarden** — Open source, free tier, cross-platform
 - **1Password** — Best UX, family plans
 - **KeePass** — Offline, self-hosted
 - **Apple/Google** — Built into your device
 
 ### Benefits
+
 - One master password to remember
 - Auto-generated unique passwords
 - Autofill on any device
@@ -67,6 +73,7 @@ Password managers generate, store, and autofill strong passwords for every site.
 2FA adds a second layer of security beyond your password.
 
 ### Types of 2FA (Ordered by Security)
+
 1. **Security keys** (FIDO2/WebAuthn) — Best
 2. **Authenticator apps** (Google Authenticator, Authy) — Great
 3. **SMS codes** — Better than nothing, but vulnerable to SIM swapping
@@ -79,6 +86,7 @@ Password managers generate, store, and autofill strong passwords for every site.
 Even with strong passwords, services you use can be breached.
 
 ### What to Do
+
 1. Check [Have I Been Pwned](https://haveibeenpwned.com) for breached accounts
 2. Change passwords for any compromised accounts immediately
 3. Enable 2FA everywhere
@@ -87,6 +95,7 @@ Even with strong passwords, services you use can be breached.
 ## Step 5: Avoid Common Mistakes
 
 ### What NOT to Do
+
 - ❌ Reusing passwords across sites
 - ❌ Using personal info (birthday, pet name, etc.)
 - ❌ Sharing passwords via unencrypted channels
@@ -94,6 +103,7 @@ Even with strong passwords, services you use can be breached.
 - ❌ Using the same password for work and personal accounts
 
 ### What TO Do
+
 - ✅ Use a password manager
 - ✅ Enable 2FA on critical accounts
 - ✅ Rotate passwords every 6–12 months
@@ -109,12 +119,15 @@ Even with strong passwords, services you use can be breached.
 ## Frequently Asked Questions
 
 ### How long should a password be?
+
 Minimum 12 characters; 16+ is recommended. Each additional character exponentially increases cracking difficulty.
 
 ### Is it safe to use a password manager?
+
 Yes. Reputable password managers use zero-knowledge encryption — even the provider cannot see your passwords. They are significantly more secure than reusing weak passwords.
 
 ### What if a service I use gets breached?
+
 1. Change your password immediately
 2. Enable 2FA if not already active
 3. Check if you reused that password elsewhere — change those too

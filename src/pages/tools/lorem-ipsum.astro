@@ -1,46 +1,139 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
-  { question: "What is Lorem Ipsum?", answer: "Lorem Ipsum is placeholder text commonly used in graphic design, publishing, and web development to demonstrate visual form before final content is ready." },
-  { question: "What generation modes are available?", answer: "You can generate by paragraphs (each ~100 words), sentences, words, or bytes. Choose what suits your mockup needs." },
-  { question: "Can I copy or download the generated text?", answer: "Yes, you can copy the generated text to clipboard with one click or download it as a .txt file." },
-  { question: "Is Lorem Ipsum based on real Latin?", answer: "Yes, Lorem Ipsum is derived from sections 1.10.32–33 of Cicero's 'De Finibus Bonorum et Malorum' from 45 BC, but it uses modified, scrambled text that has lost its original meaning." },
-  { question: "Why do designers use Lorem Ipsum instead of real text?", answer: "Lorem Ipsum has a natural-looking distribution of letters and words that mimics readable English, allowing designers to focus on layout and typography without being distracted by meaningful content." },
-  { question: "What is the difference between Lorem Ipsum and dummy text?", answer: "Lorem Ipsum is a specific type of dummy text with roots in classical Latin literature. Dummy text can be any placeholder content, but Lorem Ipsum is preferred for its realistic text distribution." },
-  { question: "Can I generate text in different languages?", answer: "This generator uses classic Lorem Ipsum text based on Latin. For other languages, you would need a language-specific placeholder text generator." },
-  { question: "What is the byte generation mode used for?", answer: "Byte mode generates an exact number of bytes of placeholder text, which is useful for testing database field lengths, API payload limits, and memory buffer sizes." },
+  {
+    question: 'What is Lorem Ipsum?',
+    answer:
+      'Lorem Ipsum is placeholder text commonly used in graphic design, publishing, and web development to demonstrate visual form before final content is ready.',
+  },
+  {
+    question: 'What generation modes are available?',
+    answer:
+      'You can generate by paragraphs (each ~100 words), sentences, words, or bytes. Choose what suits your mockup needs.',
+  },
+  {
+    question: 'Can I copy or download the generated text?',
+    answer: 'Yes, you can copy the generated text to clipboard with one click or download it as a .txt file.',
+  },
+  {
+    question: 'Is Lorem Ipsum based on real Latin?',
+    answer:
+      "Yes, Lorem Ipsum is derived from sections 1.10.32–33 of Cicero's 'De Finibus Bonorum et Malorum' from 45 BC, but it uses modified, scrambled text that has lost its original meaning.",
+  },
+  {
+    question: 'Why do designers use Lorem Ipsum instead of real text?',
+    answer:
+      'Lorem Ipsum has a natural-looking distribution of letters and words that mimics readable English, allowing designers to focus on layout and typography without being distracted by meaningful content.',
+  },
+  {
+    question: 'What is the difference between Lorem Ipsum and dummy text?',
+    answer:
+      'Lorem Ipsum is a specific type of dummy text with roots in classical Latin literature. Dummy text can be any placeholder content, but Lorem Ipsum is preferred for its realistic text distribution.',
+  },
+  {
+    question: 'Can I generate text in different languages?',
+    answer:
+      'This generator uses classic Lorem Ipsum text based on Latin. For other languages, you would need a language-specific placeholder text generator.',
+  },
+  {
+    question: 'What is the byte generation mode used for?',
+    answer:
+      'Byte mode generates an exact number of bytes of placeholder text, which is useful for testing database field lengths, API payload limits, and memory buffer sizes.',
+  },
 ];
-const liSchema = { name: "Lorem Ipsum Generator", applicationCategory: "Creator Tools", description: "Generate Lorem Ipsum placeholder text in paragraphs, sentences, words, or bytes.", featureList: ["Paragraph, sentence, word, and byte modes", "Customizable count", "Copy and download"] };
+const liSchema = {
+  name: 'Lorem Ipsum Generator',
+  applicationCategory: 'Creator Tools',
+  description: 'Generate Lorem Ipsum placeholder text in paragraphs, sentences, words, or bytes.',
+  featureList: ['Paragraph, sentence, word, and byte modes', 'Customizable count', 'Copy and download'],
+};
 
 const benefits = [
-  { icon: "📝", title: "Multiple Modes", desc: "Generate text by paragraphs, sentences, words, or bytes. Each mode gives you precise control over the amount of placeholder text you need." },
-  { icon: "⚡", title: "Instant Generation", desc: "Click generate and get your placeholder text immediately. No server calls, no waiting — pure client-side generation." },
-  { icon: "📋", title: "Copy & Download", desc: "Copy the generated text to clipboard with one click or download as a .txt file. Perfect for inserting into design mockups." },
-  { icon: "🎯", title: "Customizable Count", desc: "Set the exact number of paragraphs, sentences, or words. Fine-tune the output to match your design layout perfectly." },
-  { icon: "🔒", title: "100% Private", desc: "All generation happens in your browser. Your text never leaves your device — no server uploads, no data tracking." },
-  { icon: "🆓", title: "Completely Free", desc: "No sign-ups, no limits. Generate unlimited Lorem Ipsum text for all your design and development mockups." },
+  {
+    icon: '📝',
+    title: 'Multiple Modes',
+    desc: 'Generate text by paragraphs, sentences, words, or bytes. Each mode gives you precise control over the amount of placeholder text you need.',
+  },
+  {
+    icon: '⚡',
+    title: 'Instant Generation',
+    desc: 'Click generate and get your placeholder text immediately. No server calls, no waiting — pure client-side generation.',
+  },
+  {
+    icon: '📋',
+    title: 'Copy & Download',
+    desc: 'Copy the generated text to clipboard with one click or download as a .txt file. Perfect for inserting into design mockups.',
+  },
+  {
+    icon: '🎯',
+    title: 'Customizable Count',
+    desc: 'Set the exact number of paragraphs, sentences, or words. Fine-tune the output to match your design layout perfectly.',
+  },
+  {
+    icon: '🔒',
+    title: '100% Private',
+    desc: 'All generation happens in your browser. Your text never leaves your device — no server uploads, no data tracking.',
+  },
+  {
+    icon: '🆓',
+    title: 'Completely Free',
+    desc: 'No sign-ups, no limits. Generate unlimited Lorem Ipsum text for all your design and development mockups.',
+  },
 ];
 
 const howToSteps = [
-  { num: "1", title: "Choose Mode", desc: "Select paragraphs, sentences, or words depending on the type of placeholder text you need for your mockup." },
-  { num: "2", title: "Set Count", desc: "Enter the number of units you want to generate. For paragraphs, each is ~100 words. Adjust up or down as needed." },
-  { num: "3", title: "Generate Text", desc: "Click the Generate button to create your placeholder text. The output appears instantly in the text area below." },
-  { num: "4", title: "Copy or Download", desc: "Copy the generated text to your clipboard or download it as a .txt file for use in your design or development project." },
+  {
+    num: '1',
+    title: 'Choose Mode',
+    desc: 'Select paragraphs, sentences, or words depending on the type of placeholder text you need for your mockup.',
+  },
+  {
+    num: '2',
+    title: 'Set Count',
+    desc: 'Enter the number of units you want to generate. For paragraphs, each is ~100 words. Adjust up or down as needed.',
+  },
+  {
+    num: '3',
+    title: 'Generate Text',
+    desc: 'Click the Generate button to create your placeholder text. The output appears instantly in the text area below.',
+  },
+  {
+    num: '4',
+    title: 'Copy or Download',
+    desc: 'Copy the generated text to your clipboard or download it as a .txt file for use in your design or development project.',
+  },
 ];
 
 const useCases = [
-  { icon: "🎨", title: "Design Mockups", desc: "Fill wireframes and prototypes with realistic-looking text to demonstrate typography, layout, and spacing to clients." },
-  { icon: "🌐", title: "Web Development", desc: "Test website layouts, responsive designs, and content areas with placeholder text before final copy is ready." },
-  { icon: "📄", title: "Print & Publishing", desc: "Create print layouts, brochures, and flyer mockups with Lorem Ipsum to visualize the final design before content arrives." },
-  { icon: "🧪", title: "Software Testing", desc: "Use generated text to test text rendering, overflow handling, character limits, and UI edge cases in your applications." },
+  {
+    icon: '🎨',
+    title: 'Design Mockups',
+    desc: 'Fill wireframes and prototypes with realistic-looking text to demonstrate typography, layout, and spacing to clients.',
+  },
+  {
+    icon: '🌐',
+    title: 'Web Development',
+    desc: 'Test website layouts, responsive designs, and content areas with placeholder text before final copy is ready.',
+  },
+  {
+    icon: '📄',
+    title: 'Print & Publishing',
+    desc: 'Create print layouts, brochures, and flyer mockups with Lorem Ipsum to visualize the final design before content arrives.',
+  },
+  {
+    icon: '🧪',
+    title: 'Software Testing',
+    desc: 'Use generated text to test text rendering, overflow handling, character limits, and UI edge cases in your applications.',
+  },
 ];
 ---
+
 <MainLayout
   title="Lorem Ipsum Generator - Free Placeholder Text"
   description="Generate Lorem Ipsum placeholder text as paragraphs, sentences, words, or bytes. Free online generator for mockups."
@@ -48,72 +141,179 @@ const useCases = [
   toolSchema={liSchema}
   faq={faqItems}
   howto={{
-    name: "How to Generate Lorem Ipsum",
-    description: "Generate placeholder text in paragraphs, sentences, or words for your design mockups in 4 easy steps.",
-    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
-    totalTime: "PT1M",
+    name: 'How to Generate Lorem Ipsum',
+    description:
+      'Generate placeholder text in paragraphs, sentences, or words for your design mockups in 4 easy steps.',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
   }}
   breadcrumbs={[
-    { name: "Home", url: "/" },
-    { name: "Tools", url: "/tools/" },
-    { name: "Lorem Ipsum", url: "/tools/lorem-ipsum/" },
-  ]}>
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
-    <ToolHeader title="Lorem Ipsum" gradient="Generator" desc="Generate Lorem Ipsum placeholder text in paragraphs, sentences, words, or bytes." badge="✦ New Tool" slug="lorem-ipsum" />
-    <ShareBar />
-    <div class="max-w-xl mx-auto mt-10">
-      <div class="bg-surface-1 border border-surface rounded-2xl p-6 relative">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
-            <span id="usage-badge" class="text-xs text-muted"></span>
-          </div>
-          <div class="flex items-center gap-2">
-            <div class="flex gap-1">
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Lorem Ipsum', url: '/tools/lorem-ipsum/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="Lorem Ipsum"
+        gradient="Generator"
+        desc="Generate Lorem Ipsum placeholder text in paragraphs, sentences, words, or bytes."
+        badge="✦ New Tool"
+        slug="lorem-ipsum"
+      />
+      <ShareBar />
+      <div class="max-w-xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 relative">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+              <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
-            <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+            <div class="flex items-center gap-2">
+              <div class="flex gap-1">
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="purple"
+                  style="background:#a855f7"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="blue"
+                  style="background:#3b82f6"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="green"
+                  style="background:#22c55e"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="pink"
+                  style="background:#ec4899"></button>
+              </div>
+              <button
+                id="fullscreen-btn"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                title="Fullscreen">⛶</button
+              >
+            </div>
           </div>
-        </div>
-        <div class="flex items-center gap-3 mb-4">
-          <div class="flex gap-2">
-            <button class="li-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-blue-600 text-white" data-unit="paragraphs" data-label="Paragraphs">Paragraphs</button>
-            <button class="li-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary" data-unit="sentences" data-label="Sentences">Sentences</button>
-            <button class="li-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary" data-unit="words" data-label="Words">Words</button>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="flex gap-2">
+              <button
+                class="li-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-blue-600 text-white"
+                data-unit="paragraphs"
+                data-label="Paragraphs">Paragraphs</button
+              >
+              <button
+                class="li-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary"
+                data-unit="sentences"
+                data-label="Sentences">Sentences</button
+              >
+              <button
+                class="li-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary"
+                data-unit="words"
+                data-label="Words">Words</button
+              >
+            </div>
+            <div class="flex items-center gap-2 ml-auto">
+              <label class="text-xs text-tertiary">Count:</label>
+              <input
+                id="li-count"
+                type="number"
+                value="3"
+                min="1"
+                max="100"
+                class="w-16 px-2 py-1.5 rounded-lg border border-surface-2 bg-surface-1 text-white text-xs text-center focus:border-blue-500/50 focus:outline-none"
+              />
+            </div>
           </div>
-          <div class="flex items-center gap-2 ml-auto">
-            <label class="text-xs text-tertiary">Count:</label>
-            <input id="li-count" type="number" value="3" min="1" max="100" class="w-16 px-2 py-1.5 rounded-lg border border-surface-2 bg-surface-1 text-white text-xs text-center focus:border-blue-500/50 focus:outline-none" />
+          <button
+            id="li-generate"
+            class="w-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold py-2.5 rounded-xl transition-all mb-4"
+            >Generate</button
+          >
+          <div class="flex items-center gap-1.5 mb-2">
+            <button
+              class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A−</button
+            >
+            <button
+              class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A+</button
+            >
+            <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
           </div>
-        </div>
-        <button id="li-generate" class="w-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold py-2.5 rounded-xl transition-all mb-4">Generate</button>
-        <div class="flex items-center gap-1.5 mb-2">
-          <button class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A−</button>
-          <button class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A+</button>
-          <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
-        </div>
-        <div class="flex">
-          <div id="line-nums" class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3" style="min-width:2.5em">1</div>
-          <textarea id="li-output" class="flex-1 h-48 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm leading-relaxed focus:outline-none resize-none" readonly placeholder="Generated text will appear here..."></textarea>
-        </div>
-        <div id="reading-time" class="text-xs text-muted mt-1"></div>
-        <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
-        <div class="flex gap-2 mt-3">
-          <select id="export-format" class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5">
-            <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option>
-          </select>
-          <button id="li-copy" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy</button>
-          <button id="li-download" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Download .txt</button>
-          <button id="share-btn" class="px-3 py-1.5 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium rounded-lg border border-surface-3 transition-all" title="Copy share link">🔗</button>
-          <button id="clear-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Clear</button>
+          <div class="flex">
+            <div
+              id="line-nums"
+              class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3"
+              style="min-width:2.5em"
+            >
+              1
+            </div>
+            <textarea
+              id="li-output"
+              class="flex-1 h-48 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm leading-relaxed focus:outline-none resize-none"
+              readonly
+              placeholder="Generated text will appear here..."></textarea>
+          </div>
+          <div id="reading-time" class="text-xs text-muted mt-1"></div>
+          <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
+          <div class="flex gap-2 mt-3">
+            <select
+              id="export-format"
+              class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
+            >
+              <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option
+                value="html">HTML</option
+              >
+            </select>
+            <button
+              id="li-copy"
+              class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+              >Copy</button
+            >
+            <button
+              id="li-download"
+              class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+              >Download .txt</button
+            >
+            <button
+              id="share-btn"
+              class="px-3 py-1.5 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium rounded-lg border border-surface-3 transition-all"
+              title="Copy share link">🔗</button
+            >
+            <button
+              id="clear-btn"
+              class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+              >Clear</button
+            >
+          </div>
         </div>
       </div>
-    </div>
-    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-blue-400 uppercase tracking-wider">Learn</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">Why <span class="bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent">Lorem Ipsum?</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>Lorem Ipsum has been the standard placeholder text in the printing and typesetting industry since the 1500s. It provides a realistic text distribution that helps designers and developers visualize layouts, typography, and spacing before actual content is ready.</p></div></section>
-    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
+      <section class="mt-20 max-w-3xl mx-auto">
+        <div class="text-center mb-8">
+          <span class="text-xs font-semibold text-blue-400 uppercase tracking-wider">Learn</span><h2
+            class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
+          >
+            Why <span class="bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent"
+              >Lorem Ipsum?</span
+            >
+          </h2>
+        </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
+          <p>
+            Lorem Ipsum has been the standard placeholder text in the printing and typesetting industry since the 1500s.
+            It provides a realistic text distribution that helps designers and developers visualize layouts, typography,
+            and spacing before actual content is ready.
+          </p>
+        </div>
+      </section>
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked <span class="bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent"
+            >Questions</span
+          >
+        </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
+      </div>
 
       <ToolContentSections
         toolSlug="lorem-ipsum"
@@ -126,162 +326,382 @@ const useCases = [
 
       <!-- ─── CTA Section ─── -->
       <section class="mt-16 text-center">
-        <div class="max-w-2xl mx-auto bg-gradient-to-br from-blue-600/10 to-cyan-600/5 border border-blue-500/20 rounded-2xl p-8 md:p-10">
+        <div
+          class="max-w-2xl mx-auto bg-gradient-to-br from-blue-600/10 to-cyan-600/5 border border-blue-500/20 rounded-2xl p-8 md:p-10"
+        >
           <h2 class="text-2xl md:text-3xl font-black tracking-tight">
             Generate
-            <span class="bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent"> Placeholder Text Free</span>
+            <span class="bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent">
+              Placeholder Text Free</span
+            >
           </h2>
           <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
-            No sign-up required. No limits. Generate unlimited Lorem Ipsum text for all your design and development mockups.
+            No sign-up required. No limits. Generate unlimited Lorem Ipsum text for all your design and development
+            mockups.
           </p>
           <div class="mt-6 flex gap-3 justify-center flex-wrap">
-            <button onclick="document.querySelector('#li-generate')?.click()" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-blue-900/30">
+            <button
+              onclick="document.querySelector('#li-generate')?.click()"
+              class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-blue-900/30"
+            >
               Generate Now
             </button>
-            <a href="/tools/countdown-timer/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700">
+            <a
+              href="/tools/countdown-timer/"
+              class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700"
+            >
               Try Countdown Timer
             </a>
           </div>
         </div>
       </section>
 
-    <RelatedTools current="lorem-ipsum" />
-  </div></main>
+      <RelatedTools current="lorem-ipsum" />
+    </div>
+  </main>
 </MainLayout>
 <script>
-  function playPing(){ try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){} }
-  const loremWords = ["lorem","ipsum","dolor","sit","amet","consectetur","adipiscing","elit","sed","do","eiusmod","tempor","incididunt","ut","labore","et","dolore","magna","aliqua","ut","enim","ad","minim","veniam","quis","nostrud","exercitation","ullamco","laboris","nisi","ut","aliquip","ex","ea","commodo","consequat","duis","aute","irure","dolor","in","reprehenderit","in","voluptate","velit","esse","cillum","dolore","eu","fugiat","nulla","pariatur","excepteur","sint","occaecat","cupidatat","non","proident","sunt","in","culpa","qui","officia","deserunt","mollit","anim","id","est","laborum"];
-  function capitalize(w) { return w.charAt(0).toUpperCase() + w.slice(1); }
-  function rand(n) { return Math.floor(Math.random() * n); }
-  function makeSentence() { const len = rand(8)+5; let s = ''; for(let i=0;i<len;i++) { s += (i===0?capitalize(loremWords[rand(loremWords.length)]):loremWords[rand(loremWords.length)]) + ' '; } return s.trim() + '. '; }
-  function makeParagraph() { let p = ''; for(let i=0;i<rand(4)+4;i++) p += makeSentence(); return p.trim(); }
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
+  const loremWords = [
+    'lorem',
+    'ipsum',
+    'dolor',
+    'sit',
+    'amet',
+    'consectetur',
+    'adipiscing',
+    'elit',
+    'sed',
+    'do',
+    'eiusmod',
+    'tempor',
+    'incididunt',
+    'ut',
+    'labore',
+    'et',
+    'dolore',
+    'magna',
+    'aliqua',
+    'ut',
+    'enim',
+    'ad',
+    'minim',
+    'veniam',
+    'quis',
+    'nostrud',
+    'exercitation',
+    'ullamco',
+    'laboris',
+    'nisi',
+    'ut',
+    'aliquip',
+    'ex',
+    'ea',
+    'commodo',
+    'consequat',
+    'duis',
+    'aute',
+    'irure',
+    'dolor',
+    'in',
+    'reprehenderit',
+    'in',
+    'voluptate',
+    'velit',
+    'esse',
+    'cillum',
+    'dolore',
+    'eu',
+    'fugiat',
+    'nulla',
+    'pariatur',
+    'excepteur',
+    'sint',
+    'occaecat',
+    'cupidatat',
+    'non',
+    'proident',
+    'sunt',
+    'in',
+    'culpa',
+    'qui',
+    'officia',
+    'deserunt',
+    'mollit',
+    'anim',
+    'id',
+    'est',
+    'laborum',
+  ];
+  function capitalize(w) {
+    return w.charAt(0).toUpperCase() + w.slice(1);
+  }
+  function rand(n) {
+    return Math.floor(Math.random() * n);
+  }
+  function makeSentence() {
+    const len = rand(8) + 5;
+    let s = '';
+    for (let i = 0; i < len; i++) {
+      s += (i === 0 ? capitalize(loremWords[rand(loremWords.length)]) : loremWords[rand(loremWords.length)]) + ' ';
+    }
+    return s.trim() + '. ';
+  }
+  function makeParagraph() {
+    let p = '';
+    for (let i = 0; i < rand(4) + 4; i++) p += makeSentence();
+    return p.trim();
+  }
   function generate(unit, count) {
     let result = '';
-    switch(unit) {
-      case 'paragraphs': for(let i=0;i<count;i++) result += makeParagraph() + '\n\n'; break;
-      case 'sentences': for(let i=0;i<count;i++) result += makeSentence(); break;
-      case 'words': for(let i=0;i<count;i++) result += loremWords[rand(loremWords.length)] + ' '; break;
+    switch (unit) {
+      case 'paragraphs':
+        for (let i = 0; i < count; i++) result += makeParagraph() + '\n\n';
+        break;
+      case 'sentences':
+        for (let i = 0; i < count; i++) result += makeSentence();
+        break;
+      case 'words':
+        for (let i = 0; i < count; i++) result += loremWords[rand(loremWords.length)] + ' ';
+        break;
     }
     return result.trim();
   }
-  let currentUnit = "paragraphs";
-  document.querySelectorAll(".li-mode").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".li-mode").forEach(b => { b.classList.remove("bg-blue-600","text-white"); b.classList.add("bg-surface-2","text-tertiary","hover:text-primary"); });
-      btn.classList.remove("bg-surface-2","text-tertiary","hover:text-primary");
-      btn.classList.add("bg-blue-600","text-white");
+  let currentUnit = 'paragraphs';
+  document.querySelectorAll('.li-mode').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.li-mode').forEach((b) => {
+        b.classList.remove('bg-blue-600', 'text-white');
+        b.classList.add('bg-surface-2', 'text-tertiary', 'hover:text-primary');
+      });
+      btn.classList.remove('bg-surface-2', 'text-tertiary', 'hover:text-primary');
+      btn.classList.add('bg-blue-600', 'text-white');
       currentUnit = btn.dataset.unit;
     });
   });
-  document.getElementById("li-generate")!.addEventListener("click", () => {
-    const count = Math.min(Math.max(parseInt((document.getElementById("li-count") as HTMLInputElement).value) || 3, 1), 100);
-    const ta = document.getElementById("li-output") as HTMLTextAreaElement;
+  document.getElementById('li-generate')!.addEventListener('click', () => {
+    const count = Math.min(
+      Math.max(parseInt((document.getElementById('li-count') as HTMLInputElement).value) || 3, 1),
+      100,
+    );
+    const ta = document.getElementById('li-output') as HTMLTextAreaElement;
     ta.value = generate(currentUnit, count);
-    ta.dispatchEvent(new Event("input"));
+    ta.dispatchEvent(new Event('input'));
   });
-  document.getElementById("li-copy")!.addEventListener("click", async () => {
-    const text = (document.getElementById("li-output") as HTMLTextAreaElement).value;
-    if (!text) return; await navigator.clipboard.writeText(text); playPing(); if ((window as any).__showToast) (window as any).__showToast({message:"Copied!",variant:"success"});
+  document.getElementById('li-copy')!.addEventListener('click', async () => {
+    const text = (document.getElementById('li-output') as HTMLTextAreaElement).value;
+    if (!text) return;
+    await navigator.clipboard.writeText(text);
+    playPing();
+    if ((window as any).__showToast) (window as any).__showToast({ message: 'Copied!', variant: 'success' });
   });
-  document.getElementById("li-download")!.addEventListener("click", () => {
-    const text = (document.getElementById("li-output") as HTMLTextAreaElement).value;
-    if (!text) return; const fmt=(document.getElementById("export-format") as HTMLSelectElement)?.value||"txt"; let content=text; let mime="text/plain"; let ext="txt"; if(fmt==="json"){ content=JSON.stringify({result:text, tool:"lorem-ipsum", timestamp:new Date().toISOString()}); mime="application/json"; ext="json"; } if(fmt==="csv"){ content="Result\n\""+text.replace(/"/g,'""')+"\""; mime="text/csv"; ext="csv"; } if(fmt==="html"){ content="<!DOCTYPE html><html><body><pre>"+text.replace(/</g,"&lt;")+"</pre></body></html>"; mime="text/html"; ext="html"; } const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([content], {type:mime})); a.download = `lorem-ipsum.`+ext; a.click(); URL.revokeObjectURL(a.href);
+  document.getElementById('li-download')!.addEventListener('click', () => {
+    const text = (document.getElementById('li-output') as HTMLTextAreaElement).value;
+    if (!text) return;
+    const fmt = (document.getElementById('export-format') as HTMLSelectElement)?.value || 'txt';
+    let content = text;
+    let mime = 'text/plain';
+    let ext = 'txt';
+    if (fmt === 'json') {
+      content = JSON.stringify({ result: text, tool: 'lorem-ipsum', timestamp: new Date().toISOString() });
+      mime = 'application/json';
+      ext = 'json';
+    }
+    if (fmt === 'csv') {
+      content = 'Result\n"' + text.replace(/"/g, '""') + '"';
+      mime = 'text/csv';
+      ext = 'csv';
+    }
+    if (fmt === 'html') {
+      content = '<!DOCTYPE html><html><body><pre>' + text.replace(/</g, '&lt;') + '</pre></body></html>';
+      mime = 'text/html';
+      ext = 'html';
+    }
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([content], { type: mime }));
+    a.download = `lorem-ipsum.` + ext;
+    a.click();
+    URL.revokeObjectURL(a.href);
   });
-  document.getElementById("clear-btn")!.addEventListener("click", () => {
-    (document.getElementById("li-output") as HTMLTextAreaElement).value = "";
-    (document.getElementById("li-count") as HTMLInputElement).value = "3";
-    playPing(); if ((window as any).__showToast) (window as any).__showToast({message:"Cleared!",variant:"info"});
+  document.getElementById('clear-btn')!.addEventListener('click', () => {
+    (document.getElementById('li-output') as HTMLTextAreaElement).value = '';
+    (document.getElementById('li-count') as HTMLInputElement).value = '3';
+    playPing();
+    if ((window as any).__showToast) (window as any).__showToast({ message: 'Cleared!', variant: 'info' });
   });
 
-  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-    const card = document.getElementById("fullscreen-btn").closest(".bg-surface-1.border.border-surface.rounded-2xl") || document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card =
+      document.getElementById('fullscreen-btn').closest('.bg-surface-1.border.border-surface.rounded-2xl') ||
+      document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
     if (!card) return;
     if (document.fullscreenElement) {
       document.exitFullscreen();
-      document.getElementById("fullscreen-btn").textContent = "⛶";
+      document.getElementById('fullscreen-btn').textContent = '⛶';
     } else {
       card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
-      document.getElementById("fullscreen-btn").textContent = "✕";
+      document.getElementById('fullscreen-btn').textContent = '✕';
     }
   });
-  document.addEventListener("fullscreenchange", () => {
-    const btn = document.getElementById("fullscreen-btn");
-    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
 
-  const DRAFT_KEY = "nt_draft_lorem-ipsum";
-  (function() {
-    const input = document.getElementById("input-text") || document.querySelector("textarea:not([readonly])");
+  const DRAFT_KEY = 'nt_draft_lorem-ipsum';
+  (function () {
+    const input = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');
     if (!input) return;
     try {
       const saved = localStorage.getItem(DRAFT_KEY);
-      if (saved && !input.value) { input.value = saved; input.dispatchEvent(new Event("input")); }
-    } catch(e) {}
+      if (saved && !input.value) {
+        input.value = saved;
+        input.dispatchEvent(new Event('input'));
+      }
+    } catch (e) {}
     let saveTimer;
-    input.addEventListener("input", () => {
+    input.addEventListener('input', () => {
       clearTimeout(saveTimer);
       saveTimer = setTimeout(() => {
-        try { localStorage.setItem(DRAFT_KEY, input.value); } catch(e) {}
+        try {
+          localStorage.setItem(DRAFT_KEY, input.value);
+        } catch (e) {}
       }, 500);
     });
   })();
 
-  document.querySelector(".font-inc")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.min(24,s+2)+"px"; }); });
-  document.querySelector(".font-dec")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.max(10,s-2)+"px"; }); });
-  try { const s=localStorage.getItem("nt_fs"); if(s) document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px"); } catch(e){}
-
-  document.addEventListener("keydown", e => {
-    if(e.ctrlKey&&e.key==="Enter"){ e.preventDefault(); const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])")||document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])"); if(b) b.click(); }
-    if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){ e.preventDefault(); document.getElementById("clear-btn")?.click(); }
-    if(e.ctrlKey&&(e.key==="D"||e.key==="d")){ e.preventDefault(); document.getElementById("li-download")?.click(); }
-  });
-
-  try { const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}"); const b=document.getElementById("usage-badge"); if(b&&u["lorem-ipsum"]) b.textContent="Used "+u["lorem-ipsum"]+"×"; } catch(e){}
-
-  document.getElementById("share-btn")?.addEventListener("click", () => {
-    const o=document.getElementById("li-output")||document.querySelector("[id$='result']");
-    const t=o?.value||o?.textContent||"";
-    if(!t) return;
-    const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));
-    navigator.clipboard.writeText(u).catch(()=>{});
-    if(typeof (window as any).__showToast==="function") (window as any).__showToast({message:"Link copied!"});
-  });
-
-  const rtInput=document.getElementById("li-output")||document.querySelector("textarea:not([readonly])");
-  if(rtInput){
-    rtInput.addEventListener("input", ()=>{
-      const w=rtInput.value?rtInput.value.trim().split(/\s+/).length:0;
-      const e=document.getElementById("reading-time");
-      if(e) e.textContent=Math.max(1,Math.round(w/200))+" min read · "+Math.max(1,Math.round(w/150))+" min speak";
+  document.querySelector('.font-inc')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.min(24, s + 2) + 'px';
     });
-    rtInput.dispatchEvent(new Event("input"));
+  });
+  document.querySelector('.font-dec')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.max(10, s - 2) + 'px';
+    });
+  });
+  try {
+    const s = localStorage.getItem('nt_fs');
+    if (s) document.querySelectorAll('textarea').forEach((t) => (t.style.fontSize = s + 'px'));
+  } catch (e) {}
+
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b =
+        document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])") ||
+        document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      document.getElementById('clear-btn')?.click();
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('li-download')?.click();
+    }
+  });
+
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['lorem-ipsum']) b.textContent = 'Used ' + u['lorem-ipsum'] + '×';
+  } catch (e) {}
+
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('li-output') || document.querySelector("[id$='result']");
+    const t = o?.value || o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof (window as any).__showToast === 'function') (window as any).__showToast({ message: 'Link copied!' });
+  });
+
+  const rtInput = document.getElementById('li-output') || document.querySelector('textarea:not([readonly])');
+  if (rtInput) {
+    rtInput.addEventListener('input', () => {
+      const w = rtInput.value ? rtInput.value.trim().split(/\s+/).length : 0;
+      const e = document.getElementById('reading-time');
+      if (e)
+        e.textContent =
+          Math.max(1, Math.round(w / 200)) + ' min read · ' + Math.max(1, Math.round(w / 150)) + ' min speak';
+    });
+    rtInput.dispatchEvent(new Event('input'));
   }
 
-  const lnInput=document.getElementById("li-output");
-  if(lnInput){
-    const updateLN=()=>{ const n=document.getElementById("line-nums"); if(n) n.textContent=Array.from({length:lnInput.value.split("\n").length},(_,i)=>i+1).join("\n"); };
-    lnInput.addEventListener("input", updateLN);
-    lnInput.addEventListener("scroll", ()=>{ const n=document.getElementById("line-nums"); if(n) n.scrollTop=lnInput.scrollTop; });
+  const lnInput = document.getElementById('li-output');
+  if (lnInput) {
+    const updateLN = () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.textContent = Array.from({ length: lnInput.value.split('\n').length }, (_, i) => i + 1).join('\n');
+    };
+    lnInput.addEventListener('input', updateLN);
+    lnInput.addEventListener('scroll', () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.scrollTop = lnInput.scrollTop;
+    });
     updateLN();
   }
 
-  const lfInput=document.getElementById("li-output");
-  if(lfInput){
-    lfInput.addEventListener("input", ()=>{
-      const t=lfInput.value.toLowerCase().replace(/[^a-z]/g,""); if(!t){ document.getElementById("letter-freq").classList.add("hidden"); return; }
-      const f={}; for(const c of t) f[c]=(f[c]||0)+1;
-      const s=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,8); const m=s[0]?s[0][1]:1;
-      const el=document.getElementById("letter-freq"); el.classList.remove("hidden");
-      el.innerHTML=s.map(([c,n])=>`<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n/m)*80+10}%"></div><span class="text-muted">${n}</span></div>`).join("");
+  const lfInput = document.getElementById('li-output');
+  if (lfInput) {
+    lfInput.addEventListener('input', () => {
+      const t = lfInput.value.toLowerCase().replace(/[^a-z]/g, '');
+      if (!t) {
+        document.getElementById('letter-freq').classList.add('hidden');
+        return;
+      }
+      const f = {};
+      for (const c of t) f[c] = (f[c] || 0) + 1;
+      const s = Object.entries(f)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+      const m = s[0] ? s[0][1] : 1;
+      const el = document.getElementById('letter-freq');
+      el.classList.remove('hidden');
+      el.innerHTML = s
+        .map(
+          ([c, n]) =>
+            `<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n / m) * 80 + 10}%"></div><span class="text-muted">${n}</span></div>`,
+        )
+        .join('');
     });
   }
 
-  document.querySelectorAll(".theme-swatch").forEach(s=>{
-    s.addEventListener("click",()=>{
-      const c=s.dataset.color; const map={purple:"#a855f7",blue:"#3b82f6",green:"#22c55e",pink:"#ec4899",orange:"#f97316"};
-      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach(b=>{ b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500").replace(/from-(purple|violet)-\d+/g,"from-"+c+"-500").replace(/to-purple-\d+/g,"to-"+c+"-600"); });
-      try{localStorage.setItem("nt_theme",c);}catch(e){}
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      const map = { purple: '#a855f7', blue: '#3b82f6', green: '#22c55e', pink: '#ec4899', orange: '#f97316' };
+      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500')
+          .replace(/from-(purple|violet)-\d+/g, 'from-' + c + '-500')
+          .replace(/to-purple-\d+/g, 'to-' + c + '-600');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
     });
   });
-  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>

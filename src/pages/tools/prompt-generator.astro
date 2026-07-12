@@ -1,0 +1,509 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const benefits = [
+  {
+    title: 'Optimized for AI',
+    desc: 'Generates prompts specifically structured to get the best possible outputs from LLMs like ChatGPT and Claude.',
+  },
+  { title: 'Proven Frameworks', desc: 'Uses industry-standard frameworks like Role-Task-Format and Chain of Thought.' },
+  {
+    title: '100% Client-Side',
+    desc: 'Your prompt ideas and data are processed entirely in your browser and never sent to a server.',
+  },
+  {
+    title: 'Multiple Output Formats',
+    desc: 'Specify exactly how you want the AI to reply: tables, code blocks, JSON, or markdown.',
+  },
+  {
+    title: 'Time Saver',
+    desc: 'Stop guessing what works. Our generator instantly constructs the perfect prompt structure for your task.',
+  },
+  {
+    title: 'Completely Free',
+    desc: 'No sign-ups, no hidden limits, no premium tiers — just unlimited prompt generation.',
+  },
+];
+
+const howToSteps = [
+  {
+    title: 'Enter your topic or task',
+    desc: 'Describe what you want the AI to do in the main input box. Be as specific as you like.',
+  },
+  {
+    title: 'Select your framework & tone',
+    desc: 'Choose a prompt engineering framework, the desired tone/persona, and output format.',
+  },
+  { title: 'Generate the prompt', desc: "Click 'Generate Prompt' to assemble your highly optimized prompt." },
+  {
+    title: 'Copy & use',
+    desc: 'Copy the generated prompt to your clipboard and paste it into ChatGPT, Claude, or your preferred AI.',
+  },
+];
+
+const useCases = [
+  {
+    title: 'Content Creation',
+    desc: 'Generate high-quality blog posts, social media captions, and ad copy by instructing the AI with the right persona and framework.',
+  },
+  {
+    title: 'Coding Assistants',
+    desc: 'Create precise prompts for AI coding assistants to generate, debug, or explain code effectively.',
+  },
+  {
+    title: 'Business Strategy',
+    desc: "Use the 'Chain of Thought' framework to make the AI reason through complex business problems step-by-step.",
+  },
+  {
+    title: 'Data Formatting',
+    desc: "Instruct the AI to output information in strict JSON, CSV, or Markdown tables using the 'Format' module.",
+  },
+];
+
+const faqItems = [
+  {
+    question: 'What is a prompt framework?',
+    answer:
+      "A prompt framework is a structured way of talking to an AI. Instead of just asking a question, a framework like 'Role-Task-Format' assigns the AI a specific persona, gives it a clear objective, and dictates exactly how the answer should look. This dramatically improves the quality of the AI's response.",
+  },
+  {
+    question: "What is 'Chain of Thought'?",
+    answer:
+      "Chain of Thought is a prompting technique that asks the AI to 'think step-by-step' before providing the final answer. This forces the AI to reason through the problem logically, which significantly reduces errors in complex tasks like math, logic, and coding.",
+  },
+  {
+    question: 'Does this tool use an AI to generate the prompt?',
+    answer:
+      'No, this tool acts as a smart template engine. It takes your raw idea and wraps it in proven, highly effective structural templates (frameworks) that prompt engineers use. This ensures your data stays private and generation is instant.',
+  },
+  {
+    question: 'Which AI models does this work with?',
+    answer:
+      'The prompts generated here are universally effective for major Large Language Models (LLMs) including ChatGPT (OpenAI), Claude (Anthropic), Gemini (Google), and Llama (Meta).',
+  },
+  {
+    question: 'Is this tool free?',
+    answer: 'Yes! Like all tools on NumanX, the AI Prompt Generator is 100% free with no sign-ups or limits.',
+  },
+];
+
+const schema = {
+  name: 'AI Prompt Generator',
+  applicationCategory: 'AI Tools',
+  description:
+    'Create highly effective, optimized prompts for AI models using proven prompt engineering frameworks like Role-Task-Format and Chain of Thought.',
+  featureList: [
+    'Role-Task-Format templates',
+    'Chain of Thought frameworks',
+    'Customizable tone and persona',
+    'Client-side processing',
+    'Instant copy functionality',
+  ],
+};
+---
+
+<MainLayout
+  title="AI Prompt Generator - Create Optimized AI Prompts Free"
+  description="Generate highly effective, optimized prompts for ChatGPT, Claude, and Midjourney using proven prompt engineering frameworks. 100% free and client-side."
+  keywords="prompt generator, ai prompts, chatgpt prompts, prompt engineering, midjourney prompts"
+  toolSchema={schema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Generate AI Prompts',
+    description: 'Learn how to use our AI prompt generator to create optimized instructions for ChatGPT and Claude.',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'AI Prompt Generator', url: '/tools/prompt-generator/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="AI Prompt"
+        gradient="Generator Pro"
+        desc="Stop guessing what to ask. Generate highly optimized, structured prompts for ChatGPT, Claude, and Midjourney in seconds."
+        badge="✦ Prompt Engineering"
+        slug="prompt-generator"
+      />
+      <ShareBar />
+
+      <div class="max-w-2xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 md:p-8 space-y-6 relative">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+              <span id="usage-badge" class="text-xs text-muted"></span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="flex gap-1">
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="purple"
+                  style="background:#a855f7"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="blue"
+                  style="background:#3b82f6"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="green"
+                  style="background:#22c55e"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="pink"
+                  style="background:#ec4899"></button>
+              </div>
+              <button
+                id="fullscreen-btn"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                title="Fullscreen">⛶</button
+              >
+            </div>
+          </div>
+
+          <div class="space-y-5">
+            <div>
+              <label class="block text-sm font-medium text-tertiary mb-2"
+                >What do you want the AI to do? (Task/Topic)</label
+              >
+              <textarea
+                id="task-input"
+                rows="3"
+                placeholder="e.g., Write a blog post about the benefits of remote work, focusing on productivity and mental health."
+                class="w-full bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-y focus:outline-none focus:border-violet-500/60 transition-all"
+              ></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-tertiary mb-2">Framework</label>
+                <select
+                  id="framework-select"
+                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer"
+                >
+                  <option value="rtf">Role-Task-Format (Best for General Use)</option>
+                  <option value="cot">Chain of Thought (Best for Logic/Math)</option>
+                  <option value="few-shot">Few-Shot (Provide Examples)</option>
+                  <option value="direct">Direct & Concise (Zero-Shot)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-tertiary mb-2">Persona / Tone</label>
+                <select
+                  id="persona-select"
+                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer"
+                >
+                  <option value="expert">Industry Expert</option>
+                  <option value="professional">Professional / Corporate</option>
+                  <option value="creative">Creative / Imaginative</option>
+                  <option value="teacher">Helpful Teacher / Tutor</option>
+                  <option value="funny">Humorous / Witty</option>
+                  <option value="direct">Direct / No Fluff</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-tertiary mb-2">Output Format</label>
+                <select
+                  id="format-select"
+                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer"
+                >
+                  <option value="markdown">Markdown (Default)</option>
+                  <option value="bullet">Bullet Points</option>
+                  <option value="table">Table Format</option>
+                  <option value="json">JSON Data</option>
+                  <option value="code">Code Block</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-tertiary mb-2">Target Audience</label>
+                <select
+                  id="audience-select"
+                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer"
+                >
+                  <option value="general">General Public</option>
+                  <option value="beginners">Beginners / Novices</option>
+                  <option value="experts">Experts / Professionals</option>
+                  <option value="children">Children (Explain like I'm 5)</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="few-shot-container" class="hidden">
+              <label class="block text-sm font-medium text-tertiary mb-2">Examples (Required for Few-Shot)</label>
+              <textarea
+                id="examples-input"
+                rows="3"
+                placeholder="Example 1: Input -> Output
+Example 2: Input -> Output"
+                class="w-full bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-y focus:outline-none focus:border-violet-500/60 transition-all"
+              ></textarea>
+            </div>
+
+            <button
+              id="generate-btn"
+              class="w-full py-3.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-purple-500/20 active:scale-[0.98]"
+              >Generate Prompt</button
+            >
+          </div>
+
+          <hr class="border-surface-3 my-2" />
+
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <label class="text-sm font-semibold text-white">Generated Prompt</label>
+              <div class="flex gap-2">
+                <button
+                  id="clear-btn"
+                  class="px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+                  >Clear</button
+                >
+                <button
+                  id="copy-btn"
+                  class="px-3 py-1.5 bg-violet-500/20 hover:bg-violet-500/30 text-violet-300 border border-violet-500/30 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    ><rect x="9" y="9" width="13" height="13" rx="2"></rect><path
+                      d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg
+                  >
+                  Copy Prompt
+                </button>
+              </div>
+            </div>
+            <textarea
+              id="output-text"
+              rows="8"
+              readonly
+              placeholder="Your optimized prompt will appear here ready to copy..."
+              class="w-full bg-black/40 border border-surface-3 rounded-xl p-5 text-sm text-purple-100 placeholder-zinc-600 resize-y focus:outline-none transition-all font-mono leading-relaxed"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      <ToolContentSections
+        toolSlug="prompt-generator"
+        toolName="AI Prompt Generator"
+        category="AI Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="prompt-generator" />
+
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked
+          <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span>
+        </h2>
+        <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
+      </div>
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
+  function triggerToast(message, variant = 'info') {
+    if (window.__showToast) window.__showToast({ message, variant });
+  }
+
+  const taskInput = document.getElementById('task-input');
+  const frameworkSelect = document.getElementById('framework-select');
+  const personaSelect = document.getElementById('persona-select');
+  const formatSelect = document.getElementById('format-select');
+  const audienceSelect = document.getElementById('audience-select');
+  const examplesContainer = document.getElementById('few-shot-container');
+  const examplesInput = document.getElementById('examples-input');
+  const outputEl = document.getElementById('output-text');
+  const generateBtn = document.getElementById('generate-btn');
+  const copyBtn = document.getElementById('copy-btn');
+  const clearBtn = document.getElementById('clear-btn');
+
+  // Show/Hide examples field based on framework
+  frameworkSelect.addEventListener('change', () => {
+    if (frameworkSelect.value === 'few-shot') {
+      examplesContainer.classList.remove('hidden');
+    } else {
+      examplesContainer.classList.add('hidden');
+    }
+  });
+
+  const personas = {
+    expert: 'Act as an industry-leading expert with decades of experience.',
+    professional:
+      'Act as a seasoned corporate professional. Your tone should be formal, polite, and highly structured.',
+    creative:
+      'Act as a highly creative and imaginative writer. Use engaging, vivid language and think outside the box.',
+    teacher: 'Act as a patient, encouraging, and highly knowledgeable teacher or tutor.',
+    funny: 'Act as a witty, humorous, and entertaining persona. Use clever analogies and a conversational tone.',
+    direct:
+      'Act as a highly efficient assistant. Provide answers immediately with zero fluff or conversational filler.',
+  };
+
+  const audiences = {
+    general: 'The target audience is the general public. Keep the language accessible and avoid overly complex jargon.',
+    beginners:
+      'The target audience consists of beginners or novices. Explain core concepts clearly and avoid assuming prior knowledge.',
+    experts:
+      'The target audience consists of advanced experts. You may use high-level terminology and skip basic explanations.',
+    children:
+      'The target audience is young children. Explain things very simply, using easy analogies, as if explaining to a 5-year-old.',
+  };
+
+  const formats = {
+    markdown:
+      'Format the output using clear Markdown with appropriate headings (H1, H2, H3), bold text, and structured paragraphs.',
+    bullet: 'Format the entire output as a highly scannable, well-organized bulleted list.',
+    table: 'Format the output strictly as a Markdown table with clear column headers.',
+    json: 'Format the output STRICTLY as valid JSON data. Do not include any conversational text before or after the JSON.',
+    code: 'Format the output as a clean, well-commented code block. Provide only the code and minimal necessary explanation.',
+  };
+
+  function generatePrompt() {
+    const task = taskInput.value.trim();
+    if (!task) {
+      triggerToast('Please enter a task or topic first', 'warning');
+      taskInput.focus();
+      return;
+    }
+
+    const framework = frameworkSelect.value;
+    const persona = personas[personaSelect.value];
+    const audience = audiences[audienceSelect.value];
+    const format = formats[formatSelect.value];
+
+    let prompt = '';
+
+    if (framework === 'rtf') {
+      // Role - Task - Format
+      prompt += `${persona}\n\n`;
+      prompt += `YOUR TASK:\n${task}\n\n`;
+      prompt += `AUDIENCE:\n${audience}\n\n`;
+      prompt += `FORMAT INSTRUCTIONS:\n${format}\n`;
+    } else if (framework === 'cot') {
+      // Chain of Thought
+      prompt += `${persona}\n\n`;
+      prompt += `YOUR TASK:\n${task}\n\n`;
+      prompt += `AUDIENCE:\n${audience}\n\n`;
+      prompt += `INSTRUCTIONS:\nBefore providing the final answer, please think through the problem step-by-step. Document your reasoning clearly so I can follow your logic.\n\n`;
+      prompt += `FORMAT INSTRUCTIONS:\n${format}\n`;
+    } else if (framework === 'few-shot') {
+      // Few-Shot
+      const examples = examplesInput.value.trim();
+      prompt += `${persona}\n\n`;
+      prompt += `Below are some examples of the desired input and output:\n\n`;
+      prompt += `${examples || '[Insert your examples here]'}\n\n`;
+      prompt += `YOUR TASK:\n${task}\n\n`;
+      prompt += `AUDIENCE:\n${audience}\n\n`;
+      prompt += `FORMAT INSTRUCTIONS:\n${format}\n`;
+    } else if (framework === 'direct') {
+      // Direct / Zero-Shot
+      prompt += `${task}\n\n`;
+      prompt += `Requirements:\n- ${personaSelect.value === 'direct' ? 'No fluff or conversational filler.' : 'Adopt a ' + personaSelect.value + ' tone.'}\n- ${audience}\n- ${format}\n`;
+    }
+
+    outputEl.value = prompt;
+    triggerToast('Prompt generated successfully!', 'success');
+
+    try {
+      const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+      u['prompt-generator'] = (u['prompt-generator'] || 0) + 1;
+      localStorage.setItem('nt_tool_usage', JSON.stringify(u));
+      const b = document.getElementById('usage-badge');
+      if (b) b.textContent = 'Used ' + u['prompt-generator'] + '×';
+    } catch (e) {}
+  }
+
+  generateBtn.addEventListener('click', generatePrompt);
+
+  copyBtn.addEventListener('click', async () => {
+    if (!outputEl.value.trim()) {
+      triggerToast('Generate a prompt first to copy!', 'warning');
+      return;
+    }
+    await navigator.clipboard.writeText(outputEl.value);
+    playPing();
+    triggerToast('Prompt copied to clipboard!', 'success');
+  });
+
+  clearBtn.addEventListener('click', () => {
+    taskInput.value = '';
+    examplesInput.value = '';
+    outputEl.value = '';
+    taskInput.focus();
+    playPing();
+    triggerToast('Cleared!', 'info');
+  });
+
+  // Fullscreen toggle
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card = document.getElementById('fullscreen-btn').closest('.glass-card');
+    if (!card) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      document.getElementById('fullscreen-btn').textContent = '⛶';
+    } else {
+      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
+      document.getElementById('fullscreen-btn').textContent = '✕';
+    }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
+  });
+
+  // Theme switching
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500')
+          .replace(/from-(purple|violet)-\d+/g, 'from-' + c + '-500')
+          .replace(/to-purple-\d+/g, 'to-' + c + '-600');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
+  });
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
+</script>

@@ -4,10 +4,18 @@ const localStorageMock = (() => {
   let store: Record<string, string> = {};
   return {
     getItem: (key: string) => store[key] ?? null,
-    setItem: (key: string, value: string) => { store[key] = value; },
-    removeItem: (key: string) => { delete store[key]; },
-    clear: () => { store = {}; },
-    get length() { return Object.keys(store).length; },
+    setItem: (key: string, value: string) => {
+      store[key] = value;
+    },
+    removeItem: (key: string) => {
+      delete store[key];
+    },
+    clear: () => {
+      store = {};
+    },
+    get length() {
+      return Object.keys(store).length;
+    },
     key: (index: number) => Object.keys(store)[index] ?? null,
   };
 })();
@@ -15,10 +23,16 @@ const localStorageMock = (() => {
 Object.defineProperty(globalThis, 'localStorage', { value: localStorageMock });
 
 import {
-  getFavorites, toggleFavorite, isFavorite,
-  addRecentlyUsed, getRecentlyUsed,
-  addSearchHistory, getSearchHistory,
-  trackToolUsage, getToolUsage, getMostUsedTools,
+  getFavorites,
+  toggleFavorite,
+  isFavorite,
+  addRecentlyUsed,
+  getRecentlyUsed,
+  addSearchHistory,
+  getSearchHistory,
+  trackToolUsage,
+  getToolUsage,
+  getMostUsedTools,
 } from '../storage';
 
 describe('storage', () => {

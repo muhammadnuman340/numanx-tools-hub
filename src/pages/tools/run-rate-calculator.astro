@@ -1,57 +1,144 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import KeyboardHints from "../../components/KeyboardHints.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import KeyboardHints from '../../components/KeyboardHints.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
-  { question: "How is run rate calculated in cricket?", answer: "Run rate is total runs scored divided by overs faced. E.g., 150 runs in 20 overs = 150 ÷ 20 = 7.50 runs per over." },
-  { question: "What is a good run rate in T20 cricket?", answer: "A run rate of 8–9 is competitive, 10+ is excellent, and above 12 is explosive in T20 cricket." },
-  { question: "What is the difference between RR and NRR?", answer: "RR measures a single innings. NRR (Net Run Rate) is the difference between runs scored for and against across a tournament." },
-  { question: "How does the chase difficulty meter work?", answer: "It compares current RR to required RR. Easy = current RR > required. Moderate = within 1 RPO. Hard = 1–2 RPO behind. Very Hard = 2–4 RPO behind. Extreme = 4+ RPO behind." },
-  { question: "What is a good run rate in ODI cricket?", answer: "A run rate of 5.0–5.5 is par, 6.0–6.5 is strong, and 7+ is dominant in ODI cricket." },
-  { question: "How do you calculate net run rate (NRR)?", answer: "NRR = (runs scored for / overs faced for) - (runs scored against / overs bowled against). It is used in tournaments like the ICC World Cup to break tied points." },
-  { question: "What is a good run rate in Test cricket?", answer: "In Test cricket, run rate is less critical. A rate of 3.5–4.0 is solid, while 4.5+ is aggressive. Building partnerships matters more than raw scoring rate." },
-  { question: "Can this calculator handle partial overs?", answer: "Yes. Enter overs in the format overs.balls (e.g., 12.3 for 12 overs and 3 balls). The calculator converts balls to decimal overs automatically." },
+  {
+    question: 'How is run rate calculated in cricket?',
+    answer:
+      'Run rate is total runs scored divided by overs faced. E.g., 150 runs in 20 overs = 150 ÷ 20 = 7.50 runs per over.',
+  },
+  {
+    question: 'What is a good run rate in T20 cricket?',
+    answer: 'A run rate of 8–9 is competitive, 10+ is excellent, and above 12 is explosive in T20 cricket.',
+  },
+  {
+    question: 'What is the difference between RR and NRR?',
+    answer:
+      'RR measures a single innings. NRR (Net Run Rate) is the difference between runs scored for and against across a tournament.',
+  },
+  {
+    question: 'How does the chase difficulty meter work?',
+    answer:
+      'It compares current RR to required RR. Easy = current RR > required. Moderate = within 1 RPO. Hard = 1–2 RPO behind. Very Hard = 2–4 RPO behind. Extreme = 4+ RPO behind.',
+  },
+  {
+    question: 'What is a good run rate in ODI cricket?',
+    answer: 'A run rate of 5.0–5.5 is par, 6.0–6.5 is strong, and 7+ is dominant in ODI cricket.',
+  },
+  {
+    question: 'How do you calculate net run rate (NRR)?',
+    answer:
+      'NRR = (runs scored for / overs faced for) - (runs scored against / overs bowled against). It is used in tournaments like the ICC World Cup to break tied points.',
+  },
+  {
+    question: 'What is a good run rate in Test cricket?',
+    answer:
+      'In Test cricket, run rate is less critical. A rate of 3.5–4.0 is solid, while 4.5+ is aggressive. Building partnerships matters more than raw scoring rate.',
+  },
+  {
+    question: 'Can this calculator handle partial overs?',
+    answer:
+      'Yes. Enter overs in the format overs.balls (e.g., 12.3 for 12 overs and 3 balls). The calculator converts balls to decimal overs automatically.',
+  },
 ];
 
 const rrSchema = {
-  "name": "Run Rate Calculator Pro",
-  "applicationCategory": "Sports",
-  "description": "Calculate current and required run rates for T20, ODI, and Test matches. Chase difficulty, match pressure, and over-by-over projections.",
-  "featureList": [
-    "Current run rate and required run rate calculator",
-    "T20, ODI, and Test match format presets",
-    "Chase difficulty meter with 5-level indicator",
-    "Over-by-over run projection and winning pace",
-    "Net Run Rate (NRR) calculation for tournament analysis"
+  name: 'Run Rate Calculator Pro',
+  applicationCategory: 'Sports',
+  description:
+    'Calculate current and required run rates for T20, ODI, and Test matches. Chase difficulty, match pressure, and over-by-over projections.',
+  featureList: [
+    'Current run rate and required run rate calculator',
+    'T20, ODI, and Test match format presets',
+    'Chase difficulty meter with 5-level indicator',
+    'Over-by-over run projection and winning pace',
+    'Net Run Rate (NRR) calculation for tournament analysis',
   ],
-}
+};
 
 const benefits = [
-  { icon: "🏏", title: "Multi-Format Support", desc: "Switch between T20, ODI, and Test formats with one click. Each format has optimized overs and phase breakdowns." },
-  { icon: "🎯", title: "Chase Difficulty Meter", desc: "5-level chase difficulty indicator shows how hard the target is. Easy, Moderate, Hard, Very Hard, or Extreme." },
-  { icon: "📊", title: "Over-by-Over Projections", desc: "See projected runs at current and required rates across Powerplay, middle overs, and death overs." },
-  { icon: "📈", title: "Match Pressure Gauge", desc: "Real-time pressure indicator helps understand the game situation at a glance — Low to Critical." },
-  { icon: "⚡", title: "Winning Pace Analysis", desc: "Get a plain-English summary of the chase situation with actionable insights for captains and analysts." },
-  { icon: "🆓", title: "Free & No Sign-Up", desc: "All features including NRR calculation, projections, and download are completely free with no account required." },
+  {
+    icon: '🏏',
+    title: 'Multi-Format Support',
+    desc: 'Switch between T20, ODI, and Test formats with one click. Each format has optimized overs and phase breakdowns.',
+  },
+  {
+    icon: '🎯',
+    title: 'Chase Difficulty Meter',
+    desc: '5-level chase difficulty indicator shows how hard the target is. Easy, Moderate, Hard, Very Hard, or Extreme.',
+  },
+  {
+    icon: '📊',
+    title: 'Over-by-Over Projections',
+    desc: 'See projected runs at current and required rates across Powerplay, middle overs, and death overs.',
+  },
+  {
+    icon: '📈',
+    title: 'Match Pressure Gauge',
+    desc: 'Real-time pressure indicator helps understand the game situation at a glance — Low to Critical.',
+  },
+  {
+    icon: '⚡',
+    title: 'Winning Pace Analysis',
+    desc: 'Get a plain-English summary of the chase situation with actionable insights for captains and analysts.',
+  },
+  {
+    icon: '🆓',
+    title: 'Free & No Sign-Up',
+    desc: 'All features including NRR calculation, projections, and download are completely free with no account required.',
+  },
 ];
 
 const howToSteps = [
-  { num: "1", title: "Select Format", desc: "Choose T20, ODI, or Test from the format presets. Each format has optimized overs and phase breakdowns." },
-  { num: "2", title: "Choose Calculation Mode", desc: "Switch between Current RR (runs scored / overs bowled) or Required RR (target calculation)." },
-  { num: "3", title: "Enter Match Data", desc: "Input runs scored, overs bowled, target score, or overs remaining depending on your selected mode." },
-  { num: "4", title: "Analyze Results", desc: "View current RR, required RR, chase difficulty, match pressure, over-by-over projections, and winning pace analysis." },
+  {
+    num: '1',
+    title: 'Select Format',
+    desc: 'Choose T20, ODI, or Test from the format presets. Each format has optimized overs and phase breakdowns.',
+  },
+  {
+    num: '2',
+    title: 'Choose Calculation Mode',
+    desc: 'Switch between Current RR (runs scored / overs bowled) or Required RR (target calculation).',
+  },
+  {
+    num: '3',
+    title: 'Enter Match Data',
+    desc: 'Input runs scored, overs bowled, target score, or overs remaining depending on your selected mode.',
+  },
+  {
+    num: '4',
+    title: 'Analyze Results',
+    desc: 'View current RR, required RR, chase difficulty, match pressure, over-by-over projections, and winning pace analysis.',
+  },
 ];
 
 const useCases = [
-  { icon: "🏆", title: "Tournament NRR Tracking", desc: "Track your team's Net Run Rate across a tournament. Essential for World Cup, Asia Cup, and league stage qualification scenarios." },
-  { icon: "📺", title: "Live Match Analysis", desc: "Use during live matches to understand chase difficulty and predict outcomes. Great for commentators and analysts." },
-  { icon: "👨‍🏫", title: "Cricket Coaching", desc: "Teach players about run rate management, when to accelerate, and how to pace an innings across different formats." },
-  { icon: "🎮", title: "Fantasy Cricket", desc: "Make informed fantasy cricket decisions by analyzing team run rates, chase capabilities, and match momentum." },
+  {
+    icon: '🏆',
+    title: 'Tournament NRR Tracking',
+    desc: "Track your team's Net Run Rate across a tournament. Essential for World Cup, Asia Cup, and league stage qualification scenarios.",
+  },
+  {
+    icon: '📺',
+    title: 'Live Match Analysis',
+    desc: 'Use during live matches to understand chase difficulty and predict outcomes. Great for commentators and analysts.',
+  },
+  {
+    icon: '👨‍🏫',
+    title: 'Cricket Coaching',
+    desc: 'Teach players about run rate management, when to accelerate, and how to pace an innings across different formats.',
+  },
+  {
+    icon: '🎮',
+    title: 'Fantasy Cricket',
+    desc: 'Make informed fantasy cricket decisions by analyzing team run rates, chase capabilities, and match momentum.',
+  },
 ];
 ---
 
@@ -62,15 +149,15 @@ const useCases = [
   toolSchema={rrSchema}
   faq={faqItems}
   howto={{
-    name: "How to Calculate Cricket Run Rate",
-    description: "Calculate current and required run rates for any cricket format in 4 steps.",
-    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
-    totalTime: "PT1M",
+    name: 'How to Calculate Cricket Run Rate',
+    description: 'Calculate current and required run rates for any cricket format in 4 steps.',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
   }}
   breadcrumbs={[
-    { name: "Home", url: "/" },
-    { name: "Tools", url: "/tools/" },
-    { name: "Run Rate Calculator", url: "/tools/run-rate-calculator/" },
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Run Rate Calculator', url: '/tools/run-rate-calculator/' },
   ]}
 >
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
@@ -88,85 +175,191 @@ const useCases = [
       <!-- ─── Format Selector (Cricbuzz-style) ─── -->
       <div class="max-w-xl mx-auto mt-8 space-y-4">
         <div id="preset-buttons" class="flex gap-2.5 flex-wrap justify-center">
-          {[
-            { overs: 20, label: "T20", icon: "🏏", def: true },
-            { overs: 50, label: "ODI", icon: "🏏", def: false },
-            { overs: 90, label: "Test", icon: "🏏", def: false },
-          ].map((p) => (
-            <button class="preset-btn rounded-xl border px-5 py-2.5 text-sm font-medium transition-all" data-overs={p.overs} data-active={p.def}>
-              <div class="flex items-center gap-2"><span class="text-lg leading-none">{p.icon}</span>{p.label}</div>
-            </button>
-          ))}
+          {
+            [
+              { overs: 20, label: 'T20', icon: '🏏', def: true },
+              { overs: 50, label: 'ODI', icon: '🏏', def: false },
+              { overs: 90, label: 'Test', icon: '🏏', def: false },
+            ].map((p) => (
+              <button
+                class="preset-btn rounded-xl border px-5 py-2.5 text-sm font-medium transition-all"
+                data-overs={p.overs}
+                data-active={p.def}
+              >
+                <div class="flex items-center gap-2">
+                  <span class="text-lg leading-none">{p.icon}</span>
+                  {p.label}
+                </div>
+              </button>
+            ))
+          }
         </div>
 
         <!-- Tab Switcher -->
         <div class="bg-zinc-950 p-1.5 rounded-xl border border-surface flex gap-2">
-          <button id="tab-current" class="flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all">Current RR</button>
-          <button id="tab-required" class="flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all">Required RR</button>
+          <button
+            id="tab-current"
+            class="flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all"
+            >Current RR</button
+          >
+          <button
+            id="tab-required"
+            class="flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all"
+            >Required RR</button
+          >
         </div>
 
         <!-- Forms -->
-        <div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6">
+        <div class="glass-card rounded-2xl p-5 md:p-6">
           <div id="form-current" class="space-y-4">
             <div class="space-y-2">
-              <label for="crr-runs" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Runs Scored</label>
-              <input id="crr-runs" type="number" min="0" step="1" placeholder="e.g. 145" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm" />
+              <label for="crr-runs" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
+                >Runs Scored</label
+              >
+              <input
+                id="crr-runs"
+                type="number"
+                min="0"
+                step="1"
+                placeholder="e.g. 145"
+                class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+              />
             </div>
             <div class="space-y-2">
               <div class="flex justify-between items-center">
-                <label for="crr-overs" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Overs Bowled</label>
-                <span class="text-[9px] font-medium text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded">overs.balls (e.g. 12.3)</span>
+                <label for="crr-overs" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
+                  >Overs Bowled</label
+                >
+                <span class="text-[9px] font-medium text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded"
+                  >overs.balls (e.g. 12.3)</span
+                >
               </div>
-              <input id="crr-overs" type="text" inputmode="decimal" placeholder="e.g. 12.3" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm" />
+              <input
+                id="crr-overs"
+                type="text"
+                inputmode="decimal"
+                placeholder="e.g. 12.3"
+                class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+              />
             </div>
-            <button id="calc-crr-btn" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 rounded-xl transition-all shadow-lg shadow-purple-900/20 text-sm">Calculate Current RR</button>
+            <button
+              id="calc-crr-btn"
+              class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 rounded-xl transition-all shadow-lg shadow-purple-900/20 text-sm"
+              >Calculate Current RR</button
+            >
           </div>
 
           <div id="form-required" class="space-y-4 hidden">
             <div class="grid grid-cols-2 gap-3">
               <div class="space-y-2">
-                <label for="rrr-target" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Target Score</label>
-                <input id="rrr-target" type="number" min="0" step="1" placeholder="e.g. 280" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm" />
+                <label for="rrr-target" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
+                  >Target Score</label
+                >
+                <input
+                  id="rrr-target"
+                  type="number"
+                  min="0"
+                  step="1"
+                  placeholder="e.g. 280"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                />
               </div>
               <div class="space-y-2">
-                <label for="rrr-current" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Current Score</label>
-                <input id="rrr-current" type="number" min="0" step="1" placeholder="e.g. 120" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm" />
+                <label for="rrr-current" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
+                  >Current Score</label
+                >
+                <input
+                  id="rrr-current"
+                  type="number"
+                  min="0"
+                  step="1"
+                  placeholder="e.g. 120"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                />
               </div>
             </div>
             <div class="space-y-2">
-              <label for="rrr-overs" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Overs Remaining</label>
-              <input id="rrr-overs" type="text" inputmode="decimal" placeholder="e.g. 37.0" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm" />
+              <label for="rrr-overs" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
+                >Overs Remaining</label
+              >
+              <input
+                id="rrr-overs"
+                type="text"
+                inputmode="decimal"
+                placeholder="e.g. 37.0"
+                class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+              />
             </div>
-            <button id="calc-rrr-btn" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 rounded-xl transition-all shadow-lg shadow-purple-900/20 text-sm">Calculate Required RR</button>
+            <button
+              id="calc-rrr-btn"
+              class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 rounded-xl transition-all shadow-lg shadow-purple-900/20 text-sm"
+              >Calculate Required RR</button
+            >
           </div>
         </div>
 
         <!-- ─── Stats Dashboard (Cricbuzz-style) ─── -->
         <div id="stats-dashboard" class="hidden space-y-4">
-<div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6 relative">
-          <button id="fullscreen-btn" class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+          <div class="glass-card rounded-2xl p-5 md:p-6 relative">
+            <button
+              id="fullscreen-btn"
+              class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+              title="Fullscreen">⛶</button
+            >
             <div class="flex items-center gap-2 mb-3">
               <span id="usage-badge" class="text-xs text-muted"></span>
               <div class="flex gap-1 ml-auto">
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="purple"
+                  style="background:#a855f7"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="blue"
+                  style="background:#3b82f6"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="green"
+                  style="background:#22c55e"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="pink"
+                  style="background:#ec4899"></button>
               </div>
             </div>
             <h3 class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-4">Match Stats</h3>
             <div class="grid grid-cols-3 gap-3">
-              <div class="rounded-xl bg-zinc-950/40 border border-surface p-3.5 text-center hover:border-surface-2 transition-all">
+              <div
+                class="rounded-xl bg-zinc-950/40 border border-surface p-3.5 text-center hover:border-surface-2 transition-all"
+              >
                 <span class="text-[9px] font-semibold text-dim uppercase tracking-wider">Current RR</span>
-                <div class="mt-1 text-2xl md:text-3xl font-black tabular-nums"><span id="rr-value" class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span></div>
+                <div class="mt-1 text-2xl md:text-3xl font-black tabular-nums">
+                  <span id="rr-value" class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"
+                    >0.00</span
+                  >
+                </div>
               </div>
-              <div class="rounded-xl bg-zinc-950/40 border border-surface p-3.5 text-center hover:border-surface-2 transition-all">
+              <div
+                class="rounded-xl bg-zinc-950/40 border border-surface p-3.5 text-center hover:border-surface-2 transition-all"
+              >
                 <span class="text-[9px] font-semibold text-dim uppercase tracking-wider">Required RR</span>
-                <div class="mt-1 text-2xl md:text-3xl font-black tabular-nums"><span id="required-rr-value" class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span></div>
+                <div class="mt-1 text-2xl md:text-3xl font-black tabular-nums">
+                  <span
+                    id="required-rr-value"
+                    class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span
+                  >
+                </div>
               </div>
-              <div class="rounded-xl bg-zinc-950/40 border border-surface p-3.5 text-center hover:border-surface-2 transition-all">
+              <div
+                class="rounded-xl bg-zinc-950/40 border border-surface p-3.5 text-center hover:border-surface-2 transition-all"
+              >
                 <span class="text-[9px] font-semibold text-dim uppercase tracking-wider">Projected</span>
-                <div class="mt-1 text-2xl md:text-3xl font-black tabular-nums"><span id="projected-value" class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0</span></div>
+                <div class="mt-1 text-2xl md:text-3xl font-black tabular-nums">
+                  <span
+                    id="projected-value"
+                    class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0</span
+                  >
+                </div>
               </div>
             </div>
           </div>
@@ -178,7 +371,8 @@ const useCases = [
               <span id="chase-label" class="text-xs font-bold font-mono px-2.5 py-0.5 rounded-full border"></span>
             </div>
             <div class="relative h-3 bg-zinc-800 rounded-full overflow-hidden">
-              <div id="chase-bar" class="h-full rounded-full transition-all duration-700 ease-out" style="width:0%"></div>
+              <div id="chase-bar" class="h-full rounded-full transition-all duration-700 ease-out" style="width:0%">
+              </div>
             </div>
             <div class="flex justify-between text-[9px] text-dim mt-1.5">
               <span>Easy</span>
@@ -196,7 +390,8 @@ const useCases = [
               <span id="pressure-label" class="text-xs font-bold font-mono px-2.5 py-0.5 rounded-full border"></span>
             </div>
             <div class="relative h-3 bg-zinc-800 rounded-full overflow-hidden">
-              <div id="pressure-bar" class="h-full rounded-full transition-all duration-700 ease-out" style="width:0%"></div>
+              <div id="pressure-bar" class="h-full rounded-full transition-all duration-700 ease-out" style="width:0%">
+              </div>
             </div>
             <div class="flex justify-between text-[9px] text-dim mt-1.5">
               <span>Low</span>
@@ -228,8 +423,20 @@ const useCases = [
           <!-- Winning Pace Analysis -->
           <div id="pace-analysis" class="hidden bg-surface-1 border border-surface rounded-2xl p-5">
             <div class="flex items-start gap-3">
-              <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center shrink-0 mt-0.5">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              <div
+                class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center shrink-0 mt-0.5"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#a855f7"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg
+                >
               </div>
               <div>
                 <h4 class="text-xs font-semibold text-tertiary uppercase tracking-wider">Winning Pace Analysis</h4>
@@ -240,13 +447,47 @@ const useCases = [
 
           <!-- Copy Results -->
           <div class="flex items-center justify-center gap-2">
-            <button id="share-btn" class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95" title="Share">🔗</button>
-            <button id="copy-rr-btn" class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <button
+              id="share-btn"
+              class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95"
+              title="Share">🔗</button
+            >
+            <button
+              id="copy-rr-btn"
+              class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg
+              >
               Copy Results
             </button>
-            <button id="download-btn" class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <button
+              id="download-btn"
+              class="inline-flex items-center gap-2 bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition-all active:scale-95"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"
+                ></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg
+              >
               Download
             </button>
           </div>
@@ -263,12 +504,16 @@ const useCases = [
           </h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div class="rounded-xl border border-surface bg-surface-1 p-5 hover:border-surface-3 transition-all">
+          <div class="glass-card rounded-xl p-5 hover:border-surface-3 transition-all">
             <div class="flex items-start gap-3">
               <span class="text-lg mt-0.5">📊</span>
               <div>
                 <h3 class="text-sm font-semibold text-primary mb-1">What Is Run Rate?</h3>
-                <p class="text-xs text-muted leading-relaxed">Run rate is the average number of runs a batting side scores per over. It is calculated by dividing total runs scored by the number of overs bowled. A run rate of 6.0 means a team scores 6 runs every over on average.</p>
+                <p class="text-xs text-muted leading-relaxed">
+                  Run rate is the average number of runs a batting side scores per over. It is calculated by dividing
+                  total runs scored by the number of overs bowled. A run rate of 6.0 means a team scores 6 runs every
+                  over on average.
+                </p>
               </div>
             </div>
           </div>
@@ -277,7 +522,10 @@ const useCases = [
               <span class="text-lg mt-0.5">🎯</span>
               <div>
                 <h3 class="text-sm font-semibold text-primary mb-1">Why Chase Difficulty Matters</h3>
-                <p class="text-xs text-muted leading-relaxed">The chase difficulty compares current RR against required RR. A gap of 1+ RPO means the batting side needs to accelerate. The difficulty meter helps captains decide when to attack vs consolidate.</p>
+                <p class="text-xs text-muted leading-relaxed">
+                  The chase difficulty compares current RR against required RR. A gap of 1+ RPO means the batting side
+                  needs to accelerate. The difficulty meter helps captains decide when to attack vs consolidate.
+                </p>
               </div>
             </div>
           </div>
@@ -286,7 +534,10 @@ const useCases = [
               <span class="text-lg mt-0.5">⚡</span>
               <div>
                 <h3 class="text-sm font-semibold text-primary mb-1">T20 Strategy</h3>
-                <p class="text-xs text-muted leading-relaxed">In T20 cricket, a run rate of 8–10 is competitive while 10+ is dominant. Powerplay overs (1–6) are crucial for acceleration. Death overs (16–20) often see RR above 12 as batters go for big hits.</p>
+                <p class="text-xs text-muted leading-relaxed">
+                  In T20 cricket, a run rate of 8–10 is competitive while 10+ is dominant. Powerplay overs (1–6) are
+                  crucial for acceleration. Death overs (16–20) often see RR above 12 as batters go for big hits.
+                </p>
               </div>
             </div>
           </div>
@@ -295,18 +546,23 @@ const useCases = [
               <span class="text-lg mt-0.5">🏛️</span>
               <div>
                 <h3 class="text-sm font-semibold text-primary mb-1">ODI &amp; Test Strategy</h3>
-                <p class="text-xs text-muted leading-relaxed">In ODIs, a run rate of 5–6 is par with 7+ being strong. Teams build in phases: consolidation (1–15), acceleration (16–40), and death (41–50). In Tests, building partnerships matters more than raw rate.</p>
+                <p class="text-xs text-muted leading-relaxed">
+                  In ODIs, a run rate of 5–6 is par with 7+ being strong. Teams build in phases: consolidation (1–15),
+                  acceleration (16–40), and death (41–50). In Tests, building partnerships matters more than raw rate.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <KeyboardHints hints={[
-        { keys: "Enter", label: "Calculate run rate" },
-        { keys: "⌘K", label: "Open search" },
-        { keys: "Tab", label: "Switch mode" },
-      ]} />
+      <KeyboardHints
+        hints={[
+          { keys: 'Enter', label: 'Calculate run rate' },
+          { keys: '⌘K', label: 'Open search' },
+          { keys: 'Tab', label: 'Switch mode' },
+        ]}
+      />
 
       <RelatedTools current="run-rate-calculator" />
 
@@ -315,7 +571,7 @@ const useCases = [
           Frequently Asked
           <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
         </h2>
-        <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
+        <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
 
       <ToolContentSections
@@ -328,19 +584,30 @@ const useCases = [
       />
 
       <section class="mt-16 text-center">
-        <div class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10">
+        <div
+          class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10"
+        >
           <h2 class="text-2xl md:text-3xl font-black tracking-tight">
             Master Cricket
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> Run Rate Analysis</span>
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
+              Run Rate Analysis</span
+            >
           </h2>
           <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
-            Analyze every chase, track tournament NRR, and make data-driven cricket decisions. All free, no sign-up needed.
+            Analyze every chase, track tournament NRR, and make data-driven cricket decisions. All free, no sign-up
+            needed.
           </p>
           <div class="mt-6 flex gap-3 justify-center flex-wrap">
-            <button onclick="document.querySelector('#crr-runs')?.focus()" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30">
+            <button
+              onclick="document.querySelector('#crr-runs')?.focus()"
+              class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30"
+            >
               Start Calculating
             </button>
-            <a href="/tools/strike-rate-calculator/" class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700">
+            <a
+              href="/tools/strike-rate-calculator/"
+              class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700"
+            >
               Try Strike Rate Calculator
             </a>
           </div>
@@ -351,28 +618,28 @@ const useCases = [
 </MainLayout>
 
 <script>
-  const crrRuns = document.getElementById("crr-runs");
-  const crrOvers = document.getElementById("crr-overs");
-  const calcCrrBtn = document.getElementById("calc-crr-btn");
-  const rrrTarget = document.getElementById("rrr-target");
-  const rrrCurrent = document.getElementById("rrr-current");
-  const rrrOvers = document.getElementById("rrr-overs");
-  const calcRrrBtn = document.getElementById("calc-rrr-btn");
-  const statsDashboard = document.getElementById("stats-dashboard");
-  const rrValue = document.getElementById("rr-value");
-  const requiredRrValue = document.getElementById("required-rr-value");
-  const projectedValue = document.getElementById("projected-value");
-  const chaseDifficulty = document.getElementById("chase-difficulty-section");
-  const chaseBar = document.getElementById("chase-bar");
-  const chaseLabel = document.getElementById("chase-label");
-  const pressureSection = document.getElementById("pressure-section");
-  const pressureBar = document.getElementById("pressure-bar");
-  const pressureLabel = document.getElementById("pressure-label");
-  const projectionSection = document.getElementById("projection-section");
-  const projectionBody = document.getElementById("projection-table-body");
-  const paceText = document.getElementById("pace-text");
-  const paceAnalysis = document.getElementById("pace-analysis");
-  const presetBtns = document.querySelectorAll(".preset-btn");
+  const crrRuns = document.getElementById('crr-runs');
+  const crrOvers = document.getElementById('crr-overs');
+  const calcCrrBtn = document.getElementById('calc-crr-btn');
+  const rrrTarget = document.getElementById('rrr-target');
+  const rrrCurrent = document.getElementById('rrr-current');
+  const rrrOvers = document.getElementById('rrr-overs');
+  const calcRrrBtn = document.getElementById('calc-rrr-btn');
+  const statsDashboard = document.getElementById('stats-dashboard');
+  const rrValue = document.getElementById('rr-value');
+  const requiredRrValue = document.getElementById('required-rr-value');
+  const projectedValue = document.getElementById('projected-value');
+  const chaseDifficulty = document.getElementById('chase-difficulty-section');
+  const chaseBar = document.getElementById('chase-bar');
+  const chaseLabel = document.getElementById('chase-label');
+  const pressureSection = document.getElementById('pressure-section');
+  const pressureBar = document.getElementById('pressure-bar');
+  const pressureLabel = document.getElementById('pressure-label');
+  const projectionSection = document.getElementById('projection-section');
+  const projectionBody = document.getElementById('projection-table-body');
+  const paceText = document.getElementById('pace-text');
+  const paceAnalysis = document.getElementById('pace-analysis');
+  const presetBtns = document.querySelectorAll('.preset-btn');
 
   let activeOvers = 20;
   let currentRR = 0;
@@ -383,7 +650,7 @@ const useCases = [
   function parseOvers(input) {
     const raw = input.trim();
     if (!raw) return NaN;
-    const parts = raw.split(".");
+    const parts = raw.split('.');
     const overs = parseInt(parts[0]);
     if (isNaN(overs) || overs < 0) return NaN;
     if (parts.length === 1) return overs;
@@ -393,111 +660,128 @@ const useCases = [
   }
 
   function formatRR(value) {
-    if (isNaN(value) || value < 0) return "0.00";
+    if (isNaN(value) || value < 0) return '0.00';
     return value.toFixed(2);
   }
 
   function getChaseDifficulty(crr, rrr) {
     if (crr <= 0 || rrr <= 0) return null;
     const diff = crr - rrr;
-    if (diff >= 0) return { level: "Easy", pct: 10, color: "#22c55e", desc: "Batting side is ahead of the rate" };
-    if (diff > -1) return { level: "Moderate", pct: 30, color: "#f59e0b", desc: "Within striking distance" };
-    if (diff > -2) return { level: "Hard", pct: 50, color: "#f97316", desc: "Need to accelerate" };
-    if (diff > -4) return { level: "Very Hard", pct: 75, color: "#ef4444", desc: "Significant acceleration needed" };
-    return { level: "Extreme", pct: 95, color: "#dc2626", desc: "Almost impossible chase" };
+    if (diff >= 0) return { level: 'Easy', pct: 10, color: '#22c55e', desc: 'Batting side is ahead of the rate' };
+    if (diff > -1) return { level: 'Moderate', pct: 30, color: '#f59e0b', desc: 'Within striking distance' };
+    if (diff > -2) return { level: 'Hard', pct: 50, color: '#f97316', desc: 'Need to accelerate' };
+    if (diff > -4) return { level: 'Very Hard', pct: 75, color: '#ef4444', desc: 'Significant acceleration needed' };
+    return { level: 'Extreme', pct: 95, color: '#dc2626', desc: 'Almost impossible chase' };
   }
 
   function getPressure(crr, rrr) {
     if (crr <= 0 || rrr <= 0) return null;
     const diff = crr - rrr;
-    if (diff >= 0) return { level: "Low", pct: 10, color: "#22c55e" };
-    if (diff > -1) return { level: "Medium", pct: 35, color: "#f59e0b" };
-    if (diff > -2) return { level: "High", pct: 65, color: "#f97316" };
-    return { level: "Critical", pct: 90, color: "#dc2626" };
+    if (diff >= 0) return { level: 'Low', pct: 10, color: '#22c55e' };
+    if (diff > -1) return { level: 'Medium', pct: 35, color: '#f59e0b' };
+    if (diff > -2) return { level: 'High', pct: 65, color: '#f97316' };
+    return { level: 'Critical', pct: 90, color: '#dc2626' };
   }
 
   function buildProjection() {
-    if (currentRR <= 0) { projectionSection.classList.add("hidden"); return; }
-    projectionSection.classList.remove("hidden");
+    if (currentRR <= 0) {
+      projectionSection.classList.add('hidden');
+      return;
+    }
+    projectionSection.classList.remove('hidden');
 
-    const formatLabel = activeOvers === 20 ? "T20" : activeOvers === 50 ? "ODI" : "Test";
+    const formatLabel = activeOvers === 20 ? 'T20' : activeOvers === 50 ? 'ODI' : 'Test';
     const phases = [];
     if (activeOvers === 20) {
-      phases.push({ label: "Powerplay", overs: 6 });
-      phases.push({ label: "Mid Overs", overs: 14 });
-      phases.push({ label: "Death Overs", overs: 20 });
+      phases.push({ label: 'Powerplay', overs: 6 });
+      phases.push({ label: 'Mid Overs', overs: 14 });
+      phases.push({ label: 'Death Overs', overs: 20 });
     } else if (activeOvers === 50) {
-      phases.push({ label: "Powerplay", overs: 10 });
-      phases.push({ label: "Mid Overs 1", overs: 25 });
-      phases.push({ label: "Mid Overs 2", overs: 40 });
-      phases.push({ label: "Death Overs", overs: 50 });
+      phases.push({ label: 'Powerplay', overs: 10 });
+      phases.push({ label: 'Mid Overs 1', overs: 25 });
+      phases.push({ label: 'Mid Overs 2', overs: 40 });
+      phases.push({ label: 'Death Overs', overs: 50 });
     } else {
-      phases.push({ label: "Session 1", overs: 30 });
-      phases.push({ label: "Session 2", overs: 60 });
-      phases.push({ label: "Session 3", overs: 90 });
+      phases.push({ label: 'Session 1', overs: 30 });
+      phases.push({ label: 'Session 2', overs: 60 });
+      phases.push({ label: 'Session 3', overs: 90 });
     }
 
-    projectionBody.innerHTML = phases.map((p) => {
-      const runsAtCurrent = Math.round(currentRR * p.overs);
-      let runsAtRequired = "—";
-      let diff = "—";
-      if (requiredRR > 0) {
-        runsAtRequired = Math.round(requiredRR * p.overs);
-        const gap = runsAtCurrent - runsAtRequired;
-        diff = gap >= 0 ? `<span class="text-emerald-400">+${gap}</span>` : `<span class="text-red-400">${gap}</span>`;
-      }
-      return `<tr class="border-b border-surface last:border-0">
+    projectionBody.innerHTML = phases
+      .map((p) => {
+        const runsAtCurrent = Math.round(currentRR * p.overs);
+        let runsAtRequired = '—';
+        let diff = '—';
+        if (requiredRR > 0) {
+          runsAtRequired = Math.round(requiredRR * p.overs);
+          const gap = runsAtCurrent - runsAtRequired;
+          diff =
+            gap >= 0 ? `<span class="text-emerald-400">+${gap}</span>` : `<span class="text-red-400">${gap}</span>`;
+        }
+        return `<tr class="border-b border-surface last:border-0">
         <td class="py-2.5 pr-4 text-tertiary font-medium">${p.label}</td>
         <td class="py-2.5 pr-4 text-right font-mono tabular-nums">${p.overs}</td>
         <td class="py-2.5 pr-4 text-right font-mono tabular-nums text-primary">${runsAtCurrent}</td>
         <td class="py-2.5 pr-4 text-right font-mono tabular-nums text-primary">${runsAtRequired}</td>
         <td class="py-2.5 text-right font-mono tabular-nums">${diff}</td>
       </tr>`;
-    }).join("");
+      })
+      .join('');
   }
 
   function updateStats() {
     const show = currentRR > 0 || requiredRR > 0;
-    statsDashboard.classList.toggle("hidden", !show);
+    statsDashboard.classList.toggle('hidden', !show);
     if (!show) return;
 
     rrValue.textContent = formatRR(currentRR);
     requiredRrValue.textContent = formatRR(requiredRR);
 
     const projected = Math.round(currentRR * activeOvers);
-    projectedValue.textContent = projected > 0 ? projected : "0";
+    projectedValue.textContent = projected > 0 ? projected : '0';
 
     // Chase difficulty
     const chase = getChaseDifficulty(currentRR, requiredRR);
     if (chase) {
-      chaseDifficulty.classList.remove("hidden");
-      chaseBar.style.width = chase.pct + "%";
+      chaseDifficulty.classList.remove('hidden');
+      chaseBar.style.width = chase.pct + '%';
       chaseBar.style.background = chase.color;
-      const chaseColors = { Easy: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30", Moderate: "bg-amber-500/20 text-amber-400 border-amber-500/30", Hard: "bg-orange-500/20 text-orange-400 border-orange-500/30", "Very Hard": "bg-red-500/20 text-red-400 border-red-500/30", Extreme: "bg-red-600/20 text-red-500 border-red-600/30" };
+      const chaseColors = {
+        Easy: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+        Moderate: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+        Hard: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+        'Very Hard': 'bg-red-500/20 text-red-400 border-red-500/30',
+        Extreme: 'bg-red-600/20 text-red-500 border-red-600/30',
+      };
       chaseLabel.textContent = chase.level;
       chaseLabel.className = `text-xs font-bold font-mono px-2.5 py-0.5 rounded-full border ${chaseColors[chase.level] || chaseColors.Easy}`;
     } else {
-      chaseDifficulty.classList.add("hidden");
+      chaseDifficulty.classList.add('hidden');
     }
 
     // Pressure
     const pressure = getPressure(currentRR, requiredRR);
     if (pressure) {
-      pressureSection.classList.remove("hidden");
-      pressureBar.style.width = pressure.pct + "%";
+      pressureSection.classList.remove('hidden');
+      pressureBar.style.width = pressure.pct + '%';
       pressureBar.style.background = pressure.color;
-      const pressColors = { Low: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30", Medium: "bg-amber-500/20 text-amber-400 border-amber-500/30", High: "bg-orange-500/20 text-orange-400 border-orange-500/30", Critical: "bg-red-500/20 text-red-400 border-red-500/30" };
+      const pressColors = {
+        Low: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+        Medium: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+        High: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+        Critical: 'bg-red-500/20 text-red-400 border-red-500/30',
+      };
       pressureLabel.textContent = pressure.level;
       pressureLabel.className = `text-xs font-bold font-mono px-2.5 py-0.5 rounded-full border ${pressColors[pressure.level] || pressColors.Low}`;
     } else {
-      pressureSection.classList.add("hidden");
+      pressureSection.classList.add('hidden');
     }
 
     // Projection
     buildProjection();
 
     // Pace analysis
-    const label = activeOvers === 20 ? "T20" : activeOvers === 50 ? "ODI" : "Test";
+    const label = activeOvers === 20 ? 'T20' : activeOvers === 50 ? 'ODI' : 'Test';
     let pace = `Format: ${label} (${activeOvers} overs). Current run rate: ${formatRR(currentRR)}. Projected score: ${projected}.`;
     if (requiredRR > 0) {
       const diff = currentRR - requiredRR;
@@ -506,19 +790,32 @@ const useCases = [
       else if (diff > 0) pace += `Batting side is ahead by ${formatRR(Math.abs(diff))} RPO.`;
       else pace += `Batting side needs to accelerate by ${formatRR(Math.abs(diff))} RPO.`;
     } else {
-      const formatNote = label === "T20" ? " Competitive T20 total: 160-200." : label === "ODI" ? " Competitive ODI total: 270-320." : " In Tests, partnerships matter more than raw rate.";
+      const formatNote =
+        label === 'T20'
+          ? ' Competitive T20 total: 160-200.'
+          : label === 'ODI'
+            ? ' Competitive ODI total: 270-320.'
+            : ' In Tests, partnerships matter more than raw rate.';
       pace += formatNote;
     }
     paceText.textContent = pace;
-    paceAnalysis.classList.remove("hidden");
+    paceAnalysis.classList.remove('hidden');
   }
 
-  calcCrrBtn.addEventListener("click", () => {
+  calcCrrBtn.addEventListener('click', () => {
     const runs = parseInt(crrRuns.value);
     const oversDecimal = parseOvers(crrOvers.value);
     if (isNaN(runs) || runs < 0 || isNaN(oversDecimal) || oversDecimal <= 0) {
-      if (isNaN(runs) || runs < 0) { crrRuns.focus(); crrRuns.classList.add("ring-2","ring-red-500/40","border-red-500/60"); setTimeout(() => crrRuns.classList.remove("ring-2","ring-red-500/40","border-red-500/60"), 1500); }
-      if (isNaN(oversDecimal) || oversDecimal <= 0) { crrOvers.focus(); crrOvers.classList.add("ring-2","ring-red-500/40","border-red-500/60"); setTimeout(() => crrOvers.classList.remove("ring-2","ring-red-500/40","border-red-500/60"), 1500); }
+      if (isNaN(runs) || runs < 0) {
+        crrRuns.focus();
+        crrRuns.classList.add('ring-2', 'ring-red-500/40', 'border-red-500/60');
+        setTimeout(() => crrRuns.classList.remove('ring-2', 'ring-red-500/40', 'border-red-500/60'), 1500);
+      }
+      if (isNaN(oversDecimal) || oversDecimal <= 0) {
+        crrOvers.focus();
+        crrOvers.classList.add('ring-2', 'ring-red-500/40', 'border-red-500/60');
+        setTimeout(() => crrOvers.classList.remove('ring-2', 'ring-red-500/40', 'border-red-500/60'), 1500);
+      }
       return;
     }
     currentRR = runs / oversDecimal;
@@ -527,124 +824,222 @@ const useCases = [
     updateStats();
   });
 
-  calcRrrBtn.addEventListener("click", () => {
+  calcRrrBtn.addEventListener('click', () => {
     const target = parseInt(rrrTarget.value);
     const current = parseInt(rrrCurrent.value);
     const oversRem = parseOvers(rrrOvers.value);
     if (isNaN(target) || target <= 0 || isNaN(current) || current < 0 || isNaN(oversRem) || oversRem <= 0) {
-      if (isNaN(target) || target <= 0) { rrrTarget.focus(); rrrTarget.classList.add("ring-2","ring-red-500/40","border-red-500/60"); setTimeout(() => rrrTarget.classList.remove("ring-2","ring-red-500/40","border-red-500/60"), 1500); }
-      if (isNaN(current) || current < 0) { rrrCurrent.focus(); rrrCurrent.classList.add("ring-2","ring-red-500/40","border-red-500/60"); setTimeout(() => rrrCurrent.classList.remove("ring-2","ring-red-500/40","border-red-500/60"), 1500); }
-      if (isNaN(oversRem) || oversRem <= 0) { rrrOvers.focus(); rrrOvers.classList.add("ring-2","ring-red-500/40","border-red-500/60"); setTimeout(() => rrrOvers.classList.remove("ring-2","ring-red-500/40","border-red-500/60"), 1500); }
+      if (isNaN(target) || target <= 0) {
+        rrrTarget.focus();
+        rrrTarget.classList.add('ring-2', 'ring-red-500/40', 'border-red-500/60');
+        setTimeout(() => rrrTarget.classList.remove('ring-2', 'ring-red-500/40', 'border-red-500/60'), 1500);
+      }
+      if (isNaN(current) || current < 0) {
+        rrrCurrent.focus();
+        rrrCurrent.classList.add('ring-2', 'ring-red-500/40', 'border-red-500/60');
+        setTimeout(() => rrrCurrent.classList.remove('ring-2', 'ring-red-500/40', 'border-red-500/60'), 1500);
+      }
+      if (isNaN(oversRem) || oversRem <= 0) {
+        rrrOvers.focus();
+        rrrOvers.classList.add('ring-2', 'ring-red-500/40', 'border-red-500/60');
+        setTimeout(() => rrrOvers.classList.remove('ring-2', 'ring-red-500/40', 'border-red-500/60'), 1500);
+      }
       return;
     }
-    if (current >= target) { requiredRR = 0; updateStats(); return; }
+    if (current >= target) {
+      requiredRR = 0;
+      updateStats();
+      return;
+    }
     requiredRR = (target - current) / oversRem;
     oversRemaining = oversRem;
     updateStats();
   });
 
   // Enter key handlers
-  [crrRuns, crrOvers].forEach((el) => el.addEventListener("keydown", (e) => { if (e.key === "Enter") calcCrrBtn.click(); }));
-  [rrrTarget, rrrCurrent, rrrOvers].forEach((el) => el.addEventListener("keydown", (e) => { if (e.key === "Enter") calcRrrBtn.click(); }));
+  [crrRuns, crrOvers].forEach((el) =>
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') calcCrrBtn.click();
+    }),
+  );
+  [rrrTarget, rrrCurrent, rrrOvers].forEach((el) =>
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') calcRrrBtn.click();
+    }),
+  );
 
   // Tab switching
-  const tabCurrent = document.getElementById("tab-current");
-  const tabRequired = document.getElementById("tab-required");
-  const formCurrent = document.getElementById("form-current");
-  const formRequired = document.getElementById("form-required");
+  const tabCurrent = document.getElementById('tab-current');
+  const tabRequired = document.getElementById('tab-required');
+  const formCurrent = document.getElementById('form-current');
+  const formRequired = document.getElementById('form-required');
 
-  tabCurrent.addEventListener("click", () => {
-    tabCurrent.className = "flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all";
-    tabRequired.className = "flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all";
-    formCurrent.classList.remove("hidden"); formRequired.classList.add("hidden");
+  tabCurrent.addEventListener('click', () => {
+    tabCurrent.className =
+      'flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all';
+    tabRequired.className =
+      'flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all';
+    formCurrent.classList.remove('hidden');
+    formRequired.classList.add('hidden');
   });
-  tabRequired.addEventListener("click", () => {
-    tabRequired.className = "flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all";
-    tabCurrent.className = "flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all";
-    formRequired.classList.remove("hidden"); formCurrent.classList.add("hidden");
+  tabRequired.addEventListener('click', () => {
+    tabRequired.className =
+      'flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all';
+    tabCurrent.className =
+      'flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all';
+    formRequired.classList.remove('hidden');
+    formCurrent.classList.add('hidden');
   });
 
   // Format presets
   presetBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener('click', () => {
       presetBtns.forEach((b) => {
-        b.dataset.active = "false";
-        b.classList.remove("bg-purple-600/15","border-purple-500/50","text-purple-300");
-        b.classList.add("bg-surface-1","border-surface-3","text-tertiary");
+        b.dataset.active = 'false';
+        b.classList.remove('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
+        b.classList.add('bg-surface-1', 'border-surface-3', 'text-tertiary');
       });
-      btn.dataset.active = "true";
-      btn.classList.remove("bg-surface-1","border-surface-3","text-tertiary");
-      btn.classList.add("bg-purple-600/15","border-purple-500/50","text-purple-300");
+      btn.dataset.active = 'true';
+      btn.classList.remove('bg-surface-1', 'border-surface-3', 'text-tertiary');
+      btn.classList.add('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
       activeOvers = parseInt(btn.dataset.overs);
       if (currentRR > 0) updateStats();
     });
   });
 
   // ─── Copy Results ───
-  function triggerToast(message: string, variant: "success" | "error" | "info" | "warning" = "success") {
+  function triggerToast(message: string, variant: 'success' | 'error' | 'info' | 'warning' = 'success') {
     if ((window as any).__showToast) {
       (window as any).__showToast({ message, variant });
     }
   }
 
-  document.getElementById("copy-rr-btn")?.addEventListener("click", () => {
+  document.getElementById('copy-rr-btn')?.addEventListener('click', () => {
     const text = [
       `Current RR: ${rrValue.textContent}`,
       `Required RR: ${requiredRrValue.textContent}`,
       `Projected Score: ${projectedValue.textContent}`,
-      chaseDifficulty?.classList.contains("hidden") ? "" : `Chase Difficulty: ${chaseLabel?.textContent}`,
-      pressureSection?.classList.contains("hidden") ? "" : `Match Pressure: ${pressureLabel?.textContent}`,
-      paceText?.classList.contains("hidden") ? "" : `Analysis: ${paceText?.textContent}`,
-    ].filter(Boolean).join(" | ");
+      chaseDifficulty?.classList.contains('hidden') ? '' : `Chase Difficulty: ${chaseLabel?.textContent}`,
+      pressureSection?.classList.contains('hidden') ? '' : `Match Pressure: ${pressureLabel?.textContent}`,
+      paceText?.classList.contains('hidden') ? '' : `Analysis: ${paceText?.textContent}`,
+    ]
+      .filter(Boolean)
+      .join(' | ');
     navigator.clipboard.writeText(text).catch(() => {});
-    triggerToast("Results copied!", "success");
+    triggerToast('Results copied!', 'success');
   });
 
   // ─── Download ───
-  document.getElementById("download-btn")?.addEventListener("click", () => {
+  document.getElementById('download-btn')?.addEventListener('click', () => {
     const text = [
       `Current RR: ${rrValue.textContent}`,
       `Required RR: ${requiredRrValue.textContent}`,
       `Projected Score: ${projectedValue.textContent}`,
-      chaseDifficulty?.classList.contains("hidden") ? "" : `Chase Difficulty: ${chaseLabel?.textContent}`,
-      pressureSection?.classList.contains("hidden") ? "" : `Match Pressure: ${pressureLabel?.textContent}`,
-      paceText?.classList.contains("hidden") ? "" : `Analysis: ${paceText?.textContent}`,
-    ].filter(Boolean).join(" | ");
+      chaseDifficulty?.classList.contains('hidden') ? '' : `Chase Difficulty: ${chaseLabel?.textContent}`,
+      pressureSection?.classList.contains('hidden') ? '' : `Match Pressure: ${pressureLabel?.textContent}`,
+      paceText?.classList.contains('hidden') ? '' : `Analysis: ${paceText?.textContent}`,
+    ]
+      .filter(Boolean)
+      .join(' | ');
     if (!text) return;
-    const blob = new Blob([text], {type:"text/plain"});
-    const a = document.createElement("a");
+    const blob = new Blob([text], { type: 'text/plain' });
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = "run-rate-results.txt";
+    a.download = 'run-rate-results.txt';
     a.click();
     URL.revokeObjectURL(a.href);
   });
 
   // ─── Fullscreen ───
-  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-    const card = document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card = document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
     if (!card) return;
-    if (document.fullscreenElement) { document.exitFullscreen(); document.getElementById("fullscreen-btn").textContent = "⛶"; }
-    else { card.requestFullscreen?.() || card.webkitRequestFullscreen?.(); document.getElementById("fullscreen-btn").textContent = "✕"; }
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      document.getElementById('fullscreen-btn').textContent = '⛶';
+    } else {
+      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
+      document.getElementById('fullscreen-btn').textContent = '✕';
+    }
   });
-  document.addEventListener("fullscreenchange", () => {
-    const btn = document.getElementById("fullscreen-btn");
-    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
 
   // ─── Keyboard shortcuts ───
-  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      const clearBtn = document.getElementById('clear-btn') || document.querySelector("button[id*='clear']") || document.querySelector("button[id*='reset']");
+      if (clearBtn) clearBtn.click();
+      else {
+        const inputs = document.querySelectorAll('textarea, input:not([type="radio"]):not([type="checkbox"])');
+        inputs.forEach(i => i.value = '');
+        const evt = new Event('input', { bubbles: true });
+        inputs.forEach(i => i.dispatchEvent(evt));
+      }
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
 
   // ─── Usage badge ───
-  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["run-rate-calculator"])b.textContent="Used "+u["run-rate-calculator"]+"×";}catch(e){}
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['run-rate-calculator']) b.textContent = 'Used ' + u['run-rate-calculator'] + '×';
+  } catch (e) {}
 
   // ─── Share button ───
-  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("output-text")||document.querySelector("[id$='result']");const t=o?.value||o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof showToast==="function")showToast("Link copied!");});
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('output-text') || document.querySelector("[id$='result']");
+    const t = o?.value || o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof showToast === 'function') showToast('Link copied!');
+  });
 
   // ─── Sound effects ───
-  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
 
   // ─── Color theme picker ───
-  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500");});try{localStorage.setItem("nt_theme",c);}catch(e){}});});
-  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
+  });
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>
-

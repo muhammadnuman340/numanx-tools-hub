@@ -1,0 +1,299 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'What are UTM parameters?',
+    answer:
+      'UTM parameters are short text codes added to URLs that help you track the performance of campaigns and content in analytics tools like Google Analytics.',
+  },
+  {
+    question: 'Which UTM parameters are required?',
+    answer:
+      'The Website URL and Campaign Source (utm_source) are required to track traffic accurately. The others (medium, campaign, term, content) are optional but recommended.',
+  },
+  {
+    question: 'Is my data sent to a server?',
+    answer:
+      'No. The URL is generated entirely in your browser using JavaScript. No tracking data is sent to our servers.',
+  },
+];
+const schema = {
+  name: 'UTM Builder',
+  applicationCategory: 'Marketing Tools',
+  description: 'Easily build UTM parameters for Google Analytics tracking URLs.',
+  featureList: [
+    'Add UTM parameters to any URL',
+    'Generate standard Google Analytics tracking URLs',
+    'Real-time URL preview',
+    '100% client-side URL generation',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '📊',
+    title: 'Accurate Tracking',
+    desc: 'Ensure your Google Analytics records the exact source, medium, and campaign for every incoming link.',
+  },
+  {
+    icon: '⚡',
+    title: 'Instant Generation',
+    desc: 'URLs are built in real-time as you type. No waiting, no loading spinners, just instant results.',
+  },
+  {
+    icon: '🔒',
+    title: 'Privacy First',
+    desc: 'Your links and campaign names are never sent to a server. The URL is generated 100% in your browser.',
+  },
+  {
+    icon: '📋',
+    title: 'One-Click Copy',
+    desc: 'Copy the final URL to your clipboard with a single click, ready to be pasted into your ads or emails.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Enter URL',
+    desc: 'Type or paste the full website URL where you want to send traffic (e.g., https://example.com/landing-page).',
+  },
+  {
+    num: '2',
+    title: 'Add Source',
+    desc: 'Enter the campaign source, such as google, newsletter, or facebook to identify where the traffic comes from.',
+  },
+  {
+    num: '3',
+    title: 'Set Optional Params',
+    desc: 'Fill in the medium (e.g., cpc, email), campaign name, term, and content fields to provide more granular tracking data.',
+  },
+  {
+    num: '4',
+    title: 'Copy & Use',
+    desc: 'Click "Copy URL" to copy the fully tagged link to your clipboard. Use this link in your marketing materials.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '📧',
+    title: 'Email Marketing',
+    desc: 'Tag links in your newsletters to see exactly which emails and button clicks drive the most conversions.',
+  },
+  {
+    icon: '📱',
+    title: 'Social Media',
+    desc: 'Create distinct links for Facebook, Twitter, and LinkedIn to compare which platform yields the highest ROI.',
+  },
+  {
+    icon: '💰',
+    title: 'Paid Advertising',
+    desc: 'Append UTM parameters to your ad destination URLs to track the performance of specific ad creatives and keywords.',
+  },
+];
+---
+
+<MainLayout
+  title="UTM Builder - Generate Google Analytics Tracking URLs"
+  description="Easily add UTM parameters to your URLs for accurate Google Analytics tracking. Free online UTM link builder."
+  keywords="utm builder, utm generator, tracking url builder, google analytics utm, url builder"
+  toolSchema={schema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Build a UTM URL',
+    description: 'Step-by-step guide for generating tracking URLs.',
+    steps: [],
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'UTM Builder', url: '/tools/utm-builder/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="UTM"
+        gradient="Builder"
+        desc="Easily add UTM parameters to your URLs for accurate campaign tracking."
+        badge="✦ New Tool"
+        slug="utm-builder"
+      />
+      <ShareBar />
+      <div class="max-w-3xl mx-auto mt-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="glass-card rounded-2xl p-6 relative flex flex-col gap-4">
+            <div>
+              <label class="text-xs font-semibold text-muted uppercase tracking-wider mb-1 block">Website URL *</label>
+              <input
+                id="param-url"
+                type="url"
+                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
+                placeholder="https://example.com"
+              />
+            </div>
+            <div>
+              <label class="text-xs font-semibold text-muted uppercase tracking-wider mb-1 block">Campaign Source *</label>
+              <input
+                id="param-source"
+                type="text"
+                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
+                placeholder="google, newsletter, facebook"
+              />
+            </div>
+            <div>
+              <label class="text-xs font-semibold text-muted uppercase tracking-wider mb-1 block">Campaign Medium</label>
+              <input
+                id="param-medium"
+                type="text"
+                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
+                placeholder="cpc, banner, email"
+              />
+            </div>
+            <div>
+              <label class="text-xs font-semibold text-muted uppercase tracking-wider mb-1 block">Campaign Name</label>
+              <input
+                id="param-campaign"
+                type="text"
+                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
+                placeholder="spring_sale"
+              />
+            </div>
+            <div>
+              <label class="text-xs font-semibold text-muted uppercase tracking-wider mb-1 block">Campaign Term</label>
+              <input
+                id="param-term"
+                type="text"
+                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
+                placeholder="running+shoes"
+              />
+            </div>
+            <div>
+              <label class="text-xs font-semibold text-muted uppercase tracking-wider mb-1 block">Campaign Content</label>
+              <input
+                id="param-content"
+                type="text"
+                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
+                placeholder="logolink, textlink"
+              />
+            </div>
+          </div>
+          
+          <div class="glass-card rounded-2xl p-6 relative flex flex-col h-full">
+             <label class="text-xs font-semibold text-muted uppercase tracking-wider mb-2 block">Generated URL</label>
+             <textarea
+                id="result-url"
+                class="w-full flex-1 min-h-[150px] px-4 py-3 rounded-xl border border-surface-2 bg-surface text-emerald-400 text-sm focus:outline-none transition-all resize-none break-all"
+                readonly
+                placeholder="Your generated URL will appear here..."
+              ></textarea>
+              <button
+                id="copy-btn"
+                class="w-full mt-4 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold py-3 rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled
+              >
+                Copy URL
+              </button>
+          </div>
+        </div>
+      </div>
+      <ToolContentSections
+        toolSlug="utm-builder"
+        toolName="UTM Builder"
+        category="Marketing Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="utm-builder" />
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked <span class="bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent"
+            >Questions</span
+          >
+        </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
+      </div>
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  const urlInput = document.getElementById('param-url') as HTMLInputElement;
+  const sourceInput = document.getElementById('param-source') as HTMLInputElement;
+  const mediumInput = document.getElementById('param-medium') as HTMLInputElement;
+  const campaignInput = document.getElementById('param-campaign') as HTMLInputElement;
+  const termInput = document.getElementById('param-term') as HTMLInputElement;
+  const contentInput = document.getElementById('param-content') as HTMLInputElement;
+  
+  const resultArea = document.getElementById('result-url') as HTMLTextAreaElement;
+  const copyBtn = document.getElementById('copy-btn') as HTMLButtonElement;
+
+  function updateUrl() {
+    const url = urlInput.value.trim();
+    const source = sourceInput.value.trim();
+    const medium = mediumInput.value.trim();
+    const campaign = campaignInput.value.trim();
+    const term = termInput.value.trim();
+    const content = contentInput.value.trim();
+
+    if (!url) {
+      resultArea.value = '';
+      copyBtn.disabled = true;
+      return;
+    }
+
+    try {
+      const parsedUrl = new URL(url.includes('http') ? url : `https://${url}`);
+      
+      if (source) parsedUrl.searchParams.set('utm_source', source);
+      if (medium) parsedUrl.searchParams.set('utm_medium', medium);
+      if (campaign) parsedUrl.searchParams.set('utm_campaign', campaign);
+      if (term) parsedUrl.searchParams.set('utm_term', term);
+      if (content) parsedUrl.searchParams.set('utm_content', content);
+
+      resultArea.value = parsedUrl.toString();
+      copyBtn.disabled = false;
+    } catch (e) {
+      resultArea.value = 'Invalid URL format';
+      copyBtn.disabled = true;
+    }
+  }
+
+  [urlInput, sourceInput, mediumInput, campaignInput, termInput, contentInput].forEach(input => {
+    input.addEventListener('input', updateUrl);
+  });
+
+  copyBtn?.addEventListener('click', async () => {
+    if (!resultArea.value || resultArea.value === 'Invalid URL format') return;
+    
+    try {
+      await navigator.clipboard.writeText(resultArea.value);
+      const originalText = copyBtn.textContent;
+      copyBtn.textContent = 'Copied!';
+      copyBtn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
+      copyBtn.classList.remove('bg-blue-600', 'hover:bg-blue-500');
+      
+      if ((window as any).__showToast) {
+        (window as any).__showToast({ message: 'URL copied to clipboard!', variant: 'success' });
+      }
+
+      setTimeout(() => {
+        copyBtn.textContent = originalText;
+        copyBtn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
+        copyBtn.classList.add('bg-blue-600', 'hover:bg-blue-500');
+      }, 2000);
+    } catch (err) {
+      if ((window as any).__showToast) {
+        (window as any).__showToast({ message: 'Failed to copy to clipboard', variant: 'error' });
+      }
+    }
+  });
+</script>

@@ -1,0 +1,246 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'How do YouTube titles affect views?',
+    answer:
+      'The title is one of the most important factors for CTR (Click-Through Rate). A highly clickable title combined with a good thumbnail can drastically improve your video performance.',
+  },
+  {
+    question: 'Are these templates proven?',
+    answer:
+      'Yes! These templates are modeled after high-performing videos from top creators across various niches, using psychological triggers like curiosity, fear of missing out, and authority.',
+  },
+];
+const schema = {
+  name: 'YouTube Title Generator',
+  applicationCategory: 'Creator Tools',
+  description: 'Generate highly clickable YouTube titles using proven templates and your keywords.',
+  featureList: [
+    '50+ proven clickbait title templates',
+    'Dynamic keyword insertion',
+    'One-click copy',
+    '100% client-side generation',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '🔥',
+    title: 'Higher CTR',
+    desc: 'Use proven title structures modeled after the most successful videos on YouTube to maximize your click-through rate.',
+  },
+  {
+    icon: '⏱️',
+    title: 'Save Time',
+    desc: 'Stop staring at a blank screen. Generate dozens of high-quality title ideas for your next video in under a second.',
+  },
+  {
+    icon: '🧠',
+    title: 'Psychology Based',
+    desc: 'Our templates leverage curiosity, fear of missing out (FOMO), and authority to naturally attract more viewers.',
+  },
+  {
+    icon: '💡',
+    title: 'Endless Inspiration',
+    desc: 'Even if you don\'t use the exact generated title, the variations will spark creative ideas for your own unique angles.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Enter Keyword',
+    desc: 'Type your video\'s main topic, subject, or keyword into the input field (e.g., "AI tools" or "dog training").',
+  },
+  {
+    num: '2',
+    title: 'Generate Titles',
+    desc: 'Click the "Generate" button to instantly create over 20 proven title variations incorporating your keyword.',
+  },
+  {
+    num: '3',
+    title: 'Review Options',
+    desc: 'Scroll through the generated list and look for titles that spark curiosity and accurately represent your video\'s content.',
+  },
+  {
+    num: '4',
+    title: 'Copy & Paste',
+    desc: 'Hover over your favorite title and click the "Copy" button to save it to your clipboard, ready for YouTube.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '🎬',
+    title: 'Content Creators',
+    desc: 'Find the perfect hook for your next vlog, tutorial, or documentary to ensure the algorithm picks it up.',
+  },
+  {
+    icon: '📈',
+    title: 'Marketing Agencies',
+    desc: 'Quickly brainstorm clickable titles for client campaigns, promotional videos, and brand channels.',
+  },
+  {
+    icon: '🔄',
+    title: 'A/B Testing',
+    desc: 'Generate multiple strong title variations to test against each other using YouTube\'s A/B testing features.',
+  },
+];
+---
+
+<MainLayout
+  title="YouTube Title Generator - Get More Views & Clicks"
+  description="Generate highly clickable YouTube titles using proven templates and your keywords. Boost your CTR instantly."
+  keywords="youtube title generator, youtube title maker, clickbait titles, youtube seo"
+  toolSchema={schema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Generate YouTube Titles',
+    description: 'Step-by-step guide for generating titles.',
+    steps: [],
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'YouTube Title Generator', url: '/tools/youtube-title-generator/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="YouTube Title"
+        gradient="Generator"
+        desc="Enter your main topic or keyword, and we'll generate dozens of highly clickable, proven title variations."
+        badge="✦ New Tool"
+        slug="youtube-title-generator"
+      />
+      <ShareBar />
+      <div class="max-w-2xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 relative">
+          <label class="text-xs font-semibold text-muted uppercase tracking-wider mb-2 block">Main Topic or Keyword</label>
+          <div class="flex gap-3">
+             <input
+                id="keyword-input"
+                type="text"
+                class="flex-1 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-lg focus:border-red-500/50 focus:outline-none transition-all"
+                placeholder="e.g. AI tools, dog training, productivity"
+             />
+             <button
+                id="generate-btn"
+                class="bg-red-600 hover:bg-red-500 text-white font-semibold px-6 py-3 rounded-xl transition-all active:scale-95 whitespace-nowrap"
+             >
+                Generate
+             </button>
+          </div>
+          
+          <div id="results-container" class="mt-8 space-y-3 hidden">
+             <!-- Results injected here -->
+          </div>
+        </div>
+      </div>
+      <ToolContentSections
+        toolSlug="youtube-title-generator"
+        toolName="YouTube Title Generator"
+        category="Creator Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="youtube-title-generator" />
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked <span class="bg-gradient-to-r from-red-400 to-orange-500 bg-clip-text text-transparent"
+            >Questions</span
+          >
+        </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
+      </div>
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  const templates = [
+    "I Tried {keyword} For 30 Days (Here's What Happened)",
+    "The Truth About {keyword} That Nobody Tells You",
+    "Why {keyword} Is Destroying Your Potential",
+    "Stop Doing {keyword} Wrong (Do This Instead)",
+    "I Tested The Best {keyword} So You Don't Have To",
+    "How To Master {keyword} In 24 Hours",
+    "The Ultimate Guide To {keyword} (2026)",
+    "{keyword} For Beginners: The Only Tutorial You Need",
+    "I Asked Experts About {keyword} And They Said THIS",
+    "Why Everyone Is Obsessed With {keyword}",
+    "7 {keyword} Mistakes You Are Probably Making",
+    "{keyword}: Expectation vs Reality",
+    "Is {keyword} Still Worth It?",
+    "The Dark Side Of {keyword}",
+    "My Honest Review Of {keyword}",
+    "How {keyword} Changed My Life Forever",
+    "What They Won't Tell You About {keyword}",
+    "10 SECRETS About {keyword}",
+    "I Spent $1000 On {keyword} (Was It Worth It?)",
+    "Do NOT Try {keyword} Until You Watch This"
+  ];
+
+  const input = document.getElementById('keyword-input') as HTMLInputElement;
+  const generateBtn = document.getElementById('generate-btn');
+  const resultsContainer = document.getElementById('results-container');
+
+  function generateTitles() {
+    let keyword = input.value.trim();
+    if (!keyword) {
+      if ((window as any).__showToast) {
+        (window as any).__showToast({ message: 'Please enter a keyword', variant: 'warning' });
+      }
+      return;
+    }
+
+    // Capitalize first letter of each word
+    keyword = keyword.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+    const html = templates.map(t => {
+      const title = t.replace('{keyword}', keyword);
+      return `
+        <div class="group flex items-center justify-between p-4 bg-surface border border-surface-2 rounded-xl hover:border-red-500/30 transition-all">
+           <span class="text-white text-sm md:text-base font-medium">${title}</span>
+           <button class="copy-title-btn text-xs text-muted hover:text-white px-3 py-1.5 bg-surface-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all" data-title="${title.replace(/"/g, '&quot;')}">Copy</button>
+        </div>
+      `;
+    }).join('');
+
+    if (resultsContainer) {
+      resultsContainer.innerHTML = html;
+      resultsContainer.classList.remove('hidden');
+
+      document.querySelectorAll('.copy-title-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          const title = (e.currentTarget as HTMLElement).getAttribute('data-title');
+          if (title) {
+            try {
+              await navigator.clipboard.writeText(title);
+              if ((window as any).__showToast) {
+                (window as any).__showToast({ message: 'Title copied!', variant: 'success' });
+              }
+              const oldText = btn.textContent;
+              btn.textContent = 'Copied!';
+              setTimeout(() => btn.textContent = oldText, 2000);
+            } catch (err) {}
+          }
+        });
+      });
+    }
+  }
+
+  generateBtn?.addEventListener('click', generateTitles);
+  input?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') generateTitles();
+  });
+</script>

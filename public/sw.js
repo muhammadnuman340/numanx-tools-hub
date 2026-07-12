@@ -20,7 +20,9 @@ self.addEventListener('activate', (event) => {
       .keys()
       .then((keys) =>
         Promise.all(
-          keys.filter((k) => k !== CACHE && k !== STATIC_CACHE && k !== FONT_CACHE && k !== DATA_CACHE).map((k) => caches.delete(k)),
+          keys
+            .filter((k) => k !== CACHE && k !== STATIC_CACHE && k !== FONT_CACHE && k !== DATA_CACHE)
+            .map((k) => caches.delete(k)),
         ),
       )
       .then(() => self.clients.claim()),
@@ -100,7 +102,10 @@ self.addEventListener('fetch', (event) => {
   }
 
   // Sitemap / data / JSON: stale-while-revalidate
-  if (isSameOrigin && (url.pathname.endsWith('.xml') || url.pathname.endsWith('.json') || url.pathname.includes('/data/'))) {
+  if (
+    isSameOrigin &&
+    (url.pathname.endsWith('.xml') || url.pathname.endsWith('.json') || url.pathname.includes('/data/'))
+  ) {
     event.respondWith(
       caches.match(request).then((cached) => {
         const fetchPromise = fetch(request)
@@ -146,7 +151,11 @@ async function syncContactForm() {
     const data = await caches.match('/contact/pending');
     if (data) {
       const body = await data.json();
-      await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
       caches.delete('/contact/pending');
     }
   } catch {}

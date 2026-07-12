@@ -1,667 +1,91 @@
-# NumanX Tools — Component System
+# NumanX Tools — Comprehensive Design System & Component Matrix
 
-> Complete inventory of every Astro component in the system. Use this as a reference when building new features to ensure consistency and avoid duplication.
-
----
-
-## UI Primitives (`src/components/ui/`)
-
-These are the foundational building blocks. Every UI component supports `class?: string` for Tailwind overrides.
+This is the definitive "Principal Architect" specification for the NumanX visual language. It dictates exactly how the "God-Tier Glassmorphism" aesthetic is implemented across Tailwind utility classes, accessibility states, and animation keyframes.
 
 ---
 
-### Accordion
+## 1. The Design Language: "God-Tier Glassmorphism"
 
-**Path**: `src/components/ui/Accordion.astro`
+The NumanX aesthetic relies on deep dark backgrounds (`bg-[#0a0a0b]`), vibrant ambient radial glows, and heavily frosted glass surfaces. We explicitly avoid "flat" dark mode in favor of depth, transparency, and micro-interactions.
 
-Single-open accordion with CSS grid-rows height transition (no JS measurement). Smooth `grid-rows-[0fr]` ↔ `grid-rows-[1fr]` animation. Automatically closes other panels when one opens.
+### 1.1 The Core Tailwind Glass Matrix
+Whenever building a new card, modal, or container, you MUST use one of these three exact utility combinations:
 
-```astro
+| Glass Tier | Tailwind Combination | Use Case |
+| --- | --- | --- |
+| **Tier 1 (Subtle Base)** | `bg-white/[0.02] border border-white/[0.05] backdrop-blur-md` | Background sections, massive layout containers. |
+| **Tier 2 (Standard Card)** | `bg-white/[0.04] border border-white/[0.08] backdrop-blur-xl shadow-2xl` | Standard tool cards, blog post cards, dropdown menus. |
+| **Tier 3 (Elevated Floating)** | `bg-white/[0.08] border border-white/[0.12] backdrop-blur-2xl shadow-purple-500/10` | Sticky navbars, search overlays, floating action buttons. |
+
+### 1.2 The Interactive State Matrix (a11y)
+Buttons, links, and cards must follow this exact state transition matrix to ensure WCAG AA compliance and a premium feel.
+
+| State | Tailwind Utility Modifiers | Notes |
+| --- | --- | --- |
+| **Hover (`hover:`)** | `hover:bg-white/[0.08] hover:border-purple-500/50 hover:-translate-y-1` | Slight lift and brand-color border reveal. |
+| **Focus (`focus-visible:`)** | `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0b]` | Mandatory for keyboard navigation accessibility. |
+| **Active (`active:`)** | `active:scale-95 active:bg-white/[0.1]` | Immediate physical click feedback. |
+| **Disabled (`disabled:`)** | `disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none` | Visual communication of unavailable actions. |
+
 ---
-interface Props {
-  items: Array<{ title: string; content: string }>;
-  class?: string;
+
+## 2. Animation & Keyframe Definitions
+
+Animations must feel deliberate, fluid, and hardware-accelerated (`transform` and `opacity` only).
+
+### 2.1 Standard Transitions
+- **Global Base Transition:** `transition-all duration-300 ease-out`
+- **Snappy Micro-Interaction:** `transition-transform duration-150 ease-in-out`
+
+### 2.2 Custom CSS Keyframes (`src/styles/global.css`)
+```css
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
----
-```
 
-**Props**:
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `items` | `{title: string, content: string}[]` | required | Accordion panels |
-| `class` | `string` | `''` | Additional Tailwind classes |
-
-**Script**: Reinitializes on `astro:after-swap` for view transitions.
-
-**Usage**:
-```astro
-<Accordion items={[
-  { title: "How does it work?", content: "It runs entirely in your browser." },
-  { title: "Is it free?", content: "Yes, always." },
-]} />
-```
-
----
-
-### Badge
-
-**Path**: `src/components/ui/Badge.astro`
-
-Inline badge/pill with 7 color variants and 2 sizes.
-
-```astro
----
-type BadgeVariant = "default" | "new" | "popular" | "pro" | "success" | "warning" | "info";
-
-interface Props {
-  variant?: BadgeVariant;
-  size?: "sm" | "md";
-  class?: string;
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
 }
----
-```
 
-**Props**:
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `BadgeVariant` | `'default'` | Color + semantic variant |
-| `size` | `'sm' \| 'md'` | `'sm'` | `sm` = `text-[10px]`; `md` = `text-xs` |
-| `class` | `string` | `''` | Additional Tailwind classes |
-
-**Variants**:
-| Variant | Visual |
-|---------|--------|
-| `default` | `bg-white/[0.04] text-zinc-400 border-white/[0.06]` |
-| `new` | `bg-emerald-500/10 text-emerald-400 border-emerald-500/20` |
-| `popular` | `bg-purple-500/10 text-purple-400 border-purple-500/20` |
-| `pro` | `bg-amber-500/10 text-amber-400 border-amber-500/20` |
-| `success` | `bg-emerald-500/10 text-emerald-400 border-emerald-500/20` |
-| `warning` | `bg-amber-500/10 text-amber-400 border-amber-500/20` |
-| `info` | `bg-blue-500/10 text-blue-400 border-blue-500/20` |
-
-**Usage**:
-```astro
-<Badge variant="new" size="sm">New</Badge>
-<Badge variant="popular">Popular</Badge>
-```
-
----
-
-### Button
-
-**Path**: `src/components/ui/Button.astro`
-
-Versatile button that renders `<a>` when `href` is provided, `<button>` otherwise. Supports loading state, disabled state, and any extra HTML attributes via spread.
-
-```astro
----
-type ButtonVariant = "primary" | "secondary" | "ghost" | "outline" | "danger";
-type ButtonSize = "sm" | "md" | "lg";
-
-interface Props {
-  variant?: ButtonVariant;
-  size?: ButtonSize;
-  disabled?: boolean;
-  loading?: boolean;
-  href?: string;
-  class?: string;
-  [key: string]: any; // spread to element
+@keyframes slide-in-bottom {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
 }
----
-```
-
-**Props**:
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `ButtonVariant` | `'primary'` | Visual style |
-| `size` | `ButtonSize` | `'md'` | `sm` = `px-3 py-1.5 text-xs`; `md` = `px-5 py-2.5 text-sm`; `lg` = `px-6 py-3 text-sm` |
-| `disabled` | `boolean` | `false` | Disabled state |
-| `loading` | `boolean` | `false` | Shows spinner SVG |
-| `href` | `string` | — | If set, renders `<a>` instead of `<button>` |
-| `class` | `string` | `''` | Additional Tailwind classes |
-| `[key: string]` | `any` | — | Spread to element (e.g., `target="_blank"`, `aria-label`) |
-
-**Variants**:
-| Variant | Default | Hover | Active |
-|---------|---------|-------|--------|
-| `primary` | `bg-purple-600 text-white` | `bg-purple-500` | `scale-[0.97]` |
-| `secondary` | `bg-white/[0.03] text-zinc-300 border-white/[0.1]` | `bg-white/[0.06]` | `scale-[0.97]` |
-| `ghost` | `text-zinc-400` | `text-white bg-white/[0.04]` | `scale-[0.97]` |
-| `outline` | `text-zinc-300 border-white/[0.1]` | `text-white border-white/[0.2]` | `scale-[0.97]` |
-| `danger` | `bg-red-600 text-white` | `bg-red-500` | `scale-[0.97]` |
-
-**Usage**:
-```astro
-<Button variant="primary" size="lg">Get Started</Button>
-<Button variant="outline" href="/tools/">Browse Tools</Button>
-<Button variant="danger" loading disabled>Deleting...</Button>
 ```
 
 ---
 
-### Card
+## 3. Core Component Library Specifications
 
-**Path**: `src/components/ui/Card.astro`
+### 3.1 `<AppSEO />` (The Meta Engine)
+- **Purpose:** Injects all `<head>` metadata, OpenGraph tags, and JSON-LD schema dynamically per route.
+- **Strict Rule:** Must be the very first component rendered inside `<head>` to ensure crawlers instantly hit canonical tags.
 
-Container card with 3 visual variants and 3 padding sizes. Named slots for image and badge.
+### 3.2 `<MainLayout />` (The Application Shell)
+- **Purpose:** Wraps every single page. Injects the ambient background SVGs/Orbs, the `<Navbar />`, the main content `<slot />`, and the `<Footer />`.
+- **Strict Rule:** Must handle the `client:idle` mounting of the global Search Modal to prevent blocking the initial LCP render.
 
-```astro
----
-interface Props {
-  variant?: "default" | "glass" | "interactive";
-  padding?: "sm" | "md" | "lg";
-  class?: string;
-}
----
-```
+### 3.3 `<ToolHeader />` (The Hook)
+- **Purpose:** The H1 hero section for every tool.
+- **Strict Rule:** Must implement `nt_tool_usage` localStorage tracking within a `<script>` tag that executes purely on the client side, bypassing Astro's SSG build.
 
-**Props**:
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `'default' \| 'glass' \| 'interactive'` | `'default'` | Visual style |
-| `padding` | `'sm' \| 'md' \| 'lg'` | `'md'` | `sm` = `p-4`; `md` = `p-5`; `lg` = `p-6` |
-| `class` | `string` | `''` | Additional Tailwind classes |
-
-**Variants**:
-| Variant | Classes |
-|---------|---------|
-| `default` | `bg-white/[0.03] border border-white/[0.06] rounded-2xl` |
-| `glass` | Default + `backdrop-blur-xl` |
-| `interactive` | Default + `hover:border-purple-500/30 hover:bg-white/[0.05] hover:shadow-lg` |
-
-**Slots**: `slot="image"`, `slot="badge"`, default slot
-
-**Usage**:
-```astro
-<Card variant="interactive" padding="lg">
-  <Fragment slot="badge"><Badge variant="new">New</Badge></Fragment>
-  <h3>Card Title</h3>
-  <p>Card content here.</p>
-</Card>
-```
+### 3.4 `<Accordion />` (The FAQ Engine)
+- **Purpose:** SEO-optimized expandable FAQ sections.
+- **Strict Rule:** Must use CSS Grid transition hacks (`grid-template-rows: 0fr` to `1fr`) to animate height without relying on expensive JavaScript recalculations.
 
 ---
 
-### Drawer
-
-**Path**: `src/components/ui/Drawer.astro`
-
-Slide-in panel (left or right) with backdrop. Triggered via `[data-drawer="id"]` attribute. Locks body scroll when open.
-
-```astro
----
-interface Props {
-  id?: string;
-  position?: "left" | "right";
-}
----
-```
-
-**Props**:
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `id` | `string` | `'drawer'` | HTML id, also used for data-attribute trigger matching |
-| `position` | `'left' \| 'right'` | `'right'` | Slide direction |
-
-**Behavior**: Click backdrop or close button to dismiss. `document.body.style.overflow = "hidden"` when open.
-
-**Usage**:
-```astro
-<button data-drawer="drawer">Open Menu</button>
-<Drawer id="drawer" position="right">
-  <nav>Menu content</nav>
-</Drawer>
-```
-
----
-
-### Tabs
-
-**Path**: `src/components/ui/Tabs.astro`
-
-ARIA-compliant tab bar with role="tablist"/"tab"/"tabpanel". Active tab uses `aria-selected="true"` with purple styling. Tab panel visibility toggled via inline style.
-
-```astro
----
-interface Props {
-  tabs: Array<{ id: string; label: string }>;
-  activeTab?: string;
-  class?: string;
-}
----
-```
-
-**Props**:
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `tabs` | `{id: string, label: string}[]` | required | Tab definitions |
-| `activeTab` | `string` | first tab's id | Initial active tab |
-| `class` | `string` | `''` | Additional Tailwind classes |
-
-**Usage**:
-```astro
-<Tabs tabs={[
-  { id: "features", label: "Features" },
-  { id: "specs", label: "Specifications" },
-]} activeTab="features" />
-```
-
----
-
-### Toast
-
-**Path**: `src/components/ui/Toast.astro`
-
-Global toast notification system. Renders a fixed container at `top-4 right-4 z-[999]`. Exposes `window.__showToast(options)` for programmatic triggering.
-
-```astro
----
-type ToastVariant = "success" | "error" | "info" | "warning";
-
-interface Props {
-  variant?: ToastVariant;
-  message?: string;
-  duration?: number;
-}
----
-```
-
-**Props**:
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `ToastVariant` | `'info'` | Visual style |
-| `message` | `string` | — | Notification text |
-| `duration` | `number` | `4000` | Auto-dismiss in ms |
-
-**Variants**:
-| Variant | Visual |
-|---------|--------|
-| `success` | `bg-emerald-600` border + emerald icon |
-| `error` | `bg-red-600` border + X icon |
-| `info` | `bg-blue-600` border + info icon |
-| `warning` | `bg-amber-600` border + warning icon |
-
-**Usage**:
-```astro
-<Toast /> <!-- render once in layout -->
-
-<!-- trigger from any script -->
-<script>
-  window.__showToast?.({ variant: "success", message: "Saved!" });
-</script>
-```
-
----
-
-### ValueCard
-
-**Path**: `src/components/ui/ValueCard.astro`
-
-Animated value proposition card with hover glow, expanding underline, and staggered entrance animation. Used on the homepage "Why NumanX" section.
-
-```astro
----
-interface Props {
-  title: string;
-  description: string;
-  delay?: number;
-}
----
-```
-
-**Props**:
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | `string` | required | Card heading |
-| `description` | `string` | required | Card body text |
-| `delay` | `number` | `0` | Stagger delay in seconds for `fadeInUp` |
-
-**Visual Effects**:
-- Ambient radial gradient overlay expands on hover (`scale-150`)
-- Icon slot transitions to purple + border glow
-- Underline bar expands from `w-4` → `w-12` on hover
-- Bottom gradient divider slides in from center
-- Staggered `fadeInUp` entrance via `delay` prop
-
-**Slots**: `slot="icon"`
-
-**Usage**:
-```astro
-<ValueCard title="Fast Processing" description="All conversions happen in-browser." delay={0.1}>
-  <span slot="icon">⚡</span>
-</ValueCard>
-```
-
----
-
-## Feature Components (`src/components/`)
-
----
-
-### AdSlot
-
-**Path**: `src/components/AdSlot.astro`
-
-Ad placement container with configurable format dimensions. Currently renders "Sponsor / Advertise Here" placeholder.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `slot` | `string` | `'default'` | Ad slot identifier |
-| `format` | `'horizontal' \| 'vertical' \| 'rectangle' \| 'responsive'` | `'responsive'` | Ad size format |
-| `class` | `string` | `''` | Additional Tailwind classes |
-
-**Format dimensions**:
-- `horizontal`: `728×90`
-- `vertical`: `160×600`
-- `rectangle`: `300×250`
-- `responsive`: `min-h-[90px]` – `min-h-[250px]`
-
----
-
-### Analytics
-
-**Path**: `src/components/Analytics.astro`
-
-Google Analytics 4 injection component. Loads `gtag.js` script conditionally.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `id` | `string` | `'G-XXXXXXXXXX'` | GA4 Measurement ID |
-
-**Usage**: Conditionally rendered in MainLayout:
-```astro
-{GA_ID && <Analytics id={GA_ID} />}
-```
-
----
-
-### BackToTop
-
-**Path**: `src/components/BackToTop.astro`
-
-Self-contained scroll-to-top button. Fixed bottom-right. Uses `requestAnimationFrame` for scroll detection. Shows after 400px scroll. Smooth scroll to top on click.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| (none) | — | — | Self-contained |
-
----
-
-### CategoryCard
-
-**Path**: `src/components/CategoryCard.astro`
-
-Simple category display card with fixed star icon.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | `string` | required | Category name |
-| `description` | `string` | required | Category description |
-
----
-
-### CategoryHero
-
-**Path**: `src/components/CategoryHero.astro`
-
-Hero banner for `/category/[category]/` pages. Shows icon, tool count, title, and description.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `category` | `CategoryInfo` | required | From `data/tools.ts` |
-
----
-
-### EmptyState
-
-**Path**: `src/components/EmptyState.astro`
-
-Generic empty/fallback display with optional icon, title, message, and CTA button.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `icon` | `string` | — | Emoji or icon text |
-| `title` | `string` | `'Nothing here yet'` | Heading text |
-| `message` | `string` | `'Try adjusting your search or filters.'` | Body text |
-| `actionLabel` | `string` | — | CTA button label |
-| `actionHref` | `string` | — | CTA button href |
-| `class` | `string` | `''` | Additional Tailwind classes |
-
----
-
-### FavoriteButton
-
-**Path**: `src/components/FavoriteButton.astro`
-
-Star toggle button that reads/writes `nt_favorites` in localStorage. Uses `storage.ts` helpers.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `slug` | `string` | required | Tool slug to save |
-| `class` | `string` | `''` | Additional Tailwind classes |
-
-**Behavior**: Toggles filled/outline star icon. Shows "Save"/"Saved" label. Amber highlight when active.
-
----
-
-### Footer
-
-**Path**: `src/components/Footer.astro`
-
-4-column responsive footer: Brand + social icons, Tools links, Resources links, Company links. Gradient top divider. Copyright bar with tagline.
-
-No props. Self-contained.
-
----
-
-### HowToUse
-
-**Path**: `src/components/HowToUse.astro`
-
-Numbered step-by-step instruction grid. Used on tool pages.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `steps` | `{num: string, title: string, desc: string}[]` | required | Ordered steps |
-
----
-
-### Navbar
-
-**Path**: `src/components/Navbar.astro`
-
-Fixed glass navigation bar. Desktop: Home, Tools, Categories dropdown (from registry), Blog, About. Mobile: hamburger drawer. Search trigger (Ctrl+K), Favorites link, "Get Started" CTA button.
-
-No props. Self-contained.
-
-**Features**: Categories dropdown with hover translateY/opacity animation. Mobile glass drawer. Keyboard shortcut indicator for search. Active link state via current URL.
-
----
-
-### PopularPosts
-
-**Path**: `src/components/PopularPosts.astro`
-
-Blog sidebar widget showing top 5 posts with numbered list.
-
-No props. Hardcoded data.
-
----
-
-### RelatedPosts
-
-**Path**: `src/components/RelatedPosts.astro`
-
-Shows up to 3 related blog articles filtered by matching category.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `currentSlug` | `string` | required | Current post slug (to exclude) |
-| `category` | `string` | — | Category filter |
-| `tags` | `string[]` | — | Tag filter |
-
-Contains hardcoded array of all 14 blog posts.
-
----
-
-### RelatedTools
-
-**Path**: `src/components/RelatedTools.astro`
-
-Displays up to 3 related tools from `getRelatedTools()`.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `current` | `string` | required | Current tool slug |
-
----
-
-### SEO
-
-**Path**: `src/components/SEO.astro`
-
-Injects all meta tags (description, keywords, OG, Twitter Cards), canonical URL, and JSON-LD structured data (FAQ, BreadcrumbList, SoftwareApplication, Article).
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | `string` | — | Page title (appends `\| NumanX Tools` unless title contains "NumanX") |
-| `description` | `string` | `'Free online tools for creators, students, and developers.'` | Meta description |
-| `keywords` | `string` | Default SEO keywords set | Comma-separated |
-| `canonical` | `string` | — | Canonical URL |
-| `image` | `string` | — | OG image URL |
-| `noindex` | `boolean` | — | Sets `noindex` meta |
-| `faq` | `{question, answer}[]` | — | FAQ schema |
-| `breadcrumbs` | `{name, url}[]` | — | BreadcrumbList schema |
-| `toolSchema` | `Record<string, any>` | — | SoftwareApplication schema partial |
-| `articleSchema` | `Record<string, any>` | — | Article schema partial |
-
----
-
-### SearchBar
-
-**Path**: `src/components/SearchBar.astro`
-
-Full modal search overlay. Triggered via `window.__openSearch()`. Supports category filtering, keyboard navigation (arrows, Enter, Esc, Ctrl+K toggles).
-
-No props. Self-contained with hardcoded tool data at the page level (called via `Astro.props` or inline).
-
-**Features**: Category filter buttons (All, Image, Creator, Utility, Cricket, Blog). Result items with hover effect. Keyboard navigation with legend footer. Empty state. Popular suggestions.
-
----
-
-### ShareBar
-
-**Path**: `src/components/ShareBar.astro`
-
-Social share bar with "Share" and "Copy Link" buttons. Prefers Web Share API, falls back to clipboard copy. Shows "Copied!" feedback for 2 seconds.
-
-No props. Self-contained.
-
----
-
-### Skeleton
-
-**Path**: `src/components/Skeleton.astro`
-
-Loading placeholder with 5 variants.
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `'card' \| 'text' \| 'circle' \| 'rect' \| 'image'` | `'text'` | Shape variant |
-| `width` | `string` | — | CSS width (e.g., `'100px'`) |
-| `height` | `string` | — | CSS height |
-| `lines` | `number` | `3` | For `text` variant only |
-| `class` | `string` | `''` | Additional Tailwind classes |
-
-**Variants**:
-- `text`: Multiple `h-3` lines, last line 60% width
-- `card`: Icon + title + description skeleton
-- `circle`: Perfect circle placeholder
-- `rect`: Rectangle placeholder
-- `image`: Aspect-video + caption skeleton
-
----
-
-### TableOfContents
-
-**Path**: `src/components/TableOfContents.astro`
-
-Sticky sidebar TOC that scans `<article>` for `h2` and `h3` elements. Adds `id` attributes automatically. Uses `IntersectionObserver` for active section highlighting. Hides if no headings found.
-
-No props. Self-contained.
-
----
-
-### ToolHeader
-
-**Path**: `src/components/ToolHeader.astro`
-
-Hero section for every tool page. Renders badge, two-line title (line + gradient subtitle), description, and optional FavoriteButton. Records page view to localStorage (`nt_tool_usage` + `nt_recently_used`).
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | `string` | required | Tool name (first line) |
-| `gradient` | `string` | required | Purple-blue gradient subtitle |
-| `desc` | `string` | required | Description paragraph |
-| `badge` | `string` | `'Free Online Tool'` | Pill badge text |
-| `slug` | `string` | — | Enables FavoriteButton + usage tracking |
-
----
-
-## Layouts (`src/layouts/`)
-
-### MainLayout
-
-**Path**: `src/layouts/MainLayout.astro`
-
-Primary layout used by all pages except blog articles. Provides ambient background (3 orbiting orbs + grid + vignette), Navbar, `<main>` slot, Footer, BackToTop, SearchBar, SEO meta, GA4 analytics, WebApplication JSON-LD schema.
-
-**Props** (passed to SEO): `title`, `description`, `keywords`, `canonical`, `image`, `noindex`, `faq`, `breadcrumbs`, `toolSchema`, `articleSchema`
-
-**Slots**: `slot="head"` (in `<head>`), default slot (in `<main>`)
-
-### BlogLayout
-
-**Path**: `src/layouts/BlogLayout.astro`
-
-Specialized layout for blog articles. Includes reading progress bar (fixed top), Navbar, `<article>` with prose styling, TableOfContents sidebar, RelatedPosts, PopularPosts, author box with social share, Article JSON-LD schema.
-
-**Props**: `frontmatter: { title, description, date, author, category, tags, readingTime, slug }`
-
-**Slots**: default slot for `.md` content
-
----
-
-## Component Tree
-
-```
-MainLayout
-├── Navbar
-│   ├── Categories dropdown (from data/tools.ts)
-│   ├── SearchBar trigger (Ctrl+K)
-│   └── Mobile Drawer
-├── <main> (page content)
-│   ├── ToolHeader (tool pages)
-│   │   └── FavoriteButton
-│   ├── CategoryHero (category pages)
-│   ├── ShareBar
-│   ├── HowToUse
-│   ├── Accordion (FAQ)
-│   ├── RelatedTools
-│   ├── ValueCard[] (homepage Why section)
-│   ├── AdSlot
-│   └── EmptyState (fallback)
-├── Footer
-│   └── Social icon links
-├── BackToTop
-└── SearchBar (modal overlay)
-
-BlogLayout
-├── Navbar
-├── TableOfContents (sticky sidebar)
-├── <article> (markdown with prose)
-├── PopularPosts (sidebar)
-├── RelatedPosts
-├── Share Bar (author section)
-└── Footer
-```
+## 4. Typography & Layout Grids
+
+### 4.1 Typography Scale (Inter Font)
+- **H1 (Hero):** `text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60`
+- **H2 (Section):** `text-2xl md:text-3xl font-bold text-white`
+- **H3 (Card Title):** `text-xl font-semibold text-white/90`
+- **Body (Prose):** `text-base text-white/70 leading-relaxed`
+
+### 4.2 Standard Responsive Grid
+Always use standard 12-column logic via Tailwind flex/grid.
+- **Desktop Layout:** `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6`
+- **Max Width Container:** `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`

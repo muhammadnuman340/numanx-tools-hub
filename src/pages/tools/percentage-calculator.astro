@@ -1,56 +1,145 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
-  { question: "How do I calculate X% of Y?", answer: "Use the first calculator mode. Enter the percentage (X) and the total value (Y), and we'll compute X% of Y instantly. For example, 15% of 200 = 30." },
-  { question: "How do I calculate percentage change?", answer: "Use the 'Percentage Change' mode. Enter the original value and the new value. We'll calculate the increase or decrease as a percentage. For example, 50 to 75 is a 50% increase." },
-  { question: "How do I find what percent X is of Y?", answer: "Use the 'X is what % of Y' mode. Enter X as the part and Y as the whole. The result shows X as a percentage of Y. For example, 30 is 15% of 200." },
-  { question: "Is this calculator accurate?", answer: "Yes, all calculations are performed with full JavaScript number precision. Results are rounded to 2 decimal places for readability, but the underlying calculation uses exact values." },
-  { question: "Is my data stored anywhere?", answer: "No. All calculations happen locally in your browser. None of your numbers are sent to any server or stored anywhere." },
-  { question: "What is percentage difference vs percentage change?", answer: "Percentage change compares an old value to a new value ((new - old) / |old| × 100). Percentage difference compares two values symmetrically (|A - B| / ((A+B)/2) × 100) without a reference point." },
-  { question: "How do I calculate a tip or discount percentage?", answer: "Use the 'X% of Y' mode. Enter the tip/discount percentage as X and the bill/original price as Y. For example, 15% of $50 = $7.50 tip or discount." },
-  { question: "Can I calculate percentage increase for salary or investment growth?", answer: "Yes, use the 'Percentage Change' mode. Enter the original salary/investment value and the new value to see the percentage increase or decrease over time." },
+  {
+    question: 'How do I calculate X% of Y?',
+    answer:
+      "Use the first calculator mode. Enter the percentage (X) and the total value (Y), and we'll compute X% of Y instantly. For example, 15% of 200 = 30.",
+  },
+  {
+    question: 'How do I calculate percentage change?',
+    answer:
+      "Use the 'Percentage Change' mode. Enter the original value and the new value. We'll calculate the increase or decrease as a percentage. For example, 50 to 75 is a 50% increase.",
+  },
+  {
+    question: 'How do I find what percent X is of Y?',
+    answer:
+      "Use the 'X is what % of Y' mode. Enter X as the part and Y as the whole. The result shows X as a percentage of Y. For example, 30 is 15% of 200.",
+  },
+  {
+    question: 'Is this calculator accurate?',
+    answer:
+      'Yes, all calculations are performed with full JavaScript number precision. Results are rounded to 2 decimal places for readability, but the underlying calculation uses exact values.',
+  },
+  {
+    question: 'Is my data stored anywhere?',
+    answer:
+      'No. All calculations happen locally in your browser. None of your numbers are sent to any server or stored anywhere.',
+  },
+  {
+    question: 'What is percentage difference vs percentage change?',
+    answer:
+      'Percentage change compares an old value to a new value ((new - old) / |old| × 100). Percentage difference compares two values symmetrically (|A - B| / ((A+B)/2) × 100) without a reference point.',
+  },
+  {
+    question: 'How do I calculate a tip or discount percentage?',
+    answer:
+      "Use the 'X% of Y' mode. Enter the tip/discount percentage as X and the bill/original price as Y. For example, 15% of $50 = $7.50 tip or discount.",
+  },
+  {
+    question: 'Can I calculate percentage increase for salary or investment growth?',
+    answer:
+      "Yes, use the 'Percentage Change' mode. Enter the original salary/investment value and the new value to see the percentage increase or decrease over time.",
+  },
 ];
 
 const pctSchema = {
-  name: "Percentage Calculator Pro",
-  applicationCategory: "Utilities",
-  description: "Calculate percentages quickly — find X% of Y, percentage change, what percent X is of Y, and percentage difference.",
+  name: 'Percentage Calculator Pro',
+  applicationCategory: 'Utilities',
+  description:
+    'Calculate percentages quickly — find X% of Y, percentage change, what percent X is of Y, and percentage difference.',
   featureList: [
-    "Four calculation modes: X% of Y, X is what % of Y, percentage change, percentage difference",
-    "Instant results as you type",
-    "Copy results to clipboard with one click",
-    "100% accurate calculations",
-    "Privacy-first — all processing in your browser"
+    'Four calculation modes: X% of Y, X is what % of Y, percentage change, percentage difference',
+    'Instant results as you type',
+    'Copy results to clipboard with one click',
+    '100% accurate calculations',
+    'Privacy-first — all processing in your browser',
   ],
 };
 
 const benefits = [
-  { icon: "🧮", title: "Four Modes", desc: "Calculate X% of Y, what percent X is of Y, percentage change, and percentage difference. All common percentage scenarios covered." },
-  { icon: "⚡", title: "Instant Results", desc: "Results update as you type. No buttons to click — just enter your numbers and see the percentage immediately." },
-  { icon: "📋", title: "Copy Results", desc: "Copy any result to clipboard with one click. Perfect for transferring calculations to spreadsheets, documents, or reports." },
-  { icon: "🎯", title: "High Precision", desc: "Calculations use full JavaScript number precision. Results display 2 decimal places for readability while maintaining exact internal values." },
-  { icon: "🔄", title: "Multiple Scenarios", desc: "Switch between modes without losing your inputs. Each mode has dedicated fields that maintain their values." },
-  { icon: "🆓", title: "Completely Free", desc: "No sign-ups, no limits. Calculate unlimited percentages in all four modes completely free." },
+  {
+    icon: '🧮',
+    title: 'Four Modes',
+    desc: 'Calculate X% of Y, what percent X is of Y, percentage change, and percentage difference. All common percentage scenarios covered.',
+  },
+  {
+    icon: '⚡',
+    title: 'Instant Results',
+    desc: 'Results update as you type. No buttons to click — just enter your numbers and see the percentage immediately.',
+  },
+  {
+    icon: '📋',
+    title: 'Copy Results',
+    desc: 'Copy any result to clipboard with one click. Perfect for transferring calculations to spreadsheets, documents, or reports.',
+  },
+  {
+    icon: '🎯',
+    title: 'High Precision',
+    desc: 'Calculations use full JavaScript number precision. Results display 2 decimal places for readability while maintaining exact internal values.',
+  },
+  {
+    icon: '🔄',
+    title: 'Multiple Scenarios',
+    desc: 'Switch between modes without losing your inputs. Each mode has dedicated fields that maintain their values.',
+  },
+  {
+    icon: '🆓',
+    title: 'Completely Free',
+    desc: 'No sign-ups, no limits. Calculate unlimited percentages in all four modes completely free.',
+  },
 ];
 
 const howToSteps = [
-  { num: "1", title: "Choose a Mode", desc: "Select from X% of Y, X is what % of Y, percentage change, or percentage difference depending on what you need to calculate." },
-  { num: "2", title: "Enter Values", desc: "Type your numbers into the input fields. Each mode shows the relevant labels to guide you." },
-  { num: "3", title: "Read the Result", desc: "The result updates instantly as you type. The formula is displayed alongside the answer for clarity." },
-  { num: "4", title: "Copy or Download", desc: "Copy the result to clipboard with one click or download as a text file for your records." },
+  {
+    num: '1',
+    title: 'Choose a Mode',
+    desc: 'Select from X% of Y, X is what % of Y, percentage change, or percentage difference depending on what you need to calculate.',
+  },
+  {
+    num: '2',
+    title: 'Enter Values',
+    desc: 'Type your numbers into the input fields. Each mode shows the relevant labels to guide you.',
+  },
+  {
+    num: '3',
+    title: 'Read the Result',
+    desc: 'The result updates instantly as you type. The formula is displayed alongside the answer for clarity.',
+  },
+  {
+    num: '4',
+    title: 'Copy or Download',
+    desc: 'Copy the result to clipboard with one click or download as a text file for your records.',
+  },
 ];
 
 const useCases = [
-  { icon: "🛒", title: "Shopping Discounts", desc: "Calculate sale prices during promotions. Find out how much you save with percentage-off discounts and coupon codes." },
-  { icon: "📈", title: "Financial Planning", desc: "Track investment returns, salary increases, and budget allocations. Understand percentage growth and decline over time." },
-  { icon: "📊", title: "Data Analysis", desc: "Calculate percentages for survey results, market share, and statistical analysis. Compare datasets with percentage difference." },
-  { icon: "🎓", title: "Academic Grading", desc: "Compute test scores, grade averages, and weighted percentages. Determine what percentage you need on a final exam." },
+  {
+    icon: '🛒',
+    title: 'Shopping Discounts',
+    desc: 'Calculate sale prices during promotions. Find out how much you save with percentage-off discounts and coupon codes.',
+  },
+  {
+    icon: '📈',
+    title: 'Financial Planning',
+    desc: 'Track investment returns, salary increases, and budget allocations. Understand percentage growth and decline over time.',
+  },
+  {
+    icon: '📊',
+    title: 'Data Analysis',
+    desc: 'Calculate percentages for survey results, market share, and statistical analysis. Compare datasets with percentage difference.',
+  },
+  {
+    icon: '🎓',
+    title: 'Academic Grading',
+    desc: 'Compute test scores, grade averages, and weighted percentages. Determine what percentage you need on a final exam.',
+  },
 ];
 ---
 
@@ -61,20 +150,19 @@ const useCases = [
   toolSchema={pctSchema}
   faq={faqItems}
   howto={{
-    name: "How to Calculate Percentages",
-    description: "Calculate X% of Y, percentage change, and more in 4 easy steps with instant results.",
-    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
-    totalTime: "PT1M",
+    name: 'How to Calculate Percentages',
+    description: 'Calculate X% of Y, percentage change, and more in 4 easy steps with instant results.',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
   }}
   breadcrumbs={[
-    { name: "Home", url: "/" },
-    { name: "Tools", url: "/tools/" },
-    { name: "Percentage Calculator", url: "/tools/percentage-calculator/" },
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Percentage Calculator', url: '/tools/percentage-calculator/' },
   ]}
 >
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
-
       <ToolHeader
         title="Percentage"
         gradient="Calculator Pro"
@@ -86,35 +174,81 @@ const useCases = [
       <ShareBar />
 
       <div class="max-w-xl mx-auto mt-10">
-        <div class="bg-surface-1 border border-surface rounded-2xl p-6 relative">
-          <button id="fullscreen-btn" class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+        <div class="glass-card rounded-2xl p-6 relative">
+          <button
+            id="fullscreen-btn"
+            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+            title="Fullscreen">⛶</button
+          >
 
           <div class="flex items-center gap-2 mb-3">
             <span id="usage-badge" class="text-xs text-muted"></span>
             <div class="flex gap-1 ml-auto">
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="purple"
+                style="background:#a855f7"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="blue"
+                style="background:#3b82f6"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="green"
+                style="background:#22c55e"></button>
+              <button
+                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                data-color="pink"
+                style="background:#ec4899"></button>
             </div>
           </div>
 
           <div class="flex gap-2 mb-6 overflow-x-auto" role="tablist" aria-label="Calculation mode">
-            <button class="pct-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-purple-600 text-white" data-mode="pct-of" role="tab" aria-selected="true">X% of Y</button>
-            <button class="pct-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary" data-mode="x-of-y" role="tab" aria-selected="false">X is what % of Y</button>
-            <button class="pct-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary" data-mode="change" role="tab" aria-selected="false">% Change</button>
-            <button class="pct-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary" data-mode="diff" role="tab" aria-selected="false">% Difference</button>
+            <button
+              class="pct-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-purple-600 text-white"
+              data-mode="pct-of"
+              role="tab"
+              aria-selected="true">X% of Y</button
+            >
+            <button
+              class="pct-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary"
+              data-mode="x-of-y"
+              role="tab"
+              aria-selected="false">X is what % of Y</button
+            >
+            <button
+              class="pct-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary"
+              data-mode="change"
+              role="tab"
+              aria-selected="false">% Change</button
+            >
+            <button
+              class="pct-mode px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary"
+              data-mode="diff"
+              role="tab"
+              aria-selected="false">% Difference</button
+            >
           </div>
 
           <div id="pct-of" class="pct-panel">
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-medium text-tertiary mb-1.5">Percentage (%)</label>
-                <input id="pct-val" type="number" value="15" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all" />
+                <input
+                  id="pct-val"
+                  type="number"
+                  value="15"
+                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all"
+                />
               </div>
               <div>
                 <label class="block text-xs font-medium text-tertiary mb-1.5">Total Value</label>
-                <input id="pct-total" type="number" value="200" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all" />
+                <input
+                  id="pct-total"
+                  type="number"
+                  value="200"
+                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all"
+                />
               </div>
             </div>
           </div>
@@ -123,11 +257,21 @@ const useCases = [
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-medium text-tertiary mb-1.5">X Value</label>
-                <input id="xoy-x" type="number" value="30" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all" />
+                <input
+                  id="xoy-x"
+                  type="number"
+                  value="30"
+                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all"
+                />
               </div>
               <div>
                 <label class="block text-xs font-medium text-tertiary mb-1.5">Y Value</label>
-                <input id="xoy-y" type="number" value="200" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all" />
+                <input
+                  id="xoy-y"
+                  type="number"
+                  value="200"
+                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all"
+                />
               </div>
             </div>
           </div>
@@ -136,11 +280,21 @@ const useCases = [
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-medium text-tertiary mb-1.5">Original Value</label>
-                <input id="chg-orig" type="number" value="50" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all" />
+                <input
+                  id="chg-orig"
+                  type="number"
+                  value="50"
+                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all"
+                />
               </div>
               <div>
                 <label class="block text-xs font-medium text-tertiary mb-1.5">New Value</label>
-                <input id="chg-new" type="number" value="75" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all" />
+                <input
+                  id="chg-new"
+                  type="number"
+                  value="75"
+                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all"
+                />
               </div>
             </div>
           </div>
@@ -149,11 +303,21 @@ const useCases = [
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-medium text-tertiary mb-1.5">Value A</label>
-                <input id="diff-a" type="number" value="100" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all" />
+                <input
+                  id="diff-a"
+                  type="number"
+                  value="100"
+                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all"
+                />
               </div>
               <div>
                 <label class="block text-xs font-medium text-tertiary mb-1.5">Value B</label>
-                <input id="diff-b" type="number" value="150" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all" />
+                <input
+                  id="diff-b"
+                  type="number"
+                  value="150"
+                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all"
+                />
               </div>
             </div>
           </div>
@@ -162,13 +326,34 @@ const useCases = [
             <div class="flex items-center justify-between">
               <div>
                 <span class="text-xs font-medium text-muted uppercase tracking-wider">Result</span>
-                <p id="result-value" class="text-3xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent mt-1">15% of 200 = 30</p>
+                <p
+                  id="result-value"
+                  class="text-3xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent mt-1"
+                >
+                  15% of 200 = 30
+                </p>
               </div>
               <div class="flex items-center gap-1.5">
-                <button id="share-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all" title="Share">🔗</button>
-                <button id="clear-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Clear</button>
-                <button id="download-btn" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Download</button>
-                <button id="copy-result" class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy</button>
+                <button
+                  id="share-btn"
+                  class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+                  title="Share">🔗</button
+                >
+                <button
+                  id="clear-btn"
+                  class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+                  >Clear</button
+                >
+                <button
+                  id="download-btn"
+                  class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+                  >Download</button
+                >
+                <button
+                  id="copy-result"
+                  class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+                  >Copy</button
+                >
               </div>
             </div>
           </div>
@@ -180,12 +365,22 @@ const useCases = [
           <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Learn</span>
           <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">
             Why Use a
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Percentage Calculator?</span>
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"
+              >Percentage Calculator?</span
+            >
           </h2>
         </div>
         <div class="space-y-4 text-sm text-tertiary leading-relaxed">
-          <p>Percentages are everywhere — discounts, taxes, tips, statistics, grades, and financial calculations. A <strong class="text-primary">percentage calculator</strong> saves time and eliminates mental math errors by computing exact values instantly.</p>
-          <p>Whether you're figuring out a sale price, calculating investment returns, or analyzing data, having a reliable percentage calculator with multiple modes (X% of Y, percentage change, difference) ensures you always get accurate results.</p>
+          <p>
+            Percentages are everywhere — discounts, taxes, tips, statistics, grades, and financial calculations. A <strong
+              class="text-primary">percentage calculator</strong
+            > saves time and eliminates mental math errors by computing exact values instantly.
+          </p>
+          <p>
+            Whether you're figuring out a sale price, calculating investment returns, or analyzing data, having a
+            reliable percentage calculator with multiple modes (X% of Y, percentage change, difference) ensures you
+            always get accurate results.
+          </p>
         </div>
       </section>
 
@@ -196,50 +391,50 @@ const useCases = [
           Frequently Asked
           <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
         </h2>
-        <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
+        <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
     </div>
   </main>
 </MainLayout>
 
 <script>
-  const modeBtns = document.querySelectorAll(".pct-mode");
+  const modeBtns = document.querySelectorAll('.pct-mode');
   const panels = {
-    "pct-of": document.getElementById("pct-of"),
-    "x-of-y": document.getElementById("x-of-y"),
-    "change": document.getElementById("change"),
-    "diff": document.getElementById("diff"),
+    'pct-of': document.getElementById('pct-of'),
+    'x-of-y': document.getElementById('x-of-y'),
+    change: document.getElementById('change'),
+    diff: document.getElementById('diff'),
   };
-  const resultValue = document.getElementById("result-value");
-  const copyBtn = document.getElementById("copy-result");
+  const resultValue = document.getElementById('result-value');
+  const copyBtn = document.getElementById('copy-result');
 
   const inputs = {
-    "pct-of": [document.getElementById("pct-val"), document.getElementById("pct-total")],
-    "x-of-y": [document.getElementById("xoy-x"), document.getElementById("xoy-y")],
-    "change": [document.getElementById("chg-orig"), document.getElementById("chg-new")],
-    "diff": [document.getElementById("diff-a"), document.getElementById("diff-b")],
+    'pct-of': [document.getElementById('pct-val'), document.getElementById('pct-total')],
+    'x-of-y': [document.getElementById('xoy-x'), document.getElementById('xoy-y')],
+    change: [document.getElementById('chg-orig'), document.getElementById('chg-new')],
+    diff: [document.getElementById('diff-a'), document.getElementById('diff-b')],
   };
 
-  let activeMode = "pct-of";
+  let activeMode = 'pct-of';
 
   function compute() {
-    const [a, b] = inputs[activeMode].map(el => parseFloat(el.value) || 0);
+    const [a, b] = inputs[activeMode].map((el) => parseFloat(el.value) || 0);
     let label, result;
     switch (activeMode) {
-      case "pct-of":
+      case 'pct-of':
         result = (a / 100) * b;
         label = `${a}% of ${b} = ${result.toFixed(2)}`;
         break;
-      case "x-of-y":
+      case 'x-of-y':
         result = b !== 0 ? (a / b) * 100 : 0;
         label = `${a} is ${result.toFixed(2)}% of ${b}`;
         break;
-      case "change":
+      case 'change':
         result = b !== 0 ? ((b - a) / Math.abs(a)) * 100 : 0;
-        const sign = result >= 0 ? "+" : "";
+        const sign = result >= 0 ? '+' : '';
         label = `${sign}${result.toFixed(2)}% change (${a} → ${b})`;
         break;
-      case "diff":
+      case 'diff':
         const avg = (a + b) / 2;
         result = avg !== 0 ? (Math.abs(b - a) / Math.abs(avg)) * 100 : 0;
         label = `${result.toFixed(2)}% difference between ${a} and ${b}`;
@@ -248,78 +443,136 @@ const useCases = [
     resultValue.textContent = label;
   }
 
-  modeBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      modeBtns.forEach(b => {
-        b.classList.remove("bg-purple-600", "text-white");
-        b.classList.add("bg-surface-2", "text-tertiary", "hover:text-primary");
-        b.setAttribute("aria-selected", "false");
+  modeBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      modeBtns.forEach((b) => {
+        b.classList.remove('bg-purple-600', 'text-white');
+        b.classList.add('bg-surface-2', 'text-tertiary', 'hover:text-primary');
+        b.setAttribute('aria-selected', 'false');
       });
-      btn.classList.remove("bg-surface-2", "text-tertiary", "hover:text-primary");
-      btn.classList.add("bg-purple-600", "text-white");
-      btn.setAttribute("aria-selected", "true");
-      Object.values(panels).forEach(p => p.classList.add("hidden"));
+      btn.classList.remove('bg-surface-2', 'text-tertiary', 'hover:text-primary');
+      btn.classList.add('bg-purple-600', 'text-white');
+      btn.setAttribute('aria-selected', 'true');
+      Object.values(panels).forEach((p) => p.classList.add('hidden'));
       const mode = btn.dataset.mode;
       activeMode = mode;
-      panels[mode].classList.remove("hidden");
+      panels[mode].classList.remove('hidden');
       compute();
     });
   });
 
-  Object.values(inputs).forEach(pair => {
-    pair.forEach(el => el.addEventListener("input", compute));
+  Object.values(inputs).forEach((pair) => {
+    pair.forEach((el) => el.addEventListener('input', compute));
   });
 
   compute();
 
-  copyBtn.addEventListener("click", async () => {
+  copyBtn.addEventListener('click', async () => {
     await navigator.clipboard.writeText(resultValue.textContent);
-    if ((window as any).__showToast) (window as any).__showToast({ message: "Result copied!", variant: "success" });
+    if ((window as any).__showToast) (window as any).__showToast({ message: 'Result copied!', variant: 'success' });
   });
 
   // ─── Download ───
-  document.getElementById("download-btn")?.addEventListener("click", () => {
+  document.getElementById('download-btn')?.addEventListener('click', () => {
     const content = resultValue.textContent;
     if (!content) return;
-    const blob = new Blob([content], {type:"text/plain"});
-    const a = document.createElement("a");
+    const blob = new Blob([content], { type: 'text/plain' });
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = "percentage-result.txt";
+    a.download = 'percentage-result.txt';
     a.click();
     URL.revokeObjectURL(a.href);
   });
 
   // ─── Clear ───
-  document.getElementById("clear-btn")?.addEventListener("click", () => {
-    document.querySelectorAll("input[type=number]").forEach(i => i.value = "0");
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    document.querySelectorAll('input[type=number]').forEach((i) => (i.value = '0'));
     compute();
   });
 
   // ─── Fullscreen ───
-  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-    const card = document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card = document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
     if (!card) return;
-    if (document.fullscreenElement) { document.exitFullscreen(); document.getElementById("fullscreen-btn").textContent = "⛶"; }
-    else { card.requestFullscreen?.() || card.webkitRequestFullscreen?.(); document.getElementById("fullscreen-btn").textContent = "✕"; }
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      document.getElementById('fullscreen-btn').textContent = '⛶';
+    } else {
+      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
+      document.getElementById('fullscreen-btn').textContent = '✕';
+    }
   });
-  document.addEventListener("fullscreenchange", () => {
-    const btn = document.getElementById("fullscreen-btn");
-    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
 
   // ─── Keyboard shortcuts ───
-  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      document.getElementById('clear-btn')?.click();
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
 
   // ─── Usage badge ───
-  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["percentage-calculator"])b.textContent="Used "+u["percentage-calculator"]+"×";}catch(e){}
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['percentage-calculator']) b.textContent = 'Used ' + u['percentage-calculator'] + '×';
+  } catch (e) {}
 
   // ─── Share button ───
-  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("output-text")||document.querySelector("[id$='result']");const t=o?.value||o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof showToast==="function")showToast("Link copied!");});
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('output-text') || document.querySelector("[id$='result']");
+    const t = o?.value || o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof showToast === 'function') showToast('Link copied!');
+  });
 
   // ─── Sound effects ───
-  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
 
   // ─── Color theme picker ───
-  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500");});try{localStorage.setItem("nt_theme",c);}catch(e){}});});
-  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
+  });
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>

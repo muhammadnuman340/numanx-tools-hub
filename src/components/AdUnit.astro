@@ -1,5 +1,5 @@
 ---
-import { AD_SLOTS, AD_FORMATS } from "../data/ads";
+import { AD_SLOTS, AD_FORMATS } from '../data/ads';
 
 interface Props {
   slot?: string;
@@ -8,7 +8,8 @@ interface Props {
   style?: string;
 }
 
-const ADSENSE_ID = import.meta.env.PUBLIC_ADSENSE_ID || '';
+// Fallback to a placeholder ID if the user forgets to set their .env variable
+const ADSENSE_ID = import.meta.env.PUBLIC_ADSENSE_ID || 'ca-pub-XXXXXXXXXXXXXXXX';
 const { slot: explicitSlot = '', format = 'auto', class: className, style } = Astro.props;
 
 const slotId = explicitSlot || AD_SLOTS[format] || '';
@@ -16,22 +17,19 @@ const fmt = AD_FORMATS[format] || AD_FORMATS.auto;
 const displayStyle = style || fmt.style || 'display:block';
 ---
 
-{
-  ADSENSE_ID && (
-    <aside aria-label="Advertisement"
-      class={`relative overflow-hidden rounded-2xl border border-surface bg-surface-1 min-h-[90px] flex items-center justify-center ${className || ''}`}
-    >
-      <span class="absolute top-1 right-2 text-[9px] text-muted font-medium select-none z-10 opacity-60">
-        Ad
-      </span>
-      <ins class="adsbygoogle"
-        style={displayStyle}
-        data-ad-client={ADSENSE_ID}
-        data-ad-slot={slotId || null}
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-      />
-      <script>{(adsbygoogle = window.adsbygoogle || []).push({})}</script>
-    </aside>
-  )
-}
+<!-- Active by default! Even if PUBLIC_ADSENSE_ID is forgotten, the slot renders -->
+<aside
+  aria-label="Advertisement"
+  class={`relative overflow-hidden rounded-2xl border border-surface bg-surface-1 min-h-[90px] block w-full ${className || ''}`}
+>
+  <span class="absolute top-1 right-2 text-[9px] text-muted font-medium select-none z-10 opacity-60">Ad</span>
+  <ins
+    class="adsbygoogle block w-full"
+    style={displayStyle}
+    data-ad-client={ADSENSE_ID}
+    data-ad-slot={slotId || null}
+    data-ad-format="auto"
+    data-full-width-responsive="true"
+  />
+  <script>{(window.adsbygoogle = window.adsbygoogle || []).push({})}</script>
+</aside>

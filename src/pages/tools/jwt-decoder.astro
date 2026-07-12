@@ -1,178 +1,375 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
-  { question: "What is a JWT token?", answer: "JWT (JSON Web Token) is a compact, URL-safe token format used for authentication and information exchange. It consists of three parts: a header (algorithm & type), a payload (claims/data), and a signature (verification)." },
-  { question: "Is my token data sent to a server?", answer: "No. All decoding happens entirely in your browser. The token is split and base64-decoded on your device — nothing is uploaded." },
-  { question: "Can I verify the signature?", answer: "This tool decodes the header and payload for inspection but does not verify the cryptographic signature. Signature verification requires the secret or public key used to sign the token." },
+  {
+    question: 'What is a JWT token?',
+    answer:
+      'JWT (JSON Web Token) is a compact, URL-safe token format used for authentication and information exchange. It consists of three parts: a header (algorithm & type), a payload (claims/data), and a signature (verification).',
+  },
+  {
+    question: 'Is my token data sent to a server?',
+    answer:
+      'No. All decoding happens entirely in your browser. The token is split and base64-decoded on your device — nothing is uploaded.',
+  },
+  {
+    question: 'Can I verify the signature?',
+    answer:
+      'This tool decodes the header and payload for inspection but does not verify the cryptographic signature. Signature verification requires the secret or public key used to sign the token.',
+  },
 ];
-const schema = { name: "JWT Decoder", applicationCategory: "Developer Tools", description: "Decode JWT tokens instantly — view the header, payload, and signature information in your browser.", featureList: ["Decode JWT header and payload", "Formatted JSON display", "Signature status indicator", "100% client-side"] };
+const schema = {
+  name: 'JWT Decoder',
+  applicationCategory: 'Developer Tools',
+  description: 'Decode JWT tokens instantly — view the header, payload, and signature information in your browser.',
+  featureList: [
+    'Decode JWT header and payload',
+    'Formatted JSON display',
+    'Signature status indicator',
+    '100% client-side',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '🕵️‍♂️',
+    title: 'Instant Inspection',
+    desc: 'Instantly view the header, payload, and signature of any JSON Web Token without delays.',
+  },
+  {
+    icon: '🔒',
+    title: '100% Client-Side',
+    desc: 'Your tokens never leave your browser. All decoding happens locally for maximum security.',
+  },
+  {
+    icon: '🎨',
+    title: 'Formatted Output',
+    desc: 'Automatically parses and pretty-prints the JSON payload with syntax highlighting.',
+  },
+  {
+    icon: '📋',
+    title: 'Easy Export',
+    desc: 'Copy the decoded results to your clipboard or download them in various formats.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Paste Token',
+    desc: 'Paste your raw JWT string into the input area. It should consist of three parts separated by dots.',
+  },
+  {
+    num: '2',
+    title: 'Decode',
+    desc: 'Click the Decode button or press Ctrl+Enter to process the token.',
+  },
+  {
+    num: '3',
+    title: 'Inspect',
+    desc: 'View the decoded header and payload JSON. Check the signature status at the bottom.',
+  },
+  {
+    num: '4',
+    title: 'Copy or Download',
+    desc: 'Use the action buttons to copy the results or export them to a file.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '🔐',
+    title: 'Authentication Debugging',
+    desc: 'Verify that your OAuth or login flow is issuing tokens with the correct claims and expiration times.',
+  },
+  {
+    icon: '👨‍💻',
+    title: 'API Development',
+    desc: 'Inspect tokens sent by clients to ensure they contain the required user roles and permissions.',
+  },
+  {
+    icon: '🛡️',
+    title: 'Security Auditing',
+    desc: 'Check tokens for exposing sensitive information in the payload that should be encrypted instead.',
+  },
+];
 ---
-<MainLayout title="JWT Decoder - Decode JSON Web Tokens Online Free" description="Decode JWT tokens instantly — view the header, payload, and signature in your browser. Free online JWT decoder." keywords="jwt decoder, jwt, json web token, decode jwt, jwt tool, token decoder" toolSchema={schema} faq={faqItems}
+
+<MainLayout
+  title="JWT Decoder - Decode JSON Web Tokens Online Free"
+  description="Decode JWT tokens instantly — view the header, payload, and signature in your browser. Free online JWT decoder."
+  keywords="jwt decoder, jwt, json web token, decode jwt, jwt tool, token decoder"
+  toolSchema={schema}
+  faq={faqItems}
   howto={{
-    name: "How to Use JWT Decoder",
-    description: "Step-by-step guide for using JWT Decoder.",
+    name: 'How to Use JWT Decoder',
+    description: 'Step-by-step guide for using JWT Decoder.',
     steps: [],
-    totalTime: "PT1M",
+    totalTime: 'PT1M',
   }}
-  breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"JWT Decoder",url:"/tools/jwt-decoder/"}]}>
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
-    <ToolHeader title="JWT" gradient="Decoder Pro" desc="Decode JWT tokens instantly — inspect the header, payload, and signature in a clean interface." badge="✦ New Tool" slug="jwt-decoder" />
-    <ShareBar />
-    <div class="max-w-xl mx-auto mt-10">
-      <div class="bg-surface-1 border border-surface rounded-2xl p-6 relative">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
-            <span id="usage-badge" class="text-xs text-muted"></span>
-          </div>
-          <div class="flex items-center gap-2">
-            <div class="flex gap-1">
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'JWT Decoder', url: '/tools/jwt-decoder/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="JWT"
+        gradient="Decoder Pro"
+        desc="Decode JWT tokens instantly — inspect the header, payload, and signature in a clean interface."
+        badge="✦ New Tool"
+        slug="jwt-decoder"
+      />
+      <ShareBar />
+      <div class="max-w-xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 relative">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+              <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
-            <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
-          </div>
-        </div>
-        <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-2 block">JWT Token</label>
-        <div class="flex items-center gap-1.5 mb-2">
-          <button class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A−</button>
-          <button class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A+</button>
-          <span class="text-xs text-muted ml-auto">Ctrl+Enter to decode</span>
-        </div>
-        <div class="flex">
-          <div id="line-nums" class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3" style="min-width:2.5em">1</div>
-          <textarea id="token-input" class="flex-1 h-28 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-orange-500/50 focus:outline-none transition-all resize-none font-mono" placeholder="Paste your JWT token here..."></textarea>
-        </div>
-        <div id="reading-time" class="text-xs text-muted mt-1"></div>
-        <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
-        <button id="decode-btn" class="w-full bg-orange-600 hover:bg-orange-500 text-white text-sm font-semibold py-2.5 rounded-xl transition-all mt-3 active:scale-95">Decode</button>
-        <div id="result-area" class="mt-6 space-y-4 hidden">
-          <div>
-            <div class="flex items-center justify-between mb-1.5">
-              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Header</label>
-              <span id="header-alg" class="text-[10px] font-mono text-orange-400 px-2 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20"></span>
+            <div class="flex items-center gap-2">
+              <div class="flex gap-1">
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="purple"
+                  style="background:#a855f7"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="blue"
+                  style="background:#3b82f6"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="green"
+                  style="background:#22c55e"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="pink"
+                  style="background:#ec4899"></button>
+              </div>
+              <button
+                id="fullscreen-btn"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                title="Fullscreen">⛶</button
+              >
             </div>
-            <pre id="header-output" class="w-full h-24 overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm font-mono text-primary whitespace-pre-wrap"></pre>
           </div>
-          <div>
-            <div class="flex items-center justify-between mb-1.5">
-              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Payload</label>
-              <span id="payload-info" class="text-[10px] font-mono text-dim"></span>
+          <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-2 block">JWT Token</label>
+          <div class="flex items-center gap-1.5 mb-2">
+            <button
+              class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A−</button
+            >
+            <button
+              class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A+</button
+            >
+            <span class="text-xs text-muted ml-auto">Ctrl+Enter to decode</span>
+          </div>
+          <div class="flex">
+            <div
+              id="line-nums"
+              class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3"
+              style="min-width:2.5em"
+            >
+              1
             </div>
-            <pre id="payload-output" class="w-full h-36 overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm font-mono text-primary whitespace-pre-wrap"></pre>
+            <textarea
+              id="token-input"
+              class="flex-1 h-28 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-orange-500/50 focus:outline-none transition-all resize-none font-mono"
+              placeholder="Paste your JWT token here..."></textarea>
           </div>
-          <div class="bg-surface border border-surface-2 rounded-xl p-3 flex items-center gap-3">
-            <span class="text-[10px] font-semibold text-muted uppercase tracking-wider">Signature</span>
-            <span id="sig-status" class="text-xs font-mono"></span>
-            <code id="sig-preview" class="text-[10px] font-mono text-dim truncate flex-1 text-right"></code>
+          <div id="reading-time" class="text-xs text-muted mt-1"></div>
+          <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
+          <button
+            id="decode-btn"
+            class="w-full bg-orange-600 hover:bg-orange-500 text-white text-sm font-semibold py-2.5 rounded-xl transition-all mt-3 active:scale-95"
+            >Decode</button
+          >
+          <div id="result-area" class="mt-6 space-y-4 hidden">
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Header</label>
+                <span
+                  id="header-alg"
+                  class="text-[10px] font-mono text-orange-400 px-2 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20"
+                ></span>
+              </div>
+              <pre
+                id="header-output"
+                class="w-full h-24 overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm font-mono text-primary whitespace-pre-wrap">
+              </pre>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Payload</label>
+                <span id="payload-info" class="text-[10px] font-mono text-dim"></span>
+              </div>
+              <pre
+                id="payload-output"
+                class="w-full h-36 overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm font-mono text-primary whitespace-pre-wrap">
+              </pre>
+            </div>
+            <div class="bg-surface border border-surface-2 rounded-xl p-3 flex items-center gap-3">
+              <span class="text-[10px] font-semibold text-muted uppercase tracking-wider">Signature</span>
+              <span id="sig-status" class="text-xs font-mono"></span>
+              <code id="sig-preview" class="text-[10px] font-mono text-dim truncate flex-1 text-right"></code>
+            </div>
           </div>
-        </div>
-        <div class="flex gap-2 mt-4">
-          <button id="copy-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Copy Results</button>
-          <button id="share-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all" title="Copy share link">🔗</button>
-          <button id="download-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Download</button>
-          <button id="clear-btn" class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all">Clear</button>
-          <select id="export-format" class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5">
-            <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option>
-          </select>
+          <div class="flex gap-2 mt-4">
+            <button
+              id="copy-btn"
+              class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+              >Copy Results</button
+            >
+            <button
+              id="share-btn"
+              class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+              title="Copy share link">🔗</button
+            >
+            <button
+              id="download-btn"
+              class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+              >Download</button
+            >
+            <button
+              id="clear-btn"
+              class="flex-1 bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
+              >Clear</button
+            >
+            <select
+              id="export-format"
+              class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
+            >
+              <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option
+                value="html">HTML</option
+              >
+            </select>
+          </div>
         </div>
       </div>
+      <ToolContentSections
+        toolSlug="jwt-decoder"
+        toolName="JWT Decoder"
+        category="Developer Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="jwt-decoder" />
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked <span class="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent"
+            >Questions</span
+          >
+        </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
+      </div>
     </div>
-    <RelatedTools current="jwt-decoder" />
-    <div class="mt-20 max-w-3xl mx-auto"><h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">Frequently Asked <span class="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">Questions</span></h2><Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} /></div>
-  </div></main>
+  </main>
 </MainLayout>
 <script>
-  const tokenInput = document.getElementById("token-input") as HTMLTextAreaElement;
-  const decodeBtn = document.getElementById("decode-btn");
-  const resultArea = document.getElementById("result-area");
-  const headerOutput = document.getElementById("header-output");
-  const headerAlg = document.getElementById("header-alg");
-  const payloadOutput = document.getElementById("payload-output");
-  const payloadInfo = document.getElementById("payload-info");
-  const sigStatus = document.getElementById("sig-status");
-  const sigPreview = document.getElementById("sig-preview");
+  const tokenInput = document.getElementById('token-input') as HTMLTextAreaElement;
+  const decodeBtn = document.getElementById('decode-btn');
+  const resultArea = document.getElementById('result-area');
+  const headerOutput = document.getElementById('header-output');
+  const headerAlg = document.getElementById('header-alg');
+  const payloadOutput = document.getElementById('payload-output');
+  const payloadInfo = document.getElementById('payload-info');
+  const sigStatus = document.getElementById('sig-status');
+  const sigPreview = document.getElementById('sig-preview');
 
   function escapeHtml(s: string): string {
-    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
   function syntaxHighlight(json: string): string {
-    return escapeHtml(json).replace(
-      /("(?:[^"\\]|\\.)*")\s*:/g,
-      '<span class="text-orange-300">$1</span>:'
-    ).replace(
-      /("(?:[^"\\]|\\.)*")/g,
-      '<span class="text-emerald-300">$1</span>'
-    ).replace(
-      /\b(-?\d+\.?\d*(?:[eE][+-]?\d+)?)\b/g,
-      '<span class="text-amber-300">$1</span>'
-    ).replace(
-      /\b(true|false)\b/g,
-      '<span class="text-blue-400">$1</span>'
-    ).replace(
-      /\b(null)\b/g,
-      '<span class="text-red-400">$1</span>'
-    );
+    return escapeHtml(json)
+      .replace(/("(?:[^"\\]|\\.)*")\s*:/g, '<span class="text-orange-300">$1</span>:')
+      .replace(/("(?:[^"\\]|\\.)*")/g, '<span class="text-emerald-300">$1</span>')
+      .replace(/\b(-?\d+\.?\d*(?:[eE][+-]?\d+)?)\b/g, '<span class="text-amber-300">$1</span>')
+      .replace(/\b(true|false)\b/g, '<span class="text-blue-400">$1</span>')
+      .replace(/\b(null)\b/g, '<span class="text-red-400">$1</span>');
   }
 
   function base64UrlDecode(str: string): string {
-    let base64 = str.replace(/-/g, "+").replace(/_/g, "/");
-    while (base64.length % 4) base64 += "=";
+    let base64 = str.replace(/-/g, '+').replace(/_/g, '/');
+    while (base64.length % 4) base64 += '=';
     return atob(base64);
   }
 
-  function triggerToast(msg: string, variant: "success" | "error" | "warning" = "success") {
+  function triggerToast(msg: string, variant: 'success' | 'error' | 'warning' = 'success') {
     if ((window as any).__showToast) (window as any).__showToast({ message: msg, variant });
   }
 
-  function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
-  document.getElementById("copy-btn")?.addEventListener("click", () => {
-    const text = "Header:\n" + headerOutput.textContent + "\n\nPayload:\n" + payloadOutput.textContent;
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
+  document.getElementById('copy-btn')?.addEventListener('click', () => {
+    const text = 'Header:\n' + headerOutput.textContent + '\n\nPayload:\n' + payloadOutput.textContent;
     if (!text.trim()) return;
-    navigator.clipboard.writeText(text).catch(()=>{});
+    navigator.clipboard.writeText(text).catch(() => {});
     playPing();
-    const btn = document.getElementById("copy-btn");
-    btn.textContent = "Copied!";
-    setTimeout(() => { btn.textContent = "Copy Results"; }, 2000);
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => {
+      btn.textContent = 'Copy Results';
+    }, 2000);
   });
-  document.getElementById("download-btn")?.addEventListener("click", () => {
-    const content = "JWT Token: " + tokenInput.value + "\n\n=== Header ===\n" + headerOutput.textContent + "\n\n=== Payload ===\n" + payloadOutput.textContent + "\n\n=== Signature ===\n" + sigPreview.textContent;
+  document.getElementById('download-btn')?.addEventListener('click', () => {
+    const content =
+      'JWT Token: ' +
+      tokenInput.value +
+      '\n\n=== Header ===\n' +
+      headerOutput.textContent +
+      '\n\n=== Payload ===\n' +
+      payloadOutput.textContent +
+      '\n\n=== Signature ===\n' +
+      sigPreview.textContent;
     if (!tokenInput.value) return;
-    const fmt = (document.getElementById("export-format") as HTMLSelectElement)?.value || "txt";
-    const mimes = {txt:"text/plain",json:"application/json",csv:"text/csv",html:"text/html"};
-    const data = fmt === "json" ? JSON.stringify(content) : content;
-    const blob = new Blob([data], {type:mimes[fmt]||"text/plain"});
-    const a = document.createElement("a");
+    const fmt = (document.getElementById('export-format') as HTMLSelectElement)?.value || 'txt';
+    const mimes = { txt: 'text/plain', json: 'application/json', csv: 'text/csv', html: 'text/html' };
+    const data = fmt === 'json' ? JSON.stringify(content) : content;
+    const blob = new Blob([data], { type: mimes[fmt] || 'text/plain' });
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = "jwt-decoded." + fmt;
+    a.download = 'jwt-decoded.' + fmt;
     a.click();
     playPing();
     URL.revokeObjectURL(a.href);
   });
-  document.getElementById("clear-btn")?.addEventListener("click", () => {
-    tokenInput.value = "";
-    resultArea.classList.add("hidden");
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    tokenInput.value = '';
+    resultArea.classList.add('hidden');
     playPing();
   });
-  decodeBtn.addEventListener("click", () => {
+  decodeBtn.addEventListener('click', () => {
     const token = tokenInput.value.trim();
     if (!token) {
-      triggerToast("Paste a JWT token first!", "warning");
+      triggerToast('Paste a JWT token first!', 'warning');
       return;
     }
-    const parts = token.split(".");
+    const parts = token.split('.');
     if (parts.length !== 3) {
-      triggerToast("Invalid JWT token — expected 3 parts separated by dots", "error");
-      resultArea.classList.add("hidden");
+      triggerToast('Invalid JWT token — expected 3 parts separated by dots', 'error');
+      resultArea.classList.add('hidden');
       return;
     }
     try {
@@ -182,29 +379,128 @@ const schema = { name: "JWT Decoder", applicationCategory: "Developer Tools", de
       const header = JSON.parse(headerRaw);
       const payload = JSON.parse(payloadRaw);
       headerOutput.innerHTML = syntaxHighlight(JSON.stringify(header, null, 2));
-      headerAlg.textContent = (header.alg || "unknown") as string;
+      headerAlg.textContent = (header.alg || 'unknown') as string;
       payloadOutput.innerHTML = syntaxHighlight(JSON.stringify(payload, null, 2));
       const claimCount = Object.keys(payload).length;
-      payloadInfo.textContent = `${claimCount} claim${claimCount !== 1 ? "s" : ""}`;
-      sigStatus.textContent = "Present";
-      sigStatus.className = "text-xs font-mono text-emerald-400";
-      sigPreview.textContent = signature.substring(0, 32) + "...";
-      resultArea.classList.remove("hidden");
-      triggerToast("JWT decoded successfully!", "success");
+      payloadInfo.textContent = `${claimCount} claim${claimCount !== 1 ? 's' : ''}`;
+      sigStatus.textContent = 'Present';
+      sigStatus.className = 'text-xs font-mono text-emerald-400';
+      sigPreview.textContent = signature.substring(0, 32) + '...';
+      resultArea.classList.remove('hidden');
+      triggerToast('JWT decoded successfully!', 'success');
     } catch (e) {
-      triggerToast("Failed to decode JWT — invalid base64 or JSON", "error");
-      resultArea.classList.add("hidden");
+      triggerToast('Failed to decode JWT — invalid base64 or JSON', 'error');
+      resultArea.classList.add('hidden');
     }
   });
-  document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("payload-output");const t=o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof (window as any).__showToast==="function")(window as any).__showToast({message:"Link copied!",variant:"success"});});
-  document.querySelector(".font-inc")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.min(24,s+2)+"px";})});
-  document.querySelector(".font-dec")?.addEventListener("click",()=>{document.querySelectorAll("textarea").forEach(t=>{let s=parseInt(getComputedStyle(t).fontSize);t.style.fontSize=Math.max(10,s-2)+"px";})});
-  try{const s=localStorage.getItem("nt_fs");if(s)document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px")}catch(e){}
-  document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
-  try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["jwt"])b.textContent="Used "+u["jwt"]+"×"}catch(e){}
-  const rt=document.getElementById("token-input");if(rt){rt.addEventListener("input",()=>{const w=rt.value?rt.value.trim().split(/\s+/).length:0;const e=document.getElementById("reading-time");if(e)e.textContent=Math.max(1,Math.round(w/200))+" min read · "+Math.max(1,Math.round(w/150))+" min speak"});rt.dispatchEvent(new Event("input"));}
-  const li=document.getElementById("token-input");if(li){const ul=()=>{const n=document.getElementById("line-nums");if(n)n.textContent=Array.from({length:li.value.split("\n").length},(_,i)=>i+1).join("\n")};li.addEventListener("input",ul);li.addEventListener("scroll",()=>{const n=document.getElementById("line-nums");if(n)n.scrollTop=li.scrollTop});ul();}
-  const lf=document.getElementById("token-input");if(lf){lf.addEventListener("input",()=>{const t=lf.value.toLowerCase().replace(/[^a-z]/g,"");if(!t){document.getElementById("letter-freq")?.classList.add("hidden");return;}const f={};for(const c of t)f[c]=(f[c]||0)+1;const s=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,8);const m=s[0]?s[0][1]:1;const el=document.getElementById("letter-freq");el.classList.remove("hidden");el.innerHTML=s.map(([c,n])=>`<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n/m)*80+10}%"></div><span class="text-muted">${n}</span></div>`).join("")})}
-  document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-orange'],button[class*='bg-amber']").forEach(b=>{b.className=b.className.replace(/bg-(orange|amber)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(orange|amber)-\d+/g,"hover:bg-"+c+"-500")});try{localStorage.setItem("nt_theme",c)}catch(e){}})});
-  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click()}catch(e){}
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('payload-output');
+    const t = o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof (window as any).__showToast === 'function')
+      (window as any).__showToast({ message: 'Link copied!', variant: 'success' });
+  });
+  document.querySelector('.font-inc')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.min(24, s + 2) + 'px';
+    });
+  });
+  document.querySelector('.font-dec')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.max(10, s - 2) + 'px';
+    });
+  });
+  try {
+    const s = localStorage.getItem('nt_fs');
+    if (s) document.querySelectorAll('textarea').forEach((t) => (t.style.fontSize = s + 'px'));
+  } catch (e) {}
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      document.getElementById('clear-btn')?.click();
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['jwt']) b.textContent = 'Used ' + u['jwt'] + '×';
+  } catch (e) {}
+  const rt = document.getElementById('token-input');
+  if (rt) {
+    rt.addEventListener('input', () => {
+      const w = rt.value ? rt.value.trim().split(/\s+/).length : 0;
+      const e = document.getElementById('reading-time');
+      if (e)
+        e.textContent =
+          Math.max(1, Math.round(w / 200)) + ' min read · ' + Math.max(1, Math.round(w / 150)) + ' min speak';
+    });
+    rt.dispatchEvent(new Event('input'));
+  }
+  const li = document.getElementById('token-input');
+  if (li) {
+    const ul = () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.textContent = Array.from({ length: li.value.split('\n').length }, (_, i) => i + 1).join('\n');
+    };
+    li.addEventListener('input', ul);
+    li.addEventListener('scroll', () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.scrollTop = li.scrollTop;
+    });
+    ul();
+  }
+  const lf = document.getElementById('token-input');
+  if (lf) {
+    lf.addEventListener('input', () => {
+      const t = lf.value.toLowerCase().replace(/[^a-z]/g, '');
+      if (!t) {
+        document.getElementById('letter-freq')?.classList.add('hidden');
+        return;
+      }
+      const f = {};
+      for (const c of t) f[c] = (f[c] || 0) + 1;
+      const s = Object.entries(f)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+      const m = s[0] ? s[0][1] : 1;
+      const el = document.getElementById('letter-freq');
+      el.classList.remove('hidden');
+      el.innerHTML = s
+        .map(
+          ([c, n]) =>
+            `<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n / m) * 80 + 10}%"></div><span class="text-muted">${n}</span></div>`,
+        )
+        .join('');
+    });
+  }
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      document.querySelectorAll("button[class*='bg-orange'],button[class*='bg-amber']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(orange|amber)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(orange|amber)-\d+/g, 'hover:bg-' + c + '-500');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
+  });
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>

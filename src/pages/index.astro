@@ -1,712 +1,895 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
-import { tools, getFeaturedTools, getPopularTools, categories as catInfos } from "../data/tools";
-import AdSlot from "../components/AdSlot.astro";
-import CarbonAd from "../components/CarbonAd.astro";
-import ValueCard from "../components/ui/ValueCard.astro";
-import ToolIcon from "../components/icons/ToolIcon.astro";
-import AdUnit from "../components/AdUnit.astro";
+import MainLayout from '../layouts/MainLayout.astro';
+import { tools, getFeaturedTools, getPopularTools, categories as catInfos } from '../data/tools';
+import AdSlot from '../components/AdSlot.astro';
+import CarbonAd from '../components/CarbonAd.astro';
+import ValueCard from '../components/ui/ValueCard.astro';
+import ToolIcon from '../components/icons/ToolIcon.astro';
+import AdUnit from '../components/AdUnit.astro';
+import HeroJarvis from '../components/HeroJarvis.astro';
 
 const activeCategoryCount = catInfos.filter((c) => c.count > 0).length;
 
 const featuredTools = getFeaturedTools(6).map((t) => ({
-  name: t.name, desc: t.longDescription, url: t.url, icon: t.icon,
+  name: t.name,
+  desc: t.longDescription,
+  url: t.url,
+  icon: t.icon,
   cat: catInfos.find((c) => c.id === t.category)?.title || t.category,
 }));
 
-const categories = catInfos.filter((c) => c.count > 0).map((c) => ({
-  title: c.title, desc: c.description, count: `${c.count} Tools`, icon: c.icon, gradient: c.gradient,
-}));
+const categories = catInfos
+  .filter((c) => c.count > 0)
+  .map((c) => ({
+    title: c.title,
+    desc: c.description,
+    count: `${c.count} Tools`,
+    icon: c.icon,
+    gradient: c.gradient,
+  }));
 
 const whyNumanX = [
-  { title: "Fast Browser Processing", desc: "No backends or queues. All file conversions and generation happen instantly in your browser via Web APIs.", icon: "bolt" },
-  { title: "Privacy Friendly", desc: "Your data never leaves your computer. Files are processed entirely client-side, making it 100% secure.", icon: "lock" },
-  { title: "Free Forever", desc: "No subscriptions, hidden costs, watermarks, or limitations. Enjoy enterprise-grade utilities completely free.", icon: "target" },
-  { title: "Mobile Friendly", desc: "Fully adaptive responsive viewport adjustments optimized for smartphones, tablets, and desktop displays.", icon: "mobile" },
-  { title: "SEO Optimized", desc: "Blazing fast load speeds, proper metadata nesting, structural schema markup, and crawlable URL paths.", icon: "rocket" },
-  { title: "Accessible Anywhere", desc: "Serverless delivery ensures 100% uptime, accessible around the globe with near-zero latency.", icon: "globe" },
+  {
+    title: 'Zero Server Processing',
+    desc: 'Files process securely in your browser via WASM. No uploads, zero latency, maximum privacy.',
+    icon: 'bolt',
+    span: 'col-span-1 md:col-span-2 row-span-2',
+  },
+  {
+    title: 'Military-Grade Privacy',
+    desc: 'Data never touches our servers. 100% client-side execution.',
+    icon: 'lock',
+    span: 'col-span-1',
+  },
+  {
+    title: 'Enterprise Quality, Free',
+    desc: 'No subscriptions, hidden costs, or watermarks. Pure utility.',
+    icon: 'target',
+    span: 'col-span-1',
+  },
+  {
+    title: 'Progressive Web Tools',
+    desc: 'Works offline with Service Workers. Install as an app.',
+    icon: 'mobile',
+    span: 'col-span-1',
+  },
+  {
+    title: 'Instant Execution',
+    desc: 'No queues or wait times. Output generated in milliseconds.',
+    icon: 'rocket',
+    span: 'col-span-1 md:col-span-2',
+  },
 ];
 
-const popularTools = getPopularTools(4).map((t) => ({
-  name: t.name, url: t.url, icon: t.icon, badge: t.isNew ? "New" : t.isPopular ? "Popular" : "Trending",
+const popularTools = getPopularTools(5).map((t) => ({
+  name: t.name,
+  url: t.url,
+  icon: t.icon,
+  badge: t.isNew ? 'New' : t.isPopular ? 'Popular' : 'Trending',
 }));
 
-const blogPostModules = import.meta.glob("./blog/*.md", { eager: true });
+const blogPostModules = import.meta.glob('./blog/*.md', { eager: true });
 const allBlogPosts = Object.entries(blogPostModules).map(([path, mod]) => {
   const fm = (mod as any).frontmatter || {};
-  const slug = path.replace("./blog/", "").replace(".md", "");
+  const slug = path.replace('./blog/', '').replace('.md', '');
   return {
     title: fm.title || slug,
-    desc: fm.description || "",
+    desc: fm.description || '',
     url: `/blog/${slug}/`,
-    time: fm.readingTime || "5 min read",
-    imgText: (fm.category || "Blog").replace(" Tools", ""),
+    time: fm.readingTime || '5 min read',
+    imgText: (fm.category || 'Blog').replace(' Tools', ''),
   };
 });
-const blogPosts = allBlogPosts.slice(0, 4);
+const blogPosts = allBlogPosts.slice(0, 3);
 
 const roadmap = [
-  { phase: "Phase 1", title: "NumanX Tools", desc: "Premium online tools for image optimization, text analysis, QR assets, and sports utilities. Fully active and operational.", status: "Completed" },
-  { phase: "Phase 2", title: "Creator Hub", desc: "A resource ecosystem for templates, overlay packs, assets, and curated guides.", status: "Upcoming" },
-  { phase: "Phase 3", title: "Cricket Analytics", desc: "Advanced database structures tracking player performance metrics, match models, and form analysis.", status: "In Planning" },
-  { phase: "Phase 4", title: "AI Platform", desc: "Client-side machine learning templates for visual and textual generation.", status: "Future" },
-  { phase: "Phase 5", title: "Operating Brain", desc: "Seamless orchestration layer connecting individual tools into a synchronized personal workspace.", status: "Long-term" },
+  {
+    phase: 'Phase 1',
+    title: 'NumanX Tools',
+    desc: 'Premium online tools for image optimization, text analysis, and productivity.',
+    status: 'Active',
+  },
+  {
+    phase: 'Phase 2',
+    title: 'Creator Hub',
+    desc: 'A resource ecosystem for templates, overlay packs, assets, and guides.',
+    status: 'Upcoming',
+  },
+  {
+    phase: 'Phase 3',
+    title: 'Sports Analytics',
+    desc: 'Advanced database structures for cricket modeling and form analysis.',
+    status: 'Planned',
+  },
+  {
+    phase: 'Phase 4',
+    title: 'Client AI Edge',
+    desc: 'Local AI model execution directly in the browser via WebGPU.',
+    status: 'Future',
+  },
 ];
 ---
 
-<MainLayout title="NumanX Tools — Free Online Tools for Creators, Students &amp; Professionals" description="Free online tools including image converters, QR generators, word counters, creator tools, cricket calculators, and productivity utilities. Fast, private, and browser-based." keywords="free online tools, image compressor, image converter, qr code generator, word counter, cricket calculator, password generator, creator tools, productivity tools, browser based tools, free online tools for students, best free online tools">
-  
-  <!-- Glow Overlays -->
-  <div class="absolute top-[10%] left-[5%] w-[400px] h-[400px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none -z-10"></div>
-  <div class="absolute top-[40%] right-[5%] w-[500px] h-[500px] rounded-full bg-blue-600/10 blur-[120px] pointer-events-none -z-10"></div>
-  <div class="absolute bottom-[15%] left-[10%] w-[350px] h-[350px] rounded-full bg-purple-500/10 blur-[90px] pointer-events-none -z-10"></div>
+<MainLayout
+  title="NumanX Tools — Next-Gen Utilities for Creators & Developers"
+  description="Free online tools including image converters, QR generators, word counters, creator tools, cricket calculators, and productivity utilities. Fast, private, and browser-based."
+  keywords="free online tools, image compressor, image converter, qr code generator, word counter, cricket calculator, password generator, creator tools, productivity tools, browser based tools, free online tools for students, best free online tools"
+>
+  <HeroJarvis />
 
-  <main class="min-h-screen pt-12 pb-24 px-4 sm:px-6 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto">
-
-      <!-- ================= HERO SECTION ================= -->
-      <section class="relative pt-12 md:pt-20 pb-20 md:pb-28">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          <div class="lg:col-span-7 text-left animate-[fadeInUp_0.6s_ease-out]">
-            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-surface bg-surface-1 text-tertiary text-xs font-semibold tracking-wider uppercase mb-8">
-              <span class="relative flex h-2 w-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
-              </span>
-              Platform v3.0
-            </div>
-            
-            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] text-white text-balance">
-              Free Online Tools for
-              <span class="block mt-3 bg-gradient-to-r from-purple-300 via-purple-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(168,85,247,0.15)]">
-                Creators, Students & Builders
-              </span>
-            </h1>
-            
-            <p class="mt-6 text-tertiary text-lg sm:text-xl max-w-2xl leading-[1.75]">
-              <span class="text-purple-400 font-semibold">Build. Create. Analyze.</span> Powerful image tools, creator utilities, calculators, and cricket analytics — all free, client-side, and privacy-friendly.
-            </p>
-            
-            <div class="mt-10 flex flex-wrap items-center gap-4">
-              <a href="/tools/" class="group inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] hover:-translate-y-0.5 shadow-lg shadow-purple-900/40 hover:shadow-purple-500/40">
-                Explore Tools
-                <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </a>
-              <a href="/blog/" class="group inline-flex items-center gap-2 border border-surface-3 hover:border-purple-500/40 text-secondary hover:text-white font-semibold text-sm px-6 py-3.5 rounded-xl bg-surface-1 backdrop-blur-sm transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-900/10">
-                View Blog
-                <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              </a>
-            </div>
-          </div>
-
-          <!-- Hero Illustration / Floating UI Cards -->
-          <div class="lg:col-span-5 relative hidden lg:block animate-[fadeInUp_0.6s_ease-out_0.15s_both]">
-            <div class="relative w-full h-[440px] flex items-center justify-center">
-              
-              <!-- Core Graphic Orb -->
-              <div class="absolute w-80 h-80 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/15 blur-[80px] animate-[breathe_4s_ease-in-out_infinite]" />
-              <div class="absolute w-48 h-48 rounded-full bg-purple-500/10 blur-[60px] animate-[breathe_6s_ease-in-out_2s_infinite]" />
-              
-              <!-- Center Command Palette Mockup -->
-              <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 rounded-xl border border-surface-2 var(--surface-nav) p-3 backdrop-blur-xl shadow-2xl shadow-purple-900/20 animate-[fadeInUp_0.6s_ease-out_0.3s_both] hover:border-purple-500/30 transition-all duration-300">
-                <div class="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-surface-2 border border-surface">
-                  <svg class="w-3.5 h-3.5 text-tertiary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                  <span class="text-[11px] text-tertiary">Search tools...</span>
-                  <kbd class="ml-auto flex items-center gap-0.5 px-1 py-0.5 rounded bg-surface-2 text-muted text-[8px] font-mono border border-surface">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg>
-                    K
-                  </kbd>
-                </div>
-                <div class="mt-2 space-y-1">
-                  <div class="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-surface-1 transition-colors">
-                    <span class="w-4 h-4 rounded bg-purple-500/10 flex items-center justify-center text-[8px] text-purple-400 font-bold">W</span>
-                    <span class="text-[10px] text-tertiary">Word Counter</span>
-                    <span class="ml-auto text-[8px] text-muted">Ctrl+1</span>
-                  </div>
-                  <div class="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-surface-1 transition-colors">
-                    <span class="w-4 h-4 rounded bg-emerald-500/10 flex items-center justify-center text-[8px] text-emerald-400 font-bold">#</span>
-                    <span class="text-[10px] text-tertiary">Hashtag Generator</span>
-                    <span class="ml-auto text-[8px] text-muted">Ctrl+2</span>
-                  </div>
-                  <div class="flex items-center gap-2 px-2 py-1 rounded-md bg-purple-500/5 border border-purple-500/10">
-                    <span class="w-4 h-4 rounded bg-blue-500/10 flex items-center justify-center text-[8px] text-blue-400 font-bold">QR</span>
-                    <span class="text-[10px] text-purple-400 font-medium">QR Generator</span>
-                    <span class="ml-auto text-[8px] text-purple-400">Active</span>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Card 1: PNG to WebP -->
-              <div class="absolute top-[8%] left-[8%] w-60 rounded-2xl border border-surface-2 bg-surface-nav p-4 shadow-2xl backdrop-blur-xl animate-[float_6s_ease-in-out_infinite] hover:border-purple-500/30 hover:shadow-purple-900/20 transition-all duration-300">
-                <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/10 flex items-center justify-center text-purple-400"><ToolIcon name="jpg2png" /></div>
-                  <div>
-                    <h4 class="text-xs font-semibold text-primary">PNG to WebP</h4>
-                    <p class="text-[10px] text-tertiary">Fast client-side convert</p>
-                  </div>
-                </div>
-                <div class="mt-3 h-1.5 w-full bg-surface-2 rounded-full overflow-hidden">
-                  <div class="h-full bg-gradient-to-r from-purple-500 to-purple-400 w-[85%] rounded-full"></div>
-                </div>
-                <div class="mt-2 flex justify-between text-[9px] text-tertiary">
-                  <span>85% smaller</span>
-                  <span>2.4MB → 360KB</span>
-                </div>
-              </div>
-
-              <!-- Card 2: QR Generator -->
-              <div class="absolute bottom-[12%] right-[6%] w-56 rounded-2xl border border-surface-2 bg-surface-nav p-4 shadow-2xl backdrop-blur-xl animate-[float_8s_ease-in-out_2s_infinite] hover:border-purple-500/30 hover:shadow-purple-900/20 transition-all duration-300">
-                <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/10 flex items-center justify-center text-blue-400"><ToolIcon name="qr" /></div>
-                  <div>
-                    <h4 class="text-xs font-semibold text-primary">QR Generator</h4>
-                    <p class="text-[10px] text-tertiary">Generate instantly</p>
-                  </div>
-                </div>
-                <div class="mt-3 space-y-1.5">
-                  <div class="flex justify-between text-[10px]">
-                    <span class="text-tertiary">Type:</span>
-                    <span class="text-secondary">WiFi Network</span>
-                  </div>
-                  <div class="flex items-center gap-1.5">
-                    <span class="relative flex h-1.5 w-1.5">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                    </span>
-                    <span class="text-[10px] text-emerald-400 font-medium">Ready to scan</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Card 3: Performance Stats -->
-              <div class="absolute top-[40%] right-[12%] w-52 rounded-2xl border border-surface-2 bg-surface-nav p-4 shadow-2xl backdrop-blur-xl animate-[float_7s_ease-in-out_1s_infinite] hover:border-purple-500/30 hover:shadow-purple-900/20 transition-all duration-300">
-                <div class="flex items-center gap-2 mb-3">
-                  <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/30"></div>
-                  <span class="text-[10px] text-emerald-400 font-semibold">100% Uptime</span>
-                </div>
-                <div class="space-y-2">
-                  <div class="flex items-center justify-between text-[11px]">
-                    <span class="text-tertiary">Speed</span>
-                    <span class="text-purple-400 font-bold">98/100</span>
-                  </div>
-                  <div class="w-full h-1.5 bg-surface-2 rounded-full overflow-hidden">
-                    <div class="h-full bg-gradient-to-r from-purple-500 to-blue-500 w-[98%] rounded-full"></div>
-                  </div>
-                  <div class="flex items-center justify-between text-[11px]">
-                    <span class="text-tertiary">Privacy</span>
-                    <span class="text-emerald-400 font-bold">100%</span>
-                  </div>
-                  <div class="w-full h-1.5 bg-surface-2 rounded-full overflow-hidden">
-                    <div class="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 w-full rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <AdUnit format="horizontal" class="mb-16" />
-
-      <!-- ================= STATS SECTION ================= -->
-      <section class="mb-24 relative animate-[fadeInUp_0.6s_ease-out_0.3s_both]">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          <div class="relative rounded-2xl border border-surface bg-surface-1 backdrop-blur-xl p-6 hover:border-purple-500/30 hover:bg-surface-2 hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-colors"></div>
-            <div class="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
-              <span class="stat-counter" data-target={tools.length}>{tools.length}</span>+
-            </div>
-            <p class="text-sm font-semibold text-secondary mt-2">Tools Available</p>
-            <p class="text-xs text-tertiary mt-1">Free tools ready for production</p>
-          </div>
-          <div class="relative rounded-2xl border border-surface bg-surface-1 backdrop-blur-xl p-6 hover:border-purple-500/30 hover:bg-surface-2 hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors"></div>
-            <div class="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
-              <span class="stat-counter" data-target={activeCategoryCount}>{activeCategoryCount}</span>
-            </div>
-            <p class="text-sm font-semibold text-secondary mt-2">Core Categories</p>
-            <p class="text-xs text-tertiary mt-1">{catInfos.filter((c) => c.count > 0).map((c) => c.title).join(", ")}</p>
-          </div>
-          <div class="relative rounded-2xl border border-surface bg-surface-1 backdrop-blur-xl p-6 hover:border-purple-500/30 hover:bg-surface-2 hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-colors"></div>
-            <div class="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
-              <span class="stat-counter" data-target="100">100</span>%
-            </div>
-            <p class="text-sm font-semibold text-secondary mt-2">Free & Open</p>
-            <p class="text-xs text-tertiary mt-1">No limits, no subscriptions</p>
-          </div>
-          <div class="relative rounded-2xl border border-surface bg-surface-1 backdrop-blur-xl p-6 hover:border-purple-500/30 hover:bg-surface-2 hover:-translate-y-0.5 transition-all duration-300 group overflow-hidden">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors"></div>
-            <div class="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
-              100%
-            </div>
-            <p class="text-sm font-semibold text-secondary mt-2">Privacy Secured</p>
-            <p class="text-xs text-tertiary mt-1">No database or cookies required</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= FEATURED TOOLS ================= -->
-      <section class="mb-24 animate-[fadeInUp_0.6s_ease-out_0.45s_both]">
-        <div class="flex items-end justify-between mb-10">
-          <div>
-            <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Top Selections</span>
-            <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white mt-1">
-              Featured
-              <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Utilities</span>
-            </h2>
-          </div>
-          <a href="/tools/" class="group text-sm font-semibold text-tertiary hover:text-white flex items-center gap-1.5 transition-colors">
-            Explore All Tools
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:translate-x-0.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </a>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredTools.map((tool, idx) => (
-            <article class="group relative rounded-2xl border border-surface bg-[#111113]/30 card-glow p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/30 hover:shadow-xl hover:shadow-purple-900/10 cursor-pointer" style={`animation: fadeInUp 0.5s ease-out ${0.6 + idx * 0.1}s both`} onclick={`window.location='${tool.url}'`} onkeydown={`if(event.key==='Enter')window.location='${tool.url}'`} tabindex="0" role="link" aria-label={`Open ${tool.name}`}>
-              <div>
-                <div class="flex items-center justify-between">
-                  <span class="w-10 h-10 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-110 group-hover:bg-purple-600/20 transition-all duration-200"><ToolIcon name={tool.icon} /></span>
-                  <span class="text-[10px] text-tertiary font-medium px-2 py-0.5 rounded-md bg-surface-2">{tool.cat}</span>
-                </div>
-                <h3 class="text-base font-bold text-primary group-hover:text-white mt-4 transition-colors">{tool.name}</h3>
-                <p class="text-xs text-muted mt-2 leading-relaxed">{tool.desc}</p>
-              </div>
-              <div class="mt-6 flex items-center gap-2 text-xs font-semibold text-purple-400 group-hover:text-purple-300">
-                Open Tool
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:translate-x-0.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <!-- Monetization Row -->
-      <div class="mb-24 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <AdSlot />
-        <CarbonAd />
+  <main id="main-content" class="min-h-screen pt-12 pb-32 px-4 sm:px-6 relative z-10 preserve-3d bg-transparent">
+    <!-- Ambient Content Orbs -->
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      <div
+        class="absolute top-[20%] left-[-10%] w-[40vw] h-[40vw] bg-fuchsia-600/5 blur-[150px] rounded-full mix-blend-screen"
+      >
       </div>
+      <div
+        class="absolute bottom-[30%] right-[-10%] w-[50vw] h-[50vw] bg-amber-600/5 blur-[150px] rounded-full mix-blend-screen"
+      >
+      </div>
+    </div>
 
-      <!-- ================= TOOL CATEGORIES ================= -->
-      <section class="mb-24 animate-[fadeInUp_0.6s_ease-out_0.7s_both]">
-        <div class="text-center max-w-3xl mx-auto mb-12">
-          <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Diverse Ecosystem</span>
-          <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white mt-1">
-            Browse Tools By
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Category</span>
+    <div class="max-w-7xl mx-auto space-y-32 relative z-10">
+      <!-- ================= SCROLLING MARQUEE ================= -->
+      <section
+        class="relative w-[100vw] left-1/2 -ml-[50vw] overflow-hidden py-12 border-y border-white/5 bg-[#0a0a0c]/80 backdrop-blur-xl shadow-[0_0_50px_rgba(0,0,0,0.5)]"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-[#050505] z-10 pointer-events-none w-full h-full"
+        >
+        </div>
+        <div class="marquee-container flex w-[200%]">
+          <div class="marquee-content flex justify-around w-1/2 min-w-full items-center gap-12 px-4">
+            {
+              tools
+                .map((t) => (
+                  <div class="flex items-center gap-3 text-zinc-600 font-black uppercase tracking-widest text-sm hover:text-amber-400 hover:drop-shadow-[0_0_10px_rgba(251,191,36,0.5)] transition-all duration-300 cursor-pointer shrink-0 audio-trigger">
+                    <ToolIcon name={t.icon} class="w-6 h-6 opacity-80 pointer-events-none" />
+                    <span class="pointer-events-none">{t.name}</span>
+                  </div>
+                ))
+                .slice(0, 15)
+            }
+          </div>
+          <div class="marquee-content flex justify-around w-1/2 min-w-full items-center gap-12 px-4" aria-hidden="true">
+            {
+              tools
+                .map((t) => (
+                  <div class="flex items-center gap-3 text-zinc-600 font-black uppercase tracking-widest text-sm hover:text-amber-400 hover:drop-shadow-[0_0_10px_rgba(251,191,36,0.5)] transition-all duration-300 cursor-pointer shrink-0 audio-trigger">
+                    <ToolIcon name={t.icon} class="w-6 h-6 opacity-80 pointer-events-none" />
+                    <span class="pointer-events-none">{t.name}</span>
+                  </div>
+                ))
+                .slice(0, 15)
+            }
+          </div>
+        </div>
+      </section>
+
+      <AdUnit format="horizontal" class="max-w-4xl mx-auto opacity-80 mix-blend-screen" />
+
+      <!-- ================= BENTO BOX: STATS & ECOSYSTEM ================= -->
+      <section id="ecosystem" class="relative group-section pt-10">
+        <div class="text-center max-w-3xl mx-auto mb-20 px-4 reveal-text">
+          <h2
+            class="text-4xl md:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/30"
+          >
+            The Scale of
+            <span class="bg-gradient-to-r from-amber-400 to-peach-400 bg-clip-text text-transparent drop-shadow-lg"
+              >Innovation</span
+            >
           </h2>
-          <p class="text-sm text-tertiary mt-3 max-w-lg mx-auto">
-            Our platform features diverse divisions designed for lightning-fast delivery in image compression, cricket scoring, and utility tools.
+          <p class="text-zinc-400 mt-6 text-lg font-medium">
+            A massive ecosystem of powerful utilities designed to accelerate your workflow without costing a dime.
           </p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {categories.map((cat) => (
-            <div class="group rounded-2xl border border-surface bg-[#111113]/30 card-glow p-6 flex flex-col justify-between hover:border-purple-500/20 transition-all duration-300 hover:-translate-y-1">
-              <div>
-                <div class="flex items-center justify-between">
-                  <ToolIcon name={cat.icon} class="text-2xl" />
-                  <span class="text-[11px] font-bold text-tertiary px-2 py-0.5 rounded-full bg-zinc-800/80">{cat.count}</span>
-                </div>
-                <h3 class="text-lg font-bold text-primary mt-4 group-hover:text-white transition-colors">{cat.title}</h3>
-                <p class="text-xs text-muted mt-2 leading-relaxed">{cat.desc}</p>
-              </div>
-              <div class="mt-6 border-t border-zinc-800/60 pt-4 flex justify-between items-center text-xs">
-                <span class="text-tertiary">Instant Access</span>
-                <a href="/tools/" class="text-purple-400 hover:text-purple-300 font-semibold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                  Browse &rarr;
-                </a>
-              </div>
+        <div
+          id="cards-container-1"
+          class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[180px] preserve-3d"
+        >
+          <!-- Big Stat Card (2x2) -->
+          <div
+            class="card-spotlight col-span-1 md:col-span-2 lg:col-span-2 row-span-2 rounded-3xl bg-[#0a0a0c]/80 border border-white/5 p-10 flex flex-col justify-between relative group/card transform-gpu transition-all duration-300 audio-trigger backdrop-blur-xl"
+          >
+            <div
+              class="absolute -right-20 -top-20 w-64 h-64 bg-amber-600/10 blur-[80px] rounded-full group-hover/card:bg-amber-500/20 transition-colors duration-500 pointer-events-none"
+            >
             </div>
-          ))}
+            <div class="relative z-10 pointer-events-none">
+              <span
+                class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-8 border border-amber-500/20 shadow-lg shadow-amber-900/20"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  ><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"
+                  ></polyline><polyline points="2 12 12 17 22 12"></polyline></svg
+                >
+              </span>
+              <div class="text-7xl lg:text-9xl font-black text-white tracking-tighter drop-shadow-xl">
+                <span class="stat-counter" data-target={tools.length}>{tools.length}</span><span class="text-amber-500"
+                  >+</span
+                >
+              </div>
+              <h3 class="text-2xl font-black text-zinc-200 mt-4">Free Tools Available</h3>
+              <p class="text-base text-zinc-500 mt-2 max-w-sm font-medium">
+                A continuously expanding suite of image converters, AI generators, calculators, and developer tools
+                ready for production use.
+              </p>
+            </div>
+          </div>
+
+          <!-- Small Card 1 -->
+          <div
+            class="card-spotlight rounded-3xl bg-[#0a0a0c]/80 border border-white/5 p-8 flex flex-col justify-between group/card relative transform-gpu transition-all duration-300 audio-trigger backdrop-blur-xl"
+          >
+            <div
+              class="absolute -right-10 -bottom-10 w-40 h-40 bg-violet-600/10 blur-[50px] rounded-full pointer-events-none"
+            >
+            </div>
+            <div class="relative z-10 pointer-events-none">
+              <div class="text-5xl font-black text-white drop-shadow-lg">100%</div>
+              <h3 class="text-lg font-bold text-zinc-200 mt-3">Free & Open</h3>
+              <p class="text-sm text-zinc-500 mt-1 font-medium">No limits, subscriptions, or paywalls ever.</p>
+            </div>
+            <ToolIcon
+              name="target"
+              class="absolute right-6 top-6 text-violet-500/20 w-16 h-16 rotate-12 group-hover/card:scale-110 group-hover/card:text-violet-500/40 transition-all pointer-events-none"
+            />
+          </div>
+
+          <!-- Small Card 2 -->
+          <div
+            class="card-spotlight rounded-3xl bg-[#0a0a0c]/80 border border-white/5 p-8 flex flex-col justify-between group/card relative transform-gpu transition-all duration-300 audio-trigger backdrop-blur-xl"
+          >
+            <div
+              class="absolute -left-10 -bottom-10 w-40 h-40 bg-fuchsia-600/10 blur-[50px] rounded-full pointer-events-none"
+            >
+            </div>
+            <div class="relative z-10 pointer-events-none">
+              <div class="text-5xl font-black text-white drop-shadow-lg">
+                <span class="stat-counter" data-target={activeCategoryCount}>{activeCategoryCount}</span>
+              </div>
+              <h3 class="text-lg font-bold text-zinc-200 mt-3">Core Categories</h3>
+              <p class="text-sm text-zinc-500 mt-1 font-medium">From images to AI and specialized analytics.</p>
+            </div>
+            <ToolIcon
+              name="layout"
+              class="absolute right-6 top-6 text-fuchsia-500/20 w-16 h-16 -rotate-12 group-hover/card:scale-110 group-hover/card:text-fuchsia-500/40 transition-all pointer-events-none"
+            />
+          </div>
+
+          <!-- Medium Horizontal Card -->
+          <div
+            class="card-spotlight col-span-1 md:col-span-2 lg:col-span-2 rounded-3xl bg-[#0a0a0c]/80 border border-white/5 p-8 flex items-center justify-between group/card transform-gpu transition-all duration-300 audio-trigger backdrop-blur-xl"
+          >
+            <div class="relative z-10 max-w-[60%] pointer-events-none">
+              <span
+                class="inline-block px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-black uppercase tracking-widest border border-emerald-500/20 mb-4 shadow-[0_0_15px_rgba(52,211,153,0.2)]"
+                >Security First</span
+              >
+              <h3 class="text-2xl font-black text-white drop-shadow-md">100% Privacy Secured</h3>
+              <p class="text-sm text-zinc-400 mt-2 font-medium">
+                Zero database interactions. Your files never leave your browser sandbox.
+              </p>
+            </div>
+            <div class="relative w-28 h-28 flex items-center justify-center shrink-0 mr-4 pointer-events-none">
+              <div
+                class="absolute inset-0 border-[5px] border-emerald-500/10 rounded-full animate-[spin_4s_linear_infinite]"
+              >
+              </div>
+              <div
+                class="absolute inset-2 border-[5px] border-emerald-500/30 border-t-emerald-400 rounded-full animate-[spin_3s_linear_infinite_reverse] shadow-[0_0_20px_rgba(52,211,153,0.3)]"
+              >
+              </div>
+              <ToolIcon name="lock" class="w-10 h-10 text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- ================= WHY NUMANX TOOLS ================= -->
-      <section class="mb-24 animate-[fadeInUp_0.6s_ease-out_0.85s_both]">
-        <div class="text-center max-w-3xl mx-auto mb-12">
-          <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Built Uncompromisingly</span>
-          <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white mt-1">
-            The Startup Choice for
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Everyday Utilities</span>
-          </h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {whyNumanX.map((item, idx) => (
-            <ValueCard title={item.title} description={item.desc} delay={0.85 + idx * 0.1}>
-              <ToolIcon slot="icon" name={item.icon} />
-            </ValueCard>
-          ))}
-        </div>
-      </section>
-
-      <!-- ================= TESTIMONIALS ================= -->
-      <section class="mb-24 animate-[fadeInUp_0.6s_ease-out_1s_both]">
-        <div class="text-center max-w-3xl mx-auto mb-12">
-          <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">User Love</span>
-          <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white mt-1">
-            What Users
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Say</span>
-          </h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="rounded-2xl border border-surface bg-[#111113]/30 card-glow p-6 hover:border-purple-500/20 transition-all duration-300 hover:-translate-y-1">
-            <div class="flex gap-1 mb-4">
-              {[1,2,3,4,5].map(() => <span class="text-amber-400 text-sm">★</span>)}
-            </div>
-            <p class="text-sm text-secondary leading-relaxed">"The image compressor is incredible. I reduced a 5MB photo to 400KB with zero visible quality loss. And it's all client-side!"</p>
-            <div class="mt-4 pt-4 border-t border-surface flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-xs font-bold text-white">AK</div>
-              <div>
-                <p class="text-xs font-semibold text-primary">Alex K.</p>
-                <p class="text-[10px] text-tertiary">Content Creator</p>
-              </div>
-            </div>
-          </div>
-          <div class="rounded-2xl border border-surface bg-[#111113]/30 card-glow p-6 hover:border-purple-500/20 transition-all duration-300 hover:-translate-y-1">
-            <div class="flex gap-1 mb-4">
-              {[1,2,3,4,5].map(() => <span class="text-amber-400 text-sm">★</span>)}
-            </div>
-            <p class="text-sm text-secondary leading-relaxed">"The cricket calculators are a game-changer for my fantasy league drafts. Run rate projections help me pick the right players every time."</p>
-            <div class="mt-4 pt-4 border-t border-surface flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-xs font-bold text-white">RJ</div>
-              <div>
-                <p class="text-xs font-semibold text-primary">Rahul J.</p>
-                <p class="text-[10px] text-tertiary">Cricket Analyst</p>
-              </div>
-            </div>
-          </div>
-          <div class="rounded-2xl border border-surface bg-[#111113]/30 card-glow p-6 hover:border-purple-500/20 transition-all duration-300 hover:-translate-y-1">
-            <div class="flex gap-1 mb-4">
-              {[1,2,3,4,5].map(() => <span class="text-amber-400 text-sm">★</span>)}
-            </div>
-            <p class="text-sm text-secondary leading-relaxed">"I use the QR generator daily for my business. The WiFi QR code template is genius — customers love tapping to connect!"</p>
-            <div class="mt-4 pt-4 border-t border-surface flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-xs font-bold text-white">SM</div>
-              <div>
-                <p class="text-xs font-semibold text-primary">Sarah M.</p>
-                <p class="text-[10px] text-tertiary">Small Business Owner</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= RECENTLY USED (client-side) ================= -->
-      <section class="mb-24 animate-[fadeInUp_0.6s_ease-out_1.1s_both]" id="recently-used-section" style="display:none">
-        <div class="flex items-end justify-between mb-10">
+      <!-- ================= FEATURED TOOLS (Bento Variant) ================= -->
+      <section class="group-section">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 px-4 gap-6 reveal-text">
           <div>
-            <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Quick Access</span>
-            <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white mt-1">
-              Recently
-              <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Used</span>
+            <h2 class="text-4xl md:text-5xl font-black tracking-tight text-white">
+              Featured <span class="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent"
+                >Utilities</span
+              >
             </h2>
+            <p class="text-zinc-400 mt-3 font-medium text-lg">Hand-picked power tools to elevate your productivity.</p>
           </div>
-        </div>
-        <div id="recently-used-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
-      </section>
-
-      <!-- ================= TRENDING TOOLS ================= -->
-      <section class="mb-24 relative animate-[fadeInUp_0.6s_ease-out_1.2s_both]">
-        <div class="relative rounded-3xl border border-surface bg-surface-1 backdrop-blur-xl p-8 sm:p-10 shadow-2xl overflow-hidden">
-          <div class="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-purple-600/10 blur-[80px] pointer-events-none"></div>
-           
-          <div class="flex items-end justify-between mb-10">
-            <div>
-              <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Trending Tools</span>
-              <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white mt-1">
-                Trending Ecosystem Metrics
-              </h2>
-            </div>
-          </div>
-            
-            <div class="w-full lg:max-w-md space-y-3 shrink-0">
-              {popularTools.map((t) => (
-                <a href={t.url} class="flex items-center justify-between px-4 py-3 rounded-xl border border-surface bg-surface-1 hover:border-purple-500/30 hover:bg-surface-2 transition-all duration-200 group">
-                  <div class="flex items-center gap-3">
-                    <span class="text-sm text-purple-400 bg-purple-500/10 w-6 h-6 rounded flex items-center justify-center"><ToolIcon name={t.icon} /></span>
-                    <span class="text-xs font-semibold text-secondary group-hover:text-white">{t.name}</span>
-                  </div>
-                  <span class="text-[10px] font-bold tracking-wider uppercase text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded">{t.badge}</span>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= BLOG PREVIEW ================= -->
-      <section class="mb-24 animate-[fadeInUp_0.6s_ease-out_1.35s_both]">
-        <div class="flex items-end justify-between mb-10">
-          <div>
-            <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Latest Insights</span>
-            <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white mt-1">
-              Read Our
-              <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Creator Blog</span>
-            </h2>
-          </div>
-          <a href="/blog/" class="group text-sm font-semibold text-tertiary hover:text-white flex items-center gap-1.5 transition-colors">
-            Browse All Articles
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:translate-x-0.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          <a
+            href="/tools/"
+            class="group flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-sm border border-white/10 transition-all backdrop-blur-md shrink-0 audio-trigger hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+          >
+            Explore Directory
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              class="transition-transform group-hover:translate-x-1"
+              ><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg
+            >
           </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogPosts.map((post) => (
-            <div class="group rounded-2xl border border-surface bg-surface-1 overflow-hidden hover:border-surface-3 hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
-              <div>
-                <!-- Mock Blog Thumbnail using modern CSS backgrounds -->
-                <div class="h-44 w-full bg-gradient-to-br from-purple-900/20 via-zinc-900 to-zinc-950 flex items-center justify-center relative border-b border-zinc-800">
-                  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(120,50,255,0.05),transparent_60%)]"></div>
-                  <span class="text-sm font-bold text-purple-400 tracking-wider uppercase bg-purple-600/10 px-3 py-1 rounded-full border border-purple-500/20">{post.imgText}</span>
+        <div id="cards-container-2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 preserve-3d">
+          {
+            featuredTools.map((tool, idx) => (
+              <a
+                href={tool.url}
+                class="card-spotlight group/tool relative rounded-3xl border border-white/5 bg-[#0a0a0c]/80 backdrop-blur-xl p-8 flex flex-col justify-between transform-gpu transition-all duration-300 block audio-trigger hover:border-white/10"
+              >
+                <div class="absolute right-0 top-0 w-32 h-32 bg-amber-500/5 rounded-bl-full pointer-events-none group-hover/tool:bg-amber-500/10 transition-colors" />
+
+                <div class="relative z-10 pointer-events-none">
+                  <div class="flex items-center justify-between mb-8">
+                    <span class="w-14 h-14 rounded-2xl bg-zinc-900 border border-white/5 flex items-center justify-center text-zinc-400 shrink-0 group-hover/tool:scale-110 group-hover/tool:bg-amber-500/10 group-hover/tool:border-amber-500/20 group-hover/tool:text-amber-400 transition-all duration-300 shadow-xl shadow-black">
+                      <ToolIcon name={tool.icon} class="w-6 h-6" />
+                    </span>
+                    <span class="text-[10px] font-black text-zinc-600 tracking-widest uppercase bg-white/5 border border-white/5 px-4 py-1.5 rounded-full shadow-inner">
+                      {tool.cat}
+                    </span>
+                  </div>
+                  <h3 class="text-2xl font-black text-zinc-100 group-hover/tool:text-white transition-colors">
+                    {tool.name}
+                  </h3>
+                  <p class="text-sm text-zinc-400 mt-3 leading-relaxed font-medium line-clamp-2">{tool.desc}</p>
                 </div>
-                <div class="p-6">
-                  <span class="text-[10px] font-medium text-tertiary">{post.time}</span>
-                  <h3 class="text-base font-bold text-primary mt-2 group-hover:text-white transition-colors">{post.title}</h3>
-                  <p class="text-xs text-tertiary mt-2 leading-relaxed">{post.desc}</p>
+
+                <div class="relative z-10 mt-8 flex items-center justify-between border-t border-white/5 pt-5 pointer-events-none">
+                  <span class="text-xs font-bold text-zinc-500 group-hover/tool:text-amber-400 flex items-center gap-1.5 transition-colors uppercase tracking-widest">
+                    Launch Tool
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="3"
+                      class="transition-transform group-hover/tool:translate-x-1"
+                    >
+                      <>
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                      </>
+                    </svg>
+                  </span>
+                  <span class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-600 group-hover/tool:bg-amber-500/20 group-hover/tool:text-amber-400 transition-all duration-300 scale-90 group-hover/tool:scale-100">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                    >
+                      <path d="M7 17l9.2-9.2M17 17V7H7" />
+                    </svg>
+                  </span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- ================= WHY NUMANX ================= -->
+      <section class="group-section">
+        <div class="text-center max-w-3xl mx-auto mb-16 px-4 reveal-text">
+          <span
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-[10px] font-black tracking-widest uppercase mb-4"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-violet-400 animate-ping"></span> Core Architecture
+          </span>
+          <h2 class="text-4xl md:text-5xl font-black tracking-tight text-white">Built Uncompromisingly</h2>
+        </div>
+
+        <div id="cards-container-3" class="grid grid-cols-1 md:grid-cols-3 gap-6 preserve-3d">
+          {
+            whyNumanX.map((item) => (
+              <div
+                class={`card-spotlight ${item.span} rounded-3xl bg-[#0a0a0c]/80 backdrop-blur-xl border border-white/5 p-10 relative transform-gpu transition-all duration-300 group/why audio-trigger`}
+              >
+                <div class="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover/why:opacity-100 transition-opacity pointer-events-none rounded-3xl" />
+                <div class="relative z-10 pointer-events-none">
+                  <ToolIcon
+                    name={item.icon}
+                    class="w-12 h-12 text-zinc-600 group-hover/why:text-violet-400 transition-colors mb-6 drop-shadow-md"
+                  />
+                  <h3 class="text-2xl font-black text-white">{item.title}</h3>
+                  <p class="text-base text-zinc-400 mt-4 leading-relaxed font-medium">{item.desc}</p>
                 </div>
               </div>
-              <div class="p-6 pt-0">
-                <a href={post.url} class="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 group-hover:text-purple-300">
-                  Read Article
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:translate-x-0.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- ================= RECENTLY USED (Client Only) ================= -->
+      <section id="recently-used-section" class="group-section" style="display:none">
+        <div class="mb-12 px-4 reveal-text">
+          <h2 class="text-3xl font-black tracking-tight text-white">Your Workspace</h2>
+          <p class="text-zinc-400 mt-2 text-sm font-medium">Jump back into your recently used tools.</p>
+        </div>
+        <div id="recently-used-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 preserve-3d"></div>
+      </section>
+
+      <!-- ================= BLOG & ROADMAP DUAL GRID ================= -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 group-section">
+        <!-- Blog Column -->
+        <div class="lg:col-span-8 flex flex-col h-full">
+          <div class="flex items-end justify-between mb-10 px-2 reveal-text">
+            <h2 class="text-3xl font-black text-white">Creator Insights</h2>
+            <a href="/blog/" class="text-sm font-bold text-amber-400 hover:text-amber-300 audio-trigger"
+              >View All &rarr;</a
+            >
+          </div>
+
+          <div id="cards-container-4" class="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1 preserve-3d">
+            {
+              blogPosts.slice(0, 2).map((post) => (
+                <a
+                  href={post.url}
+                  class="card-spotlight group/post rounded-3xl bg-[#0a0a0c]/80 backdrop-blur-xl border border-white/5 overflow-hidden flex flex-col h-full hover:border-white/10 transform-gpu transition-all duration-300 audio-trigger"
+                >
+                  <div class="h-56 w-full bg-black relative flex items-center justify-center overflow-hidden border-b border-white/5 pointer-events-none">
+                    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(251,191,36,0.15),transparent_70%)] group-hover/post:opacity-80 transition-opacity" />
+                    <div class="absolute w-full h-full bg-[url('/noise.png')] opacity-20 mix-blend-overlay" />
+                    <span class="px-5 py-2 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[10px] font-black text-amber-400 tracking-widest uppercase z-10 shadow-2xl">
+                      {post.imgText}
+                    </span>
+                  </div>
+                  <div class="p-8 flex-1 flex flex-col justify-between pointer-events-none">
+                    <div>
+                      <span class="text-[11px] font-mono font-bold text-zinc-600 tracking-wider uppercase">
+                        {post.time}
+                      </span>
+                      <h3 class="text-xl font-black text-zinc-100 mt-3 group-hover/post:text-amber-400 transition-colors line-clamp-2 leading-snug">
+                        {post.title}
+                      </h3>
+                      <p class="text-sm text-zinc-400 mt-3 line-clamp-2 font-medium">{post.desc}</p>
+                    </div>
+                  </div>
                 </a>
-              </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Roadmap Column -->
+        <div class="lg:col-span-4 flex flex-col h-full">
+          <div class="mb-10 px-2 reveal-text">
+            <h2 class="text-3xl font-black text-white">Roadmap</h2>
+          </div>
+
+          <div
+            id="cards-container-5"
+            class="card-spotlight rounded-3xl bg-[#0a0a0c]/80 backdrop-blur-xl border border-white/5 p-10 flex-1 relative transform-gpu transition-all duration-300 audio-trigger"
+          >
+            <div class="absolute top-0 right-0 w-64 h-64 bg-violet-600/10 blur-[80px] rounded-full pointer-events-none">
             </div>
-          ))}
+            <div class="space-y-8 relative z-10 pointer-events-none">
+              {
+                roadmap.map((step, idx) => (
+                  <div class="relative pl-8 pb-8 border-l border-white/10 last:border-transparent last:pb-0">
+                    <div
+                      class={`absolute left-[-7px] top-1 w-3.5 h-3.5 rounded-full border-[3px] border-[#0a0a0c] ${step.status === 'Active' ? 'bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(52,211,153,0.8)]' : step.status === 'Upcoming' ? 'bg-amber-400' : 'bg-zinc-700'}`}
+                    />
+                    <span class="text-[10px] font-black font-mono tracking-widest text-zinc-500 uppercase">
+                      {step.phase} &bull; {step.status}
+                    </span>
+                    <h4 class="text-base font-black text-white mt-2">{step.title}</h4>
+                    <p class="text-sm text-zinc-400 mt-1.5 font-medium">{step.desc}</p>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
         </div>
       </section>
 
-      <AdUnit format="horizontal" class="mb-16" />
-
-      <!-- ================= FOUNDER SECTION ================= -->
-      <section class="mb-24 animate-[fadeInUp_0.6s_ease-out_1.5s_both]">
-        <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 rounded-3xl border border-surface bg-surface-1 p-8 sm:p-10">
-          <div class="w-36 h-36 rounded-2xl bg-gradient-to-br from-purple-600/30 to-blue-600/20 flex items-center justify-center border border-zinc-700/50 shrink-0">
-            <span class="text-6xl font-black text-purple-400 tracking-tight">NU</span>
+      <!-- ================= NEWSLETTER & FOOTER CTA (Reactor Core) ================= -->
+      <section class="group-section pb-16">
+        <div
+          id="cards-container-6"
+          class="card-spotlight relative rounded-[3rem] border border-white/10 bg-[#050505] p-12 md:p-20 text-center overflow-hidden transform-gpu transition-all duration-300"
+        >
+          <!-- Reactor Glow -->
+          <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(251,191,36,0.15)_0%,transparent_60%)] pointer-events-none"
+          >
           </div>
-          
-          <div class="text-center lg:text-left flex-1">
-            <span class="text-xs font-semibold text-purple-400 uppercase tracking-widest bg-purple-500/10 px-2 py-0.5 rounded">FOUNDER</span>
-            <h2 class="text-3xl md:text-4xl font-black text-white mt-2">Muhammad Numan Usmani</h2>
-            <p class="text-sm text-tertiary mt-3 max-w-2xl leading-relaxed">
-              As an IT student, designer, and content creator, I started NumanX with a single mission: to design and ship high-performance, beautiful utilities completely free of server processing blocks, keeping user security paramount.
+          <div class="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay pointer-events-none"></div>
+          <div
+            class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[60%] bg-amber-600/20 blur-[150px] rounded-t-full pointer-events-none"
+          >
+          </div>
+
+          <div class="relative z-10 max-w-2xl mx-auto pointer-events-auto">
+            <span
+              class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-[10px] font-black tracking-widest uppercase mb-8 shadow-[0_0_20px_rgba(251,191,36,0.1)] hover:bg-amber-500/20 transition-colors audio-trigger"
+            >
+              <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span> Connect Node
+            </span>
+            <h2 class="text-5xl md:text-6xl font-black text-white tracking-tighter drop-shadow-2xl">
+              Join the Early Access List
+            </h2>
+            <p class="text-zinc-400 mt-6 text-lg font-medium">
+              Get notified when Phase 2 (Creator Hub) and Phase 3 (Sports Analytics) launch. Pure value, zero spam.
             </p>
-            
-            <div class="mt-6 flex flex-wrap justify-center lg:justify-start gap-4">
-              <a href="/about/" class="bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
-                About NumanX
-              </a>
-              <a href="/terms-of-service/" class="border border-surface-2 hover:border-surface text-secondary hover:text-white font-semibold text-xs px-5 py-3 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
-                Read Terms
-              </a>
-            </div>
+
+            <form id="newsletter-form" class="mt-12 flex flex-col sm:flex-row items-center gap-4 max-w-lg mx-auto">
+              <input
+                id="newsletter-email"
+                type="email"
+                placeholder="Enter your email address"
+                required
+                class="w-full px-6 py-5 rounded-2xl border border-white/10 bg-white/5 text-white placeholder-zinc-500 text-base font-medium focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/30 transition-all backdrop-blur-2xl shadow-inner audio-trigger"
+              />
+              <button
+                type="submit"
+                class="w-full sm:w-auto bg-white text-black hover:bg-amber-400 hover:shadow-[0_0_30px_rgba(251,191,36,0.4)] font-black text-sm px-10 py-5 rounded-2xl shrink-0 transition-all duration-300 hover:-translate-y-1 active:scale-95 audio-trigger"
+              >
+                Initialize
+              </button>
+            </form>
+            <p id="newsletter-msg" class="text-sm text-emerald-400 mt-6 hidden font-bold tracking-wide">
+              Connection established.
+            </p>
           </div>
         </div>
       </section>
-
-      <!-- ================= ROADMAP SECTION ================= -->
-      <section class="mb-24 animate-[fadeInUp_0.6s_ease-out_1.65s_both]">
-        <div class="text-center max-w-3xl mx-auto mb-16">
-          <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider font-mono">Future Vision</span>
-          <h2 class="text-3xl md:text-4xl font-black tracking-tight text-white mt-1">
-            Ecosystem
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Roadmap</span>
-          </h2>
-          <p class="text-sm text-tertiary mt-3">
-            Following structured release vectors to construct premium utilities, content hubs, and ML architectures.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 relative">
-          <!-- Connector line -->
-          <div class="absolute top-[28px] left-[50px] right-[50px] h-0.5 bg-zinc-800 hidden lg:block -z-10"></div>
-          
-          {roadmap.map((step) => (
-            <div class={`rounded-2xl p-6 flex flex-col justify-between hover:border-purple-500/20 transition-all duration-300 relative ${step.phase === 'Phase 1' ? 'border-emerald-500/30 shadow-lg shadow-emerald-900/20 bg-emerald-500/[0.02]' : 'border-surface bg-surface-1'}`}>
-              <div>
-                <div class="flex items-center justify-between mb-4">
-                  <span class="text-[10px] font-bold font-mono tracking-widest text-purple-400">{step.phase}</span>
-                  <span class={`text-[9px] font-semibold px-2 py-0.5 rounded ${step.phase === 'Phase 1' ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 animate-pulse' : 'text-tertiary bg-zinc-800/80'}`}>{step.status}</span>
-                </div>
-                <h3 class="text-base font-bold text-primary">{step.title}</h3>
-                <p class="text-xs text-muted mt-2 leading-relaxed">{step.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <!-- ================= NEWSLETTER UI ================= -->
-      <section class="mb-24 relative animate-[fadeInUp_0.6s_ease-out_1.8s_both]">
-          <div class="rounded-3xl border border-surface bg-surface-1 p-8 sm:p-10 text-center">
-            <div class="relative z-10 max-w-xl mx-auto">
-              <span class="text-xs font-bold text-purple-400 uppercase tracking-widest font-mono">STAY UPDATED</span>
-              <h2 class="text-2xl md:text-3xl font-black text-white mt-3">Join NumanX Dispatch</h2>
-              <p class="text-sm text-tertiary mt-2 leading-relaxed">
-                Get notified immediately when we publish fresh tools, creator packs, or cricket form predictors.
-              </p>
-              
-              <form id="newsletter-form" class="mt-8 flex flex-col sm:flex-row items-center gap-3" aria-label="Newsletter subscription">
-                <input id="newsletter-email" type="email" placeholder="Enter your email address" required class="w-full px-5 py-3.5 rounded-xl border border-surface-2 bg-surface-1 text-white placeholder-zinc-400 text-sm focus:border-purple-500/50 focus:outline-none transition-all" aria-label="Email address" />
-                <button type="submit" class="w-full sm:w-auto bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm px-6 py-3.5 rounded-xl shrink-0 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
-                  Subscribe
-                </button>
-              </form>
-              <p id="newsletter-msg" class="text-xs text-emerald-400 mt-3 hidden" aria-live="polite">Successfully subscribed to NumanX updates!</p>
-            </div>
-          </div>
-      </section>
-
-      <!-- ================= FINAL CTA ================= -->
-      <section class="text-center relative animate-[fadeInUp_0.6s_ease-out_1.95s_both]">
-          <div class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
-          
-          <h2 class="text-3xl md:text-5xl font-black tracking-tight text-white">
-            Start Using Free Tools Today
-          </h2>
-          <p class="mt-4 text-tertiary text-sm md:text-base max-w-lg mx-auto leading-relaxed">
-            Boost your productivity instantly. No registration keys, no installation files, just pure tools running in your browser sandbox.
-          </p>
-          
-          <div class="mt-8 flex flex-wrap justify-center gap-4">
-            <a href="/tools/" class="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-purple-900/40">
-              Explore Tools
-              <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-            <a href="/blog/" class="inline-flex items-center gap-2 border border-surface-2 hover:border-surface text-secondary hover:text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
-              Browse Blog
-            </a>
-          </div>
-      </section>
-
     </div>
   </main>
 </MainLayout>
 
-<style>
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+<style is:global>
+  /* Advanced Spotlight Effect */
+  .card-spotlight {
+    position: relative;
+    --mouse-x: -1000px;
+    --mouse-y: -1000px;
+  }
+  .card-spotlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      800px circle at var(--mouse-x) var(--mouse-y),
+      rgba(255, 255, 255, 0.05),
+      transparent 40%
+    );
+    z-index: 0;
+    pointer-events: none;
+    transition: background 0.1s;
+  }
+  .card-spotlight::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: radial-gradient(
+      400px circle at var(--mouse-x) var(--mouse-y),
+      rgba(251, 191, 36, 0.2),
+      transparent 40%
+    );
+    z-index: -1;
+    pointer-events: none;
+    transition: background 0.1s;
+  }
+
+  /* Marquee Animation */
+  .marquee-container {
+    animation: marquee 40s linear infinite;
+  }
+  .marquee-container:hover {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Depth utility */
+  .preserve-3d {
+    transform-style: preserve-3d;
+    perspective: 1200px;
   }
 </style>
 
 <script>
-  // Newsletter Logic
-  document.getElementById("newsletter-form")?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email = (document.getElementById("newsletter-email") as HTMLInputElement).value;
-    const msgEl = document.getElementById("newsletter-msg");
-    try {
-      const res = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { getIconSvg } from '../lib/iconSvgs';
+
+  // Shared Audio Context for the whole page
+  let audioCtx: AudioContext | null = null;
+  const initAudio = () => {
+    if (!audioCtx) {
+      try {
+        audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      } catch (e) {}
+    }
+  };
+  const playTick = () => {
+    if (!audioCtx || audioCtx.state === 'suspended') return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.03);
+    gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.03);
+  };
+
+  if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Initialize audio on first user interaction
+    document.addEventListener('click', initAudio, { once: true });
+    document.addEventListener('keydown', initAudio, { once: true });
+
+    // Attach audio to all triggers
+    document.querySelectorAll('.audio-trigger').forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        initAudio();
+        playTick();
       });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        msgEl.textContent = data.message || "Successfully subscribed to NumanX updates!";
-        msgEl.classList.remove("hidden", "text-red-400");
-        msgEl.classList.add("text-emerald-400");
-        (document.getElementById("newsletter-form") as HTMLFormElement).reset();
-        setTimeout(() => msgEl.classList.add("hidden"), 5000);
-      } else {
-        msgEl.textContent = data.error || "Subscription failed. Please try again.";
-        msgEl.classList.remove("hidden", "text-emerald-400");
-        msgEl.classList.add("text-red-400");
-      }
-    } catch (err) {
-      msgEl.textContent = "Network error. Please try again.";
-      msgEl.classList.remove("hidden", "text-emerald-400");
-      msgEl.classList.add("text-red-400");
-    }
-  });
+    });
 
-  // Stat Counter Logic
-  const counters = document.querySelectorAll(".stat-counter");
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const el = entry.target as HTMLElement;
-        const target = parseInt(el.dataset.target || "0");
-        let current = 0;
-        el.textContent = '0';
-        const step = Math.ceil(target / 40);
-        const interval = setInterval(() => {
-          current += step;
-          if (current >= target) { 
-            current = target; 
-            clearInterval(interval); 
+    // Advanced Magnetic 3D Tracker for Grids
+    const handleOnMouseMove = (e: MouseEvent, containerId: string) => {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      const cards = container.getElementsByClassName('card-spotlight');
+      for (const card of cards as any) {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+
+        // Magnetic Tilt Logic (Active only when hovered)
+        if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -4; // Max 4 deg tilt
+          const rotateY = ((x - centerX) / centerX) * 4;
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px) scale(1.02)`;
+          card.style.zIndex = '50';
+          card.style.boxShadow = '0 30px 60px rgba(0,0,0,0.5), 0 0 20px rgba(251,191,36,0.1)';
+        } else {
+          card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
+          card.style.zIndex = '1';
+          card.style.boxShadow = 'none';
+        }
+      }
+    };
+
+    // Attach to containers
+    [
+      'cards-container-1',
+      'cards-container-2',
+      'cards-container-3',
+      'cards-container-4',
+      'cards-container-5',
+      'cards-container-6',
+    ].forEach((id) => {
+      document.getElementById(id)?.parentElement?.addEventListener('mousemove', (e) => handleOnMouseMove(e, id));
+      document.getElementById(id)?.parentElement?.addEventListener('mouseleave', () => {
+        // Reset all cards on leave
+        const cards = document.getElementById(id)?.getElementsByClassName('card-spotlight');
+        if (cards) {
+          for (const card of cards as any) {
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
+            card.style.zIndex = '1';
+            card.style.boxShadow = 'none';
           }
-          el.textContent = current.toString();
-        }, 40);
-        observer.unobserve(el);
+        }
+      });
+    });
+
+    // Cinematic GSAP Scroll Animations
+    // Text Reveal Blur
+    document.querySelectorAll('.reveal-text').forEach((el) => {
+      gsap.fromTo(
+        el,
+        { opacity: 0, y: 30, filter: 'blur(10px)' },
+        {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' },
+        },
+      );
+    });
+
+    // 3D Card Reveal
+    document.querySelectorAll('.group-section').forEach((section) => {
+      const cards = section.querySelectorAll('.card-spotlight');
+      if (cards.length > 0) {
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 60, scale: 0.9, rotationX: 10 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            rotationX: 0,
+            duration: 1.2,
+            stagger: 0.1,
+            ease: 'back.out(1.5)',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 80%',
+              toggleActions: 'play none none reverse',
+            },
+          },
+        );
       }
     });
-  }, { threshold: 0.5 });
-  counters.forEach((c) => observer.observe(c));
 
-  // Recently Used
-  import { getIconSvg } from "../lib/iconSvgs";
-  const allToolsData = [
-    { id: "qr-generator", name: "QR Generator", icon: "qr", url: "/tools/qr-generator/" },
-    { id: "word-counter", name: "Word Counter", icon: "word", url: "/tools/word-counter/" },
-    { id: "age-calculator", name: "Age Calculator", icon: "age", url: "/tools/age-calculator/" },
-    { id: "password-generator", name: "Password Generator", icon: "password", url: "/tools/password-generator/" },
-    { id: "hashtag-generator", name: "Hashtag Generator", icon: "hashtag", url: "/tools/hashtag-generator/" },
-    { id: "run-rate-calculator", name: "Run Rate Calculator", icon: "runrate", url: "/tools/run-rate-calculator/" },
-    { id: "strike-rate-calculator", name: "Strike Rate Calculator", icon: "strikerate", url: "/tools/strike-rate-calculator/" },
-    { id: "jpg-to-png", name: "JPG to PNG", icon: "jpg2png", url: "/tools/jpg-to-png/" },
-    { id: "image-compressor", name: "Image Compressor", icon: "compress", url: "/tools/image-compressor/" },
-    { id: "png-to-webp", name: "PNG to WebP", icon: "webp", url: "/tools/png-to-webp/" },
-    { id: "image-resizer", name: "Image Resizer", icon: "resize", url: "/tools/image-resizer/" },
-    { id: "unit-converter", name: "Unit Converter", icon: "unit", url: "/tools/unit-converter/" },
-    { id: "markdown-editor", name: "Markdown Editor", icon: "markdown", url: "/tools/markdown-editor/" },
-    { id: "json-formatter", name: "JSON Formatter", icon: "json", url: "/tools/json-formatter/" },
-    { id: "png-to-jpg", name: "PNG to JPG", icon: "jpg2png", url: "/tools/png-to-jpg/" },
-    { id: "character-counter", name: "Character Counter", icon: "word", url: "/tools/character-counter/" },
-    { id: "image-cropper", name: "Image Cropper", icon: "resize", url: "/tools/image-cropper/" },
-    { id: "percentage-calculator", name: "Percentage Calculator", icon: "age", url: "/tools/percentage-calculator/" },
-    { id: "bmi-calculator", name: "BMI Calculator", icon: "target", url: "/tools/bmi-calculator/" },
-    { id: "case-converter", name: "Case Converter", icon: "word", url: "/tools/case-converter/" },
-    { id: "uuid-generator", name: "UUID Generator", icon: "lock", url: "/tools/uuid-generator/" },
-    { id: "color-converter", name: "Color Converter", icon: "target", url: "/tools/color-converter/" },
-    { id: "base64-tool", name: "Base64 Encoder/Decoder", icon: "lock", url: "/tools/base64-tool/" },
-    { id: "lorem-ipsum", name: "Lorem Ipsum Generator", icon: "word", url: "/tools/lorem-ipsum/" },
-  ];
-
-  try {
-    const recentSlugs: string[] = JSON.parse(localStorage.getItem("nt_recently_used") || "[]");
-    if (recentSlugs.length > 0) {
-      const section = document.getElementById("recently-used-section");
-      const grid = document.getElementById("recently-used-grid");
-      if (section && grid) {
-        section.style.display = "block";
-        const recentTools = recentSlugs.slice(0, 4).map((slug) => allToolsData.find((t) => t.id === slug)).filter(Boolean);
-        grid.innerHTML = recentTools.map((tool) => `
-          <a href="${tool.url}" class="group rounded-xl border border-zinc-800 bg-[#111113]/30 card-glow p-4 hover:border-purple-500/40 transition-all duration-300 flex items-center gap-3">
-            <span class="w-9 h-9 rounded-lg bg-purple-600/10 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-110 transition-transform">${getIconSvg(tool.icon)}</span>
-            <span class="text-sm font-semibold text-primary group-hover:text-white transition-colors">${tool.name}</span>
-          </a>
-        `).join("");
+    // Newsletter Form Logic
+    document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = (document.getElementById('newsletter-email') as HTMLInputElement).value;
+      const msgEl = document.getElementById('newsletter-msg');
+      if (!msgEl) return;
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          msgEl.textContent = data.message || 'Connection established.';
+          msgEl.classList.remove('hidden', 'text-red-400');
+          msgEl.classList.add('text-amber-400');
+          (document.getElementById('newsletter-form') as HTMLFormElement).reset();
+          setTimeout(() => msgEl.classList.add('hidden'), 5000);
+        } else {
+          msgEl.textContent = data.error || 'Connection failed.';
+          msgEl.classList.remove('hidden', 'text-amber-400');
+          msgEl.classList.add('text-red-400');
+        }
+      } catch (err) {
+        msgEl.textContent = 'Network array disconnected.';
+        msgEl.classList.remove('hidden', 'text-amber-400');
+        msgEl.classList.add('text-red-400');
       }
+    });
+
+    // Stat Counter Logic
+    const counters = document.querySelectorAll('.stat-counter');
+    if (counters.length > 0) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const el = entry.target as HTMLElement;
+              const target = parseInt(el.dataset.target || '0');
+              let current = 0;
+              el.textContent = '0';
+              const step = Math.ceil(target / 30);
+              const interval = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                  current = target;
+                  clearInterval(interval);
+                }
+                el.textContent = current.toString();
+              }, 30);
+              observer.unobserve(el);
+            }
+          });
+        },
+        { threshold: 0.5 },
+      );
+      counters.forEach((c) => observer.observe(c));
     }
-  } catch {}
 
-  // Card Glow mousemove listener
-  window.addEventListener("mousemove", (e) => {
-    const cards = document.querySelectorAll(".card-glow");
-    cards.forEach((card) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      (card as HTMLElement).style.setProperty("--mouse-x", `${x}px`);
-      (card as HTMLElement).style.setProperty("--mouse-y", `${y}px`);
-    });
-  });
+    // Recently Used Tools Grid Construction
+    const allToolsData = [
+      { id: 'qr-generator', name: 'QR Generator', icon: 'qr', url: '/tools/qr-generator/' },
+      { id: 'word-counter', name: 'Word Counter', icon: 'word', url: '/tools/word-counter/' },
+      { id: 'age-calculator', name: 'Age Calculator', icon: 'age', url: '/tools/age-calculator/' },
+      { id: 'password-generator', name: 'Password Generator', icon: 'password', url: '/tools/password-generator/' },
+      { id: 'hashtag-generator', name: 'Hashtag Generator', icon: 'hashtag', url: '/tools/hashtag-generator/' },
+      { id: 'run-rate-calculator', name: 'Run Rate Calculator', icon: 'runrate', url: '/tools/run-rate-calculator/' },
+      {
+        id: 'strike-rate-calculator',
+        name: 'Strike Rate Calculator',
+        icon: 'strikerate',
+        url: '/tools/strike-rate-calculator/',
+      },
+      { id: 'jpg-to-png', name: 'JPG to PNG', icon: 'jpg2png', url: '/tools/jpg-to-png/' },
+      { id: 'image-compressor', name: 'Image Compressor', icon: 'compress', url: '/tools/image-compressor/' },
+      { id: 'png-to-webp', name: 'PNG to WebP', icon: 'webp', url: '/tools/png-to-webp/' },
+      { id: 'image-resizer', name: 'Image Resizer', icon: 'resize', url: '/tools/image-resizer/' },
+      { id: 'unit-converter', name: 'Unit Converter', icon: 'unit', url: '/tools/unit-converter/' },
+      { id: 'markdown-editor', name: 'Markdown Editor', icon: 'markdown', url: '/tools/markdown-editor/' },
+      { id: 'json-formatter', name: 'JSON Formatter', icon: 'json', url: '/tools/json-formatter/' },
+      { id: 'png-to-jpg', name: 'PNG to JPG', icon: 'jpg2png', url: '/tools/png-to-jpg/' },
+      { id: 'character-counter', name: 'Character Counter', icon: 'word', url: '/tools/character-counter/' },
+      { id: 'image-cropper', name: 'Image Cropper', icon: 'resize', url: '/tools/image-cropper/' },
+      { id: 'percentage-calculator', name: 'Percentage Calculator', icon: 'age', url: '/tools/percentage-calculator/' },
+      { id: 'bmi-calculator', name: 'BMI Calculator', icon: 'age', url: '/tools/bmi-calculator/' },
+      { id: 'ai-text-summarizer', name: 'AI Summarizer', icon: 'ai', url: '/tools/ai-text-summarizer/' },
+      { id: 'prompt-generator', name: 'Prompt Generator', icon: 'sparkles', url: '/tools/prompt-generator/' },
+    ];
+
+    try {
+      const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+      const sorted = Object.entries(u)
+        .sort((a: any, b: any) => b[1] - a[1])
+        .slice(0, 6)
+        .map((x) => x[0]);
+      if (sorted.length > 0) {
+        const sect = document.getElementById('recently-used-section');
+        const grid = document.getElementById('recently-used-grid');
+        if (sect && grid) {
+          sect.style.display = 'block';
+          sorted.forEach((id) => {
+            const t = allToolsData.find((x) => x.id === id);
+            if (t) {
+              const a = document.createElement('a');
+              a.href = t.url;
+              a.className =
+                'card-spotlight flex items-center gap-3 p-5 rounded-2xl bg-[#0a0a0c]/80 border border-white/5 hover:-translate-y-1 transform-gpu transition-all duration-300 group/rec relative overflow-hidden audio-trigger';
+              a.innerHTML = `<span class="text-amber-400 bg-amber-500/10 p-2.5 rounded-xl relative z-10 group-hover/rec:bg-amber-500/20 transition-colors">${getIconSvg(t.icon)}</span><span class="text-sm font-black text-zinc-300 group-hover/rec:text-white transition-colors relative z-10 pointer-events-none">${t.name}</span>`;
+              grid.appendChild(a);
+            }
+          });
+
+          // Re-attach audio trigger for dynamic nodes
+          grid.querySelectorAll('.audio-trigger').forEach((el) => {
+            el.addEventListener('mouseenter', () => {
+              initAudio();
+              playTick();
+            });
+          });
+
+          // Attach magnetic listener
+          grid.addEventListener('mousemove', (e) => handleOnMouseMove(e, 'recently-used-grid'));
+          grid.addEventListener('mouseleave', () => {
+            const cards = grid.getElementsByClassName('card-spotlight');
+            for (const card of cards as any) {
+              card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
+              card.style.zIndex = '1';
+              card.style.boxShadow = 'none';
+            }
+          });
+        }
+      }
+    } catch (e) {}
+  }
 </script>

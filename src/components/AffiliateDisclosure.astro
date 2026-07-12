@@ -5,16 +5,38 @@ const { slim } = Astro.props;
 {
   slim ? (
     <p class="text-[11px] text-dim leading-relaxed">
-      Some links on this page are affiliate links. If you make a purchase, we may earn a commission at no extra cost to you. See our <a href="/recommended/" class="text-purple-400 hover:text-purple-300 underline underline-offset-2">recommended tools page</a> for full disclosure.
+      Some links on this page are affiliate links. If you make a purchase, we may earn a commission at no extra cost to
+      you. See our{' '}
+      <a href="/recommended/" class="text-purple-400 hover:text-purple-300 underline underline-offset-2">
+        recommended tools page
+      </a>{' '}
+      for full disclosure.
     </p>
   ) : (
     <div class="rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
       <div class="flex items-start gap-3">
-        <svg class="w-5 h-5 text-amber-400 mt-0.5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <svg
+          class="w-5 h-5 text-amber-400 mt-0.5 shrink-0"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
         <div>
           <p class="text-xs font-semibold text-amber-400">Affiliate Disclosure</p>
           <p class="text-xs text-tertiary mt-1 leading-relaxed">
-            Some links on this website are affiliate links. If you click through and make a purchase, we may earn a small commission at no additional cost to you. We only recommend products and services we genuinely believe in. See our <a href="/recommended/" class="text-purple-400 hover:text-purple-300 underline underline-offset-2">recommended tools page</a> for details.
+            Some links on this website are affiliate links. If you click through and make a purchase, we may earn a
+            small commission at no additional cost to you. We only recommend products and services we genuinely believe
+            in. See our{' '}
+            <a href="/recommended/" class="text-purple-400 hover:text-purple-300 underline underline-offset-2">
+              recommended tools page
+            </a>{' '}
+            for details.
           </p>
         </div>
       </div>

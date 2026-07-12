@@ -1,0 +1,318 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'Are my images uploaded to a server?',
+    answer: 'No. The AI model runs entirely in your browser using your device\'s processing power. Your images never leave your computer, ensuring 100% privacy.',
+  },
+  {
+    question: 'Why does it take a moment to load the first time?',
+    answer: 'The tool needs to download the AI model weights (around 5-15MB) to run locally. Once downloaded, it is cached in your browser for instant future use.',
+  },
+  {
+    question: 'What image formats are supported?',
+    answer: 'You can upload JPG, PNG, WebP, and standard image formats. The result is always provided as a transparent PNG file.',
+  },
+  {
+    question: 'Does this work on mobile?',
+    answer: 'Yes, but please note that running AI models locally requires significant memory. It works best on modern smartphones and computers.',
+  },
+];
+
+const schema = {
+  name: 'AI Background Remover',
+  applicationCategory: 'Multimedia',
+  description: 'Instantly remove image backgrounds entirely in your browser using Edge AI.',
+  featureList: [
+    '100% client-side processing (no uploads)',
+    'High-accuracy background removal',
+    'Transparent PNG export',
+    'Edge AI powered by ONNX',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '🔒',
+    title: 'Absolute Privacy',
+    desc: 'Unlike traditional tools that upload your photos to cloud servers, our AI runs directly on your device. Your data stays yours.',
+  },
+  {
+    icon: '⚡',
+    title: 'Fast Offline Processing',
+    desc: 'Once the model is cached, background removal happens instantly, even if you lose your internet connection.',
+  },
+  {
+    icon: '🎯',
+    title: 'High Precision',
+    desc: 'Uses state-of-the-art neural networks to cleanly separate foreground subjects from complex backgrounds, handling hair and edges smoothly.',
+  },
+  {
+    icon: '💸',
+    title: 'Completely Free',
+    desc: 'Since you provide the processing power, there are no server costs to pass on to you. Enjoy unlimited background removals.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Select an Image',
+    desc: 'Drag and drop your photo into the upload area or click to browse. Ensure the subject is clearly visible.',
+  },
+  {
+    num: '2',
+    title: 'Wait for Processing',
+    desc: 'The AI will analyze your image locally. If it\'s your first time, it may take a few seconds to load the model.',
+  },
+  {
+    num: '3',
+    title: 'Preview the Result',
+    desc: 'View the transparent result. The background will be replaced with a checkerboard pattern to indicate transparency.',
+  },
+  {
+    num: '4',
+    title: 'Download PNG',
+    desc: 'Click download to save your new transparent image in high-quality PNG format, ready for any design project.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '📸',
+    title: 'Product Photography',
+    desc: 'Remove distracting backgrounds from e-commerce product shots to create clean, professional listings.',
+  },
+  {
+    icon: '🎨',
+    title: 'Graphic Design',
+    desc: 'Extract subjects for use in posters, social media graphics, thumbnails, and composite images.',
+  },
+  {
+    icon: '👤',
+    title: 'Profile Pictures',
+    desc: 'Create clean headshots with transparent or custom backgrounds for LinkedIn, Slack, and professional profiles.',
+  },
+];
+---
+
+<MainLayout
+  title="AI Background Remover - Free & 100% Private (No Uploads)"
+  description="Instantly remove image backgrounds entirely in your browser. Powered by Edge AI, ensuring absolute privacy as your photos never leave your device."
+  keywords="ai background remover, remove background free, transparent png maker, private background removal"
+  toolSchema={schema}
+  faq={faqItems}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'AI Background Remover', url: '/tools/ai-background-remover/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto">
+      <ToolHeader
+        title="AI Background"
+        gradient="Remover"
+        desc="Instantly separate subjects from their backgrounds. Runs 100% in your browser for absolute privacy."
+        badge="✦ Edge AI"
+        slug="ai-background-remover"
+      />
+      <ShareBar />
+      
+      <div class="w-full max-w-3xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 relative">
+           <div id="dropzone" class="relative rounded-2xl border-2 border-dashed border-surface-3 bg-surface-1 p-10 md:p-16 text-center cursor-pointer hover:border-purple-500/50 hover:bg-surface-2 transition-all duration-300 group">
+            <input id="file-input" type="file" accept="image/*" class="hidden" />
+            <div id="dropzone-content">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-primary mb-2">Drop your image here</h3>
+              <p class="text-sm text-muted mb-4">
+                or <span class="text-purple-400 underline underline-offset-2 font-medium">browse files</span>
+              </p>
+              <p class="text-xs text-amber-500 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full inline-block">100% Private - Processed entirely on your device</p>
+            </div>
+            
+            <div id="loading-state" class="hidden flex-col items-center justify-center space-y-4">
+               <div class="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></div>
+               <p id="loading-text" class="text-sm font-medium text-white">Downloading AI Model...</p>
+               <div class="w-full max-w-xs bg-surface-3 rounded-full h-2 mt-2 hidden" id="progress-bar-container">
+                  <div class="bg-purple-500 h-2 rounded-full" style="width: 0%" id="progress-bar"></div>
+               </div>
+               <p class="text-xs text-muted text-center max-w-xs">This may take a moment on the first run. The model will be cached for faster future use.</p>
+            </div>
+          </div>
+          
+          <div id="result-section" class="hidden mt-8 space-y-6">
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h4 class="text-sm font-semibold text-tertiary mb-3 text-center">Original</h4>
+                  <div class="rounded-xl overflow-hidden border border-surface-2 bg-black/20 aspect-video flex items-center justify-center p-2">
+                     <img id="original-preview" class="max-w-full max-h-full object-contain rounded-lg" />
+                  </div>
+                </div>
+                <div>
+                  <h4 class="text-sm font-semibold text-tertiary mb-3 text-center">Result</h4>
+                  <div class="rounded-xl overflow-hidden border border-surface-2 aspect-video flex items-center justify-center relative p-2" style="background-image: repeating-linear-gradient(45deg, #1f2937 25%, transparent 25%, transparent 75%, #1f2937 75%, #1f2937), repeating-linear-gradient(45deg, #1f2937 25%, #111827 25%, #111827 75%, #1f2937 75%, #1f2937); background-position: 0 0, 10px 10px; background-size: 20px 20px;">
+                     <img id="result-preview" class="max-w-full max-h-full object-contain drop-shadow-2xl rounded-lg" />
+                  </div>
+                </div>
+             </div>
+             
+             <div class="flex justify-center pt-4 border-t border-surface">
+                <button id="download-btn" class="bg-gradient-to-r from-purple-600 to-blue-600 hover:opacity-90 text-white font-bold px-8 py-3 rounded-xl shadow-lg shadow-purple-900/30 transition-all active:scale-95 flex items-center gap-2">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                   Download Transparent PNG
+                </button>
+             </div>
+          </div>
+        </div>
+      </div>
+      
+      <ToolContentSections
+        toolSlug="ai-background-remover"
+        toolName="AI Background Remover"
+        category="Multimedia"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="ai-background-remover" />
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+        </h2>
+        <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
+      </div>
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  // Dynamic import to prevent SSR issues and load only when needed
+  let removeBackground: any = null;
+
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('file-input');
+  const dropzoneContent = document.getElementById('dropzone-content');
+  const loadingState = document.getElementById('loading-state');
+  const loadingText = document.getElementById('loading-text');
+  const progressBarContainer = document.getElementById('progress-bar-container');
+  const progressBar = document.getElementById('progress-bar');
+  const resultSection = document.getElementById('result-section');
+  const originalPreview = document.getElementById('original-preview') as HTMLImageElement;
+  const resultPreview = document.getElementById('result-preview') as HTMLImageElement;
+  const downloadBtn = document.getElementById('download-btn');
+  
+  let currentFile: File | null = null;
+  let resultBlobURL: string | null = null;
+
+  dropzone?.addEventListener('click', () => {
+    if(!loadingState?.classList.contains('hidden')) return;
+    fileInput?.click();
+  });
+  
+  fileInput?.addEventListener('change', (e) => {
+    const file = (e.target as HTMLInputElement).files?.[0];
+    if (file) processImage(file);
+  });
+  
+  dropzone?.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    if(!loadingState?.classList.contains('hidden')) return;
+    dropzone.classList.add('border-purple-500', 'bg-surface-2');
+  });
+  
+  dropzone?.addEventListener('dragleave', () => dropzone.classList.remove('border-purple-500', 'bg-surface-2'));
+  
+  dropzone?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('border-purple-500', 'bg-surface-2');
+    if(!loadingState?.classList.contains('hidden')) return;
+    const file = e.dataTransfer?.files?.[0];
+    if (file && file.type.startsWith('image/')) processImage(file);
+  });
+
+  async function processImage(file: File) {
+    currentFile = file;
+    dropzoneContent?.classList.add('hidden');
+    loadingState?.classList.remove('hidden');
+    loadingState?.classList.add('flex');
+    resultSection?.classList.add('hidden');
+    
+    // Set original preview
+    const objectURL = URL.createObjectURL(file);
+    originalPreview.src = objectURL;
+    
+    try {
+      if(!removeBackground) {
+        loadingText!.textContent = "Initializing Engine...";
+        const imgly = await import('@imgly/background-removal');
+        removeBackground = imgly.default || imgly.removeBackground;
+      }
+      
+      loadingText!.textContent = "Loading AI Model & Processing...";
+      progressBarContainer?.classList.remove('hidden');
+      
+      // We must explicitly configure publicPath to use a CDN because Astro doesn't
+      // package the WASM and ONNX files from node_modules automatically in the same way Vite does without extra config.
+      const config = {
+        publicPath: "https://unpkg.com/@imgly/background-removal@1.7.0/dist/",
+        progress: (key: string, current: number, total: number) => {
+            const percent = Math.round((current / total) * 100);
+            if(progressBar) progressBar.style.width = `${percent}%`;
+            
+            if(key.includes('fetch')) {
+               loadingText!.textContent = `Downloading AI Model... ${percent}%`;
+            } else if (key.includes('compute')) {
+               loadingText!.textContent = `Removing Background...`;
+            }
+        }
+      };
+
+      const blob = await removeBackground(file, config);
+      
+      if(resultBlobURL) URL.revokeObjectURL(resultBlobURL);
+      resultBlobURL = URL.createObjectURL(blob);
+      resultPreview.src = resultBlobURL;
+      
+      loadingState?.classList.add('hidden');
+      loadingState?.classList.remove('flex');
+      resultSection?.classList.remove('hidden');
+      dropzoneContent?.classList.remove('hidden');
+      progressBarContainer?.classList.add('hidden');
+      if(fileInput) (fileInput as HTMLInputElement).value = ''; 
+      
+    } catch (err) {
+      console.error(err);
+      loadingState?.classList.add('hidden');
+      loadingState?.classList.remove('flex');
+      dropzoneContent?.classList.remove('hidden');
+      progressBarContainer?.classList.add('hidden');
+      if ((window as any).__showToast) {
+        (window as any).__showToast({ message: 'Failed to process image. Check console for details.', variant: 'error' });
+      } else {
+        alert('Failed to process image.');
+      }
+    }
+  }
+
+  downloadBtn?.addEventListener('click', () => {
+    if (!resultBlobURL) return;
+    const a = document.createElement('a');
+    a.href = resultBlobURL;
+    a.download = `removed-bg-${Date.now()}.png`;
+    a.click();
+  });
+</script>

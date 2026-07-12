@@ -1,31 +1,116 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
-  { question: "What is BMI?", answer: "BMI (Body Mass Index) is a measure of body fat based on height and weight. It is calculated by dividing weight in kilograms by the square of height in meters. While not a direct measure of body fat, it's a useful screening tool for weight categories." },
-  { question: "How is BMI calculated?", answer: "BMI = weight (kg) / height² (m²). For imperial units: BMI = (weight in lbs / height² in inches) × 703. This tool handles both unit systems for you." },
-  { question: "What is a healthy BMI range?", answer: "A healthy BMI range is 18.5 to 24.9. Below 18.5 is underweight, 25.0–29.9 is overweight, and 30.0 or above is obese. These ranges apply to most adults 18–65 years old." },
-  { question: "Is BMI accurate for everyone?", answer: "BMI is a screening tool, not a diagnostic one. It may not be accurate for athletes with high muscle mass, pregnant women, the elderly, or children. For these groups, additional measurements may be needed." },
-  { question: "Is my health data stored?", answer: "No. All calculations happen locally in your browser. Your height, weight, and BMI information never leaves your device." },
+  {
+    question: 'What is BMI?',
+    answer:
+      "BMI (Body Mass Index) is a measure of body fat based on height and weight. It is calculated by dividing weight in kilograms by the square of height in meters. While not a direct measure of body fat, it's a useful screening tool for weight categories.",
+  },
+  {
+    question: 'How is BMI calculated?',
+    answer:
+      'BMI = weight (kg) / height² (m²). For imperial units: BMI = (weight in lbs / height² in inches) × 703. This tool handles both unit systems for you.',
+  },
+  {
+    question: 'What is a healthy BMI range?',
+    answer:
+      'A healthy BMI range is 18.5 to 24.9. Below 18.5 is underweight, 25.0–29.9 is overweight, and 30.0 or above is obese. These ranges apply to most adults 18–65 years old.',
+  },
+  {
+    question: 'Is BMI accurate for everyone?',
+    answer:
+      'BMI is a screening tool, not a diagnostic one. It may not be accurate for athletes with high muscle mass, pregnant women, the elderly, or children. For these groups, additional measurements may be needed.',
+  },
+  {
+    question: 'Is my health data stored?',
+    answer:
+      'No. All calculations happen locally in your browser. Your height, weight, and BMI information never leaves your device.',
+  },
 ];
 
 const bmiSchema = {
-  name: "BMI Calculator Pro",
-  applicationCategory: "Utilities",
-  description: "Calculate your Body Mass Index with metric or imperial units. See BMI category, healthy weight range, and health insights.",
+  name: 'BMI Calculator Pro',
+  applicationCategory: 'Utilities',
+  description:
+    'Calculate your Body Mass Index with metric or imperial units. See BMI category, healthy weight range, and health insights.',
   featureList: [
-    "Metric (kg/cm) and imperial (lbs/ft/in) unit support",
-    "Instant BMI calculation with color-coded category",
-    "Healthy weight range display",
-    "Visual BMI scale indicator",
-    "100% private — data never leaves your browser"
+    'Metric (kg/cm) and imperial (lbs/ft/in) unit support',
+    'Instant BMI calculation with color-coded category',
+    'Healthy weight range display',
+    'Visual BMI scale indicator',
+    '100% private — data never leaves your browser',
   ],
 };
+
+const benefits = [
+  {
+    icon: '⚖️',
+    title: 'Instant Calculation',
+    desc: 'Calculate your precise Body Mass Index instantly as you type your height and weight.',
+  },
+  {
+    icon: '📏',
+    title: 'Unit Support',
+    desc: 'Seamlessly toggle between Metric (kg/cm) and Imperial (lbs/ft/in) unit systems.',
+  },
+  {
+    icon: '🎯',
+    title: 'Healthy Range',
+    desc: 'View the ideal, healthy weight range customized for your specific height.',
+  },
+  {
+    icon: '🔒',
+    title: 'Total Privacy',
+    desc: 'Your sensitive health data never leaves your device. All calculations are 100% local.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Choose System',
+    desc: 'Select your preferred measurement system: Metric or Imperial.',
+  },
+  {
+    num: '2',
+    title: 'Enter Weight',
+    desc: 'Input your current weight in kilograms or pounds.',
+  },
+  {
+    num: '3',
+    title: 'Enter Height',
+    desc: 'Input your current height in centimeters, or feet and inches.',
+  },
+  {
+    num: '4',
+    title: 'View Results',
+    desc: 'Instantly view your BMI score, category, and healthy weight range on the visual scale.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '🏃‍♂️',
+    title: 'Fitness Tracking',
+    desc: 'Monitor your BMI over time to track your progress during a weight loss or muscle gain journey.',
+  },
+  {
+    icon: '🏥',
+    title: 'Health Screening',
+    desc: 'Use BMI as an initial screening tool to identify potential weight-related health risks.',
+  },
+  {
+    icon: '📋',
+    title: 'Medical Forms',
+    desc: 'Quickly calculate your BMI when filling out medical history forms or insurance applications.',
+  },
+];
 ---
 
 <MainLayout
@@ -35,15 +120,15 @@ const bmiSchema = {
   toolSchema={bmiSchema}
   faq={faqItems}
   howto={{
-    name: "How to Use BMI Calculator",
-    description: "Step-by-step guide for using BMI Calculator.",
+    name: 'How to Use BMI Calculator',
+    description: 'Step-by-step guide for using BMI Calculator.',
     steps: [],
-    totalTime: "PT1M",
+    totalTime: 'PT1M',
   }}
   breadcrumbs={[
-    { name: "Home", url: "/" },
-    { name: "Tools", url: "/tools/" },
-    { name: "BMI Calculator", url: "/tools/bmi-calculator/" },
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'BMI Calculator', url: '/tools/bmi-calculator/' },
   ]}
 >
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
@@ -59,24 +144,45 @@ const bmiSchema = {
       <ShareBar />
 
       <div class="max-w-xl mx-auto mt-10">
-        <div class="bg-surface-1 border border-surface rounded-2xl p-6 relative">
-
-          <button id="fullscreen-btn" class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+        <div class="glass-card rounded-2xl p-6 relative">
+          <button
+            id="fullscreen-btn"
+            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+            title="Fullscreen">⛶</button
+          >
 
           <div class="flex gap-2 mb-6">
-            <button id="unit-metric" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-green-600 text-white" data-unit="metric">Metric (kg/cm)</button>
-            <button id="unit-imperial" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary" data-unit="imperial">Imperial (lbs/ft)</button>
+            <button
+              id="unit-metric"
+              class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-green-600 text-white"
+              data-unit="metric">Metric (kg/cm)</button
+            >
+            <button
+              id="unit-imperial"
+              class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-surface-2 text-tertiary hover:text-primary"
+              data-unit="imperial">Imperial (lbs/ft)</button
+            >
           </div>
 
           <div id="metric-inputs">
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-medium text-tertiary mb-1.5">Weight (kg)</label>
-                <input id="weight-metric" type="number" value="70" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-500/50 focus:outline-none transition-all" />
+                <input
+                  id="weight-metric"
+                  type="number"
+                  value="70"
+                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-500/50 focus:outline-none transition-all"
+                />
               </div>
               <div>
                 <label class="block text-xs font-medium text-tertiary mb-1.5">Height (cm)</label>
-                <input id="height-metric" type="number" value="175" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-500/50 focus:outline-none transition-all" />
+                <input
+                  id="height-metric"
+                  type="number"
+                  value="175"
+                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-500/50 focus:outline-none transition-all"
+                />
               </div>
             </div>
           </div>
@@ -85,15 +191,30 @@ const bmiSchema = {
             <div class="grid grid-cols-3 gap-4">
               <div>
                 <label class="block text-xs font-medium text-tertiary mb-1.5">Weight (lbs)</label>
-                <input id="weight-imp" type="number" value="154" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-500/50 focus:outline-none transition-all" />
+                <input
+                  id="weight-imp"
+                  type="number"
+                  value="154"
+                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-500/50 focus:outline-none transition-all"
+                />
               </div>
               <div>
                 <label class="block text-xs font-medium text-tertiary mb-1.5">Feet</label>
-                <input id="height-ft" type="number" value="5" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-500/50 focus:outline-none transition-all" />
+                <input
+                  id="height-ft"
+                  type="number"
+                  value="5"
+                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-500/50 focus:outline-none transition-all"
+                />
               </div>
               <div>
                 <label class="block text-xs font-medium text-tertiary mb-1.5">Inches</label>
-                <input id="height-in" type="number" value="9" class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-500/50 focus:outline-none transition-all" />
+                <input
+                  id="height-in"
+                  type="number"
+                  value="9"
+                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-green-500/50 focus:outline-none transition-all"
+                />
               </div>
             </div>
           </div>
@@ -102,7 +223,12 @@ const bmiSchema = {
             <div class="flex items-center justify-between mb-4">
               <div>
                 <span class="text-xs font-medium text-muted uppercase tracking-wider">Your BMI</span>
-                <p id="bmi-value" class="text-3xl font-black bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent mt-1">22.9</p>
+                <p
+                  id="bmi-value"
+                  class="text-3xl font-black bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent mt-1"
+                >
+                  22.9
+                </p>
               </div>
               <div class="text-right">
                 <span class="text-xs font-medium text-muted uppercase tracking-wider">Category</span>
@@ -110,15 +236,27 @@ const bmiSchema = {
               </div>
             </div>
 
-            <div class="w-full bg-surface-3 rounded-full h-2.5 mb-4 overflow-hidden" role="progressbar" aria-valuenow="22.9" aria-valuemin="10" aria-valuemax="40" aria-label="BMI scale">
-              <div id="bmi-bar" class="h-full rounded-full bg-gradient-to-r from-blue-500 via-green-400 via-yellow-400 to-red-500" style="width: 42.9%"></div>
+            <div
+              class="w-full bg-surface-3 rounded-full h-2.5 mb-4 overflow-hidden"
+              role="progressbar"
+              aria-valuenow="22.9"
+              aria-valuemin="10"
+              aria-valuemax="40"
+              aria-label="BMI scale"
+            >
+              <div
+                id="bmi-bar"
+                class="h-full rounded-full bg-gradient-to-r from-blue-500 via-green-400 via-yellow-400 to-red-500"
+                style="width: 42.9%"
+              >
+              </div>
             </div>
 
             <div class="grid grid-cols-4 text-[10px] text-muted mb-4">
-              <span>Underweight<br/>&lt; 18.5</span>
-              <span>Normal<br/>18.5–24.9</span>
-              <span>Overweight<br/>25–29.9</span>
-              <span class="text-right">Obese<br/>≥ 30</span>
+              <span>Underweight<br />&lt; 18.5</span>
+              <span>Normal<br />18.5–24.9</span>
+              <span>Overweight<br />25–29.9</span>
+              <span class="text-right">Obese<br />≥ 30</span>
             </div>
 
             <div class="bg-surface-1 rounded-xl p-4">
@@ -126,38 +264,60 @@ const bmiSchema = {
               <p id="healthy-range" class="text-sm font-semibold text-primary mt-1">56.7 kg – 76.6 kg</p>
             </div>
             <div class="flex gap-2 mt-4">
-              <button id="copy-btn" class="flex-1 rounded-xl border border-surface-2 px-4 py-2.5 text-xs font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98]"><span>Copy</span></button>
-              <button id="download-btn" class="flex-1 rounded-xl border border-surface-2 px-4 py-2.5 text-xs font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98]"><span>Download</span></button>
-              <button id="clear-btn" class="flex-1 rounded-xl border border-surface-2 px-4 py-2.5 text-xs font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98]"><span>Clear</span></button>
+              <button
+                id="copy-btn"
+                class="flex-1 rounded-xl border border-surface-2 px-4 py-2.5 text-xs font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98]"
+                ><span>Copy</span></button
+              >
+              <button
+                id="download-btn"
+                class="flex-1 rounded-xl border border-surface-2 px-4 py-2.5 text-xs font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98]"
+                ><span>Download</span></button
+              >
+              <button
+                id="clear-btn"
+                class="flex-1 rounded-xl border border-surface-2 px-4 py-2.5 text-xs font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98]"
+                ><span>Clear</span></button
+              >
             </div>
             <div class="flex items-center gap-2 mt-4">
               <span id="usage-badge" class="text-xs text-muted"></span>
-              <button id="share-btn" class="rounded-xl border border-surface-2 px-3 py-1.5 text-xs font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98] flex items-center gap-1.5" title="Share">🔗</button>
+              <button
+                id="share-btn"
+                class="rounded-xl border border-surface-2 px-3 py-1.5 text-xs font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98] flex items-center gap-1.5"
+                title="Share">🔗</button
+              >
               <div class="flex gap-1 ml-auto">
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-                <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="purple"
+                  style="background:#a855f7"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="blue"
+                  style="background:#3b82f6"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="green"
+                  style="background:#22c55e"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="pink"
+                  style="background:#ec4899"></button>
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
-      <section class="mt-20 max-w-3xl mx-auto">
-        <div class="text-center mb-8">
-          <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Learn</span>
-          <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">
-            Understanding Your
-            <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">BMI Score</span>
-          </h2>
-        </div>
-        <div class="space-y-4 text-sm text-tertiary leading-relaxed">
-          <p>Body Mass Index (BMI) is a widely used screening tool that estimates body fat based on your height and weight. While it doesn't directly measure body fat, it provides a useful indicator for most adults to assess whether they're in a healthy weight range.</p>
-          <p>Your BMI falls into one of four categories: underweight (&lt;18.5), normal weight (18.5–24.9), overweight (25–29.9), or obese (≥30). Keep in mind that factors like muscle mass, age, sex, and ethnicity can affect the interpretation of BMI results.</p>
-        </div>
-      </section>
+      <ToolContentSections
+        toolSlug="bmi-calculator"
+        toolName="BMI Calculator"
+        category="Health Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
 
       <RelatedTools current="bmi-calculator" />
 
@@ -166,35 +326,35 @@ const bmiSchema = {
           Frequently Asked
           <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">Questions</span>
         </h2>
-        <Accordion items={faqItems.map(i => ({title: i.question, content: i.answer}))} />
+        <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
     </div>
   </main>
 </MainLayout>
 
 <script>
-  const unitMetric = document.getElementById("unit-metric");
-  const unitImperial = document.getElementById("unit-imperial");
-  const metricInputs = document.getElementById("metric-inputs");
-  const imperialInputs = document.getElementById("imperial-inputs");
+  const unitMetric = document.getElementById('unit-metric');
+  const unitImperial = document.getElementById('unit-imperial');
+  const metricInputs = document.getElementById('metric-inputs');
+  const imperialInputs = document.getElementById('imperial-inputs');
 
-  const weightMetric = document.getElementById("weight-metric");
-  const heightMetric = document.getElementById("height-metric");
-  const weightImp = document.getElementById("weight-imp");
-  const heightFt = document.getElementById("height-ft");
-  const heightIn = document.getElementById("height-in");
-  const bmiValue = document.getElementById("bmi-value");
-  const bmiCategory = document.getElementById("bmi-category");
-  const bmiBar = document.getElementById("bmi-bar");
-  const healthyRange = document.getElementById("healthy-range");
+  const weightMetric = document.getElementById('weight-metric');
+  const heightMetric = document.getElementById('height-metric');
+  const weightImp = document.getElementById('weight-imp');
+  const heightFt = document.getElementById('height-ft');
+  const heightIn = document.getElementById('height-in');
+  const bmiValue = document.getElementById('bmi-value');
+  const bmiCategory = document.getElementById('bmi-category');
+  const bmiBar = document.getElementById('bmi-bar');
+  const healthyRange = document.getElementById('healthy-range');
 
   let useMetric = true;
 
   function bmiCategoryClass(cat) {
-    if (cat === "Underweight") return "text-blue-400";
-    if (cat === "Normal weight") return "text-green-400";
-    if (cat === "Overweight") return "text-yellow-400";
-    return "text-red-400";
+    if (cat === 'Underweight') return 'text-blue-400';
+    if (cat === 'Normal weight') return 'text-green-400';
+    if (cat === 'Overweight') return 'text-yellow-400';
+    return 'text-red-400';
   }
 
   function computeBMI() {
@@ -216,10 +376,10 @@ const bmiSchema = {
     bmi = Math.round(bmi * 10) / 10;
     if (!isFinite(bmi) || bmi <= 0) bmi = 0;
 
-    let cat = "Underweight";
-    if (bmi >= 30) cat = "Obese";
-    else if (bmi >= 25) cat = "Overweight";
-    else if (bmi >= 18.5) cat = "Normal weight";
+    let cat = 'Underweight';
+    if (bmi >= 30) cat = 'Obese';
+    else if (bmi >= 25) cat = 'Overweight';
+    else if (bmi >= 18.5) cat = 'Normal weight';
 
     bmiValue.textContent = bmi.toFixed(1);
     bmiCategory.textContent = cat;
@@ -227,7 +387,7 @@ const bmiSchema = {
 
     const pct = Math.min(Math.max(((bmi - 10) / 30) * 100, 0), 100);
     bmiBar.style.width = `${pct}%`;
-    bmiBar.setAttribute("aria-valuenow", bmi.toFixed(1));
+    bmiBar.setAttribute('aria-valuenow', bmi.toFixed(1));
 
     if (heightCm > 0) {
       const lower = Math.round(18.5 * (heightCm / 100) * (heightCm / 100) * 10) / 10;
@@ -245,75 +405,138 @@ const bmiSchema = {
   function setUnit(metric) {
     useMetric = metric;
     if (metric) {
-      unitMetric.classList.remove("bg-surface-2", "text-tertiary", "hover:text-primary");
-      unitMetric.classList.add("bg-green-600", "text-white");
-      unitImperial.classList.remove("bg-green-600", "text-white");
-      unitImperial.classList.add("bg-surface-2", "text-tertiary", "hover:text-primary");
-      metricInputs.classList.remove("hidden");
-      imperialInputs.classList.add("hidden");
+      unitMetric.classList.remove('bg-surface-2', 'text-tertiary', 'hover:text-primary');
+      unitMetric.classList.add('bg-green-600', 'text-white');
+      unitImperial.classList.remove('bg-green-600', 'text-white');
+      unitImperial.classList.add('bg-surface-2', 'text-tertiary', 'hover:text-primary');
+      metricInputs.classList.remove('hidden');
+      imperialInputs.classList.add('hidden');
     } else {
-      unitImperial.classList.remove("bg-surface-2", "text-tertiary", "hover:text-primary");
-      unitImperial.classList.add("bg-green-600", "text-white");
-      unitMetric.classList.remove("bg-green-600", "text-white");
-      unitMetric.classList.add("bg-surface-2", "text-tertiary", "hover:text-primary");
-      imperialInputs.classList.remove("hidden");
-      metricInputs.classList.add("hidden");
+      unitImperial.classList.remove('bg-surface-2', 'text-tertiary', 'hover:text-primary');
+      unitImperial.classList.add('bg-green-600', 'text-white');
+      unitMetric.classList.remove('bg-green-600', 'text-white');
+      unitMetric.classList.add('bg-surface-2', 'text-tertiary', 'hover:text-primary');
+      imperialInputs.classList.remove('hidden');
+      metricInputs.classList.add('hidden');
     }
     computeBMI();
   }
 
-  unitMetric.addEventListener("click", () => setUnit(true));
-  unitImperial.addEventListener("click", () => setUnit(false));
+  unitMetric.addEventListener('click', () => setUnit(true));
+  unitImperial.addEventListener('click', () => setUnit(false));
 
-  [weightMetric, heightMetric, weightImp, heightFt, heightIn].forEach(el => {
-    el.addEventListener("input", computeBMI);
+  [weightMetric, heightMetric, weightImp, heightFt, heightIn].forEach((el) => {
+    el.addEventListener('input', computeBMI);
   });
 
-  document.getElementById("copy-btn")?.addEventListener("click", () => {
+  document.getElementById('copy-btn')?.addEventListener('click', () => {
     const text = `BMI: ${bmiValue.textContent} (${bmiCategory.textContent}) — Healthy range: ${healthyRange.textContent}`;
-    navigator.clipboard.writeText(text).catch(()=>{});
-    const btn = document.getElementById("copy-btn");
-    const span = btn.querySelector("span");
-    span.textContent = "Copied!";
-    setTimeout(() => { span.textContent = "Copy"; }, 2000);
+    navigator.clipboard.writeText(text).catch(() => {});
+    const btn = document.getElementById('copy-btn');
+    const span = btn.querySelector('span');
+    span.textContent = 'Copied!';
+    setTimeout(() => {
+      span.textContent = 'Copy';
+    }, 2000);
   });
 
-  document.getElementById("download-btn")?.addEventListener("click", () => {
+  document.getElementById('download-btn')?.addEventListener('click', () => {
     const content = `BMI Calculator Result\nBMI: ${bmiValue.textContent}\nCategory: ${bmiCategory.textContent}\nHealthy weight range: ${healthyRange.textContent}`;
-    const blob = new Blob([content], {type:"text/plain"});
-    const a = document.createElement("a");
+    const blob = new Blob([content], { type: 'text/plain' });
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = "bmi-result.txt";
+    a.download = 'bmi-result.txt';
     a.click();
     URL.revokeObjectURL(a.href);
   });
 
-  document.getElementById("clear-btn")?.addEventListener("click", () => {
-    weightMetric.value = "70";
-    heightMetric.value = "175";
-    weightImp.value = "154";
-    heightFt.value = "5";
-    heightIn.value = "9";
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    weightMetric.value = '70';
+    heightMetric.value = '175';
+    weightImp.value = '154';
+    heightFt.value = '5';
+    heightIn.value = '9';
     computeBMI();
   });
 
   computeBMI();
 
   // Fullscreen toggle
-  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-    const card = document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card = document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
     if (!card) return;
-    if (document.fullscreenElement) { document.exitFullscreen(); document.getElementById("fullscreen-btn").textContent = "⛶"; }
-    else { card.requestFullscreen?.() || card.webkitRequestFullscreen?.(); document.getElementById("fullscreen-btn").textContent = "✕"; }
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      document.getElementById('fullscreen-btn').textContent = '⛶';
+    } else {
+      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
+      document.getElementById('fullscreen-btn').textContent = '✕';
+    }
   });
-  document.addEventListener("fullscreenchange", () => {
-    const btn = document.getElementById("fullscreen-btn");
-    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
-document.addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter"){e.preventDefault();const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");if(b)b.click();}if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){e.preventDefault();document.getElementById("clear-btn")?.click();}if(e.ctrlKey&&(e.key==="D"||e.key==="d")){e.preventDefault();document.getElementById("download-btn")?.click();}});
-try{const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}");const b=document.getElementById("usage-badge");if(b&&u["bmi-calculator"])b.textContent="Used "+u["bmi-calculator"]+"×";}catch(e){}
-document.getElementById("share-btn")?.addEventListener("click",()=>{const o=document.getElementById("output-text")||document.querySelector("[id$='result']");const t=o?.value||o?.textContent||"";if(!t)return;const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));navigator.clipboard.writeText(u).catch(()=>{});if(typeof showToast==="function"){playPing();showToast("Link copied!");}});
-function playPing(){try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){}}
-document.querySelectorAll(".theme-swatch").forEach(s=>{s.addEventListener("click",()=>{const c=s.dataset.color;document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach(b=>{b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500");});try{localStorage.setItem("nt_theme",c);}catch(e){}});});
-try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      document.getElementById('clear-btn')?.click();
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['bmi-calculator']) b.textContent = 'Used ' + u['bmi-calculator'] + '×';
+  } catch (e) {}
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('output-text') || document.querySelector("[id$='result']");
+    const t = o?.value || o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof showToast === 'function') {
+      playPing();
+      showToast('Link copied!');
+    }
+  });
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
+    });
+  });
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>

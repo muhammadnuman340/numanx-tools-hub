@@ -1,6 +1,6 @@
 ---
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "outline" | "danger";
-export type ButtonSize = "sm" | "md" | "lg";
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'outline' | 'danger';
+export type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface Props {
   variant?: ButtonVariant;
@@ -12,33 +12,47 @@ interface Props {
   [key: string]: any;
 }
 
-const { variant = "primary", size = "md", disabled = false, loading = false, href, class: className, ...rest } = Astro.props;
+const {
+  variant = 'primary',
+  size = 'md',
+  disabled = false,
+  loading = false,
+  href,
+  class: className,
+  ...rest
+} = Astro.props;
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: "bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-900/30 hover:shadow-purple-500/30 active:scale-[0.97]",
-  secondary: "bg-surface-3 hover:bg-surface-nav text-primary border border-surface-2 hover:border-surface-3 active:scale-[0.97]",
-  ghost: "bg-transparent hover:bg-surface-2 text-tertiary hover:text-primary active:scale-[0.97]",
-  outline: "bg-transparent border border-surface-3 hover:border-surface text-secondary hover:text-white active:scale-[0.97]",
-  danger: "bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-900/30 hover:shadow-red-500/30 active:scale-[0.97]",
+  primary:
+    'bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-900/30 hover:shadow-purple-500/30 active:scale-[0.97]',
+  secondary:
+    'bg-surface-3 hover:bg-surface-nav text-primary border border-surface-2 hover:border-surface-3 active:scale-[0.97]',
+  ghost: 'bg-transparent hover:bg-surface-2 text-tertiary hover:text-primary active:scale-[0.97]',
+  outline:
+    'bg-transparent border border-surface-3 hover:border-surface text-secondary hover:text-white active:scale-[0.97]',
+  danger:
+    'bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-900/30 hover:shadow-red-500/30 active:scale-[0.97]',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: "text-xs px-3 py-1.5 rounded-lg",
-  md: "text-sm px-4 py-2.5 rounded-xl",
-  lg: "text-base px-6 py-3 rounded-xl",
+  sm: 'text-xs px-3 py-1.5 rounded-lg',
+  md: 'text-sm px-4 py-2.5 rounded-xl',
+  lg: 'text-base px-6 py-3 rounded-xl',
 };
 
-const buttonClass = `inline-flex items-center justify-center gap-2 font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0b] select-none ${variantClasses[variant]} ${sizeClasses[size]} ${disabled ? "opacity-50 pointer-events-none" : "cursor-pointer"} ${className || ""}`;
+const buttonClass = `inline-flex items-center justify-center gap-2 font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0b] select-none ${variantClasses[variant]} ${sizeClasses[size]} ${disabled ? 'opacity-50 pointer-events-none' : 'cursor-pointer'} ${className || ''}`;
 ---
 
-{href ? (
-  <a href={href} class={buttonClass} {...rest}>
-    {loading && <span class="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />}
-    <slot />
-  </a>
-) : (
-  <button disabled={disabled || loading} class={buttonClass} {...rest}>
-    {loading && <span class="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />}
-    <slot />
-  </button>
-)}
+{
+  href ? (
+    <a href={href} class={buttonClass} {...rest}>
+      {loading && <span class="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />}
+      <slot />
+    </a>
+  ) : (
+    <button disabled={disabled || loading} class={buttonClass} {...rest}>
+      {loading && <span class="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />}
+      <slot />
+    </button>
+  )
+}

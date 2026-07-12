@@ -1,163 +1,365 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const benefits = [
-  { title: "Catch Common Errors", desc: "Detects confused words, apostrophe mistakes, double negatives, subject-verb issues, and misspellings in seconds" },
-  { title: "Confused Words Detection", desc: "Catches tricky pairs like their/there/they're, your/you're, its/it's with context-aware rules" },
-  { title: "Punctuation & Spelling", desc: "Highlights incorrect apostrophe usage, common misspellings, and repeated words throughout your text" },
-  { title: "Privacy-First Processing", desc: "All grammar checking runs entirely in your browser. Your text never leaves your device" },
-  { title: "Copy Corrected Text", desc: "Get instant before-and-after comparison with a single-click copy of the corrected version" },
-  { title: "Completely Free", desc: "No sign-ups, no limits, no premium tiers — just unlimited grammar checking" },
+  {
+    title: 'Catch Common Errors',
+    desc: 'Detects confused words, apostrophe mistakes, double negatives, subject-verb issues, and misspellings in seconds',
+  },
+  {
+    title: 'Confused Words Detection',
+    desc: "Catches tricky pairs like their/there/they're, your/you're, its/it's with context-aware rules",
+  },
+  {
+    title: 'Punctuation & Spelling',
+    desc: 'Highlights incorrect apostrophe usage, common misspellings, and repeated words throughout your text',
+  },
+  {
+    title: 'Privacy-First Processing',
+    desc: 'All grammar checking runs entirely in your browser. Your text never leaves your device',
+  },
+  {
+    title: 'Copy Corrected Text',
+    desc: 'Get instant before-and-after comparison with a single-click copy of the corrected version',
+  },
+  { title: 'Completely Free', desc: 'No sign-ups, no limits, no premium tiers — just unlimited grammar checking' },
 ];
 
 const howToSteps = [
-  { title: "Paste your text", desc: "Copy and paste any text you want to check into the input box" },
-  { title: "Run grammar check", desc: "Click the check button to scan your text against our comprehensive set of grammar rules" },
-  { title: "Review errors", desc: "See a detailed list of every error found, organized by type with suggested corrections" },
-  { title: "Copy corrected version", desc: "Copy the auto-corrected version of your text with one click and use it anywhere" },
+  { title: 'Paste your text', desc: 'Copy and paste any text you want to check into the input box' },
+  {
+    title: 'Run grammar check',
+    desc: 'Click the check button to scan your text against our comprehensive set of grammar rules',
+  },
+  {
+    title: 'Review errors',
+    desc: 'See a detailed list of every error found, organized by type with suggested corrections',
+  },
+  {
+    title: 'Copy corrected version',
+    desc: 'Copy the auto-corrected version of your text with one click and use it anywhere',
+  },
 ];
 
 const useCases = [
-  { title: "Email Proofing", desc: "Quickly proofread professional emails before sending to clients or colleagues" },
-  { title: "Academic Writing", desc: "Catch grammar mistakes in essays, papers, and assignments before submission" },
-  { title: "Social Media Posts", desc: "Polish your social media content to ensure it's error-free and professional" },
-  { title: "Business Documents", desc: "Review reports, proposals, and documentation for grammatical accuracy" },
+  { title: 'Email Proofing', desc: 'Quickly proofread professional emails before sending to clients or colleagues' },
+  { title: 'Academic Writing', desc: 'Catch grammar mistakes in essays, papers, and assignments before submission' },
+  { title: 'Social Media Posts', desc: "Polish your social media content to ensure it's error-free and professional" },
+  { title: 'Business Documents', desc: 'Review reports, proposals, and documentation for grammatical accuracy' },
 ];
 
 const faqItems = [
-  { question: "What types of grammar errors does the checker detect?", answer: "The grammar checker catches common mistakes including: confused words (their/there/they're, your/you're, its/it's), incorrect apostrophe usage (its vs it's, possessive forms), double negatives, subject-verb agreement issues, common misspellings, and incorrect verb forms. It also highlights repeated words and punctuation problems." },
-  { question: "Is this grammar checker suitable for professional writing?", answer: "This tool is great for catching common grammar mistakes quickly, but it's a rule-based checker, not a full AI writing assistant. It works best as a first pass for everyday writing — emails, social media posts, school assignments, and quick edits. For professional or academic writing, we recommend using it alongside a human proofreader." },
-  { question: "Is my text stored or analyzed by external servers?", answer: "No. All grammar checking happens entirely in your browser using JavaScript. Your text is never sent to any server, stored, or shared. This makes it safe to check confidential documents, private correspondence, or sensitive content." },
-  { question: "Does the grammar checker support languages other than English?", answer: "Currently, the grammar checker is optimized for English. It handles American and British English variations and includes a comprehensive set of English-specific grammar rules and spelling dictionaries." },
-  { question: "How accurate is the grammar detection?", answer: "The rule-based approach catches most common grammar mistakes with high accuracy. However, it may not catch every nuance — especially in complex sentences. It's a great first-pass tool but shouldn't replace a human proofreader for critical content." },
-  { question: "Can I check large documents?", answer: "Yes, you can check documents of any length. There's no character limit, and the processing happens instantly in your browser regardless of file size." },
-  { question: "Does it check punctuation and formatting?", answer: "Yes, it checks for apostrophe errors and repeated words. For comprehensive punctuation checking, we recommend using it alongside other tools." },
-  { question: "Is there a way to export the results?", answer: "Yes, you can download the corrected text in multiple formats including TXT, JSON, CSV, and HTML, or simply copy it to your clipboard." },
+  {
+    question: 'What types of grammar errors does the checker detect?',
+    answer:
+      "The grammar checker catches common mistakes including: confused words (their/there/they're, your/you're, its/it's), incorrect apostrophe usage (its vs it's, possessive forms), double negatives, subject-verb agreement issues, common misspellings, and incorrect verb forms. It also highlights repeated words and punctuation problems.",
+  },
+  {
+    question: 'Is this grammar checker suitable for professional writing?',
+    answer:
+      "This tool is great for catching common grammar mistakes quickly, but it's a rule-based checker, not a full AI writing assistant. It works best as a first pass for everyday writing — emails, social media posts, school assignments, and quick edits. For professional or academic writing, we recommend using it alongside a human proofreader.",
+  },
+  {
+    question: 'Is my text stored or analyzed by external servers?',
+    answer:
+      'No. All grammar checking happens entirely in your browser using JavaScript. Your text is never sent to any server, stored, or shared. This makes it safe to check confidential documents, private correspondence, or sensitive content.',
+  },
+  {
+    question: 'Does the grammar checker support languages other than English?',
+    answer:
+      'Currently, the grammar checker is optimized for English. It handles American and British English variations and includes a comprehensive set of English-specific grammar rules and spelling dictionaries.',
+  },
+  {
+    question: 'How accurate is the grammar detection?',
+    answer:
+      "The rule-based approach catches most common grammar mistakes with high accuracy. However, it may not catch every nuance — especially in complex sentences. It's a great first-pass tool but shouldn't replace a human proofreader for critical content.",
+  },
+  {
+    question: 'Can I check large documents?',
+    answer:
+      "Yes, you can check documents of any length. There's no character limit, and the processing happens instantly in your browser regardless of file size.",
+  },
+  {
+    question: 'Does it check punctuation and formatting?',
+    answer:
+      'Yes, it checks for apostrophe errors and repeated words. For comprehensive punctuation checking, we recommend using it alongside other tools.',
+  },
+  {
+    question: 'Is there a way to export the results?',
+    answer:
+      'Yes, you can download the corrected text in multiple formats including TXT, JSON, CSV, and HTML, or simply copy it to your clipboard.',
+  },
 ];
 
 const schema = {
-  name: "AI Grammar Checker",
-  applicationCategory: "AI Tools",
-  description: "Check your writing for common grammar mistakes, confused words, punctuation errors, and misspellings with this free online grammar checker.",
-  featureList: ["Detect confused words (their/there/they're, your/you're, its/it's)", "Catch apostrophe and punctuation errors", "Identify double negatives and subject-verb issues", "Highlight common misspellings", "Privacy-first — all processing in your browser"],
+  name: 'AI Grammar Checker',
+  applicationCategory: 'AI Tools',
+  description:
+    'Check your writing for common grammar mistakes, confused words, punctuation errors, and misspellings with this free online grammar checker.',
+  featureList: [
+    "Detect confused words (their/there/they're, your/you're, its/it's)",
+    'Catch apostrophe and punctuation errors',
+    'Identify double negatives and subject-verb issues',
+    'Highlight common misspellings',
+    'Privacy-first — all processing in your browser',
+  ],
 };
 ---
-<MainLayout title="AI Grammar Checker - Free Online Grammar & Spell Check" description="Check your writing for grammar mistakes, confused words, punctuation errors, and common misspellings. Free online grammar checker with privacy-first processing." keywords="grammar checker, spell checker, grammar corrector, writing assistant, grammar fix" toolSchema={schema} faq={faqItems} howto={{
-    name: "How to Check Grammar with AI",
-    description: "Learn how to use our AI grammar checker to detect and fix common writing mistakes",
-    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
-    totalTime: "PT1M",
-  }} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Grammar Checker",url:"/tools/ai-grammar-checker/"}]}>
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
-    <ToolHeader title="AI Grammar" gradient="Checker Pro" desc="Catch grammar mistakes, confused words, punctuation errors, and common misspellings. Clean up your writing in seconds." badge="✦ AI Powered" slug="ai-grammar-checker" />
-    <ShareBar />
-    <div class="max-w-xl mx-auto mt-10">
-      <div class="bg-surface-1 border border-surface rounded-2xl p-6 space-y-4 relative">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
-            <span id="usage-badge" class="text-xs text-muted"></span>
-          </div>
-          <div class="flex items-center gap-2">
-            <div class="flex gap-1">
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+
+<MainLayout
+  title="AI Grammar Checker - Free Online Grammar & Spell Check"
+  description="Check your writing for grammar mistakes, confused words, punctuation errors, and common misspellings. Free online grammar checker with privacy-first processing."
+  keywords="grammar checker, spell checker, grammar corrector, writing assistant, grammar fix"
+  toolSchema={schema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Check Grammar with AI',
+    description: 'Learn how to use our AI grammar checker to detect and fix common writing mistakes',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'AI Grammar Checker', url: '/tools/ai-grammar-checker/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="AI Grammar"
+        gradient="Checker Pro"
+        desc="Catch grammar mistakes, confused words, punctuation errors, and common misspellings. Clean up your writing in seconds."
+        badge="✦ AI Powered"
+        slug="ai-grammar-checker"
+      />
+      <ShareBar />
+      <div class="max-w-xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 space-y-4 relative">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+              <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
-            <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+            <div class="flex items-center gap-2">
+              <div class="flex gap-1">
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="purple"
+                  style="background:#a855f7"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="blue"
+                  style="background:#3b82f6"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="green"
+                  style="background:#22c55e"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="pink"
+                  style="background:#ec4899"></button>
+              </div>
+              <button
+                id="fullscreen-btn"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                title="Fullscreen">⛶</button
+              >
+            </div>
           </div>
-        </div>
-        <div class="flex items-center gap-1.5 mb-2">
-          <button class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A−</button>
-          <button class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A+</button>
-          <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
-        </div>
-        <div class="relative flex">
-          <div id="line-nums" class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3" style="min-width:2.5em">1</div>
-          <textarea id="input-text" rows="8" placeholder="Paste your text here to check for grammar errors..." class="flex-1 bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-none focus:outline-none focus:border-violet-500/60 transition-all"></textarea>
-          <button class="paste-btn absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" data-target="input-text" title="Paste">📋</button>
-        </div>
-        <div class="flex justify-between text-xs text-muted mt-1.5 px-1">
-          <span><span class="font-medium text-white" id="char-count">0</span> chars</span>
-          <span><span class="font-medium text-white" id="word-count">0</span> words</span>
-          <span><span class="font-medium text-white" id="line-count">0</span> lines</span>
-        </div>
-        <div id="reading-time" class="text-xs text-muted mt-1"></div>
-        <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
-        <button id="check-btn" class="w-full py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all">Check Grammar</button>
-        <div class="flex gap-2">
-          <select id="export-format" class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5">
-            <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option>
-          </select>
-          <button id="download-btn" class="px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Download</button>
-          <button id="share-btn" class="px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all" title="Copy share link">🔗</button>
-          <button id="clear-btn" class="px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Clear</button>
-        </div>
-        <div id="results-area" class="hidden space-y-4">
-          <div id="errors-list" class="space-y-2"></div>
-          <div id="corrected-area" class="bg-surface-2 border border-surface-3 rounded-xl p-4">
-            <div class="text-xs text-dim mb-2">Corrected Text:</div>
-            <div id="corrected-text" class="text-sm text-white leading-relaxed"></div>
-            <button id="copy-corrected-btn" class="mt-3 px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Copy Corrected</button>
+          <div class="flex items-center gap-1.5 mb-2">
+            <button
+              class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A−</button
+            >
+            <button
+              class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A+</button
+            >
+            <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
+          </div>
+          <div class="relative flex">
+            <div
+              id="line-nums"
+              class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3"
+              style="min-width:2.5em"
+            >
+              1
+            </div>
+            <textarea
+              id="input-text"
+              rows="8"
+              placeholder="Paste your text here to check for grammar errors..."
+              class="flex-1 bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-none focus:outline-none focus:border-violet-500/60 transition-all"
+            ></textarea>
+            <button
+              class="paste-btn absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+              data-target="input-text"
+              title="Paste">📋</button
+            >
+          </div>
+          <div class="flex justify-between text-xs text-muted mt-1.5 px-1">
+            <span><span class="font-medium text-white" id="char-count">0</span> chars</span>
+            <span><span class="font-medium text-white" id="word-count">0</span> words</span>
+            <span><span class="font-medium text-white" id="line-count">0</span> lines</span>
+          </div>
+          <div id="reading-time" class="text-xs text-muted mt-1"></div>
+          <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
+          <button
+            id="check-btn"
+            class="w-full py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all"
+            >Check Grammar</button
+          >
+          <div class="flex gap-2">
+            <select
+              id="export-format"
+              class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
+            >
+              <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option
+                value="html">HTML</option
+              >
+            </select>
+            <button
+              id="download-btn"
+              class="px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              >Download</button
+            >
+            <button
+              id="share-btn"
+              class="px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              title="Copy share link">🔗</button
+            >
+            <button
+              id="clear-btn"
+              class="px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+              >Clear</button
+            >
+          </div>
+          <div id="results-area" class="hidden space-y-4">
+            <div id="errors-list" class="space-y-2"></div>
+            <div id="corrected-area" class="bg-surface-2 border border-surface-3 rounded-xl p-4">
+              <div class="text-xs text-dim mb-2">Corrected Text:</div>
+              <div id="corrected-text" class="text-sm text-white leading-relaxed"></div>
+              <button
+                id="copy-corrected-btn"
+                class="mt-3 px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+                >Copy Corrected</button
+              >
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Grammar Checker uses a <strong class="text-primary">rule-based pattern matching</strong> engine to scan your text for common grammar mistakes. It maintains extensive dictionaries of confused word pairs (like their/there/they're, your/you're, its/it's), common misspellings, and grammar rule patterns.</p><p>When you click "Check Grammar," the engine breaks your text into sentences and words, then applies a series of rules to detect errors. Each detected error is highlighted with a color-coded tag showing the error type, and a suggested correction is provided. The corrected version of your text is automatically generated by applying all suggestions.</p><p>The entire process runs <strong class="text-primary">entirely in your browser</strong> using JavaScript — no data is sent to any server, ensuring your writing stays private and secure.</p></div></section>
-<div id="history-panel" class="mt-6 hidden max-w-xl mx-auto">
-  <div class="flex items-center justify-between mb-2 px-1">
-    <span class="text-xs font-semibold text-muted uppercase tracking-wider">Recent Results</span>
-    <button id="clear-history-btn" class="text-xs text-red-400 hover:text-red-300 transition-colors">Clear</button>
-  </div>
-  <div id="history-list" class="space-y-1 max-h-40 overflow-y-auto"></div>
-</div>
-    <ToolContentSections
-      toolSlug="ai-grammar-checker"
-      toolName="AI Grammar Checker"
-      category="AI Tools"
-      {benefits}
-      howToSteps={howToSteps}
-      useCases={useCases}
-    />
-    <RelatedTools current="ai-grammar-checker" />
-    <div class="mt-20 max-w-3xl mx-auto px-4">
-      <div class="bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-fuchsia-500/10 border border-violet-500/20 rounded-2xl p-8 md:p-12 text-center">
-        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-4">Ready to <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Check</span> Your Grammar?</h2>
-        <p class="text-tertiary text-sm max-w-lg mx-auto mb-6">Try our AI grammar checker now — no sign-up required, completely free, and your data never leaves your device.</p>
-        <a href="#main-content" class="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all">Start Checking</a>
+      <section class="mt-20 max-w-3xl mx-auto">
+        <div class="text-center mb-8">
+          <span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2
+            class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
+          >
+            How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+              >Works</span
+            >
+          </h2>
+        </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
+          <p>
+            The AI Grammar Checker uses a <strong class="text-primary">rule-based pattern matching</strong> engine to scan
+            your text for common grammar mistakes. It maintains extensive dictionaries of confused word pairs (like their/there/they're,
+            your/you're, its/it's), common misspellings, and grammar rule patterns.
+          </p><p>
+            When you click "Check Grammar," the engine breaks your text into sentences and words, then applies a series
+            of rules to detect errors. Each detected error is highlighted with a color-coded tag showing the error type,
+            and a suggested correction is provided. The corrected version of your text is automatically generated by
+            applying all suggestions.
+          </p><p>
+            The entire process runs <strong class="text-primary">entirely in your browser</strong> using JavaScript — no data
+            is sent to any server, ensuring your writing stays private and secure.
+          </p>
+        </div>
+      </section>
+      <div id="history-panel" class="mt-6 hidden max-w-xl mx-auto">
+        <div class="flex items-center justify-between mb-2 px-1">
+          <span class="text-xs font-semibold text-muted uppercase tracking-wider">Recent Results</span>
+          <button id="clear-history-btn" class="text-xs text-red-400 hover:text-red-300 transition-colors">Clear</button
+          >
+        </div>
+        <div id="history-list" class="space-y-1 max-h-40 overflow-y-auto"></div>
+      </div>
+      <ToolContentSections
+        toolSlug="ai-grammar-checker"
+        toolName="AI Grammar Checker"
+        category="AI Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="ai-grammar-checker" />
+      <div class="mt-20 max-w-3xl mx-auto px-4">
+        <div
+          class="bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-fuchsia-500/10 border border-violet-500/20 rounded-2xl p-8 md:p-12 text-center"
+        >
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-4">
+            Ready to <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+              >Check</span
+            > Your Grammar?
+          </h2>
+          <p class="text-tertiary text-sm max-w-lg mx-auto mb-6">
+            Try our AI grammar checker now — no sign-up required, completely free, and your data never leaves your
+            device.
+          </p>
+          <a
+            href="#main-content"
+            class="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all"
+            >Start Checking</a
+          >
+        </div>
+      </div>
+      <div
+        id="toast"
+        class="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-xl bg-surface-2 border border-surface text-sm text-primary font-medium shadow-lg transition-all duration-300 translate-y-4 opacity-0 pointer-events-none"
+      >
+        ✓ Done
       </div>
     </div>
-<div id="toast" class="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-xl bg-surface-2 border border-surface text-sm text-primary font-medium shadow-lg transition-all duration-300 translate-y-4 opacity-0 pointer-events-none">✓ Done</div>
-  </div></main>
+  </main>
 </MainLayout>
 
 <script>
-  function playPing(){ try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){} }
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
   function showToast(msg) {
-    const t = document.getElementById("toast");
+    const t = document.getElementById('toast');
     if (!t) return;
     t.textContent = msg;
-    t.classList.remove("opacity-0", "translate-y-4", "pointer-events-none");
-    t.classList.add("opacity-100", "translate-y-0");
+    t.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+    t.classList.add('opacity-100', 'translate-y-0');
     clearTimeout(t._timer);
     t._timer = setTimeout(() => {
-      t.classList.remove("opacity-100", "translate-y-0");
-      t.classList.add("opacity-0", "translate-y-4", "pointer-events-none");
+      t.classList.remove('opacity-100', 'translate-y-0');
+      t.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
     }, 2000);
   }
 
-  const inputEl = document.getElementById("input-text");
-  const checkBtn = document.getElementById("check-btn");
-  const resultsArea = document.getElementById("results-area");
-  const errorsList = document.getElementById("errors-list");
-  const correctedText = document.getElementById("corrected-text");
-  const copyCorrectedBtn = document.getElementById("copy-corrected-btn");
+  const inputEl = document.getElementById('input-text');
+  const checkBtn = document.getElementById('check-btn');
+  const resultsArea = document.getElementById('results-area');
+  const errorsList = document.getElementById('errors-list');
+  const correctedText = document.getElementById('corrected-text');
+  const copyCorrectedBtn = document.getElementById('copy-corrected-btn');
 
   function triggerToast(message, variant) {
     if (window.__showToast) window.__showToast({ message, variant });
@@ -165,110 +367,241 @@ const schema = {
 
   const rules = [
     // their/there/they're
-    { pattern: /\btheir\b(?!\s*own\b)/gi, check: (m, words, i) => {
-      const next = words[i+1]?.toLowerCase();
-      if (next === "are" || next === "is" || next === "was" || next === "were" || next === "not") return "they're";
-      if (next && !["book","house","car","bag","dog","cat","work","idea","way","own","owning"].includes(next) && !/^[a-z]+(s|ed|ing)$/.test(next)) return "they're";
-      return null;
-    }, type: "confused", label: "Confused Word" },
-    { pattern: /\bthere\b/gi, check: (m, words, i) => {
-      if (i > 0 && ["is","are","was","were","will","has","have","had","does","do","did"].includes(words[i-1]?.toLowerCase())) return null;
-      const prev = words[i-1]?.toLowerCase();
-      const next = words[i+1]?.toLowerCase();
-      if (prev === "and" || prev === "or" || prev === "but") return null;
-      if (next && /^[a-z]+(ing|ed)$/.test(next) && !["is","are","was","were","will"].includes(prev)) return "their";
-      return null;
-    }, type: "confused", label: "Confused Word" },
+    {
+      pattern: /\btheir\b(?!\s*own\b)/gi,
+      check: (m, words, i) => {
+        const next = words[i + 1]?.toLowerCase();
+        if (next === 'are' || next === 'is' || next === 'was' || next === 'were' || next === 'not') return "they're";
+        if (
+          next &&
+          !['book', 'house', 'car', 'bag', 'dog', 'cat', 'work', 'idea', 'way', 'own', 'owning'].includes(next) &&
+          !/^[a-z]+(s|ed|ing)$/.test(next)
+        )
+          return "they're";
+        return null;
+      },
+      type: 'confused',
+      label: 'Confused Word',
+    },
+    {
+      pattern: /\bthere\b/gi,
+      check: (m, words, i) => {
+        if (
+          i > 0 &&
+          ['is', 'are', 'was', 'were', 'will', 'has', 'have', 'had', 'does', 'do', 'did'].includes(
+            words[i - 1]?.toLowerCase(),
+          )
+        )
+          return null;
+        const prev = words[i - 1]?.toLowerCase();
+        const next = words[i + 1]?.toLowerCase();
+        if (prev === 'and' || prev === 'or' || prev === 'but') return null;
+        if (next && /^[a-z]+(ing|ed)$/.test(next) && !['is', 'are', 'was', 'were', 'will'].includes(prev))
+          return 'their';
+        return null;
+      },
+      type: 'confused',
+      label: 'Confused Word',
+    },
     // your/you're
-    { pattern: /\byour\b/gi, check: (m, words, i) => {
-      const next = words[i+1]?.toLowerCase();
-      if (next === "are" || next === "re" || next === "not" || next === "going" || next === "welcome") return "you're";
-      if (next && (next.endsWith("ing") || ["right","wrong","sure","crazy","serious"].includes(next))) return "you're";
-      return null;
-    }, type: "confused", label: "Confused Word" },
-    { pattern: /\byoure\b|\byou're\b/gi, check: (m, words, i) => {
-      const next = words[i+1]?.toLowerCase();
-      if (next && !["not","going","welcome","right","wrong","sure","crazy","serious"].includes(next) && !next.endsWith("ing")) return "your";
-      return null;
-    }, type: "confused", label: "Confused Word" },
+    {
+      pattern: /\byour\b/gi,
+      check: (m, words, i) => {
+        const next = words[i + 1]?.toLowerCase();
+        if (next === 'are' || next === 're' || next === 'not' || next === 'going' || next === 'welcome')
+          return "you're";
+        if (next && (next.endsWith('ing') || ['right', 'wrong', 'sure', 'crazy', 'serious'].includes(next)))
+          return "you're";
+        return null;
+      },
+      type: 'confused',
+      label: 'Confused Word',
+    },
+    {
+      pattern: /\byoure\b|\byou're\b/gi,
+      check: (m, words, i) => {
+        const next = words[i + 1]?.toLowerCase();
+        if (
+          next &&
+          !['not', 'going', 'welcome', 'right', 'wrong', 'sure', 'crazy', 'serious'].includes(next) &&
+          !next.endsWith('ing')
+        )
+          return 'your';
+        return null;
+      },
+      type: 'confused',
+      label: 'Confused Word',
+    },
     // its/it's
-    { pattern: /\bits\b(?!\s*[a-z]+(ing|s)\b)/gi, check: (m, words, i) => {
-      if (i === 0) return null;
-      const prev = words[i-1]?.toLowerCase();
-      if (prev === "and" || prev === "or" || prev === "but" || prev === "if") return null;
-      const next = words[i+1]?.toLowerCase();
-      if (next === "own" || next === "way" || next === "name" || next === "size" || next === "color") return null;
-      if (next === "a" || next === "an" || next === "the") return "it's";
-      if (next && /^(a|an|the|my|his|her|our|their)$/.test(next)) return null;
-      if (next && (next.endsWith("ing") || next.endsWith("ed") || ["not","been","being","always","never","also","just","really"].includes(next))) return "it's";
-      return null;
-    }, type: "confused", label: "Confused Word" },
-    { pattern: /\bits\b(?=\s+own\b|\s+way\b|\s+name\b|\s+size\b)/gi, check: () => null, type: "confused", label: "Confused Word" },
-    { pattern: /\bit's\b/gi, check: (m, words, i) => {
-      const next = words[i+1]?.toLowerCase();
-      if (next && /^(own|way|name|size|color|history|purpose|members|features)$/.test(next)) return "its";
-      return null;
-    }, type: "confused", label: "Confused Word" },
+    {
+      pattern: /\bits\b(?!\s*[a-z]+(ing|s)\b)/gi,
+      check: (m, words, i) => {
+        if (i === 0) return null;
+        const prev = words[i - 1]?.toLowerCase();
+        if (prev === 'and' || prev === 'or' || prev === 'but' || prev === 'if') return null;
+        const next = words[i + 1]?.toLowerCase();
+        if (next === 'own' || next === 'way' || next === 'name' || next === 'size' || next === 'color') return null;
+        if (next === 'a' || next === 'an' || next === 'the') return "it's";
+        if (next && /^(a|an|the|my|his|her|our|their)$/.test(next)) return null;
+        if (
+          next &&
+          (next.endsWith('ing') ||
+            next.endsWith('ed') ||
+            ['not', 'been', 'being', 'always', 'never', 'also', 'just', 'really'].includes(next))
+        )
+          return "it's";
+        return null;
+      },
+      type: 'confused',
+      label: 'Confused Word',
+    },
+    {
+      pattern: /\bits\b(?=\s+own\b|\s+way\b|\s+name\b|\s+size\b)/gi,
+      check: () => null,
+      type: 'confused',
+      label: 'Confused Word',
+    },
+    {
+      pattern: /\bit's\b/gi,
+      check: (m, words, i) => {
+        const next = words[i + 1]?.toLowerCase();
+        if (next && /^(own|way|name|size|color|history|purpose|members|features)$/.test(next)) return 'its';
+        return null;
+      },
+      type: 'confused',
+      label: 'Confused Word',
+    },
     // double negatives
-    { pattern: /\b(?:don't|doesn't|didn't|won't|wouldn't|couldn't|shouldn't|isn't|aren't|wasn't|weren't|haven't|hasn't|hadn't|never|no|nobody|nothing|nowhere|neither|hardly|scarcely)\b(?:\s+\w+){0,4}\s+(?:don't|doesn't|didn't|won't|wouldn't|couldn't|shouldn't|isn't|aren't|wasn't|weren't|haven't|hasn't|hadn't|never|no|nobody|nothing|nowhere|neither|hardly|scarcely)\b/gi,
-    check: () => "Remove the double negative for clarity", type: "double-negative", label: "Double Negative" },
+    {
+      pattern:
+        /\b(?:don't|doesn't|didn't|won't|wouldn't|couldn't|shouldn't|isn't|aren't|wasn't|weren't|haven't|hasn't|hadn't|never|no|nobody|nothing|nowhere|neither|hardly|scarcely)\b(?:\s+\w+){0,4}\s+(?:don't|doesn't|didn't|won't|wouldn't|couldn't|shouldn't|isn't|aren't|wasn't|weren't|haven't|hasn't|hadn't|never|no|nobody|nothing|nowhere|neither|hardly|scarcely)\b/gi,
+      check: () => 'Remove the double negative for clarity',
+      type: 'double-negative',
+      label: 'Double Negative',
+    },
     // apostrophe in possessive its
-    { pattern: /\b(?:his|her|our|their|my|your|its)\s+(\w+)'s\b/gi, check: (m) => {
-      const match = m.match(/\b(?:his|her|our|their|my|your|its)\s+(\w+)'s\b/i);
-      if (match && !["let's","it's","he's","she's","that's","what's","who's","here's","there's","where's","how's"].includes(match[0].toLowerCase())) {
-        return match[0].replace(/'s\b/, "s");
-      }
-      return null;
-    }, type: "apostrophe", label: "Apostrophe Error" },
+    {
+      pattern: /\b(?:his|her|our|their|my|your|its)\s+(\w+)'s\b/gi,
+      check: (m) => {
+        const match = m.match(/\b(?:his|her|our|their|my|your|its)\s+(\w+)'s\b/i);
+        if (
+          match &&
+          ![
+            "let's",
+            "it's",
+            "he's",
+            "she's",
+            "that's",
+            "what's",
+            "who's",
+            "here's",
+            "there's",
+            "where's",
+            "how's",
+          ].includes(match[0].toLowerCase())
+        ) {
+          return match[0].replace(/'s\b/, 's');
+        }
+        return null;
+      },
+      type: 'apostrophe',
+      label: 'Apostrophe Error',
+    },
   ];
 
   const commonMisspellings = {
-    "recieve": "receive", "occured": "occurred", "occuring": "occurring",
-    "seperate": "separate", "definately": "definitely", "practise": "practice",
-    "licence": "license", "offence": "offense", "defence": "defense",
-    "accomodate": "accommodate", "accomodation": "accommodation", "acheive": "achieve",
-    "beleive": "believe", "beleif": "belief", "calender": "calendar",
-    "catagory": "category", "comittee": "committee", "commitee": "committee",
-    "concious": "conscious", "curiculum": "curriculum", "embarass": "embarrass",
-    "enviroment": "environment", "goverment": "government", "neccessary": "necessary",
-    "occassion": "occasion", "occasionaly": "occasionally", "paralel": "parallel",
-    "percieve": "perceive", "priviledge": "privilege", "priveledge": "privilege",
-    "pubically": "publicly", "recomend": "recommend", "refered": "referred",
-    "refering": "referring", "sincerly": "sincerely", "speach": "speech",
-    "sucess": "success", "succesful": "successful", "temperary": "temporary",
-    "tommorow": "tomorrow", "tommorrow": "tomorrow", "truely": "truly",
-    "untill": "until", "wierd": "weird", "writting": "writing", "alot": "a lot",
-    "cant": "can't", "dont": "don't", "wont": "won't", "didnt": "didn't",
-    "doesnt": "doesn't", "isnt": "isn't", "arent": "aren't", "wasnt": "wasn't",
-    "werent": "weren't", "havent": "haven't", "hasnt": "hasn't", "hadnt": "hadn't",
-    "couldnt": "couldn't", "wouldnt": "wouldn't", "shouldnt": "shouldn't",
-    "itsa": "it's a", "thats": "that's", "whats": "what's",
-    "theres": "there's", "heres": "here's", "whos": "who's",
+    recieve: 'receive',
+    occured: 'occurred',
+    occuring: 'occurring',
+    seperate: 'separate',
+    definately: 'definitely',
+    practise: 'practice',
+    licence: 'license',
+    offence: 'offense',
+    defence: 'defense',
+    accomodate: 'accommodate',
+    accomodation: 'accommodation',
+    acheive: 'achieve',
+    beleive: 'believe',
+    beleif: 'belief',
+    calender: 'calendar',
+    catagory: 'category',
+    comittee: 'committee',
+    commitee: 'committee',
+    concious: 'conscious',
+    curiculum: 'curriculum',
+    embarass: 'embarrass',
+    enviroment: 'environment',
+    goverment: 'government',
+    neccessary: 'necessary',
+    occassion: 'occasion',
+    occasionaly: 'occasionally',
+    paralel: 'parallel',
+    percieve: 'perceive',
+    priviledge: 'privilege',
+    priveledge: 'privilege',
+    pubically: 'publicly',
+    recomend: 'recommend',
+    refered: 'referred',
+    refering: 'referring',
+    sincerly: 'sincerely',
+    speach: 'speech',
+    sucess: 'success',
+    succesful: 'successful',
+    temperary: 'temporary',
+    tommorow: 'tomorrow',
+    tommorrow: 'tomorrow',
+    truely: 'truly',
+    untill: 'until',
+    wierd: 'weird',
+    writting: 'writing',
+    alot: 'a lot',
+    cant: "can't",
+    dont: "don't",
+    wont: "won't",
+    didnt: "didn't",
+    doesnt: "doesn't",
+    isnt: "isn't",
+    arent: "aren't",
+    wasnt: "wasn't",
+    werent: "weren't",
+    havent: "haven't",
+    hasnt: "hasn't",
+    hadnt: "hadn't",
+    couldnt: "couldn't",
+    wouldnt: "wouldn't",
+    shouldnt: "shouldn't",
+    itsa: "it's a",
+    thats: "that's",
+    whats: "what's",
+    theres: "there's",
+    heres: "here's",
+    whos: "who's",
   };
 
-  const subVerbs = { "i": "am", "you": "are", "he": "is", "she": "is", "it": "is", "we": "are", "they": "are" };
-  const subVerbsPast = { "i": "was", "you": "were", "he": "was", "she": "was", "it": "was", "we": "were", "they": "were" };
+  const subVerbs = { i: 'am', you: 'are', he: 'is', she: 'is', it: 'is', we: 'are', they: 'are' };
+  const subVerbsPast = { i: 'was', you: 'were', he: 'was', she: 'was', it: 'was', we: 'were', they: 'were' };
 
   const verbForms = {
-    "go": { past: "went", pastPart: "gone", presPart: "going", third: "goes" },
-    "see": { past: "saw", pastPart: "seen", presPart: "seeing", third: "sees" },
-    "do": { past: "did", pastPart: "done", presPart: "doing", third: "does" },
-    "have": { past: "had", pastPart: "had", presPart: "having", third: "has" },
-    "say": { past: "said", pastPart: "said", presPart: "saying", third: "says" },
-    "make": { past: "made", pastPart: "made", presPart: "making", third: "makes" },
-    "take": { past: "took", pastPart: "taken", presPart: "taking", third: "takes" },
-    "write": { past: "wrote", pastPart: "written", presPart: "writing", third: "writes" },
-    "speak": { past: "spoke", pastPart: "spoken", presPart: "speaking", third: "speaks" },
-    "break": { past: "broke", pastPart: "broken", presPart: "breaking", third: "breaks" },
-    "drive": { past: "drove", pastPart: "driven", presPart: "driving", third: "drives" },
-    "eat": { past: "ate", pastPart: "eaten", presPart: "eating", third: "eats" },
-    "fall": { past: "fell", pastPart: "fallen", presPart: "falling", third: "falls" },
-    "give": { past: "gave", pastPart: "given", presPart: "giving", third: "gives" },
-    "know": { past: "knew", pastPart: "known", presPart: "knowing", third: "knows" },
-    "begin": { past: "began", pastPart: "begun", presPart: "beginning", third: "begins" },
-    "ring": { past: "rang", pastPart: "rung", presPart: "ringing", third: "rings" },
-    "sing": { past: "sang", pastPart: "sung", presPart: "singing", third: "sings" },
-    "swim": { past: "swam", pastPart: "swum", presPart: "swimming", third: "swims" },
+    go: { past: 'went', pastPart: 'gone', presPart: 'going', third: 'goes' },
+    see: { past: 'saw', pastPart: 'seen', presPart: 'seeing', third: 'sees' },
+    do: { past: 'did', pastPart: 'done', presPart: 'doing', third: 'does' },
+    have: { past: 'had', pastPart: 'had', presPart: 'having', third: 'has' },
+    say: { past: 'said', pastPart: 'said', presPart: 'saying', third: 'says' },
+    make: { past: 'made', pastPart: 'made', presPart: 'making', third: 'makes' },
+    take: { past: 'took', pastPart: 'taken', presPart: 'taking', third: 'takes' },
+    write: { past: 'wrote', pastPart: 'written', presPart: 'writing', third: 'writes' },
+    speak: { past: 'spoke', pastPart: 'spoken', presPart: 'speaking', third: 'speaks' },
+    break: { past: 'broke', pastPart: 'broken', presPart: 'breaking', third: 'breaks' },
+    drive: { past: 'drove', pastPart: 'driven', presPart: 'driving', third: 'drives' },
+    eat: { past: 'ate', pastPart: 'eaten', presPart: 'eating', third: 'eats' },
+    fall: { past: 'fell', pastPart: 'fallen', presPart: 'falling', third: 'falls' },
+    give: { past: 'gave', pastPart: 'given', presPart: 'giving', third: 'gives' },
+    know: { past: 'knew', pastPart: 'known', presPart: 'knowing', third: 'knows' },
+    begin: { past: 'began', pastPart: 'begun', presPart: 'beginning', third: 'begins' },
+    ring: { past: 'rang', pastPart: 'rung', presPart: 'ringing', third: 'rings' },
+    sing: { past: 'sang', pastPart: 'sung', presPart: 'singing', third: 'sings' },
+    swim: { past: 'swam', pastPart: 'swum', presPart: 'swimming', third: 'swims' },
   };
 
   function checkGrammar(text) {
@@ -301,15 +634,15 @@ const schema = {
     const wordArr = text.split(/(\s+|[.!?,;:])/);
     let charOffset = 0;
     for (const w of wordArr) {
-      const clean = w.replace(/[^a-zA-Z]/g, "").toLowerCase();
+      const clean = w.replace(/[^a-zA-Z]/g, '').toLowerCase();
       if (clean.length > 1 && commonMisspellings[clean]) {
         errors.push({
           word: w,
           index: charOffset,
           length: w.length,
           suggestion: commonMisspellings[clean],
-          type: "spelling",
-          label: "Misspelling",
+          type: 'spelling',
+          label: 'Misspelling',
         });
       }
       charOffset += w.length;
@@ -317,30 +650,30 @@ const schema = {
 
     // Subject-verb agreement checks
     for (const sent of sentences) {
-      const sWords = sent.split(/\s+/).filter(w => w);
+      const sWords = sent.split(/\s+/).filter((w) => w);
       for (let i = 0; i < sWords.length - 1; i++) {
-        const sub = sWords[i].toLowerCase().replace(/[^a-z]/g, "");
-        const verb = sWords[i+1].toLowerCase().replace(/[^a-z]/g, "");
+        const sub = sWords[i].toLowerCase().replace(/[^a-z]/g, '');
+        const verb = sWords[i + 1].toLowerCase().replace(/[^a-z]/g, '');
         if (subVerbs[sub]) {
           const expectedBe = subVerbs[sub];
-          if (verb === "is" || verb === "are" || verb === "am" || verb === "was" || verb === "were") {
+          if (verb === 'is' || verb === 'are' || verb === 'am' || verb === 'was' || verb === 'were') {
             if (verb !== expectedBe && verb !== subVerbsPast[sub]) {
-              const idx = text.indexOf(sWords[i] + " " + sWords[i+1]);
+              const idx = text.indexOf(sWords[i] + ' ' + sWords[i + 1]);
               if (idx >= 0) {
                 errors.push({
-                  word: `${sWords[i]} ${sWords[i+1]}`,
+                  word: `${sWords[i]} ${sWords[i + 1]}`,
                   index: idx,
-                  length: sWords[i].length + 1 + sWords[i+1].length,
+                  length: sWords[i].length + 1 + sWords[i + 1].length,
                   suggestion: `${sWords[i]} ${expectedBe}`,
-                  type: "agreement",
-                  label: "Subject-Verb Agreement",
+                  type: 'agreement',
+                  label: 'Subject-Verb Agreement',
                 });
               }
             }
           }
         }
         // Check that "he/she/it" + verb without -s
-        if (["he","she","it"].includes(sub) && verbForms[verb] && verb === verbForms[verb].past) {
+        if (['he', 'she', 'it'].includes(sub) && verbForms[verb] && verb === verbForms[verb].past) {
           // past tense is fine with he/she/it
           continue;
         }
@@ -349,18 +682,18 @@ const schema = {
 
     // Repeated words
     for (let i = 0; i < words.length - 1; i++) {
-      const clean1 = words[i].toLowerCase().replace(/[^a-z]/g, "");
-      const clean2 = words[i+1].toLowerCase().replace(/[^a-z]/g, "");
+      const clean1 = words[i].toLowerCase().replace(/[^a-z]/g, '');
+      const clean2 = words[i + 1].toLowerCase().replace(/[^a-z]/g, '');
       if (clean1 === clean2 && clean1.length > 1) {
-        const idx = text.indexOf(words[i] + " " + words[i+1]);
-        if (idx >= 0 && !errors.find(e => e.index === idx)) {
+        const idx = text.indexOf(words[i] + ' ' + words[i + 1]);
+        if (idx >= 0 && !errors.find((e) => e.index === idx)) {
           errors.push({
-            word: `${words[i]} ${words[i+1]}`,
+            word: `${words[i]} ${words[i + 1]}`,
             index: idx,
-            length: words[i].length + 1 + words[i+1].length,
+            length: words[i].length + 1 + words[i + 1].length,
             suggestion: words[i],
-            type: "repeated",
-            label: "Repeated Word",
+            type: 'repeated',
+            label: 'Repeated Word',
           });
         }
       }
@@ -382,34 +715,50 @@ const schema = {
 
   function getColor(type) {
     const colors = {
-      "confused": { bg: "bg-rose-500/15", border: "border-rose-500/30", text: "text-rose-300", dot: "bg-rose-400" },
-      "spelling": { bg: "bg-amber-500/15", border: "border-amber-500/30", text: "text-amber-300", dot: "bg-amber-400" },
-      "double-negative": { bg: "bg-red-500/15", border: "border-red-500/30", text: "text-red-300", dot: "bg-red-400" },
-      "apostrophe": { bg: "bg-sky-500/15", border: "border-sky-500/30", text: "text-sky-300", dot: "bg-sky-400" },
-      "agreement": { bg: "bg-orange-500/15", border: "border-orange-500/30", text: "text-orange-300", dot: "bg-orange-400" },
-      "repeated": { bg: "bg-fuchsia-500/15", border: "border-fuchsia-500/30", text: "text-fuchsia-300", dot: "bg-fuchsia-400" },
+      confused: { bg: 'bg-rose-500/15', border: 'border-rose-500/30', text: 'text-rose-300', dot: 'bg-rose-400' },
+      spelling: { bg: 'bg-amber-500/15', border: 'border-amber-500/30', text: 'text-amber-300', dot: 'bg-amber-400' },
+      'double-negative': { bg: 'bg-red-500/15', border: 'border-red-500/30', text: 'text-red-300', dot: 'bg-red-400' },
+      apostrophe: { bg: 'bg-sky-500/15', border: 'border-sky-500/30', text: 'text-sky-300', dot: 'bg-sky-400' },
+      agreement: {
+        bg: 'bg-orange-500/15',
+        border: 'border-orange-500/30',
+        text: 'text-orange-300',
+        dot: 'bg-orange-400',
+      },
+      repeated: {
+        bg: 'bg-fuchsia-500/15',
+        border: 'border-fuchsia-500/30',
+        text: 'text-fuchsia-300',
+        dot: 'bg-fuchsia-400',
+      },
     };
-    return colors[type] || { bg: "bg-zinc-500/15", border: "border-zinc-500/30", text: "text-zinc-300", dot: "bg-zinc-400" };
+    return (
+      colors[type] || { bg: 'bg-zinc-500/15', border: 'border-zinc-500/30', text: 'text-zinc-300', dot: 'bg-zinc-400' }
+    );
   }
 
-  checkBtn.addEventListener("click", () => {
+  checkBtn.addEventListener('click', () => {
     const text = inputEl.value.trim();
-    if (!text) { triggerToast("Please enter some text to check", "warning"); return; }
+    if (!text) {
+      triggerToast('Please enter some text to check', 'warning');
+      return;
+    }
 
     const errors = checkGrammar(text);
-    resultsArea.classList.remove("hidden");
+    resultsArea.classList.remove('hidden');
 
     if (errors.length === 0) {
       errorsList.innerHTML = `<div class="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 text-center"><span class="text-emerald-400 text-sm font-medium">✓ No grammar errors found!</span></div>`;
       correctedText.textContent = text;
-      triggerToast("No errors found!", "success");
+      triggerToast('No errors found!', 'success');
       return;
     }
 
-    errorsList.innerHTML = errors.map((err, i) => {
-      const c = getColor(err.type);
-      return `<div class="${c.bg} ${c.border} border rounded-xl p-3 flex items-start gap-3">
-        <span class="w-5 h-5 rounded-full ${c.dot} shrink-0 flex items-center justify-center text-[10px] text-white font-bold">${i+1}</span>
+    errorsList.innerHTML = errors
+      .map((err, i) => {
+        const c = getColor(err.type);
+        return `<div class="${c.bg} ${c.border} border rounded-xl p-3 flex items-start gap-3">
+        <span class="w-5 h-5 rounded-full ${c.dot} shrink-0 flex items-center justify-center text-[10px] text-white font-bold">${i + 1}</span>
         <div class="flex-1 min-w-0">
           <div class="flex items-center gap-2 mb-0.5">
             <span class="text-[10px] font-semibold uppercase tracking-wider ${c.text}">${err.label}</span>
@@ -417,143 +766,247 @@ const schema = {
           <div class="text-sm"><span class="text-red-400 line-through">${err.word}</span> → <span class="text-emerald-400 font-medium">${err.suggestion}</span></div>
         </div>
       </div>`;
-    }).join("");
+      })
+      .join('');
 
     correctedText.textContent = applyCorrections(text, errors);
     saveHistory(correctedText.textContent);
-    triggerToast(`Found ${errors.length} error${errors.length > 1 ? "s" : ""}!`, errors.length > 0 ? "warning" : "success");
+    triggerToast(
+      `Found ${errors.length} error${errors.length > 1 ? 's' : ''}!`,
+      errors.length > 0 ? 'warning' : 'success',
+    );
   });
 
-  copyCorrectedBtn.addEventListener("click", async () => {
+  copyCorrectedBtn.addEventListener('click', async () => {
     const text = correctedText.textContent;
-    if (!text) { showToast("Nothing to copy!"); return; }
+    if (!text) {
+      showToast('Nothing to copy!');
+      return;
+    }
     await navigator.clipboard.writeText(text);
-    playPing(); showToast("Copied!");
+    playPing();
+    showToast('Copied!');
   });
 
-  document.getElementById("download-btn")?.addEventListener("click", () => {
-    const outputText = correctedText?.textContent || "";
-    if (!outputText) { showToast("Nothing to download!"); return; }
-    const fmt=document.getElementById("export-format")?.value||"txt";
+  document.getElementById('download-btn')?.addEventListener('click', () => {
+    const outputText = correctedText?.textContent || '';
+    if (!outputText) {
+      showToast('Nothing to download!');
+      return;
+    }
+    const fmt = document.getElementById('export-format')?.value || 'txt';
     let content = outputText;
-    let mime = "text/plain";
-    let ext = "txt";
-    if(fmt==="json"){ content=JSON.stringify({result:outputText, tool:"ai-grammar-checker", timestamp:new Date().toISOString()}); mime="application/json"; ext="json"; }
-    if(fmt==="csv"){ content="Result\n\""+outputText.replace(/"/g,'""')+"\""; mime="text/csv"; ext="csv"; }
-    if(fmt==="html"){ content="<!DOCTYPE html><html><body><pre>"+outputText.replace(/</g,"&lt;")+"</pre></body></html>"; mime="text/html"; ext="html"; }
-    const blob = new Blob([content], {type:mime});
-    const a = document.createElement("a");
+    let mime = 'text/plain';
+    let ext = 'txt';
+    if (fmt === 'json') {
+      content = JSON.stringify({ result: outputText, tool: 'ai-grammar-checker', timestamp: new Date().toISOString() });
+      mime = 'application/json';
+      ext = 'json';
+    }
+    if (fmt === 'csv') {
+      content = 'Result\n"' + outputText.replace(/"/g, '""') + '"';
+      mime = 'text/csv';
+      ext = 'csv';
+    }
+    if (fmt === 'html') {
+      content = '<!DOCTYPE html><html><body><pre>' + outputText.replace(/</g, '&lt;') + '</pre></body></html>';
+      mime = 'text/html';
+      ext = 'html';
+    }
+    const blob = new Blob([content], { type: mime });
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = "grammar-check-output."+ext;
+    a.download = 'grammar-check-output.' + ext;
     a.click();
     URL.revokeObjectURL(a.href);
-    playPing(); showToast("Downloaded!");
+    playPing();
+    showToast('Downloaded!');
   });
 
-  document.getElementById("clear-btn")?.addEventListener("click", () => {
-    document.querySelectorAll("textarea").forEach(t => t.value = "");
-    document.querySelectorAll("input[type=text], input[type=number]").forEach(i => i.value = "");
-    document.querySelectorAll("[id$='result'], [id$='output']").forEach(el => { el.textContent = ""; el.innerHTML = ""; el.classList.add("hidden"); });
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => (t.value = ''));
+    document.querySelectorAll('input[type=text], input[type=number]').forEach((i) => (i.value = ''));
+    document.querySelectorAll("[id$='result'], [id$='output']").forEach((el) => {
+      el.textContent = '';
+      el.innerHTML = '';
+      el.classList.add('hidden');
+    });
     inputEl.focus();
-    playPing(); showToast("Cleared!");
+    playPing();
+    showToast('Cleared!');
   });
 
-  inputEl?.addEventListener("input", () => {
+  inputEl?.addEventListener('input', () => {
     const text = inputEl.value;
-    document.getElementById("char-count").textContent = text.length;
-    document.getElementById("word-count").textContent = text.trim() ? text.trim().split(/\s+/).filter(w => w).length : 0;
-    document.getElementById("line-count").textContent = text ? text.split("\n").length : 0;
+    document.getElementById('char-count').textContent = text.length;
+    document.getElementById('word-count').textContent = text.trim()
+      ? text
+          .trim()
+          .split(/\s+/)
+          .filter((w) => w).length
+      : 0;
+    document.getElementById('line-count').textContent = text ? text.split('\n').length : 0;
   });
 
-  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-    const card = document.getElementById("fullscreen-btn").closest(".bg-surface-1.border.border-surface.rounded-2xl") || document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card =
+      document.getElementById('fullscreen-btn').closest('.bg-surface-1.border.border-surface.rounded-2xl') ||
+      document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
     if (!card) return;
     if (document.fullscreenElement) {
       document.exitFullscreen();
-      document.getElementById("fullscreen-btn").textContent = "⛶";
+      document.getElementById('fullscreen-btn').textContent = '⛶';
     } else {
       card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
-      document.getElementById("fullscreen-btn").textContent = "✕";
+      document.getElementById('fullscreen-btn').textContent = '✕';
     }
   });
-  document.addEventListener("fullscreenchange", () => {
-    const btn = document.getElementById("fullscreen-btn");
-    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
 
-  const DRAFT_KEY = "nt_draft_ai-grammar-checker";
-  (function() {
-    const input = document.getElementById("input-text") || document.querySelector("textarea:not([readonly])");
+  const DRAFT_KEY = 'nt_draft_ai-grammar-checker';
+  (function () {
+    const input = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');
     if (!input) return;
     try {
       const saved = localStorage.getItem(DRAFT_KEY);
-      if (saved && !input.value) { input.value = saved; input.dispatchEvent(new Event("input")); }
-    } catch(e) {}
+      if (saved && !input.value) {
+        input.value = saved;
+        input.dispatchEvent(new Event('input'));
+      }
+    } catch (e) {}
     let saveTimer;
-    input.addEventListener("input", () => {
+    input.addEventListener('input', () => {
       clearTimeout(saveTimer);
       saveTimer = setTimeout(() => {
-        try { localStorage.setItem(DRAFT_KEY, input.value); } catch(e) {}
+        try {
+          localStorage.setItem(DRAFT_KEY, input.value);
+        } catch (e) {}
       }, 500);
     });
   })();
 
-  document.querySelector(".font-inc")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.min(24,s+2)+"px"; }); });
-  document.querySelector(".font-dec")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.max(10,s-2)+"px"; }); });
-  try { const s=localStorage.getItem("nt_fs"); if(s) document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px"); } catch(e){}
-
-  document.addEventListener("keydown", e => {
-    if(e.ctrlKey&&e.key==="Enter"){ e.preventDefault(); const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])")||document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])"); if(b) b.click(); }
-    if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){ e.preventDefault(); document.getElementById("clear-btn")?.click(); }
-    if(e.ctrlKey&&(e.key==="D"||e.key==="d")){ e.preventDefault(); document.getElementById("download-btn")?.click(); }
-  });
-
-  try { const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}"); const b=document.getElementById("usage-badge"); if(b&&u["ai-grammar-checker"]) b.textContent="Used "+u["ai-grammar-checker"]+"×"; } catch(e){}
-
-  document.getElementById("share-btn")?.addEventListener("click", () => {
-    const o=document.getElementById("corrected-text")||document.querySelector("[id$='result']");
-    const t=o?.value||o?.textContent||"";
-    if(!t) return;
-    const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));
-    navigator.clipboard.writeText(u).catch(()=>{});
-    if(typeof showToast==="function") showToast("Link copied!");
-  });
-
-  const rtInput=document.getElementById("input-text")||document.querySelector("textarea:not([readonly])");
-  if(rtInput){
-    rtInput.addEventListener("input", ()=>{
-      const w=rtInput.value?rtInput.value.trim().split(/\s+/).length:0;
-      const e=document.getElementById("reading-time");
-      if(e) e.textContent=Math.max(1,Math.round(w/200))+" min read · "+Math.max(1,Math.round(w/150))+" min speak";
+  document.querySelector('.font-inc')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.min(24, s + 2) + 'px';
     });
-    rtInput.dispatchEvent(new Event("input"));
+  });
+  document.querySelector('.font-dec')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.max(10, s - 2) + 'px';
+    });
+  });
+  try {
+    const s = localStorage.getItem('nt_fs');
+    if (s) document.querySelectorAll('textarea').forEach((t) => (t.style.fontSize = s + 'px'));
+  } catch (e) {}
+
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b =
+        document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])") ||
+        document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      document.getElementById('clear-btn')?.click();
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
+
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['ai-grammar-checker']) b.textContent = 'Used ' + u['ai-grammar-checker'] + '×';
+  } catch (e) {}
+
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('corrected-text') || document.querySelector("[id$='result']");
+    const t = o?.value || o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof showToast === 'function') showToast('Link copied!');
+  });
+
+  const rtInput = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');
+  if (rtInput) {
+    rtInput.addEventListener('input', () => {
+      const w = rtInput.value ? rtInput.value.trim().split(/\s+/).length : 0;
+      const e = document.getElementById('reading-time');
+      if (e)
+        e.textContent =
+          Math.max(1, Math.round(w / 200)) + ' min read · ' + Math.max(1, Math.round(w / 150)) + ' min speak';
+    });
+    rtInput.dispatchEvent(new Event('input'));
   }
 
-  const lnInput=document.getElementById("input-text");
-  if(lnInput){
-    const updateLN=()=>{ const n=document.getElementById("line-nums"); if(n) n.textContent=Array.from({length:lnInput.value.split("\n").length},(_,i)=>i+1).join("\n"); };
-    lnInput.addEventListener("input", updateLN);
-    lnInput.addEventListener("scroll", ()=>{ const n=document.getElementById("line-nums"); if(n) n.scrollTop=lnInput.scrollTop; });
+  const lnInput = document.getElementById('input-text');
+  if (lnInput) {
+    const updateLN = () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.textContent = Array.from({ length: lnInput.value.split('\n').length }, (_, i) => i + 1).join('\n');
+    };
+    lnInput.addEventListener('input', updateLN);
+    lnInput.addEventListener('scroll', () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.scrollTop = lnInput.scrollTop;
+    });
     updateLN();
   }
 
-  const lfInput=document.getElementById("input-text");
-  if(lfInput){
-    lfInput.addEventListener("input", ()=>{
-      const t=lfInput.value.toLowerCase().replace(/[^a-z]/g,""); if(!t){ document.getElementById("letter-freq").classList.add("hidden"); return; }
-      const f={}; for(const c of t) f[c]=(f[c]||0)+1;
-      const s=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,8); const m=s[0]?s[0][1]:1;
-      const el=document.getElementById("letter-freq"); el.classList.remove("hidden");
-      el.innerHTML=s.map(([c,n])=>`<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n/m)*80+10}%"></div><span class="text-muted">${n}</span></div>`).join("");
+  const lfInput = document.getElementById('input-text');
+  if (lfInput) {
+    lfInput.addEventListener('input', () => {
+      const t = lfInput.value.toLowerCase().replace(/[^a-z]/g, '');
+      if (!t) {
+        document.getElementById('letter-freq').classList.add('hidden');
+        return;
+      }
+      const f = {};
+      for (const c of t) f[c] = (f[c] || 0) + 1;
+      const s = Object.entries(f)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+      const m = s[0] ? s[0][1] : 1;
+      const el = document.getElementById('letter-freq');
+      el.classList.remove('hidden');
+      el.innerHTML = s
+        .map(
+          ([c, n]) =>
+            `<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n / m) * 80 + 10}%"></div><span class="text-muted">${n}</span></div>`,
+        )
+        .join('');
     });
   }
 
-  document.querySelectorAll(".theme-swatch").forEach(s=>{
-    s.addEventListener("click",()=>{
-      const c=s.dataset.color; const map={purple:"#a855f7",blue:"#3b82f6",green:"#22c55e",pink:"#ec4899",orange:"#f97316"};
-      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach(b=>{ b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500").replace(/from-(purple|violet)-\d+/g,"from-"+c+"-500").replace(/to-purple-\d+/g,"to-"+c+"-600"); });
-      try{localStorage.setItem("nt_theme",c);}catch(e){}
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      const map = { purple: '#a855f7', blue: '#3b82f6', green: '#22c55e', pink: '#ec4899', orange: '#f97316' };
+      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500')
+          .replace(/from-(purple|violet)-\d+/g, 'from-' + c + '-500')
+          .replace(/to-purple-\d+/g, 'to-' + c + '-600');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
     });
   });
-  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>

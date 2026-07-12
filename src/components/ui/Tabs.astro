@@ -13,33 +13,35 @@ interface Props {
 const { tabs, activeTab: _activeTab, class: className } = Astro.props;
 ---
 
-<div class={`flex flex-wrap gap-2 ${className || ""}`} role="tablist">
-  {tabs.map((tab) => (
-    <button
-      class="tab-btn text-xs px-3.5 py-1.5 rounded-lg border transition-all duration-200 font-medium cursor-pointer"
-      role="tab"
-      aria-selected={tab.id === (_activeTab || tabs[0]?.id)}
-      aria-controls={`tabpanel-${tab.id}`}
-      id={`tab-${tab.id}`}
-      data-tab-id={tab.id}
-    >
-      {tab.label}
-    </button>
-  ))}
+<div class={`flex flex-wrap gap-2 ${className || ''}`} role="tablist">
+  {
+    tabs.map((tab) => (
+      <button
+        class="tab-btn text-xs px-3.5 py-1.5 rounded-lg border transition-all duration-200 font-medium cursor-pointer"
+        role="tab"
+        aria-selected={tab.id === (_activeTab || tabs[0]?.id)}
+        aria-controls={`tabpanel-${tab.id}`}
+        id={`tab-${tab.id}`}
+        data-tab-id={tab.id}
+      >
+        {tab.label}
+      </button>
+    ))
+  }
 </div>
 
 <style>
-  .tab-btn[aria-selected="true"] {
+  .tab-btn[aria-selected='true'] {
     background: var(--purple-600);
     border-color: var(--purple-500);
     color: white;
   }
-  .tab-btn[aria-selected="false"] {
+  .tab-btn[aria-selected='false'] {
     background: var(--surface-2);
     border-color: var(--border-surface);
     color: var(--text-tertiary);
   }
-  .tab-btn[aria-selected="false"]:hover {
+  .tab-btn[aria-selected='false']:hover {
     color: var(--text-primary);
     border-color: var(--border-surface-3);
   }

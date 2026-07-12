@@ -1,162 +1,496 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import ToolHeader from "../../components/ToolHeader.astro";
-import ShareBar from "../../components/ShareBar.astro";
-import RelatedTools from "../../components/RelatedTools.astro";
-import Accordion from "../../components/ui/Accordion.astro";
-import ToolContentSections from "../../components/ToolContentSections.astro";
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const benefits = [
-  { title: "Extract Key Sentences", desc: "Automatically identifies and extracts the most important sentences from any text using advanced NLP algorithms" },
-  { title: "Adjustable Compression", desc: "Control the summary length with an intuitive slider — from brief overviews to detailed condensations" },
-  { title: "Privacy-First Processing", desc: "All text analysis happens entirely in your browser. Nothing is ever sent to a server or stored" },
-  { title: "Word Count Statistics", desc: "View detailed before-and-after word counts to understand exactly how much compression was achieved" },
-  { title: "Copy with One Click", desc: "Export your summary instantly to your clipboard with a single click — no formatting lost" },
-  { title: "Completely Free", desc: "No sign-ups, no hidden limits, no premium tiers — just unlimited text summarization" },
+  {
+    title: 'Extract Key Sentences',
+    desc: 'Automatically identifies and extracts the most important sentences from any text using advanced NLP algorithms',
+  },
+  {
+    title: 'Adjustable Compression',
+    desc: 'Control the summary length with an intuitive slider — from brief overviews to detailed condensations',
+  },
+  {
+    title: 'Privacy-First Processing',
+    desc: 'All text analysis happens entirely in your browser. Nothing is ever sent to a server or stored',
+  },
+  {
+    title: 'Word Count Statistics',
+    desc: 'View detailed before-and-after word counts to understand exactly how much compression was achieved',
+  },
+  {
+    title: 'Copy with One Click',
+    desc: 'Export your summary instantly to your clipboard with a single click — no formatting lost',
+  },
+  {
+    title: 'Completely Free',
+    desc: 'No sign-ups, no hidden limits, no premium tiers — just unlimited text summarization',
+  },
 ];
 
 const howToSteps = [
-  { title: "Paste your text", desc: "Copy and paste any article, document, or passage into the input box — up to 100,000 characters supported" },
-  { title: "Choose compression level", desc: "Use the slider to set how much of the original text you want the summary to retain (10%–90%)" },
-  { title: "Generate summary", desc: "Click the summarize button and watch as the AI condenses your text into the most important points" },
-  { title: "Copy & use", desc: "Review the result, tweak the compression if needed, and copy the finished summary to your clipboard" },
+  {
+    title: 'Paste your text',
+    desc: 'Copy and paste any article, document, or passage into the input box — up to 100,000 characters supported',
+  },
+  {
+    title: 'Choose compression level',
+    desc: 'Use the slider to set how much of the original text you want the summary to retain (10%–90%)',
+  },
+  {
+    title: 'Generate summary',
+    desc: 'Click the summarize button and watch as the AI condenses your text into the most important points',
+  },
+  {
+    title: 'Copy & use',
+    desc: 'Review the result, tweak the compression if needed, and copy the finished summary to your clipboard',
+  },
 ];
 
 const useCases = [
-  { title: "Research Papers", desc: "Quickly digest lengthy academic papers and extract the core findings without reading every page" },
-  { title: "News Articles", desc: "Get the gist of breaking news stories in seconds so you stay informed without the time commitment" },
-  { title: "Meeting Notes", desc: "Condense long meeting transcripts and notes into actionable takeaways for your team" },
-  { title: "Content Previews", desc: "Generate article previews and meta descriptions that capture reader attention and improve CTR" },
+  {
+    title: 'Research Papers',
+    desc: 'Quickly digest lengthy academic papers and extract the core findings without reading every page',
+  },
+  {
+    title: 'News Articles',
+    desc: 'Get the gist of breaking news stories in seconds so you stay informed without the time commitment',
+  },
+  {
+    title: 'Meeting Notes',
+    desc: 'Condense long meeting transcripts and notes into actionable takeaways for your team',
+  },
+  {
+    title: 'Content Previews',
+    desc: 'Generate article previews and meta descriptions that capture reader attention and improve CTR',
+  },
 ];
 
 const faqItems = [
-  { question: "How does the AI summarizer work?", answer: "The AI summarizer uses advanced natural language processing to analyze your text, identify the most important sentences, and generate a concise summary. It evaluates each sentence for relevance and key information, then compiles the most significant points into a coherent summary." },
-  { question: "What compression ratio should I use?", answer: "For most documents, a 30-50% compression ratio works well. For longer texts, start with 20% to capture the most essential information. You can adjust the compression slider to see real-time previews and find the perfect balance." },
-  { question: "Is my text stored or shared?", answer: "No. All text processing happens entirely in your browser. Your content is never sent to any server, stored, or shared with third parties. Your privacy is completely protected." },
-  { question: "Can I summarize text in languages other than English?", answer: "Yes, the AI summarizer supports multiple languages including Spanish, French, German, Italian, Portuguese, Dutch, and more. The summarization quality is highest for English, but other languages are well-supported." },
-  { question: "What is the maximum text length I can summarize?", answer: "You can summarize texts up to 100,000 characters — enough for most articles, essays, and even short books. There is no minimum length requirement." },
-  { question: "Does the summarizer preserve the original meaning?", answer: "Yes, the AI is designed to extract the core meaning and most important information while discarding redundant or less critical details. It maintains the original context and tone." },
-  { question: "Can I use the summaries for commercial purposes?", answer: "Absolutely. There are no restrictions on how you use the generated summaries — whether for personal projects, academic work, or commercial content." },
-  { question: "How accurate is the text summarization?", answer: "The summarizer uses state-of-the-art extractive summarization techniques. Accuracy depends on text quality and structure, but for well-written content it consistently captures the key points with high precision." },
+  {
+    question: 'How does the AI summarizer work?',
+    answer:
+      'The AI summarizer uses advanced natural language processing to analyze your text, identify the most important sentences, and generate a concise summary. It evaluates each sentence for relevance and key information, then compiles the most significant points into a coherent summary.',
+  },
+  {
+    question: 'What compression ratio should I use?',
+    answer:
+      'For most documents, a 30-50% compression ratio works well. For longer texts, start with 20% to capture the most essential information. You can adjust the compression slider to see real-time previews and find the perfect balance.',
+  },
+  {
+    question: 'Is my text stored or shared?',
+    answer:
+      'No. All text processing happens entirely in your browser. Your content is never sent to any server, stored, or shared with third parties. Your privacy is completely protected.',
+  },
+  {
+    question: 'Can I summarize text in languages other than English?',
+    answer:
+      'Yes, the AI summarizer supports multiple languages including Spanish, French, German, Italian, Portuguese, Dutch, and more. The summarization quality is highest for English, but other languages are well-supported.',
+  },
+  {
+    question: 'What is the maximum text length I can summarize?',
+    answer:
+      'You can summarize texts up to 100,000 characters — enough for most articles, essays, and even short books. There is no minimum length requirement.',
+  },
+  {
+    question: 'Does the summarizer preserve the original meaning?',
+    answer:
+      'Yes, the AI is designed to extract the core meaning and most important information while discarding redundant or less critical details. It maintains the original context and tone.',
+  },
+  {
+    question: 'Can I use the summaries for commercial purposes?',
+    answer:
+      'Absolutely. There are no restrictions on how you use the generated summaries — whether for personal projects, academic work, or commercial content.',
+  },
+  {
+    question: 'How accurate is the text summarization?',
+    answer:
+      'The summarizer uses state-of-the-art extractive summarization techniques. Accuracy depends on text quality and structure, but for well-written content it consistently captures the key points with high precision.',
+  },
 ];
 
 const schema = {
-  name: "AI Text Summarizer",
-  applicationCategory: "AI Tools",
-  description: "Summarize long articles, documents, and text using extractive AI summarization. Reduce text length while preserving key meaning.",
-  featureList: ["Extractive sentence scoring", "Adjustable compression ratio", "Privacy-first browser processing", "Original word count & compression stats", "Copy summary with one click"],
+  name: 'AI Text Summarizer',
+  applicationCategory: 'AI Tools',
+  description:
+    'Summarize long articles, documents, and text using extractive AI summarization. Reduce text length while preserving key meaning.',
+  featureList: [
+    'Extractive sentence scoring',
+    'Adjustable compression ratio',
+    'Privacy-first browser processing',
+    'Original word count & compression stats',
+    'Copy summary with one click',
+  ],
 };
 ---
-<MainLayout title="AI Text Summarizer - Free Online Summarizing Tool" description="Summarize long articles and text using AI-powered extractive summarization. Adjust compression ratio, see summary stats, and keep your data private." keywords="text summarizer, AI summary generator, article summarizer, extractive summarization, text compression" toolSchema={schema} faq={faqItems} howto={{
-    name: "How to Summarize Text with AI",
-    description: "Learn how to use our AI text summarizer to condense long documents into concise, readable summaries",
-    steps: howToSteps.map(s => ({ title: s.title, text: s.desc })),
-    totalTime: "PT1M",
-  }} breadcrumbs={[{name:"Home",url:"/"},{name:"Tools",url:"/tools/"},{name:"AI Text Summarizer",url:"/tools/ai-text-summarizer/"}]}>
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden"><div class="max-w-4xl mx-auto">
-    <ToolHeader title="AI Text" gradient="Summarizer Pro" desc="Summarize long articles, documents, and any text in seconds. Extract key sentences while preserving the original meaning." badge="✦ AI Powered" slug="ai-text-summarizer" />
-    <ShareBar />
-    <div class="max-w-xl mx-auto mt-10">
-      <div class="bg-surface-1 border border-surface rounded-2xl p-6 space-y-4 relative">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
-            <span id="usage-badge" class="text-xs text-muted"></span>
-          </div>
-          <div class="flex items-center gap-2">
-            <div class="flex gap-1">
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="purple" style="background:#a855f7"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="blue" style="background:#3b82f6"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="green" style="background:#22c55e"></button>
-              <button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="pink" style="background:#ec4899"></button>
+
+<MainLayout
+  title="AI Text Summarizer - Free Online Summarizing Tool"
+  description="Summarize long articles and text using AI-powered extractive summarization. Adjust compression ratio, see summary stats, and keep your data private."
+  keywords="text summarizer, AI summary generator, article summarizer, extractive summarization, text compression"
+  toolSchema={schema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Summarize Text with AI',
+    description: 'Learn how to use our AI text summarizer to condense long documents into concise, readable summaries',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'AI Text Summarizer', url: '/tools/ai-text-summarizer/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="AI Text"
+        gradient="Summarizer Pro"
+        desc="Summarize long articles, documents, and any text in seconds. Extract key sentences while preserving the original meaning."
+        badge="✦ AI Powered"
+        slug="ai-text-summarizer"
+      />
+      <ShareBar />
+      <div class="max-w-xl mx-auto mt-10">
+        <div class="glass-card rounded-2xl p-6 space-y-4 relative">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+              <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
-            <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs" title="Fullscreen">⛶</button>
+            <div class="flex items-center gap-2">
+              <div class="flex gap-1">
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="purple"
+                  style="background:#a855f7"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="blue"
+                  style="background:#3b82f6"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="green"
+                  style="background:#22c55e"></button>
+                <button
+                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                  data-color="pink"
+                  style="background:#ec4899"></button>
+              </div>
+              <button
+                id="fullscreen-btn"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                title="Fullscreen">⛶</button
+              >
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 mb-2">
+            <button
+              class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A−</button
+            >
+            <button
+              class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
+              >A+</button
+            >
+            <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
+          </div>
+          <div class="flex">
+            <div
+              id="line-nums"
+              class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3"
+              style="min-width:2.5em"
+            >
+              1
+            </div>
+            <textarea
+              id="input-text"
+              rows="8"
+              placeholder="Paste your article or text here..."
+              class="flex-1 bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-none focus:outline-none focus:border-violet-500/60 transition-all"
+            ></textarea>
+          </div>
+          <div id="reading-time" class="text-xs text-muted mt-1"></div>
+          <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
+          <div class="flex items-center gap-4">
+            <div class="flex-1">
+              <label class="text-xs text-dim block mb-1">Compression: <span id="compression-label">30%</span></label>
+              <input
+                type="range"
+                id="compression-slider"
+                min="10"
+                max="60"
+                value="30"
+                class="w-full accent-violet-500"
+              />
+            </div>
+            <button
+              id="summarize-btn"
+              class="px-6 py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all"
+              >Summarize</button
+            >
+          </div>
+          <textarea
+            id="output-text"
+            rows="6"
+            readonly
+            placeholder="Your summary will appear here..."
+            class="w-full bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-none focus:outline-none transition-all"
+          ></textarea>
+          <div class="flex items-center justify-between">
+            <div id="summary-stats" class="flex gap-4 text-xs text-dim"></div>
+            <div class="flex gap-2">
+              <select
+                id="export-format"
+                class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
+              >
+                <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option
+                ><option value="html">HTML</option>
+              </select>
+              <button
+                id="download-btn"
+                class="px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+                >Download</button
+              >
+              <button
+                id="share-btn"
+                class="px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+                title="Copy share link">🔗</button
+              >
+              <button
+                id="clear-btn"
+                class="px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+                >Clear</button
+              >
+              <button
+                id="copy-summary-btn"
+                class="px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all"
+                >Copy Summary</button
+              >
+            </div>
           </div>
         </div>
-      <div class="flex items-center gap-1.5 mb-2">
-        <button class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A−</button>
-        <button class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all">A+</button>
-        <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
       </div>
-      <div class="flex">
-        <div id="line-nums" class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3" style="min-width:2.5em">1</div>
-        <textarea id="input-text" rows="8" placeholder="Paste your article or text here..." class="flex-1 bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-none focus:outline-none focus:border-violet-500/60 transition-all"></textarea>
-      </div>
-      <div id="reading-time" class="text-xs text-muted mt-1"></div>
-      <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
-        <div class="flex items-center gap-4">
-          <div class="flex-1">
-            <label class="text-xs text-dim block mb-1">Compression: <span id="compression-label">30%</span></label>
-            <input type="range" id="compression-slider" min="10" max="60" value="30" class="w-full accent-violet-500" />
-          </div>
-          <button id="summarize-btn" class="px-6 py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all">Summarize</button>
+      <section class="mt-20 max-w-3xl mx-auto">
+        <div class="text-center mb-8">
+          <span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2
+            class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
+          >
+            How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+              >Works</span
+            >
+          </h2>
+        </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
+          <p>
+            The AI Text Summarizer uses an <strong class="text-primary">extractive summarization</strong> algorithm that analyzes
+            your text at the sentence level. It first splits the text into individual sentences, then calculates a relevance
+            score for each sentence based on word frequency analysis — words that appear more frequently across the document
+            are considered more important.
+          </p><p>
+            Each sentence is scored by summing the frequency weights of its words (excluding common stop words), and the
+            top-scoring sentences are selected to form the summary. The <strong class="text-primary"
+              >compression ratio</strong
+            > slider lets you control how much of the original text is retained — lower percentages produce shorter, denser
+            summaries while higher percentages include more context.
+          </p><p>
+            This approach works best for factual, informative texts like news articles, research papers, and
+            documentation. Since everything runs client-side, your text never leaves your device.
+          </p>
         </div>
-        <textarea id="output-text" rows="6" readonly placeholder="Your summary will appear here..." class="w-full bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-none focus:outline-none transition-all"></textarea>
-        <div class="flex items-center justify-between">
-          <div id="summary-stats" class="flex gap-4 text-xs text-dim"></div>
-          <div class="flex gap-2">
-            <select id="export-format" class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5">
-              <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option value="html">HTML</option>
-            </select>
-            <button id="download-btn" class="px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Download</button>
-            <button id="share-btn" class="px-3 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all" title="Copy share link">🔗</button>
-            <button id="clear-btn" class="px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Clear</button>
-            <button id="copy-summary-btn" class="px-4 py-1.5 bg-surface-2 hover:bg-surface-3 border border-surface-3 rounded-lg text-xs text-tertiary hover:text-primary transition-all">Copy Summary</button>
-          </div>
+      </section>
+      <ToolContentSections
+        toolSlug="ai-text-summarizer"
+        toolName="AI Text Summarizer"
+        category="AI Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="ai-text-summarizer" />
+      <div class="mt-20 max-w-3xl mx-auto px-4">
+        <div
+          class="bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-fuchsia-500/10 border border-violet-500/20 rounded-2xl p-8 md:p-12 text-center"
+        >
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-4">
+            Ready to <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+              >Summarize</span
+            > Your Text?
+          </h2>
+          <p class="text-tertiary text-sm max-w-lg mx-auto mb-6">
+            Try our AI text summarizer now — no sign-up required, completely free, and your data never leaves your
+            device.
+          </p>
+          <a
+            href="#main-content"
+            class="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all"
+            >Start Summarizing</a
+          >
         </div>
       </div>
     </div>
-    <section class="mt-20 max-w-3xl mx-auto"><div class="text-center mb-8"><span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Works</span></h2></div><div class="space-y-4 text-sm text-tertiary leading-relaxed"><p>The AI Text Summarizer uses an <strong class="text-primary">extractive summarization</strong> algorithm that analyzes your text at the sentence level. It first splits the text into individual sentences, then calculates a relevance score for each sentence based on word frequency analysis — words that appear more frequently across the document are considered more important.</p><p>Each sentence is scored by summing the frequency weights of its words (excluding common stop words), and the top-scoring sentences are selected to form the summary. The <strong class="text-primary">compression ratio</strong> slider lets you control how much of the original text is retained — lower percentages produce shorter, denser summaries while higher percentages include more context.</p><p>This approach works best for factual, informative texts like news articles, research papers, and documentation. Since everything runs client-side, your text never leaves your device.</p></div></section>
-    <ToolContentSections
-      toolSlug="ai-text-summarizer"
-      toolName="AI Text Summarizer"
-      category="AI Tools"
-      {benefits}
-      howToSteps={howToSteps}
-      useCases={useCases}
-    />
-    <RelatedTools current="ai-text-summarizer" />
-    <div class="mt-20 max-w-3xl mx-auto px-4">
-      <div class="bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-fuchsia-500/10 border border-violet-500/20 rounded-2xl p-8 md:p-12 text-center">
-        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-4">Ready to <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Summarize</span> Your Text?</h2>
-        <p class="text-tertiary text-sm max-w-lg mx-auto mb-6">Try our AI text summarizer now — no sign-up required, completely free, and your data never leaves your device.</p>
-        <a href="#main-content" class="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all">Start Summarizing</a>
-      </div>
-    </div>
-  </div></main>
+  </main>
 </MainLayout>
 
 <script>
-  function playPing(){ try{const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=800;g.gain.setValueAtTime(0.08,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+0.12);o.start();o.stop(a.currentTime+0.12);}catch(e){} }
-  const inputEl = document.getElementById("input-text");
-  const outputEl = document.getElementById("output-text");
-  const summarizeBtn = document.getElementById("summarize-btn");
-  const copyBtn = document.getElementById("copy-summary-btn");
-  const slider = document.getElementById("compression-slider");
-  const compressionLabel = document.getElementById("compression-label");
-  const statsEl = document.getElementById("summary-stats");
+  function playPing() {
+    try {
+      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.connect(g);
+      g.connect(a.destination);
+      o.frequency.value = 800;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.start();
+      o.stop(a.currentTime + 0.12);
+    } catch (e) {}
+  }
+  const inputEl = document.getElementById('input-text');
+  const outputEl = document.getElementById('output-text');
+  const summarizeBtn = document.getElementById('summarize-btn');
+  const copyBtn = document.getElementById('copy-summary-btn');
+  const slider = document.getElementById('compression-slider');
+  const compressionLabel = document.getElementById('compression-label');
+  const statsEl = document.getElementById('summary-stats');
 
-  const stopWords = new Set(["the","a","an","and","or","but","in","on","at","to","for","of","by","with","from","as","is","was","are","were","be","been","being","have","has","had","do","does","did","will","would","can","could","shall","should","may","might","must","it","its","this","that","these","those","i","you","he","she","we","they","me","him","her","us","them","my","your","his","its","our","their","not","no","nor","so","if","than","then","else","all","each","every","both","few","some","any","many","much","such","only","own","same","here","there","when","where","why","how","what","which","who","whom"]);
+  const stopWords = new Set([
+    'the',
+    'a',
+    'an',
+    'and',
+    'or',
+    'but',
+    'in',
+    'on',
+    'at',
+    'to',
+    'for',
+    'of',
+    'by',
+    'with',
+    'from',
+    'as',
+    'is',
+    'was',
+    'are',
+    'were',
+    'be',
+    'been',
+    'being',
+    'have',
+    'has',
+    'had',
+    'do',
+    'does',
+    'did',
+    'will',
+    'would',
+    'can',
+    'could',
+    'shall',
+    'should',
+    'may',
+    'might',
+    'must',
+    'it',
+    'its',
+    'this',
+    'that',
+    'these',
+    'those',
+    'i',
+    'you',
+    'he',
+    'she',
+    'we',
+    'they',
+    'me',
+    'him',
+    'her',
+    'us',
+    'them',
+    'my',
+    'your',
+    'his',
+    'its',
+    'our',
+    'their',
+    'not',
+    'no',
+    'nor',
+    'so',
+    'if',
+    'than',
+    'then',
+    'else',
+    'all',
+    'each',
+    'every',
+    'both',
+    'few',
+    'some',
+    'any',
+    'many',
+    'much',
+    'such',
+    'only',
+    'own',
+    'same',
+    'here',
+    'there',
+    'when',
+    'where',
+    'why',
+    'how',
+    'what',
+    'which',
+    'who',
+    'whom',
+  ]);
 
   function summarize(text, ratio) {
-    const sentences = text.match(/[^.!?\n]+[.!?]*/g) || text.split(/\n+/).filter(s => s.trim());
-    if (sentences.length === 0) return { summary: "", originalWords: 0, summaryWords: 0, compression: 0 };
+    const sentences = text.match(/[^.!?\n]+[.!?]*/g) || text.split(/\n+/).filter((s) => s.trim());
+    if (sentences.length === 0) return { summary: '', originalWords: 0, summaryWords: 0, compression: 0 };
 
-    const words = text.toLowerCase().replace(/[^a-z\s]/g, "").split(/\s+/).filter(w => w && !stopWords.has(w));
+    const words = text
+      .toLowerCase()
+      .replace(/[^a-z\s]/g, '')
+      .split(/\s+/)
+      .filter((w) => w && !stopWords.has(w));
     const freq = {};
-    words.forEach(w => { freq[w] = (freq[w] || 0) + 1 });
+    words.forEach((w) => {
+      freq[w] = (freq[w] || 0) + 1;
+    });
     const maxFreq = Math.max(...Object.values(freq), 1);
 
-    const scored = sentences.map(s => {
-      const sWords = s.toLowerCase().replace(/[^a-z\s]/g, "").split(/\s+/).filter(w => w && !stopWords.has(w));
+    const scored = sentences.map((s) => {
+      const sWords = s
+        .toLowerCase()
+        .replace(/[^a-z\s]/g, '')
+        .split(/\s+/)
+        .filter((w) => w && !stopWords.has(w));
       const score = sWords.reduce((sum, w) => sum + (freq[w] || 0) / maxFreq, 0) / Math.max(sWords.length, 1);
       return { sentence: s.trim(), score, length: sWords.length };
     });
 
     const totalWords = sentences.reduce((sum, s) => {
-      return sum + s.toLowerCase().replace(/[^a-z\s]/g, "").split(/\s+/).filter(w => w).length;
+      return (
+        sum +
+        s
+          .toLowerCase()
+          .replace(/[^a-z\s]/g, '')
+          .split(/\s+/)
+          .filter((w) => w).length
+      );
     }, 0);
-    const targetWords = Math.max(1, Math.round(totalWords * ratio / 100));
+    const targetWords = Math.max(1, Math.round((totalWords * ratio) / 100));
 
     scored.sort((a, b) => b.score - a.score);
 
@@ -170,8 +504,8 @@ const schema = {
 
     selected.sort((a, b) => sentences.indexOf(a.sentence) - sentences.indexOf(b.sentence));
 
-    const summary = selected.map(s => s.sentence).join(" ");
-    const summaryWords = summary.split(/\s+/).filter(w => w).length;
+    const summary = selected.map((s) => s.sentence).join(' ');
+    const summaryWords = summary.split(/\s+/).filter((w) => w).length;
     const comp = totalWords > 0 ? Math.round((1 - summaryWords / totalWords) * 100) : 0;
 
     return { summary, originalWords: totalWords, summaryWords, compression: comp };
@@ -181,10 +515,16 @@ const schema = {
     if (window.__showToast) window.__showToast({ message, variant });
   }
 
-  summarizeBtn.addEventListener("click", () => {
+  summarizeBtn.addEventListener('click', () => {
     const text = inputEl.value.trim();
-    if (!text) { triggerToast("Please enter some text to summarize", "warning"); return; }
-    if (text.split(/\s+/).filter(w => w).length < 10) { triggerToast("Need at least 10 words for a meaningful summary", "warning"); return; }
+    if (!text) {
+      triggerToast('Please enter some text to summarize', 'warning');
+      return;
+    }
+    if (text.split(/\s+/).filter((w) => w).length < 10) {
+      triggerToast('Need at least 10 words for a meaningful summary', 'warning');
+      return;
+    }
 
     const ratio = parseInt(slider.value);
     const result = summarize(text, ratio);
@@ -195,135 +535,226 @@ const schema = {
       <span>Summary: <strong class="text-primary">${result.summaryWords}</strong> words</span>
       <span>Compressed: <strong class="text-violet-400">${result.compression}%</strong></span>
     `;
-    triggerToast("Summary generated!", "success");
+    triggerToast('Summary generated!', 'success');
   });
 
-  copyBtn.addEventListener("click", async () => {
-    if (!outputEl.value.trim()) { triggerToast("Nothing to copy!", "warning"); return; }
+  copyBtn.addEventListener('click', async () => {
+    if (!outputEl.value.trim()) {
+      triggerToast('Nothing to copy!', 'warning');
+      return;
+    }
     await navigator.clipboard.writeText(outputEl.value);
-    playPing(); triggerToast("Summary copied to clipboard!", "success");
+    playPing();
+    triggerToast('Summary copied to clipboard!', 'success');
   });
 
-  document.getElementById("download-btn")?.addEventListener("click", () => {
+  document.getElementById('download-btn')?.addEventListener('click', () => {
     const outputText = outputEl.value.trim();
-    if (!outputText) { triggerToast("Nothing to download!", "warning"); return; }
-    const fmt=document.getElementById("export-format")?.value||"txt";
+    if (!outputText) {
+      triggerToast('Nothing to download!', 'warning');
+      return;
+    }
+    const fmt = document.getElementById('export-format')?.value || 'txt';
     let content = outputText;
-    let mime = "text/plain";
-    let ext = "txt";
-    if(fmt==="json"){ content=JSON.stringify({result:outputText, tool:"ai-text-summarizer", timestamp:new Date().toISOString()}); mime="application/json"; ext="json"; }
-    if(fmt==="csv"){ content="Result\n\""+outputText.replace(/"/g,'""')+"\""; mime="text/csv"; ext="csv"; }
-    if(fmt==="html"){ content="<!DOCTYPE html><html><body><pre>"+outputText.replace(/</g,"&lt;")+"</pre></body></html>"; mime="text/html"; ext="html"; }
-    const blob = new Blob([content], {type:mime});
-    const a = document.createElement("a");
+    let mime = 'text/plain';
+    let ext = 'txt';
+    if (fmt === 'json') {
+      content = JSON.stringify({ result: outputText, tool: 'ai-text-summarizer', timestamp: new Date().toISOString() });
+      mime = 'application/json';
+      ext = 'json';
+    }
+    if (fmt === 'csv') {
+      content = 'Result\n"' + outputText.replace(/"/g, '""') + '"';
+      mime = 'text/csv';
+      ext = 'csv';
+    }
+    if (fmt === 'html') {
+      content = '<!DOCTYPE html><html><body><pre>' + outputText.replace(/</g, '&lt;') + '</pre></body></html>';
+      mime = 'text/html';
+      ext = 'html';
+    }
+    const blob = new Blob([content], { type: mime });
+    const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = "summary-output."+ext;
+    a.download = 'summary-output.' + ext;
     a.click();
     URL.revokeObjectURL(a.href);
-    playPing(); triggerToast("Downloaded!", "success");
+    playPing();
+    triggerToast('Downloaded!', 'success');
   });
 
-  document.getElementById("clear-btn")?.addEventListener("click", () => {
-    inputEl.value = "";
-    outputEl.value = "";
-    statsEl.innerHTML = "";
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    inputEl.value = '';
+    outputEl.value = '';
+    statsEl.innerHTML = '';
     inputEl.focus();
-    playPing(); triggerToast("Cleared!", "info");
+    playPing();
+    triggerToast('Cleared!', 'info');
   });
 
-  slider.addEventListener("input", () => {
-    compressionLabel.textContent = slider.value + "%";
+  slider.addEventListener('input', () => {
+    compressionLabel.textContent = slider.value + '%';
   });
 
-  document.getElementById("fullscreen-btn")?.addEventListener("click", () => {
-    const card = document.getElementById("fullscreen-btn").closest(".bg-surface-1.border.border-surface.rounded-2xl") || document.getElementById("fullscreen-btn").closest("[class*='bg-surface-1']");
+  document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
+    const card =
+      document.getElementById('fullscreen-btn').closest('.bg-surface-1.border.border-surface.rounded-2xl') ||
+      document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
     if (!card) return;
     if (document.fullscreenElement) {
       document.exitFullscreen();
-      document.getElementById("fullscreen-btn").textContent = "⛶";
+      document.getElementById('fullscreen-btn').textContent = '⛶';
     } else {
       card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
-      document.getElementById("fullscreen-btn").textContent = "✕";
+      document.getElementById('fullscreen-btn').textContent = '✕';
     }
   });
-  document.addEventListener("fullscreenchange", () => {
-    const btn = document.getElementById("fullscreen-btn");
-    if (btn) btn.textContent = document.fullscreenElement ? "✕" : "⛶";
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('fullscreen-btn');
+    if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
 
-  const DRAFT_KEY = "nt_draft_ai-text-summarizer";
-  (function() {
-    const input = document.getElementById("input-text") || document.querySelector("textarea:not([readonly])");
+  const DRAFT_KEY = 'nt_draft_ai-text-summarizer';
+  (function () {
+    const input = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');
     if (!input) return;
     try {
       const saved = localStorage.getItem(DRAFT_KEY);
-      if (saved && !input.value) { input.value = saved; input.dispatchEvent(new Event("input")); }
-    } catch(e) {}
+      if (saved && !input.value) {
+        input.value = saved;
+        input.dispatchEvent(new Event('input'));
+      }
+    } catch (e) {}
     let saveTimer;
-    input.addEventListener("input", () => {
+    input.addEventListener('input', () => {
       clearTimeout(saveTimer);
       saveTimer = setTimeout(() => {
-        try { localStorage.setItem(DRAFT_KEY, input.value); } catch(e) {}
+        try {
+          localStorage.setItem(DRAFT_KEY, input.value);
+        } catch (e) {}
       }, 500);
     });
   })();
 
-  document.querySelector(".font-inc")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.min(24,s+2)+"px"; }); });
-  document.querySelector(".font-dec")?.addEventListener("click", () => { document.querySelectorAll("textarea").forEach(t => { let s=parseInt(getComputedStyle(t).fontSize); t.style.fontSize=Math.max(10,s-2)+"px"; }); });
-  try { const s=localStorage.getItem("nt_fs"); if(s) document.querySelectorAll("textarea").forEach(t=>t.style.fontSize=s+"px"); } catch(e){}
-
-  document.addEventListener("keydown", e => {
-    if(e.ctrlKey&&e.key==="Enter"){ e.preventDefault(); const b=document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])")||document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])"); if(b) b.click(); }
-    if(e.ctrlKey&&e.shiftKey&&(e.key==="C"||e.key==="c")){ e.preventDefault(); document.getElementById("clear-btn")?.click(); }
-    if(e.ctrlKey&&(e.key==="D"||e.key==="d")){ e.preventDefault(); document.getElementById("download-btn")?.click(); }
-  });
-
-  try { const u=JSON.parse(localStorage.getItem("nt_tool_usage")||"{}"); const b=document.getElementById("usage-badge"); if(b&&u["ai-text-summarizer"]) b.textContent="Used "+u["ai-text-summarizer"]+"×"; } catch(e){}
-
-  document.getElementById("share-btn")?.addEventListener("click", () => {
-    const o=document.getElementById("output-text")||document.querySelector("[id$='result']");
-    const t=o?.value||o?.textContent||"";
-    if(!t) return;
-    const u=window.location.origin+window.location.pathname+"#result="+encodeURIComponent(t.substring(0,200));
-    navigator.clipboard.writeText(u).catch(()=>{});
-    if(typeof triggerToast==="function") triggerToast("Link copied!");
-  });
-
-  const rtInput=document.getElementById("input-text")||document.querySelector("textarea:not([readonly])");
-  if(rtInput){
-    rtInput.addEventListener("input", ()=>{
-      const w=rtInput.value?rtInput.value.trim().split(/\s+/).length:0;
-      const e=document.getElementById("reading-time");
-      if(e) e.textContent=Math.max(1,Math.round(w/200))+" min read · "+Math.max(1,Math.round(w/150))+" min speak";
+  document.querySelector('.font-inc')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.min(24, s + 2) + 'px';
     });
-    rtInput.dispatchEvent(new Event("input"));
+  });
+  document.querySelector('.font-dec')?.addEventListener('click', () => {
+    document.querySelectorAll('textarea').forEach((t) => {
+      let s = parseInt(getComputedStyle(t).fontSize);
+      t.style.fontSize = Math.max(10, s - 2) + 'px';
+    });
+  });
+  try {
+    const s = localStorage.getItem('nt_fs');
+    if (s) document.querySelectorAll('textarea').forEach((t) => (t.style.fontSize = s + 'px'));
+  } catch (e) {}
+
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      const b =
+        document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])") ||
+        document.querySelector("button[class*='bg-']:not([id*='full']):not([id*='paste'])");
+      if (b) b.click();
+    }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      document.getElementById('clear-btn')?.click();
+    }
+    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      document.getElementById('download-btn')?.click();
+    }
+  });
+
+  try {
+    const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
+    const b = document.getElementById('usage-badge');
+    if (b && u['ai-text-summarizer']) b.textContent = 'Used ' + u['ai-text-summarizer'] + '×';
+  } catch (e) {}
+
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    const o = document.getElementById('output-text') || document.querySelector("[id$='result']");
+    const t = o?.value || o?.textContent || '';
+    if (!t) return;
+    const u = window.location.origin + window.location.pathname + '#result=' + encodeURIComponent(t.substring(0, 200));
+    navigator.clipboard.writeText(u).catch(() => {});
+    if (typeof triggerToast === 'function') triggerToast('Link copied!');
+  });
+
+  const rtInput = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');
+  if (rtInput) {
+    rtInput.addEventListener('input', () => {
+      const w = rtInput.value ? rtInput.value.trim().split(/\s+/).length : 0;
+      const e = document.getElementById('reading-time');
+      if (e)
+        e.textContent =
+          Math.max(1, Math.round(w / 200)) + ' min read · ' + Math.max(1, Math.round(w / 150)) + ' min speak';
+    });
+    rtInput.dispatchEvent(new Event('input'));
   }
 
-  const lnInput=document.getElementById("input-text");
-  if(lnInput){
-    const updateLN=()=>{ const n=document.getElementById("line-nums"); if(n) n.textContent=Array.from({length:lnInput.value.split("\n").length},(_,i)=>i+1).join("\n"); };
-    lnInput.addEventListener("input", updateLN);
-    lnInput.addEventListener("scroll", ()=>{ const n=document.getElementById("line-nums"); if(n) n.scrollTop=lnInput.scrollTop; });
+  const lnInput = document.getElementById('input-text');
+  if (lnInput) {
+    const updateLN = () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.textContent = Array.from({ length: lnInput.value.split('\n').length }, (_, i) => i + 1).join('\n');
+    };
+    lnInput.addEventListener('input', updateLN);
+    lnInput.addEventListener('scroll', () => {
+      const n = document.getElementById('line-nums');
+      if (n) n.scrollTop = lnInput.scrollTop;
+    });
     updateLN();
   }
 
-  const lfInput=document.getElementById("input-text");
-  if(lfInput){
-    lfInput.addEventListener("input", ()=>{
-      const t=lfInput.value.toLowerCase().replace(/[^a-z]/g,""); if(!t){ document.getElementById("letter-freq").classList.add("hidden"); return; }
-      const f={}; for(const c of t) f[c]=(f[c]||0)+1;
-      const s=Object.entries(f).sort((a,b)=>b[1]-a[1]).slice(0,8); const m=s[0]?s[0][1]:1;
-      const el=document.getElementById("letter-freq"); el.classList.remove("hidden");
-      el.innerHTML=s.map(([c,n])=>`<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n/m)*80+10}%"></div><span class="text-muted">${n}</span></div>`).join("");
+  const lfInput = document.getElementById('input-text');
+  if (lfInput) {
+    lfInput.addEventListener('input', () => {
+      const t = lfInput.value.toLowerCase().replace(/[^a-z]/g, '');
+      if (!t) {
+        document.getElementById('letter-freq').classList.add('hidden');
+        return;
+      }
+      const f = {};
+      for (const c of t) f[c] = (f[c] || 0) + 1;
+      const s = Object.entries(f)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+      const m = s[0] ? s[0][1] : 1;
+      const el = document.getElementById('letter-freq');
+      el.classList.remove('hidden');
+      el.innerHTML = s
+        .map(
+          ([c, n]) =>
+            `<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n / m) * 80 + 10}%"></div><span class="text-muted">${n}</span></div>`,
+        )
+        .join('');
     });
   }
 
-  document.querySelectorAll(".theme-swatch").forEach(s=>{
-    s.addEventListener("click",()=>{
-      const c=s.dataset.color; const map={purple:"#a855f7",blue:"#3b82f6",green:"#22c55e",pink:"#ec4899",orange:"#f97316"};
-      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach(b=>{ b.className=b.className.replace(/bg-(purple|violet)-\d+/g,"bg-"+c+"-600").replace(/hover:bg-(purple|violet)-\d+/g,"hover:bg-"+c+"-500").replace(/from-(purple|violet)-\d+/g,"from-"+c+"-500").replace(/to-purple-\d+/g,"to-"+c+"-600"); });
-      try{localStorage.setItem("nt_theme",c);}catch(e){}
+  document.querySelectorAll('.theme-swatch').forEach((s) => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      const map = { purple: '#a855f7', blue: '#3b82f6', green: '#22c55e', pink: '#ec4899', orange: '#f97316' };
+      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach((b) => {
+        b.className = b.className
+          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
+          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500')
+          .replace(/from-(purple|violet)-\d+/g, 'from-' + c + '-500')
+          .replace(/to-purple-\d+/g, 'to-' + c + '-600');
+      });
+      try {
+        localStorage.setItem('nt_theme', c);
+      } catch (e) {}
     });
   });
-  try{const c=localStorage.getItem("nt_theme");if(c)document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();}catch(e){}
+  try {
+    const c = localStorage.getItem('nt_theme');
+    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
+  } catch (e) {}
 </script>

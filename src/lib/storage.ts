@@ -1,11 +1,11 @@
-const FAVORITES_KEY = "nt_favorites";
-const RECENTLY_USED_KEY = "nt_recently_used";
-const SEARCH_HISTORY_KEY = "nt_search_history";
-const TOOL_USAGE_KEY = "nt_tool_usage";
+const FAVORITES_KEY = 'nt_favorites';
+const RECENTLY_USED_KEY = 'nt_recently_used';
+const SEARCH_HISTORY_KEY = 'nt_search_history';
+const TOOL_USAGE_KEY = 'nt_tool_usage';
 
 export function getFavorites(): string[] {
   try {
-    return JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+    return JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
   } catch {
     return [];
   }
@@ -31,7 +31,7 @@ export function isFavorite(slug: string): boolean {
 
 export function addRecentlyUsed(slug: string): void {
   try {
-    let recent: string[] = JSON.parse(localStorage.getItem(RECENTLY_USED_KEY) || "[]");
+    let recent: string[] = JSON.parse(localStorage.getItem(RECENTLY_USED_KEY) || '[]');
     recent = recent.filter((id) => id !== slug);
     recent.unshift(slug);
     if (recent.length > 20) recent = recent.slice(0, 20);
@@ -41,26 +41,7 @@ export function addRecentlyUsed(slug: string): void {
 
 export function getRecentlyUsed(): string[] {
   try {
-    return JSON.parse(localStorage.getItem(RECENTLY_USED_KEY) || "[]");
-  } catch {
-    return [];
-  }
-}
-
-export function addSearchHistory(query: string): void {
-  try {
-    if (!query.trim()) return;
-    let history: string[] = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || "[]");
-    history = history.filter((q) => q !== query);
-    history.unshift(query);
-    if (history.length > 10) history = history.slice(0, 10);
-    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));
-  } catch {}
-}
-
-export function getSearchHistory(): string[] {
-  try {
-    return JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || "[]");
+    return JSON.parse(localStorage.getItem(RECENTLY_USED_KEY) || '[]');
   } catch {
     return [];
   }
@@ -68,7 +49,7 @@ export function getSearchHistory(): string[] {
 
 export function trackToolUsage(slug: string): void {
   try {
-    const usage: Record<string, number> = JSON.parse(localStorage.getItem(TOOL_USAGE_KEY) || "{}");
+    const usage: Record<string, number> = JSON.parse(localStorage.getItem(TOOL_USAGE_KEY) || '{}');
     usage[slug] = (usage[slug] || 0) + 1;
     localStorage.setItem(TOOL_USAGE_KEY, JSON.stringify(usage));
   } catch {}
@@ -76,16 +57,8 @@ export function trackToolUsage(slug: string): void {
 
 export function getToolUsage(): Record<string, number> {
   try {
-    return JSON.parse(localStorage.getItem(TOOL_USAGE_KEY) || "{}");
+    return JSON.parse(localStorage.getItem(TOOL_USAGE_KEY) || '{}');
   } catch {
     return {};
   }
-}
-
-export function getMostUsedTools(limit = 5): string[] {
-  const usage = getToolUsage();
-  return Object.entries(usage)
-    .sort(([, a], [, b]) => b - a)
-    .slice(0, limit)
-    .map(([slug]) => slug);
 }

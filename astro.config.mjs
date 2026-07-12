@@ -1,35 +1,18 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite';
+import tailwind from '@tailwindcss/vite';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://numanx-tools.pages.dev',
-  compressHTML: true,
-  scopedStyleStrategy: 'where',
-  build: {
-    inlineStylesheets: 'auto',
-    assetsInlineLimit: 4096,
-  },
-  prefetch: {
-    defaultStrategy: 'hover',
-  },
+  trailingSlash: 'always', // Strictly normalize slashes to prevent Duplicate Content in GSC
+  integrations: [
+    sitemap({
+      changefreq: 'daily',
+      priority: 0.8,
+    })
+  ],
   vite: {
-    plugins: [tailwindcss()],
-    build: {
-      cssMinify: 'lightningcss',
-      rollupOptions: {
-        output: {
-          assetFileNames: '_astro/[name].[hash][extname]',
-          chunkFileNames: '_astro/[name].[hash].js',
-          entryFileNames: '_astro/[name].[hash].js',
-          manualChunks(id) {
-            if (id.includes('node_modules/qrcode')) {
-              return 'vendor/qrcode';
-            }
-          },
-        },
-      },
-    },
+    plugins: [tailwind()],
   },
 });

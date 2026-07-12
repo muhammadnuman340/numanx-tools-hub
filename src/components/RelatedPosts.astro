@@ -6,11 +6,13 @@ interface Props {
   limit?: number;
 }
 
-const postModules = import.meta.glob("../pages/blog/*.md", { eager: true });
-const allPosts = Object.entries(postModules).map(([path, mod]) => ({
-  slug: path.replace("../pages/blog/", "").replace(".md", ""),
-  ...mod,
-})).sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
+const postModules = import.meta.glob('../pages/blog/*.md', { eager: true });
+const allPosts = Object.entries(postModules)
+  .map(([path, mod]) => ({
+    slug: path.replace('../pages/blog/', '').replace('.md', ''),
+    ...mod,
+  }))
+  .sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
 
 const { currentSlug, category, tags, limit = 3 } = Astro.props;
 
@@ -19,24 +21,31 @@ const related = allPosts
   .filter((p) => {
     if (category && p.frontmatter.category === category) return true;
     if (tags && tags.length > 0 && p.frontmatter.tags) {
-      return p.frontmatter.tags.some(t => tags.includes(t));
+      return p.frontmatter.tags.some((t) => tags.includes(t));
     }
     return !category && !tags;
   })
   .slice(0, limit);
 ---
 
-{related.length > 0 && (
-  <div class="mt-12 pt-8 border-t border-surface">
-    <h3 class="text-lg font-bold text-white mb-5">Related Articles</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      {related.map((post) => (
-        <a href={`/blog/${post.slug}/`} class="group rounded-xl border border-surface bg-surface-1 p-4 hover:border-purple-500/40 transition-all duration-300">
-          <span class="text-[10px] text-purple-400 font-medium">{post.frontmatter.category}</span>
-          <h4 class="text-sm font-semibold text-primary group-hover:text-white mt-1 transition-colors">{post.frontmatter.title}</h4>
-          <p class="text-xs text-muted mt-1 line-clamp-2">{post.frontmatter.description}</p>
-        </a>
-      ))}
+{
+  related.length > 0 && (
+    <div class="mt-12 pt-8 border-t border-surface">
+      <h3 class="text-lg font-bold text-white mb-5">Related Articles</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {related.map((post) => (
+          <a
+            href={`/blog/${post.slug}/`}
+            class="group rounded-xl border border-surface bg-surface-1 p-4 hover:border-purple-500/40 transition-all duration-300"
+          >
+            <span class="text-[10px] text-purple-400 font-medium">{post.frontmatter.category}</span>
+            <h4 class="text-sm font-semibold text-primary group-hover:text-white mt-1 transition-colors">
+              {post.frontmatter.title}
+            </h4>
+            <p class="text-xs text-muted mt-1 line-clamp-2">{post.frontmatter.description}</p>
+          </a>
+        ))}
+      </div>
     </div>
-  </div>
-)}
+  )
+}

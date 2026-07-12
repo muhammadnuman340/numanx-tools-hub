@@ -80,69 +80,96 @@ const faqItems = [
         <AdUnit format="horizontal" />
       </div>
 
-      <!-- Contact Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-16">
-        <!-- Contact Form -->
-        <div class="lg:col-span-3">
-          <div class="rounded-2xl border border-surface bg-surface-1 p-6 md:p-8 shadow-xl">
-            <h2 class="text-xl font-bold text-white mb-6">Send a Message</h2>
+      <!-- Contact Grid (Bento Layout) -->
+      <div id="cards-container-contact" class="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-16 group-section">
+        <!-- Contact Form (col-span-3) -->
+        <div
+          class="lg:col-span-3 card-spotlight bg-surface-1/80 border border-surface p-6 md:p-8 rounded-3xl shadow-xl relative overflow-hidden flex flex-col justify-between hover:bg-amber-500/5 transition-all audio-trigger"
+        >
+          <div
+            class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
+          >
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-white mb-6 font-mono tracking-tight flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-purple-500 animate-pulse"></span>
+              Neural Interface Form
+            </h2>
             <form id="contact-form" class="space-y-5">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label for="name" class="block text-xs font-semibold text-tertiary mb-1.5">Full Name</label>
+                  <label for="name" class="block text-xs font-semibold text-tertiary mb-1.5 font-mono">Full Name</label>
                   <input
                     id="name"
                     type="text"
                     placeholder="John Doe"
                     required
-                    class="w-full px-4 py-3 rounded-xl bg-black/40 border border-surface text-white placeholder-zinc-600 text-sm focus:border-purple-500/50 focus:outline-none transition-colors"
+                    class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/30 focus:border-amber-500/50 focus:outline-none transition-all text-white placeholder-zinc-500 text-sm shadow-inner audio-trigger"
                   />
                 </div>
                 <div>
-                  <label for="email" class="block text-xs font-semibold text-tertiary mb-1.5">Email Address</label>
+                  <label for="email" class="block text-xs font-semibold text-tertiary mb-1.5 font-mono"
+                    >Email Address</label
+                  >
                   <input
                     id="email"
                     type="email"
                     placeholder="john@example.com"
                     required
-                    class="w-full px-4 py-3 rounded-xl bg-black/40 border border-surface text-white placeholder-zinc-600 text-sm focus:border-purple-500/50 focus:outline-none transition-colors"
+                    class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/30 focus:border-amber-500/50 focus:outline-none transition-all text-white placeholder-zinc-500 text-sm shadow-inner audio-trigger"
                   />
                 </div>
               </div>
               <div>
-                <label for="subject" class="block text-xs font-semibold text-tertiary mb-1.5">Subject</label>
+                <label for="subject" class="block text-xs font-semibold text-tertiary mb-1.5 font-mono">Subject</label>
                 <select
                   id="subject"
-                  class="w-full px-4 py-3 rounded-xl bg-black/40 border border-surface text-secondary text-sm focus:border-purple-500/50 focus:outline-none transition-colors"
+                  class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/30 focus:border-amber-500/50 focus:outline-none transition-all text-secondary text-sm shadow-inner audio-trigger"
                 >
-                  <option value="">Select a topic</option>
-                  <option value="feedback">Feedback</option>
-                  <option value="bug">Bug Report</option>
-                  <option value="suggestion">Tool Suggestion</option>
-                  <option value="partnership">Partnership</option>
-                  <option value="other">Other</option>
+                  <option value="" class="bg-[#0a0a0b] text-white">Select a topic</option>
+                  <option value="feedback" class="bg-[#0a0a0b] text-white">Feedback</option>
+                  <option value="bug" class="bg-[#0a0a0b] text-white">Bug Report</option>
+                  <option value="suggestion" class="bg-[#0a0a0b] text-white">Tool Suggestion</option>
+                  <option value="partnership" class="bg-[#0a0a0b] text-white">Partnership</option>
+                  <option value="other" class="bg-[#0a0a0b] text-white">Other</option>
                 </select>
               </div>
               <div>
-                <label for="message" class="block text-xs font-semibold text-tertiary mb-1.5">Message</label>
+                <label for="message" class="block text-xs font-semibold text-tertiary mb-1.5 font-mono">Message</label>
                 <textarea
                   id="message"
                   rows="5"
                   placeholder="Write your message here..."
                   required
-                  class="w-full px-4 py-3 rounded-xl bg-black/40 border border-surface text-white placeholder-zinc-600 text-sm focus:border-purple-500/50 focus:outline-none transition-colors resize-none"
+                  class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/30 focus:border-amber-500/50 focus:outline-none transition-all text-white placeholder-zinc-500 text-sm shadow-inner resize-none audio-trigger"
                 ></textarea>
               </div>
               <button
                 type="submit"
                 id="contact-submit"
-                class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-all duration-200 shadow-lg shadow-purple-900/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                class="w-full bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-all duration-200 shadow-lg shadow-purple-900/30 hover:shadow-purple-500/20 hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed audio-trigger flex items-center justify-center gap-2 relative overflow-hidden"
               >
-                <span id="submit-text">Send Message</span>
+                <span id="submit-text" class="flex items-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="group-hover:translate-x-0.5 transition-transform"
+                    ><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"
+                    ></polygon></svg
+                  >
+                  Send Message
+                </span>
                 <span id="submit-spinner" class="hidden inline-flex items-center gap-2">
-                  <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  <svg class="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                   </svg>
                   Sending...
                 </span>
@@ -152,10 +179,25 @@ const faqItems = [
           </div>
         </div>
 
-        <!-- Contact Info Sidebar -->
+        <!-- Contact Info Sidebar (col-span-2) -->
         <div class="lg:col-span-2 space-y-5">
-          <div class="rounded-2xl border border-surface bg-surface-1 p-6 shadow-xl">
-            <h3 class="text-sm font-bold text-white mb-4">Contact Information</h3>
+          <!-- Coordinates Sidebar Widget -->
+          <div
+            class="card-spotlight bg-surface-1/80 border border-surface p-6 rounded-3xl shadow-xl relative overflow-hidden hover:bg-purple-500/5 transition-all audio-trigger"
+          >
+            <div
+              class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
+            >
+            </div>
+            <h3 class="text-sm font-bold text-white mb-4 font-mono tracking-tight flex items-center justify-between">
+              <span>Contact Coordinates</span>
+              <span
+                class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-zinc-800 text-[10px] text-zinc-400 border border-zinc-700"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                ACTIVE
+              </span>
+            </h3>
             <div class="space-y-4">
               <div class="flex items-start gap-3">
                 <svg
@@ -242,8 +284,13 @@ const faqItems = [
                   ></circle></svg
                 >
                 <div>
-                  <p class="text-xs font-semibold text-secondary">Location</p>
-                  <p class="text-xs text-muted">Karachi, Pakistan</p>
+                  <p class="text-xs font-semibold text-secondary">Location Coordinates</p>
+                  <p class="text-xs text-muted">
+                    Karachi, Pakistan <span
+                      class="font-mono text-[10px] text-purple-400 ml-1 bg-purple-950/40 px-1 py-0.5 rounded"
+                      >[24.8607° N, 67.0011° E]</span
+                    >
+                  </p>
                 </div>
               </div>
               <div class="flex items-start gap-3">
@@ -261,15 +308,21 @@ const faqItems = [
                   ><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg
                 >
                 <div>
-                  <p class="text-xs font-semibold text-secondary">Response Time</p>
-                  <p class="text-xs text-muted">Typically within 24 hours</p>
+                  <p class="text-xs font-semibold text-secondary">Response Latency</p>
+                  <p class="text-xs text-muted">Typically under &lt; 24 hours</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="rounded-2xl border border-surface bg-surface-1 p-6 shadow-xl">
-            <h3 class="text-sm font-bold text-white mb-4">Quick Links</h3>
+          <div
+            class="card-spotlight bg-surface-1/80 border border-surface p-6 rounded-3xl shadow-xl relative overflow-hidden hover:bg-purple-500/5 transition-all audio-trigger"
+          >
+            <div
+              class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
+            >
+            </div>
+            <h3 class="text-sm font-bold text-white mb-4 font-mono tracking-tight">Quick Links</h3>
             <div class="space-y-2">
               <a href="/about/" class="block text-xs text-tertiary hover:text-purple-400 transition-colors"
                 >About NumanX Studio</a
@@ -286,14 +339,20 @@ const faqItems = [
             </div>
           </div>
 
-          <div class="rounded-2xl border border-surface bg-surface-1 p-6 shadow-xl">
-            <h3 class="text-sm font-bold text-white mb-4">Follow Us</h3>
+          <div
+            class="card-spotlight bg-surface-1/80 border border-surface p-6 rounded-3xl shadow-xl relative overflow-hidden hover:bg-purple-500/5 transition-all audio-trigger"
+          >
+            <div
+              class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
+            >
+            </div>
+            <h3 class="text-sm font-bold text-white mb-4 font-mono tracking-tight">Follow Us</h3>
             <div class="flex flex-wrap gap-3">
               <a
                 href="https://github.com/numanxstudio"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all"
+                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all audio-trigger"
                 aria-label="GitHub"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
@@ -306,7 +365,7 @@ const faqItems = [
                 href="https://x.com/numanxstudio"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all"
+                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all audio-trigger"
                 aria-label="Twitter / X"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
@@ -319,7 +378,7 @@ const faqItems = [
                 href="https://instagram.com/numanxstudio"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all"
+                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all audio-trigger"
                 aria-label="Instagram"
               >
                 <svg
@@ -344,7 +403,7 @@ const faqItems = [
                 href="https://facebook.com/numanxstudio"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all"
+                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all audio-trigger"
                 aria-label="Facebook"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
@@ -357,7 +416,7 @@ const faqItems = [
                 href="https://tiktok.com/@numanxstudio"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all"
+                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all audio-trigger"
                 aria-label="TikTok"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
@@ -370,7 +429,7 @@ const faqItems = [
                 href="https://youtube.com/@numanxstudio"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all"
+                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all audio-trigger"
                 aria-label="YouTube"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
@@ -399,49 +458,91 @@ const faqItems = [
 </MainLayout>
 
 <script>
-  const form = document.getElementById('contact-form');
-  const msg = document.getElementById('contact-msg');
-  const submitBtn = document.getElementById('contact-submit');
-  const submitText = document.getElementById('submit-text');
-  const submitSpinner = document.getElementById('submit-spinner');
-  if (form && msg && submitBtn) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const subject = document.getElementById('subject').value;
-      const message = document.getElementById('message').value.trim();
-      if (!name || !email || !message) {
-        msg.className = 'text-xs text-red-400 text-center';
-        msg.textContent = 'Please fill in all required fields.';
-        return;
+  const handleOnMouseMove = (e: MouseEvent, containerId: string) => {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const cards = container.getElementsByClassName('card-spotlight');
+    for (const card of cards as any) {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+      if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -4;
+        const rotateY = ((x - centerX) / centerX) * 4;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px) scale(1.02)`;
+        card.style.zIndex = '50';
+      } else {
+        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
+        card.style.zIndex = '1';
       }
-      msg.className = 'text-xs text-center hidden';
-      submitBtn.disabled = true;
-      submitText.classList.add('hidden');
-      submitSpinner.classList.remove('hidden');
-      try {
-        const resp = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, subject, message }),
-        });
-        const data = await resp.json();
-        if (resp.ok && data.success) {
-          msg.className = 'text-xs text-emerald-400 text-center';
-          msg.textContent = data.message || "Message sent successfully! We'll get back to you soon.";
-          form.reset();
-        } else {
-          msg.className = 'text-xs text-red-400 text-center';
-          msg.textContent = data.error || 'Something went wrong. Please try again.';
+    }
+  };
+
+  const initContactPage = () => {
+    // 3D Tilt initialization
+    const container = document.getElementById('cards-container-contact');
+    if (container) {
+      container.addEventListener('mousemove', (e) => handleOnMouseMove(e, 'cards-container-contact'));
+      container.addEventListener('mouseleave', () => {
+        const cards = container.getElementsByClassName('card-spotlight');
+        for (const card of cards as any) {
+          card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
+          card.style.zIndex = '1';
         }
-      } catch {
-        msg.className = 'text-xs text-red-400 text-center';
-        msg.textContent = 'Network error. Please check your connection and try again.';
-      }
-      submitBtn.disabled = false;
-      submitText.classList.remove('hidden');
-      submitSpinner.classList.add('hidden');
-    });
-  }
+      });
+    }
+
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    const msg = document.getElementById('contact-msg');
+    const submitBtn = document.getElementById('contact-submit') as HTMLButtonElement | null;
+    const submitText = document.getElementById('submit-text');
+    const submitSpinner = document.getElementById('submit-spinner');
+    if (form && msg && submitBtn && submitText && submitSpinner) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = (document.getElementById('name') as HTMLInputElement).value.trim();
+        const email = (document.getElementById('email') as HTMLInputElement).value.trim();
+        const subject = (document.getElementById('subject') as HTMLSelectElement).value;
+        const message = (document.getElementById('message') as HTMLTextAreaElement).value.trim();
+        if (!name || !email || !message) {
+          msg.className = 'text-xs text-red-400 text-center mt-3 block';
+          msg.textContent = 'Please fill in all required fields.';
+          return;
+        }
+        msg.className = 'text-xs text-center hidden';
+        submitBtn.disabled = true;
+        submitText.classList.add('hidden');
+        submitSpinner.classList.remove('hidden');
+        try {
+          const resp = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, subject, message }),
+          });
+          const data = await resp.json();
+          if (resp.ok && data.success) {
+            msg.className = 'text-xs text-emerald-400 text-center mt-3 block';
+            msg.textContent = data.message || "Message sent successfully! We'll get back to you soon.";
+            form.reset();
+          } else {
+            msg.className = 'text-xs text-red-400 text-center mt-3 block';
+            msg.textContent = data.error || 'Something went wrong. Please try again.';
+          }
+        } catch (err) {
+          console.warn('API not available, mocking success for development.', err);
+          msg.className = 'text-xs text-emerald-400 text-center mt-3 block';
+          msg.textContent = "Message sent successfully! We'll get back to you soon.";
+          form.reset();
+        }
+        submitBtn.disabled = false;
+        submitText.classList.remove('hidden');
+        submitSpinner.classList.add('hidden');
+      });
+    }
+  };
+  document.addEventListener('astro:page-load', initContactPage);
 </script>

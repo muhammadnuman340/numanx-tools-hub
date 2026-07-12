@@ -1,0 +1,351 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'How does this make my sheet a backend?',
+    answer:
+      'By adding a Google Apps Script to your spreadsheet and deploying it as a Web App, Google provides you with a unique URL. Sending JSON data via POST to this URL triggers a function that writes to your sheet. A GET request reads the data and returns it as JSON.',
+  },
+  {
+    question: 'Is it really free?',
+    answer:
+      "Yes, using Google Sheets and Apps Script as a backend is completely free within Google's quota limits, which are usually generous enough for small projects, prototypes, or contact forms.",
+  },
+  {
+    question: "Why send 'text/plain' and not 'application/json'?",
+    answer:
+      "Google Apps Script has strict CORS policies. If you send 'application/json', the browser sends a preflight OPTIONS request, which can cause issues. Sending 'text/plain' bypasses this and the Apps Script still parses the JSON string correctly.",
+  },
+];
+
+const schema = {
+  name: 'Google Sheets Backend Generator',
+  applicationCategory: 'DeveloperApplication',
+  description: 'Turn your Google Sheet into a free API and database by generating the required Google Apps Script.',
+  featureList: ['Apps Script Generation', 'Turn Sheet into Database', 'Free API Endpoint'],
+};
+
+const benefits = [
+  {
+    icon: '💸',
+    title: 'Completely Free',
+    desc: 'Avoid paying for external database hosting. Google Sheets and Apps Script provide generous free tiers perfect for small projects.',
+  },
+  {
+    icon: '🚀',
+    title: 'Zero Setup',
+    desc: 'No need to provision servers, configure SQL tables, or manage database credentials. Just paste the script and deploy.',
+  },
+  {
+    icon: '🌐',
+    title: 'REST API Ready',
+    desc: 'Generates standard GET and POST endpoints that you can fetch from any web application or mobile app.',
+  },
+  {
+    icon: '👨‍💻',
+    title: 'Easy Management',
+    desc: 'View, edit, and delete your database records using the familiar Google Sheets interface instead of complex admin panels.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Prepare Sheet',
+    desc: 'Create a new Google Sheet. In row 1, add your database column names (e.g., "id", "name", "email").',
+  },
+  {
+    num: '2',
+    title: 'Add Script',
+    desc: 'In the Sheet menu, click Extensions > Apps Script. Delete any existing code and paste the generated script.',
+  },
+  {
+    num: '3',
+    title: 'Deploy API',
+    desc: 'Click Deploy > New deployment. Select "Web app", set access to "Anyone", and authorize the permissions.',
+  },
+  {
+    num: '4',
+    title: 'Fetch Data',
+    desc: 'Copy the provided Web App URL. Use standard fetch() in your JavaScript to GET rows or POST new data.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '📩',
+    title: 'Contact Forms',
+    desc: 'Save website contact form submissions directly to a spreadsheet without needing a backend server.',
+  },
+  {
+    icon: '🛠️',
+    title: 'Prototyping',
+    desc: 'Quickly spin up a working backend API for a hackathon project or MVP in less than 2 minutes.',
+  },
+  {
+    icon: '📋',
+    title: 'Waitlists',
+    desc: 'Collect email addresses for an upcoming product launch and easily export the list later.',
+  },
+];
+
+const appsScriptCode = `function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var data = JSON.parse(e.postData.contents);
+    
+    var headers = sheet.getRange(1, 1, 1, Math.max(1, sheet.getLastColumn())).getValues()[0];
+    var row = [];
+    
+    for (var i = 0; i < headers.length; i++) {
+       var header = headers[i];
+       if (header) {
+           row.push(data[header] !== undefined ? data[header] : "");
+       }
+    }
+    
+    if (row.length === 0) {
+        // If no headers, just append values in order
+        sheet.appendRow(Object.values(data));
+    } else {
+        sheet.appendRow(row);
+    }
+    
+    return ContentService.createTextOutput(JSON.stringify({"success": true, "message": "Row added"}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({"success": false, "error": err.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doGet(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var data = sheet.getDataRange().getValues();
+    if (data.length <= 1) {
+      return ContentService.createTextOutput(JSON.stringify({"success": true, "data": []}))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    var headers = data[0];
+    var result = [];
+    
+    for (var i = 1; i < data.length; i++) {
+      var obj = {};
+      for (var j = 0; j < headers.length; j++) {
+        if(headers[j]) {
+          obj[headers[j]] = data[i][j];
+        }
+      }
+      result.push(obj);
+    }
+    
+    return ContentService.createTextOutput(JSON.stringify({"success": true, "data": result}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({"success": false, "error": err.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}`;
+
+const fetchCode = `// Example POST request to add a row
+async function addRow(data) {
+  const url = 'YOUR_WEB_APP_URL';
+  
+  const response = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'text/plain;charset=utf-8', 
+    }
+  });
+  
+  const result = await response.json();
+  console.log(result);
+}
+
+// Make sure your sheet has headers like "name", "email", "message" in Row 1
+addRow({ name: "John Doe", email: "john@example.com", message: "Hello!" });
+
+// Example GET request to fetch all rows
+async function getRows() {
+  const url = 'YOUR_WEB_APP_URL';
+  
+  const response = await fetch(url);
+  const result = await response.json();
+  
+  console.log(result.data);
+}`;
+---
+
+<MainLayout
+  title="Google Sheets as a Backend Database Generator - Tools"
+  description="Turn your Google Sheet into a free API by generating the required Google Apps Script."
+  keywords="google sheets backend, sheet to api, google sheets database, apps script generator"
+  toolSchema={schema}
+  faq={faqItems}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Sheet Backend Generator', url: '/tools/sheet-backend-generator/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto">
+      <ToolHeader
+        title="Sheet"
+        gradient="Backend Generator"
+        desc="Turn any Google Sheet into a fully functional, free REST API. Generate the Apps Script to use your spreadsheet as a database."
+        badge="✦ Developer Utility"
+        slug="sheet-backend-generator"
+      />
+      <ShareBar />
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
+        <!-- Steps and Info -->
+        <div class="space-y-6">
+          <div class="glass-card rounded-[2rem] p-8">
+            <h3 class="text-xl font-bold text-white mb-6">How to setup:</h3>
+            <ol class="space-y-4 text-sm text-tertiary">
+              <li class="flex gap-3 items-start">
+                <span
+                  class="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold"
+                  >1</span
+                >
+                <p>Create a new Google Sheet and add your column headers (e.g. name, email) in the first row.</p>
+              </li>
+              <li class="flex gap-3 items-start">
+                <span
+                  class="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold"
+                  >2</span
+                >
+                <p>Click on <strong>Extensions &gt; Apps Script</strong> in the menu.</p>
+              </li>
+              <li class="flex gap-3 items-start">
+                <span
+                  class="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold"
+                  >3</span
+                >
+                <p>Delete any existing code and <strong>paste the Apps Script Code</strong> shown here.</p>
+              </li>
+              <li class="flex gap-3 items-start">
+                <span
+                  class="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold"
+                  >4</span
+                >
+                <p>
+                  Click <strong>Deploy &gt; New deployment</strong>. Select the gear icon and check <strong
+                    >Web app</strong
+                  >.
+                </p>
+              </li>
+              <li class="flex gap-3 items-start">
+                <span
+                  class="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold"
+                  >5</span
+                >
+                <p>Set Execute as: <strong>Me</strong> and Who has access: <strong>Anyone</strong>. Click Deploy.</p>
+              </li>
+              <li class="flex gap-3 items-start">
+                <span
+                  class="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold"
+                  >6</span
+                >
+                <p>Copy the provided <strong>Web app URL</strong>. You will use this to make your API requests.</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Code Snippets -->
+        <div class="space-y-6">
+          <div class="glass-card rounded-[2rem] p-6 relative">
+            <div class="flex justify-between items-center mb-4">
+              <h4 class="text-sm font-bold text-white uppercase tracking-wider">1. Apps Script Code (Code.gs)</h4>
+              <button
+                class="copy-btn text-xs bg-surface-2 hover:bg-surface-3 text-white px-3 py-1.5 rounded-lg transition-colors font-medium border border-surface-3"
+                >Copy</button
+              >
+            </div>
+            <pre
+              class="bg-surface-1 rounded-xl p-4 overflow-x-auto border border-surface-2"><code class="text-xs text-purple-300 font-mono code-content">{appsScriptCode}</code></pre>
+          </div>
+
+          <div class="glass-card rounded-[2rem] p-6 relative">
+            <div class="flex justify-between items-center mb-4">
+              <h4 class="text-sm font-bold text-white uppercase tracking-wider">2. Client Fetch Example</h4>
+              <button
+                class="copy-btn text-xs bg-surface-2 hover:bg-surface-3 text-white px-3 py-1.5 rounded-lg transition-colors font-medium border border-surface-3"
+                >Copy</button
+              >
+            </div>
+            <pre
+              class="bg-surface-1 rounded-xl p-4 overflow-x-auto border border-surface-2"><code class="text-xs text-emerald-300 font-mono code-content">{fetchCode}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <ToolContentSections
+        toolSlug="sheet-backend-generator"
+        toolName="Sheet Backend Generator"
+        category="Developer Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+      <RelatedTools current="sheet-backend-generator" />
+
+      <div class="mt-20 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+          Frequently Asked <span
+            class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent font-medium"
+            >Questions</span
+          >
+        </h2>
+        <Accordion items={faqItems} />
+      </div>
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  document.querySelectorAll('.copy-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const parent = btn.closest('.glass-card');
+      if (!parent) return;
+      const code = parent.querySelector('.code-content')?.textContent;
+      if (code) {
+        navigator.clipboard.writeText(code);
+        const originalText = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.classList.add('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/30');
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.classList.remove('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/30');
+        }, 2000);
+      }
+    });
+  });
+
+  // ─── Fullscreen ───
+  (function() {
+    var fsBtn = document.getElementById('fullscreen-btn');
+    if (fsBtn) {
+      fsBtn.addEventListener('click', function() {
+        var el = document.querySelector('main') || document.documentElement;
+        if (!document.fullscreenElement) { el.requestFullscreen && el.requestFullscreen(); }
+        else { document.exitFullscreen && document.exitFullscreen(); }
+      });
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'f' || e.key === 'F') { if (fsBtn) fsBtn.click(); }
+    });
+  })();</script>
