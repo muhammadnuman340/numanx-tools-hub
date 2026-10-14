@@ -17,6 +17,7 @@ import Toast from '../components/ui/Toast.astro';
 import FeedbackButton from '../components/FeedbackButton.astro';
 import InstallPrompt from '../components/InstallPrompt.astro';
 import CookieConsent from '../components/CookieConsent.astro';
+import AmbientBackground from '../components/AmbientBackground.astro';
 import ClientRouter from 'astro/components/ClientRouter.astro';
 
 const GA_ID = import.meta.env.PUBLIC_GA_ID || '';
@@ -157,23 +158,8 @@ const {
     >
     </div>
 
-    <!-- Ambient Background (God Tier Jarvis) -->
-    <div class="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#050505]" aria-hidden="true">
-      <div id="global-canvas-container" class="absolute inset-0 z-0 opacity-80 mix-blend-screen pointer-events-none"></div>
-      <div
-        class="absolute top-[10%] left-[-10%] w-[50vw] h-[50vw] bg-fuchsia-600/5 blur-[150px] rounded-full mix-blend-screen animate-[breathe_10s_ease-in-out_infinite]"
-      >
-      </div>
-      <div
-        class="absolute bottom-[10%] right-[-10%] w-[60vw] h-[60vw] bg-amber-600/5 blur-[150px] rounded-full mix-blend-screen animate-[breathe_15s_ease-in-out_2s_infinite]"
-      >
-      </div>
-      <div
-        class="absolute inset-0 bg-[image:repeating-linear-gradient(0deg,transparent,transparent_40px,rgba(255,255,255,0.01)_40px,rgba(255,255,255,0.01)_41px),repeating-linear-gradient(90deg,transparent,transparent_40px,rgba(255,255,255,0.01)_40px,rgba(255,255,255,0.01)_41px)] mix-blend-overlay"
-      >
-      </div>
-      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(5,5,5,0.8)_100%)]"></div>
-    </div>
+    <!-- Ambient Background (God Tier Jarvis & Aurora) -->
+    <AmbientBackground mode="dual" />
 
     <!-- Floating Brand Logo (since Navbar is gone) -->
     <a href="/" class="fixed top-4 left-4 sm:top-6 sm:left-6 z-[100] group">
@@ -250,7 +236,6 @@ const {
       import Lenis from 'lenis';
       import gsap from 'gsap';
       import { ScrollTrigger } from 'gsap/ScrollTrigger';
-      import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
       import Fuse from 'https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.mjs';
 
       gsap.registerPlugin(ScrollTrigger);
@@ -483,76 +468,7 @@ const {
       // ----------------------------------------------------------------------
 
       const initGlobalJarvis = () => {
-        // 1. WebGL Particles
-        const container = document.getElementById('global-canvas-container');
-        if (!container || container.dataset.jarvisLoaded) return;
-        container.dataset.jarvisLoaded = 'true';
-
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        container.appendChild(renderer.domElement);
-
-        const particlesCount = window.innerWidth < 768 ? 3000 : 8000;
-        const posArray = new Float32Array(particlesCount * 3);
-        for (let i = 0; i < particlesCount * 3; i++) {
-          posArray[i] = (Math.random() - 0.5) * 10;
-        }
-        const particlesGeometry = new THREE.BufferGeometry();
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const particlesMaterial = new THREE.PointsMaterial({
-          size: 0.08,
-          color: 0xffaa55,
-          transparent: true,
-          opacity: 0.7,
-          blending: THREE.AdditiveBlending,
-          sizeAttenuation: true
-        });
-        const particleMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particleMesh);
-        camera.position.z = 3;
-
-        let targetX = 0,
-          targetY = 0,
-          voiceReactivity = 0;
-        let mouseX = 0, mouseY = 0;
-        document.addEventListener('mousemove', (event) => {
-          mouseX = ((event.clientX / window.innerWidth) * 2 - 1) * 0.5;
-          mouseY = (-(event.clientY / window.innerHeight) * 2 + 1) * 0.5;
-        });
-
-        const clock = new THREE.Clock();
-        function animate() {
-          requestAnimationFrame(animate);
-          const elapsedTime = clock.getElapsedTime();
-          
-          targetX += (mouseX - targetX) * 0.05;
-          targetY += (mouseY - targetY) * 0.05;
-
-          particleMesh.rotation.y = elapsedTime * 0.05 + targetX;
-          particleMesh.rotation.x = elapsedTime * 0.02 + targetY;
-
-          if (voiceReactivity > 0) {
-            const scale = 1 + voiceReactivity * 0.3;
-            particleMesh.scale.lerp(new THREE.Vector3(scale, scale, scale), 0.2);
-            particlesMaterial.color.setHSL((elapsedTime * 0.05) % 1, 0.8, 0.6);
-            voiceReactivity *= 0.95;
-          } else {
-            particleMesh.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
-            particlesMaterial.color.lerp(new THREE.Color(0xffaa55), 0.05);
-          }
-          renderer.render(scene, camera);
-        }
-        animate();
-        window.addEventListener('resize', () => {
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // 2. Local AI & Search Logic
+        // 1. Local AI & Search Logic
         const ecosystemTools = [
           {
             id: 'image-compressor',
@@ -687,14 +603,18 @@ const {
               .map((result) => result[0].transcript)
               .join('');
             if (input) input.value = transcript;
-            voiceReactivity = Math.min(1.5, transcript.length * 0.1);
+            window.dispatchEvent(
+              new CustomEvent('jarvis-voice', { detail: Math.min(1.5, transcript.length * 0.1) }),
+            );
             renderResults(fuse.search(transcript));
           };
 
           recognition.onend = () => {
             globalVoiceBtn.classList.remove('text-amber-400', 'bg-white/10');
             if (input) input.placeholder = 'Ask Jarvis or search tools... (Cmd+K)';
-            setTimeout(() => (voiceReactivity = 0), 1000);
+            setTimeout(() => {
+              window.dispatchEvent(new CustomEvent('jarvis-voice', { detail: 0 }));
+            }, 1000);
           };
 
           const startVoice = () => {

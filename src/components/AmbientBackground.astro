@@ -1,0 +1,157 @@
+---
+// FILE: src/components/AmbientBackground.astro
+interface Props {
+  mode?: 'dual' | 'particles' | 'aurora';
+  accentColor?: string;
+}
+
+const { mode = 'dual', accentColor = '0xffaa55' } = Astro.props;
+const showParticles = mode === 'dual' || mode === 'particles';
+const showAurora = mode === 'dual' || mode === 'aurora';
+---
+
+<div
+  id="ambient-background"
+  class="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#050505]"
+  aria-hidden="true"
+  data-mode={mode}
+>
+  {showParticles && (
+    <!-- Interactive WebGL Particles Container -->
+    <div
+      id="global-canvas-container"
+      class="absolute inset-0 z-0 opacity-80 mix-blend-screen pointer-events-none"
+    />
+  )}
+
+  {showAurora && (
+    <!-- Ambient Aurora Atmospheric Layers -->
+    <div
+      class="absolute top-[10%] left-[-10%] w-[50vw] h-[50vw] bg-fuchsia-600/5 blur-[150px] rounded-full mix-blend-screen animate-[breathe_10s_ease-in-out_infinite]"
+    />
+    <div
+      class="absolute bottom-[10%] right-[-10%] w-[60vw] h-[60vw] bg-amber-600/5 blur-[150px] rounded-full mix-blend-screen animate-[breathe_15s_ease-in-out_2s_infinite]"
+    />
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] bg-purple-600/5 blur-[180px] rounded-full mix-blend-screen pointer-events-none"
+    />
+  )}
+
+  <!-- Fine Geometric Texture Grid & Vignette -->
+  <div
+    class="absolute inset-0 bg-[image:repeating-linear-gradient(0deg,transparent,transparent_40px,rgba(255,255,255,0.01)_40px,rgba(255,255,255,0.01)_41px),repeating-linear-gradient(90deg,transparent,transparent_40px,rgba(255,255,255,0.01)_40px,rgba(255,255,255,0.01)_41px)] mix-blend-overlay"
+  />
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(5,5,5,0.8)_100%)]" />
+</div>
+
+{showParticles && (
+  <script is:inline define:vars={{ accentColor }}>
+    (function () {
+      function initParticles() {
+        if (window.__threeParticlesInitialized) return;
+        const container = document.getElementById('global-canvas-container');
+        if (!container) return;
+
+        // Respect reduced motion preferences
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js')
+          .then((THREE) => {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({
+              alpha: true,
+              antialias: true,
+              powerPreference: 'high-performance',
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            const isMobile = window.innerWidth < 768;
+            const particlesCount = isMobile ? 3200 : 8000;
+            const posArray = new Float32Array(particlesCount * 3);
+
+            for (let i = 0; i < particlesCount * 3; i++) {
+              posArray[i] = (Math.random() - 0.5) * 10;
+            }
+
+            const particlesGeometry = new THREE.BufferGeometry();
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            const hexColor = parseInt(accentColor.replace('0x', ''), 16) || 0xffaa55;
+            const particlesMaterial = new THREE.PointsMaterial({
+              size: isMobile ? 0.05 : 0.08,
+              color: hexColor,
+              transparent: true,
+              opacity: 0.75,
+              blending: THREE.AdditiveBlending,
+              sizeAttenuation: true,
+            });
+
+            const particleMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particleMesh);
+            camera.position.z = 3;
+
+            let targetX = 0;
+            let targetY = 0;
+            let mouseX = 0;
+            let mouseY = 0;
+            let voiceReactivity = 0;
+
+            window.addEventListener('jarvis-voice', (event) => {
+              voiceReactivity = typeof event.detail === 'number' ? event.detail : 1;
+            });
+
+            const onMouseMove = (event) => {
+              mouseX = ((event.clientX / window.innerWidth) * 2 - 1) * 0.5;
+              mouseY = (-(event.clientY / window.innerHeight) * 2 + 1) * 0.5;
+            };
+            window.addEventListener('mousemove', onMouseMove, { passive: true });
+
+            const clock = new THREE.Clock();
+            let animId;
+
+            function animate() {
+              animId = requestAnimationFrame(animate);
+              const elapsedTime = clock.getElapsedTime();
+
+              targetX += (mouseX - targetX) * 0.05;
+              targetY += (mouseY - targetY) * 0.05;
+
+              particleMesh.rotation.y = elapsedTime * 0.05 + targetX;
+              particleMesh.rotation.x = elapsedTime * 0.02 + targetY;
+
+              if (voiceReactivity > 0) {
+                const scale = 1 + voiceReactivity * 0.3;
+                particleMesh.scale.lerp(new THREE.Vector3(scale, scale, scale), 0.2);
+                particlesMaterial.color.setHSL((elapsedTime * 0.05) % 1, 0.8, 0.6);
+                voiceReactivity *= 0.95;
+              } else {
+                particleMesh.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
+                particlesMaterial.color.lerp(new THREE.Color(hexColor), 0.05);
+              }
+
+              renderer.render(scene, camera);
+            }
+            animate();
+
+            const onResize = () => {
+              camera.aspect = window.innerWidth / window.innerHeight;
+              camera.updateProjectionMatrix();
+              renderer.setSize(window.innerWidth, window.innerHeight);
+            };
+            window.addEventListener('resize', onResize, { passive: true });
+
+            window.__threeParticlesInitialized = true;
+          })
+          .catch((err) => {
+            console.warn('[AmbientBackground] Three.js particles fallback active:', err);
+          });
+      }
+
+      initParticles();
+      document.addEventListener('astro:page-load', initParticles);
+    })();
+  </script>
+)}
