@@ -50,14 +50,16 @@ const faqItems = [
   },
 ];
 const qrSchema = {
-  name: 'QR Generator Pro',
+  name: 'rMQR & QR Code Generator Pro',
   applicationCategory: 'Multimedia',
   description:
-    'Create custom QR codes with logo, colors, templates, and SVG download. Free QR code generator with WiFi, Email, Phone, YouTube templates.',
+    'Generate ISO/IEC 23941 Rectangular Micro QR (rMQR) strips (R7x43 to R17x139) and custom square QR codes with WiFi, vCard, Logo, PNG, and vector SVG export.',
   featureList: [
-    'Custom QR codes with logo and brand colors',
+    'ISO/IEC 23941 Rectangular Micro QR (rMQR) strips (R7x43 to R17x139)',
+    'Auto-Fit smart sizing for compact rectangular barcodes',
+    'Custom square QR codes with logo and brand colors',
     'WiFi, Email, Phone, SMS, YouTube, and vCard templates',
-    'SVG, PNG, and JPG download formats',
+    'Vector SVG, PNG, and JPG download formats',
     '4 error correction levels for damaged-code recovery',
     '100% client-side — no server uploads, zero data transfer',
   ],
@@ -144,30 +146,30 @@ const useCases = [
 ---
 
 <MainLayout
-  title="QR Code Generator Free Online - Custom QR Maker Pro"
-  description="Create custom QR codes with logo, colors, templates, and SVG download. Free QR code generator with WiFi, Email, Phone, YouTube templates."
-  keywords="qr code generator, custom qr maker, qr with logo, wifi qr code, qr code templates, svg qr code"
+  title="rMQR & QR Code Generator Pro - ISO/IEC 23941 Rectangular & Custom Maker"
+  description="Generate ISO/IEC 23941 Rectangular Micro QR (rMQR) strips (R7x43 to R17x139) and custom square QR codes with WiFi, vCard, Logo, PNG, and vector SVG export."
+  keywords="rmqr generator, rectangular micro qr, qr code generator, custom qr maker, qr with logo, wifi qr code, svg qr code"
   toolSchema={qrSchema}
   faq={faqItems}
   howto={{
-    name: 'How to Generate a QR Code',
-    description: 'Create a custom QR code with logo, colors, and templates in 4 easy steps.',
+    name: 'How to Generate a QR Code or rMQR Strip',
+    description: 'Create a custom square QR code or rectangular micro QR strip with logo, colors, and templates in 4 easy steps.',
     steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
     totalTime: 'PT1M',
   }}
   breadcrumbs={[
     { name: 'Home', url: '/' },
     { name: 'Tools', url: '/tools/' },
-    { name: 'QR Generator', url: '/tools/qr-generator/' },
+    { name: 'rMQR & QR Generator', url: '/tools/qr-generator/' },
   ]}
 >
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
-        title="QR Code"
+        title="rMQR & QR"
         gradient="Generator Pro"
-        desc="Create custom QR codes with templates, colors, logos, and SVG export. Live preview as you type — free and privacy-first."
-        badge="✦ Pro Version"
+        desc="Generate ISO/IEC 23941 Rectangular Micro QR strips and custom square QR codes with colors, logos, and vector SVG export. 100% client-side."
+        badge="✦ ISO/IEC 23941 rMQR"
         slug="qr-generator"
       />
 
@@ -177,8 +179,33 @@ const useCases = [
       <div class="mt-8 grid grid-cols-1 lg:grid-cols-5 gap-5">
         <!-- ── Left Panel: Inputs ── -->
         <div class="lg:col-span-3 space-y-4">
+          <!-- Format & Standard Selector -->
+          <div class="glass-card rounded-2xl p-4">
+            <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-2.5 block">Format & Standard</label>
+            <div class="grid grid-cols-2 gap-2" id="format-toggle">
+              <button
+                type="button"
+                id="btn-mode-square"
+                class="format-mode-btn rounded-xl py-2.5 px-3 text-xs font-semibold border transition-all flex items-center justify-center gap-2 bg-purple-600/20 border-purple-500/50 text-white shadow-sm"
+                data-mode="square"
+              >
+                <span>🔲</span>
+                <span>Square QR (Standard)</span>
+              </button>
+              <button
+                type="button"
+                id="btn-mode-rmqr"
+                class="format-mode-btn rounded-xl py-2.5 px-3 text-xs font-semibold border transition-all flex items-center justify-center gap-2 bg-surface-2 border-surface text-tertiary hover:text-white"
+                data-mode="rmqr"
+              >
+                <span>📏</span>
+                <span>rMQR Strip (ISO/IEC 23941)</span>
+              </button>
+            </div>
+          </div>
+
           <!-- Templates -->
-          <div class="glass-card rounded-2xl p-5">
+          <div class="glass-card rounded-2xl p-5" id="templates-card">
             <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3 block">Template</label>
             <div class="grid grid-cols-5 gap-2" id="template-tabs">
               {
@@ -343,25 +370,60 @@ const useCases = [
                 {
                   [100, 150, 200, 250, 300, 400, 500].map((s) => (
                     <option value={s}>
-                      {s}�{s}px
+                      {s}×{s}px
                     </option>
                   ))
                 }
               </select>
             </div>
-            <div>
+            <!-- Square QR Options -->
+            <div id="square-qr-options">
               <label class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2"
                 >Error Correction</label
               >
               <select
                 id="qr-error-level"
-                class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all mt-4"
+                class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
               >
                 <option value="L">L (7%)</option>
                 <option value="M">M (15%)</option>
                 <option value="Q">Q (25%)</option>
                 <option value="H" selected>H (30%)</option>
               </select>
+            </div>
+
+            <!-- rMQR Options -->
+            <div id="rmqr-options" class="hidden space-y-3">
+              <div>
+                <label class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2"
+                  >rMQR Strip Version</label
+                >
+                <select
+                  id="rmqr-version"
+                  class="w-full bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all font-mono text-xs"
+                >
+                  <option value="auto" selected>Auto-Fit (Smart Compact Strip)</option>
+                  <option value="R7x43">R7x43 (7 rows × 43 cols - Ultra Slim)</option>
+                  <option value="R7x59">R7x59 (7 rows × 59 cols)</option>
+                  <option value="R7x77">R7x77 (7 rows × 77 cols)</option>
+                  <option value="R7x99">R7x99 (7 rows × 99 cols)</option>
+                  <option value="R7x139">R7x139 (7 rows × 139 cols - Long Strip)</option>
+                  <option value="R9x43">R9x43 (9 rows × 43 cols)</option>
+                  <option value="R9x59">R9x59 (9 rows × 59 cols)</option>
+                  <option value="R9x77">R9x77 (9 rows × 77 cols)</option>
+                  <option value="R9x99">R9x99 (9 rows × 99 cols)</option>
+                  <option value="R9x139">R9x139 (9 rows × 139 cols)</option>
+                  <option value="R11x43">R11x43 (11 rows × 43 cols)</option>
+                  <option value="R11x77">R11x77 (11 rows × 77 cols)</option>
+                  <option value="R11x139">R11x139 (11 rows × 139 cols - High Density)</option>
+                  <option value="R13x77">R13x77 (13 rows × 77 cols)</option>
+                  <option value="R15x99">R15x99 (15 rows × 99 cols)</option>
+                  <option value="R17x139">R17x139 (17 rows × 139 cols - Maximum)</option>
+                </select>
+              </div>
+              <p class="text-[11px] text-zinc-400 leading-relaxed">
+                ISO/IEC 23941 Rectangular Micro QR is optimized for long, narrow spaces like packaging edges, test tubes, and wristbands.
+              </p>
             </div>
           </div>
         </div>
@@ -493,56 +555,140 @@ const useCases = [
 
 <script>
   import QRCode from 'qrcode';
+  import bwipjs from 'bwip-js/browser';
 
-  const canvas = document.getElementById('qr-canvas');
-  const qrText = document.getElementById('qr-text');
-  const fgColor = document.getElementById('fg-color');
-  const bgColor = document.getElementById('bg-color');
-  const qrSize = document.getElementById('qr-size');
-  const qrErrorLevel = document.getElementById('qr-error-level');
+  const canvas = document.getElementById('qr-canvas') as HTMLCanvasElement;
+  const qrText = document.getElementById('qr-text') as HTMLInputElement;
+  const fgColor = document.getElementById('fg-color') as HTMLInputElement;
+  const bgColor = document.getElementById('bg-color') as HTMLInputElement;
+  const qrSize = document.getElementById('qr-size') as HTMLSelectElement;
+  const qrErrorLevel = document.getElementById('qr-error-level') as HTMLSelectElement;
+  const rmqrVersionSelect = document.getElementById('rmqr-version') as HTMLSelectElement;
   const sizeBadge = document.getElementById('qr-size-badge');
   const downloadBtns = document.querySelectorAll('.download-btn');
   const templateBtns = document.querySelectorAll('.template-btn');
+  const formatModeBtns = document.querySelectorAll('.format-mode-btn');
+  const squareOptions = document.getElementById('square-qr-options');
+  const rmqrOptions = document.getElementById('rmqr-options');
 
-  let currentData = 'https://opencode.ai';
+  let currentMode: 'square' | 'rmqr' = 'square';
+  let currentData = 'https://numanx-tools.pages.dev';
   let currentTemplate = 'Website';
+  let lastValidRMQRVersion = 'R11x139';
+
+  const RMQR_ASCENDING_VERSIONS = [
+    'R7x43', 'R7x59', 'R7x77', 'R7x99', 'R7x139',
+    'R9x43', 'R9x59', 'R9x77', 'R9x99', 'R9x139',
+    'R11x43', 'R11x77', 'R11x139',
+    'R13x77', 'R15x99', 'R17x139'
+  ];
+
+  function resolveRMQRVersion(data: string, requested: string): string {
+    if (requested !== 'auto') return requested;
+    for (const v of RMQR_ASCENDING_VERSIONS) {
+      try {
+        bwipjs.toSVG({
+          bcid: 'rectangularmicroqrcode',
+          text: data,
+          version: v,
+        });
+        return v;
+      } catch (err) {
+        // Continue searching larger versions
+      }
+    }
+    return 'R17x139';
+  }
 
   function getQRData() {
     switch (currentTemplate) {
       case 'WiFi': {
-        const ssid = document.getElementById('wifi-ssid').value || 'network';
-        const pass = document.getElementById('wifi-pass').value || '';
+        const ssid = (document.getElementById('wifi-ssid') as HTMLInputElement)?.value || 'network';
+        const pass = (document.getElementById('wifi-pass') as HTMLInputElement)?.value || '';
         return `WIFI:S:${ssid};T:WPA;P:${pass};;`;
       }
       case 'Email': {
-        const to = document.getElementById('email-to').value || '';
-        const sub = document.getElementById('email-subject').value || '';
-        const body = document.getElementById('email-body').value || '';
+        const to = (document.getElementById('email-to') as HTMLInputElement)?.value || '';
+        const sub = (document.getElementById('email-subject') as HTMLInputElement)?.value || '';
+        const body = (document.getElementById('email-body') as HTMLTextAreaElement)?.value || '';
         return `mailto:${to}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
       }
       case 'Phone':
-        return `tel:${document.getElementById('phone-number').value || '+1234567890'}`;
+        return `tel:${(document.getElementById('phone-number') as HTMLInputElement)?.value || '+1234567890'}`;
       case 'YouTube':
-        return document.getElementById('youtube-url').value || 'https://youtube.com';
+        return (document.getElementById('youtube-url') as HTMLInputElement)?.value || 'https://youtube.com';
       default:
-        return qrText.value || 'https://opencode.ai';
+        return qrText?.value || 'https://numanx-tools.pages.dev';
     }
   }
 
-  async function generateQR() {
-    currentData = getQRData();
-    const size = parseInt(qrSize.value);
-    sizeBadge.textContent = `${size}�${size}`;
-    try {
-      await QRCode.toCanvas(canvas, currentData, {
-        width: size,
-        color: { dark: fgColor.value, light: bgColor.value },
-        errorCorrectionLevel: (document.getElementById('qr-error-level') as HTMLSelectElement)?.value || 'H',
-      });
-    } catch (e) {
-      console.error('QR generation error:', e);
+  async function generateBarcode() {
+    currentData = getQRData() || 'https://numanx-tools.pages.dev';
+    const fg = fgColor?.value || '#000000';
+    const bg = bgColor?.value || '#ffffff';
+
+    if (currentMode === 'square') {
+      const size = parseInt(qrSize?.value || '250');
+      if (sizeBadge) sizeBadge.textContent = `${size}×${size}px`;
+      try {
+        await QRCode.toCanvas(canvas, currentData, {
+          width: size,
+          color: { dark: fg, light: bg },
+          errorCorrectionLevel: (qrErrorLevel?.value as any) || 'H',
+        });
+      } catch (e) {
+        console.error('Square QR generation error:', e);
+      }
+    } else {
+      // rMQR Strip mode (ISO/IEC 23941)
+      const requestedVersion = rmqrVersionSelect?.value || 'auto';
+      const actualVersion = resolveRMQRVersion(currentData, requestedVersion);
+      lastValidRMQRVersion = actualVersion;
+
+      try {
+        bwipjs.toCanvas(canvas, {
+          bcid: 'rectangularmicroqrcode',
+          text: currentData,
+          version: actualVersion,
+          scale: 4,
+          barcolor: fg.replace('#', ''),
+          backgroundcolor: bg.replace('#', ''),
+          padding: 8,
+        });
+        if (sizeBadge) {
+          sizeBadge.textContent = `rMQR ${actualVersion} (${canvas.width}×${canvas.height}px)`;
+        }
+      } catch (err: any) {
+        console.warn('rMQR generation error:', err);
+        if (sizeBadge) {
+          sizeBadge.textContent = `Capacity exceeded for ${actualVersion}`;
+        }
+      }
     }
   }
+
+  formatModeBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const mode = (btn as HTMLElement).dataset.mode as 'square' | 'rmqr';
+      currentMode = mode;
+
+      formatModeBtns.forEach((b) => {
+        b.classList.remove('bg-purple-600/20', 'border-purple-500/50', 'text-white', 'shadow-sm');
+        b.classList.add('bg-surface-2', 'border-surface', 'text-tertiary');
+      });
+      btn.classList.remove('bg-surface-2', 'border-surface', 'text-tertiary');
+      btn.classList.add('bg-purple-600/20', 'border-purple-500/50', 'text-white', 'shadow-sm');
+
+      if (mode === 'square') {
+        squareOptions?.classList.remove('hidden');
+        rmqrOptions?.classList.add('hidden');
+      } else {
+        squareOptions?.classList.add('hidden');
+        rmqrOptions?.classList.remove('hidden');
+      }
+      generateBarcode();
+    });
+  });
 
   templateBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -552,22 +698,23 @@ const useCases = [
       });
       btn.classList.remove('bg-surface-2', 'border-surface', 'text-tertiary');
       btn.classList.add('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
-      currentTemplate = btn.dataset.template;
+      currentTemplate = (btn as HTMLElement).dataset.template || 'Website';
       document.querySelectorAll('.field-group').forEach((g) => g.classList.add('hidden'));
       const field = document.getElementById(`field-${currentTemplate.toLowerCase()}`);
       if (field) field.classList.remove('hidden');
-      generateQR();
+      generateBarcode();
     });
   });
 
-  qrText.addEventListener('input', generateQR);
-  fgColor.addEventListener('input', generateQR);
-  bgColor.addEventListener('input', generateQR);
-  qrSize.addEventListener('change', generateQR);
-  qrErrorLevel.addEventListener('change', generateQR);
+  qrText?.addEventListener('input', generateBarcode);
+  fgColor?.addEventListener('input', generateBarcode);
+  bgColor?.addEventListener('input', generateBarcode);
+  qrSize?.addEventListener('change', generateBarcode);
+  qrErrorLevel?.addEventListener('change', generateBarcode);
+  rmqrVersionSelect?.addEventListener('change', generateBarcode);
 
   document.querySelectorAll('#input-fields input, #input-fields textarea').forEach((el) => {
-    el.addEventListener('input', generateQR);
+    el.addEventListener('input', generateBarcode);
   });
 
   function triggerToast(message: string, variant: 'success' | 'error' | 'info' | 'warning' = 'success') {
@@ -578,28 +725,43 @@ const useCases = [
 
   downloadBtns.forEach((btn) => {
     btn.addEventListener('click', async () => {
-      const fmt = btn.dataset.format.toLowerCase();
+      const fmt = (btn as HTMLElement).dataset.format?.toLowerCase() || 'png';
       const link = document.createElement('a');
+      const filename = currentMode === 'square' ? `qrcode.${fmt}` : `rmqr-${lastValidRMQRVersion}.${fmt}`;
+
       if (fmt === 'svg') {
         try {
-          const svgStr = await QRCode.toString(currentData, {
-            type: 'svg',
-            color: { dark: fgColor.value, light: bgColor.value },
-            errorCorrectionLevel: qrErrorLevel.value || 'H',
-          });
+          let svgStr = '';
+          if (currentMode === 'square') {
+            svgStr = await QRCode.toString(currentData, {
+              type: 'svg',
+              color: { dark: fgColor?.value || '#000000', light: bgColor?.value || '#ffffff' },
+              errorCorrectionLevel: (qrErrorLevel?.value as any) || 'H',
+            });
+          } else {
+            svgStr = bwipjs.toSVG({
+              bcid: 'rectangularmicroqrcode',
+              text: currentData,
+              version: lastValidRMQRVersion,
+              scale: 4,
+              barcolor: (fgColor?.value || '#000000').replace('#', ''),
+              backgroundcolor: (bgColor?.value || '#ffffff').replace('#', ''),
+              padding: 8,
+            });
+          }
           const blob = new Blob([svgStr], { type: 'image/svg+xml' });
           link.href = URL.createObjectURL(blob);
-          link.download = `qrcode.${fmt}`;
+          link.download = filename;
         } catch (e) {
           console.error(e);
           return;
         }
       } else {
         link.href = canvas.toDataURL(`image/${fmt === 'jpg' ? 'jpeg' : fmt}`);
-        link.download = `qrcode.${fmt}`;
+        link.download = filename;
       }
       link.click();
-      triggerToast(`QR code downloaded as ${fmt.toUpperCase()}`, 'success');
+      triggerToast(`Downloaded as ${fmt.toUpperCase()}`, 'success');
     });
   });
 
@@ -627,7 +789,7 @@ const useCases = [
 
   // Init
   templateBtns[0]?.classList.add('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
-  generateQR();
+  generateBarcode();
 
   // Fullscreen toggle
   document.getElementById('fullscreen-btn')?.addEventListener('click', () => {

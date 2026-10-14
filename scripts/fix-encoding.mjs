@@ -23,6 +23,11 @@ const replacements = [
   [/300\uFFFD300px/g, '300×300px'],
   [/400\uFFFD400px/g, '400×400px'],
   [/500\uFFFD500px/g, '500×500px'],
+  [/\$\{size\}\uFFFD\$\{size\}/g, '${size}×${size}'],
+  [/\{s\}\uFFFD\{s\}px/g, '{s}×{s}px'],
+  [/\(fuzzy\) \uFFFD with/g, '(fuzzy) — with'],
+  [/provided \uFFFD prompt/g, 'provided — prompt'],
+  [/tool \uFFFD just/g, 'tool — just'],
   [/Â /g, ' ']
 ];
 

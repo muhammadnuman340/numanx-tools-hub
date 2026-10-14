@@ -2452,7 +2452,7 @@ const schema = {
       return execStats();
     }
 
-    // Tool search (fuzzy) � with inline execution when possible
+    // Tool search (fuzzy) — with inline execution when possible
     const searchTerms = lq
       .split(/\s+/)
       .filter(
@@ -2513,9 +2513,9 @@ const schema = {
             const subResult = processCommand(fullCmd);
             if (subResult) return subResult;
           }
-          // No text provided � prompt for input
+          // No text provided — prompt for input
           if (cmd === null) {
-            // Complex tool � just link
+            // Complex tool — just link
             return (
               "Here's the **[" +
               bestTool.name +
