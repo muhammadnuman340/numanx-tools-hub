@@ -1,7 +1,7 @@
 ﻿---
 layout: ../../layouts/BlogLayout.astro
 title: 'How to Compress Images Without Losing Quality'
-description: 'Learn the best techniques to reduce image file sizes while keeping visual quality intact â€” perfect for websites and social media.'
+description: 'Learn the best techniques to reduce image file sizes while keeping visual quality intact — perfect for websites and social media.'
 date: 'May 25, 2026'
 author: 'NumanX Tools'
 category: 'Image Tools'
@@ -44,13 +44,13 @@ The format you choose has a massive impact on file size.
 
 ## 2. Adjust Quality Settings
 
-The easiest way to compress an image is to adjust its quality setting. Most tools offer a scale from 0â€“100 or 0â€“1.
+The easiest way to compress an image is to adjust its quality setting. Most tools offer a scale from 0–100 or 0–1.
 
 ### Quality Guidelines
 
-- **80â€“90%** â€” Visually lossless. Great for most uses.
-- **50â€“70%** â€” Good balance of size and quality.
-- **20â€“40%** â€” Small files with visible quality loss.
+- **80–90%** — Visually lossless. Great for most uses.
+- **50–70%** — Good balance of size and quality.
+- **20–40%** — Small files with visible quality loss.
 
 Use our **Smart Image Compressor** to experiment with different quality levels and see the results in real time.
 
@@ -60,22 +60,22 @@ One of the biggest mistakes people make is compressing an image that's way too l
 
 ### Recommended Sizes
 
-- **Blog content** â€” 800â€“1200px wide
-- **Hero images** â€” 1920px wide
-- **Thumbnails** â€” 400â€“600px wide
-- **Social media** â€” Platform-specific (use presets)
+- **Blog content** — 800–1200px wide
+- **Hero images** — 1920px wide
+- **Thumbnails** — 400–600px wide
+- **Social media** — Platform-specific (use presets)
 
 The **Smart Image Resizer** includes presets for YouTube, Instagram, TikTok, and more.
 
 ## 4. Use Modern Formats
 
-WebP reduces file size by 25â€“35% compared to PNG with equivalent quality. AVIF can reduce by up to 50% compared to JPEG.
+WebP reduces file size by 25–35% compared to PNG with equivalent quality. AVIF can reduce by up to 50% compared to JPEG.
 
 ### Browser Support (2026)
 
-- **WebP** â€” Supported in all modern browsers (95%+ of users)
-- **AVIF** â€” Supported in Chrome, Firefox, Safari
-- **JPEG XL** â€” Emerging standard
+- **WebP** — Supported in all modern browsers (95%+ of users)
+- **AVIF** — Supported in Chrome, Firefox, Safari
+- **JPEG XL** — Emerging standard
 
 ## 5. Compress in Batches
 

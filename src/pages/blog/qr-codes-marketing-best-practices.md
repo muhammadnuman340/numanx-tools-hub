@@ -11,11 +11,11 @@ slug: 'qr-codes-marketing-best-practices'
 image: '/images/blog/qr-codes-marketing-best-practices.svg'
 ---
 
-QR codes have evolved from a niche technology into a mainstream marketing tool. In 2026, they are everywhere â€” on product packaging, restaurant tables, billboards, and business cards. But not all QR code campaigns are created equal. Here is how to use them effectively.
+QR codes have evolved from a niche technology into a mainstream marketing tool. In 2026, they are everywhere — on product packaging, restaurant tables, billboards, and business cards. But not all QR code campaigns are created equal. Here is how to use them effectively.
 
 ## Why QR Codes Work in 2026
 
-Modern smartphones can scan QR codes directly from the camera app â€” no separate app required. This frictionless experience has driven adoption to new heights.
+Modern smartphones can scan QR codes directly from the camera app — no separate app required. This frictionless experience has driven adoption to new heights.
 
 ### QR Code Usage Statistics
 
@@ -68,13 +68,13 @@ Where you place a QR code matters as much as the design.
 
 - **Eye level** on posters and signage
 - **Within arm's reach** on tables and counters
-- **On the fold** of packaging â€” not hidden on the back
-- **In well-lit areas** â€” darkness prevents scanning
-- **At the right distance** â€” allow 10â€“15cm of viewing space
+- **On the fold** of packaging — not hidden on the back
+- **In well-lit areas** — darkness prevents scanning
+- **At the right distance** — allow 10–15cm of viewing space
 
 ### Context Matters
 
-A QR code on a billboard above a highway is useless â€” drivers cannot safely scan it. A QR code on a product shelf display, however, can capture shoppers at the moment of decision.
+A QR code on a billboard above a highway is useless — drivers cannot safely scan it. A QR code on a product shelf display, however, can capture shoppers at the moment of decision.
 
 ## 4. Mobile-Optimized Landing Pages
 
@@ -151,7 +151,7 @@ Understanding the difference is crucial for campaign management.
 
 ### Static QR Codes
 
-- Fixed destination â€” cannot be changed
+- Fixed destination — cannot be changed
 - No tracking capabilities
 - Never expire
 - Simpler and faster to create

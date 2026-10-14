@@ -1,0 +1,121 @@
+---
+// FILE: src/components/SeoHead.astro
+export interface FAQItem { question: string; answer: string; }
+export interface StepItem { title: string; detail: string; }
+
+export interface Props {
+  title: string;
+  description: string;
+  category?: string;
+  categorySlug?: string;
+  noindex?: boolean;
+  isTool?: boolean;
+  faqs?: FAQItem[];
+  steps?: StepItem[];
+}
+
+const {
+  title,
+  description,
+  category = 'WebApplication',
+  categorySlug = 'utility-tools',
+  noindex = false,
+  isTool = false,
+  faqs = [],
+  steps = [],
+} = Astro.props;
+
+const SITE_URL = 'https://numanx-tools.pages.dev';
+const rawPath = Astro.url.pathname;
+const normalizedPath = rawPath.endsWith('/') ? rawPath : `${rawPath}/`;
+const canonicalURL = new URL(normalizedPath, SITE_URL).toString();
+
+// Automatically noindex state routes even if prop was omitted
+const isStateRoute = ['/dashboard/', '/favorites/', '/search/'].some((p) => normalizedPath.startsWith(p));
+const shouldNoindex = noindex || isStateRoute;
+
+const graph: any[] = [
+  {
+    "@type": "Organization",
+    "@id": `${SITE_URL}/#organization`,
+    "name": "NumanX Studio",
+    "url": SITE_URL,
+    "email": "numanxstudio@gmail.com",
+    "founder": {
+      "@type": "Person",
+      "name": "Muhammad Numan Usmani",
+      "url": "https://github.com/muhammadnuman340"
+    }
+  },
+  {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "NumanX Tools", "item": `${SITE_URL}/` },
+      ...(isTool ? [
+        { "@type": "ListItem", "position": 2, "name": category, "item": `${SITE_URL}/category/${categorySlug}/` },
+        { "@type": "ListItem", "position": 3, "name": title, "item": canonicalURL }
+      ] : [
+        { "@type": "ListItem", "position": 2, "name": title, "item": canonicalURL }
+      ])
+    ]
+  }
+];
+
+if (isTool) {
+  graph.push({
+    "@type": "SoftwareApplication",
+    "name": title,
+    "url": canonicalURL,
+    "description": description,
+    "applicationCategory": category,
+    "operatingSystem": "All (Browser-Based Client-Side Web Application)",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD" },
+    "featureList": [
+      "100% Client-Side Execution",
+      "Zero Server Uploads",
+      "Works Offline via PWA Service Worker",
+      "No Watermarks or Sign-Up Required"
+    ],
+    "publisher": { "@id": `${SITE_URL}/#organization` }
+  });
+}
+
+if (steps.length > 0) {
+  graph.push({
+    "@type": "HowTo",
+    "name": `How to use ${title}`,
+    "step": steps.map((s, idx) => ({
+      "@type": "HowToStep",
+      "position": idx + 1,
+      "name": s.title,
+      "text": s.detail
+    }))
+  });
+}
+
+if (faqs.length > 0) {
+  graph.push({
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((f) => ({
+      "@type": "Question",
+      "name": f.question,
+      "acceptedAnswer": { "@type": "Answer", "text": f.answer }
+    }))
+  });
+}
+
+const jsonLdPayload = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
+---
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+<meta name="robots" content={shouldNoindex ? "noindex, follow" : "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"} />
+<meta property="og:type" content="website" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:site_name" content="NumanX Tools" />
+<script type="application/ld+json" set:html={jsonLdPayload} />

@@ -78,7 +78,7 @@ JPEG is still the best choice in specific scenarios.
 
 ### JPEG Strengths
 
-- Universal browser support â€” works everywhere
+- Universal browser support — works everywhere
 - Excellent for photographs with smooth gradients
 - Small file sizes at reasonable quality
 - Supported by every image editor and device
@@ -110,7 +110,7 @@ PNG excels where accuracy matters more than file size.
 
 ### PNG Weaknesses
 
-- Large file sizes (often 2â€“5x larger than JPEG)
+- Large file sizes (often 2–5x larger than JPEG)
 - Not suitable for photographs at high resolution
 - No animation support
 - No lossy compression option
@@ -193,8 +193,8 @@ Converting between formats is simple with the right tools.
 
 | Tool               | Formats     | Batch |
 | ------------------ | ----------- | ----- |
-| NumanX JPG to PNG  | JPG â†” PNG   | Yes   |
-| NumanX PNG to WebP | PNG â†’ WebP  | Yes   |
+| NumanX JPG to PNG  | JPG ↔ PNG   | Yes   |
+| NumanX PNG to WebP | PNG → WebP  | Yes   |
 | Squoosh            | All formats | No    |
 | CloudConvert       | All formats | Yes   |
 

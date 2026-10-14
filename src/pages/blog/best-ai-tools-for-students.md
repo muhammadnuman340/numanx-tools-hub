@@ -24,7 +24,7 @@ Tools like ChatGPT, Claude, and Gemini have transformed how students approach wr
 - Improve grammar and sentence structure
 - Get feedback on clarity and flow
 
-> "AI writing tools are like having a tutor available 24/7. They don't replace your thinking â€” they enhance it."
+> "AI writing tools are like having a tutor available 24/7. They don't replace your thinking — they enhance it."
 
 ## 2. Research and Citation Tools
 
@@ -73,10 +73,10 @@ Students deal with countless images, PDFs, and documents. Tools like NumanX Tool
 
 ## Tips for Using AI as a Student
 
-- **Verify AI outputs** â€” AI can make mistakes. Always double-check facts.
-- **Cite your sources** â€” If AI helped you research, acknowledge it.
-- **Use AI for understanding** â€” Ask it to explain concepts, not just give answers.
-- **Stay ethical** â€” Follow your institution's AI usage policies.
+- **Verify AI outputs** — AI can make mistakes. Always double-check facts.
+- **Cite your sources** — If AI helped you research, acknowledge it.
+- **Use AI for understanding** — Ask it to explain concepts, not just give answers.
+- **Stay ethical** — Follow your institution's AI usage policies.
 
 ## Frequently Asked Questions
 

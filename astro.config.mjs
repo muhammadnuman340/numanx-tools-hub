@@ -2,15 +2,24 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
-// https://astro.build/config
 export default defineConfig({
   site: 'https://numanx-tools.pages.dev',
-  trailingSlash: 'always', // Strictly normalize slashes to prevent Duplicate Content in GSC
+  output: 'static',
+  trailingSlash: 'always',
+  build: {
+    format: 'directory',
+  },
   integrations: [
     sitemap({
-      changefreq: 'daily',
-      priority: 0.8,
-    })
+      changefreq: 'weekly',
+      priority: 0.85,
+      filter: (page) =>
+        !page.includes('/dashboard/') &&
+        !page.includes('/favorites/') &&
+        !page.includes('/search/') &&
+        !page.includes('/api/') &&
+        !page.includes('/404'),
+    }),
   ],
   vite: {
     plugins: [tailwind()],

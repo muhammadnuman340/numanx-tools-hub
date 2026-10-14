@@ -5,3 +5,18 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https://www.google-analytics.com https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://cdn.jsdelivr.net; frame-src 'self' https://www.googletagmanager.com https://googleads.g.doubleclick.net
   X-Permitted-Cross-Domain-Policies: none
+
+/dashboard/*
+  X-Robots-Tag: noindex, follow
+
+/favorites/*
+  X-Robots-Tag: noindex, follow
+
+/search/*
+  X-Robots-Tag: noindex, follow
+
+/tools/*
+  X-Robots-Tag: index, follow, max-snippet:-1, max-image-preview:large
+
+/blog/*
+  X-Robots-Tag: index, follow, max-snippet:-1, max-image-preview:large

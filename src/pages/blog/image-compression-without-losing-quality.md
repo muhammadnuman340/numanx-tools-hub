@@ -37,10 +37,10 @@ Lossless compression reduces file size without removing any pixel data. The deco
 
 | Type        | File Size Reduction | Quality           | Use Case     |
 | ----------- | ------------------- | ----------------- | ------------ |
-| Lossless    | 20â€“50%              | Exact original    | Logos, icons |
-| Lossy (90%) | 50â€“70%              | Visually lossless | Web photos   |
-| Lossy (70%) | 70â€“85%              | Good quality      | Blog images  |
-| Lossy (50%) | 85â€“95%              | Noticeable loss   | Thumbnails   |
+| Lossless    | 20–50%              | Exact original    | Logos, icons |
+| Lossy (90%) | 50–70%              | Visually lossless | Web photos   |
+| Lossy (70%) | 70–85%              | Good quality      | Blog images  |
+| Lossy (50%) | 85–95%              | Noticeable loss   | Thumbnails   |
 
 ## 2. Best Image Compression Tools
 
@@ -57,10 +57,10 @@ Different tools excel at different types of compression.
 
 ### Desktop Software
 
-- **ImageOptim** (Mac) â€” Lossless compression
-- **FileOptimizer** (Windows) â€” Batch processing
-- **RIOT** (Windows) â€” Visual comparison tool
-- **XnConvert** (Cross-platform) â€” Batch conversion
+- **ImageOptim** (Mac) — Lossless compression
+- **FileOptimizer** (Windows) — Batch processing
+- **RIOT** (Windows) — Visual comparison tool
+- **XnConvert** (Cross-platform) — Batch conversion
 
 ## 3. Quality Settings Explained
 
@@ -68,15 +68,15 @@ Compression quality scales are not standardized. A quality of 80 in one tool may
 
 ### Practical Quality Guide
 
-- **100%** â€” No compression. Unnecessary for web use.
-- **85â€“95%** â€” Visually lossless. Great for photography portfolios.
-- **70â€“85%** â€” Excellent balance. Use for most web content.
-- **50â€“70%** â€” Good for thumbnails and backgrounds.
-- **20â€“50%** â€” Heavy compression. Visible artifacts.
+- **100%** — No compression. Unnecessary for web use.
+- **85–95%** — Visually lossless. Great for photography portfolios.
+- **70–85%** — Excellent balance. Use for most web content.
+- **50–70%** — Good for thumbnails and backgrounds.
+- **20–50%** — Heavy compression. Visible artifacts.
 
 ### Visual Lossless Threshold
 
-Testing shows that most people cannot tell the difference between 100% and 85% quality in JPEG images, while file size drops by 60â€“70%. This is the sweet spot for web images.
+Testing shows that most people cannot tell the difference between 100% and 85% quality in JPEG images, while file size drops by 60–70%. This is the sweet spot for web images.
 
 ## 4. Batch Processing Tips
 
@@ -120,8 +120,8 @@ Real-world compression results using NumanX Tools.
 | Format             | JPEG      | JPEG             |
 | Dimensions         | 1920x1080 | 1920x1080        |
 | File Size          | 2.4 MB    | 480 KB           |
-| Reduction          | â€”         | 80%              |
-| Visible Difference | â€”         | None             |
+| Reduction          | —         | 80%              |
+| Visible Difference | —         | None             |
 
 ### Example 2: PNG Graphic
 
@@ -130,8 +130,8 @@ Real-world compression results using NumanX Tools.
 | Format             | PNG      | PNG (lossless) |
 | Dimensions         | 800x600  | 800x600        |
 | File Size          | 640 KB   | 210 KB         |
-| Reduction          | â€”        | 67%            |
-| Visible Difference | â€”        | None (exact)   |
+| Reduction          | —        | 67%            |
+| Visible Difference | —        | None (exact)   |
 
 ## 7. Compression for Different Outputs
 
@@ -141,21 +141,21 @@ Different mediums require different approaches.
 
 - Target: Under 500KB for hero images
 - Format: WebP (preferred) or JPEG
-- Quality: 80â€“85%
+- Quality: 80–85%
 - Always resize to display dimensions first
 
 ### Print Compression
 
 - Target: Minimum file size while preserving detail
 - Format: TIFF or high-quality JPEG
-- Quality: 95â€“100%
+- Quality: 95–100%
 - Resolution: 300 DPI minimum
 
 ### Social Media Compression
 
 - Target: Platform-specific size limits
 - Format: JPEG for photos, PNG for graphics
-- Quality: 80â€“90%
+- Quality: 80–90%
 - Resize to platform dimensions before compressing
 
 ## 8. Advanced Techniques
@@ -164,7 +164,7 @@ For power users who want maximum compression.
 
 ### Psychovisual Optimization
 
-Advanced encoders like MozJPEG use models of human vision to selectively reduce quality in areas where artifacts are less noticeable. This can reduce file size by an additional 10â€“20% at the same quality setting.
+Advanced encoders like MozJPEG use models of human vision to selectively reduce quality in areas where artifacts are less noticeable. This can reduce file size by an additional 10–20% at the same quality setting.
 
 ### Progressive JPEG
 
@@ -178,7 +178,7 @@ Only lossy compression reduces quality. Lossless compression preserves every pix
 
 ### What is the best compression ratio?
 
-Aim for 60â€“80% file size reduction for photographs. Graphics can often be reduced by 50â€“70% losslessly. Beyond these ranges, quality loss becomes noticeable.
+Aim for 60–80% file size reduction for photographs. Graphics can often be reduced by 50–70% losslessly. Beyond these ranges, quality loss becomes noticeable.
 
 ### Can I compress images without uploading to a server?
 
@@ -186,4 +186,4 @@ Yes. Our **Smart Image Compressor** runs entirely in your browser using WebAssem
 
 ## Conclusion
 
-Image compression without quality loss is achievable with the right tools and settings. Focus on choosing the correct format, using quality settings in the 80â€“90% range, resizing before compressing, and leveraging modern formats like WebP. Use the **Smart Image Compressor** at NumanX Tools to start compressing your images in seconds.
+Image compression without quality loss is achievable with the right tools and settings. Focus on choosing the correct format, using quality settings in the 80–90% range, resizing before compressing, and leveraging modern formats like WebP. Use the **Smart Image Compressor** at NumanX Tools to start compressing your images in seconds.

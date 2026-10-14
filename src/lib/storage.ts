@@ -47,6 +47,26 @@ export function getRecentlyUsed(): string[] {
   }
 }
 
+export function addSearchHistory(query: string): void {
+  const trimmed = query.trim();
+  if (!trimmed) return;
+  try {
+    let history: string[] = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
+    history = history.filter((q) => q !== trimmed);
+    history.unshift(trimmed);
+    if (history.length > 10) history = history.slice(0, 10);
+    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));
+  } catch {}
+}
+
+export function getSearchHistory(): string[] {
+  try {
+    return JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
+  } catch {
+    return [];
+  }
+}
+
 export function trackToolUsage(slug: string): void {
   try {
     const usage: Record<string, number> = JSON.parse(localStorage.getItem(TOOL_USAGE_KEY) || '{}');
@@ -60,5 +80,17 @@ export function getToolUsage(): Record<string, number> {
     return JSON.parse(localStorage.getItem(TOOL_USAGE_KEY) || '{}');
   } catch {
     return {};
+  }
+}
+
+export function getMostUsedTools(limit = 5): string[] {
+  try {
+    const usage = getToolUsage();
+    return Object.entries(usage)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, limit)
+      .map(([slug]) => slug);
+  } catch {
+    return [];
   }
 }

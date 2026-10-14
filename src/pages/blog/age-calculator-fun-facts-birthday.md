@@ -59,18 +59,18 @@ Your birth date determines your Western zodiac sign, which astrologers believe i
 
 | Sign        | Dates           | Element | Personality              |
 | ----------- | --------------- | ------- | ------------------------ |
-| Aries       | Mar 21 â€“ Apr 19 | Fire    | Bold, ambitious          |
-| Taurus      | Apr 20 â€“ May 20 | Earth   | Reliable, patient        |
-| Gemini      | May 21 â€“ Jun 20 | Air     | Adaptable, curious       |
-| Cancer      | Jun 21 â€“ Jul 22 | Water   | Emotional, caring        |
-| Leo         | Jul 23 â€“ Aug 22 | Fire    | Confident, generous      |
-| Virgo       | Aug 23 â€“ Sep 22 | Earth   | Analytical, practical    |
-| Libra       | Sep 23 â€“ Oct 22 | Air     | Diplomatic, fair         |
-| Scorpio     | Oct 23 â€“ Nov 21 | Water   | Passionate, resourceful  |
-| Sagittarius | Nov 22 â€“ Dec 21 | Fire    | Adventurous, optimistic  |
-| Capricorn   | Dec 22 â€“ Jan 19 | Earth   | Disciplined, responsible |
-| Aquarius    | Jan 20 â€“ Feb 18 | Air     | Innovative, independent  |
-| Pisces      | Feb 19 â€“ Mar 20 | Water   | Compassionate, artistic  |
+| Aries       | Mar 21 – Apr 19 | Fire    | Bold, ambitious          |
+| Taurus      | Apr 20 – May 20 | Earth   | Reliable, patient        |
+| Gemini      | May 21 – Jun 20 | Air     | Adaptable, curious       |
+| Cancer      | Jun 21 – Jul 22 | Water   | Emotional, caring        |
+| Leo         | Jul 23 – Aug 22 | Fire    | Confident, generous      |
+| Virgo       | Aug 23 – Sep 22 | Earth   | Analytical, practical    |
+| Libra       | Sep 23 – Oct 22 | Air     | Diplomatic, fair         |
+| Scorpio     | Oct 23 – Nov 21 | Water   | Passionate, resourceful  |
+| Sagittarius | Nov 22 – Dec 21 | Fire    | Adventurous, optimistic  |
+| Capricorn   | Dec 22 – Jan 19 | Earth   | Disciplined, responsible |
+| Aquarius    | Jan 20 – Feb 18 | Air     | Innovative, independent  |
+| Pisces      | Feb 19 – Mar 20 | Water   | Compassionate, artistic  |
 
 ## 4. Chinese Zodiac
 

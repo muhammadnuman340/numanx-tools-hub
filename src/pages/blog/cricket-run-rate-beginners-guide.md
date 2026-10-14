@@ -67,11 +67,11 @@ In T20, each team bats for a maximum of 20 overs. Run rates are typically high:
 
 | Phase           | Typical Run Rate | Strategy                |
 | --------------- | ---------------- | ----------------------- |
-| Powerplay (1â€“6) | 7â€“9 runs/over    | Aggressive batting      |
-| Middle (7â€“15)   | 8â€“10 runs/over   | Balance risk and reward |
-| Death (16â€“20)   | 10â€“14 runs/over  | Maximum attacking       |
+| Powerplay (1–6) | 7–9 runs/over    | Aggressive batting      |
+| Middle (7–15)   | 8–10 runs/over   | Balance risk and reward |
+| Death (16–20)   | 10–14 runs/over  | Maximum attacking       |
 
-A par score in T20 is around 160â€“180, requiring a run rate of 8â€“9 runs per over.
+A par score in T20 is around 160–180, requiring a run rate of 8–9 runs per over.
 
 ### ODI Cricket
 
@@ -79,15 +79,15 @@ ODIs allow 50 overs per side. Run rates are more measured:
 
 | Phase          | Typical Run Rate | Strategy            |
 | -------------- | ---------------- | ------------------- |
-| Early (1â€“10)   | 4.5â€“5.5          | Build a foundation  |
-| Middle (11â€“40) | 5â€“6              | Accelerate steadily |
-| Death (41â€“50)  | 6â€“9              | Attack aggressively |
+| Early (1–10)   | 4.5–5.5          | Build a foundation  |
+| Middle (11–40) | 5–6              | Accelerate steadily |
+| Death (41–50)  | 6–9              | Attack aggressively |
 
 Modern ODI scores of 300+ require a run rate of 6+ throughout the innings.
 
 ### Test Cricket
 
-Test cricket has no over limit, so run rate is less critical. Teams typically score at 3â€“4 runs per over. However, a high run rate can help set up declarations or chase targets on the final day.
+Test cricket has no over limit, so run rate is less critical. Teams typically score at 3–4 runs per over. However, a high run rate can help set up declarations or chase targets on the final day.
 
 ## Real-World Example
 
@@ -126,7 +126,7 @@ Our **Run Rate Calculator** at NumanX Tools does all the math instantly. Just en
 
 ### What is a good run rate in T20?
 
-A run rate of 8â€“9 is considered good in T20 cricket. World-class teams aim for 9+ in the powerplay and 10+ in the death overs.
+A run rate of 8–9 is considered good in T20 cricket. World-class teams aim for 9+ in the powerplay and 10+ in the death overs.
 
 ### How does rain affect run rate?
 

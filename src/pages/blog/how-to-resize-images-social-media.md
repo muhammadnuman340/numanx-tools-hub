@@ -1,7 +1,7 @@
 ﻿---
 layout: ../../layouts/BlogLayout.astro
 title: 'How to Resize Images for Social Media Platforms [2026 Guide]'
-description: 'Perfect image sizes for Instagram, TikTok, YouTube, Twitter, LinkedIn, and Facebook â€” with free resizing tools.'
+description: 'Perfect image sizes for Instagram, TikTok, YouTube, Twitter, LinkedIn, and Facebook — with free resizing tools.'
 date: 'May 30, 2026'
 author: 'NumanX Tools'
 category: 'Image Tools'
@@ -71,11 +71,11 @@ YouTube has specific requirements for every visual element.
 | Channel banner | 2560 x 1440 px | 16:9         | 6 MB            |
 | Channel icon   | 800 x 800 px   | 1:1          | 4 MB            |
 | Video upload   | 1920 x 1080 px | 16:9         | 256 GB          |
-| Story          | 1920 x 1080 px | 16:9         | â€”               |
+| Story          | 1920 x 1080 px | 16:9         | —               |
 
 ### YouTube Thumbnail Tips
 
-Thumbnails should be 1280 x 720 px minimum. Use bright colors, readable text, and a clear focal point. Channels with custom thumbnails see 30â€“40% more clicks than those without.
+Thumbnails should be 1280 x 720 px minimum. Use bright colors, readable text, and a clear focal point. Channels with custom thumbnails see 30–40% more clicks than those without.
 
 ## 4. X (Twitter) Image Sizes
 
@@ -152,7 +152,7 @@ Resizing an image usually reduces quality. Here is how to maintain sharpness.
 ### Resizing Best Practices
 
 - **Start with the largest source image** possible
-- **Downscale only** â€” enlarging small images creates blur
+- **Downscale only** — enlarging small images creates blur
 - **Use high-quality interpolation** (Lanczos or Bicubic)
 - **Sharpen after resizing** for crisper results
 - **Export in the platform's preferred format**

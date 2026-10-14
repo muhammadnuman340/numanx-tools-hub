@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
-    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/sitemap": "^3.7.4",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@imgly/background-removal": "^1.7.0",
@@ -29,6 +29,7 @@
     "@upscalerjs/default-model": "^1.0.0",
     "astro": "^6.4.2",
     "astro-eslint-parser": "^1.4.0",
+    "bwip-js": "^4.11.4",
     "cron-parser": "^5.5.0",
     "eslint": "^10.4.1",
     "eslint-plugin-astro": "^1.7.0",

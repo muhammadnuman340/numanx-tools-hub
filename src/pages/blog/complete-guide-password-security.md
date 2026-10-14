@@ -26,11 +26,11 @@ Cyberattacks are more sophisticated than ever. In 2025 alone, over 5 billion cre
 
 ## 1. What Makes a Password Strong
 
-Password strength is measured by entropy â€” how many guesses an attacker would need to crack it.
+Password strength is measured by entropy — how many guesses an attacker would need to crack it.
 
 ### The Anatomy of a Strong Password
 
-- At least 12â€“16 characters
+- At least 12–16 characters
 - Mix of uppercase and lowercase letters
 - Numbers and special characters
 - No dictionary words or common patterns
@@ -75,10 +75,10 @@ Our **Password Generator** at NumanX Tools creates strong, random passwords inst
 
 ### Types of 2FA
 
-- **SMS codes** â€” Convenient but vulnerable to SIM swapping
-- **Authenticator apps** â€” More secure (Google Authenticator, Authy)
-- **Hardware keys** â€” Most secure (YubiKey, Titan)
-- **Biometric** â€” Fingerprint, face recognition, iris scan
+- **SMS codes** — Convenient but vulnerable to SIM swapping
+- **Authenticator apps** — More secure (Google Authenticator, Authy)
+- **Hardware keys** — Most secure (YubiKey, Titan)
+- **Biometric** — Fingerprint, face recognition, iris scan
 
 ### 2FA Best Practices
 
@@ -109,7 +109,7 @@ Even security-conscious people make these mistakes.
 - **Using personal information** (birthdays, names, pet names)
 - **Sharing passwords** via email or messaging apps
 - **Storing passwords** in plain text files or sticky notes
-- **Ignoring breach notifications** â€” change passwords immediately
+- **Ignoring breach notifications** — change passwords immediately
 
 ## 6. How to Create Memorable Strong Passwords
 
@@ -123,7 +123,7 @@ Combine random words into a sentence:
 BlueCoffeeJumpsFasterThanGreenTea!
 ```
 
-This is easy to remember but has over 80 bits of entropy â€” effectively uncrackable.
+This is easy to remember but has over 80 bits of entropy — effectively uncrackable.
 
 ## 7. Recognizing Phishing Attacks
 
