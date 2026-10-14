@@ -1,0 +1,313 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import KeyboardHints from '../../components/KeyboardHints.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'How is cricket batting average calculated?',
+    answer:
+      'Batting average = Total Runs Scored ÷ Number of Dismissals (Times Out). Not-out innings do not count as dismissals, which is why finishing games increases a batter’s average.',
+  },
+  {
+    question: 'How is cricket strike rate calculated?',
+    answer:
+      'Batting strike rate = (Total Runs Scored ÷ Balls Faced) × 100. It measures the scoring speed per 100 deliveries faced.',
+  },
+  {
+    question: 'What is the 1080x1920 WWS Stat Card?',
+    answer:
+      'It is a high-resolution 1080×1920 vertical canvas graphic formatted specifically for YouTube Shorts, Instagram Reels, and TikTok clips, powered by World Wonders & Sports (WWS) × NumanX Tools.',
+  },
+  {
+    question: 'What is considered a world-class T20 strike rate and average?',
+    answer:
+      'In T20 cricket, a batting average of 35+ combined with a strike rate of 140+ is considered elite and world-class.',
+  },
+];
+
+const sraSchema = {
+  name: 'Strike Rate & Average Calculator Pro',
+  applicationCategory: 'Sports',
+  description:
+    'Calculate cricket batting average, strike rate, and generate 1080x1920 vertical social media stat cards for Shorts & Reels.',
+  featureList: [
+    'Batting average and strike rate combined calculation',
+    'Not-out innings handling for precise ICC averages',
+    'One-click WWS 1080x1920 vertical Shorts/Reels stat card generator',
+    'Player comparison and performance tier benchmarks',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '📊',
+    title: 'Dual Metric Accuracy',
+    desc: 'Calculate both Batting Average and Strike Rate simultaneously with exact ICC decimal precision.',
+  },
+  {
+    icon: '📱',
+    title: '1080×1920 Shorts Exporter',
+    desc: 'Download publication-ready vertical cards designed for YouTube Shorts, TikTok, and Instagram Reels.',
+  },
+  {
+    icon: '🌟',
+    title: 'Not-Out Handling',
+    desc: 'Accurately separates total innings from dismissals so not-out finishes properly boost the batting average.',
+  },
+  {
+    icon: '⚡',
+    title: 'Instant In-Browser',
+    desc: 'Generates cards locally via HTML5 Canvas with zero server uploads and zero lag.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Enter Player Information',
+    desc: 'Type the player name, tournament or series title, and select a preset or custom numbers.',
+  },
+  {
+    num: '2',
+    title: 'Input Batting Statistics',
+    desc: 'Enter total runs, balls faced, and times dismissed (times out).',
+  },
+  {
+    num: '3',
+    title: 'Review Average & Strike Rate',
+    desc: 'See the live calculated average, strike rate, and performance rating update instantly.',
+  },
+  {
+    num: '4',
+    title: 'Download Social Media Stat Card',
+    desc: 'Click the WWS export button to download a 1080×1920 PNG ready for YouTube Shorts and Reels.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '🎬',
+    title: 'Cricket YouTubers & Creators',
+    desc: 'Create viral YouTube Shorts and Reels graphics highlighting player statistics in seconds.',
+  },
+  {
+    icon: '📈',
+    title: 'Fantasy Team Selection',
+    desc: 'Evaluate players using combined average and strike rate efficiency for fantasy cricket leagues.',
+  },
+  {
+    icon: '🏏',
+    title: 'Player Performance Tracking',
+    desc: 'Track club, school, or professional player progression across an entire season.',
+  },
+];
+---
+
+<MainLayout
+  title="Cricket Batting Strike Rate & Average Calculator — Free WWS 1080x1920 Shorts Stat Card Maker | NumanX Tools"
+  description="Calculate cricket batting average and strike rate. Generate and download free 1080x1920 vertical social media stat cards for YouTube Shorts and Instagram Reels."
+  keywords="cricket batting average calculator, strike rate and average calculator, cricket strike rate, wws stat card maker, cricket shorts maker, reels cricket stats"
+  toolSchema={sraSchema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Calculate Strike Rate and Batting Average',
+    description: 'Calculate batting stats and export a 1080x1920 social card in 4 easy steps.',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Strike Rate & Average', url: '/tools/strike-rate-average-calculator/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto">
+      <ToolHeader
+        title="Strike Rate & Average"
+        gradient="Calculator Pro"
+        desc="Calculate batting average and strike rate with real-time stats and export 1080×1920 social media stat cards."
+        badge="✦ WWS Shorts Edition"
+        slug="strike-rate-average-calculator"
+      />
+
+      <ShareBar />
+
+      <div class="max-w-2xl mx-auto mt-8 space-y-6">
+        <!-- Input Form -->
+        <div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6 space-y-4">
+          <div class="space-y-3">
+            <div>
+              <label for="player-name" class="text-[10px] uppercase font-semibold text-muted block mb-1">Player Name</label>
+              <input
+                id="player-name"
+                type="text"
+                value="Babar Azam"
+                placeholder="e.g. Babar Azam"
+                class="w-full bg-zinc-950 text-white px-4 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-purple-500 text-sm font-semibold"
+              />
+            </div>
+            <div>
+              <label for="tournament-name" class="text-[10px] uppercase font-semibold text-muted block mb-1">Tournament / Format</label>
+              <input
+                id="tournament-name"
+                type="text"
+                value="PSL / T20 Statistical Breakdown"
+                placeholder="e.g. ICC T20 World Cup"
+                class="w-full bg-zinc-950 text-white px-4 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-purple-500 text-sm"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+            <div>
+              <label for="total-runs" class="text-[10px] uppercase font-semibold text-muted block mb-1">Total Runs</label>
+              <input
+                id="total-runs"
+                type="number"
+                min="0"
+                value="568"
+                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-purple-500 text-sm font-mono font-bold"
+              />
+            </div>
+            <div>
+              <label for="total-balls" class="text-[10px] uppercase font-semibold text-muted block mb-1">Balls Faced</label>
+              <input
+                id="total-balls"
+                type="number"
+                min="1"
+                value="398"
+                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-purple-500 text-sm font-mono font-bold"
+              />
+            </div>
+            <div>
+              <label for="total-outs" class="text-[10px] uppercase font-semibold text-muted block mb-1">Dismissals (Out)</label>
+              <input
+                id="total-outs"
+                type="number"
+                min="1"
+                value="10"
+                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-purple-500 text-sm font-mono font-bold"
+              />
+            </div>
+          </div>
+
+          <!-- Result Cards -->
+          <div class="grid grid-cols-2 gap-3 pt-2">
+            <div class="p-4 rounded-xl bg-zinc-950 border border-surface text-center space-y-1">
+              <span class="text-[10px] uppercase font-bold tracking-wider text-muted">Batting Average</span>
+              <div class="text-3xl font-black text-emerald-400 font-mono" id="bat-avg-display">56.80</div>
+              <p class="text-[10px] text-zinc-500">Runs / Dismissal</p>
+            </div>
+            <div class="p-4 rounded-xl bg-zinc-950 border border-surface text-center space-y-1">
+              <span class="text-[10px] uppercase font-bold tracking-wider text-muted">Strike Rate (SR)</span>
+              <div class="text-3xl font-black text-purple-400 font-mono" id="bat-sr-display">142.71</div>
+              <p class="text-[10px] text-zinc-500">Runs / 100 Balls</p>
+            </div>
+          </div>
+
+          <!-- WWS Shorts 1080x1920 Card Exporter -->
+          <div class="rounded-xl p-5 bg-gradient-to-r from-emerald-950/40 via-surface-1 to-indigo-950/40 border border-emerald-500/30 text-center space-y-3 mt-4">
+            <div class="flex items-center justify-center gap-2">
+              <span class="text-xl">📱</span>
+              <h3 class="text-xs font-bold text-white uppercase tracking-wider">WWS Social Media Shorts Stat Card</h3>
+            </div>
+            <p class="text-[11px] text-zinc-400 max-w-md mx-auto">
+              Download an ultra-sharp 1080×1920 vertical canvas graphic formatted for YouTube Shorts, Reels, and TikTok.
+            </p>
+            <button
+              id="export-wws-card-btn"
+              class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-lg shadow-emerald-950/50 active:scale-98 transition-all flex items-center justify-center gap-2"
+            >
+              <span>📱</span>
+              <span>Download 1080×1920 WWS Shorts/Reels Stat Card (PNG)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="mt-16">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+            Frequently Asked
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+          </h2>
+          <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
+        </div>
+      </section>
+
+      <KeyboardHints
+        hints={[
+          { keys: '⌘K', label: 'Open search' },
+          { keys: 'Tab', label: 'Next field' },
+          { keys: 'Enter', label: 'Update' },
+        ]}
+      />
+
+      <ToolContentSections
+        toolSlug="strike-rate-average-calculator"
+        toolName="Strike Rate & Average Calculator"
+        category="Cricket Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+
+      <RelatedTools current="strike-rate-average-calculator" />
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  import { exportWWSStatCardPNG } from '../../utils/cricketAnalytics.js';
+
+  const nameInput = document.getElementById('player-name') as HTMLInputElement | null;
+  const tourInput = document.getElementById('tournament-name') as HTMLInputElement | null;
+  const runsInput = document.getElementById('total-runs') as HTMLInputElement | null;
+  const ballsInput = document.getElementById('total-balls') as HTMLInputElement | null;
+  const outsInput = document.getElementById('total-outs') as HTMLInputElement | null;
+
+  const avgDisplay = document.getElementById('bat-avg-display');
+  const srDisplay = document.getElementById('bat-sr-display');
+
+  function updateStats() {
+    const runs = parseFloat(runsInput?.value || '0') || 0;
+    const balls = Math.max(1, parseFloat(ballsInput?.value || '1') || 1);
+    const outs = Math.max(1, parseFloat(outsInput?.value || '1') || 1);
+
+    const avg = (runs / outs).toFixed(2);
+    const sr = ((runs / balls) * 100).toFixed(2);
+
+    if (avgDisplay) avgDisplay.textContent = avg;
+    if (srDisplay) srDisplay.textContent = sr;
+  }
+
+  [runsInput, ballsInput, outsInput].forEach((el) => {
+    el?.addEventListener('input', updateStats);
+  });
+
+  document.getElementById('export-wws-card-btn')?.addEventListener('click', () => {
+    const playerName = nameInput?.value?.trim() || 'Cricket Star';
+    const tournament = tourInput?.value?.trim() || 'T20 Statistical Breakdown';
+    const runs = parseFloat(runsInput?.value || '0') || 0;
+    const balls = parseFloat(ballsInput?.value || '1') || 1;
+    const dismissals = parseFloat(outsInput?.value || '1') || 1;
+
+    exportWWSStatCardPNG({
+      playerName,
+      tournament,
+      runs,
+      balls,
+      dismissals,
+      brandTag: 'World Wonders & Sports (WWS) × NumanX Tools'
+    });
+  });
+
+  updateStats();
+</script>

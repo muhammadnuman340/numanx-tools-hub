@@ -564,6 +564,24 @@ const useCases = [
               </div>
             </div>
           </div>
+
+          <!-- WWS 1080x1920 Shorts / Reels Stat Card Exporter -->
+          <div class="rounded-2xl p-5 bg-gradient-to-r from-emerald-950/40 via-surface-1 to-indigo-950/40 border border-emerald-500/30 text-center space-y-3">
+            <div class="flex items-center justify-center gap-2">
+              <span class="text-xl">📱</span>
+              <h3 class="text-sm font-bold text-white uppercase tracking-wider">Social Media Shorts / Reels Stat Card</h3>
+            </div>
+            <p class="text-xs text-zinc-400 max-w-md mx-auto">
+              Export an official 1080×1920 high-resolution vertical stat card formatted for YouTube Shorts, Instagram Reels, and TikTok.
+            </p>
+            <button
+              id="export-wws-stat-card-btn"
+              class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-lg shadow-emerald-950/50 active:scale-95 transition-all"
+            >
+              <span>📱</span>
+              <span>Download 1080×1920 WWS Shorts/Reels Stat Card (PNG)</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1209,4 +1227,20 @@ const useCases = [
     const c = localStorage.getItem('nt_theme');
     if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
   } catch (e) {}
+
+  // ─── WWS Shorts / Reels Stat Card Exporter ───
+  import { exportWWSStatCardPNG } from '../../utils/cricketAnalytics.js';
+
+  document.getElementById('export-wws-stat-card-btn')?.addEventListener('click', () => {
+    const runs = parseInt((document.getElementById('bat-runs') as HTMLInputElement)?.value) || 72;
+    const balls = parseInt((document.getElementById('bat-balls') as HTMLInputElement)?.value) || 50;
+    exportWWSStatCardPNG({
+      playerName: 'Cricket Batting Star',
+      tournament: 'T20 / Match Analysis',
+      runs,
+      balls,
+      dismissals: 1,
+      brandTag: 'World Wonders & Sports (WWS) × NumanX Tools'
+    });
+  });
 </script>

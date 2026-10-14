@@ -1,0 +1,455 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import KeyboardHints from '../../components/KeyboardHints.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'How is Net Run Rate (NRR) calculated in ICC tournaments?',
+    answer:
+      'Net Run Rate is calculated by deducting the average runs per over conceded by a team from the average runs per over scored by that team throughout the tournament: NRR = (Total Runs Scored / Total Overs Faced) - (Total Runs Conceded / Total Overs Bowled).',
+  },
+  {
+    question: 'What is the ICC All-Out rule for Net Run Rate?',
+    answer:
+      'Under ICC Law 16.10.2, if a team is bowled out (all-out) before completing their allocated overs, their Net Run Rate calculation uses the full quota of overs (e.g. 20.0 overs for T20, 50.0 overs for ODI) rather than the overs actually batted.',
+  },
+  {
+    question: 'How does the Tournament Playoff Chase Solver work?',
+    answer:
+      'The Playoff Chase Solver determines the exact maximum number of overs a chasing team can bat to surpass a rival team on Net Run Rate and qualify for the semifinals or playoffs.',
+  },
+  {
+    question: 'How are partial overs handled in NRR math?',
+    answer:
+      'In cricket notation, 17.3 overs represents 17 completed overs and 3 balls. Mathematically, 3 balls is 3/6 = 0.5 overs, so 17.3 overs is converted to 17.50 decimal overs for official rate calculations.',
+  },
+];
+
+const nrrSchema = {
+  name: 'Net Run Rate Calculator Pro',
+  applicationCategory: 'Sports',
+  description:
+    'Calculate cricket tournament Net Run Rate (NRR) with official ICC all-out quota rules and playoff chase overs solver.',
+  featureList: [
+    'Official ICC Law 16.10.2 all-out full quota penalty enforcement',
+    'Playoff qualification chase solver for target NRR scenarios',
+    'T20, ODI, and custom match formats with base-6 ball precision',
+    'Client-side computation — 100% private and real-time',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '⚖️',
+    title: 'Official ICC Rules',
+    desc: 'Fully compliant with ICC Law 16.10.2 all-out quota rules. Evaluates decimal overs (17.3 = 17.5) with zero rounding errors.',
+  },
+  {
+    icon: '🎯',
+    title: 'Playoff Chase Solver',
+    desc: 'Calculate the exact over-by-over equation your team must achieve to overtake rivals in the points table.',
+  },
+  {
+    icon: '🏏',
+    title: 'Multi-Match Tournaments',
+    desc: 'Aggregate runs scored and overs faced across entire tournament group stages (World Cup, IPL, PSL, BBL).',
+  },
+  {
+    icon: '⚡',
+    title: 'Instant Live Updates',
+    desc: 'Type runs and overs to see live positive/negative NRR indicators and delta breakdown.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Choose Match Format',
+    desc: 'Select T20 (20 overs), ODI (50 overs), or enter custom maximum quota overs.',
+  },
+  {
+    num: '2',
+    title: 'Input Batting Figures',
+    desc: 'Enter total runs scored and overs faced. Toggle All-Out if your team was bowled out.',
+  },
+  {
+    num: '3',
+    title: 'Input Bowling Figures',
+    desc: 'Enter runs conceded and overs bowled. Toggle All-Out if the opponent was bowled out.',
+  },
+  {
+    num: '4',
+    title: 'Simulate Chase Scenarios',
+    desc: 'Use the Chase Solver to calculate how quickly you must chase your target to surpass a rival on NRR.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '🏆',
+    title: 'World Cup Qualification',
+    desc: 'Find out if your team can qualify for semifinals based on NRR tiebreakers.',
+  },
+  {
+    icon: '📺',
+    title: 'Live Commentary & Broadcast',
+    desc: 'Deliver accurate playoff scenarios and required chase overs in real-time during live matches.',
+  },
+  {
+    icon: '📊',
+    title: 'Tournament Analysts',
+    desc: 'Build team strategy around net run rate defense and acceleration phases.',
+  },
+];
+---
+
+<MainLayout
+  title="Cricket Net Run Rate (NRR) Calculator Online — Official ICC All-Out Rule & Playoff Simulator | NumanX Tools"
+  description="Calculate cricket Net Run Rate (NRR) online with official ICC Law 16.10.2 All-Out full-quota penalty rules and tournament playoff chase qualification simulator."
+  keywords="cricket net run rate calculator, nrr calculator, net run rate formula, icc all out rule, cricket playoff simulator, t20 nrr calculator, odi nrr"
+  toolSchema={nrrSchema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Calculate Net Run Rate',
+    description: 'Calculate official ICC Net Run Rate and playoff chase requirements in 4 steps.',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Net Run Rate Calculator', url: '/tools/net-run-rate-calculator/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto">
+      <ToolHeader
+        title="Net Run Rate"
+        gradient="Calculator Pro"
+        desc="Calculate tournament Net Run Rate (NRR) with official ICC All-Out quota rules and playoff chase overs solver."
+        badge="✦ ICC Rule Certified"
+        slug="net-run-rate-calculator"
+      />
+
+      <ShareBar />
+
+      <div class="max-w-2xl mx-auto mt-8 space-y-6">
+        <!-- Match Format Selector -->
+        <div class="bg-surface-1 border border-surface rounded-2xl p-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+              <span>🏏</span> Tournament Format
+            </span>
+            <div class="flex gap-2">
+              <button
+                class="format-btn px-4 py-1.5 rounded-xl border text-xs font-semibold transition-all bg-purple-600 border-purple-500 text-white"
+                data-quota="20"
+              >
+                T20 (20 Overs)
+              </button>
+              <button
+                class="format-btn px-4 py-1.5 rounded-xl border text-xs font-semibold transition-all bg-surface-2 border-surface text-tertiary hover:text-white"
+                data-quota="50"
+              >
+                ODI (50 Overs)
+              </button>
+            </div>
+          </div>
+
+          <!-- Batting Section -->
+          <div class="p-4 rounded-xl bg-surface-2/60 border border-surface-3 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-purple-300">Your Team (Batting)</span>
+              <label class="flex items-center gap-2 text-xs text-amber-300 font-medium cursor-pointer select-none">
+                <input type="checkbox" id="bat-all-out" class="rounded border-zinc-700 bg-zinc-900 text-purple-500" />
+                <span>Team Bowled Out (Count Full Quota)</span>
+              </label>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label for="bat-runs" class="text-[10px] uppercase font-semibold text-muted block mb-1">Runs Scored</label>
+                <input
+                  id="bat-runs"
+                  type="number"
+                  min="0"
+                  placeholder="e.g. 175"
+                  class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-purple-500 text-sm font-mono"
+                />
+              </div>
+              <div>
+                <label for="bat-overs" class="text-[10px] uppercase font-semibold text-muted block mb-1">Overs Faced (e.g. 18.3)</label>
+                <input
+                  id="bat-overs"
+                  type="text"
+                  placeholder="e.g. 20.0"
+                  class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-purple-500 text-sm font-mono"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Bowling Section -->
+          <div class="p-4 rounded-xl bg-surface-2/60 border border-surface-3 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-blue-300">Opponent Team (Bowling)</span>
+              <label class="flex items-center gap-2 text-xs text-amber-300 font-medium cursor-pointer select-none">
+                <input type="checkbox" id="bowl-all-out" class="rounded border-zinc-700 bg-zinc-900 text-blue-500" />
+                <span>Opponent Bowled Out (Count Full Quota)</span>
+              </label>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label for="bowl-runs" class="text-[10px] uppercase font-semibold text-muted block mb-1">Runs Conceded</label>
+                <input
+                  id="bowl-runs"
+                  type="number"
+                  min="0"
+                  placeholder="e.g. 150"
+                  class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-blue-500 text-sm font-mono"
+                />
+              </div>
+              <div>
+                <label for="bowl-overs" class="text-[10px] uppercase font-semibold text-muted block mb-1">Overs Bowled (e.g. 20.0)</label>
+                <input
+                  id="bowl-overs"
+                  type="text"
+                  placeholder="e.g. 20.0"
+                  class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-blue-500 text-sm font-mono"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- NRR Result Box -->
+          <div class="rounded-xl p-5 bg-zinc-950 border border-surface text-center space-y-2">
+            <span class="text-[10px] uppercase font-bold tracking-wider text-muted">Tournament Net Run Rate (NRR)</span>
+            <div class="text-4xl font-black font-mono" id="nrr-output-container">
+              <span id="nrr-value" class="text-emerald-400">+0.0000</span>
+            </div>
+            <div class="flex justify-center gap-6 text-xs text-zinc-400 pt-1 font-mono">
+              <span>For Rate: <strong id="for-rate" class="text-white">0.0000</strong> RPO</span>
+              <span>Against Rate: <strong id="against-rate" class="text-white">0.0000</strong> RPO</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tournament NRR Playoff Qualification Chase Solver -->
+        <section class="bg-surface-1 border border-surface rounded-2xl p-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">🎯</span>
+              <div>
+                <h2 class="text-sm font-bold text-white m-0">Playoff NRR Qualification Chase Solver</h2>
+                <p class="text-[11px] text-muted m-0">Calculate how quickly your team must chase to surpass a rival</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/30">
+              Live Simulator
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label for="solver-target" class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-1">
+                Target Score to Reach
+              </label>
+              <input
+                id="solver-target"
+                type="number"
+                value="161"
+                class="w-full bg-zinc-950 text-white px-3 py-2 rounded-xl border border-surface font-mono"
+              />
+            </div>
+            <div>
+              <label for="solver-rival-nrr" class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-1">
+                Rival Team NRR to Beat
+              </label>
+              <input
+                id="solver-rival-nrr"
+                type="number"
+                step="0.01"
+                value="0.35"
+                class="w-full bg-zinc-950 text-white px-3 py-2 rounded-xl border border-surface font-mono"
+              />
+            </div>
+            <div>
+              <label for="solver-prev-runs-for" class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-1">
+                Prior Runs Scored (Tournament)
+              </label>
+              <input
+                id="solver-prev-runs-for"
+                type="number"
+                value="640"
+                class="w-full bg-zinc-950 text-white px-3 py-2 rounded-xl border border-surface font-mono"
+              />
+            </div>
+            <div>
+              <label for="solver-prev-overs-for" class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-1">
+                Prior Overs Batted (Tournament)
+              </label>
+              <input
+                id="solver-prev-overs-for"
+                type="number"
+                value="80"
+                class="w-full bg-zinc-950 text-white px-3 py-2 rounded-xl border border-surface font-mono"
+              />
+            </div>
+          </div>
+
+          <button
+            id="solve-chase-btn"
+            class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-xs font-bold transition-all shadow-lg active:scale-98"
+          >
+            Solve Maximum Chase Overs
+          </button>
+
+          <div id="solver-result-box" class="p-4 rounded-xl bg-purple-950/30 border border-purple-500/30 text-center space-y-1">
+            <span class="text-[10px] uppercase font-bold text-purple-300">Qualification Target</span>
+            <div id="solver-result-text" class="text-sm font-semibold text-white">
+              Chase the target in <strong class="text-emerald-400 font-mono text-base">14.2 overs</strong> or fewer to surpass your rival on NRR!
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="mt-16">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+            Frequently Asked
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+          </h2>
+          <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
+        </div>
+      </section>
+
+      <KeyboardHints
+        hints={[
+          { keys: '⌘K', label: 'Open search' },
+          { keys: 'Tab', label: 'Next field' },
+          { keys: 'Enter', label: 'Calculate' },
+        ]}
+      />
+
+      <ToolContentSections
+        toolSlug="net-run-rate-calculator"
+        toolName="Net Run Rate Calculator"
+        category="Cricket Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+
+      <RelatedTools current="net-run-rate-calculator" />
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  import {
+    calculateTournamentNRR,
+    cricketOversToDecimal,
+    solveChaseOversForTargetNRR
+  } from '../../utils/cricketAnalytics.js';
+
+  let currentQuota = 20;
+
+  const formatBtns = document.querySelectorAll('.format-btn');
+  formatBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      formatBtns.forEach((b) => {
+        b.classList.remove('bg-purple-600', 'border-purple-500', 'text-white');
+        b.classList.add('bg-surface-2', 'border-surface', 'text-tertiary');
+      });
+      btn.classList.remove('bg-surface-2', 'border-surface', 'text-tertiary');
+      btn.classList.add('bg-purple-600', 'border-purple-500', 'text-white');
+      currentQuota = parseInt((btn as HTMLElement).dataset.quota || '20', 10);
+      recalcNRR();
+    });
+  });
+
+  const batRuns = document.getElementById('bat-runs') as HTMLInputElement | null;
+  const batOvers = document.getElementById('bat-overs') as HTMLInputElement | null;
+  const batAllOut = document.getElementById('bat-all-out') as HTMLInputElement | null;
+
+  const bowlRuns = document.getElementById('bowl-runs') as HTMLInputElement | null;
+  const bowlOvers = document.getElementById('bowl-overs') as HTMLInputElement | null;
+  const bowlAllOut = document.getElementById('bowl-all-out') as HTMLInputElement | null;
+
+  const nrrValue = document.getElementById('nrr-value');
+  const forRateEl = document.getElementById('for-rate');
+  const againstRateEl = document.getElementById('against-rate');
+
+  function recalcNRR() {
+    const bRuns = parseFloat(batRuns?.value || '0') || 0;
+    const bOversNotation = batOvers?.value?.trim() || `${currentQuota}.0`;
+    const isBatOut = batAllOut?.checked || false;
+
+    const blRuns = parseFloat(bowlRuns?.value || '0') || 0;
+    const blOversNotation = bowlOvers?.value?.trim() || `${currentQuota}.0`;
+    const isBowlOut = bowlAllOut?.checked || false;
+
+    const effectiveBatOvers = cricketOversToDecimal(bOversNotation, isBatOut, currentQuota);
+    const effectiveBowlOvers = cricketOversToDecimal(blOversNotation, isBowlOut, currentQuota);
+
+    const forRate = effectiveBatOvers > 0 ? bRuns / effectiveBatOvers : 0;
+    const againstRate = effectiveBowlOvers > 0 ? blRuns / effectiveBowlOvers : 0;
+    const nrr = forRate - againstRate;
+
+    if (forRateEl) forRateEl.textContent = forRate.toFixed(4);
+    if (againstRateEl) againstRateEl.textContent = againstRate.toFixed(4);
+
+    if (nrrValue) {
+      const sign = nrr > 0 ? '+' : '';
+      nrrValue.textContent = `${sign}${nrr.toFixed(4)}`;
+      if (nrr > 0) {
+        nrrValue.className = 'text-emerald-400';
+      } else if (nrr < 0) {
+        nrrValue.className = 'text-rose-400';
+      } else {
+        nrrValue.className = 'text-zinc-300';
+      }
+    }
+  }
+
+  [batRuns, batOvers, batAllOut, bowlRuns, bowlOvers, bowlAllOut].forEach((el) => {
+    el?.addEventListener('input', recalcNRR);
+    el?.addEventListener('change', recalcNRR);
+  });
+
+  // Solver Button Handler
+  document.getElementById('solve-chase-btn')?.addEventListener('click', () => {
+    const target = parseFloat((document.getElementById('solver-target') as HTMLInputElement)?.value || '161');
+    const rivalNRR = parseFloat((document.getElementById('solver-rival-nrr') as HTMLInputElement)?.value || '0.35');
+    const prevRuns = parseFloat((document.getElementById('solver-prev-runs-for') as HTMLInputElement)?.value || '640');
+    const prevOvers = parseFloat((document.getElementById('solver-prev-overs-for') as HTMLInputElement)?.value || '80');
+
+    const result = solveChaseOversForTargetNRR({
+      prevRunsScored: prevRuns,
+      prevOversFaced: prevOvers,
+      prevRunsConceded: 650,
+      prevOversBowled: 80,
+      matchRunsConceded: target - 1,
+      matchOversBowled: currentQuota,
+      targetRunsToScore: target,
+      rivalNRR: rivalNRR
+    });
+
+    const resText = document.getElementById('solver-result-text');
+    if (resText) {
+      if (result.possible) {
+        resText.innerHTML = `Chase the target in <strong class="text-emerald-400 font-mono text-base">${result.maxChaseOversCricket} overs</strong> or fewer to surpass your rival on NRR!`;
+      } else {
+        resText.innerHTML = `<span class="text-rose-400">Target cannot be achieved within ${currentQuota} overs at the required rate to overtake NRR.</span>`;
+      }
+    }
+  });
+
+  // Initial calculation
+  recalcNRR();
+</script>

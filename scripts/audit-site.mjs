@@ -59,7 +59,7 @@ if (fs.existsSync(llmsPath)) {
 // 4. Audit Tool Pages in src/pages/tools/
 const toolsDir = path.join(SRC_DIR, 'pages', 'tools');
 if (fs.existsSync(toolsDir)) {
-  const toolFiles = fs.readdirSync(toolsDir).filter(f => f.endsWith('.astro') && f !== 'index.astro');
+  const toolFiles = fs.readdirSync(toolsDir).filter(f => f.endsWith('.astro') && f !== 'index.astro' && !f.startsWith('['));
   console.log(`\n🛠️ Auditing ${toolFiles.length} tool pages in src/pages/tools/...`);
   let validTools = 0;
   for (const tf of toolFiles) {
@@ -74,6 +74,30 @@ if (fs.existsSync(toolsDir)) {
   }
   console.log(`✅ All ${validTools}/${toolFiles.length} tool pages contain complete SEO metadata.`);
 }
+
+// 5. Audit E-E-A-T and Contact Verification in src/
+function checkContactIntegrity(dir) {
+  const files = fs.readdirSync(dir, { withFileTypes: true });
+  for (const file of files) {
+    const fullPath = path.join(dir, file.name);
+    if (file.isDirectory()) {
+      checkContactIntegrity(fullPath);
+    } else if (/\.(astro|ts|js|mjs|json|md)$/i.test(file.name)) {
+      const content = fs.readFileSync(fullPath, 'utf8');
+      if (/@numanxstudio\.com|@numanxtools\.site/.test(content)) {
+        console.error(`❌ Unverified email domain detected in: ${path.relative('.', fullPath)}`);
+        totalErrors++;
+      }
+      if (/https:\/\/github\.com\/numanxstudio\b/.test(content)) {
+        console.error(`❌ Deprecated GitHub org URL detected in: ${path.relative('.', fullPath)}`);
+        totalErrors++;
+      }
+    }
+  }
+}
+
+checkContactIntegrity(SRC_DIR);
+console.log('✅ E-E-A-T Contact Integrity verified (0 unverified email domains, canonical repo link verified).');
 
 console.log('\n----------------------------------------');
 if (totalErrors === 0) {

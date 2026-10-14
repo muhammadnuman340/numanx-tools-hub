@@ -1,0 +1,226 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import KeyboardHints from '../../components/KeyboardHints.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'How is a cricket target calculated in rain-affected matches?',
+    answer:
+      'In professional cricket, the Duckworth-Lewis-Stern (DLS) method calculates revised targets based on resources remaining (overs and wickets in hand). For standard uninterrupted matches, Target = 1st Innings Runs + 1.',
+  },
+  {
+    question: 'How do you calculate required run rate for a chase?',
+    answer:
+      'Required Run Rate (RRR) = Runs Required ÷ Overs Remaining. For example, needing 65 runs from 7.0 overs = 65 ÷ 7 = 9.29 RPO.',
+  },
+  {
+    question: 'Can this tool simulate target predictions at different stages?',
+    answer:
+      'Yes, enter the current score and overs bowled to project final 1st innings targets based on conservative, par, and aggressive scoring rates.',
+  },
+];
+
+const ctSchema = {
+  name: 'Cricket Target Calculator Pro',
+  applicationCategory: 'Sports',
+  description:
+    'Calculate cricket chase targets, required run rates, and projected 1st innings totals for T20, ODI, and club matches.',
+  featureList: [
+    'Target score predictor and required chase equations',
+    'T20 (20 overs) and ODI (50 overs) standard presets',
+    'Over-by-over required run rate simulator',
+    'Client-side computation with zero latency',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '🎯',
+    title: 'Precise Target Equations',
+    desc: 'Calculate exact runs required, balls remaining, and balls-per-boundary requirements for any chase.',
+  },
+  {
+    icon: '📊',
+    title: 'Pacing Projections',
+    desc: 'See projected targets at 6.0, 8.0, 10.0, and 12.0 RPO to pace your innings effectively.',
+  },
+  {
+    icon: '⚡',
+    title: 'Instant Results',
+    desc: 'All calculations run in real-time in your browser without any server requests.',
+  },
+];
+
+const howToSteps = [
+  { num: '1', title: 'Enter Target Score', desc: 'Input the total target runs to win.' },
+  { num: '2', title: 'Enter Current Score', desc: 'Input your team’s current score and overs bowled.' },
+  { num: '3', title: 'Analyze Required Rate', desc: 'Review current required run rate and balls remaining.' },
+];
+
+const useCases = [
+  { icon: '🏏', title: 'Live Match Chases', desc: 'Track what rate you need to hit in live cricket matches.' },
+  { icon: '👨‍🏫', title: 'Captaincy Decisions', desc: 'Decide when to accelerate or rotate strike during chases.' },
+];
+---
+
+<MainLayout
+  title="Cricket Target Calculator Online — Chase Simulator & Required Rate Predictor | NumanX Tools"
+  description="Calculate cricket chase targets, required run rates, and projected 1st innings totals for T20 and ODI cricket matches."
+  keywords="cricket target calculator, chase calculator, required run rate, target predictor, cricket math"
+  toolSchema={ctSchema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Calculate Cricket Target',
+    description: 'Calculate chase requirements and required run rate in 3 easy steps.',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Cricket Target Calculator', url: '/tools/cricket-target-calculator/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto">
+      <ToolHeader
+        title="Cricket Target"
+        gradient="Calculator Pro"
+        desc="Calculate chase targets, required run rates, and projected totals for T20, ODI, and club matches."
+        badge="✦ Match Engine"
+        slug="cricket-target-calculator"
+      />
+
+      <ShareBar />
+
+      <div class="max-w-2xl mx-auto mt-8 space-y-6">
+        <div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6 space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="chase-target" class="text-[10px] uppercase font-semibold text-muted block mb-1">Target to Win</label>
+              <input
+                id="chase-target"
+                type="number"
+                value="180"
+                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface text-sm font-mono font-bold"
+              />
+            </div>
+            <div>
+              <label for="chase-total-overs" class="text-[10px] uppercase font-semibold text-muted block mb-1">Total Match Overs</label>
+              <input
+                id="chase-total-overs"
+                type="number"
+                value="20"
+                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface text-sm font-mono font-bold"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="chase-current-runs" class="text-[10px] uppercase font-semibold text-muted block mb-1">Current Runs</label>
+              <input
+                id="chase-current-runs"
+                type="number"
+                value="95"
+                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface text-sm font-mono font-bold"
+              />
+            </div>
+            <div>
+              <label for="chase-current-overs" class="text-[10px] uppercase font-semibold text-muted block mb-1">Overs Bowled (e.g. 11.2)</label>
+              <input
+                id="chase-current-overs"
+                type="text"
+                value="11.2"
+                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface text-sm font-mono font-bold"
+              />
+            </div>
+          </div>
+
+          <!-- Result Box -->
+          <div class="p-5 rounded-xl bg-zinc-950 border border-surface text-center space-y-2">
+            <span class="text-[10px] uppercase font-bold tracking-wider text-muted">Required Equation</span>
+            <div class="text-2xl font-black text-white" id="equation-display">
+              Need <span class="text-purple-400 font-mono">85 runs</span> in <span class="text-blue-400 font-mono">52 balls</span>
+            </div>
+            <div class="text-3xl font-black text-emerald-400 font-mono" id="rrr-display">
+              RRR: 9.81 RPO
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="mt-16">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
+            Frequently Asked
+            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+          </h2>
+          <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
+        </div>
+      </section>
+
+      <KeyboardHints
+        hints={[
+          { keys: '⌘K', label: 'Open search' },
+          { keys: 'Enter', label: 'Update' },
+        ]}
+      />
+
+      <ToolContentSections
+        toolSlug="cricket-target-calculator"
+        toolName="Cricket Target Calculator"
+        category="Cricket Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+
+      <RelatedTools current="cricket-target-calculator" />
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  import { cricketOversToDecimal } from '../../utils/cricketAnalytics.js';
+
+  const targetInput = document.getElementById('chase-target') as HTMLInputElement | null;
+  const matchOversInput = document.getElementById('chase-total-overs') as HTMLInputElement | null;
+  const runsInput = document.getElementById('chase-current-runs') as HTMLInputElement | null;
+  const oversInput = document.getElementById('chase-current-overs') as HTMLInputElement | null;
+
+  const eqDisplay = document.getElementById('equation-display');
+  const rrrDisplay = document.getElementById('rrr-display');
+
+  function updateChase() {
+    const target = parseFloat(targetInput?.value || '0') || 0;
+    const matchOvers = parseFloat(matchOversInput?.value || '20') || 20;
+    const currentRuns = parseFloat(runsInput?.value || '0') || 0;
+    const oversNotation = oversInput?.value?.trim() || '0.0';
+
+    const runsNeeded = Math.max(0, target - currentRuns);
+    const bowledDecimal = cricketOversToDecimal(oversNotation, false, matchOvers);
+    const oversLeft = Math.max(0, matchOvers - bowledDecimal);
+    const ballsLeft = Math.max(0, Math.round(oversLeft * 6));
+
+    const rrr = oversLeft > 0 ? (runsNeeded / oversLeft).toFixed(2) : '0.00';
+
+    if (eqDisplay) {
+      eqDisplay.innerHTML = `Need <span class="text-purple-400 font-mono">${runsNeeded} runs</span> in <span class="text-blue-400 font-mono">${ballsLeft} balls</span>`;
+    }
+    if (rrrDisplay) {
+      rrrDisplay.textContent = `RRR: ${rrr} RPO`;
+    }
+  }
+
+  [targetInput, matchOversInput, runsInput, oversInput].forEach((el) => {
+    el?.addEventListener('input', updateChase);
+  });
+
+  updateChase();
+</script>
