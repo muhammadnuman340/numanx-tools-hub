@@ -6,6 +6,7 @@ import CarbonAd from '../components/CarbonAd.astro';
 import ValueCard from '../components/ui/ValueCard.astro';
 import ToolIcon from '../components/icons/ToolIcon.astro';
 import AdUnit from '../components/AdUnit.astro';
+import MonetizationSlot from '../components/MonetizationSlot.astro';
 import HeroJarvis from '../components/HeroJarvis.astro';
 
 const activeCategoryCount = catInfos.filter((c) => c.count > 0).length;
@@ -167,7 +168,9 @@ const roadmap = [
         </div>
       </section>
 
-      <AdUnit format="horizontal" class="max-w-4xl mx-auto opacity-80 mix-blend-screen" />
+      <div class="max-w-4xl mx-auto px-4 my-8">
+        <MonetizationSlot slotType="pakistan-support-bar" />
+      </div>
 
       <!-- ================= BENTO BOX: STATS & ECOSYSTEM ================= -->
       <section id="ecosystem" class="relative group-section pt-10">

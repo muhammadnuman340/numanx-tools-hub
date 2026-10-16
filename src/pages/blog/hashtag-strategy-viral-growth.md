@@ -23,6 +23,56 @@ Modern social media recommendation engines (TikTok's Monolith, Instagram's Graph
 - **Velocity & Save-to-Impression Ratio:** Posts that accumulate high saves and shares within the first 45 minutes get pushed to non-follower Explore/FYP feeds.
 - **Keyword Saturation Avoidance:** Stuffing 30 generic tags like `#fyp` or `#viral` dilutes your content vector. High-performing creators use hyper-targeted semantic tags paired with 2–3 niche anchors.
 
+<div class="my-6 p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl">
+  <div class="flex items-center justify-between mb-3">
+    <span class="text-xs font-bold text-white flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      Interactive Mini Hashtag Generator
+    </span>
+    <a href="/tools/hashtag-generator/" class="text-[11px] font-semibold text-indigo-400 hover:text-indigo-300 no-underline">Launch Full Tool →</a>
+  </div>
+  <div class="flex gap-2 mb-3">
+    <input type="text" id="mini-hashtag-input" placeholder="e.g. travel, tech, fitness..." class="flex-1 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
+    <button type="button" id="mini-hashtag-btn" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-bold text-white transition">Generate</button>
+  </div>
+  <div id="mini-hashtag-results" class="text-xs font-mono p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-indigo-300 min-h-[38px] flex items-center flex-wrap gap-1.5">
+    <span class="text-slate-500 font-sans text-[11px]">Type a niche keyword above to generate viral tags instantly...</span>
+  </div>
+</div>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('mini-hashtag-btn');
+    const input = document.getElementById('mini-hashtag-input');
+    const res = document.getElementById('mini-hashtag-results');
+    if (!btn || !input || !res) return;
+    
+    function gen() {
+      const q = (input.value || '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (!q) {
+        res.innerHTML = '<span class="text-slate-500 font-sans text-[11px]">Please enter a keyword first.</span>';
+        return;
+      }
+      const tags = [
+        '#' + q, '#' + q + 'tips', '#' + q + 'creator', '#' + q + 'hacks',
+        '#' + q + '2026', '#' + q + 'growth', '#' + q + 'viral', '#' + q + 'daily',
+        '#' + q + 'community', '#learn' + q
+      ];
+      res.innerHTML = tags.map(t => '<span class="px-2 py-0.5 rounded bg-indigo-950/80 border border-indigo-500/30 text-indigo-300 cursor-pointer hover:bg-indigo-900 transition" title="Click to copy">' + t + '</span>').join(' ');
+      res.querySelectorAll('span').forEach(el => {
+        el.addEventListener('click', () => {
+          navigator.clipboard.writeText(el.innerText);
+          const orig = el.innerText;
+          el.innerText = 'Copied!';
+          setTimeout(() => el.innerText = orig, 1200);
+        });
+      });
+    }
+    btn.addEventListener('click', gen);
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') gen(); });
+  });
+</script>
+
 ## Why Hashtags Still Matter
 
 Social media algorithms use hashtags to categorize content and serve it to interested users. A well-chosen hashtag puts your content in front of people who do not follow you yet.

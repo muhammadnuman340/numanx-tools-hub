@@ -162,8 +162,12 @@ const heroCategory = category.id === 'ai-tools'
       )}
 
       {/* Contextual Zero-CLS Monetization Slot Below Content */}
-      <div class="max-w-4xl mx-auto mb-12">
-        <MonetizationSlot format="in-feed" variant="auto" />
+      <div class="max-w-4xl mx-auto mb-12 space-y-4">
+        <MonetizationSlot
+          slotType="post-tool-affiliate"
+          category={category.id.replace('-tools', '')}
+        />
+        <MonetizationSlot slotType="pakistan-support-bar" />
       </div>
 
       <div class="mt-8 text-center">

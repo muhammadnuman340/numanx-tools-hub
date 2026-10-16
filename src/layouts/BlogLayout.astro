@@ -4,6 +4,7 @@ import TableOfContents from '../components/TableOfContents.astro';
 import RelatedPosts from '../components/RelatedPosts.astro';
 import PopularPosts from '../components/PopularPosts.astro';
 import AdUnit from '../components/AdUnit.astro';
+import MonetizationSlot from '../components/MonetizationSlot.astro';
 
 const { frontmatter } = Astro.props;
 const { title, description, date, author, category, tags, readingTime, slug, image } = frontmatter;
@@ -292,6 +293,15 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
                 >
               </button>
             </div>
+          </div>
+
+          <!-- Post-Article Contextual Partner Offer & Support Bar -->
+          <div class="my-8 space-y-4">
+            <MonetizationSlot
+              slotType="post-tool-affiliate"
+              category={category ? (category.toLowerCase().includes('cricket') ? 'cricket' : category.toLowerCase().includes('image') ? 'image' : category.toLowerCase().includes('creator') ? 'creator' : category.toLowerCase().includes('dev') ? 'developer' : category.toLowerCase().includes('ai') ? 'ai' : 'utility') : 'utility'}
+            />
+            <MonetizationSlot slotType="pakistan-support-bar" />
           </div>
 
           <RelatedPosts currentSlug={slug || ''} category={category} tags={tags} />

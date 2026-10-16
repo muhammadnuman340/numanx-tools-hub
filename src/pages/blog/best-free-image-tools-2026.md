@@ -17,6 +17,15 @@ The good news? In 2026, free image tools have become incredibly powerful. The we
 
 In this comprehensive guide, we'll break down the very best free, privacy-first, client-side image tools available right now, and why doing things directly in the browser is the ultimate productivity hack.
 
+<div class="my-4 flex flex-wrap gap-2.5">
+  <a href="/tools/color-converter/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 text-xs font-semibold no-underline">
+    ⚡ Launch Color Picker & Palette Extractor →
+  </a>
+  <a href="/tools/base64-tool/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 text-xs font-semibold no-underline">
+    🧬 Launch Base64 Data URI Serializer →
+  </a>
+</div>
+
 > ⚡ **Process Images at $0 Cost:** Access our complete suite of client-side [**Image Tools**](/category/image-tools/) — including [**Image Compressor**](/tools/image-compressor/), [**JPG to PNG**](/tools/jpg-to-png/), [**PNG to WebP**](/tools/png-to-webp/), and [**Smart Image Resizer**](/tools/image-resizer/). 100% free, unlimited files, and 0 server uploads.
 
 ## 1. The Smart Image Compressor

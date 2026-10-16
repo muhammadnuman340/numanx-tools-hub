@@ -1,7 +1,7 @@
 ---
 import { getRelatedTools } from '../data/tools';
 import ToolIcon from './icons/ToolIcon.astro';
-import AdUnit from './AdUnit.astro';
+import MonetizationSlot from './MonetizationSlot.astro';
 
 interface Props {
   current: string;
@@ -39,7 +39,7 @@ const relatedTools = getRelatedTools(current);
             </a>
           ))}
         </div>
-        <AdUnit format="horizontal" class="mt-8" />
+        <MonetizationSlot slotType="in-content-banner" class="mt-8" />
       </div>
     </section>
   )

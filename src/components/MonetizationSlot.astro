@@ -1,103 +1,141 @@
 ---
 // FILE: src/components/MonetizationSlot.astro
-interface Props {
+// Complete AdSense Replacement: Contextual Affiliates + EthicalAds/A-Ads + NayaPay/Easypaisa/JazzCash Direct Support
+export interface Props {
+  slotType?: 'post-tool-affiliate' | 'in-content-banner' | 'pakistan-support-bar' | string;
+  category?: 'creator' | 'utility' | 'image' | 'cricket' | 'ai' | 'developer' | string;
   slotId?: string;
   format?: 'horizontal' | 'vertical' | 'rectangle' | 'in-feed' | 'leaderboard';
   variant?: 'auto' | 'adsense' | 'sponsor' | 'affiliate';
-  sponsorName?: string;
-  sponsorTagline?: string;
-  sponsorUrl?: string;
-  sponsorCta?: string;
   class?: string;
 }
 
 const {
-  slotId = '',
+  slotType = 'post-tool-affiliate',
+  category = 'utility',
   format = 'horizontal',
   variant = 'auto',
-  sponsorName = 'Hostinger Cloud',
-  sponsorTagline = 'High-Speed Web Hosting with 99.9% Uptime & Free SSL',
-  sponsorUrl = 'https://www.hostinger.com',
-  sponsorCta = 'Get 75% Off',
   class: className = '',
 } = Astro.props;
 
-const ADSENSE_ID = import.meta.env.PUBLIC_ADSENSE_ID || '';
-const hasAdSense = Boolean(ADSENSE_ID && ADSENSE_ID !== 'ca-pub-XXXXXXXXXXXXXXXX');
+const PARTNER_OFFERS: Record<string, { badge: string; title: string; desc: string; cta: string; href: string; accent: string }> = {
+  creator: {
+    badge: 'Creator Growth Partner',
+    title: 'Boost Your YouTube Shorts & TikTok Views with VidIQ AI',
+    desc: 'Discover high-velocity viral keywords, daily video ideas, and real-time competitor tag audits.',
+    cta: 'Try VidIQ Free →',
+    href: 'https://vidiq.com/?utm_source=numanx_tools',
+    accent: 'border-indigo-500/40 bg-indigo-950/30'
+  },
+  utility: {
+    badge: 'Security Recommendation',
+    title: 'Store Your Generated Passwords Safely in NordPass / 1Password',
+    desc: 'Zero-knowledge XChaCha20 encryption across all your desktop and mobile devices with automatic breach alerts.',
+    cta: 'Get Free Vault →',
+    href: 'https://nordpass.com/?utm_source=numanx_tools',
+    accent: 'border-emerald-500/40 bg-emerald-950/30'
+  },
+  image: {
+    badge: 'Design & CDN Partner',
+    title: 'Design Thumbnails & Social Graphics in Seconds with Canva Pro',
+    desc: 'Pair NumanX lossless WebP compression with studio-grade templates, background removal, and brand kits.',
+    cta: 'Launch Design Suite →',
+    href: 'https://www.canva.com/?utm_source=numanx_tools',
+    accent: 'border-sky-500/40 bg-sky-950/30'
+  },
+  cricket: {
+    badge: 'Live Match Streaming & WWS Partner',
+    title: 'Stream Live PSL, IPL & ICC Tournaments Anywhere + Follow World Wonders & Sports',
+    desc: 'Unblock HD sports broadcasts globally with high-speed VPN protection and get deep cricket statistical breakdowns.',
+    cta: 'Explore Cricket Hub →',
+    href: 'mailto:numanxstudio@gmail.com?subject=Cricket%20Tool%20Sponsorship',
+    accent: 'border-emerald-500/40 bg-emerald-950/30'
+  },
+  ai: {
+    badge: 'AI Workflow Partner',
+    title: 'Scale Your Academic & Content Research with Pro AI Workspace Tools',
+    desc: 'Combine NumanX local browser NLP with automated citation management and long-document synthesis.',
+    cta: 'Explore AI Suite →',
+    href: 'mailto:numanxstudio@gmail.com?subject=AI%20Tool%20Partnership',
+    accent: 'border-purple-500/40 bg-purple-950/30'
+  },
+  developer: {
+    badge: 'Cloud & Edge Partner',
+    title: 'Deploy High-Speed Web Apps & APIs on Hostinger Cloud / VPS',
+    desc: 'NVMe SSD storage, dedicated IPv4, automated Git deployments, and 99.9% uptime for full-stack developers.',
+    cta: 'Claim Developer Deal →',
+    href: 'https://www.hostinger.com/?utm_source=numanx_tools',
+    accent: 'border-amber-500/40 bg-amber-950/30'
+  }
+};
 
-// Standardized CLS-safe dimensions (prevents Cumulative Layout Shift)
+const offer = PARTNER_OFFERS[category] || PARTNER_OFFERS.utility;
+
+// Standardized CLS-safe dimensions for grid/in-feed placements
 const formatStyles: Record<string, string> = {
   horizontal: 'w-full min-h-[100px] md:min-h-[120px] max-w-4xl mx-auto',
   leaderboard: 'w-full min-h-[90px] md:min-h-[100px] max-w-5xl mx-auto',
   rectangle: 'w-full min-h-[280px] max-w-[340px] mx-auto',
   vertical: 'w-full min-h-[600px] max-w-[300px] mx-auto',
-  'in-feed': 'w-full min-h-[140px] md:min-h-[160px] col-span-full',
+  'in-feed': 'w-full min-h-[120px] col-span-full',
 };
-
 const dimensionClass = formatStyles[format] || formatStyles.horizontal;
 ---
 
-<aside
-  aria-label="Sponsored content and advertisement"
-  class={`relative overflow-hidden rounded-2xl border border-white/5 bg-[#0a0a0c]/80 backdrop-blur-xl transition-all duration-300 hover:border-white/10 ${dimensionClass} ${className}`}
->
-  <!-- Micro Badge -->
-  <span
-    class="absolute top-2 right-3 text-[9px] font-mono font-bold tracking-widest uppercase text-zinc-500 z-20 pointer-events-none select-none bg-black/40 px-2 py-0.5 rounded-full border border-white/5"
-  >
-    {hasAdSense && (variant === 'adsense' || variant === 'auto') ? 'Ad' : 'Sponsored'}
-  </span>
-
-  {hasAdSense && (variant === 'adsense' || variant === 'auto') ? (
-    <!-- AdSense Safe Delivery Box -->
-    <div class="relative w-full h-full flex items-center justify-center p-2 z-10">
-      <ins
-        class="adsbygoogle block w-full"
-        style="display:block"
-        data-ad-client={ADSENSE_ID}
-        data-ad-slot={slotId || null}
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-      ></ins>
-      <script is:inline>
-        try {
-          (window.adsbygoogle = window.adsbygoogle || []).push({});
-        } catch (e) {}
-      </script>
-    </div>
-  ) : (
-    <!-- Native Glassmorphism Sponsor / High-Yield Affiliate Fallback -->
-    <div class="relative z-10 w-full h-full flex flex-col sm:flex-row items-center justify-between p-6 sm:p-8 gap-4 text-left">
-      <!-- Glow Accent -->
-      <div class="absolute -top-12 -left-12 w-48 h-48 bg-purple-500/10 blur-3xl rounded-full pointer-events-none"></div>
-      <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-amber-500/10 blur-3xl rounded-full pointer-events-none"></div>
-
-      <div class="flex items-center gap-4 relative z-10">
-        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-amber-500 flex items-center justify-center shrink-0 shadow-lg shadow-purple-900/30">
-          <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <h4 class="text-sm font-black text-white tracking-tight">{sponsorName}</h4>
-            <span class="text-[10px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">Verified Partner</span>
-          </div>
-          <p class="text-xs text-zinc-400 mt-1 max-w-xl font-medium leading-relaxed">{sponsorTagline}</p>
-        </div>
+{slotType === 'post-tool-affiliate' && (
+  <aside aria-label="Recommended Tool Partner" class={`my-7 p-4 sm:p-5 rounded-2xl border ${offer.accent} flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 backdrop-blur-md ${className}`}>
+    <div class="space-y-1">
+      <div class="flex items-center gap-2">
+        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-900 text-indigo-300 border border-slate-700">
+          {offer.badge}
+        </span>
+        <span class="text-[11px] text-slate-400"> keeps NumanX 100% free & zero-server</span>
       </div>
-
-      <a
-        href={sponsorUrl}
-        target="_blank"
-        rel="noopener noreferrer sponsored"
-        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/10 hover:border-purple-500/30 transition-all duration-200 shrink-0 hover:scale-[1.02] active:scale-[0.98] shadow-md group relative z-10"
-      >
-        <span>{sponsorCta}</span>
-        <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg>
-      </a>
+      <h3 class="text-sm sm:text-base font-bold text-white m-0">{offer.title}</h3>
+      <p class="text-xs text-slate-300 m-0 max-w-xl">{offer.desc}</p>
     </div>
-  )}
-</aside>
+    <a
+      href={offer.href}
+      target="_blank"
+      rel="sponsored noopener noreferrer"
+      class="shrink-0 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition no-underline shadow-lg hover:scale-105 active:scale-95"
+    >
+      {offer.cta}
+    </a>
+  </aside>
+)}
+
+{slotType === 'in-content-banner' && (
+  <div class={`my-8 min-h-[110px] rounded-xl bg-slate-900/70 border border-slate-800 p-4 flex flex-col sm:flex-row items-center justify-between gap-4 ${dimensionClass} ${className}`}>
+    <!-- Plug-and-Play EthicalAds / A-Ads Crypto Unit or Direct Sponsor Fallback -->
+    <div data-ea-publisher="numanx-tools" data-ea-type="text" class="text-xs text-slate-300">
+      <span class="text-[10px] uppercase tracking-wider text-emerald-400 font-bold block mb-1">Sponsor NumanX Tools Hub</span>
+      <strong>Reach 10,000+ Developers, Creators & Students:</strong> Place your brand or SaaS directly on this tool page.
+      Instant setup via USDT, Payoneer, NayaPay, Easypaisa, or JazzCash.
+    </div>
+    <a
+      href="mailto:numanxstudio@gmail.com?subject=Sponsor%20NumanX%20Tools%20Hub"
+      class="shrink-0 px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 text-xs font-semibold no-underline transition"
+    >
+      Book Sponsor Slot →
+    </a>
+  </div>
+)}
+
+{slotType === 'pakistan-support-bar' && (
+  <div class={`my-6 p-4 rounded-xl bg-gradient-to-r from-emerald-950/40 via-slate-900/80 to-indigo-950/40 border border-emerald-500/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs ${className}`}>
+    <div class="flex items-center gap-2.5 text-slate-300">
+      <span class="flex h-2 w-2 relative">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+      </span>
+      <span><strong>Support NumanX Open-Source Utilities:</strong> 100% Free Forever with Zero Server Storage. Instant local support via <strong>NayaPay / JazzCash / Easypaisa / Payoneer</strong> or Crypto USDT.</span>
+    </div>
+    <a
+      href="mailto:numanxstudio@gmail.com?subject=Support%20NumanX%20Tools"
+      class="shrink-0 px-3 py-1.5 rounded-lg bg-emerald-600/80 hover:bg-emerald-600 text-white font-semibold no-underline transition shadow-sm"
+    >
+      Direct Support / Tip →
+    </a>
+  </div>
+)}

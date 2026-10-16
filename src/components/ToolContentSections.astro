@@ -1,7 +1,8 @@
 ---
 import HowToUse from './HowToUse.astro';
 import RelatedPosts from './RelatedPosts.astro';
-import AdUnit from './AdUnit.astro';
+import MonetizationSlot from './MonetizationSlot.astro';
+import ProToolDocs from './ProToolDocs.astro';
 import AuthorCard from './AuthorCard.astro';
 import PopularTools from './PopularTools.astro';
 import RecentlyUsed from './RecentlyUsed.astro';
@@ -109,10 +110,17 @@ const { toolSlug = '', toolName = '', category = '', benefits, howToSteps, useCa
   )
 }
 
-<!-- ─── Info Section ─── -->
+<!-- ─── Verifiable Technical Documentation & Mathematical Architecture (AEO / GEO) ─── -->
+<ProToolDocs slug={toolSlug} toolName={toolName} category={category} />
+
+<!-- ─── Contextual Monetization & Support ─── -->
 <section class="mt-12">
-  <div class="max-w-4xl mx-auto">
-    <AdUnit format="horizontal" />
+  <div class="max-w-4xl mx-auto space-y-4">
+    <MonetizationSlot
+      slotType="post-tool-affiliate"
+      category={category.toLowerCase().includes('cricket') ? 'cricket' : category.toLowerCase().includes('image') ? 'image' : category.toLowerCase().includes('creator') ? 'creator' : category.toLowerCase().includes('dev') ? 'developer' : category.toLowerCase().includes('ai') ? 'ai' : 'utility'}
+    />
+    <MonetizationSlot slotType="pakistan-support-bar" />
   </div>
 </section>
 

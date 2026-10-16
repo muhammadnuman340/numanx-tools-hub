@@ -74,6 +74,16 @@ At equivalent visual quality settings:
 | 16-bit color         | No   | Yes (48-bit) | No   | Yes  |
 | Browser support      | 100% | 100%         | 97%  | 88%  |
 
+### 2026 Image Conversion & Compression Pricing Options ($0 Forever Free vs. Cloud SaaS)
+
+| Platform & Tool | 2026 Pricing | Monthly / Annual Cost | Batch Limits | Server Upload & Privacy |
+| :--- | :--- | :--- | :--- | :--- |
+| **NumanX Tools Hub** | **$0.00 Forever Free** | **$0 / month** | **Unlimited** | **100% Local Browser RAM (0 Uploads)** |
+| TinyPNG Pro | Paid Subscription | $39.00 / year | 20 images/batch | Files uploaded to remote cloud |
+| CloudConvert | Credits / Tiered | $9.00 to $15.00 / mo | 25 conversion mins/day | Cloud storage queue & retention |
+| Canva Pro | Monthly / Annual | $12.99 / mo ($120/yr) | Account required | Stored in Canva Cloud Assets |
+| Adobe Photoshop | Creative Cloud | $20.99 / month | Local Software | Cloud sync & telemetry |
+
 ## 2. When to Use JPEG
 
 JPEG is still the best choice in specific scenarios.
