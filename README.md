@@ -5,7 +5,7 @@
 [![Cloudflare Pages](https://img.shields.io/badge/Deployed%20on-Cloudflare%20Pages-F38020?logo=cloudflare&logoColor=white)](https://numanx-tools.pages.dev)
 [![Astro 6.4](https://img.shields.io/badge/Astro-6.4%20SSG-BC52EE?logo=astro&logoColor=white)](https://astro.build)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind-v4.3-38BDF8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![Vitest](https://img.shields.io/badge/Vitest-36%2F36%20Passed-4ADE80?logo=vitest&logoColor=white)](https://vitest.dev)
+[![Vitest](https://img.shields.io/badge/Vitest-43%2F43%20Passed-4ADE80?logo=vitest&logoColor=white)](https://vitest.dev)
 [![Pages](https://img.shields.io/badge/Static%20Pages-112%20Routes-0EA5E9)](#)
 [![Sitemap](https://img.shields.io/badge/Clean%20Sitemap-103%20URLs-8B5CF6)](#)
 [![Privacy](https://img.shields.io/badge/Privacy-100%25%20Client--Side-10B981)](#)
