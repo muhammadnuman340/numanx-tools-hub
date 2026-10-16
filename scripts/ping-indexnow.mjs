@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const HOST = 'numanx-tools.pages.dev';
-const KEY = 'c89e21f7a0b348d4b5391c497420eb18';
+const KEY = 'numanx2026indexnowkey8842';
 const KEY_LOCATION = `https://${HOST}/${KEY}.txt`;
 const SITEMAP_PATH = path.resolve('dist', 'sitemap-0.xml');
 
