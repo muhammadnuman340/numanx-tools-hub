@@ -302,8 +302,10 @@ const icSchema = {
                   </div>
                 </button>
                 <button
+                  id="extreme-jpg-preset-btn"
                   class="preset-btn relative rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-200 bg-surface-1 border-surface-3 text-tertiary"
-                  data-quality="0.1"
+                  data-quality="0.52"
+                  data-mode="extreme"
                   data-active="false"
                 >
                   <div class="flex items-center gap-1.5">
@@ -319,7 +321,7 @@ const icSchema = {
                       stroke-linejoin="round"
                       class="shrink-0"><polyline points="4 14 10 14 7 23 18 9 12 9 15 1"></polyline></svg
                     >
-                    <span>Extreme</span>
+                    <span>Extreme JPG</span>
                   </div>
                 </button>
                 <button
@@ -722,6 +724,8 @@ const icSchema = {
 </MainLayout>
 
 <script>
+  import { processImageInWorker } from '../../utils/imageWorkerClient.js';
+
   const dropzone = document.getElementById('dropzone');
   const fileInput = document.getElementById('file-input');
   const controlsSection = document.getElementById('controls-section');
@@ -745,6 +749,7 @@ const icSchema = {
 
   let uploadedFiles = [];
   let selectedQuality = 0.5;
+  let selectedMode = 'balanced';
   let compressedResults = [];
 
   function formatSize(bytes) {
@@ -792,6 +797,7 @@ const icSchema = {
   presetBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       updatePresetUI(btn);
+      selectedMode = btn.dataset.mode || 'balanced';
       if (btn.dataset.quality === 'custom') {
         customSliderWrap.classList.remove('hidden');
         selectedQuality = parseInt(qualitySlider.value) / 100;
@@ -915,7 +921,7 @@ const icSchema = {
     let completed = 0;
     const total = uploadedFiles.length;
 
-    uploadedFiles.forEach((f) => {
+    uploadedFiles.forEach(async (f) => {
       const cards = galleryGrid.querySelectorAll(':scope > div');
       let targetCard = null;
       for (const c of cards) {
@@ -930,6 +936,98 @@ const icSchema = {
         return;
       }
 
+      const origSize = parseInt(targetCard.dataset.origSize) || f.size;
+
+      const applyCompressedResult = (blob) => {
+        const savings = origSize > 0 ? Math.round((1 - blob.size / origSize) * 100) : 0;
+        const dataUrl = URL.createObjectURL(blob);
+
+        compressedResults.push({
+          name: f.name,
+          origSize: origSize,
+          compSize: blob.size,
+          savings: savings,
+          dataUrl: dataUrl,
+          originalUrl: targetCard.dataset.original,
+        });
+
+        const statusBadge = targetCard.querySelector('.status-badge');
+        statusBadge.textContent = savings >= 0 ? `-${savings}%` : 'Done';
+        statusBadge.className =
+          'status-badge px-2.5 py-1 rounded-lg text-xs font-semibold shrink-0 ' +
+          (savings >= 50
+            ? 'bg-emerald-600/15 text-emerald-400'
+            : savings >= 20
+              ? 'bg-lime-600/15 text-lime-400'
+              : 'bg-surface-1 text-secondary');
+
+        targetCard.dataset.compressedUrl = dataUrl;
+
+        const previewDiv = targetCard.querySelector('.aspect-video');
+        previewDiv.innerHTML = `
+          <div class="relative w-full h-full">
+            <img src="${dataUrl}" alt="${f.name}" class="w-full h-full object-contained compressed-img" />
+            <button class="toggle-before absolute top-2 right-2 bg-black/40 border border-surface-2 rounded-lg px-2 py-1 text-[10px] font-semibold text-secondary hover:text-white hover:border-purple-500/50 transition-all flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              <span>Original</span>
+            </button>
+          </div>
+        `;
+
+        const toggleBtn = previewDiv.querySelector('.toggle-before');
+        let showingCompressed = true;
+        toggleBtn.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          const imgEl = previewDiv.querySelector('img');
+          if (showingCompressed) {
+            imgEl.src = targetCard.dataset.original;
+            toggleBtn.querySelector('span').textContent = 'Compressed';
+            showingCompressed = false;
+          } else {
+            imgEl.src = targetCard.dataset.compressedUrl;
+            toggleBtn.querySelector('span').textContent = 'Original';
+            showingCompressed = true;
+          }
+        });
+
+        const existingInfo = targetCard.querySelector('.info-row');
+        if (existingInfo) existingInfo.remove();
+
+        const infoRow = document.createElement('div');
+        infoRow.className = 'info-row flex items-center justify-between mt-3';
+        infoRow.innerHTML = `
+          <div class="flex items-center gap-3 text-xs text-muted">
+            <span class="flex items-center gap-1"><span class="text-dim">Before:</span> ${formatSize(origSize)}</span>
+            <span class="flex items-center gap-1"><span class="text-emerald-400">After:</span> ${formatSize(blob.size)}</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${savings >= 50 ? 'bg-emerald-600/20 text-emerald-400' : 'bg-lime-600/20 text-lime-400'}">-${savings}%</span>
+          </div>
+          <a href="${dataUrl}" download="${f.name.replace(/\.[^.]+$/, '')}-compressed.jpg" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs font-semibold hover:from-purple-500 hover:to-blue-500 active:scale-95 transition-all duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download
+          </a>
+        `;
+        targetCard.appendChild(infoRow);
+
+        updateAnalytics();
+
+        completed++;
+        if (completed === total) finishCompression();
+      };
+
+      try {
+        const workerData = await processImageInWorker(f, {
+          mode: selectedMode,
+          customQuality: selectedQuality,
+          targetMime: 'image/jpeg'
+        });
+        if (workerData?.blob) {
+          applyCompressedResult(workerData.blob);
+          return;
+        }
+      } catch (err) {
+        // Fallback to main thread canvas if worker is unsupported
+      }
+
       const reader = new FileReader();
       reader.onload = (e) => {
         const img = new Image();
@@ -938,84 +1036,16 @@ const icSchema = {
           canvas.width = img.width;
           canvas.height = img.height;
           const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0);
+          if (ctx) ctx.drawImage(img, 0, 0);
 
           canvas.toBlob(
             (blob) => {
-              const origSize = parseInt(targetCard.dataset.origSize) || f.size;
-              const savings = origSize > 0 ? Math.round((1 - blob.size / origSize) * 100) : 0;
-              const dataUrl = URL.createObjectURL(blob);
-
-              compressedResults.push({
-                name: f.name,
-                origSize: origSize,
-                compSize: blob.size,
-                savings: savings,
-                dataUrl: dataUrl,
-                originalUrl: targetCard.dataset.original,
-              });
-
-              const statusBadge = targetCard.querySelector('.status-badge');
-              statusBadge.textContent = savings >= 0 ? `-${savings}%` : 'Done';
-              statusBadge.className =
-                'status-badge px-2.5 py-1 rounded-lg text-xs font-semibold shrink-0 ' +
-                (savings >= 50
-                  ? 'bg-emerald-600/15 text-emerald-400'
-                  : savings >= 20
-                    ? 'bg-lime-600/15 text-lime-400'
-                    : 'bg-surface-1 text-secondary');
-
-              targetCard.dataset.compressedUrl = dataUrl;
-
-              const previewDiv = targetCard.querySelector('.aspect-video');
-              previewDiv.innerHTML = `
-              <div class="relative w-full h-full">
-                <img src="${dataUrl}" alt="${f.name}" class="w-full h-full object-contained compressed-img" />
-                <button class="toggle-before absolute top-2 right-2 bg-black/40 border border-surface-2 rounded-lg px-2 py-1 text-[10px] font-semibold text-secondary hover:text-white hover:border-purple-500/50 transition-all flex items-center gap-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-                  <span>Original</span>
-                </button>
-              </div>
-            `;
-
-              const toggleBtn = previewDiv.querySelector('.toggle-before');
-              let showingCompressed = true;
-              toggleBtn.addEventListener('click', (ev) => {
-                ev.stopPropagation();
-                const imgEl = previewDiv.querySelector('img');
-                if (showingCompressed) {
-                  imgEl.src = targetCard.dataset.original;
-                  toggleBtn.querySelector('span').textContent = 'Compressed';
-                  showingCompressed = false;
-                } else {
-                  imgEl.src = targetCard.dataset.compressedUrl;
-                  toggleBtn.querySelector('span').textContent = 'Original';
-                  showingCompressed = true;
-                }
-              });
-
-              const existingInfo = targetCard.querySelector('.info-row');
-              if (existingInfo) existingInfo.remove();
-
-              const infoRow = document.createElement('div');
-              infoRow.className = 'info-row flex items-center justify-between mt-3';
-              infoRow.innerHTML = `
-              <div class="flex items-center gap-3 text-xs text-muted">
-                <span class="flex items-center gap-1"><span class="text-dim">Before:</span> ${formatSize(origSize)}</span>
-                <span class="flex items-center gap-1"><span class="text-emerald-400">After:</span> ${formatSize(blob.size)}</span>
-                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${savings >= 50 ? 'bg-emerald-600/20 text-emerald-400' : 'bg-lime-600/20 text-lime-400'}">-${savings}%</span>
-              </div>
-              <a href="${dataUrl}" download="${f.name.replace(/\.[^.]+$/, '')}-compressed.jpg" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs font-semibold hover:from-purple-500 hover:to-blue-500 active:scale-95 transition-all duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Download
-              </a>
-            `;
-              targetCard.appendChild(infoRow);
-
-              updateAnalytics();
-
-              completed++;
-              if (completed === total) finishCompression();
+              if (blob) {
+                applyCompressedResult(blob);
+              } else {
+                completed++;
+                if (completed === total) finishCompression();
+              }
             },
             'image/jpeg',
             selectedQuality,

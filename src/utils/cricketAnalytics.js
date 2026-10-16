@@ -144,6 +144,74 @@ export function exportWWSStatCardPNG({
 }
 
 /**
+ * Generates an industrial 1080x1920 vertical format card for YouTube Shorts / TikTok / Instagram Reels for Net Run Rate (NRR) standings.
+ */
+export function exportWWSNRRCardPNG({
+  teamName = 'Pakistan',
+  tournament = 'PSL / T20 World Cup',
+  nrr = '+0.4500',
+  runsFor = '640 in 80.0 ov',
+  runsAgainst = '605 in 80.0 ov',
+  scenario = 'Chase in ≤ 14.2 ov for SF',
+  brandTag = 'World Wonders & Sports (WWS) × NumanX Tools'
+}) {
+  if (typeof document === 'undefined') return;
+  const canvas = document.createElement('canvas');
+  canvas.width = 1080;
+  canvas.height = 1920;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const grad = ctx.createLinearGradient(0, 0, 1080, 1920);
+  grad.addColorStop(0, '#020617');
+  grad.addColorStop(0.5, '#1e1b4b');
+  grad.addColorStop(1, '#064e3b');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 1080, 1920);
+
+  ctx.fillStyle = '#34d399';
+  ctx.font = 'bold 40px sans-serif';
+  ctx.fillText(tournament.toUpperCase(), 90, 210);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 84px sans-serif';
+  ctx.fillText(teamName, 90, 330);
+
+  const cards = [
+    { label: 'NET RUN RATE (NRR)', val: String(nrr) },
+    { label: 'RUNS FOR (BATTING)', val: String(runsFor) },
+    { label: 'RUNS AGAINST (BOWLING)', val: String(runsAgainst) },
+    { label: 'PLAYOFF QUALIFICATION', val: String(scenario) }
+  ];
+
+  cards.forEach((c, idx) => {
+    const y = 480 + idx * 275;
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.82)';
+    ctx.fillRect(90, y, 900, 225);
+    ctx.strokeStyle = idx === 0 ? '#34d399' : '#6366f1';
+    ctx.lineWidth = 4;
+    ctx.strokeRect(90, y, 900, 225);
+
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = 'bold 34px sans-serif';
+    ctx.fillText(c.label, 140, y + 80);
+
+    ctx.fillStyle = idx === 0 ? '#34d399' : '#f8fafc';
+    ctx.font = 'bold 64px sans-serif';
+    ctx.fillText(c.val, 140, y + 170);
+  });
+
+  ctx.fillStyle = '#a5b4fc';
+  ctx.font = 'bold 30px sans-serif';
+  ctx.fillText(brandTag, 90, 1790);
+
+  const link = document.createElement('a');
+  link.download = `${teamName.toLowerCase().replace(/\s+/g, '-')}-nrr-wws-shorts-card.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+/**
  * Standard Duckworth-Lewis-Stern (DLS) resource constants (Standard Edition).
  * Z0 represents asymptotic resource percentage for wickets 0-9.
  * b represents exponential decay rate per over.

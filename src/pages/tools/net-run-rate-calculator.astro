@@ -314,6 +314,44 @@ const useCases = [
               Chase the target in <strong class="text-emerald-400 font-mono text-base">14.2 overs</strong> or fewer to surpass your rival on NRR!
             </div>
           </div>
+
+          <!-- WWS Shorts 1080x1920 NRR Card Exporter -->
+          <div class="rounded-xl p-5 bg-gradient-to-r from-emerald-950/40 via-surface-1 to-indigo-950/40 border border-emerald-500/30 text-center space-y-3 mt-6">
+            <div class="flex items-center justify-center gap-2">
+              <span class="text-xl">📱</span>
+              <h3 class="text-xs font-bold text-white uppercase tracking-wider">WWS Social Media Shorts NRR Card</h3>
+            </div>
+            <p class="text-[11px] text-zinc-400 max-w-md mx-auto">
+              Download an ultra-sharp 1080×1920 vertical canvas graphic formatted for YouTube Shorts, Reels, and TikTok.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+              <div>
+                <label for="wws-team-name" class="text-[10px] uppercase font-semibold text-muted block mb-1">Team / Match Title</label>
+                <input
+                  id="wws-team-name"
+                  type="text"
+                  value="Pakistan / PSL Standings"
+                  class="w-full bg-zinc-950 text-white px-3 py-2 rounded-xl border border-surface text-xs font-semibold"
+                />
+              </div>
+              <div>
+                <label for="wws-tournament" class="text-[10px] uppercase font-semibold text-muted block mb-1">Tournament / Group</label>
+                <input
+                  id="wws-tournament"
+                  type="text"
+                  value="ICC T20 Tournament Analysis"
+                  class="w-full bg-zinc-950 text-white px-3 py-2 rounded-xl border border-surface text-xs"
+                />
+              </div>
+            </div>
+            <button
+              id="export-wws-nrr-card-btn"
+              class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-lg shadow-emerald-950/50 active:scale-98 transition-all flex items-center justify-center gap-2"
+            >
+              <span>📱</span>
+              <span>Download 1080×1920 WWS NRR Shorts/Reels Stat Card (PNG)</span>
+            </button>
+          </div>
         </section>
       </div>
 
@@ -354,7 +392,8 @@ const useCases = [
   import {
     calculateTournamentNRR,
     cricketOversToDecimal,
-    solveChaseOversForTargetNRR
+    solveChaseOversForTargetNRR,
+    exportWWSNRRCardPNG
   } from '../../utils/cricketAnalytics.js';
 
   let currentQuota = 20;
@@ -448,6 +487,26 @@ const useCases = [
         resText.innerHTML = `<span class="text-rose-400">Target cannot be achieved within ${currentQuota} overs at the required rate to overtake NRR.</span>`;
       }
     }
+  });
+
+  document.getElementById('export-wws-nrr-card-btn')?.addEventListener('click', () => {
+    const teamName = (document.getElementById('wws-team-name') as HTMLInputElement)?.value?.trim() || 'Team Standings';
+    const tournament = (document.getElementById('wws-tournament') as HTMLInputElement)?.value?.trim() || 'Tournament NRR Analysis';
+    const nrrText = nrrValue?.textContent || '+0.0000';
+    const bRuns = batRuns?.value || '0';
+    const bOvers = batOvers?.value || `${currentQuota}.0`;
+    const blRuns = bowlRuns?.value || '0';
+    const blOvers = bowlOvers?.value || `${currentQuota}.0`;
+
+    exportWWSNRRCardPNG({
+      teamName,
+      tournament,
+      nrr: nrrText,
+      runsFor: `${bRuns} runs in ${bOvers} ov`,
+      runsAgainst: `${blRuns} runs in ${blOvers} ov`,
+      scenario: 'Playoff NRR Metric Verified',
+      brandTag: 'World Wonders & Sports (WWS) × NumanX Tools'
+    });
   });
 
   // Initial calculation

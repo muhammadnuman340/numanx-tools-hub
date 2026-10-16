@@ -44,14 +44,14 @@ const catJson = JSON.stringify(categories.map((c) => ({ title: c.title, count: c
           >
         </div>
         <div>
-          <p class="text-sm font-bold text-primary">NumanX AI</p>
-          <p class="text-[10px] text-muted">Ask me anything about tools</p>
+          <p class="text-sm font-bold text-primary">NumanX Quick Command & Tool Router</p>
+          <p class="text-[10px] text-muted">12 instant client-side tools & quick navigation</p>
         </div>
       </div>
       <button
         id="ai-close-btn"
         class="w-7 h-7 rounded-lg flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 transition-all cursor-pointer"
-        aria-label="Close AI assistant"
+        aria-label="Close Quick Command Router"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -87,24 +87,28 @@ const catJson = JSON.stringify(categories.map((c) => ({ title: c.title, count: c
         </div>
         <div class="flex-1 bg-surface-2 rounded-xl rounded-tl-none px-3.5 py-2.5">
           <p class="text-xs text-secondary leading-relaxed">
-            Hi! I'm your NumanX AI. I can run any tool right here. Try:
+            Hi! I'm your NumanX Quick Command & Tool Router. Run 12 instant client-side tools or deep-link right here:
           </p>
           <div class="mt-2 flex flex-wrap gap-1.5">
-            <button
-              class="ai-suggestion text-[10px] px-2 py-1 rounded-lg bg-surface-3 hover:bg-purple-500/20 text-tertiary hover:text-purple-300 border border-surface-2 transition-all cursor-pointer"
-              >summarize: Hello world</button
-            >
             <button
               class="ai-suggestion text-[10px] px-2 py-1 rounded-lg bg-surface-3 hover:bg-purple-500/20 text-tertiary hover:text-purple-300 border border-surface-2 transition-all cursor-pointer"
               >generate password 16</button
             >
             <button
               class="ai-suggestion text-[10px] px-2 py-1 rounded-lg bg-surface-3 hover:bg-purple-500/20 text-tertiary hover:text-purple-300 border border-surface-2 transition-all cursor-pointer"
-              >calculate 5*10+3</button
+              >calculate 160/20</button
             >
             <button
               class="ai-suggestion text-[10px] px-2 py-1 rounded-lg bg-surface-3 hover:bg-purple-500/20 text-tertiary hover:text-purple-300 border border-surface-2 transition-all cursor-pointer"
-              >hash: hello world</button
+              >crr 145 in 16.2</button
+            >
+            <button
+              class="ai-suggestion text-[10px] px-2 py-1 rounded-lg bg-surface-3 hover:bg-purple-500/20 text-tertiary hover:text-purple-300 border border-surface-2 transition-all cursor-pointer"
+              >open qr generator</button
+            >
+            <button
+              class="ai-suggestion text-[10px] px-2 py-1 rounded-lg bg-surface-3 hover:bg-purple-500/20 text-tertiary hover:text-purple-300 border border-surface-2 transition-all cursor-pointer"
+              >summarize: Quick test text</button
             >
           </div>
         </div>
@@ -1970,6 +1974,37 @@ const catJson = JSON.stringify(categories.map((c) => ({ title: c.title, count: c
   function parseAndExec(query) {
     const q = query.trim();
     const lq = q.toLowerCase();
+
+    // 0a) Cricket CRR: "crr 145 in 16.2" or "crr 145/16.2" or "cricket crr 145 16.2"
+    let mCrr = q.match(/^(?:cricket\s+)?crr(?:\s*:|\s+)(\d+(?:\.\d+)?)\s*(?:runs)?\s*(?:in|\/|\s)\s*(\d+(?:\.\d+)?)\s*(?:overs?)?/i);
+    if (mCrr) {
+      const runs = parseFloat(mCrr[1]) || 0;
+      const oversParts = String(mCrr[2]).split('.');
+      const compOvers = parseInt(oversParts[0], 10) || 0;
+      const balls = Math.min(parseInt(oversParts[1] || '0', 10), 5);
+      const decOvers = compOvers + balls / 6;
+      const crr = decOvers > 0 ? (runs / decOvers).toFixed(2) : '0.00';
+      return `<div class="text-[11px] space-y-1">
+        <div class="font-bold text-emerald-400">🏏 Cricket Current Run Rate (CRR): ${crr} RPO</div>
+        <div class="text-muted text-[10px]">${runs} runs in ${compOvers}.${balls} overs (${decOvers.toFixed(2)} decimal overs).</div>
+        <div class="pt-1"><a href="/tools/net-run-rate-calculator/" class="text-purple-400 hover:underline">Open NRR Calculator &rarr;</a></div>
+      </div>`;
+    }
+
+    // 0b) Deep Link Quick Navigation: "open <tool>", "goto <tool>", "launch <tool>"
+    let mOpen = q.match(/^(?:open|goto|go\s+to|launch|visit)\s+(.+)/i);
+    if (mOpen) {
+      const targetQuery = mOpen[1].toLowerCase().trim();
+      const matched = quickTools.find((t) => t.name.toLowerCase().includes(targetQuery) || t.url.includes(targetQuery));
+      if (matched) {
+        return `<div class="text-[11px] space-y-1.5">
+          <div class="text-muted">Direct tool link found:</div>
+          <a href="${matched.url}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs transition-all">
+            <span>🚀 Open ${matched.name}</span>
+          </a>
+        </div>`;
+      }
+    }
 
     // 1) Summarize: "summarize: <text>" or "summarize <text>"
     let m = q.match(/^(?:summarize|summary)(?:\s*(?::|of)\s*|\s+)(.+)/is);
