@@ -1,4 +1,4 @@
-﻿---
+---
 layout: ../../layouts/BlogLayout.astro
 title: 'The Complete Guide to Password Security'
 description: 'Everything you need to know about creating, managing, and storing secure passwords in 2026.'
@@ -12,6 +12,8 @@ image: '/images/blog/complete-guide-password-security.svg'
 ---
 
 Passwords are the keys to your digital life. Yet most people use weak, reused passwords that put their accounts at risk. This guide covers everything you need to know about password security in 2026, from creating strong passwords to using password managers and two-factor authentication.
+
+> 🔐 **Generate High-Entropy Passwords & Passphrases:** Create cryptographically secure random passwords and memorable multi-word passphrases using the browser's native `crypto.getRandomValues()` with our free [**Password Generator**](/tools/password-generator/). 100% client-side with 0 network transmission.
 
 ## Why Password Security Matters
 
@@ -67,7 +69,7 @@ You cannot remember dozens of unique, complex passwords. Password managers solve
 
 ### Using Our Password Generator
 
-Our **Password Generator** at NumanX Tools creates strong, random passwords instantly. You can customize length, character types, and exclude ambiguous characters like l, 1, O, and 0.
+Our [**Password Generator**](/tools/password-generator/) at NumanX Tools creates strong, random passwords instantly. You can customize length, character types, and exclude ambiguous characters like l, 1, O, and 0.
 
 ## 3. Two-Factor Authentication (2FA)
 
@@ -124,6 +126,13 @@ BlueCoffeeJumpsFasterThanGreenTea!
 ```
 
 This is easy to remember but has over 80 bits of entropy — effectively uncrackable.
+
+### Word-Based Passphrases & Web Crypto API Entropy
+
+Traditional passwords relying on random character strings (e.g. `k$9@mP!2`) can be cumbersome to type on mobile devices. The **Diceware passphrase standard** solves this by chaining 4 to 6 random, dictionary-verified words separated by hyphens or spaces (e.g., `correct-horse-battery-staple`).
+
+- **Mathematical Entropy:** A 5-word passphrase chosen from an 8,000-word EFF list yields $\approx 65$ bits of entropy ($\log_2(8000^5) \approx 64.8$ bits). That requires over 36 quintillion brute-force attempts.
+- **Cryptographic Randomness (CSPRNG):** Never use `Math.random()` to generate security credentials because it is pseudo-random and predictable. Our [**Password Generator**](/tools/password-generator/) utilizes the browser's hardware-backed `window.crypto.getRandomValues()` API to guarantee true cryptographic entropy with zero network transmission.
 
 ## 7. Recognizing Phishing Attacks
 

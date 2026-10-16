@@ -2,7 +2,6 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import { tools, categories } from '../data/tools';
 import ToolIcon from '../components/icons/ToolIcon.astro';
-import AdUnit from '../components/AdUnit.astro';
 
 const searchTools = tools.map((t) => ({
   name: t.name,
@@ -130,10 +129,6 @@ const popular = allItems.slice(0, 5);
           </div>
         </div>
       </section>
-
-      <div class="max-w-4xl mx-auto mb-8">
-        <AdUnit format="horizontal" />
-      </div>
 
       <section class="mb-10">
         <div class="flex flex-wrap justify-center gap-2" id="page-categories">

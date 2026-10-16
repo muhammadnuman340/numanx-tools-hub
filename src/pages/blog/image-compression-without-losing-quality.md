@@ -1,4 +1,4 @@
-﻿---
+---
 layout: ../../layouts/BlogLayout.astro
 title: 'Image Compression Without Losing Quality: Complete Guide'
 description: 'Learn how to dramatically reduce image file sizes while maintaining visual quality for web and print.'
@@ -12,6 +12,8 @@ image: '/images/blog/image-compression-without-losing-quality.svg'
 ---
 
 Large image files slow down websites, eat up storage, and frustrate users. But compression does not have to mean visible quality loss. This guide explains how to achieve dramatic file size reductions while keeping your images looking pristine.
+
+> ⚡ **Compress Images Instantly Without Quality Loss:** Reduce JPEG, PNG, and WebP file sizes by up to 85% directly in your browser with our free [**Smart Image Compressor**](/tools/image-compressor/). 100% private, zero uploads to external servers, and instant real-time before/after quality preview.
 
 ## Understanding Compression Types
 

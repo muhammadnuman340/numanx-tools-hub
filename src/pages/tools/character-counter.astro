@@ -144,7 +144,7 @@ const useCases = [
 ---
 
 <MainLayout
-  title="Character Counter - Free Online Character & Word Counter"
+  title="Paragraph Character Count & Word Counter Online — Free Character & Limit Checker | NumanX Tools"
   description="Count characters, words, sentences, paragraphs, and lines in real-time. Free online character counter with and without spaces."
   keywords="character counter, character count, word count, letter counter, text analyzer, character counter online"
   toolSchema={ccSchema}
@@ -358,6 +358,56 @@ const useCases = [
           </p>
         </div>
 
+        <!-- Platform & SEO Limit Bars -->
+        <div class="bg-surface-1 border border-surface rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-sm leading-none">📱</span>
+            <span class="text-xs font-semibold text-secondary uppercase tracking-wider">Social Media &amp; SEO Limits</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Twitter/X -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs text-secondary">
+                <span class="font-medium">X / Twitter</span>
+                <span id="limit-twitter" class="font-mono text-muted">0 / 280</span>
+              </div>
+              <div class="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+                <div id="bar-twitter" class="bg-purple-500 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+            <!-- Instagram Caption -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs text-secondary">
+                <span class="font-medium">Instagram Caption</span>
+                <span id="limit-ig" class="font-mono text-muted">0 / 2,200</span>
+              </div>
+              <div class="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+                <div id="bar-ig" class="bg-pink-500 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+            <!-- Meta Title -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs text-secondary">
+                <span class="font-medium">SEO Meta Title</span>
+                <span id="limit-meta-title" class="font-mono text-muted">0 / 60</span>
+              </div>
+              <div class="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+                <div id="bar-meta-title" class="bg-emerald-500 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+            <!-- Meta Description -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs text-secondary">
+                <span class="font-medium">SEO Meta Description</span>
+                <span id="limit-meta-desc" class="font-mono text-muted">0 / 160</span>
+              </div>
+              <div class="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+                <div id="bar-meta-desc" class="bg-blue-500 h-1.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="bg-surface-1 border border-surface rounded-xl p-4">
           <div class="flex items-center gap-2 mb-3">
             <span class="text-sm leading-none">📋</span>
@@ -515,6 +565,40 @@ const useCases = [
     statLines.textContent = lines.toLocaleString();
     statRead.textContent = wc > 0 ? Math.ceil(wc / 200) + 'm' : '0m';
     statSpeak.textContent = wc > 0 ? Math.ceil(wc / 150) + 'm' : '0m';
+
+    // Social Media & SEO Limits
+    const tw = $('limit-twitter');
+    const twBar = $('bar-twitter');
+    if (tw && twBar) {
+      tw.textContent = `${chars} / 280`;
+      const twPct = Math.min(100, (chars / 280) * 100);
+      twBar.style.width = `${twPct}%`;
+      twBar.className = chars > 280 ? 'bg-red-500 h-1.5 rounded-full transition-all duration-300' : 'bg-purple-500 h-1.5 rounded-full transition-all duration-300';
+    }
+    const ig = $('limit-ig');
+    const igBar = $('bar-ig');
+    if (ig && igBar) {
+      ig.textContent = `${chars.toLocaleString()} / 2,200`;
+      const igPct = Math.min(100, (chars / 2200) * 100);
+      igBar.style.width = `${igPct}%`;
+      igBar.className = chars > 2200 ? 'bg-red-500 h-1.5 rounded-full transition-all duration-300' : 'bg-pink-500 h-1.5 rounded-full transition-all duration-300';
+    }
+    const mt = $('limit-meta-title');
+    const mtBar = $('bar-meta-title');
+    if (mt && mtBar) {
+      mt.textContent = `${chars} / 60`;
+      const mtPct = Math.min(100, (chars / 60) * 100);
+      mtBar.style.width = `${mtPct}%`;
+      mtBar.className = chars > 60 ? 'bg-amber-500 h-1.5 rounded-full transition-all duration-300' : 'bg-emerald-500 h-1.5 rounded-full transition-all duration-300';
+    }
+    const md = $('limit-meta-desc');
+    const mdBar = $('bar-meta-desc');
+    if (md && mdBar) {
+      md.textContent = `${chars} / 160`;
+      const mdPct = Math.min(100, (chars / 160) * 100);
+      mdBar.style.width = `${mdPct}%`;
+      mdBar.className = chars > 160 ? 'bg-amber-500 h-1.5 rounded-full transition-all duration-300' : 'bg-blue-500 h-1.5 rounded-full transition-all duration-300';
+    }
 
     if (wc > 0) {
       detailLongest.textContent = words.reduce((a, b) => (a.length >= b.length ? a : b)).substring(0, 18);

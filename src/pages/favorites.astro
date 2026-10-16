@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import { tools } from '../data/tools';
-import AdUnit from '../components/AdUnit.astro';
 ---
 
 <MainLayout title="Favorites - NumanX Tools" description="Your saved tools for quick access." keywords="favorites, saved tools, numanx tools" noindex={true}>
@@ -37,10 +36,6 @@ import AdUnit from '../components/AdUnit.astro';
         <p class="mt-4 text-tertiary text-lg max-w-xl mx-auto leading-relaxed">
           Your saved tools for quick access. Star any tool to add it here.
         </p>
-      </div>
-
-      <div class="max-w-4xl mx-auto mb-8">
-        <AdUnit format="horizontal" />
       </div>
 
       <div id="favorites-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">

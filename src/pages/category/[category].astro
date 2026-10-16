@@ -1,10 +1,11 @@
 ---
+// FILE: src/pages/category/[category].astro
 import MainLayout from '../../layouts/MainLayout.astro';
-import { categories, getToolsByCategory, getCategoryInfo } from '../../data/tools';
+import { categories, getToolsByCategory } from '../../data/tools';
 import type { ToolCategory } from '../../data/tools';
 import CategoryHero from '../../components/CategoryHero.astro';
 import ToolIcon from '../../components/icons/ToolIcon.astro';
-import AdUnit from '../../components/AdUnit.astro';
+import MonetizationSlot from '../../components/MonetizationSlot.astro';
 
 export async function getStaticPaths() {
   return categories.map((cat) => ({
@@ -15,61 +16,109 @@ export async function getStaticPaths() {
 
 const { category } = Astro.props;
 const categoryTools = getToolsByCategory(category.id as ToolCategory);
+
+const categoryGuides: Record<string, { title: string; paragraphs: string[]; highlights: string[] }> = {
+  'image-tools': {
+    title: 'Client-Side Canvas & WebAssembly Image Processing Guide',
+    paragraphs: [
+      'Image optimization on NumanX Tools operates exclusively within your local browser sandbox via HTML5 Canvas, OffscreenCanvas Web Workers, and WebAssembly decoders. Unlike legacy cloud image processors that upload your private photos, creative assets, and client documents to remote cloud storage, our tools perform pixel transformations, bilinear resampling, and quantization directly on your device GPU and CPU threads.',
+      'Modern compression formats such as WebP, MozJPEG-equivalent 90% extreme compression, and PNG alpha stripping reduce bandwidth by up to 85% while preserving visual clarity. By utilizing client-side blobs and ArrayBuffers, you eliminate upload latency and achieve 60 FPS non-blocking background performance even when processing high-resolution 4K and RAW images.'
+    ],
+    highlights: ['100% Client-Side Privacy (0 Server Uploads)', 'Hardware-Accelerated OffscreenCanvas Workers', 'High-DPI 4K Resizing & WebP Conversion', 'Instant Zero-Latency Batch Processing']
+  },
+  'creator-tools': {
+    title: 'High-Velocity Creator Workflows & Barcode Architecture',
+    paragraphs: [
+      'Content creators, digital publishers, and packaging engineers require ultra-fast, high-precision tools that seamlessly integrate with modern media workflows. Our creator suite combines next-generation barcode generation, including industrial ISO/IEC 23941 Rectangular Micro QR (rMQR) strips designed for narrow physical surfaces, with real-time markdown documentation compilers and viral hashtag metadata analyzers.',
+      'Whether you are building YouTube Shorts and TikTok discovery tags, encoding compact product labels, or authoring technical guides with KaTeX equations and Mermaid diagrams, every tool is engineered with instant keyboard shortcuts, clipboard integration, and zero subscription barriers.'
+    ],
+    highlights: ['ISO/IEC 23941 rMQR Slender Barcode Engine', 'TikTok FYP & YouTube Shorts Tag Extractors', 'Client-Side Markdown to Vector PDF', 'Live Interactive Canvas Previews']
+  },
+  'utility-tools': {
+    title: 'SI Measurement Standards & Cryptographic Entropy Guide',
+    paragraphs: [
+      'Precision utilities require rigorous adherence to international standards and robust mathematical algorithms. Our utility suite features high-precision unit conversions mapped directly against Bureau International des Poids et Mesures (BIPM) SI base factors, accurate age and date intervals accounting for leap centuries, and percentage increase/decrease financial calculators.',
+      'For security utilities, our password and passphrase engines employ the Web Cryptography API (crypto.getRandomValues) and the Electronic Frontier Foundation (EFF) 7,776-word Diceware lexicon to generate mathematically unpredictable passwords with over 64 bits of true entropy, guaranteeing resilience against offline dictionary and rainbow table attacks.'
+    ],
+    highlights: ['BIPM Standard SI Conversion Factors', 'EFF 7,776-Word Diceware CSPRNG Passphrases', 'Calendar-Accurate Leap Year & Birthday Math', 'Zero-Tracking Local Storage Persistence']
+  },
+  'cricket-tools': {
+    title: 'ICC Official Net Run Rate (Law 16.10.2) & DLS 5.0 Analytics Guide',
+    paragraphs: [
+      'Cricket tournament analytics demand mathematical accuracy that standard sports apps frequently omit. Our cricket suite is built in strict accordance with official International Cricket Council (ICC) regulations, specifically enforcing ICC Law 16.10.2: if a batting team is dismissed all out before completing their allotted overs, their run rate is calculated based on the maximum quota of overs (e.g., 20.0 or 50.0) rather than the fraction overs when the final wicket fell.',
+      'Featuring real-time Playoff Chase Solvers (determining the exact overs threshold or run margin required to leapfrog a tournament rival on Net Run Rate) and Duckworth-Lewis-Stern (DLS) rain par score curves, this suite powers fans, analysts, and viral shorts creators with broadcast-grade statistical precision.'
+    ],
+    highlights: ['ICC Law 16.10.2 All-Out Quota Enforcement', 'Live Playoff Qualification Scenario Solvers', 'Duckworth-Lewis-Stern (DLS) Par Curves', '1080×1920 Mobile Shorts Stat Card Exporters']
+  },
+  'ai-tools': {
+    title: 'Smart Text, Readability & Local WebGPU AI Utilities',
+    paragraphs: [
+      'Modern text analysis should be both powerful and private. Our Smart NLP suite pairs instant statistical algorithms (TF-IDF keyword extraction, Flesch-Kincaid Grade Level, Gunning Fog index, and SMOG readability scoring) with cutting-edge client-side WebGPU neural execution.',
+      'By probing for WebGPU hardware acceleration via navigator.gpu, devices with dedicated graphics processors can run quantized 4-bit neural models directly in a dedicated background worker with zero server cost, while mobile and low-power devices default instantaneously to blazing-fast statistical heuristics.'
+    ],
+    highlights: ['Flesch-Kincaid, Gunning Fog & SMOG Metrics', 'On-Device WebGPU Neural Inference Workers', 'TF-IDF & RAKE Keyword Density Algorithms', 'Zero Telemetry & 100% Confidential Copy']
+  },
+  'developer-tools': {
+    title: 'Zero-Upload Security Architecture for Developers',
+    paragraphs: [
+      'Pasting production JSON payloads, database connection strings, JWT authorization tokens, or proprietary SQL queries into public cloud utilities represents a critical security and compliance hazard. NumanX Developer Tools eliminates this risk entirely through a zero-upload client-side architecture.',
+      'All formatting, AST parsing, regex evaluation, Base64 encoding/decoding, and cryptographic hashing (SHA-256, SHA-512, HMAC) execute inside an isolated browser sandbox. Your authentication keys, sensitive customer records, and system schemas never leave your machine, satisfying GDPR, SOC2, and HIPAA compliance mandates.'
+    ],
+    highlights: ['100% Offline Zero-Upload JWT Debugger', 'Web Crypto API (SHA-256, SHA-512, HMAC)', 'AST-Based JSON, SQL & Code Formatters', 'RFC 3986 URI & UTF-8 Safe Binary Inspection']
+  }
+};
+
+const guide = categoryGuides[category.id];
+const heroCategory = category.id === 'ai-tools' 
+  ? { ...category, title: 'Smart Text, Readability & Local WebGPU AI Utilities' }
+  : category;
 ---
 
 <MainLayout
-  title={`${category.title} - NumanX Tools`}
-  description={category.description}
-  keywords={`${category.title.toLowerCase()}, online tools, free ${category.title.toLowerCase()} tools, numanx tools`}
+  title={`${heroCategory.title} - NumanX Tools`}
+  description={heroCategory.description}
+  keywords={`${heroCategory.title.toLowerCase()}, online tools, free ${heroCategory.title.toLowerCase()} tools, numanx tools`}
   noindex={categoryTools.length === 0}
   breadcrumbs={[
     { name: 'Home', url: '/' },
     { name: 'Tools', url: '/tools/' },
-    { name: category.title, url: `/category/${category.id}/` },
+    { name: heroCategory.title, url: `/category/${category.id}/` },
   ]}
 >
   <main class="min-h-screen pt-8 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-7xl mx-auto">
-      <CategoryHero category={category} />
+      <CategoryHero category={heroCategory} />
 
       {
         categoryTools.length > 0 ? (
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categoryTools.map((tool) => {
-              const initials = tool.name
-                .split(' ')
-                .map((w) => w[0])
-                .join('')
-                .slice(0, 2);
-              return (
-                <div class="bg-zinc-900/30 border border-zinc-800/80 p-5 rounded-2xl flex flex-col justify-between hover:border-purple-500/40 hover:bg-zinc-900/50 transition-all group">
-                  <div>
-                    <div class="flex items-center gap-3 mb-3">
-                      <div class="w-10 h-10 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
-                        <ToolIcon name={tool.icon} />
-                      </div>
-                      <h3 class="text-base font-semibold text-primary group-hover:text-purple-300 transition-colors">
-                        {tool.name}
-                      </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {categoryTools.map((tool) => (
+              <div class="bg-zinc-900/30 border border-zinc-800/80 p-5 rounded-2xl flex flex-col justify-between hover:border-purple-500/40 hover:bg-zinc-900/50 transition-all group">
+                <div>
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
+                      <ToolIcon name={tool.icon} />
                     </div>
-                    <p class="text-xs text-tertiary leading-relaxed">{tool.description}</p>
+                    <h3 class="text-base font-semibold text-primary group-hover:text-purple-300 transition-colors">
+                      {tool.name}
+                    </h3>
                   </div>
-                  <a
-                    href={tool.url}
-                    class="mt-5 w-full bg-surface-2 hover:bg-purple-600 text-secondary hover:text-white text-xs font-medium py-2.5 rounded-xl border border-surface hover:border-purple-500 text-center transition-all"
-                  >
-                    Open Tool
-                  </a>
+                  <p class="text-xs text-tertiary leading-relaxed">{tool.description}</p>
                 </div>
-              );
-            })}
+                <a
+                  href={tool.url}
+                  class="mt-5 w-full bg-surface-2 hover:bg-purple-600 text-secondary hover:text-white text-xs font-medium py-2.5 rounded-xl border border-surface hover:border-purple-500 text-center transition-all"
+                >
+                  Open Tool
+                </a>
+              </div>
+            ))}
           </div>
         ) : (
-          <div class="text-center py-20 bg-zinc-900/30 border border-zinc-800 p-8 rounded-2xl max-w-2xl mx-auto">
+          <div class="text-center py-20 bg-zinc-900/30 border border-zinc-800 p-8 rounded-2xl max-w-2xl mx-auto mb-16">
             <h2 class="text-2xl font-bold text-white">This category is launching soon</h2>
             <p class="text-sm text-tertiary mt-3 mb-8">
-              We are actively building these tools. Drop your email to get early access and be notified the moment they
-              launch.
+              We are actively building these tools. Drop your email to get early access and be notified the moment they launch.
             </p>
             <form class="flex max-w-md mx-auto gap-3">
               <input
@@ -89,9 +138,35 @@ const categoryTools = getToolsByCategory(category.id as ToolCategory);
         )
       }
 
-      {categoryTools.length > 0 && <AdUnit format="horizontal" class="mt-8" />}
+      {/* Authoritative Category Guide & E-E-A-T Architecture Panel */}
+      {guide && (
+        <section class="max-w-4xl mx-auto mb-16 rounded-2xl bg-slate-900/60 border border-slate-800/80 p-6 sm:p-8 backdrop-blur-md">
+          <div class="flex items-center gap-2 mb-4 text-xs font-mono text-purple-400 font-bold uppercase tracking-wider">
+            <span>Engineering Architecture &amp; Methodology</span>
+          </div>
+          <h2 class="text-2xl font-bold text-white mb-4">{guide.title}</h2>
+          <div class="space-y-4 text-sm text-slate-300 leading-relaxed">
+            {guide.paragraphs.map((p) => (
+              <p>{p}</p>
+            ))}
+          </div>
+          <div class="mt-6 pt-6 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {guide.highlights.map((h) => (
+              <div class="flex items-center gap-2 text-xs font-medium text-emerald-400">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                <span>{h}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
-      <div class="mt-12 text-center">
+      {/* Contextual Zero-CLS Monetization Slot Below Content */}
+      <div class="max-w-4xl mx-auto mb-12">
+        <MonetizationSlot format="in-feed" variant="auto" />
+      </div>
+
+      <div class="mt-8 text-center">
         <a
           href="/tools/"
           class="inline-flex items-center gap-2 text-sm text-muted hover:text-purple-400 transition-colors font-medium"
@@ -104,8 +179,7 @@ const categoryTools = getToolsByCategory(category.id as ToolCategory);
             fill="none"
             stroke="currentColor"
             stroke-width="2.5"
-            ><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg
-          >
+          ><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
           Browse All Tools
         </a>
       </div>

@@ -1,6 +1,5 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-import AdUnit from '../../components/AdUnit.astro';
 
 const postModules = import.meta.glob('./*.md', { eager: true });
 const blogPosts = Object.entries(postModules)
@@ -49,10 +48,6 @@ const categories = ['All', 'AI Tools', 'Image Tools', 'Creator Tools', 'Cricket 
           Tips, guides, and resources to help you work smarter.
           <span class="text-secondary"> Tools, AI, and productivity insights.</span>
         </p>
-      </div>
-
-      <div class="max-w-4xl mx-auto px-4 mb-8">
-        <AdUnit format="horizontal" />
       </div>
 
       {
@@ -256,10 +251,6 @@ const categories = ['All', 'AI Tools', 'Image Tools', 'Creator Tools', 'Cricket 
             </a>
           ))
         }
-      </div>
-
-      <div class="max-w-4xl mx-auto my-8">
-        <AdUnit format="horizontal" />
       </div>
 
       <div id="empty-state" class="hidden mt-10 text-center py-16">

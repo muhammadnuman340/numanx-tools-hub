@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import { tools as allTools, categories as catInfos } from '../data/tools';
-import AdUnit from '../components/AdUnit.astro';
 
 const dashboardTools = allTools.map((t) => ({
   name: t.name,
@@ -161,6 +160,7 @@ const roadmap = [
   description="Track tools, categories, content growth, and ecosystem expansion on the NumanX platform."
   keywords="numanx dashboard, tool dashboard, content growth, ecosystem, numanx tools"
   canonical="https://numanx-tools.pages.dev/dashboard/"
+  noindex={true}
 >
   <!-- Glow Overlays -->
   <div
@@ -232,10 +232,6 @@ const roadmap = [
           </div>
         </div>
       </section>
-
-      <div class="max-w-4xl mx-auto mb-8">
-        <AdUnit format="horizontal" />
-      </div>
 
       <!-- ================= PLATFORM STATS GRID ================= -->
       <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10">
@@ -348,10 +344,6 @@ const roadmap = [
           </div>
         </div>
       </section>
-
-      <div class="max-w-4xl mx-auto mb-8">
-        <AdUnit format="horizontal" />
-      </div>
 
       <!-- ================= MAIN DASHBOARD BODY GRID ================= -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">

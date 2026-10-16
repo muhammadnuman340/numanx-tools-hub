@@ -1,6 +1,5 @@
 ---
 import FavoriteButton from './FavoriteButton.astro';
-import AdUnit from './AdUnit.astro';
 
 interface Props {
   title: string;
@@ -43,7 +42,7 @@ const { title, gradient, desc, badge = 'Free Online Tool', slug } = Astro.props;
     )
   }
 </div>
-<AdUnit format="horizontal" class="mb-10" />
+
 
 <script define:vars={{ slug }}>
   if (slug) {

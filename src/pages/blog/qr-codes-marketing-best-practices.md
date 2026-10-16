@@ -1,4 +1,4 @@
-﻿---
+---
 layout: ../../layouts/BlogLayout.astro
 title: 'QR Codes in Marketing: Best Practices for 2026'
 description: 'How to use QR codes effectively in your marketing campaigns with proven strategies and designs.'
@@ -12,6 +12,8 @@ image: '/images/blog/qr-codes-marketing-best-practices.svg'
 ---
 
 QR codes have evolved from a niche technology into a mainstream marketing tool. In 2026, they are everywhere — on product packaging, restaurant tables, billboards, and business cards. But not all QR code campaigns are created equal. Here is how to use them effectively.
+
+> 📱 **Create Branded QR & rMQR Codes Instantly:** Generate high-resolution, vector SVG/PNG standard QR codes and narrow industrial Rectangular Micro QR (rMQR) codes for packaging with our free [**QR Code Generator**](/tools/qr-generator/). 100% client-side privacy, zero scan limits.
 
 ## Why QR Codes Work in 2026
 
@@ -58,7 +60,7 @@ A well-designed QR code gets scanned. A poorly designed one gets ignored.
 - Putting it in hard-to-scan locations
 - Making it too small (minimum 2cm x 2cm)
 
-Our **QR Code Generator** lets you create custom QR codes with logos, colors, and multiple data types (URL, text, email, WiFi, vCard).
+Our [**QR Code Generator**](/tools/qr-generator/) lets you create custom QR codes with logos, colors, and multiple data types (URL, text, email, WiFi, vCard).
 
 ## 3. Placement Strategies
 
@@ -158,6 +160,17 @@ Understanding the difference is crucial for campaign management.
 
 Always use dynamic QR codes for marketing campaigns so you can update the destination and track performance.
 
+## 9. The Modern Breakthrough: Rectangular Micro QR (rMQR) Codes
+
+Traditional square QR codes require substantial horizontal and vertical clearance. In narrow packaging, medicine vials, retail price tags, and slim banner margins, fitting a standard 20×20mm square without clipping is often impossible.
+
+Enter **rMQR (Rectangular Micro QR Code, ISO/IEC 23941)**:
+- **Narrow Form Factor:** Scales down to an ultra-slim height of just 7 or 9 modules while extending horizontally to fit tight edge strips.
+- **High Data Density:** Encodes URLs, serial numbers, and batch IDs with Reed-Solomon error correction (Levels M and H).
+- **Native Camera Scanning:** Read directly by modern iOS and Android vision camera stacks without third-party apps.
+
+You can generate both standard square QR codes and industrial rectangular rMQR codes directly in our free [**QR Code Generator Pro**](/tools/qr-generator/) with instant SVG/PNG export.
+
 ## Frequently Asked Questions
 
 ### Do QR codes expire?
@@ -174,4 +187,4 @@ At minimum, QR codes should be 2cm x 2cm (about 0.8 inches). For billboards and 
 
 ## Conclusion
 
-QR codes are a powerful bridge between the physical and digital worlds. With thoughtful design, strategic placement, mobile-optimized landing pages, and proper tracking, they can drive measurable marketing results. Use our **QR Code Generator** to create professional, trackable QR codes for your next campaign.
+QR codes are a powerful bridge between the physical and digital worlds. With thoughtful design, strategic placement, mobile-optimized landing pages, and proper tracking, they can drive measurable marketing results. Use our [**QR Code Generator**](/tools/qr-generator/) to create professional, trackable QR codes and rMQR barcodes for your next campaign.

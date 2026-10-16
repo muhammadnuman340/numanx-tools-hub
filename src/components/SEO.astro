@@ -229,12 +229,19 @@ const builtToolSchema = toolSchema
 <meta
   name="robots"
   content={noindex
-    ? 'noindex, nofollow'
+    ? 'noindex, follow'
     : nofollow
       ? 'index, nofollow'
       : 'index, follow, max-snippet:-1, max-image-preview:large'}
 />
-<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large" />
+<meta
+  name="googlebot"
+  content={noindex
+    ? 'noindex, follow'
+    : nofollow
+      ? 'index, nofollow'
+      : 'index, follow, max-snippet:-1, max-image-preview:large'}
+/>
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#05080f" />
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#05080f" />
 <meta name="application-name" content={siteName} />

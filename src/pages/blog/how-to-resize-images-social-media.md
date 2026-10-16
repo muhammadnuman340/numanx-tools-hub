@@ -1,4 +1,4 @@
-﻿---
+---
 layout: ../../layouts/BlogLayout.astro
 title: 'How to Resize Images for Social Media Platforms [2026 Guide]'
 description: 'Perfect image sizes for Instagram, TikTok, YouTube, Twitter, LinkedIn, and Facebook — with free resizing tools.'
@@ -12,6 +12,8 @@ image: '/images/blog/how-to-resize-images-social-media.svg'
 ---
 
 Every social media platform has its own image dimension requirements. Posting the wrong size can lead to awkward cropping, stretched images, or low-quality thumbnails. This guide provides the exact dimensions for every major platform and shows you how to resize images quickly.
+
+> 🚀 **Resize for Any Platform Instantly:** Use our free [**Smart Image Resizer Pro**](/tools/image-resizer/) with 1-click presets for Instagram (1080×1080, 1080×1350), YouTube Thumbnails (1280×720), and TikTok / Reels (1080×1920) directly in your browser. Zero server latency.
 
 ## Why Image Dimensions Matter
 
