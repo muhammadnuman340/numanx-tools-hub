@@ -1,4 +1,4 @@
-﻿---
+---
 layout: ../../layouts/BlogLayout.astro
 title: 'Age Calculator: Fun Facts About Your Birthday You Never Knew'
 description: 'Discover fascinating facts about your birth date, zodiac signs, historical events, and how old you really are.'
@@ -27,7 +27,7 @@ This seems simple, but leap years add complexity. Someone born on February 29 ha
 
 ### What Our Age Calculator Shows
 
-Our **Age Calculator** at NumanX Tools calculates:
+Our [**Free Online Age Calculator**](/tools/age-calculator/) at NumanX Tools calculates:
 
 - Exact years, months, and days old
 - Days until your next birthday

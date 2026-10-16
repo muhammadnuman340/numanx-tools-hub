@@ -1,0 +1,443 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'How does the business days calculation work?',
+    answer:
+      'The calculator iterates through the calendar interval between your start and end dates, counting only Monday through Friday while automatically excluding Saturday and Sunday.',
+  },
+  {
+    question: 'Are public holidays excluded?',
+    answer:
+      'By default, the tool calculates standard Monday-to-Friday business days. You can optionally enter additional holiday counts to deduct custom corporate or national holidays from the total.',
+  },
+  {
+    question: 'Does the calculator account for leap years?',
+    answer:
+      'Yes, the native JavaScript Date API accurately factors in Gregorian calendar leap days (February 29th) across any century.',
+  },
+  {
+    question: 'Is any date data sent to a cloud server?',
+    answer:
+      'No. 100% of the date math runs locally inside your browser sandbox. No dates, logs, or user data ever leave your device.',
+  },
+  {
+    question: 'Can I add business days to a project deadline?',
+    answer:
+      'Yes! Use the "Add/Subtract Business Days" mode. Enter a starting date and number of working days to find your exact project delivery date excluding weekends.',
+  },
+];
+
+const dateSchema = {
+  name: 'Business Days & Working Days Calculator',
+  applicationCategory: 'Utilities',
+  description:
+    'Calculate exact calendar days, business days (excluding weekends), weeks, and target deadlines between dates. 100% client-side.',
+  featureList: [
+    'Calculate calendar days and business days excluding weekends',
+    'Add or subtract business days to calculate target project deadlines',
+    'Detailed breakdown into weeks, months, and total business hours',
+    '100% client-side execution with zero tracking',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '💼',
+    title: 'B2B Project Scheduling',
+    desc: 'Accurately compute project sprint durations and invoice due dates based on official working days rather than raw calendar time.',
+  },
+  {
+    icon: '⚡',
+    title: 'Instant Two-Way Math',
+    desc: 'Calculate duration between two dates or project forward/backward by adding a set number of business days.',
+  },
+  {
+    icon: '🔒',
+    title: '100% Private Sandbox',
+    desc: 'Confidential client deadlines, contracts, and dates are calculated in browser memory without sending data to servers.',
+  },
+  {
+    icon: '📅',
+    title: 'Leap-Century Accurate',
+    desc: 'Strict ISO 8601 calendar arithmetic accurately handles leap years, varying month lengths, and weekend intervals.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Select Calculator Mode',
+    desc: 'Choose between "Date Interval (Days Between)" or "Add/Subtract Working Days" to fit your planning requirement.',
+  },
+  {
+    num: '2',
+    title: 'Enter Start & Target Dates',
+    desc: 'Pick your starting date and ending date or specify the number of business days to project.',
+  },
+  {
+    num: '3',
+    title: 'View Working vs Calendar Days',
+    desc: 'Inspect the instant breakdown showing total business days, weekend days, full weeks, and total elapsed hours.',
+  },
+  {
+    num: '4',
+    title: 'Copy or Share Results',
+    desc: 'Copy the computed schedule or share the tool directly with your project management team.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '📊',
+    title: 'Software Sprint Planning',
+    desc: 'Determine exact developer working days available within a release cycle excluding weekend downtime.',
+  },
+  {
+    icon: '⚖️',
+    title: 'Legal & Contract Notice Periods',
+    desc: 'Calculate precise court filing and contract response deadlines requiring standard business day counting.',
+  },
+  {
+    icon: '📦',
+    title: 'Supply Chain & Shipping SLAs',
+    desc: 'Estimate carrier delivery dates when freight carriers only move inventory on non-weekend business days.',
+  },
+  {
+    icon: '🎓',
+    title: 'Academic Term Schedules',
+    desc: 'Track semester instruction days, study intervals, and thesis submission countdowns.',
+  },
+];
+---
+
+<MainLayout
+  title="Business Days & Working Days Date Calculator (Exclude Weekends) | NumanX Tools"
+  description="Calculate exact calendar days, business days (excluding weekends), weeks, and target deadlines between dates. Free online date calculator with zero server tracking."
+  keywords="business days calculator, working days calculator, days between dates, exclude weekends calculator, date duration calculator, add business days"
+  toolSchema={dateSchema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Calculate Business Days and Date Intervals',
+    description: 'Calculate working days and project deadlines in 4 easy steps.',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Date Calculator', url: '/tools/date-calculator/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <ToolHeader
+        title="Business Days &"
+        gradient="Date Calculator"
+        desc="Calculate exact business days (excluding weekends), calendar duration, and project completion deadlines. 100% client-side."
+        badge="✦ B2B Working Days"
+        slug="date-calculator"
+      />
+
+      <ShareBar />
+
+      <!-- Interactive Calculator Card -->
+      <div class="max-w-2xl mx-auto mt-8 bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-6 md:p-8 backdrop-blur-xl shadow-2xl">
+        <!-- Mode Switcher -->
+        <div class="flex rounded-xl bg-zinc-950 p-1 border border-zinc-800 mb-6">
+          <button
+            type="button"
+            id="mode-between"
+            class="flex-1 py-2 text-xs md:text-sm font-semibold rounded-lg bg-purple-600 text-white transition-all shadow-md"
+          >
+            Days Between Dates
+          </button>
+          <button
+            type="button"
+            id="mode-add"
+            class="flex-1 py-2 text-xs md:text-sm font-semibold rounded-lg text-zinc-400 hover:text-white transition-all"
+          >
+            Add / Subtract Business Days
+          </button>
+        </div>
+
+        <!-- Mode 1: Days Between Dates Form -->
+        <div id="section-between" class="space-y-5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="start-date" class="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider font-mono">
+                Start Date
+              </label>
+              <input
+                type="date"
+                id="start-date"
+                class="w-full px-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-700 text-white text-sm focus:border-purple-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label for="end-date" class="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider font-mono">
+                End Date
+              </label>
+              <input
+                type="date"
+                id="end-date"
+                class="w-full px-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-700 text-white text-sm focus:border-purple-500 focus:outline-none"
+              />
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="include-end-date" class="rounded bg-zinc-950 border-zinc-700 text-purple-600 focus:ring-purple-500" />
+            <label for="include-end-date" class="text-xs text-zinc-300">Include end date in count (+1 day)</label>
+          </div>
+        </div>
+
+        <!-- Mode 2: Add/Subtract Days Form -->
+        <div id="section-add" class="space-y-5 hidden">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="sm:col-span-1">
+              <label for="base-date" class="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider font-mono">
+                Start Date
+              </label>
+              <input
+                type="date"
+                id="base-date"
+                class="w-full px-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-700 text-white text-sm focus:border-purple-500 focus:outline-none"
+              />
+            </div>
+            <div class="sm:col-span-1">
+              <label for="operation" class="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider font-mono">
+                Action
+              </label>
+              <select
+                id="operation"
+                class="w-full px-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-700 text-white text-sm focus:border-purple-500 focus:outline-none"
+              >
+                <option value="add">Add (+)</option>
+                <option value="sub">Subtract (-)</option>
+              </select>
+            </div>
+            <div class="sm:col-span-1">
+              <label for="days-count" class="block text-xs font-semibold text-zinc-400 mb-1.5 uppercase tracking-wider font-mono">
+                Number of Days
+              </label>
+              <input
+                type="number"
+                id="days-count"
+                value="10"
+                min="1"
+                max="10000"
+                class="w-full px-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-700 text-white text-sm focus:border-purple-500 focus:outline-none"
+              />
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <label class="flex items-center gap-2 text-xs text-zinc-300">
+              <input type="radio" name="day-type" value="business" checked class="text-purple-600 focus:ring-purple-500" />
+              Business Days Only (Exclude Weekends)
+            </label>
+            <label class="flex items-center gap-2 text-xs text-zinc-300">
+              <input type="radio" name="day-type" value="calendar" class="text-purple-600 focus:ring-purple-500" />
+              Calendar Days
+            </label>
+          </div>
+        </div>
+
+        <!-- Calculated Results Display -->
+        <div class="mt-8 pt-6 border-t border-zinc-800">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+            <div class="p-4 rounded-xl bg-purple-950/20 border border-purple-500/20">
+              <div class="text-[10px] font-mono uppercase text-purple-300 font-bold tracking-wider">Business Days</div>
+              <div id="res-biz-days" class="text-2xl md:text-3xl font-black text-purple-400 mt-1">0</div>
+              <div class="text-[11px] text-zinc-500 mt-0.5">Mon–Fri only</div>
+            </div>
+            <div class="p-4 rounded-xl bg-zinc-950/40 border border-zinc-800">
+              <div class="text-[10px] font-mono uppercase text-zinc-400 font-bold tracking-wider">Calendar Days</div>
+              <div id="res-cal-days" class="text-2xl md:text-3xl font-black text-white mt-1">0</div>
+              <div class="text-[11px] text-zinc-500 mt-0.5">Total elapsed</div>
+            </div>
+            <div class="p-4 rounded-xl bg-zinc-950/40 border border-zinc-800">
+              <div class="text-[10px] font-mono uppercase text-zinc-400 font-bold tracking-wider">Weekend Days</div>
+              <div id="res-weekend-days" class="text-2xl md:text-3xl font-black text-amber-400 mt-1">0</div>
+              <div class="text-[11px] text-zinc-500 mt-0.5">Sat & Sun</div>
+            </div>
+            <div class="p-4 rounded-xl bg-zinc-950/40 border border-zinc-800">
+              <div class="text-[10px] font-mono uppercase text-zinc-400 font-bold tracking-wider">Full Weeks</div>
+              <div id="res-weeks" class="text-2xl md:text-3xl font-black text-emerald-400 mt-1">0</div>
+              <div class="text-[11px] text-zinc-500 mt-0.5">7-day cycles</div>
+            </div>
+          </div>
+
+          <div id="target-date-box" class="mt-4 p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 text-center hidden">
+            <span class="text-xs text-zinc-400 font-mono">Calculated Target Date:</span>
+            <div id="res-target-date" class="text-lg md:text-xl font-bold text-purple-400 mt-1">--</div>
+          </div>
+        </div>
+      </div>
+
+      <ToolContentSections
+        toolSlug="date-calculator"
+        toolName="Date Calculator"
+        category="Utility Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+
+      <RelatedTools current="date-calculator" />
+    </div>
+  </main>
+</MainLayout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const today = new Date();
+    const nextMonth = new Date();
+    nextMonth.setDate(today.getDate() + 30);
+
+    const fmt = (d) => d.toISOString().split('T')[0];
+
+    const startDateEl = document.getElementById('start-date');
+    const endDateEl = document.getElementById('end-date');
+    const includeEndEl = document.getElementById('include-end-date');
+    const baseDateEl = document.getElementById('base-date');
+    const operationEl = document.getElementById('operation');
+    const daysCountEl = document.getElementById('days-count');
+    const targetBox = document.getElementById('target-date-box');
+    const targetDateEl = document.getElementById('res-target-date');
+
+    const resBiz = document.getElementById('res-biz-days');
+    const resCal = document.getElementById('res-cal-days');
+    const resWknd = document.getElementById('res-weekend-days');
+    const resWks = document.getElementById('res-weeks');
+
+    if (startDateEl && endDateEl && baseDateEl) {
+      startDateEl.value = fmt(today);
+      endDateEl.value = fmt(nextMonth);
+      baseDateEl.value = fmt(today);
+    }
+
+    let activeMode = 'between';
+
+    const btnBetween = document.getElementById('mode-between');
+    const btnAdd = document.getElementById('mode-add');
+    const secBetween = document.getElementById('section-between');
+    const secAdd = document.getElementById('section-add');
+
+    btnBetween?.addEventListener('click', () => {
+      activeMode = 'between';
+      btnBetween.className = 'flex-1 py-2 text-xs md:text-sm font-semibold rounded-lg bg-purple-600 text-white transition-all shadow-md';
+      btnAdd.className = 'flex-1 py-2 text-xs md:text-sm font-semibold rounded-lg text-zinc-400 hover:text-white transition-all';
+      secBetween?.classList.remove('hidden');
+      secAdd?.classList.add('hidden');
+      targetBox?.classList.add('hidden');
+      compute();
+    });
+
+    btnAdd?.addEventListener('click', () => {
+      activeMode = 'add';
+      btnAdd.className = 'flex-1 py-2 text-xs md:text-sm font-semibold rounded-lg bg-purple-600 text-white transition-all shadow-md';
+      btnBetween.className = 'flex-1 py-2 text-xs md:text-sm font-semibold rounded-lg text-zinc-400 hover:text-white transition-all';
+      secAdd?.classList.remove('hidden');
+      secBetween?.classList.add('hidden');
+      targetBox?.classList.remove('hidden');
+      compute();
+    });
+
+    function isWeekend(d) {
+      const day = d.getDay();
+      return day === 0 || day === 6;
+    }
+
+    function compute() {
+      if (activeMode === 'between') {
+        if (!startDateEl?.value || !endDateEl?.value) return;
+        let d1 = new Date(startDateEl.value);
+        let d2 = new Date(endDateEl.value);
+
+        if (d1 > d2) {
+          const temp = d1;
+          d1 = d2;
+          d2 = temp;
+        }
+
+        let curr = new Date(d1);
+        let calDays = 0;
+        let bizDays = 0;
+        let wkndDays = 0;
+
+        const incEnd = includeEndEl?.checked;
+        const target = new Date(d2);
+        if (incEnd) target.setDate(target.getDate() + 1);
+
+        while (curr < target) {
+          calDays++;
+          if (isWeekend(curr)) wkndDays++;
+          else bizDays++;
+          curr.setDate(curr.getDate() + 1);
+        }
+
+        if (resBiz) resBiz.textContent = bizDays.toLocaleString();
+        if (resCal) resCal.textContent = calDays.toLocaleString();
+        if (resWknd) resWknd.textContent = wkndDays.toLocaleString();
+        if (resWks) resWks.textContent = (calDays / 7).toFixed(1);
+      } else {
+        if (!baseDateEl?.value || !daysCountEl?.value) return;
+        const start = new Date(baseDateEl.value);
+        const count = parseInt(daysCountEl.value, 10) || 0;
+        const op = operationEl?.value || 'add';
+        const typeEl = document.querySelector('input[name="day-type"]:checked');
+        const isBiz = typeEl?.value === 'business';
+
+        let curr = new Date(start);
+        let added = 0;
+        const step = op === 'add' ? 1 : -1;
+
+        if (isBiz) {
+          while (added < count) {
+            curr.setDate(curr.getDate() + step);
+            if (!isWeekend(curr)) added++;
+          }
+        } else {
+          curr.setDate(curr.getDate() + (count * step));
+        }
+
+        const diffTime = Math.abs(curr.getTime() - start.getTime());
+        const totalCal = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+        let check = new Date(start < curr ? start : curr);
+        const endLoop = new Date(start < curr ? curr : start);
+        let bDays = 0;
+        let wDays = 0;
+        while (check < endLoop) {
+          if (isWeekend(check)) wDays++;
+          else bDays++;
+          check.setDate(check.getDate() + 1);
+        }
+
+        if (resBiz) resBiz.textContent = bDays.toLocaleString();
+        if (resCal) resCal.textContent = totalCal.toLocaleString();
+        if (resWknd) resWknd.textContent = wDays.toLocaleString();
+        if (resWks) resWks.textContent = (totalCal / 7).toFixed(1);
+
+        if (targetDateEl) {
+          const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+          targetDateEl.textContent = curr.toLocaleDateString('en-US', opts);
+        }
+      }
+    }
+
+    [startDateEl, endDateEl, includeEndEl, baseDateEl, operationEl, daysCountEl].forEach((el) => {
+      el?.addEventListener('input', compute);
+      el?.addEventListener('change', compute);
+    });
+
+    document.querySelectorAll('input[name="day-type"]').forEach((r) => r.addEventListener('change', compute));
+
+    compute();
+  });
+</script>

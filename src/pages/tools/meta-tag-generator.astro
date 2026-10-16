@@ -1,0 +1,485 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+
+const faqItems = [
+  {
+    question: 'Why are OpenGraph and Twitter cards important?',
+    answer:
+      'OpenGraph and Twitter meta tags control how your links render when shared on social platforms like Facebook, LinkedIn, X, and WhatsApp. Rich cards with images and structured snippets dramatically increase Click-Through Rates (CTR).',
+  },
+  {
+    question: 'What is the optimal character length for title and meta description?',
+    answer:
+      'Search engines typically truncate titles after 55–60 characters (approx. 600 pixels) and meta descriptions after 155–160 characters on desktop (or 120 on mobile). Our generator includes live visual meters to prevent truncation.',
+  },
+  {
+    question: 'How does the AI Overview citation preview work?',
+    answer:
+      'Generative AI search engines (like Google Gemini Overviews and Perplexity) extract structured knowledge from your meta title, description, and canonical data to form synthesized citation cards.',
+  },
+  {
+    question: 'Does this generator upload my page data to any server?',
+    answer:
+      'No. All tag generation and live card previews are compiled entirely inside your browser memory. Your drafts and metadata remain 100% private.',
+  },
+];
+
+const metaSchema = {
+  name: 'Meta Tag Generator & Live SERP / Social Previewer',
+  applicationCategory: 'DeveloperApplication',
+  description:
+    'Generate SEO meta tags with live Google Mobile SERP, OpenGraph, X (Twitter) Card, and AI Overview citation previews.',
+  featureList: [
+    'Live Google Mobile SERP preview with character limits',
+    'OpenGraph Facebook and LinkedIn social card preview',
+    'Twitter / X Large Image summary card preview',
+    'AI Overview citation snippet generator',
+    '1-click copy formatted HTML tags',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '🔍',
+    title: 'Zero Truncation Guarantee',
+    desc: 'Live character length and pixel-width meters ensure your titles and snippets never get cut off by ellipses on Google SERPs.',
+  },
+  {
+    icon: '📱',
+    title: 'Multi-Platform Visual Previews',
+    desc: 'See exactly how your link will appear across Google Mobile, Facebook, LinkedIn, X, and AI answer engines before deploying.',
+  },
+  {
+    icon: '⚡',
+    title: '1-Click Clean HTML Copy',
+    desc: 'Instantly generate syntactically pristine HTML `<meta>` tags ready to drop into your Astro, Next.js, or HTML `<head>`.',
+  },
+  {
+    icon: '🔒',
+    title: '100% Client-Side Privacy',
+    desc: 'No drafts, tokens, or campaign metadata are ever transmitted across the network or logged in remote cloud databases.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Input Page Metadata',
+    desc: 'Type your title, meta description, canonical URL, and open graph image link into the form.',
+  },
+  {
+    num: '2',
+    title: 'Monitor Length Meters',
+    desc: 'Keep title below 60 characters and description below 160 characters using the real-time indicators.',
+  },
+  {
+    num: '3',
+    title: 'Switch Live Previews',
+    desc: 'Toggle between Google SERP, OpenGraph, Twitter Card, and AI Overview tabs to verify card layout.',
+  },
+  {
+    num: '4',
+    title: 'Copy & Paste HTML',
+    desc: 'Click "Copy Meta Tags" and paste the generated snippet directly into your website `<head>` tag.',
+  },
+];
+
+const useCases = [
+  {
+    icon: '🚀',
+    title: 'Product Launch Previews',
+    desc: 'Ensure new SaaS and product pages share stunning social cards with high click velocity across social feeds.',
+  },
+  {
+    icon: '📝',
+    title: 'Blog SEO Optimization',
+    desc: 'Fine-tune editorial headlines and descriptions to maximize organic Google Search CTR.',
+  },
+  {
+    icon: '🤖',
+    title: 'AEO / GEO Engine Discovery',
+    desc: 'Structure metadata so Perplexity and Google Gemini cite your domain with authoritative attribution.',
+  },
+  {
+    icon: '🛠️',
+    title: 'Client Web Audits',
+    desc: 'Rapidly prototype and test meta tag configurations during client technical SEO audits.',
+  },
+];
+---
+
+<MainLayout
+  title="Free Meta Tag Generator — Google SERP, OpenGraph & Social Previewer | NumanX Tools"
+  description="Generate SEO meta tags with live Google Mobile SERP, OpenGraph, X (Twitter) Card, and AI Overview citation previews. 100% client-side."
+  keywords="meta tag generator, serps previewer, opengraph generator, twitter card generator, google preview tool, seo meta tags online"
+  toolSchema={metaSchema}
+  faq={faqItems}
+  howto={{
+    name: 'How to Generate SEO Meta Tags and Social Previews',
+    description: 'Create and preview SEO meta tags in 4 easy steps.',
+    steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
+    totalTime: 'PT1M',
+  }}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Meta Tag Generator', url: '/tools/meta-tag-generator/' },
+  ]}
+>
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto">
+      <ToolHeader
+        title="Meta Tag Generator &"
+        gradient="SERP Previewer"
+        desc="Generate SEO meta tags with live Google Mobile SERP, OpenGraph, Twitter Card, and AI Overview citation previews. 100% client-side."
+        badge="✦ Live SERP & AI Previews"
+        slug="meta-tag-generator"
+      />
+
+      <ShareBar />
+
+      <!-- Interactive Generator Workspace -->
+      <div class="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Input Controls Form -->
+        <div class="lg:col-span-6 bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-6 backdrop-blur-xl shadow-xl space-y-4">
+          <h2 class="text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+            Page Information
+          </h2>
+
+          <div>
+            <div class="flex justify-between text-xs mb-1">
+              <label for="meta-title" class="font-semibold text-zinc-300">Page Title</label>
+              <span id="title-counter" class="text-zinc-500 font-mono">0 / 60</span>
+            </div>
+            <input
+              type="text"
+              id="meta-title"
+              placeholder="e.g. NumanX Tools Hub — 51+ Free Client-Side Developer Tools"
+              value="NumanX Tools — Free Client-Side Browser Utilities & Developer Tools"
+              class="w-full px-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-700 text-white text-sm focus:border-purple-500 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs mb-1">
+              <label for="meta-desc" class="font-semibold text-zinc-300">Meta Description</label>
+              <span id="desc-counter" class="text-zinc-500 font-mono">0 / 160</span>
+            </div>
+            <textarea
+              id="meta-desc"
+              rows="3"
+              placeholder="A concise, high-intent summary of your page content..."
+              class="w-full px-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-700 text-white text-sm focus:border-purple-500 focus:outline-none resize-none"
+            >Free online tools for image optimization, text analysis, QR codes, and developer utilities. 100% private, browser-based with zero server uploads.</textarea>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="canonical-url" class="block text-xs font-semibold text-zinc-300 mb-1">Canonical URL</label>
+              <input
+                type="url"
+                id="canonical-url"
+                placeholder="https://example.com/page/"
+                value="https://numanx-tools.pages.dev/"
+                class="w-full px-3 py-2 rounded-xl bg-zinc-950 border border-zinc-700 text-white text-xs focus:border-purple-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label for="site-name" class="block text-xs font-semibold text-zinc-300 mb-1">Site Name</label>
+              <input
+                type="text"
+                id="site-name"
+                placeholder="Brand / Company"
+                value="NumanX Tools"
+                class="w-full px-3 py-2 rounded-xl bg-zinc-950 border border-zinc-700 text-white text-xs focus:border-purple-500 focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="og-image" class="block text-xs font-semibold text-zinc-300 mb-1">Social Image URL (og:image)</label>
+              <input
+                type="url"
+                id="og-image"
+                placeholder="https://example.com/banner.png"
+                value="https://numanx-tools.pages.dev/og-image.png"
+                class="w-full px-3 py-2 rounded-xl bg-zinc-950 border border-zinc-700 text-white text-xs focus:border-purple-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label for="twitter-handle" class="block text-xs font-semibold text-zinc-300 mb-1">Twitter / X @Handle</label>
+              <input
+                type="text"
+                id="twitter-handle"
+                placeholder="@username"
+                value="@numanx"
+                class="w-full px-3 py-2 rounded-xl bg-zinc-950 border border-zinc-700 text-white text-xs focus:border-purple-500 focus:outline-none"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Previews & Generated Code -->
+        <div class="lg:col-span-6 space-y-6">
+          <div class="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-6 backdrop-blur-xl shadow-xl">
+            <!-- Preview Tabs -->
+            <div class="flex flex-wrap gap-2 pb-4 mb-4 border-b border-zinc-800">
+              <button type="button" class="preview-tab px-3 py-1.5 text-xs font-bold rounded-lg bg-purple-600 text-white" data-tab="google">
+                Google SERP
+              </button>
+              <button type="button" class="preview-tab px-3 py-1.5 text-xs font-bold rounded-lg bg-zinc-800 text-zinc-400 hover:text-white" data-tab="og">
+                OpenGraph (FB/LI)
+              </button>
+              <button type="button" class="preview-tab px-3 py-1.5 text-xs font-bold rounded-lg bg-zinc-800 text-zinc-400 hover:text-white" data-tab="twitter">
+                X / Twitter
+              </button>
+              <button type="button" class="preview-tab px-3 py-1.5 text-xs font-bold rounded-lg bg-zinc-800 text-zinc-400 hover:text-white" data-tab="ai">
+                AI Overview
+              </button>
+            </div>
+
+            <!-- Google SERP Card -->
+            <div id="tab-google" class="preview-panel p-4 rounded-xl bg-[#1f1f23] border border-zinc-700 text-left font-sans">
+              <div class="flex items-center gap-2 mb-1.5 text-xs text-zinc-400">
+                <div class="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center text-[10px] text-white font-bold">G</div>
+                <span id="serp-site-name" class="font-medium text-zinc-300 text-xs">NumanX Tools</span>
+                <span class="text-zinc-500">•</span>
+                <span id="serp-url" class="text-zinc-400 text-[11px] truncate">https://numanx-tools.pages.dev</span>
+              </div>
+              <h3 id="serp-title" class="text-base text-[#8ab4f8] hover:underline cursor-pointer font-medium leading-snug">
+                NumanX Tools — Free Client-Side Browser Utilities
+              </h3>
+              <p id="serp-desc" class="text-xs text-[#bdc1c6] mt-1.5 leading-relaxed line-clamp-2">
+                Free online tools for image optimization, text analysis, QR codes, and developer utilities. 100% private, browser-based with zero server uploads.
+              </p>
+            </div>
+
+            <!-- OpenGraph Social Card -->
+            <div id="tab-og" class="preview-panel p-3 rounded-xl bg-[#242526] border border-zinc-700 text-left font-sans hidden">
+              <div class="h-36 w-full rounded-lg bg-zinc-800 flex items-center justify-center overflow-hidden border border-zinc-700 mb-2">
+                <img id="og-preview-img" src="https://numanx-tools.pages.dev/og-image.png" alt="Preview" class="w-full h-full object-cover" onerror="this.src='/favicon.svg'" />
+              </div>
+              <div class="text-[11px] text-zinc-400 uppercase font-mono tracking-wider" id="og-domain">numanx-tools.pages.dev</div>
+              <div id="og-title" class="text-sm font-bold text-white mt-0.5 line-clamp-1">NumanX Tools — Free Client-Side Browser Utilities</div>
+              <div id="og-desc" class="text-xs text-zinc-300 mt-1 line-clamp-2">Free online tools for image optimization, text analysis, and productivity.</div>
+            </div>
+
+            <!-- Twitter Card -->
+            <div id="tab-twitter" class="preview-panel p-3 rounded-xl bg-black border border-zinc-700 text-left font-sans hidden">
+              <div class="h-36 w-full rounded-xl bg-zinc-900 flex items-center justify-center overflow-hidden border border-zinc-800 mb-2">
+                <img id="twitter-preview-img" src="https://numanx-tools.pages.dev/og-image.png" alt="Preview" class="w-full h-full object-cover" onerror="this.src='/favicon.svg'" />
+              </div>
+              <div id="twitter-title" class="text-sm font-bold text-white line-clamp-1">NumanX Tools — Free Client-Side Browser Utilities</div>
+              <div id="twitter-desc" class="text-xs text-zinc-400 mt-0.5 line-clamp-2">Free online tools for image optimization, text analysis, and productivity.</div>
+              <div class="text-[11px] text-zinc-500 mt-1 flex items-center gap-1">
+                <span>🔗</span>
+                <span id="twitter-domain">numanx-tools.pages.dev</span>
+              </div>
+            </div>
+
+            <!-- AI Overview Card -->
+            <div id="tab-ai" class="preview-panel p-4 rounded-xl bg-gradient-to-br from-purple-950/40 to-blue-950/40 border border-purple-500/30 text-left font-sans hidden">
+              <div class="flex items-center gap-2 text-xs font-semibold text-purple-300 mb-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Synthesized AI Search Citation Overview</span>
+              </div>
+              <div class="p-3 rounded-lg bg-zinc-950/80 border border-zinc-800">
+                <div class="text-[11px] text-zinc-400 font-mono" id="ai-cite-domain">Source: numanx-tools.pages.dev</div>
+                <div id="ai-cite-title" class="text-xs font-bold text-white mt-0.5">NumanX Tools</div>
+                <p id="ai-cite-desc" class="text-xs text-zinc-300 mt-1 leading-relaxed">
+                  "Offers 100% client-side privacy without remote server latency..."
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Generated HTML Tags Box -->
+          <div class="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-6 backdrop-blur-xl shadow-xl">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold text-white font-mono uppercase tracking-wider">Generated HTML Meta Tags</span>
+              <button
+                type="button"
+                id="copy-tags-btn"
+                class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition flex items-center gap-1.5"
+              >
+                <span>📋</span>
+                <span id="copy-btn-text">Copy Meta Tags</span>
+              </button>
+            </div>
+            <pre class="p-4 rounded-xl bg-zinc-950 border border-zinc-800 text-[11px] font-mono text-purple-300 overflow-x-auto leading-relaxed max-h-48" id="meta-output"></pre>
+          </div>
+        </div>
+      </div>
+
+      <ToolContentSections
+        toolSlug="meta-tag-generator"
+        toolName="Meta Tag Generator"
+        category="Developer Tools"
+        {benefits}
+        howToSteps={howToSteps}
+        useCases={useCases}
+      />
+
+      <RelatedTools current="meta-tag-generator" />
+    </div>
+  </main>
+</MainLayout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const titleInput = document.getElementById('meta-title');
+    const descInput = document.getElementById('meta-desc');
+    const urlInput = document.getElementById('canonical-url');
+    const siteInput = document.getElementById('site-name');
+    const imgInput = document.getElementById('og-image');
+    const twitterInput = document.getElementById('twitter-handle');
+
+    const titleCount = document.getElementById('title-counter');
+    const descCount = document.getElementById('desc-counter');
+
+    // Previews
+    const serpTitle = document.getElementById('serp-title');
+    const serpDesc = document.getElementById('serp-desc');
+    const serpUrl = document.getElementById('serp-url');
+    const serpSite = document.getElementById('serp-site-name');
+
+    const ogTitle = document.getElementById('og-title');
+    const ogDesc = document.getElementById('og-desc');
+    const ogDomain = document.getElementById('og-domain');
+    const ogImg = document.getElementById('og-preview-img');
+
+    const twitterTitle = document.getElementById('twitter-title');
+    const twitterDesc = document.getElementById('twitter-desc');
+    const twitterDomain = document.getElementById('twitter-domain');
+    const twitterImg = document.getElementById('twitter-preview-img');
+
+    const aiTitle = document.getElementById('ai-cite-title');
+    const aiDesc = document.getElementById('ai-cite-desc');
+    const aiDomain = document.getElementById('ai-cite-domain');
+
+    const outputPre = document.getElementById('meta-output');
+    const copyBtn = document.getElementById('copy-tags-btn');
+    const copyBtnText = document.getElementById('copy-btn-text');
+
+    function update() {
+      const title = titleInput?.value || '';
+      const desc = descInput?.value || '';
+      const url = urlInput?.value || 'https://example.com';
+      const site = siteInput?.value || 'My Site';
+      const img = imgInput?.value || '';
+      const twitter = twitterInput?.value || '@username';
+
+      let domain = 'example.com';
+      try {
+        domain = new URL(url).hostname;
+      } catch (e) {}
+
+      // Counters
+      if (titleCount) {
+        titleCount.textContent = `${title.length} / 60`;
+        titleCount.className = title.length > 60 ? 'text-amber-400 font-mono font-bold' : 'text-zinc-500 font-mono';
+      }
+      if (descCount) {
+        descCount.textContent = `${desc.length} / 160`;
+        descCount.className = desc.length > 160 ? 'text-amber-400 font-mono font-bold' : 'text-zinc-500 font-mono';
+      }
+
+      // SERP
+      if (serpTitle) serpTitle.textContent = title;
+      if (serpDesc) serpDesc.textContent = desc;
+      if (serpUrl) serpUrl.textContent = url;
+      if (serpSite) serpSite.textContent = site;
+
+      // OG
+      if (ogTitle) ogTitle.textContent = title;
+      if (ogDesc) ogDesc.textContent = desc;
+      if (ogDomain) ogDomain.textContent = domain;
+      if (ogImg && img) ogImg.src = img;
+
+      // Twitter
+      if (twitterTitle) twitterTitle.textContent = title;
+      if (twitterDesc) twitterDesc.textContent = desc;
+      if (twitterDomain) twitterDomain.textContent = domain;
+      if (twitterImg && img) twitterImg.src = img;
+
+      // AI Overview
+      if (aiTitle) aiTitle.textContent = title;
+      if (aiDesc) aiDesc.textContent = `"${desc}"`;
+      if (aiDomain) aiDomain.textContent = `Source: ${domain}`;
+
+      // Generate Code
+      const snippet = `<!-- Primary Meta Tags -->
+<title>${escapeHtml(title)}</title>
+<meta name="title" content="${escapeHtml(title)}" />
+<meta name="description" content="${escapeHtml(desc)}" />
+<link rel="canonical" href="${escapeHtml(url)}" />
+
+<!-- Open Graph / Facebook / LinkedIn -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="${escapeHtml(url)}" />
+<meta property="og:title" content="${escapeHtml(title)}" />
+<meta property="og:description" content="${escapeHtml(desc)}" />
+<meta property="og:site_name" content="${escapeHtml(site)}" />
+<meta property="og:image" content="${escapeHtml(img)}" />
+
+<!-- Twitter / X -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="${escapeHtml(url)}" />
+<meta property="twitter:title" content="${escapeHtml(title)}" />
+<meta property="twitter:description" content="${escapeHtml(desc)}" />
+<meta property="twitter:image" content="${escapeHtml(img)}" />
+<meta property="twitter:site" content="${escapeHtml(twitter)}" />`;
+
+      if (outputPre) outputPre.textContent = snippet;
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    [titleInput, descInput, urlInput, siteInput, imgInput, twitterInput].forEach((el) => {
+      el?.addEventListener('input', update);
+    });
+
+    // Tab switching
+    const tabs = document.querySelectorAll('.preview-tab');
+    const panels = document.querySelectorAll('.preview-panel');
+
+    tabs.forEach((t) => {
+      t.addEventListener('click', () => {
+        tabs.forEach((tab) => {
+          tab.className = 'preview-tab px-3 py-1.5 text-xs font-bold rounded-lg bg-zinc-800 text-zinc-400 hover:text-white';
+        });
+        t.className = 'preview-tab px-3 py-1.5 text-xs font-bold rounded-lg bg-purple-600 text-white';
+
+        const targetId = `tab-${t.getAttribute('data-tab')}`;
+        panels.forEach((p) => {
+          if (p.id === targetId) p.classList.remove('hidden');
+          else p.classList.add('hidden');
+        });
+      });
+    });
+
+    // Copy tags
+    copyBtn?.addEventListener('click', async () => {
+      if (!outputPre) return;
+      try {
+        await navigator.clipboard.writeText(outputPre.textContent || '');
+        if (copyBtnText) copyBtnText.textContent = 'Copied to Clipboard!';
+        setTimeout(() => {
+          if (copyBtnText) copyBtnText.textContent = 'Copy Meta Tags';
+        }, 2000);
+      } catch (err) {
+        console.error('Clipboard copy failed', err);
+      }
+    });
+
+    update();
+  });
+</script>
