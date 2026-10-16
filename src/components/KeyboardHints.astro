@@ -4,10 +4,10 @@ interface Hint {
   label: string;
 }
 interface Props {
-  hints: Hint[];
+  hints?: Hint[];
 }
 
-const { hints } = Astro.props;
+const { hints = [] } = Astro.props;
 ---
 
 <div
@@ -16,7 +16,7 @@ const { hints } = Astro.props;
   aria-label="Keyboard shortcuts"
 >
   {
-    hints.map((h) => (
+    (hints || []).map((h) => (
       <span class="inline-flex items-center gap-1.5">
         <kbd class="key-hint">{h.keys}</kbd>
         <span>{h.label}</span>

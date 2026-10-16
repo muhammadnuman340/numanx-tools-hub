@@ -48,7 +48,7 @@ interface Props {
   faq?: Array<{ question: string; answer: string }>;
 }
 
-const { toolSlug, toolName, category, benefits, howToSteps, useCases } = Astro.props;
+const { toolSlug = '', toolName = '', category = '', benefits, howToSteps, useCases } = Astro.props;
 ---
 
 <!-- ─── Benefits Section ─── -->{

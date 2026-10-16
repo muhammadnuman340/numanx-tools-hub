@@ -1,0 +1,415 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ToolHeader from '../../components/ToolHeader.astro';
+import ShareBar from '../../components/ShareBar.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import KeyboardHints from '../../components/KeyboardHints.astro';
+import ToolContentSections from '../../components/ToolContentSections.astro';
+import ProToolDocs from '../../components/ProToolDocs.astro';
+
+const faqItems = [
+  {
+    question: 'How does the Duckworth-Lewis-Stern (DLS) method work?',
+    answer:
+      'The DLS method calculates revised targets in rain-interrupted cricket matches by measuring the percentage of resources (overs remaining and wickets in hand) available to each team. The team batting second has their target scaled according to the ratio of resources available.',
+  },
+  {
+    question: 'What is a DLS Par Score?',
+    answer:
+      'The Par Score is the exact number of runs the chasing team needs to have scored at any specific ball or wicket loss to tie the match if play is called off. Scoring one run more than the Par Score results in a win.',
+  },
+  {
+    question: 'Why does a revised target sometimes increase?',
+    answer:
+      'If Team 1’s innings was interrupted prematurely before they could complete their overs, Team 2 starts with 100% resources against a truncated total. Under ICC regulations, Team 2’s target is increased to reflect their resource advantage.',
+  },
+  {
+    question: 'Is this DLS Calculator suitable for both T20 and ODI matches?',
+    answer:
+      'Yes. The calculator supports standard 50-over ODIs (using G50 average baseline of 245) and 20-over T20 matches (G20 average baseline of 160).',
+  },
+];
+
+const dlsSchema = {
+  name: 'Duckworth-Lewis-Stern (DLS) Method Calculator',
+  applicationCategory: 'Sports',
+  description:
+    'Calculate revised targets, par scores, and required run rates for rain-curtailed T20 and ODI cricket matches.',
+  featureList: [
+    'Official DLS Standard Edition resource percentage engine',
+    'Supports both ODI (50 overs) and T20 (20 overs) match formats',
+    'Live par score, target calculation, and required run rate simulator',
+    'Over-by-over resource curve and par score progression',
+    '100% client-side calculation — completely private and offline capable',
+  ],
+};
+
+const benefits = [
+  {
+    icon: '🌧️',
+    title: 'Rain Interruption Par Scores',
+    desc: 'Instant revised targets and live par scores for rain delays in T20 leagues (IPL, PSL, BBL) and ICC World Cups.',
+  },
+  {
+    icon: '📊',
+    title: 'Standard Resource Percentages',
+    desc: 'Engineered with exponential decay resource curves accounting for overs remaining and wickets lost.',
+  },
+  {
+    icon: '⚡',
+    title: 'Real-Time Dynamic Recalculation',
+    desc: 'Adjust reduced overs and team scores via instant sliders and responsive numeric inputs.',
+  },
+  {
+    icon: '🔒',
+    title: 'Client-Side Privacy',
+    desc: 'All calculations run in browser volatile memory without uploading match data to external servers.',
+  },
+];
+
+const howToSteps = [
+  {
+    num: '1',
+    title: 'Choose Match Format',
+    desc: 'Select T20 (20 overs) or One Day International (50 overs).',
+  },
+  {
+    num: '2',
+    title: 'Enter First Innings Total',
+    desc: 'Provide Team 1 total runs scored (e.g. 265) and allocated overs.',
+  },
+  {
+    num: '3',
+    title: 'Set Team 2 Reduced Overs',
+    desc: 'Enter the revised number of overs available to the chasing team following the rain delay.',
+  },
+  {
+    num: '4',
+    title: 'Read Revised Target & Pacing',
+    desc: 'View the official DLS Target, Par Score, and Required Run Rate per over.',
+  },
+];
+---
+
+<MainLayout
+  title="Cricket DLS Method Calculator Online — Duckworth-Lewis-Stern Target & Par Score | NumanX Tools"
+  description="Free online Duckworth-Lewis-Stern (DLS) method calculator for rain-curtailed cricket matches. Calculate revised targets, par scores, and required run rates for ODI and T20."
+  keywords="dls calculator cricket, duckworth lewis calculator online, dls target calculator, cricket par score calculator, rain interrupted cricket match, t20 dls target, odi revised target"
+  canonical="https://numanx-tools.pages.dev/tools/cricket-dls-calculator/"
+  toolSchema={dlsSchema}
+  faq={faqItems}
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Tools', url: '/tools/' },
+    { name: 'Cricket DLS Calculator', url: '/tools/cricket-dls-calculator/' },
+  ]}
+>
+  <main class="min-h-screen pt-20 pb-24 px-4 sm:px-6 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto">
+      <ToolHeader
+        title="Cricket DLS Method Calculator"
+        description="Official Duckworth-Lewis-Stern (DLS) revised target and par score calculator for rain-curtailed T20 and ODI cricket matches."
+        badge="ICC DLS Engine"
+      />
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 my-8">
+        <!-- Input Configuration Card -->
+        <div class="lg:col-span-7 bg-surface-1/90 border border-surface rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-md relative">
+          <div class="flex items-center justify-between pb-6 border-b border-surface">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              Match Parameters
+            </h2>
+            <div class="flex items-center gap-1.5 p-1 bg-surface-2 rounded-xl border border-surface">
+              <button
+                type="button"
+                id="dls-format-t20"
+                class="px-3 py-1 rounded-lg text-xs font-semibold bg-purple-600 text-white transition-all cursor-pointer"
+              >
+                T20 (20 Overs)
+              </button>
+              <button
+                type="button"
+                id="dls-format-odi"
+                class="px-3 py-1 rounded-lg text-xs font-semibold text-zinc-400 hover:text-white transition-all cursor-pointer"
+              >
+                ODI (50 Overs)
+              </button>
+            </div>
+          </div>
+
+          <div class="space-y-6 mt-6">
+            <!-- Team 1 Innings -->
+            <div>
+              <label class="block text-xs font-mono font-semibold text-zinc-400 uppercase tracking-wider mb-2">
+                Team 1 Score (Innings 1)
+              </label>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <span class="text-[11px] text-zinc-500 block mb-1">Runs Scored</span>
+                  <input
+                    type="number"
+                    id="dls-t1-runs"
+                    value="180"
+                    min="1"
+                    max="600"
+                    class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white font-mono text-lg focus:border-purple-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <span class="text-[11px] text-zinc-500 block mb-1">Allocated Overs</span>
+                  <input
+                    type="number"
+                    id="dls-t1-overs"
+                    value="20"
+                    min="5"
+                    max="50"
+                    class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white font-mono text-lg focus:border-purple-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Team 2 Revised Overs -->
+            <div class="pt-4 border-t border-surface">
+              <div class="flex justify-between items-center mb-2">
+                <label class="text-xs font-mono font-semibold text-zinc-400 uppercase tracking-wider">
+                  Team 2 Revised Overs (Innings 2)
+                </label>
+                <span id="dls-overs-badge" class="px-2.5 py-0.5 rounded-md bg-purple-900/40 text-purple-300 font-mono text-xs border border-purple-800">
+                  15.0 Overs
+                </span>
+              </div>
+              <input
+                type="range"
+                id="dls-t2-overs-slider"
+                min="5"
+                max="20"
+                value="15"
+                step="1"
+                class="w-full h-2 bg-surface-2 rounded-lg appearance-none cursor-pointer accent-purple-500 mb-2"
+              />
+              <div class="flex justify-between text-[11px] font-mono text-zinc-500">
+                <span id="dls-min-overs">5 Overs (Min T20)</span>
+                <span id="dls-max-overs">20 Overs (Full)</span>
+              </div>
+            </div>
+
+            <!-- Optional: Wickets Lost at Curtailment -->
+            <div class="pt-4 border-t border-surface">
+              <label class="block text-xs font-mono font-semibold text-zinc-400 uppercase tracking-wider mb-2">
+                Team 2 Current Wickets (For Live Par Score)
+              </label>
+              <div class="grid grid-cols-5 gap-2">
+                {[0, 1, 2, 3, 4].map((w) => (
+                  <button
+                    type="button"
+                    class="dls-wicket-btn px-2 py-2 rounded-xl border border-surface bg-surface-2 text-xs font-mono text-zinc-300 hover:border-purple-500 transition-all cursor-pointer"
+                    data-wickets={w}
+                  >
+                    {w} Wkts
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Output Result Display Card -->
+        <div class="lg:col-span-5 flex flex-col justify-between bg-gradient-to-br from-surface-1/90 via-surface-1/80 to-purple-950/20 border border-surface rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-md">
+          <div>
+            <div class="flex items-center justify-between pb-4 border-b border-surface">
+              <span class="text-xs font-mono text-purple-400 uppercase tracking-wider font-semibold">DLS Target & Pacing</span>
+              <span id="dls-format-badge" class="px-2 py-0.5 rounded bg-zinc-800 text-[10px] font-mono text-zinc-400 border border-zinc-700">
+                T20 MATCH
+              </span>
+            </div>
+
+            <!-- Giant Target Number -->
+            <div class="my-6 text-center">
+              <span class="text-xs text-zinc-400 uppercase font-mono block mb-1">Revised Target to Win</span>
+              <div id="dls-target-result" class="text-6xl sm:text-7xl font-black text-white font-mono tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-white to-emerald-300">
+                144
+              </div>
+              <p id="dls-target-subtext" class="text-xs text-zinc-400 font-mono mt-2">
+                Need 144 runs in 15.0 overs (Par Score: 143)
+              </p>
+            </div>
+
+            <!-- Stat Breakdown Grid -->
+            <div class="grid grid-cols-2 gap-3 mt-6">
+              <div class="bg-surface-2/60 border border-surface p-4 rounded-2xl">
+                <span class="text-[10px] font-mono text-zinc-500 uppercase block">Required Rate (RRR)</span>
+                <span id="dls-rrr-val" class="text-2xl font-bold font-mono text-emerald-400">9.60</span>
+                <span class="text-[10px] text-zinc-500 block">runs per over</span>
+              </div>
+              <div class="bg-surface-2/60 border border-surface p-4 rounded-2xl">
+                <span class="text-[10px] font-mono text-zinc-500 uppercase block">Resource Available</span>
+                <span id="dls-resource-val" class="text-2xl font-bold font-mono text-purple-400">79.5%</span>
+                <span class="text-[10px] text-zinc-500 block">Team 2 innings share</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-surface space-y-3">
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-zinc-400">Team 1 Baseline</span>
+              <span id="dls-t1-summary" class="font-mono text-white">180 in 20.0 overs</span>
+            </div>
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-zinc-400">DLS Standard Edition Model</span>
+              <span class="font-mono text-emerald-400">ICC Clause 16 Standard</span>
+            </div>
+            <button
+              type="button"
+              id="dls-copy-btn"
+              class="w-full mt-4 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs font-mono uppercase tracking-wider transition-all duration-200 cursor-pointer shadow-lg shadow-purple-900/30"
+            >
+              Copy DLS Summary
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pro Tool Educational Documentation Component -->
+      <div class="my-12">
+        <ProToolDocs
+          slug="cricket-dls-calculator"
+          toolName="Cricket DLS Method Calculator"
+          category="Cricket Tools"
+        />
+      </div>
+
+      <ShareBar title="Cricket DLS Method Calculator" />
+      <ToolContentSections
+        toolSlug="cricket-dls-calculator"
+        toolName="Cricket DLS Method Calculator"
+        category="Cricket Tools"
+        benefits={benefits}
+        howToSteps={howToSteps}
+      />
+      
+      <section class="mt-16 mb-8">
+        <h2 class="text-2xl font-bold text-white mb-6 text-center">Frequently Asked Questions</h2>
+        <div class="max-w-3xl mx-auto">
+          <Accordion items={faqItems} />
+        </div>
+      </section>
+
+      <RelatedTools currentSlug="cricket-dls-calculator" />
+      <KeyboardHints hints={[{ keys: 'Tab', label: 'Navigate inputs' }, { keys: 'Space', label: 'Toggle format' }]} />
+    </div>
+  </main>
+</MainLayout>
+
+<script>
+  import { calculateDLSTarget, getDLSResourcePercentage } from '../../utils/cricketAnalytics.js';
+
+  let currentFormat = 'T20';
+  let currentWickets = 0;
+
+  function recalculateDLS() {
+    const t1RunsInput = document.getElementById('dls-t1-runs') as HTMLInputElement;
+    const t1OversInput = document.getElementById('dls-t1-overs') as HTMLInputElement;
+    const t2Slider = document.getElementById('dls-t2-overs-slider') as HTMLInputElement;
+
+    const t1Runs = parseInt(t1RunsInput?.value || '180', 10);
+    const t1Overs = parseInt(t1OversInput?.value || (currentFormat === 'T20' ? '20' : '50'), 10);
+    const t2Overs = parseInt(t2Slider?.value || '15', 10);
+
+    const badge = document.getElementById('dls-overs-badge');
+    if (badge) badge.textContent = `${t2Overs}.0 Overs`;
+
+    const result = calculateDLSTarget({
+      team1Runs: t1Runs,
+      team1OversQuota: t1Overs,
+      team2OversQuota: t2Overs,
+      format: currentFormat
+    });
+
+    const targetEl = document.getElementById('dls-target-result');
+    const subtextEl = document.getElementById('dls-target-subtext');
+    const rrrEl = document.getElementById('dls-rrr-val');
+    const resourceEl = document.getElementById('dls-resource-val');
+    const t1SummaryEl = document.getElementById('dls-t1-summary');
+
+    if (targetEl) targetEl.textContent = String(result.target);
+    if (subtextEl) subtextEl.textContent = `Need ${result.target} runs in ${t2Overs}.0 overs (Par Score: ${result.parScore})`;
+    if (rrrEl) rrrEl.textContent = result.requiredRunRate.toFixed(2);
+    if (resourceEl) resourceEl.textContent = `${result.team2Resource.toFixed(1)}%`;
+    if (t1SummaryEl) t1SummaryEl.textContent = `${t1Runs} in ${t1Overs}.0 overs`;
+  }
+
+  function initDLS() {
+    const btnT20 = document.getElementById('dls-format-t20');
+    const btnODI = document.getElementById('dls-format-odi');
+    const slider = document.getElementById('dls-t2-overs-slider') as HTMLInputElement;
+    const minOversEl = document.getElementById('dls-min-overs');
+    const maxOversEl = document.getElementById('dls-max-overs');
+    const formatBadge = document.getElementById('dls-format-badge');
+    const t1OversInput = document.getElementById('dls-t1-overs') as HTMLInputElement;
+    const t1RunsInput = document.getElementById('dls-t1-runs') as HTMLInputElement;
+
+    btnT20?.addEventListener('click', () => {
+      currentFormat = 'T20';
+      btnT20.className = 'px-3 py-1 rounded-lg text-xs font-semibold bg-purple-600 text-white transition-all cursor-pointer';
+      btnODI.className = 'px-3 py-1 rounded-lg text-xs font-semibold text-zinc-400 hover:text-white transition-all cursor-pointer';
+      if (formatBadge) formatBadge.textContent = 'T20 MATCH';
+      if (t1OversInput) t1OversInput.value = '20';
+      if (t1RunsInput) t1RunsInput.value = '180';
+      if (slider) {
+        slider.min = '5';
+        slider.max = '20';
+        slider.value = '15';
+      }
+      if (minOversEl) minOversEl.textContent = '5 Overs (Min T20)';
+      if (maxOversEl) maxOversEl.textContent = '20 Overs (Full)';
+      recalculateDLS();
+    });
+
+    btnODI?.addEventListener('click', () => {
+      currentFormat = 'ODI';
+      btnODI.className = 'px-3 py-1 rounded-lg text-xs font-semibold bg-purple-600 text-white transition-all cursor-pointer';
+      btnT20.className = 'px-3 py-1 rounded-lg text-xs font-semibold text-zinc-400 hover:text-white transition-all cursor-pointer';
+      if (formatBadge) formatBadge.textContent = 'ODI MATCH';
+      if (t1OversInput) t1OversInput.value = '50';
+      if (t1RunsInput) t1RunsInput.value = '280';
+      if (slider) {
+        slider.min = '20';
+        slider.max = '50';
+        slider.value = '35';
+      }
+      if (minOversEl) minOversEl.textContent = '20 Overs (Min ODI)';
+      if (maxOversEl) maxOversEl.textContent = '50 Overs (Full)';
+      recalculateDLS();
+    });
+
+    slider?.addEventListener('input', recalculateDLS);
+    t1RunsInput?.addEventListener('input', recalculateDLS);
+    t1OversInput?.addEventListener('input', recalculateDLS);
+
+    const copyBtn = document.getElementById('dls-copy-btn');
+    copyBtn?.addEventListener('click', () => {
+      const targetEl = document.getElementById('dls-target-result');
+      const subtextEl = document.getElementById('dls-target-subtext');
+      const rrrEl = document.getElementById('dls-rrr-val');
+      const text = `🏏 DLS Revised Target: ${targetEl?.textContent} Runs\n📊 ${subtextEl?.textContent}\n⚡ Required Rate: ${rrrEl?.textContent} RPO\nCalculated via NumanX Cricket Analytics (https://numanx-tools.pages.dev/tools/cricket-dls-calculator/)`;
+      navigator.clipboard.writeText(text).then(() => {
+        copyBtn.textContent = 'Copied to Clipboard!';
+        setTimeout(() => {
+          copyBtn.textContent = 'Copy DLS Summary';
+        }, 2000);
+      });
+    });
+
+    recalculateDLS();
+  }
+
+  document.addEventListener('astro:page-load', initDLS);
+  if (document.readyState === 'complete') {
+    initDLS();
+  } else {
+    window.addEventListener('DOMContentLoaded', initDLS);
+  }
+</script>
