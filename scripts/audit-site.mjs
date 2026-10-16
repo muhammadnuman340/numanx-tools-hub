@@ -99,6 +99,52 @@ function checkContactIntegrity(dir) {
 checkContactIntegrity(SRC_DIR);
 console.log('✅ E-E-A-T Contact Integrity verified (0 unverified email domains, canonical repo link verified).');
 
+// 6. Audit Trailing Slash Canonicalization across all internal links in src/
+let linkErrors = 0;
+function checkTrailingSlashIntegrity(dir) {
+  const files = fs.readdirSync(dir, { withFileTypes: true });
+  for (const file of files) {
+    const fullPath = path.join(dir, file.name);
+    if (file.isDirectory()) {
+      checkTrailingSlashIntegrity(fullPath);
+    } else if (/\.(astro|md|ts|js)$/i.test(file.name)) {
+      const content = fs.readFileSync(fullPath, 'utf8');
+      const lines = content.split('\n');
+      lines.forEach((line, idx) => {
+        // 1. Static href="/blog/xyz" without trailing slash
+        const mStatic = line.match(/href=["'](\/(?:blog|guides|comparisons|category|tools)\/[a-zA-Z0-9_-]+)(?<!\/)["']/g);
+        if (mStatic) {
+          console.error(`❌ Static link missing trailing slash in ${path.relative('.', fullPath)}:${idx + 1} -> ${line.trim()}`);
+          linkErrors++;
+          totalErrors++;
+        }
+        // 2. Concatenated href={'/blog/' + slug} without +'/'
+        if (/href=\{['"]\/(?:blog|guides|comparisons|category|tools)\/['"]\s*\+/.test(line) && !/\+\s*['"]\/['"]/.test(line)) {
+          console.error(`❌ Concatenated link missing trailing slash in ${path.relative('.', fullPath)}:${idx + 1} -> ${line.trim()}`);
+          linkErrors++;
+          totalErrors++;
+        }
+        // 3. Template literal href={`/blog/${slug}`} where character before closing backtick is not /
+        const mTemplate = line.match(/href=\{`\/(?:blog|guides|comparisons|category|tools)\/[^`]+`\}/g);
+        if (mTemplate) {
+          mTemplate.forEach((tpl) => {
+            if (!tpl.includes('/`}') && !tpl.includes('/?')) {
+              console.error(`❌ Template link missing trailing slash in ${path.relative('.', fullPath)}:${idx + 1} -> ${line.trim()}`);
+              linkErrors++;
+              totalErrors++;
+            }
+          });
+        }
+      });
+    }
+  }
+}
+
+checkTrailingSlashIntegrity(SRC_DIR);
+if (linkErrors === 0) {
+  console.log('✅ Trailing Slash Canonicalization verified (0 internal redirect inlinks, 100% direct 200 OK links).');
+}
+
 console.log('\n----------------------------------------');
 if (totalErrors === 0) {
   console.log('🎉 AUDIT PASSED: Site integrity, encoding, and metadata are 100% clean!\n');

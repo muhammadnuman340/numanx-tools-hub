@@ -53,7 +53,7 @@ const categories = ['All', 'AI Tools', 'Image Tools', 'Creator Tools', 'Cricket 
       {
         featured && (
           <a
-            href={'/blog/' + featured.slug}
+            href={'/blog/' + featured.slug + '/'}
             class="group block card-spotlight bg-surface-1/80 border border-surface rounded-3xl hover:-translate-y-1 transition-all duration-300 p-6 md:p-10 mb-12 overflow-hidden relative audio-trigger"
           >
             <div class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
@@ -202,7 +202,7 @@ const categories = ['All', 'AI Tools', 'Image Tools', 'Creator Tools', 'Cricket 
         {
           latest.map((post) => (
             <a
-              href={'/blog/' + post.slug}
+              href={'/blog/' + post.slug + '/'}
               class="post-card group card-spotlight bg-surface-1/80 border border-surface rounded-3xl p-6 hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-300 block audio-trigger"
               data-category={post.frontmatter.category || 'General'}
             >

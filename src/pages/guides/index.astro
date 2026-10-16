@@ -55,7 +55,7 @@ const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
       {
         featured && (
           <a
-            href={'/guides/' + featured.slug}
+            href={'/guides/' + featured.slug + '/'}
             class="group block glass-card rounded-3xl hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-300 p-6 md:p-10 mb-12 overflow-hidden"
           >
             <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
@@ -126,7 +126,7 @@ const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
         {
           guides.map((guide) => (
             <a
-              href={'/guides/' + guide.slug}
+              href={'/guides/' + guide.slug + '/'}
               class="group glass-card rounded-2xl p-6 hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-300 block"
             >
               <div class="w-full aspect-video rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mb-4 border border-zinc-800">
