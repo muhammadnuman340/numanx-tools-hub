@@ -1,6 +1,8 @@
 ---
 // FILE: src/components/MonetizationSlot.astro
 // Complete AdSense Replacement: Contextual Affiliates + EthicalAds/A-Ads + NayaPay/Easypaisa/JazzCash Direct Support
+import { PAYMENT_METHODS } from '../data/monetizationConfig';
+
 export interface Props {
   slotType?: 'post-tool-affiliate' | 'in-content-banner' | 'pakistan-support-bar' | string;
   category?: 'creator' | 'utility' | 'image' | 'cricket' | 'ai' | 'developer' | string;
@@ -131,11 +133,156 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
       </span>
       <span><strong>Support NumanX Open-Source Utilities:</strong> 100% Free Forever with Zero Server Storage. Instant local support via <strong>NayaPay / JazzCash / Easypaisa / Payoneer</strong> or Crypto USDT.</span>
     </div>
-    <a
-      href="mailto:numanxstudio@gmail.com?subject=Support%20NumanX%20Tools"
-      class="shrink-0 px-3 py-1.5 rounded-lg bg-emerald-600/80 hover:bg-emerald-600 text-white font-semibold no-underline transition shadow-sm"
+    <button
+      type="button"
+      class="open-tip-modal-btn shrink-0 px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition shadow-sm flex items-center gap-1.5 cursor-pointer active:scale-95"
     >
-      Direct Support / Tip →
-    </a>
+      <span>Direct Support / Tip</span>
+      <span>⚡</span>
+    </button>
   </div>
+
+  <!-- ─── Pakistan & Global Direct Tip / Sponsor Modal ─── -->
+  <dialog id="numanx-tip-modal" class="fixed inset-0 m-auto p-0 bg-transparent backdrop:bg-slate-950/80 backdrop:backdrop-blur-sm z-50 max-w-lg w-[calc(100%-2rem)] rounded-2xl border border-slate-700 shadow-2xl overflow-hidden text-slate-200">
+    <div class="bg-slate-900 p-6 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <h3 class="text-base font-bold text-white m-0">Support NumanX Tools Hub</h3>
+        </div>
+        <button type="button" id="close-tip-modal-btn" class="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer" aria-label="Close modal">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-400 m-0 leading-relaxed">
+        NumanX Tools Hub runs 100% in your browser with zero server data retention. Support open-source development directly via local Pakistani mobile accounts or global crypto:
+      </p>
+
+      <!-- Tab navigation -->
+      <div class="flex flex-wrap gap-1 p-1 rounded-xl bg-slate-950 border border-slate-800" id="tip-modal-tabs">
+        {PAYMENT_METHODS.map((pm, idx) => (
+          <button
+            type="button"
+            data-target={pm.id}
+            class={`tip-tab-btn flex-1 min-w-[70px] py-1.5 px-2 rounded-lg text-xs font-semibold transition text-center cursor-pointer ${idx === 0 ? 'bg-indigo-600 text-white shadow' : 'text-slate-400 hover:text-white'}`}
+          >
+            <span class="mr-1">{pm.icon}</span>{pm.label}
+          </button>
+        ))}
+      </div>
+
+      <!-- Tab panels -->
+      <div id="tip-modal-panels" class="space-y-3">
+        {PAYMENT_METHODS.map((pm, idx) => (
+          <div id={`panel-${pm.id}`} class={`tip-tab-panel space-y-3 p-4 rounded-xl bg-slate-950/80 border border-slate-800 ${idx === 0 ? 'block' : 'hidden'}`}>
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-400">{pm.badge}</span>
+              {pm.network && <span class="text-[10px] text-slate-500 font-mono">{pm.network}</span>}
+            </div>
+
+            <div>
+              <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">Account Title:</span>
+              <div class="text-sm font-semibold text-white">{pm.accountTitle}</div>
+            </div>
+
+            <div>
+              <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">Account Number / ID / Address:</span>
+              <div class="flex items-center gap-2">
+                <input
+                  type="text"
+                  readonly
+                  value={pm.accountIdentifier}
+                  class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-emerald-300 select-all focus:outline-none"
+                />
+                <button
+                  type="button"
+                  class="copy-payment-btn shrink-0 px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition flex items-center gap-1 cursor-pointer active:scale-95"
+                  data-copy={pm.accountIdentifier}
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+
+            <p class="text-[11px] text-slate-400 m-0 leading-relaxed italic">
+              💡 {pm.note}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <div class="pt-2 text-center text-[11px] text-slate-500">
+        Brand sponsorships & custom tool requests: <a href="mailto:numanxstudio@gmail.com" class="text-indigo-400 hover:text-indigo-300 underline">numanxstudio@gmail.com</a>
+      </div>
+    </div>
+  </dialog>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('numanx-tip-modal');
+      if (!modal) return;
+
+      document.querySelectorAll('.open-tip-modal-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          modal.showModal();
+        });
+      });
+
+      const closeBtn = document.getElementById('close-tip-modal-btn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => modal.close());
+      }
+
+      modal.addEventListener('click', (e) => {
+        const rect = modal.getBoundingClientRect();
+        const inDialog =
+          rect.top <= e.clientY &&
+          e.clientY <= rect.top + rect.height &&
+          rect.left <= e.clientX &&
+          e.clientX <= rect.left + rect.width;
+        if (!inDialog) {
+          modal.close();
+        }
+      });
+
+      const tabBtns = document.querySelectorAll('.tip-tab-btn');
+      const panels = document.querySelectorAll('.tip-tab-panel');
+      tabBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-target');
+          tabBtns.forEach((b) => {
+            b.classList.remove('bg-indigo-600', 'text-white', 'shadow');
+            b.classList.add('text-slate-400');
+          });
+          btn.classList.add('bg-indigo-600', 'text-white', 'shadow');
+          btn.classList.remove('text-slate-400');
+
+          panels.forEach((p) => {
+            if (p.id === 'panel-' + target) {
+              p.classList.remove('hidden');
+            } else {
+              p.classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      document.querySelectorAll('.copy-payment-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const text = btn.getAttribute('data-copy');
+          if (text) {
+            navigator.clipboard.writeText(text);
+            const orig = btn.innerText;
+            btn.innerText = 'Copied! ✓';
+            btn.classList.add('bg-emerald-600');
+            setTimeout(() => {
+              btn.innerText = orig;
+              btn.classList.remove('bg-emerald-600');
+            }, 1500);
+          }
+        });
+      });
+    });
+  </script>
 )}
