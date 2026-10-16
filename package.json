@@ -18,7 +18,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "audit": "node scripts/audit-site.mjs",
-    "ping:indexnow": "node scripts/ping-indexnow.mjs"
+    "ping:indexnow": "node scripts/ping-indexnow.mjs",
+    "submit:indexnow": "node scripts/submit-indexnow.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
