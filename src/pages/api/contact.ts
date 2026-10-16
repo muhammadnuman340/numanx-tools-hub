@@ -17,17 +17,21 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Method 1: Google Apps Script Webhook
     if (webhookUrl) {
-      await fetch(webhookUrl, {
+      const resp = await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'contact', ...data }),
       });
+      if (!resp.ok) {
+        throw new Error(`Webhook failed with status ${resp.status}`);
+      }
     }
     // Method 2: Google Service Account
     else if (
       process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL &&
       process.env.GOOGLE_PRIVATE_KEY &&
-      process.env.PUBLIC_GOOGLE_SHEET_ID
+      process.env.PUBLIC_GOOGLE_SHEET_ID &&
+      !process.env.GOOGLE_PRIVATE_KEY.includes('fdffb4f5647498bfb593ce4e82a7011e268108c3')
     ) {
       const timestamp = new Date().toISOString();
       const row = [
@@ -44,7 +48,17 @@ export const POST: APIRoute = async ({ request }) => {
       await sheetsService.appendRow(process.env.PUBLIC_GOOGLE_SHEET_ID, 'Sheet1!A:H', row);
     } else {
       console.warn(
-        'No Google Sheets integration configured. Set CONTACT_WEBHOOK_URL or GOOGLE_SERVICE_ACCOUNT_EMAIL to persist data.',
+        'No active webhook or valid Google Service Account credentials configured. Set CONTACT_WEBHOOK_URL in .env to receive messages.',
+      );
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Contact system is undergoing setup. Please email directly at numanxstudio@gmail.com',
+        }),
+        {
+          status: 503,
+          headers: { 'Content-Type': 'application/json' },
+        },
       );
     }
 

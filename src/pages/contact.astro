@@ -533,10 +533,9 @@ const faqItems = [
             msg.textContent = data.error || 'Something went wrong. Please try again.';
           }
         } catch (err) {
-          console.warn('API not available, mocking success for development.', err);
-          msg.className = 'text-xs text-emerald-400 text-center mt-3 block';
-          msg.textContent = "Message sent successfully! We'll get back to you soon.";
-          form.reset();
+          console.error('Contact form submission error:', err);
+          msg.className = 'text-xs text-red-400 text-center mt-3 block';
+          msg.innerHTML = 'Unable to send message. Please email directly at <a href="mailto:numanxstudio@gmail.com" class="underline text-purple-400 font-bold">numanxstudio@gmail.com</a>';
         }
         submitBtn.disabled = false;
         submitText.classList.remove('hidden');

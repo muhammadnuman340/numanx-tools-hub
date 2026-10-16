@@ -40,6 +40,30 @@ function doPost(e) {
         '',
         'New',
       ]);
+
+      // Deliver instant email notification to Gmail
+      try {
+        MailApp.sendEmail({
+          to: 'numanxstudio@gmail.com',
+          subject: `[NumanX Contact] ${data.subject || 'Inquiry'} from ${data.name || 'Visitor'}`,
+          replyTo: data.email || undefined,
+          htmlBody: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; color: #111; line-height: 1.6;">
+              <h2 style="color: #6d28d9;">📬 New Contact Form Message</h2>
+              <p><strong>Name:</strong> ${data.name || 'Anonymous'}</p>
+              <p><strong>Email:</strong> ${data.email || 'None'}</p>
+              <p><strong>Subject:</strong> ${data.subject || 'General Inquiry'}</p>
+              <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
+              <hr style="border: none; border-top: 1px solid #e4e4e7; margin: 16px 0;" />
+              <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 8px; white-space: pre-wrap;">
+${data.message || ''}
+              </div>
+            </div>
+          `,
+        });
+      } catch (e) {
+        Logger.log('Mail send error: ' + e);
+      }
     } else if (type === 'feedback') {
       const rating = data.rating ? `${data.rating}/5` : '';
       sheet.appendRow([
@@ -52,6 +76,15 @@ function doPost(e) {
         data.page || '',
         'New',
       ]);
+
+      try {
+        MailApp.sendEmail({
+          to: 'numanxstudio@gmail.com',
+          subject: `[NumanX Feedback] Rating: ${rating || 'N/A'}`,
+          replyTo: data.email || undefined,
+          htmlBody: `<p><strong>Rating:</strong> ${rating}</p><p><strong>Page:</strong> ${data.page || ''}</p><p><strong>Message:</strong> ${data.message || ''}</p>`,
+        });
+      } catch (e) {}
     }
 
     return ContentService.createTextOutput(JSON.stringify({ success: true })).setMimeType(ContentService.MimeType.JSON);

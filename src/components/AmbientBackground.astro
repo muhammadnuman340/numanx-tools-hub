@@ -20,7 +20,7 @@ const showAurora = mode === 'dual' || mode === 'aurora';
     <!-- Interactive WebGL Particles Container -->
     <div
       id="global-canvas-container"
-      class="absolute inset-0 z-0 opacity-80 mix-blend-screen pointer-events-none"
+      class="absolute inset-0 z-0 opacity-100 pointer-events-none"
     />
   )}
 
@@ -61,15 +61,15 @@ const showAurora = mode === 'dual' || mode === 'aurora';
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({
               alpha: true,
-              antialias: true,
-              powerPreference: 'high-performance',
+              antialias: false,
+              powerPreference: 'default',
             });
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
             container.appendChild(renderer.domElement);
 
             const isMobile = window.innerWidth < 768;
-            const particlesCount = isMobile ? 3200 : 8000;
+            const particlesCount = isMobile ? 1200 : 3800;
             const posArray = new Float32Array(particlesCount * 3);
 
             for (let i = 0; i < particlesCount * 3; i++) {
@@ -81,11 +81,10 @@ const showAurora = mode === 'dual' || mode === 'aurora';
 
             const hexColor = parseInt(accentColor.replace('0x', ''), 16) || 0xffaa55;
             const particlesMaterial = new THREE.PointsMaterial({
-              size: isMobile ? 0.05 : 0.08,
+              size: isMobile ? 0.022 : 0.034,
               color: hexColor,
-              transparent: true,
-              opacity: 0.75,
-              blending: THREE.AdditiveBlending,
+              transparent: false,
+              opacity: 1.0,
               sizeAttenuation: true,
             });
 
@@ -98,6 +97,8 @@ const showAurora = mode === 'dual' || mode === 'aurora';
             let mouseX = 0;
             let mouseY = 0;
             let voiceReactivity = 0;
+            let isRunning = true;
+            let animId = null;
 
             window.addEventListener('jarvis-voice', (event) => {
               voiceReactivity = typeof event.detail === 'number' ? event.detail : 1;
@@ -110,16 +111,16 @@ const showAurora = mode === 'dual' || mode === 'aurora';
             window.addEventListener('mousemove', onMouseMove, { passive: true });
 
             const clock = new THREE.Clock();
-            let animId;
 
             function animate() {
+              if (!isRunning) return;
               animId = requestAnimationFrame(animate);
               const elapsedTime = clock.getElapsedTime();
 
               targetX += (mouseX - targetX) * 0.05;
               targetY += (mouseY - targetY) * 0.05;
 
-              particleMesh.rotation.y = elapsedTime * 0.05 + targetX;
+              particleMesh.rotation.y = elapsedTime * 0.04 + targetX;
               particleMesh.rotation.x = elapsedTime * 0.02 + targetY;
 
               if (voiceReactivity > 0) {
@@ -134,6 +135,31 @@ const showAurora = mode === 'dual' || mode === 'aurora';
 
               renderer.render(scene, camera);
             }
+
+            function pauseAnimation() {
+              if (!isRunning) return;
+              isRunning = false;
+              if (animId) {
+                cancelAnimationFrame(animId);
+                animId = null;
+              }
+            }
+
+            function resumeAnimation() {
+              if (isRunning) return;
+              isRunning = true;
+              clock.start();
+              animate();
+            }
+
+            document.addEventListener('visibilitychange', () => {
+              if (document.hidden) {
+                pauseAnimation();
+              } else {
+                resumeAnimation();
+              }
+            });
+
             animate();
 
             const onResize = () => {
@@ -150,8 +176,20 @@ const showAurora = mode === 'dual' || mode === 'aurora';
           });
       }
 
-      initParticles();
-      document.addEventListener('astro:page-load', initParticles);
+      function scheduleInit() {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => initParticles(), { timeout: 1500 });
+        } else {
+          setTimeout(initParticles, 120);
+        }
+      }
+
+      if (document.readyState === 'complete') {
+        scheduleInit();
+      } else {
+        window.addEventListener('load', scheduleInit, { once: true });
+      }
+      document.addEventListener('astro:page-load', scheduleInit);
     })();
   </script>
 )}
