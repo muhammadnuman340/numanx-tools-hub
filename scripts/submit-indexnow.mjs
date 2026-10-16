@@ -59,6 +59,20 @@ async function submitIndexNow() {
     }
   }
 
+  // Resilient High-Speed GET Broadcast Fallback for Universal IndexNow Gateway
+  console.log('\n⚡ Broadcasting routes via Universal IndexNow GET API...');
+  let successCount = 0;
+  for (const url of urlList) {
+    try {
+      const getEndpoint = `https://api.indexnow.org/indexnow?url=${encodeURIComponent(url)}&key=${KEY}`;
+      const res = await fetch(getEndpoint);
+      if (res.status === 200 || res.status === 202) {
+        successCount++;
+      }
+    } catch (e) {}
+  }
+  console.log(`  🟢 Universal IndexNow GET Broadcast: ${successCount}/${urlList.length} URLs Accepted (HTTP 202)!`);
+
   console.log('\n✨ Multi-Engine IndexNow submission complete.');
 }
 
