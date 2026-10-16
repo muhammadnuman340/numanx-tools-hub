@@ -18,6 +18,58 @@ export interface ProToolDocEntry {
   benchmarks?: { label: string; value: string }[];
 }
 
+// FILE: src/data/proToolContent.ts — Unified Mathematical & RFC Documentation Registry
+export const PRO_TOOL_CONTENT: Record<string, any> = {
+  "qr-generator": {
+    toolName: "rMQR & QR Code Generator Pro",
+    formulaTitle: "ISO/IEC 23941 Rectangular Micro QR & Reed-Solomon Error Correction",
+    formulaExplanation: "Encodes binary, alphanumeric, or numeric strings into either a square ISO/IEC 18004 QR matrix (21x21 to 177x177 modules) or an elongated ISO/IEC 23941 Rectangular Micro QR (rMQR) strip (32 sizes from R7x43 to R17x139) using Reed-Solomon polynomial error correction over GF(2^8).",
+    formulaCode: "rMQR Max Capacity (R17x139): 361 Numeric | 219 Alphanumeric | 150 Byte | EC Levels: M (15%) & H (30%)"
+  },
+  "hashtag-generator": {
+    toolName: "AI Hashtag Generator",
+    formulaTitle: "Lexical Co-Occurrence & Platform Competition Tiering",
+    formulaExplanation: "Tokenizes your seed topic and maps tags into 3 algorithmic velocity tiers tailored to TikTok For You feeds, YouTube Shorts shelves, and Instagram Reels SEO.",
+    formulaCode: "Optimal Ratio = 2 Broad High-Velocity (20%) + 5 Niche Topic SEO (50%) + 3 Micro-Community (30%)"
+  },
+  "word-counter": {
+    toolName: "Text Count & Paragraph Word Counter",
+    formulaTitle: "Unicode Grapheme Segmentation & Per-Paragraph Lexical Analysis",
+    formulaExplanation: "Splits input text on whitespace and double-newline boundaries to compute real-time total word count, individual paragraph word counts, Flesch Reading Ease, and speaking cadence.",
+    formulaCode: "Reading Time (min) = TotalWords / 200 WPM | Speaking Time (min) = TotalWords / 150 WPM"
+  },
+  "password-generator": {
+    toolName: "Password & Word Passphrase Generator",
+    formulaTitle: "OS Hardware CSPRNG (window.crypto.getRandomValues) & Shannon Entropy",
+    formulaExplanation: "Samples cryptographically secure 32-bit integers directly from your operating system entropy pool to generate either high-density character strings or memorable multi-word passphrases.",
+    formulaCode: "Shannon Entropy E = L * log2(R) bits // 16-char mixed = 104.87 bits | 5-word passphrase = 64.6 bits"
+  },
+  "run-rate-calculator": {
+    toolName: "Cricket Run Rate Calculator",
+    formulaTitle: "Base-6 Cricket Over Notation to Decimal Arithmetic",
+    formulaExplanation: "Converts standard cricket over notation (where .1 to .5 represent sixths of an over) into true decimal overs before calculating Current Run Rate (CRR) and Required Run Rate (RRR).",
+    formulaCode: "TrueOvers = CompletedOvers + (Balls / 6) | CRR = Runs / TrueOvers | RRR = (Target - Runs) / OversLeft"
+  },
+  "net-run-rate-calculator": {
+    toolName: "Tournament Net Run Rate (NRR) Calculator",
+    formulaTitle: "Official ICC Tournament NRR & All-Out Full-Quota Penalty Rule",
+    formulaExplanation: "Computes cumulative team Net Run Rate across tournament matches. Enforces the mandatory ICC rule that any team bowled out before completing their quota is charged the full 20 or 50 overs.",
+    formulaCode: "NRR = (TotalRunsScored / TotalOversFaced_QuotaAdjusted) - (TotalRunsConceded / TotalOversBowled_QuotaAdjusted)"
+  },
+  "image-compressor": {
+    toolName: "Image Compressor Pro",
+    formulaTitle: "OffscreenCanvas Chroma Subsampling & DCT Quantization",
+    formulaExplanation: "Decodes high-resolution bitmaps inside a non-blocking Web Worker and re-encodes via JPEG or WebP quantization matrices, reducing byte size by 70%-90% locally with zero server uploads.",
+    formulaCode: "ByteSavings(%) = ((OriginalBytes - CompressedBlob.size) / OriginalBytes) * 100"
+  },
+  "json-formatter": {
+    toolName: "JSON Formatter, Validator & Minifier",
+    formulaTitle: "RFC 8259 Abstract Syntax Tree (AST) Lexer & Serializer",
+    formulaExplanation: "Parses raw JSON payloads locally inside your browser V8 engine to pinpoint exact line/column syntax errors, pretty-print nested trees, or strip whitespace for production APIs.",
+    formulaCode: "PrettyPrint = JSON.stringify(JSON.parse(raw), null, indentSpaces) | Minify = JSON.stringify(JSON.parse(raw))"
+  }
+};
+
 export const PRO_TOOL_DOCS_REGISTRY: Record<string, ProToolDocEntry> = {
   'net-run-rate-calculator': {
     title: 'ICC Net Run Rate (NRR) Mathematical Specification & Rules',

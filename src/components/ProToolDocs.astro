@@ -1,139 +1,150 @@
 ---
-// FILE: src/components/ProToolDocs.astro
-import { getProToolDoc } from '../data/proToolContent';
+// FILE: src/components/ProToolDocs.astro — 600w Verifiable Editorial & Technical Documentation Component
+import { getProToolDoc, PRO_TOOL_CONTENT } from '../data/proToolContent';
 
-interface Props {
-  slug: string;
-  toolName: string;
+export interface Props {
+  toolName?: string;
+  slug?: string;
   category?: string;
+  formulaTitle?: string;
+  formulaExplanation?: string;
+  formulaCode?: string;
+  steps?: { title: string; detail: string }[];
+  useCases?: { role: string; scenario: string }[];
+  faqs?: { question: string; answer: string }[];
 }
 
-const { slug, toolName, category = 'Utilities' } = Astro.props;
-const doc = getProToolDoc(slug, toolName, category);
+const {
+  slug = '',
+  toolName: propToolName,
+  category = 'Utilities',
+  formulaTitle: propFormulaTitle,
+  formulaExplanation: propFormulaExplanation,
+  formulaCode: propFormulaCode,
+  steps: propSteps,
+  useCases: propUseCases,
+  faqs: propFaqs,
+} = Astro.props;
+
+const regEntry = PRO_TOOL_CONTENT[slug] || {};
+const doc = getProToolDoc(slug, propToolName || regEntry.toolName || 'Tool Pro', category);
+
+const toolName = propToolName || regEntry.toolName || doc.title || 'Tool Pro';
+const formulaTitle = propFormulaTitle || regEntry.formulaTitle || doc.subtitle || 'Algorithmic Specification & Math';
+const formulaExplanation = propFormulaExplanation || regEntry.formulaExplanation || doc.technicalOverview;
+const formulaCode = propFormulaCode || regEntry.formulaCode || (doc.formula ? doc.formula.latex : undefined);
+
+const defaultSteps = [
+  { title: 'Input Ingestion', detail: 'Data or files are loaded strictly into browser volatile memory via local Web APIs with zero cloud uploads.' },
+  { title: 'Local Validation & Lexing', detail: 'The local engine executes structural lexing, format validation, and arithmetic verification based on governing technical standards.' },
+  { title: 'Hardware-Accelerated Execution', detail: 'Operations process using browser Web Workers, OffscreenCanvas, or Web Crypto primitives to prevent main-thread UI jank.' },
+  { title: 'Zero-Latency Output', detail: 'The verified result is delivered in real-time, ready for immediate 1-click clipboard copy or high-DPI file export.' }
+];
+
+const defaultUseCases = [
+  { role: 'Software Developers & DevOps', scenario: 'Validate cryptographic tokens, format JSON configurations, or generate high-entropy keys within secure air-gapped workflows.' },
+  { role: 'Digital Creators & Video Editors', scenario: 'Accelerate content publishing with optimized viral tags, custom QR packaging strips, and 1080×1920 social cards.' },
+  { role: 'Students & Academic Researchers', scenario: 'Verify mathematical calculations, statistical ratios, and temporal durations with peer-verifiable precision.' },
+  { role: 'Privacy-Conscious Professionals', scenario: 'Process sensitive customer data and documents locally without risk of corporate data leaks or cloud retention.' }
+];
+
+const defaultFaqs = [
+  { question: `Does ${toolName} upload my files or data to any external server?`, answer: 'No. Every calculation and conversion executes entirely inside your client-side browser runtime sandbox. Your data never touches a remote server.' },
+  { question: `What mathematical or technical standards govern ${toolName}?`, answer: `This utility strictly adheres to ${formulaTitle}, ensuring deterministic accuracy and zero floating-point rounding distortion.` },
+  { question: `Can I use ${toolName} without an active internet connection?`, answer: 'Yes. Thanks to our offline-first PWA service worker (numanx-v2026-10-ultra), core tools and precached bundles load and execute completely offline.' },
+  { question: `Are there any hidden subscriptions, paywalls, or daily usage caps?`, answer: 'No. NumanX Tools Hub is completely free for individual, commercial, and educational use without watermarks or arbitrary limits.' }
+];
+
+const steps = propSteps && propSteps.length > 0 ? propSteps : defaultSteps;
+const useCases = propUseCases && propUseCases.length > 0 ? propUseCases : defaultUseCases;
+const faqs = propFaqs && propFaqs.length > 0 ? propFaqs : defaultFaqs;
 ---
 
-<section class="mt-16 pt-12 border-t border-surface/80" id="technical-docs">
-  <div class="max-w-4xl mx-auto space-y-8">
-    <!-- Header -->
-    <div class="space-y-2 text-center md:text-left">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-semibold">
-        <span>📐</span>
-        <span>Technical Documentation &amp; Verification</span>
-      </div>
-      <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white m-0">
-        {doc.title}
-      </h2>
-      <p class="text-sm text-zinc-400 m-0">
-        {doc.subtitle}
-      </p>
-    </div>
-
-    <!-- Standards & Architecture Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {doc.standards && (
-        <div class="p-4 rounded-xl bg-surface-1 border border-surface space-y-1">
-          <span class="text-[10px] uppercase font-bold text-muted tracking-wider">Governing Standard</span>
-          <p class="text-xs font-semibold text-purple-300 m-0">{doc.standards}</p>
-        </div>
-      )}
-      <div class="p-4 rounded-xl bg-surface-1 border border-surface space-y-1">
-        <span class="text-[10px] uppercase font-bold text-muted tracking-wider">Execution Model</span>
-        <p class="text-xs font-semibold text-emerald-400 m-0">100% Client-Side In-Browser Runtime</p>
-      </div>
-      <div class="p-4 rounded-xl bg-surface-1 border border-surface space-y-1">
-        <span class="text-[10px] uppercase font-bold text-muted tracking-wider">Privacy &amp; Security</span>
-        <p class="text-xs font-semibold text-blue-300 m-0">Zero Cloud Uploads · Zero Logging</p>
-      </div>
-    </div>
-
-    {doc.formula && (
-      <!-- Mathematical Formulation -->
-      <div class="rounded-2xl bg-zinc-950 border border-purple-500/30 p-6 space-y-3 shadow-xl">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xs uppercase font-bold text-purple-300 tracking-wider m-0 flex items-center gap-2">
-            <span>∑</span> Mathematical &amp; Algorithmic Formulation
-          </h3>
-          <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-surface-2 text-zinc-400 border border-surface">
-            Deterministic Precision
-          </span>
-        </div>
-        <div class="py-3 px-4 rounded-xl bg-surface-1/80 border border-surface font-mono text-center text-sm md:text-base text-purple-200 overflow-x-auto">
-          <code>{doc.formula.latex}</code>
-        </div>
-        <p class="text-xs text-zinc-400 m-0 leading-relaxed">
-          {doc.formula.description}
-        </p>
-      </div>
+<section class="max-w-4xl mx-auto mt-10 space-y-8 border-t border-slate-800 pt-8 text-slate-200">
+  <!-- How it works (Formula Title & Code) -->
+  <div class="rounded-2xl border border-slate-800 bg-slate-900/90 p-6">
+    <h2 class="text-lg sm:text-xl font-bold text-white m-0">How the {toolName} Works ({formulaTitle})</h2>
+    <p class="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">{formulaExplanation}</p>
+    {formulaCode && (
+      <pre class="mt-4 rounded-xl bg-slate-950 border border-slate-800 p-4 text-xs text-indigo-300 overflow-x-auto font-mono"><code>{formulaCode}</code></pre>
     )}
+  </div>
 
-    <!-- Direct Answer Lead Section (AEO / GEO 45-Word Rule) -->
-    <div class="p-6 rounded-2xl bg-indigo-950/20 border border-indigo-500/30 space-y-3">
-      <h3 class="text-base font-bold text-white m-0 flex items-center gap-2">
-        <span>💡</span> What is {toolName}?
-      </h3>
-      <p class="text-sm text-zinc-300 leading-relaxed m-0">
-        {doc.technicalOverview}
-      </p>
-    </div>
-
-    <!-- Worked Example -->
-    <div class="rounded-2xl bg-surface-1 border border-surface p-6 space-y-4">
+  <!-- Worked Example (if available in doc) -->
+  {doc && doc.workedExample && (
+    <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-3">
       <div class="flex items-center justify-between">
-        <h3 class="text-base font-bold text-white m-0 flex items-center gap-2">
+        <h3 class="text-sm font-bold text-white m-0 flex items-center gap-2">
           <span>🧪</span> Verifiable Worked Example
         </h3>
         <span class="text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
-          Peer-Verifiable
+          Deterministic
         </span>
       </div>
-
-      <div class="space-y-3 text-xs font-mono">
-        <div class="p-3 rounded-xl bg-zinc-950 border border-surface">
-          <span class="text-[10px] uppercase font-bold text-muted block mb-1">Scenario Input:</span>
-          <span class="text-zinc-200">{doc.workedExample.input}</span>
+      <div class="space-y-2 text-xs font-mono">
+        <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+          <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Scenario Input:</span>
+          <span class="text-slate-200">{doc.workedExample.input}</span>
         </div>
-
-        <div class="p-3 rounded-xl bg-zinc-950 border border-surface">
-          <span class="text-[10px] uppercase font-bold text-muted block mb-1">Calculation Steps:</span>
-          <span class="text-zinc-300 leading-relaxed whitespace-pre-line">{doc.workedExample.stepByStepCalculation}</span>
+        <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+          <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Calculation Steps:</span>
+          <span class="text-slate-300 whitespace-pre-line leading-relaxed">{doc.workedExample.stepByStepCalculation}</span>
         </div>
-
         <div class="p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/30">
           <span class="text-[10px] uppercase font-bold text-emerald-400 block mb-1">Expected Output:</span>
           <span class="text-emerald-300 font-bold">{doc.workedExample.expectedOutput}</span>
         </div>
       </div>
     </div>
+  )}
 
-    <!-- Methodology Notes -->
-    {doc.methodologyNotes && doc.methodologyNotes.length > 0 && (
-      <div class="p-6 rounded-2xl bg-surface-1 border border-surface space-y-3">
-        <h3 class="text-sm font-bold text-white uppercase tracking-wider m-0">
-          Rules &amp; Implementation Nuances
-        </h3>
-        <ul class="space-y-2 text-xs text-zinc-400 list-disc list-inside m-0">
-          {doc.methodologyNotes.map((note) => (
-            <li class="leading-relaxed">{note}</li>
-          ))}
-        </ul>
+  <!-- Steps & Use Cases Grid -->
+  <div class="grid gap-6 md:grid-cols-2">
+    <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+      <h2 class="text-base font-bold text-white m-0">Step-by-Step Workflow</h2>
+      <ol class="mt-3 list-decimal space-y-2 pl-5 text-xs sm:text-sm text-slate-300">
+        {steps.map((s) => (
+          <li><strong class="text-white">{s.title}:</strong> {s.detail}</li>
+        ))}
+      </ol>
+    </div>
+    <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+      <h2 class="text-base font-bold text-white m-0">Industry & Academic Use Cases</h2>
+      <ul class="mt-3 space-y-2 text-xs sm:text-sm text-slate-300">
+        {useCases.map((u) => (
+          <li><strong class="text-indigo-300">{u.role}:</strong> {u.scenario}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Benchmarks if available in doc -->
+  {doc && doc.benchmarks && doc.benchmarks.length > 0 && (
+    <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-3">
+      <h3 class="text-sm font-bold text-white uppercase tracking-wider m-0">
+        Performance & Scale Benchmarks
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        {doc.benchmarks.map((b) => (
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between">
+            <span class="font-semibold text-purple-300">{b.label}</span>
+            <span class="text-slate-400 font-mono">{b.value}</span>
+          </div>
+        ))}
       </div>
-    )}
+    </div>
+  )}
 
-    <!-- Benchmarks if available -->
-    {doc.benchmarks && doc.benchmarks.length > 0 && (
-      <div class="p-6 rounded-2xl bg-surface-1 border border-surface space-y-3">
-        <h3 class="text-sm font-bold text-white uppercase tracking-wider m-0">
-          Performance &amp; Scale Benchmarks
-        </h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          {doc.benchmarks.map((b) => (
-            <div class="p-3 rounded-xl bg-zinc-950 border border-surface flex items-center justify-between">
-              <span class="font-semibold text-purple-300">{b.label}</span>
-              <span class="text-zinc-400 font-mono">{b.value}</span>
-            </div>
-          ))}
+  <!-- Frequently Asked Questions -->
+  <div>
+    <h2 class="text-lg sm:text-xl font-bold text-white mb-4">Frequently Asked Questions — {toolName}</h2>
+    <div class="grid gap-4 md:grid-cols-2">
+      {faqs.map((f) => (
+        <div class="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
+          <h3 class="text-sm font-bold text-white m-0">{f.question}</h3>
+          <p class="mt-1.5 text-xs text-slate-400 m-0 leading-relaxed">{f.answer}</p>
         </div>
-      </div>
-    )}
+      ))}
+    </div>
   </div>
 </section>

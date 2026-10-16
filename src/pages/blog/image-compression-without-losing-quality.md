@@ -189,3 +189,11 @@ Yes. Our **Smart Image Compressor** runs entirely in your browser using WebAssem
 ## Conclusion
 
 Image compression without quality loss is achievable with the right tools and settings. Focus on choosing the correct format, using quality settings in the 80–90% range, resizing before compressing, and leveraging modern formats like WebP. Use the **Smart Image Compressor** at NumanX Tools to start compressing your images in seconds.
+
+<div class="my-8 p-6 rounded-2xl bg-gradient-to-r from-purple-900/40 via-surface-1 to-blue-900/40 border border-purple-500/30 text-center space-y-3">
+  <h3 class="text-lg font-bold text-white m-0">Compress Images with Zero Quality Loss</h3>
+  <p class="text-xs text-slate-300 max-w-lg mx-auto">Reduce file sizes by up to 90% using OffscreenCanvas Web Workers and Extreme JPG presets right inside your browser.</p>
+  <a href="/tools/image-compressor/" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm shadow-lg shadow-purple-900/40 transition-all">
+    <span>⚡</span> Launch Image Compressor Pro Free &rarr;
+  </a>
+</div>

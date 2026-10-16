@@ -111,3 +111,16 @@ Focus on keyword-rich titles, detailed descriptions, relevant hashtags, and high
 ## Conclusion
 
 Success on YouTube requires a combination of great content and the right tools. From thumbnails to hashtags to format optimization — use every advantage available. Bookmark these tools and watch your channel grow.
+
+<div class="my-8 p-6 rounded-2xl bg-gradient-to-r from-purple-900/40 via-surface-1 to-blue-900/40 border border-purple-500/30 text-center space-y-3">
+  <h3 class="text-lg font-bold text-white m-0">Boost Your YouTube Production Workflow</h3>
+  <p class="text-xs text-slate-300 max-w-lg mx-auto">Generate viral title hooks, optimize hashtag velocity, and format crisp 1280×720 thumbnails with 1-click tools.</p>
+  <div class="flex flex-wrap gap-3 justify-center">
+    <a href="/tools/youtube-title-generator/" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-lg transition-all">
+      <span>🎬</span> YouTube Title Generator &rarr;
+    </a>
+    <a href="/tools/hashtag-generator/" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs border border-zinc-700 transition-all">
+      <span>#️⃣</span> AI Hashtag Generator &rarr;
+    </a>
+  </div>
+</div>

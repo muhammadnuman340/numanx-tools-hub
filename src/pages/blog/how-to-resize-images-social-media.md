@@ -188,3 +188,11 @@ Downscaling reduces quality only if not done properly. Using high-quality algori
 ## Conclusion
 
 Each social media platform has unique image requirements. By using the correct dimensions, you ensure your content looks professional and performs well. Bookmark this guide and use the **Smart Image Resizer** at NumanX Tools for quick, batch resizing with platform-specific presets.
+
+<div class="my-8 p-6 rounded-2xl bg-gradient-to-r from-purple-900/40 via-surface-1 to-blue-900/40 border border-purple-500/30 text-center space-y-3">
+  <h3 class="text-lg font-bold text-white m-0">Resize Social Media Images Instantly</h3>
+  <p class="text-xs text-slate-300 max-w-lg mx-auto">Batch resize images with built-in Instagram, YouTube, TikTok, and Twitter aspect ratio presets locally in your browser.</p>
+  <a href="/tools/image-resizer/" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm shadow-lg shadow-purple-900/40 transition-all">
+    <span>📐</span> Launch Smart Image Resizer Free &rarr;
+  </a>
+</div>
