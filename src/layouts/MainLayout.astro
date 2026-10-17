@@ -164,7 +164,7 @@ const {
     <AmbientBackground mode="dual" />
 
     <!-- Floating Brand Logo (since Navbar is gone) -->
-    <a href="/" class="fixed top-4 left-4 sm:top-6 sm:left-6 z-[100] group">
+    <a href="/" class="fixed top-4 left-4 sm:top-6 sm:left-6 z-[100] group" aria-label="NumanX Tools Home">
       <span
         class="text-xl font-black tracking-tight bg-gradient-to-r from-purple-300 via-purple-200 to-white bg-clip-text text-transparent drop-shadow-sm"
         >NumanX</span
@@ -197,6 +197,7 @@ const {
             id="global-btn-voice"
             class="p-4 text-zinc-500 hover:text-amber-400 transition-colors shrink-0 outline-none rounded-xl hover:bg-white/5"
             title="Jarvis Voice Mode"
+            aria-label="Jarvis Voice Mode"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -215,6 +216,7 @@ const {
           <input
             type="text"
             id="global-cmd-input"
+            aria-label="Ask Jarvis or search tools"
             placeholder="Ask Jarvis or search tools... (Cmd+K)"
             class="w-full bg-transparent border-none text-white text-lg px-2 py-4 outline-none placeholder-zinc-600 font-medium"
             autocomplete="off"
