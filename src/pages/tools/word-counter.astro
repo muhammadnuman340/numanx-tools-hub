@@ -184,7 +184,7 @@ const useCases = [
               class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent tabular-nums"
               >0</span
             >
-            <span class="text-[9px] font-semibold uppercase tracking-wider text-muted">Words</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-muted">Words</span>
           </div>
           <div class="stat-card group glass-card rounded-xl p-3 text-center hover:border-purple-500/30 transition-all">
             <span
@@ -192,7 +192,7 @@ const useCases = [
               class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent tabular-nums"
               >0</span
             >
-            <span class="text-[9px] font-semibold uppercase tracking-wider text-muted">Chars</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-muted">Chars</span>
           </div>
           <div
             class="stat-card group bg-surface-1 border border-surface rounded-xl p-3 text-center hover:border-purple-500/30 transition-all"
@@ -202,7 +202,7 @@ const useCases = [
               class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent tabular-nums"
               >0</span
             >
-            <span class="text-[9px] font-semibold uppercase tracking-wider text-muted">No Spaces</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-muted">No Spaces</span>
           </div>
           <div
             class="stat-card group bg-surface-1 border border-surface rounded-xl p-3 text-center hover:border-purple-500/30 transition-all"
@@ -212,7 +212,7 @@ const useCases = [
               class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent tabular-nums"
               >0</span
             >
-            <span class="text-[9px] font-semibold uppercase tracking-wider text-muted">Sentences</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-muted">Sentences</span>
           </div>
           <div
             class="stat-card group bg-surface-1 border border-surface rounded-xl p-3 text-center hover:border-purple-500/30 transition-all"
@@ -222,7 +222,7 @@ const useCases = [
               class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent tabular-nums"
               >0</span
             >
-            <span class="text-[9px] font-semibold uppercase tracking-wider text-muted">Paragraphs</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-muted">Paragraphs</span>
           </div>
           <div
             class="stat-card group bg-surface-1 border border-surface rounded-xl p-3 text-center hover:border-purple-500/30 transition-all"
@@ -232,15 +232,15 @@ const useCases = [
               class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent tabular-nums"
               >0m</span
             >
-            <span class="text-[9px] font-semibold uppercase tracking-wider text-muted">Read Time</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-muted">Read Time</span>
           </div>
         </div>
 
         <!-- Text Area — Notion x ChatGPT style -->
         <div
-          class="relative rounded-2xl border border-surface-2 bg-surface-1 focus-within:border-purple-500/60 focus-within:shadow-[0_0_20px_-8px_#a855f7] transition-all duration-300 overflow-hidden"
+          class="relative rounded-xl border border-surface-2 bg-surface-1 focus-within:border-purple-500/60 focus-within:shadow-[0_0_20px_-8px_#a855f7] transition-all duration-300 overflow-hidden"
         >
-          <div class="flex items-center justify-between px-5 pt-3">
+          <div class="flex items-center justify-between px-5 py-3">
             <div class="flex items-center gap-2">
               <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
               <span id="usage-badge" class="text-xs text-muted"></span>
@@ -250,70 +250,88 @@ const useCases = [
                 <button
                   class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
                   data-color="purple"
-                  style="background:#a855f7"></button>
+                  style="background:#a855f7"
+                  aria-label="Purple theme accent"
+                  title="Purple theme accent"></button>
                 <button
                   class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
                   data-color="blue"
-                  style="background:#3b82f6"></button>
+                  style="background:#3b82f6"
+                  aria-label="Blue theme accent"
+                  title="Blue theme accent"></button>
                 <button
                   class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
                   data-color="green"
-                  style="background:#22c55e"></button>
+                  style="background:#22c55e"
+                  aria-label="Green theme accent"
+                  title="Green theme accent"></button>
                 <button
                   class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
                   data-color="pink"
-                  style="background:#ec4899"></button>
+                  style="background:#ec4899"
+                  aria-label="Pink theme accent"
+                  title="Pink theme accent"></button>
               </div>
               <button
                 id="fullscreen-btn"
                 class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
-                title="Fullscreen">⛶</button
+                title="Fullscreen"
+                aria-label="Fullscreen">⛶</button
               >
             </div>
           </div>
-          <div class="flex items-center gap-1.5 px-5">
+          <div class="flex items-center gap-1.5 px-5 pb-2">
             <button
+              type="button"
+              aria-label="Decrease font size"
               class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
               >A−</button
             >
             <button
+              type="button"
+              aria-label="Increase font size"
               class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
               >A+</button
             >
             <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
           </div>
-          <div class="flex">
+          <div class="flex h-[380px] bg-black/40 border-t border-b border-surface overflow-hidden relative">
             <div
               id="line-nums"
-              class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3 whitespace-pre shrink-0"
-              style="min-width:2.5em; max-width:3.5em;"
+              class="w-12 shrink-0 h-full select-none overflow-hidden font-mono text-sm leading-6 text-right pr-3.5 py-3 text-zinc-500/80 bg-zinc-950/60 border-r border-white/5 whitespace-pre pointer-events-none tabular-nums"
+              style="line-height: 24px; font-size: 14px;"
             >
               1
             </div>
             <textarea
               id="analyzer-input"
-              rows="10"
+              aria-label="Word counter text input"
               placeholder="Start typing or paste your text here…"
-              class="flex-1 bg-transparent text-white placeholder-zinc-600 p-5 pb-16 resize-none focus:outline-none text-sm leading-relaxed"
+              class="flex-1 min-w-0 h-full bg-transparent text-zinc-100 placeholder:text-zinc-500 text-sm leading-6 px-4 py-3 focus:outline-none font-mono resize-none border-0 overflow-y-auto"
+              style="line-height: 24px; font-size: 14px;"
             ></textarea>
           </div>
-          <div id="reading-time" class="text-xs text-muted px-5 -mt-2"></div>
-          <div id="letter-freq" class="px-5 mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
-          <div class="absolute bottom-3 right-3 flex items-center gap-2">
-            <select
-              id="export-format"
-              class="bg-surface-2 border border-surface text-[10px] text-tertiary rounded-lg px-2 py-1.5"
-            >
-              <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option
-                value="html">HTML</option
+          <div class="flex items-center justify-between px-5 py-3 text-xs text-zinc-400">
+            <span id="reading-time"></span>
+            <div class="flex items-center gap-2">
+              <select
+                id="export-format"
+                aria-label="Export file format"
+                title="Export file format"
+                class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1"
               >
-            </select>
-            <button
-              id="clear-btn"
-              class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
-              >Clear</button
-            >
-            <button
+                <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option
+                  value="html">HTML</option
+                >
+              </select>
+              <button
+                id="clear-btn"
+                class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1 rounded-lg border border-surface-3 transition-all"
+                >Clear</button
+              >
+            </div>
+          </div>
+          <div id="letter-freq" tabindex="0" role="region" aria-label="Character frequency breakdown" class="px-5 pb-3 flex flex-wrap gap-1.5 hidden"></div>  <button
               id="share-btn"
               class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-[10px] font-medium px-2.5 py-1.5 rounded-lg border border-surface-3 transition-all"
               title="Copy share link">🔗</button
@@ -879,21 +897,36 @@ const useCases = [
     });
   })();
 
-  document.querySelector('.font-inc')?.addEventListener('click', () => {
+  const updateEditorFontSize = (newSize: number) => {
+    const clamped = Math.max(10, Math.min(24, newSize));
+    const lineHeight = Math.round(clamped * 1.7);
     document.querySelectorAll('textarea').forEach((t) => {
-      let s = parseInt(getComputedStyle(t).fontSize);
-      t.style.fontSize = Math.min(24, s + 2) + 'px';
+      t.style.fontSize = clamped + 'px';
+      t.style.lineHeight = lineHeight + 'px';
     });
+    const lineNums = document.getElementById('line-nums');
+    if (lineNums) {
+      lineNums.style.fontSize = clamped + 'px';
+      lineNums.style.lineHeight = lineHeight + 'px';
+    }
+    try {
+      localStorage.setItem('nt_fs', String(clamped));
+    } catch (e) {}
+  };
+
+  document.querySelector('.font-inc')?.addEventListener('click', () => {
+    const ta = document.getElementById('analyzer-input');
+    const s = parseInt(getComputedStyle(ta as HTMLElement).fontSize) || 14;
+    updateEditorFontSize(s + 2);
   });
   document.querySelector('.font-dec')?.addEventListener('click', () => {
-    document.querySelectorAll('textarea').forEach((t) => {
-      let s = parseInt(getComputedStyle(t).fontSize);
-      t.style.fontSize = Math.max(10, s - 2) + 'px';
-    });
+    const ta = document.getElementById('analyzer-input');
+    const s = parseInt(getComputedStyle(ta as HTMLElement).fontSize) || 14;
+    updateEditorFontSize(s - 2);
   });
   try {
     const s = localStorage.getItem('nt_fs');
-    if (s) document.querySelectorAll('textarea').forEach((t) => (t.style.fontSize = s + 'px'));
+    if (s) updateEditorFontSize(parseInt(s));
   } catch (e) {}
 
   document.addEventListener('keydown', (e) => {
@@ -974,7 +1007,7 @@ const useCases = [
       el.innerHTML = s
         .map(
           ([c, n]) =>
-            `<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n / m) * 80 + 10}%"></div><span class="text-muted">${n}</span></div>`,
+            `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white/5 border border-white/5 text-xs font-mono"><strong class="text-purple-400 uppercase">${c}</strong><span class="text-zinc-400">${n}</span></span>`,
         )
         .join('');
     });
