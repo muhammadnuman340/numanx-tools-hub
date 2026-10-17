@@ -177,13 +177,14 @@ const useCases = [
       <!-- Tool Interface -->
       <div class="mt-8 space-y-4">
         <!-- Toolbar -->
-        <div class="glass-card rounded-2xl p-3">
+        <div class="glass-card rounded-xl p-3">
           <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
+            <span class="text-xs font-semibold text-zinc-300">Tool</span>
             <button
               id="fullscreen-btn"
-              class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
-              title="Fullscreen">⛶</button
+              class="p-1.5 rounded-lg bg-surface-2 border border-surface text-zinc-300 hover:text-white hover:border-purple-500/40 transition-all text-xs"
+              title="Fullscreen"
+              aria-label="Toggle Fullscreen">⛶</button
             >
           </div>
           <div class="flex flex-wrap items-center gap-1">
@@ -213,9 +214,10 @@ const useCases = [
                 ) : (
                   <button
                     type="button"
-                    class={`toolbar-btn px-2.5 py-1.5 rounded-lg text-xs font-medium text-tertiary hover:text-white hover:bg-surface-3 transition-all active:scale-95 ${item.style || ''}`}
+                    class={`toolbar-btn px-2.5 py-1.5 rounded-lg text-xs font-medium text-zinc-300 hover:text-white hover:bg-surface-3 transition-all active:scale-95 ${item.style || ''}`}
                     data-cmd={item.cmd}
                     title={item.cmd.toUpperCase()}
+                    aria-label={`Insert ${item.cmd}`}
                   >
                     {item.label}
                   </button>
@@ -229,20 +231,20 @@ const useCases = [
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div>
             <div class="flex items-center justify-between mb-2">
-              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Markdown</label>
+              <label for="md-input" class="text-xs font-semibold text-zinc-300">Markdown</label>
               <div class="flex items-center gap-2">
-                <span id="md-stats" class="text-[10px] text-dim font-mono">0 words</span>
+                <span id="md-stats" class="text-xs text-zinc-400 font-mono">0 words</span>
                 <button
                   id="toggle-linenums-btn"
                   type="button"
-                  class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all"
+                  class="text-xs font-medium text-zinc-300 hover:text-white px-2.5 py-1.5 rounded-lg border border-surface hover:bg-surface-2 transition-all"
                   title="Toggle Line Numbers"
                   ># Numbers</button
                 >
                 <button
                   id="clear-btn"
                   type="button"
-                  class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all"
+                  class="text-xs font-medium text-zinc-300 hover:text-white px-2.5 py-1.5 rounded-lg border border-surface hover:bg-surface-2 transition-all"
                   >Clear</button
                 >
               </div>
@@ -250,15 +252,17 @@ const useCases = [
             <div class="flex items-center gap-1.5 mb-2">
               <button
                 type="button"
-                class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40"
+                aria-label="Decrease editor font size"
+                class="font-dec p-1.5 px-2 rounded-lg bg-surface-2 border border-surface text-xs text-zinc-300 hover:text-white hover:border-purple-500/40"
                 >A−</button
               >
               <button
                 type="button"
-                class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40"
+                aria-label="Increase editor font size"
+                class="font-inc p-1.5 px-2 rounded-lg bg-surface-2 border border-surface text-xs text-zinc-300 hover:text-white hover:border-purple-500/40"
                 >A+</button
               >
-              <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
+              <span class="text-xs text-zinc-400 ml-auto">Ctrl+Enter to process</span>
             </div>
             <div class="flex rounded-xl bg-black/40 border border-surface focus-within:border-purple-500 focus-within:ring-1 focus-within:ring-purple-500 transition-all overflow-hidden">
               <div
@@ -267,63 +271,78 @@ const useCases = [
               >1</div>
               <textarea
                 id="md-input"
+                aria-label="Markdown text input"
                 class="flex-1 min-w-0 w-full h-[500px] bg-transparent text-zinc-100 placeholder:text-zinc-500 text-sm px-4 py-3 focus:outline-none font-mono resize-y border-0"
                 placeholder="Type your markdown here..."
               ></textarea>
             </div>
-            <div id="reading-time" class="text-xs text-muted mt-1"></div>
-            <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
+            <div id="reading-time" class="text-xs text-zinc-400 mt-1"></div>
+            <div id="letter-freq" tabindex="0" role="region" aria-label="Character frequency breakdown" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
           </div>
           <div>
             <div class="flex items-center justify-between mb-2">
-              <label class="text-[10px] font-semibold text-muted uppercase tracking-wider">Preview</label>
+              <label class="text-xs font-semibold text-zinc-300">Preview</label>
               <div class="flex items-center gap-2">
-                <span id="usage-badge" class="text-xs text-muted"></span>
+                <span id="usage-badge" class="text-xs text-zinc-400"></span>
                 <button
                   id="share-btn"
-                  class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all"
-                  title="Share">🔗</button
+                  class="text-xs font-medium text-zinc-300 hover:text-white px-2.5 py-1.5 rounded-lg border border-surface hover:bg-surface-2 transition-all"
+                  title="Share"
+                  aria-label="Share Markdown content">🔗</button
                 >
                 <select
                   id="export-format"
-                  class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
+                  aria-label="Export file format"
+                  title="Export file format"
+                  class="bg-surface-2 border border-surface text-xs text-zinc-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-purple-500"
                 >
                   <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option
                   ><option value="html">HTML</option>
                 </select>
                 <button
                   id="copy-html-btn"
-                  class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all"
+                  class="text-xs font-medium text-zinc-300 hover:text-white px-2.5 py-1.5 rounded-lg border border-surface hover:bg-surface-2 transition-all"
                   >Copy HTML</button
                 >
                 <button
                   id="export-html-btn"
-                  class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all"
+                  class="text-xs font-medium text-zinc-300 hover:text-white px-2.5 py-1.5 rounded-lg border border-surface hover:bg-surface-2 transition-all"
                   >Export HTML</button
                 >
-                <div class="flex gap-1">
+                <div class="flex gap-1.5 items-center">
                   <button
-                    class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                    class="theme-swatch w-6 h-6 rounded-full border border-surface flex items-center justify-center transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     data-color="purple"
-                    style="background:#a855f7"></button>
+                    style="background:#a855f7"
+                    title="Purple preview accent"
+                    aria-label="Purple preview accent"></button>
                   <button
-                    class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                    class="theme-swatch w-6 h-6 rounded-full border border-surface flex items-center justify-center transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     data-color="blue"
-                    style="background:#3b82f6"></button>
+                    style="background:#3b82f6"
+                    title="Blue preview accent"
+                    aria-label="Blue preview accent"></button>
                   <button
-                    class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                    class="theme-swatch w-6 h-6 rounded-full border border-surface flex items-center justify-center transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-green-400"
                     data-color="green"
-                    style="background:#22c55e"></button>
+                    style="background:#22c55e"
+                    title="Green preview accent"
+                    aria-label="Green preview accent"></button>
                   <button
-                    class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
+                    class="theme-swatch w-6 h-6 rounded-full border border-surface flex items-center justify-center transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-pink-400"
                     data-color="pink"
-                    style="background:#ec4899"></button>
+                    style="background:#ec4899"
+                    title="Pink preview accent"
+                    aria-label="Pink preview accent"></button>
                 </div>
               </div>
             </div>
             <div
               id="md-preview"
-              class="w-full h-[500px] overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm text-zinc-200 prose prose-invert max-w-none"
+              role="region"
+              aria-label="Markdown Live Preview"
+              tabindex="0"
+              class="w-full h-[500px] overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm text-zinc-200 prose prose-invert max-w-none focus:outline-none focus:ring-1 focus:ring-purple-500"
             >
             </div>
           </div>
@@ -366,7 +385,7 @@ const useCases = [
       <!-- ─── CTA Section ─── -->
       <section class="mt-16 text-center">
         <div
-          class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10"
+          class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-xl p-8 md:p-10"
         >
           <h2 class="text-2xl md:text-3xl font-black tracking-tight">
             Start Writing
@@ -385,10 +404,10 @@ const useCases = [
               Start Writing
             </button>
             <a
-              href="/tools/lorem-ipsum/"
+              href="/tools/markdown-to-pdf/"
               class="px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-semibold text-sm transition-all border border-zinc-700"
             >
-              Try Lorem Ipsum Generator
+              Convert Markdown to PDF
             </a>
           </div>
         </div>
@@ -410,16 +429,29 @@ const useCases = [
     return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  function renderMarkdown(src: string): string {
+  function renderMarkdown(src: string, isExport: boolean = false): string {
     let html = '';
 
     // Split into blocks, preserving order
     const lines = src.split('\n');
     let inCodeBlock = false;
     let inTable = false;
+    let inUl = false;
+    let inOl = false;
     let tableRows: string[] = [];
     let codeContent: string[] = [];
     let codeLang = '';
+
+    function flushList() {
+      if (inUl) {
+        html += '</ul>\n';
+        inUl = false;
+      }
+      if (inOl) {
+        html += '</ol>\n';
+        inOl = false;
+      }
+    }
 
     function flushTable() {
       if (tableRows.length > 0) {
@@ -471,6 +503,7 @@ const useCases = [
       // Code block
       if (line.trim().startsWith('```')) {
         if (!inCodeBlock) {
+          flushList();
           flushTable();
           inCodeBlock = true;
           codeLang = line.trim().slice(3).trim();
@@ -490,6 +523,7 @@ const useCases = [
 
       // Table
       if (line.includes('|') && line.trim().startsWith('|')) {
+        flushList();
         inTable = true;
         tableRows.push(line);
         continue;
@@ -500,6 +534,8 @@ const useCases = [
 
       // Horizontal rule
       if (/^(-{3,}|\*{3,}|_{3,})\s*$/.test(line.trim())) {
+        flushList();
+        flushTable();
         html += '<hr class="border-white/10 my-4" />\n';
         continue;
       }
@@ -507,13 +543,20 @@ const useCases = [
       // Headings
       const hMatch = line.match(/^(#{1,6})\s+(.+)$/);
       if (hMatch) {
-        const level = hMatch[1].length;
-        html += `<h${level} class="font-bold text-white mt-5 mb-2 ${level <= 2 ? 'text-xl' : level === 3 ? 'text-lg' : 'text-base'}">${inlineMd(hMatch[2])}</h${level}>\n`;
+        flushList();
+        flushTable();
+        const rawLevel = hMatch[1].length;
+        // In the live page preview, map # -> h2, ## -> h3, etc. so the preview headings don't conflict with the page H1
+        const level = isExport ? rawLevel : Math.min(6, rawLevel + 1);
+        const sizeClasses = level <= 2 ? 'text-xl' : level === 3 ? 'text-lg' : 'text-base';
+        html += `<h${level} class="font-bold text-white mt-5 mb-2 ${sizeClasses}">${inlineMd(hMatch[2])}</h${level}>\n`;
         continue;
       }
 
       // Blockquote
       if (line.trim().startsWith('> ')) {
+        flushList();
+        flushTable();
         const content = line.trim().slice(2);
         html += `<blockquote class="border-l-2 border-purple-500/60 pl-4 my-2 text-zinc-300 italic bg-white/[0.02] py-1 rounded-r">${inlineMd(content)}</blockquote>\n`;
         continue;
@@ -522,27 +565,43 @@ const useCases = [
       // Unordered list
       const ulMatch = line.match(/^(\s*)[*\-+]\s+(.+)$/);
       if (ulMatch) {
-        html += `<li class="ml-4 list-disc text-zinc-200">${inlineMd(ulMatch[2])}</li>\n`;
+        flushTable();
+        if (inOl) flushList();
+        if (!inUl) {
+          html += '<ul class="list-disc list-inside my-2 space-y-1">\n';
+          inUl = true;
+        }
+        html += `<li class="ml-4 text-zinc-200">${inlineMd(ulMatch[2])}</li>\n`;
         continue;
       }
 
       // Ordered list
       const olMatch = line.match(/^(\s*)\d+\.\s+(.+)$/);
       if (olMatch) {
-        html += `<li class="ml-4 list-decimal text-zinc-200">${inlineMd(olMatch[2])}</li>\n`;
+        flushTable();
+        if (inUl) flushList();
+        if (!inOl) {
+          html += '<ol class="list-decimal list-inside my-2 space-y-1">\n';
+          inOl = true;
+        }
+        html += `<li class="ml-4 text-zinc-200">${inlineMd(olMatch[2])}</li>\n`;
         continue;
       }
 
       // Empty line
       if (line.trim() === '') {
+        flushList();
         html += '\n';
         continue;
       }
 
       // Regular paragraph
+      flushList();
+      flushTable();
       html += `<p class="my-1.5 text-zinc-200 leading-relaxed">${inlineMd(line)}</p>\n`;
     }
 
+    flushList();
     if (inCodeBlock) {
       const code = escapeHtml(codeContent.join('\n'));
       html += `<pre class="bg-zinc-950/80 border border-white/10 rounded-xl p-4 my-3 overflow-x-auto"><code class="text-sm text-zinc-200 font-mono">${code}</code></pre>\n`;
@@ -570,8 +629,8 @@ const useCases = [
   }
 
   function getHtmlDocument(): string {
-    const content = renderMarkdown(input.value);
-    return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Markdown Export</title><style>body{max-width:800px;margin:0 auto;padding:2rem;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;line-height:1.6;color:#1a1a2e;background:#fff}h1,h2,h3{color:#111}code{background:#f0f0f0;padding:0.2em 0.4em;border-radius:3px;font-size:0.9em}pre{background:#f5f5f5;padding:1rem;border-radius:8px;overflow-x:auto}pre code{background:none;padding:0}img{max-width:100%;border-radius:8px}blockquote{border-left:3px solid #7c3aed;padding-left:1rem;color:#555;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:0.5rem;text-align:left}th{background:#f5f5f5}</style></head><body>${content}</body></html>`;
+    const content = renderMarkdown(input.value, true);
+    return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Markdown Export</title><style>body{max-width:800px;margin:0 auto;padding:2rem;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;line-height:1.6;color:#1a1a2e;background:#fff}h1,h2,h3{color:#111}code{background:#f0f0f0;padding:0.2em 0.4em;border-radius:3px;font-size:0.9em}pre{background:#f5f5f5;padding:1rem;border-radius:8px;overflow-x:auto}pre code{background:none;padding:0}img{max-width:100%;border-radius:8px}blockquote{border-left:3px solid #7c3aed;padding-left:1rem;color:#555;margin:1rem 0}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{border:1px solid #ddd;padding:0.5rem;text-align:left}th{background:#f5f5f5}ul,ol{margin:1rem 0;padding-left:1.5rem}</style></head><body>${content}</body></html>`;
   }
 
   input.addEventListener('input', updatePreview);
