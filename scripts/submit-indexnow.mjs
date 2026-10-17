@@ -4,7 +4,7 @@ import path from 'node:path';
 const SITE_HOST = 'numanx-tools.pages.dev';
 const KEY = 'numanx2026indexnowkey8842';
 const KEY_LOCATION = `https://${SITE_HOST}/${KEY}.txt`;
-const SITEMAP_PATH = path.resolve('dist', 'sitemap-0.xml');
+const SITEMAP_PATH = path.resolve('dist', 'sitemap.xml');
 
 async function submitIndexNow() {
   console.log('📡 Starting Multi-Engine IndexNow AI Broadcasting...');
@@ -16,15 +16,15 @@ async function submitIndexNow() {
   }
 
   const sitemapXml = fs.readFileSync(SITEMAP_PATH, 'utf8');
-  const urlMatches = [...sitemapXml.matchAll(/<loc>(https:\/\/numanx-tools\.pages\.dev\/[^<]+)<\/loc>/g)];
+  const urlMatches = [...sitemapXml.matchAll(/<loc>(https:\/\/numanx-tools\.pages\.dev\/[^<]*)<\/loc>/g)];
   const urlList = urlMatches.map((m) => m[1]);
 
   if (urlList.length === 0) {
-    console.error('❌ No URLs matched in sitemap-0.xml.');
+    console.error('❌ No URLs matched in sitemap.xml.');
     process.exit(1);
   }
 
-  console.log(`✅ Discovered ${urlList.length} clean URLs in dist/sitemap-0.xml.`);
+  console.log(`✅ Discovered ${urlList.length} clean URLs in dist/sitemap.xml.`);
   console.log('🚀 Broadcasting batch to IndexNow endpoints (Bing, Copilot, Perplexity, OpenAI, DuckDuckGo)...\n');
 
   const payload = {

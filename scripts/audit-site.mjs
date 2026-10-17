@@ -38,10 +38,11 @@ console.log(`✅ Checked ${totalFilesChecked} source files for encoding integrit
 const robotsPath = path.join(PUBLIC_DIR, 'robots.txt');
 if (fs.existsSync(robotsPath)) {
   const robots = fs.readFileSync(robotsPath, 'utf8');
-  if (robots.includes('Google-Extended') && robots.includes('sitemap-index.xml')) {
-    console.log('✅ robots.txt properly configured with Google-Extended and sitemap-index.xml.');
+  if (robots.includes('Google-Extended') && robots.includes('Sitemap: https://numanx-tools.pages.dev/sitemap.xml')) {
+    console.log('✅ robots.txt properly configured with Google-Extended and single sitemap.xml.');
   } else {
-    console.warn('⚠️ robots.txt is missing Google-Extended or sitemap-index.xml reference.');
+    console.error('❌ robots.txt is missing Google-Extended or single sitemap.xml reference.');
+    totalErrors++;
   }
 } else {
   console.error('❌ robots.txt missing in public directory.');
@@ -143,6 +144,46 @@ function checkTrailingSlashIntegrity(dir) {
 checkTrailingSlashIntegrity(SRC_DIR);
 if (linkErrors === 0) {
   console.log('✅ Trailing Slash Canonicalization verified (0 internal redirect inlinks, 100% direct 200 OK links).');
+}
+
+// 7. Audit Single Sitemap Architecture (when dist/ exists)
+const DIST_DIR = path.resolve('dist');
+const distSitemap = path.join(DIST_DIR, 'sitemap.xml');
+const distSitemapIndex = path.join(DIST_DIR, 'sitemap-index.xml');
+const distSitemap0 = path.join(DIST_DIR, 'sitemap-0.xml');
+
+if (fs.existsSync(distSitemapIndex) || fs.existsSync(distSitemap0)) {
+  console.error('❌ Redundant multi-file sitemaps (sitemap-index.xml or sitemap-0.xml) detected in dist/.');
+  totalErrors++;
+}
+
+if (fs.existsSync(distSitemap)) {
+  const sitemapXml = fs.readFileSync(distSitemap, 'utf8');
+  const locMatches = [...sitemapXml.matchAll(/<loc>(https:\/\/numanx-tools\.pages\.dev\/[^<]*)<\/loc>/g)];
+  const urls = locMatches.map(m => m[1]);
+  const uniqueUrls = new Set(urls);
+
+  if (urls.length !== uniqueUrls.size) {
+    console.error(`❌ Duplicate URLs detected in sitemap.xml (${urls.length} total, ${uniqueUrls.size} unique).`);
+    totalErrors++;
+  }
+
+  const disallowed = ['/dashboard/', '/favorites/', '/search/', '/offline/', '/404', '/api/'];
+  let disallowedFound = 0;
+  for (const url of urls) {
+    if (disallowed.some(d => url.includes(d))) {
+      console.error(`❌ Disallowed URL detected in sitemap.xml: ${url}`);
+      disallowedFound++;
+      totalErrors++;
+    }
+  }
+
+  if (urls.length === 108 && urls.length === uniqueUrls.size && disallowedFound === 0) {
+    console.log(`✅ Single Sitemap Architecture verified (exactly 108 canonical URLs, 0 duplicates, 0 disallowed).`);
+  } else if (urls.length !== 108) {
+    console.error(`❌ Sitemap URL count mismatch: expected 108 URLs, found ${urls.length}.`);
+    totalErrors++;
+  }
 }
 
 console.log('\n----------------------------------------');

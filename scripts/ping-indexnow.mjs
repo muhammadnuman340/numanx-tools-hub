@@ -4,7 +4,7 @@ import path from 'node:path';
 const HOST = 'numanx-tools.pages.dev';
 const KEY = 'numanx2026indexnowkey8842';
 const KEY_LOCATION = `https://${HOST}/${KEY}.txt`;
-const SITEMAP_PATH = path.resolve('dist', 'sitemap-0.xml');
+const SITEMAP_PATH = path.resolve('dist', 'sitemap.xml');
 
 async function pingIndexNow() {
   console.log('🚀 Initiating IndexNow Instant Crawl Ping for NumanX Tools Hub...\n');
@@ -26,11 +26,11 @@ async function pingIndexNow() {
   }
 
   if (urls.length === 0) {
-    console.error('❌ No valid URLs extracted from sitemap-0.xml.');
+    console.error('❌ No valid URLs extracted from sitemap.xml.');
     process.exit(1);
   }
 
-  console.log(`📡 Extracted ${urls.length} indexable URLs from sitemap-0.xml.`);
+  console.log(`📡 Extracted ${urls.length} indexable URLs from sitemap.xml.`);
 
   const payload = {
     host: HOST,
