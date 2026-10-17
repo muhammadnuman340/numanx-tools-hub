@@ -186,16 +186,16 @@ const useCases = [
               title="Fullscreen">⛶</button
             >
           </div>
-          <div class="flex flex-wrap gap-1">
+          <div class="flex flex-wrap items-center gap-1">
             {
               [
                 { cmd: 'bold', label: 'B', style: 'font-bold' },
-                { cmd: 'italic', label: 'I', style: 'italic' },
+                { cmd: 'italic', label: 'I', style: 'italic font-serif' },
                 { cmd: 'strike', label: 'S', style: 'line-through' },
                 { cmd: '|' },
-                { cmd: 'h1', label: 'H1' },
-                { cmd: 'h2', label: 'H2' },
-                { cmd: 'h3', label: 'H3' },
+                { cmd: 'h1', label: 'H1', style: 'font-bold' },
+                { cmd: 'h2', label: 'H2', style: 'font-bold' },
+                { cmd: 'h3', label: 'H3', style: 'font-bold' },
                 { cmd: '|' },
                 { cmd: 'link', label: '🔗' },
                 { cmd: 'img', label: '🖼' },
@@ -207,13 +207,20 @@ const useCases = [
                 { cmd: 'hr', label: '—' },
                 { cmd: '|' },
                 { cmd: 'table', label: '⊞ Table' },
-              ]
-                .map((item) =>
-                  item.cmd === '|'
-                    ? `<span class="w-px h-6 bg-surface-3 mx-1 self-center"></span>`
-                    : `<button class="toolbar-btn px-2.5 py-1.5 rounded-lg text-xs font-medium text-tertiary hover:text-white hover:bg-surface-3 transition-all active:scale-95" data-cmd="${item.cmd}">${item.label}</button>`,
-                )
-                .join('')
+              ].map((item) =>
+                item.cmd === '|' ? (
+                  <span class="w-px h-5 bg-white/10 mx-1 self-center" />
+                ) : (
+                  <button
+                    type="button"
+                    class={`toolbar-btn px-2.5 py-1.5 rounded-lg text-xs font-medium text-tertiary hover:text-white hover:bg-surface-3 transition-all active:scale-95 ${item.style || ''}`}
+                    data-cmd={item.cmd}
+                    title={item.cmd.toUpperCase()}
+                  >
+                    {item.label}
+                  </button>
+                ),
+              )
             }
           </div>
         </div>
@@ -226,7 +233,15 @@ const useCases = [
               <div class="flex items-center gap-2">
                 <span id="md-stats" class="text-[10px] text-dim font-mono">0 words</span>
                 <button
+                  id="toggle-linenums-btn"
+                  type="button"
+                  class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all"
+                  title="Toggle Line Numbers"
+                  ># Numbers</button
+                >
+                <button
                   id="clear-btn"
+                  type="button"
                   class="text-[10px] font-medium text-muted hover:text-secondary px-2 py-1 rounded-lg border border-surface hover:bg-surface-2 transition-all"
                   >Clear</button
                 >
@@ -234,31 +249,27 @@ const useCases = [
             </div>
             <div class="flex items-center gap-1.5 mb-2">
               <button
+                type="button"
                 class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40"
                 >A−</button
               >
               <button
+                type="button"
                 class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40"
                 >A+</button
               >
               <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
             </div>
-            <div class="flex">
+            <div class="flex rounded-xl bg-black/40 border border-surface focus-within:border-purple-500 focus-within:ring-1 focus-within:ring-purple-500 transition-all overflow-hidden">
               <div
                 id="line-nums"
-                class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3"
-                style="min-width:2.5em"
-              >
-                1
-              </div>
+                class="w-12 shrink-0 select-none overflow-hidden font-mono text-sm leading-relaxed text-right pr-3 py-3 text-zinc-500 whitespace-pre pointer-events-none bg-white/[0.02] border-r border-white/5"
+              >1</div>
               <textarea
                 id="md-input"
-                class="flex-1 w-full h-[500px] bg-black/40 border border-surface text-primary text-sm px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all font-mono resize-y"
+                class="flex-1 min-w-0 w-full h-[500px] bg-transparent text-primary text-sm px-4 py-3 focus:outline-none font-mono resize-y border-0"
                 placeholder="Type your markdown here..."
-                ># Hello World Start typing **markdown** on the left, see the *rendered* preview on the right. ##
-                Features - Headings (H1-H6) - **Bold**, *italic*, ~~strikethrough~~ - [Links](https://example.com) -
-                Code blocks with `inline code` - Tables, lists, and more</textarea
-              >
+              ></textarea>
             </div>
             <div id="reading-time" class="text-xs text-muted mt-1"></div>
             <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
@@ -674,19 +685,40 @@ const useCases = [
     triggerToast('HTML file exported successfully!', 'success');
   });
 
+  const DEFAULT_CONTENT = `# Hello World
+
+Start typing **markdown** on the left, see the *rendered* preview on the right.
+
+## Features
+- Headings (H1-H6)
+- **Bold**, *italic*, ~~strikethrough~~
+- [Links](https://example.com)
+- Code blocks with \`inline code\`
+- Tables, lists, and more
+`;
+
   document.getElementById('clear-btn')?.addEventListener('click', () => {
     input.value = '';
     updatePreview();
+    const n = document.getElementById('line-nums');
+    if (n) n.textContent = '1';
     try {
       localStorage.removeItem('nt_md_content');
+      localStorage.removeItem('nt_draft_markdown-editor');
     } catch {}
   });
 
-  // Load saved content
+  // Load saved content or set clean default
   try {
     const saved = localStorage.getItem('nt_md_content');
-    if (saved) input.value = saved;
-  } catch {}
+    if (saved && saved.trim()) {
+      input.value = saved;
+    } else {
+      input.value = DEFAULT_CONTENT;
+    }
+  } catch {
+    input.value = DEFAULT_CONTENT;
+  }
   updatePreview();
 
   // Fullscreen toggle
@@ -796,21 +828,47 @@ const useCases = [
     rt.dispatchEvent(new Event('input'));
   }
 
-  // Feature 6: Line numbers
+  // Feature 6: Line numbers with toggle support
   (function () {
-    const li = document.getElementById('md-input');
-    if (li) {
-      const ul = () => {
-        const n = document.getElementById('line-nums');
-        if (n) n.textContent = Array.from({ length: li.value.split('\n').length }, (_, i) => i + 1).join('\n');
-      };
-      li.addEventListener('input', ul);
-      li.addEventListener('scroll', () => {
-        const n = document.getElementById('line-nums');
-        if (n) n.scrollTop = li.scrollTop;
-      });
-      ul();
-    }
+    const li = document.getElementById('md-input') as HTMLTextAreaElement | null;
+    const n = document.getElementById('line-nums');
+    const toggleBtn = document.getElementById('toggle-linenums-btn');
+    if (!li || !n) return;
+
+    let showLines = true;
+    try {
+      const saved = localStorage.getItem('nt_md_linenums');
+      if (saved !== null) showLines = saved === 'true';
+    } catch {}
+
+    const applyState = () => {
+      n.style.display = showLines ? 'block' : 'none';
+      if (toggleBtn) {
+        toggleBtn.textContent = showLines ? '# Numbers (On)' : '# Numbers (Off)';
+        toggleBtn.classList.toggle('text-purple-400', showLines);
+      }
+    };
+
+    const updateLineNums = () => {
+      const count = (li.value || '').split('\n').length;
+      n.textContent = Array.from({ length: Math.max(1, count) }, (_, i) => i + 1).join('\n');
+    };
+
+    toggleBtn?.addEventListener('click', () => {
+      showLines = !showLines;
+      applyState();
+      try {
+        localStorage.setItem('nt_md_linenums', String(showLines));
+      } catch {}
+    });
+
+    li.addEventListener('input', updateLineNums);
+    li.addEventListener('scroll', () => {
+      n.scrollTop = li.scrollTop;
+    });
+
+    applyState();
+    updateLineNums();
   })();
 
   // Feature 7: Sound effects
