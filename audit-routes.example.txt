@@ -1,0 +1,12 @@
+# Example route list for Omega Site Audit Pro (AUDIT_DISCOVERY=routes)
+# Replace these with routes that actually exist on your site.
+/
+/about/
+/contact/
+/tools/
+/tools/word-counter/
+/tools/age-calculator/
+/blog/
+/guides/
+/comparisons/
+/privacy-policy/

@@ -216,6 +216,62 @@ const builtToolSchema = toolSchema
       ...toolSchema,
     }
   : null;
+// Organization schema
+const organizationSchema = {
+  '@type': 'Organization',
+  '@id': `${orgUrl}/#organization`,
+  name: orgName,
+  url: orgUrl,
+  logo: { '@type': 'ImageObject', url: `${orgUrl}/favicon.svg` },
+  sameAs: [
+    'https://github.com/muhammadnuman340/numanx-tools-hub',
+    'https://x.com/numanxstudio',
+    'https://instagram.com/numanxstudio',
+    'https://facebook.com/numanxstudio',
+    'https://youtube.com/@numanxstudio',
+  ],
+  contactPoint: { '@type': 'ContactPoint', email: 'numanxstudio@gmail.com', contactType: 'customer service' },
+  address: { '@type': 'PostalAddress', addressLocality: 'Karachi', addressCountry: 'PK' },
+  foundingDate: '2024',
+  founder: { '@type': 'Person', name: 'Muhammad Numan Usmani' },
+};
+
+// WebPage schema
+const webpageSchema = {
+  '@type': 'WebPage',
+  '@id': siteUrl,
+  url: siteUrl,
+  name: pageTitle,
+  description: siteDesc,
+  inLanguage: 'en-US',
+  isPartOf: { '@id': `${orgUrl}/#website` },
+  ...(breadcrumbsSchema ? { breadcrumb: { '@id': `${siteUrl}#breadcrumb` } } : {}),
+  ...(builtToolSchema ? { mainEntity: { '@id': `${siteUrl}#tool` } } : {}),
+  ...(type === 'article' && builtArticleSchema ? { mainEntity: { '@id': `${siteUrl}#article` } } : {}),
+};
+
+const rawEntities = [
+  organizationSchema,
+  websiteSchema,
+  webpageSchema,
+  breadcrumbsSchema ? { ...breadcrumbsSchema, '@id': `${siteUrl}#breadcrumb` } : null,
+  faqSchema,
+  howtoSchema,
+  builtGuideSchema,
+  itemListSchema,
+  builtToolSchema ? { ...builtToolSchema, '@id': `${siteUrl}#tool` } : null,
+  type === 'article' && builtArticleSchema ? { ...builtArticleSchema, '@id': `${siteUrl}#article` } : null,
+].filter(Boolean);
+
+const graphEntities = rawEntities.map((entity: any) => {
+  const { '@context': _context, ...cleanEntity } = entity;
+  return cleanEntity;
+});
+
+const schemaGraph = {
+  '@context': 'https://schema.org',
+  '@graph': graphEntities,
+};
 ---
 
 <meta charset="UTF-8" />
@@ -274,67 +330,6 @@ const builtToolSchema = toolSchema
 <meta name="twitter:site" content="@numanxstudio" />
 <meta name="twitter:creator" content="@numanxstudio" />
 
-<!-- Organization Schema -->
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: orgName,
-    url: orgUrl,
-    logo: { '@type': 'ImageObject', url: `${orgUrl}/favicon.svg` },
-    sameAs: [
-      'https://github.com/muhammadnuman340/numanx-tools-hub',
-      'https://x.com/numanxstudio',
-      'https://instagram.com/numanxstudio',
-      'https://facebook.com/numanxstudio',
-      'https://youtube.com/@numanxstudio',
-    ],
-    contactPoint: { '@type': 'ContactPoint', email: 'numanxstudio@gmail.com', contactType: 'customer service' },
-    address: { '@type': 'PostalAddress', addressLocality: 'Karachi', addressCountry: 'PK' },
-    foundingDate: '2024',
-    founder: { '@type': 'Person', name: 'Muhammad Numan Usmani' },
-  })}
-/>
+<!-- Unified Schema.org @graph Stack -->
+<script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
 
-<!-- WebSite Schema -->
-<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
-
-<!-- WebPage Schema -->
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name: pageTitle,
-    description: siteDesc,
-    url: siteUrl,
-    inLanguage: 'en-US',
-    isPartOf: { '@type': 'WebSite', url: orgUrl },
-  })}
-/>
-
-<!-- BreadcrumbList Schema -->
-{breadcrumbsSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsSchema)} />}
-
-<!-- FAQ Schema -->
-{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
-
-<!-- HowTo Schema -->
-{howtoSchema && <script type="application/ld+json" set:html={JSON.stringify(howtoSchema)} />}
-
-<!-- Guide/Article Schema -->
-{builtGuideSchema && <script type="application/ld+json" set:html={JSON.stringify(builtGuideSchema)} />}
-
-<!-- ItemList Schema -->
-{itemListSchema && <script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />}
-
-<!-- Tool Schema -->
-{builtToolSchema && <script type="application/ld+json" set:html={JSON.stringify(builtToolSchema)} />}
-
-<!-- Article Schema -->
-{
-  type === 'article' && builtArticleSchema && (
-    <script type="application/ld+json" set:html={JSON.stringify(builtArticleSchema)} />
-  )
-}

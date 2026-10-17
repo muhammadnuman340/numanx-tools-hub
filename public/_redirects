@@ -1,0 +1,5 @@
+# Permanent 301 Redirects for Retired and Renamed Tools
+/tools/cricket-stat-tracker/ /tools/strike-rate-average-calculator/ 301
+/tools/cricket-stat-tracker /tools/strike-rate-average-calculator/ 301
+/tools/text-summarizer/ /tools/ai-text-summarizer/ 301
+/tools/text-summarizer /tools/ai-text-summarizer/ 301

@@ -1,9 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /api/
-Disallow: /search/
-Disallow: /dashboard/
-Disallow: /favorites/
 
 User-agent: Google-Extended
 Allow: /
