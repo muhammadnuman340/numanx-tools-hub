@@ -45,10 +45,12 @@ const {
   <head>
     <script>
       !(function () {
-        var t =
-          localStorage.getItem('theme') ||
-          (window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark');
-        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.setAttribute('data-theme', 'dark');
+        try {
+          if (localStorage.getItem('theme') === 'light') {
+            localStorage.setItem('theme', 'dark');
+          }
+        } catch (e) {}
       })();
     </script>
     <meta charset="UTF-8" />
