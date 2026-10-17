@@ -165,59 +165,79 @@ const schema = {
               <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
             <div class="flex items-center gap-2">
-              <div class="flex gap-1">
+              <div class="flex gap-1" role="group" aria-label="Editor color theme">
                 <button
+                  type="button"
+                  aria-label="Set purple theme"
                   class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
                   data-color="purple"
                   style="background:#a855f7"></button>
                 <button
+                  type="button"
+                  aria-label="Set blue theme"
                   class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
                   data-color="blue"
                   style="background:#3b82f6"></button>
                 <button
+                  type="button"
+                  aria-label="Set green theme"
                   class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
                   data-color="green"
                   style="background:#22c55e"></button>
                 <button
+                  type="button"
+                  aria-label="Set pink theme"
                   class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
                   data-color="pink"
                   style="background:#ec4899"></button>
               </div>
               <button
+                type="button"
                 id="fullscreen-btn"
                 class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
-                title="Fullscreen">⛶</button
+                title="Fullscreen"
+                aria-label="Toggle fullscreen">⛶</button
               >
             </div>
           </div>
-          <div class="flex items-center gap-1.5 mb-2">
-            <button
-              class="font-dec p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
-              >A−</button
-            >
-            <button
-              class="font-inc p-1 px-1.5 rounded bg-surface-2 border border-surface text-xs text-tertiary hover:text-white hover:border-purple-500/40 transition-all"
-              >A+</button
-            >
-            <span class="text-xs text-muted ml-auto">Ctrl+Enter to process</span>
+          <div class="flex items-center justify-between min-h-[32px] mb-2">
+            <label for="input-text" class="text-xs font-semibold text-zinc-300">Input Text</label>
+            <div class="flex items-center gap-1.5">
+              <div class="flex items-center gap-0.5 bg-surface-2 p-0.5 rounded-lg border border-surface">
+                <button
+                  type="button"
+                  aria-label="Decrease font size"
+                  class="font-dec px-2 py-0.5 rounded text-xs font-medium text-zinc-300 hover:text-white hover:bg-white/10 transition-all"
+                  >A−</button
+                >
+                <button
+                  type="button"
+                  aria-label="Increase font size"
+                  class="font-inc px-2 py-0.5 rounded text-xs font-medium text-zinc-300 hover:text-white hover:bg-white/10 transition-all"
+                  >A+</button
+                >
+              </div>
+              <span class="text-xs text-muted ml-2">Ctrl+Enter to process</span>
+            </div>
           </div>
-          <div class="flex">
+          <div class="flex h-[200px] rounded-xl bg-black/40 border border-surface focus-within:border-purple-500 focus-within:ring-1 focus-within:ring-purple-500 transition-all overflow-hidden relative">
             <div
               id="line-nums"
-              class="text-xs text-muted text-right pr-2 select-none overflow-hidden font-mono leading-relaxed pt-3 whitespace-pre shrink-0"
-              style="min-width:2.5em; max-width:3.5em;"
+              class="w-12 shrink-0 h-full select-none overflow-hidden font-mono text-sm leading-6 text-right pr-3.5 py-3 text-zinc-500/80 bg-zinc-950/60 border-r border-white/5 whitespace-pre pointer-events-none tabular-nums"
+              style="line-height: 24px; font-size: 14px;"
             >
               1
             </div>
             <textarea
               id="input-text"
-              rows="8"
               placeholder="Paste your article or text here..."
-              class="flex-1 bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-none focus:outline-none focus:border-violet-500/60 transition-all"
+              aria-label="Article or text to summarize"
+              class="flex-1 min-w-0 h-full bg-transparent text-zinc-100 placeholder:text-zinc-500 text-sm leading-6 px-4 py-3 focus:outline-none font-mono resize-none border-0 overflow-y-auto"
+              style="line-height: 24px; font-size: 14px;"
             ></textarea>
           </div>
-          <div id="reading-time" class="text-xs text-muted mt-1"></div>
-          <div id="letter-freq" class="mt-2 space-y-0.5 max-h-24 overflow-y-auto hidden"></div>
+          <div id="reading-time" class="text-xs text-muted mt-2"></div>
+          <div id="letter-freq" class="mt-2 flex flex-wrap gap-1.5 hidden" role="region" aria-label="Character frequency breakdown"></div>
           <div class="flex items-center gap-4">
             <div class="flex-1">
               <label class="text-xs text-dim block mb-1">Compression: <span id="compression-label">30%</span></label>
@@ -240,6 +260,7 @@ const schema = {
             id="output-text"
             rows="6"
             readonly
+            aria-label="Generated summary"
             placeholder="Your summary will appear here..."
             class="w-full bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-none focus:outline-none transition-all"
           ></textarea>
@@ -636,21 +657,36 @@ const schema = {
     });
   })();
 
-  document.querySelector('.font-inc')?.addEventListener('click', () => {
+  const updateEditorFontSize = (newSize: number) => {
+    const clamped = Math.max(10, Math.min(24, newSize));
+    const lineHeight = Math.round(clamped * 1.7);
     document.querySelectorAll('textarea').forEach((t) => {
-      let s = parseInt(getComputedStyle(t).fontSize);
-      t.style.fontSize = Math.min(24, s + 2) + 'px';
+      t.style.fontSize = clamped + 'px';
+      t.style.lineHeight = lineHeight + 'px';
     });
+    const lineNums = document.getElementById('line-nums');
+    if (lineNums) {
+      lineNums.style.fontSize = clamped + 'px';
+      lineNums.style.lineHeight = lineHeight + 'px';
+    }
+    try {
+      localStorage.setItem('nt_fs', String(clamped));
+    } catch (e) {}
+  };
+
+  document.querySelector('.font-inc')?.addEventListener('click', () => {
+    const firstArea = document.querySelector('textarea');
+    const cur = firstArea ? parseInt(getComputedStyle(firstArea).fontSize) : 14;
+    updateEditorFontSize(cur + 2);
   });
   document.querySelector('.font-dec')?.addEventListener('click', () => {
-    document.querySelectorAll('textarea').forEach((t) => {
-      let s = parseInt(getComputedStyle(t).fontSize);
-      t.style.fontSize = Math.max(10, s - 2) + 'px';
-    });
+    const firstArea = document.querySelector('textarea');
+    const cur = firstArea ? parseInt(getComputedStyle(firstArea).fontSize) : 14;
+    updateEditorFontSize(cur - 2);
   });
   try {
     const s = localStorage.getItem('nt_fs');
-    if (s) document.querySelectorAll('textarea').forEach((t) => (t.style.fontSize = s + 'px'));
+    if (s) updateEditorFontSize(parseInt(s));
   } catch (e) {}
 
   document.addEventListener('keydown', (e) => {
@@ -712,26 +748,26 @@ const schema = {
     updateLN();
   }
 
-  const lfInput = document.getElementById('input-text');
+  const lfInput = document.getElementById('input-text') as HTMLTextAreaElement | null;
   if (lfInput) {
     lfInput.addEventListener('input', () => {
       const t = lfInput.value.toLowerCase().replace(/[^a-z]/g, '');
+      const el = document.getElementById('letter-freq');
+      if (!el) return;
       if (!t) {
-        document.getElementById('letter-freq').classList.add('hidden');
+        el.classList.add('hidden');
         return;
       }
-      const f = {};
+      const f: Record<string, number> = {};
       for (const c of t) f[c] = (f[c] || 0) + 1;
       const s = Object.entries(f)
         .sort((a, b) => b[1] - a[1])
         .slice(0, 8);
-      const m = s[0] ? s[0][1] : 1;
-      const el = document.getElementById('letter-freq');
       el.classList.remove('hidden');
       el.innerHTML = s
         .map(
           ([c, n]) =>
-            `<div class="flex items-center gap-1.5 text-xs"><span class="w-3 text-center font-mono text-white">${c}</span><div class="h-2 rounded-full bg-purple-500/50" style="width:${(n / m) * 80 + 10}%"></div><span class="text-muted">${n}</span></div>`,
+            `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white/5 border border-white/5 text-xs font-mono"><strong class="text-purple-400 uppercase">${c}</strong><span class="text-zinc-400">${n}</span></span>`
         )
         .join('');
     });
