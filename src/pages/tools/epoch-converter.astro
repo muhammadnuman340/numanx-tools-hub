@@ -104,7 +104,7 @@ const useCases = [
 ---
 
 <MainLayout
-  title="Unix Epoch Timestamp to UTC/Local Date Converter (Seconds, Milliseconds & ISO-8601) | NumanX Tools"
+  title="Unix Epoch Converter — Seconds, ms & ISO-8601 | NumanX"
   description="Convert Unix timestamps in seconds and milliseconds into human-readable UTC and local dates and ISO-8601 strings. 100% free and client-side."
   keywords="unix epoch timestamp converter, seconds to date, milliseconds to iso 8601, timestamp to utc, epoch converter online"
   toolSchema={ecSchema}
@@ -185,7 +185,7 @@ const useCases = [
                     id="input-timestamp-val"
                     type="number"
                     placeholder="e.g. 1718192345"
-                    class="flex-1 bg-surface-1 text-white border border-surface-2 rounded-xl px-4 py-3 text-sm font-mono focus:outline-none focus:border-rose-500/50"
+                    class="flex-1 bg-surface-1 text-white border border-surface-2 rounded-xl px-4 py-3 text-sm font-mono focus:outline-none focus:border-rose-500/50" aria-label="Unix timestamp"
                   />
                   <button
                     id="fill-current-btn"
@@ -244,7 +244,7 @@ const useCases = [
                     id="date-yr"
                     type="number"
                     value="2026"
-                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50"
+                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50" aria-label="Year"
                   />
                 </div>
                 <div>
@@ -255,7 +255,7 @@ const useCases = [
                     value="6"
                     min="1"
                     max="12"
-                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50"
+                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50" aria-label="Month"
                   />
                 </div>
                 <div>
@@ -266,7 +266,7 @@ const useCases = [
                     value="12"
                     min="1"
                     max="31"
-                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50"
+                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50" aria-label="Day"
                   />
                 </div>
               </div>
@@ -280,7 +280,7 @@ const useCases = [
                     value="4"
                     min="0"
                     max="23"
-                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50"
+                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50" aria-label="Hour"
                   />
                 </div>
                 <div>
@@ -291,7 +291,7 @@ const useCases = [
                     value="20"
                     min="0"
                     max="59"
-                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50"
+                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50" aria-label="Minute"
                   />
                 </div>
                 <div>
@@ -302,7 +302,7 @@ const useCases = [
                     value="0"
                     min="0"
                     max="59"
-                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50"
+                    class="w-full bg-surface-1 text-white border border-surface-2 rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none focus:border-rose-500/50" aria-label="Second"
                   />
                 </div>
               </div>

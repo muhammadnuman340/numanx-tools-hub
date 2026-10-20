@@ -14,7 +14,7 @@ import process from 'node:process';
 const VERSION = '3.0.0';
 const SITE_URL = normalizeOrigin(process.env.SITE_URL || 'http://localhost:3000');
 const CONCURRENCY = intEnv('AUDIT_CONCURRENCY', 4, 1, 16);
-const TIMEOUT_MS = intEnv('AUDIT_TIMEOUT_MS', 20000, 1000, 120000);
+const TIMEOUT_MS = intEnv('AUDIT_TIMEOUT_MS', 30000, 1000, 120000);
 const MAX_PAGES = intEnv('AUDIT_MAX_PAGES', 1000, 1, 20000);
 const CRAWL_DEPTH = intEnv('AUDIT_CRAWL_DEPTH', 5, 0, 30);
 const RETRIES = intEnv('AUDIT_RETRIES', 1, 0, 5);

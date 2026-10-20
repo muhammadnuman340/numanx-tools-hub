@@ -1,0 +1,18 @@
+{
+  "name": "omega-site-audit-pro-universal-v4",
+  "version": "4.0.0",
+  "private": true,
+  "description": "Universal, evidence-based website audit starter kit with local reports and resource-aware crawling.",
+  "type": "module",
+  "engines": { "node": ">=20.0.0" },
+  "scripts": {
+    "audit": "node scripts/audit-site.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "puppeteer": "^24.0.0"
+  },
+  "optionalDependencies": {
+    "lighthouse": "^12.0.0"
+  }
+}

@@ -118,8 +118,8 @@ const schema = {
 ---
 
 <MainLayout
-  title="Dual-Engine Sentiment Analyzer — AFINN-165 Valence & WebGPU DistilBERT SST-2 | NumanX Tools"
-  description="Analyze text sentiment with Dual-Engine precision (AFINN-165 valence heuristics + local WebGPU DistilBERT neural classification). Detect emotions and sentiment scores with 100% privacy."
+  title="Sentiment Analyzer — AFINN & WebGPU AI | NumanX"
+  description="Analyze sentiment with AFINN-165 heuristics and a local WebGPU model. Get scores and emotion insights with 100% privacy."
   keywords="dual engine sentiment analyzer, afinn 165 sentiment, distilbert sst2 webgpu, emotion detection online, sentiment analysis free"
   toolSchema={schema}
   faq={faqItems}
@@ -232,7 +232,7 @@ const schema = {
           >
           <div class="flex gap-2">
             <select
-              id="export-format"
+              id="export-format" aria-label="Export file format"
               class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
             >
               <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option

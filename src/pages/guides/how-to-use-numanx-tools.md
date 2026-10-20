@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/BlogLayout.astro
 title: 'The Ultimate Guide to Using NumanX Tools as a Web App'
-description: 'Master the NumanX Tools platform. A comprehensive, step-by-step guide to installing the PWA, unlocking offline capabilities, zero-server privacy, and advanced keyboard shortcuts.'
+description: 'Learn how to install the NumanX Tools PWA, work offline, protect your privacy and use keyboard shortcuts.'
 date: 'June 17, 2026'
 author: 'NumanX Studio'
 category: 'Platform'

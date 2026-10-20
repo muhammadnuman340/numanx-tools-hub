@@ -101,7 +101,7 @@ const useCases = [
 ---
 
 <MainLayout
-  title="UTM Builder - Generate Google Analytics Tracking URLs"
+  title="UTM Builder — Campaign Tracking URL Generator | NumanX"
   description="Easily add UTM parameters to your URLs for accurate Google Analytics tracking. Free online UTM link builder."
   keywords="utm builder, utm generator, tracking url builder, google analytics utm, url builder"
   toolSchema={schema}
@@ -137,7 +137,7 @@ const useCases = [
                 id="param-url"
                 type="url"
                 class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
-                placeholder="https://example.com"
+                placeholder="https://example.com" aria-label="Website URL"
               />
             </div>
             <div>
@@ -146,7 +146,7 @@ const useCases = [
                 id="param-source"
                 type="text"
                 class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
-                placeholder="google, newsletter, facebook"
+                placeholder="google, newsletter, facebook" aria-label="Campaign source"
               />
             </div>
             <div>
@@ -155,7 +155,7 @@ const useCases = [
                 id="param-medium"
                 type="text"
                 class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
-                placeholder="cpc, banner, email"
+                placeholder="cpc, banner, email" aria-label="Campaign medium"
               />
             </div>
             <div>
@@ -164,7 +164,7 @@ const useCases = [
                 id="param-campaign"
                 type="text"
                 class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
-                placeholder="spring_sale"
+                placeholder="spring_sale" aria-label="Campaign name"
               />
             </div>
             <div>
@@ -173,7 +173,7 @@ const useCases = [
                 id="param-term"
                 type="text"
                 class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
-                placeholder="running+shoes"
+                placeholder="running+shoes" aria-label="Campaign term"
               />
             </div>
             <div>
@@ -182,7 +182,7 @@ const useCases = [
                 id="param-content"
                 type="text"
                 class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
-                placeholder="logolink, textlink"
+                placeholder="logolink, textlink" aria-label="Campaign content"
               />
             </div>
           </div>
@@ -193,7 +193,7 @@ const useCases = [
                 id="result-url"
                 class="w-full flex-1 min-h-[150px] px-4 py-3 rounded-xl border border-surface-2 bg-surface text-emerald-400 text-sm focus:outline-none transition-all resize-none break-all"
                 readonly
-                placeholder="Your generated URL will appear here..."
+                placeholder="Your generated URL will appear here..." aria-label="Generated tracking URL"
               ></textarea>
               <button
                 id="copy-btn"

@@ -9,7 +9,35 @@ interface Props {
   slug?: string;
 }
 const { title, gradient, desc, badge = 'Free Online Tool', slug } = Astro.props;
+const toolDisplayName = `${title} ${gradient}`.trim();
 ---
+
+<div class="w-full mb-8 text-left">
+  <nav aria-label="Breadcrumb" class="space-y-2">
+    <ol class="flex items-center gap-1.5 text-xs sm:text-sm text-zinc-400">
+      <li>
+        <a href="/" class="hover:text-white transition-colors">Home</a>
+      </li>
+      <li class="text-zinc-600 select-none" aria-hidden="true">&gt;</li>
+      <li>
+        <a href="/tools/" class="hover:text-white transition-colors">Tools</a>
+      </li>
+      <li class="text-zinc-600 select-none" aria-hidden="true">&gt;</li>
+      <li class="text-zinc-200 font-semibold truncate" aria-current="page">
+        {toolDisplayName}
+      </li>
+    </ol>
+    <div>
+      <a
+        href="/tools/"
+        class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-zinc-300 hover:text-white transition-colors group"
+      >
+        <span class="transition-transform group-hover:-translate-x-1" aria-hidden="true">&larr;</span>
+        <span>All Tools</span>
+      </a>
+    </div>
+  </nav>
+</div>
 
 <div class="text-center mb-8 reveal-text">
   <div

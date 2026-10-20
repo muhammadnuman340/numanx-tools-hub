@@ -97,7 +97,7 @@ const useCases = [
 ---
 
 <MainLayout
-  title="WCAG 2.1 / 3.0 Color Contrast Checker — AA & AAA Accessibility Tester | NumanX Tools"
+  title="WCAG Color Contrast Checker — AA & AAA | NumanX"
   description="Check color contrast ratios for WCAG AA/AAA compliance. Enter foreground and background hex colors to verify accessibility."
   keywords="wcag color contrast checker, color contrast checker, wcag contrast, accessibility tester, aa aaa contrast checker, contrast ratio"
   toolSchema={schema}
@@ -159,7 +159,7 @@ const useCases = [
                 type="text"
                 value="#ffffff"
                 maxlength="7"
-                class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-violet-400/50 focus:outline-none transition-all uppercase"
+                class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-violet-400/50 focus:outline-none transition-all uppercase" aria-label="Foreground color"
               /><div id="fg-preview" class="mt-2 h-12 rounded-xl border border-surface-3" style="background:#ffffff">
               </div>
             </div>
@@ -169,7 +169,7 @@ const useCases = [
                 type="text"
                 value="#000000"
                 maxlength="7"
-                class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-violet-400/50 focus:outline-none transition-all uppercase"
+                class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-violet-400/50 focus:outline-none transition-all uppercase" aria-label="Background color"
               /><div id="bg-preview" class="mt-2 h-12 rounded-xl border border-surface-3" style="background:#000000">
               </div>
             </div>

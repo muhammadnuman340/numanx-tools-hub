@@ -33,7 +33,7 @@ const schema = {
 ---
 
 <MainLayout
-  title="Economy Rate Calculator - Cricket Bowling Economy Calculator"
+  title="Cricket Economy Rate Calculator | NumanX"
   description="Calculate cricket bowling economy rate instantly. Enter runs conceded and overs bowled to get your economy rate."
   keywords="economy rate calculator, cricket economy rate, bowling economy, cricket calculator"
   toolSchema={schema}
@@ -96,7 +96,7 @@ const schema = {
             step="1"
             value="0"
             class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-400/50 focus:outline-none transition-all mb-4"
-            placeholder="e.g. 42"
+            placeholder="e.g. 42" aria-label="Runs conceded"
           />
           <label class="block text-xs font-medium text-tertiary mb-1.5">Overs Bowled (e.g. 7.3)</label>
           <input
@@ -106,7 +106,7 @@ const schema = {
             step="0.1"
             value="0"
             class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-400/50 focus:outline-none transition-all mb-4"
-            placeholder="e.g. 7.3"
+            placeholder="e.g. 7.3" aria-label="Overs bowled"
           />
           <button
             id="calculate-btn"

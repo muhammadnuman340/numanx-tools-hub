@@ -50,7 +50,7 @@ const schema = {
 ---
 
 <MainLayout
-  title="Free Online JSON Formatter, Validator & Minifier — 100% Client-Side | NumanX Tools"
+  title="JSON Formatter, Validator & Minifier | NumanX"
   description="Format, validate, and minify JSON data online with syntax highlighting, error detection, and one-click copy. Free developer tool with zero server uploads."
   keywords="free online json formatter, json formatter, json validator, json beautifier, json minifier, format json online, developer tools"
   toolSchema={schema}
@@ -125,7 +125,7 @@ const schema = {
           <select
             id="indent-size"
             class="bg-surface-2 hover:bg-surface-3 border border-surface text-secondary hover:text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-all"
-            title="Indentation Size"
+            title="Indentation Size" aria-label="Indentation size"
           >
             <option value="2">2 Spaces</option>
             <option value="4">4 Spaces</option>
@@ -152,7 +152,7 @@ const schema = {
             title="Copy share link">🔗</button
           >
           <select
-            id="export-format"
+            id="export-format" aria-label="Export file format"
             class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5 hidden"
           >
             <option value="json">JSON</option>

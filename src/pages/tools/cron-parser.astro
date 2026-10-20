@@ -101,7 +101,7 @@ const useCases = [
 ---
 
 <MainLayout
-  title="Cron Parser - Translate Cron Expressions to English"
+  title="Cron Parser — Cron Expressions in Plain English | NumanX"
   description="Translate standard 5-part Cron strings into human-readable text instantly. Free, fast, and secure client-side tool."
   keywords="cron parser, cron to english, cronstrue, cron expression, cron translator"
   toolSchema={schema}
@@ -136,7 +136,7 @@ const useCases = [
             type="text"
             class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-lg font-mono text-center focus:border-purple-500/50 focus:outline-none transition-all mb-6"
             placeholder="* * * * *"
-            value="0 0 * * *"
+            value="0 0 * * *" aria-label="Cron expression"
           />
           <div class="p-6 bg-surface-1 border border-surface-2 rounded-xl text-center min-h-[100px] flex items-center justify-center">
              <p id="result-text" class="text-xl md:text-2xl font-medium text-emerald-400">Every day at midnight</p>

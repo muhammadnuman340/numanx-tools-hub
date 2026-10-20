@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /favorites/
-Disallow: /search/
-
-Sitemap: https://numanx-tools.pages.dev/sitemap.xml

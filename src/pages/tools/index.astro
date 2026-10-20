@@ -17,7 +17,7 @@ const categories = ['All', ...categoryInfos.map((c) => categoryMap[c.id] || c.ti
 
 <MainLayout
   title="Free Online Tools - NumanX Tools"
-  description="Free online tools for image conversion, text analysis, QR codes, cricket calculators, creator utilities, and productivity. Fast, private, browser-based. No sign-up required."
+  description="Free browser-based tools for image conversion, text analysis, QR codes, cricket and productivity. No sign-up needed."
   keywords="free online tools, image compressor, qr code generator, word counter, cricket calculator, password generator, hashtag generator, age calculator, png to webp, jpg to png, image resizer, online utilities free, browser tools no signup, productivity tools, best free online tools"
   canonical="https://numanx-tools.pages.dev/tools/"
   breadcrumbs={[
@@ -27,6 +27,19 @@ const categories = ['All', ...categoryInfos.map((c) => categoryMap[c.id] || c.ti
 >
   <main class="min-h-screen pt-8 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-7xl mx-auto">
+      <!-- Breadcrumb Navigation -->
+      <nav aria-label="Breadcrumb" class="mb-6">
+        <ol class="flex items-center gap-1.5 text-xs sm:text-sm text-zinc-400">
+          <li>
+            <a href="/" class="hover:text-white transition-colors">Home</a>
+          </li>
+          <li class="text-zinc-600 select-none" aria-hidden="true">&gt;</li>
+          <li class="text-zinc-200 font-semibold" aria-current="page">
+            Tools
+          </li>
+        </ol>
+      </nav>
+
       <div class="text-center mb-12">
         <div
           class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-surface bg-surface-1 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6"
@@ -61,7 +74,7 @@ const categories = ['All', ...categoryInfos.map((c) => categoryMap[c.id] || c.ti
             type="search"
             placeholder="Search tools..."
             class="w-full bg-[#0a0a0c]/80 text-white placeholder-zinc-500 pl-11 pr-24 py-3.5 rounded-2xl border border-white/5 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 transition-all text-sm shadow-inner"
-            autocomplete="off"
+            autocomplete="off" aria-label="Search tools"
           />
           <div class="absolute right-3 flex items-center gap-1.5 pointer-events-none">
             <kbd

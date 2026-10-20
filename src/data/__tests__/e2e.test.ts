@@ -90,14 +90,14 @@ describe('NumanX Tools Hub - E2E Build Structural Validation', () => {
 
   // Blog Page assertions (13 assertions)
   describe('Blog Page (blog/index.astro)', () => {
-    it('should satisfy spotlight banner, floating search, category pills, and 3D grid layout', () => {
+    it('should satisfy search, category pills, post grid, and newsletter layout', () => {
       const html = readHtml('dist/blog/index.html');
 
-      // Spotlight banner
-      expect(html).toContain('card-spotlight');
-      expect(html).toContain('Read Article');
+      // Page heading and post grid
+      expect(html).toContain('id="cards-container-blog"');
+      expect(html).toContain('post-card');
 
-      // Search components & KBD placeholder/hints
+      // Search components
       expect(html).toContain('id="search-input"');
       expect(html).toContain('placeholder="Search articles..."');
       expect(html).toContain('id="search-clear"');
@@ -105,15 +105,13 @@ describe('NumanX Tools Hub - E2E Build Structural Validation', () => {
 
       // Category pills
       expect(html).toContain('cat-btn');
-      expect(html).toContain('bg-[#0a0a0c]/80');
-      expect(html).toContain('text-zinc-400');
 
-      // 3D Grid
-      expect(html).toContain('id="cards-container-blog"');
-      expect(html).toContain('preserve-3d');
-      expect(html).toContain('post-card');
+      // Newsletter CTA
+      expect(html).toContain('blog-newsletter-form');
+      expect(html).toContain('Stay');
+      expect(html).toContain('Subscribe');
 
-      // Script elements
+      // Client-side filter script
       expect(html).toContain('cards-container-blog');
     });
   });

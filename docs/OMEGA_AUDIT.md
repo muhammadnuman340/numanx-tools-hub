@@ -18,14 +18,19 @@ A framework-independent, read-only browser crawler and accessibility/SEO auditor
 npm install -D puppeteer
 ```
 
-### Script in `package.json`
+### Scripts in `package.json`
 ```json
 {
   "scripts": {
-    "audit:site:pro": "node scripts/audit-site.mjs"
+    "audit:site:pro": "node scripts/audit-site.mjs",
+    "audit:site:v4": "node tools/omega-audit-pro/scripts/audit-site.mjs",
+    "test:omega": "node --test tools/omega-audit-pro/tests/core.test.mjs tools/omega-audit-pro/tests/report.test.mjs"
   }
 }
 ```
+- **Tier 1 (`audit:site:pro`)**: Fast, zero-config single-file crawler (`scripts/audit-site.mjs`, v3.0.0) generating fixed deterministic reports for CI and pre-commit checks.
+- **Tier 2 (`audit:site:v4`)**: Enterprise modular crawler (`tools/omega-audit-pro/`, v4.0.0) with history diffing (`manage-history.mjs`), PDF exports, SSRF guards, and GSC integration.
+
 
 ---
 
@@ -57,7 +62,7 @@ $env:SITE_URL="https://numanx-tools.pages.dev"; npm run audit:site:pro
 
 #### Run With Route List Mode
 ```powershell
-$env:SITE_URL="http://localhost:3000"; $env:AUDIT_DISCOVERY="routes"; $env:AUDIT_ROUTES_FILE="./audit-routes.example.txt"; npm run audit:site:pro
+$env:SITE_URL="http://localhost:3000"; $env:AUDIT_DISCOVERY="routes"; $env:AUDIT_ROUTES_FILE="./docs/examples/audit-routes.example.txt"; npm run audit:site:pro
 ```
 
 ---

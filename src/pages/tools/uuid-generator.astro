@@ -101,7 +101,7 @@ const useCases = [
 ---
 
 <MainLayout
-  title="Bulk UUID v4 & v7 Timestamp-Ordered GUID Generator Online Free | NumanX Tools"
+  title="UUID Generator — Bulk v4 & v7 GUIDs | NumanX"
   description="Generate random UUID v4 and timestamp-ordered UUID v7 GUID identifiers in bulk. Free online UUID generator with CSV and JSON export support."
   keywords="bulk uuid generator, uuid v7 generator, timestamp ordered guid, uuid v4 online, unique id generator"
   toolSchema={uvSchema}
@@ -171,7 +171,7 @@ const useCases = [
                 value="1"
                 min="1"
                 max="100"
-                class="w-16 px-2 py-1.5 rounded-lg border border-surface-2 bg-surface-1 text-white text-xs text-center focus:border-purple-500/50 focus:outline-none"
+                class="w-16 px-2 py-1.5 rounded-lg border border-surface-2 bg-surface-1 text-white text-xs text-center focus:border-purple-500/50 focus:outline-none" aria-label="Number of UUIDs"
               />
             </div>
           </div>
@@ -208,7 +208,7 @@ const useCases = [
               >Clear</button
             >
             <select
-              id="export-format"
+              id="export-format" aria-label="Export file format"
               class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
             >
               <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option

@@ -45,7 +45,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
 ---
 
 <MainLayout
-  title={`${title} - NumanX Tools Blog`}
+  title={`${title} | NumanX`}
   description={description}
   keywords={(tags || []).join(', ')}
   canonical={Astro.url.href}
@@ -70,33 +70,38 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
     <div class="max-w-6xl mx-auto">
       <div class="flex gap-8">
         <article class="flex-1 min-w-0 max-w-3xl">
-          <div class="flex items-center gap-3 text-sm text-muted mb-6 flex-wrap">
-            <a href="/blog/" class="inline-flex items-center gap-1 hover:text-purple-400 transition-colors">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                ><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg
+          <!-- Proper Breadcrumb Navigation -->
+          <nav aria-label="Breadcrumb" class="mb-6 space-y-2">
+            <ol class="flex items-center gap-1.5 text-xs sm:text-sm text-zinc-400">
+              <li>
+                <a href="/" class="inline-flex min-h-6 items-center hover:text-white transition-colors">Home</a>
+              </li>
+              <li class="text-zinc-600 select-none" aria-hidden="true">&gt;</li>
+              <li>
+                <a href="/blog/" class="inline-flex min-h-6 items-center hover:text-white transition-colors">Blog</a>
+              </li>
+              <li class="text-zinc-600 select-none" aria-hidden="true">&gt;</li>
+              <li class="text-zinc-200 font-semibold truncate max-w-[200px] sm:max-w-xs" aria-current="page">
+                {title}
+              </li>
+            </ol>
+            <div class="flex items-center gap-3">
+              <a
+                href="/blog/"
+                class="inline-flex items-center gap-1.5 min-h-6 text-xs sm:text-sm font-medium text-zinc-300 hover:text-white transition-colors group"
               >
-              Back
-            </a>
-            <span class="text-dim">/</span>
-            <a
-              href={`/blog/?category=${encodeURIComponent(category || 'General')}`}
-              class="px-2.5 py-0.5 rounded-full bg-purple-600/15 border border-purple-500/30 text-purple-300 text-xs font-medium hover:bg-purple-600/25 transition-colors"
-              >{category || 'General'}</a
-            >
-            <span class="text-dim">·</span>
-            <time datetime={date}>{date}</time>
-            <span class="text-dim">·</span>
-            <span>{readingTime || '5 min read'}</span>
-          </div>
+                <span class="transition-transform group-hover:-translate-x-1" aria-hidden="true">&larr;</span>
+                <span>All Articles</span>
+              </a>
+              <span class="text-zinc-600">·</span>
+              <a
+                href={`/blog/?category=${encodeURIComponent(category || 'General')}`}
+                class="inline-flex items-center min-h-6 px-2.5 py-0.5 rounded-full bg-purple-600/15 border border-purple-500/30 text-purple-300 text-xs font-medium hover:bg-purple-600/25 transition-colors"
+              >{category || 'General'}</a>
+              <span class="text-zinc-600">·</span>
+              <span class="text-xs text-zinc-500">{readingTime || '5 min read'}</span>
+            </div>
+          </nav>
 
           {
             image && (
@@ -238,8 +243,10 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
               <a
                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(Astro.url.href)}`}
                 target="_blank"
+                rel="noopener noreferrer"
                 class="p-2.5 rounded-lg bg-surface-2 border border-surface-2 text-tertiary hover:text-white hover:bg-surface-3 transition-all duration-200"
                 title="Share on Twitter"
+                aria-label="Share on Twitter"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -249,6 +256,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
                   fill="none"
                   stroke="currentColor"
                   stroke-width="2"
+                  aria-hidden="true"
                   ><path
                     d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"
                   ></path></svg
@@ -257,8 +265,10 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
               <a
                 href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(Astro.url.href)}`}
                 target="_blank"
+                rel="noopener noreferrer"
                 class="p-2.5 rounded-lg bg-surface-2 border border-surface-2 text-tertiary hover:text-white hover:bg-surface-3 transition-all duration-200"
                 title="Share on LinkedIn"
+                aria-label="Share on LinkedIn"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -268,6 +278,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
                   fill="none"
                   stroke="currentColor"
                   stroke-width="2"
+                  aria-hidden="true"
                   ><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect
                     x="2"
                     y="9"
@@ -276,9 +287,11 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
                 >
               </a>
               <button
+                type="button"
                 id="copy-link-btn"
                 class="p-2.5 rounded-lg bg-surface-2 border border-surface-2 text-tertiary hover:text-white hover:bg-surface-3 transition-all duration-200"
                 title="Copy link"
+                aria-label="Copy link to clipboard"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -288,6 +301,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
                   fill="none"
                   stroke="currentColor"
                   stroke-width="2"
+                  aria-hidden="true"
                   ><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path
                     d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg
                 >
@@ -309,7 +323,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
           <div class="mt-10 text-center">
             <a
               href="/blog/"
-              class="inline-flex items-center gap-2 text-sm text-muted hover:text-purple-400 transition-colors font-medium"
+              class="inline-flex items-center gap-2 min-h-6 text-sm text-muted hover:text-purple-400 transition-colors font-medium"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -333,7 +347,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
               <span class="text-lg">{matchedTool.icon}</span>
               <span class="text-[10px] font-bold uppercase tracking-wider text-purple-300">Try Online Free</span>
             </div>
-            <h4 class="text-xs font-bold text-white mb-1 leading-snug">{matchedTool.name}</h4>
+            <h3 class="text-xs font-bold text-white mb-1 leading-snug">{matchedTool.name}</h3>
             <p class="text-[11px] text-zinc-400 mb-3 leading-relaxed">{matchedTool.desc}</p>
             <a
               href={`/tools/${matchedTool.slug}/`}
@@ -356,9 +370,11 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
   <!-- Floating utility toolbar -->
   <div class="fixed bottom-20 right-6 flex flex-col gap-2 z-50">
     <button
+      type="button"
       onclick="navigator.clipboard.writeText(window.location.href); this.classList.add('text-emerald-400'); setTimeout(() => this.classList.remove('text-emerald-400'), 2000);"
       class="p-3 bg-slate-900 border border-white/10 text-slate-400 rounded-full shadow-xl transition-all duration-200 hover:text-white hover:border-purple-500/40 hover:bg-slate-800 active:scale-95 group"
       title="Copy Link"
+      aria-label="Copy article link to clipboard"
     >
       <svg
         class="w-5 h-5 transition-transform group-hover:rotate-12"

@@ -29,7 +29,11 @@ const hasValidAdSense = Boolean(ADSENSE_ID && ADSENSE_ID !== 'ca-pub-XXXXXXXXXXX
       data-ad-format="auto"
       data-full-width-responsive="true"
     />
-    <script>{(window.adsbygoogle = window.adsbygoogle || []).push({})}</script>
+    <script is:inline>
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {}
+    </script>
   </aside>
 ) : (
   <MonetizationSlot slotType="in-content-banner" category={category} class={className} />

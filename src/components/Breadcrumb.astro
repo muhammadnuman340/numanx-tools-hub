@@ -1,0 +1,46 @@
+---
+interface Props {
+  breadcrumbs: { name: string; url: string }[];
+  backLabel?: string;
+  backUrl?: string;
+}
+
+const {
+  breadcrumbs,
+  backLabel = "All Tools",
+  backUrl = "/tools/",
+} = Astro.props;
+---
+
+<nav aria-label="Breadcrumb" class="mb-6">
+  <ol class="flex items-center gap-1.5 text-sm text-zinc-400">
+    {breadcrumbs.map((crumb, index) => {
+      const isLast = index === breadcrumbs.length - 1;
+      return (
+        <li class="flex items-center gap-1.5">
+          {index > 0 && (
+            <span class="text-zinc-600" aria-hidden="true">&gt;</span>
+          )}
+          {isLast ? (
+            <span class="text-zinc-200 font-semibold" aria-current="page">
+              {crumb.name}
+            </span>
+          ) : (
+            <a
+              href={crumb.url}
+              class="inline-flex min-h-6 items-center text-zinc-400 hover:text-white transition-colors"
+            >
+              {crumb.name}
+            </a>
+          )}
+        </li>
+      );
+    })}
+  </ol>
+  <a
+    href={backUrl}
+    class="inline-flex items-center gap-1.5 text-sm text-zinc-400 hover:text-purple-400 transition-colors mt-2"
+  >
+    &larr; {backLabel}
+  </a>
+</nav>

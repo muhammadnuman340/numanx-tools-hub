@@ -36,3 +36,7 @@ indexing-pages.md
 
 # audit reports
 audit-reports/
+
+# test reports
+test-results.json
+

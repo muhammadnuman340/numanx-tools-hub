@@ -95,7 +95,7 @@ const howToSteps = [
 ---
 
 <MainLayout
-  title="Free Markdown to PDF Converter Online — GFM, LaTeX Math & Mermaid Diagrams | NumanX Tools"
+  title="Markdown to PDF — GFM, Math & Mermaid | NumanX"
   description="Convert Markdown to PDF online free. 100% client-side with full support for GitHub Flavored Markdown, LaTeX math equations, Mermaid diagrams, and vector print."
   keywords="markdown to pdf, convert markdown to pdf online, md to pdf, latex markdown to pdf, mermaid to pdf, github markdown pdf exporter, free pdf generator, printable markdown"
   canonical="https://numanx-tools.pages.dev/tools/markdown-to-pdf/"
@@ -112,6 +112,8 @@ const howToSteps = [
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
     crossorigin="anonymous"
+    media="print"
+    onload="this.media='all'"
   />
 
   <main class="min-h-screen pt-20 pb-24 px-4 sm:px-6 relative overflow-hidden">
@@ -130,7 +132,7 @@ const howToSteps = [
             <span class="text-xs text-zinc-400 font-mono hidden sm:inline">Template:</span>
             <select
               id="md-template-select"
-              class="px-3 py-1.5 rounded-xl bg-surface-2 border border-surface text-xs font-mono text-zinc-200 focus:border-purple-500 focus:outline-none cursor-pointer"
+              class="px-3 py-1.5 rounded-xl bg-surface-2 border border-surface text-xs font-mono text-zinc-200 focus:border-purple-500 focus:outline-none cursor-pointer" aria-label="Document template"
             >
               <option value="tech-report">Architecture & Technical Spec</option>
               <option value="academic">Academic Research Paper</option>
@@ -144,7 +146,7 @@ const howToSteps = [
             <span class="text-xs text-zinc-400 font-mono hidden sm:inline">Page:</span>
             <select
               id="md-pagesize-select"
-              class="px-3 py-1.5 rounded-xl bg-surface-2 border border-surface text-xs font-mono text-zinc-200 focus:border-purple-500 focus:outline-none cursor-pointer"
+              class="px-3 py-1.5 rounded-xl bg-surface-2 border border-surface text-xs font-mono text-zinc-200 focus:border-purple-500 focus:outline-none cursor-pointer" aria-label="Page size"
             >
               <option value="a4">A4 (210×297mm)</option>
               <option value="letter">US Letter (8.5×11")</option>
@@ -156,7 +158,7 @@ const howToSteps = [
             <span class="text-xs text-zinc-400 font-mono hidden sm:inline">Theme:</span>
             <select
               id="md-theme-select"
-              class="px-3 py-1.5 rounded-xl bg-surface-2 border border-surface text-xs font-mono text-zinc-200 focus:border-purple-500 focus:outline-none cursor-pointer"
+              class="px-3 py-1.5 rounded-xl bg-surface-2 border border-surface text-xs font-mono text-zinc-200 focus:border-purple-500 focus:outline-none cursor-pointer" aria-label="PDF theme"
             >
               <option value="theme-github">GitHub Light</option>
               <option value="theme-academic">Academic Serif</option>
@@ -431,11 +433,11 @@ const howToSteps = [
 </style>
 
 <!-- External Script Libraries for GFM, Math & Diagrams -->
-<script is:inline src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
-<script is:inline src="https://cdn.jsdelivr.net/npm/dompurify@3.0.8/dist/purify.min.js"></script>
-<script is:inline src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-<script is:inline src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-<script is:inline src="https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js"></script>
+<script is:inline async src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
+<script is:inline async src="https://cdn.jsdelivr.net/npm/dompurify@3.0.8/dist/purify.min.js"></script>
+<script is:inline async src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script is:inline async src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script is:inline async src="https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js"></script>
 
 <script>
   declare const marked: any;
@@ -443,8 +445,19 @@ const howToSteps = [
   declare const renderMathInElement: any;
   declare const mermaid: any;
 
+  // Mermaid can reject internally while a diagram is still loading from the CDN.
+  // Keep that transient failure from surfacing as an uncaught promise error.
+  window.addEventListener('unhandledrejection', (event) => {
+    const reason = event.reason;
+    const message = typeof reason === 'string' ? reason : reason?.message || '';
+    if (message.includes("reading 'ParseError'")) {
+      event.preventDefault();
+      console.warn('Mermaid diagram could not be rendered; continuing with the rest of the preview.');
+    }
+  });
+
   const TEMPLATES: Record<string, string> = {
-    'tech-report': `# NumanX System Architecture & Technical Report
+    'tech-report': `## NumanX System Architecture & Technical Report
 *Date: October 16, 2026 | Author: System Engineering Team*
 
 ---
@@ -528,6 +541,7 @@ npm run dev
   };
 
   let isMermaidInitialized = false;
+  let isMarkdownConverterInitialized = false;
 
   async function renderPreview() {
     const textarea = document.getElementById('markdown-input') as HTMLTextAreaElement;
@@ -561,7 +575,7 @@ npm run dev
 
     // 3. Render Mermaid Diagrams
     const mermaidNodes = preview.querySelectorAll('pre code.language-mermaid');
-    if (mermaidNodes.length > 0 && typeof mermaid !== 'undefined') {
+    if (mermaidNodes.length > 0 && typeof mermaid !== 'undefined' && typeof DOMPurify !== 'undefined') {
       if (!isMermaidInitialized) {
         mermaid.initialize({ startOnLoad: false, theme: 'default', securityLevel: 'loose' });
         isMermaidInitialized = true;
@@ -596,6 +610,8 @@ npm run dev
   }
 
   function initMarkdownConverter() {
+    if (isMarkdownConverterInitialized) return;
+    isMarkdownConverterInitialized = true;
     const textarea = document.getElementById('markdown-input') as HTMLTextAreaElement;
     const templateSelect = document.getElementById('md-template-select') as HTMLSelectElement;
     const pageSizeSelect = document.getElementById('md-pagesize-select') as HTMLSelectElement;
