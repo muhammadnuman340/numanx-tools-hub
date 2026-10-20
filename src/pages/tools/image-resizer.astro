@@ -145,7 +145,7 @@ const useCases = [
 ---
 
 <MainLayout
-  title="Free Online Image Resizer — YouTube Thumbnail, Banner & Social Media Presets | NumanX Tools"
+  title="Image Resizer — Social Media & Thumbnail Presets | NumanX"
   description="Resize images online free for YouTube thumbnails, banners, and social media presets. Batch resize JPG, PNG, and WebP with aspect ratio lock and high quality."
   keywords="free online image resizer, image resizer, youtube thumbnail size, banner resizer, resize image online, social media image sizes, batch image resizer"
   toolSchema={irSchema}
@@ -177,7 +177,7 @@ const useCases = [
             id="dropzone"
             class="relative rounded-2xl border-2 border-dashed border-surface-3 bg-surface-1 p-10 md:p-16 text-center cursor-pointer hover:border-purple-500/50 hover:bg-surface-2 transition-all duration-300 group"
           >
-            <input id="file-input" type="file" accept="image/*" multiple class="hidden" />
+            <input id="file-input" type="file" accept="image/*" multiple class="hidden" aria-label="Upload images to resize" />
             <div id="dropzone-content">
               <div
                 class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300"
@@ -198,7 +198,7 @@ const useCases = [
                   <line x1="12" y1="3" x2="12" y2="15"></line>
                 </svg>
               </div>
-              <h3 class="text-lg font-semibold text-primary mb-2">Drop your images here</h3>
+              <h2 class="text-lg font-semibold text-primary mb-2">Drop your images here</h2>
               <p class="text-sm text-muted mb-4">
                 or <span class="text-purple-400 underline underline-offset-2 font-medium">browse files</span>
               </p>

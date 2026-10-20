@@ -93,7 +93,7 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
         </span>
         <span class="text-xs text-zinc-400"> keeps NumanX 100% free & zero-server</span>
       </div>
-      <h3 class="text-sm sm:text-base font-bold text-white m-0">{offer.title}</h3>
+      <h2 class="text-sm sm:text-base font-bold text-white m-0">{offer.title}</h2>
       <p class="text-xs text-zinc-300 m-0 max-w-xl">{offer.desc}</p>
     </div>
     <a
@@ -148,7 +148,7 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
         <div class="flex items-center gap-2">
           <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          <h3 class="text-base font-bold text-white m-0">Support NumanX Tools Hub</h3>
+          <h2 class="text-base font-bold text-white m-0">Support NumanX Tools Hub</h2>
         </div>
         <button type="button" id="close-tip-modal-btn" class="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer" aria-label="Close modal">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -193,10 +193,12 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
                   type="text"
                   readonly
                   value={pm.accountIdentifier}
+                  aria-label={`${pm.name} account identifier`}
                   class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-emerald-300 select-all focus:outline-none"
                 />
                 <button
                   type="button"
+                  aria-label={`Copy ${pm.name} account details`}
                   class="copy-payment-btn shrink-0 px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition flex items-center gap-1 cursor-pointer active:scale-95"
                   data-copy={pm.accountIdentifier}
                 >

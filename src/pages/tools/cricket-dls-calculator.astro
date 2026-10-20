@@ -93,8 +93,8 @@ const howToSteps = [
 ---
 
 <MainLayout
-  title="Cricket DLS Method Calculator Online — Duckworth-Lewis-Stern Target & Par Score | NumanX Tools"
-  description="Free online Duckworth-Lewis-Stern (DLS) method calculator for rain-curtailed cricket matches. Calculate revised targets, par scores, and required run rates for ODI and T20."
+  title="Cricket DLS Calculator — Target & Par Score | NumanX"
+  description="Free DLS calculator for rain-curtailed cricket. Get revised targets, par scores and required run rates for ODI and T20."
   keywords="dls calculator cricket, duckworth lewis calculator online, dls target calculator, cricket par score calculator, rain interrupted cricket match, t20 dls target, odi revised target"
   canonical="https://numanx-tools.pages.dev/tools/cricket-dls-calculator/"
   toolSchema={dlsSchema}
@@ -154,7 +154,7 @@ const howToSteps = [
                     value="180"
                     min="1"
                     max="600"
-                    class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white font-mono text-lg focus:border-purple-500 focus:outline-none"
+                    class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white font-mono text-lg focus:border-purple-500 focus:outline-none" aria-label="First innings runs"
                   />
                 </div>
                 <div>
@@ -165,7 +165,7 @@ const howToSteps = [
                     value="20"
                     min="5"
                     max="50"
-                    class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white font-mono text-lg focus:border-purple-500 focus:outline-none"
+                    class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white font-mono text-lg focus:border-purple-500 focus:outline-none" aria-label="First innings allocated overs"
                   />
                 </div>
               </div>
@@ -188,7 +188,7 @@ const howToSteps = [
                 max="20"
                 value="15"
                 step="1"
-                class="w-full h-2 bg-surface-2 rounded-lg appearance-none cursor-pointer accent-purple-500 mb-2"
+                class="w-full h-2 bg-surface-2 rounded-lg appearance-none cursor-pointer accent-purple-500 mb-2" aria-label="Team 2 revised overs"
               />
               <div class="flex justify-between text-[11px] font-mono text-zinc-500">
                 <span id="dls-min-overs">5 Overs (Min T20)</span>

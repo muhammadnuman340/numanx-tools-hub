@@ -144,7 +144,7 @@ const useCases = [
 ---
 
 <MainLayout
-  title="Free Online Unit Converter — Length, Weight, Temperature, Area & Data Storage | NumanX Tools"
+  title="Unit Converter — Length, Weight, Temp & Data | NumanX"
   description="Convert 100+ units across length, mass, volume, temperature, area, speed, time, and data storage. Real-time conversion with smart category detection."
   keywords="free online unit converter, unit converter, length converter, weight converter, temperature converter, metric conversion, imperial to metric"
   toolSchema={schema}
@@ -235,17 +235,51 @@ const useCases = [
             </div>
           </div>
         </div>
+
+        <!-- Converter Panel -->
+        <div class="bg-surface-1 border border-surface rounded-2xl p-5 space-y-4">
+          <div class="grid grid-cols-[1fr,auto,1fr] gap-3 items-end">
+            <div>
+              <label for="unit-from" class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2">From</label>
+              <select id="unit-from" aria-label="From unit" class="w-full bg-black/40 border border-surface text-primary text-sm px-3 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"></select>
+            </div>
+            <button id="swap-btn" type="button" aria-label="Swap from and to units" class="mt-6 p-2.5 rounded-xl bg-surface-2 hover:bg-surface-nav border border-surface text-tertiary hover:text-white transition-all active:scale-90 text-lg" title="Swap units">⇄</button>
+            <div>
+              <label for="unit-to" class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2">To</label>
+              <select id="unit-to" aria-label="To unit" class="w-full bg-black/40 border border-surface text-primary text-sm px-3 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"></select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-[1fr,auto,1fr] gap-3 items-center">
+            <div>
+              <label for="input-value" class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2">Value</label>
+              <input id="input-value" type="number" inputmode="decimal" value="1" step="any" aria-label="Value to convert" class="w-full bg-black/40 border border-surface text-primary text-2xl font-mono px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+            </div>
+            <div class="text-dim text-2xl mt-6" aria-hidden="true">=</div>
+            <div>
+              <span class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2">Result</span>
+              <div id="result-display" role="region" aria-label="Converted unit result" tabindex="0" class="w-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-2xl font-mono px-4 py-3 rounded-xl select-all cursor-copy" title="Click to copy">--</div>
+            </div>
+          </div>
+
+          <button id="copy-btn" type="button" aria-label="Copy conversion result to clipboard" class="w-full bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-sm font-medium py-2.5 rounded-xl transition-all active:scale-95">
+            Copy Result
+          </button>
+
+          <div id="conversion-detail" class="text-[11px] text-dim text-center font-mono hidden"></div>
+        </div>
       </div>
 
       <!-- Quick Reference Table -->
       <div class="bg-surface-1 border border-surface rounded-2xl p-5">
-        <label class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3 block">Quick Reference</label>
+        <span class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-3 block">Quick Reference</span>
         <div id="ref-table" class="overflow-x-auto">
           <table class="w-full text-xs text-tertiary">
+            <caption class="sr-only">Quick Reference Unit Conversions and Factors</caption>
             <thead>
               <tr class="text-dim border-b border-surface">
-                <th class="text-left py-2 pr-4">Unit</th>
-                <th class="text-right py-2">Value</th>
+                <th scope="col" class="text-left py-2 pr-4 font-semibold">Unit</th>
+                <th scope="col" class="text-right py-2 font-semibold">Value</th>
               </tr>
             </thead>
             <tbody id="ref-body"></tbody>

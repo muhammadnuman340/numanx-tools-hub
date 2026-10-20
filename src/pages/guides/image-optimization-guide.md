@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: 'Complete Guide to Image Optimization for Web Performance'
+title: 'Complete Guide to Image Optimization'
 description: 'Learn how to optimize images for the web — choose formats, compress effectively, resize for different devices, and implement lazy loading for faster page speed.'
 date: 'June 1, 2026'
 author: 'Muhammad Numan Usmani'

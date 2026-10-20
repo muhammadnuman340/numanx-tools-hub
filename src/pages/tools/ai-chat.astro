@@ -38,8 +38,8 @@ const schema = {
 ---
 
 <MainLayout
-  title="100% Local Browser AI Chat (WebGPU Qwen2.5 — Zero Data Sent to Servers) | NumanX Tools"
-  description="Chat with a 100% local browser AI assistant powered by WebGPU neural execution. Execute text transformations, code formatting, and creative tasks with zero server data transfer."
+  title="Local Browser AI Chat — WebGPU, Zero Uploads | NumanX"
+  description="Chat with a local browser AI powered by WebGPU. Summarize, rewrite and generate text with zero server uploads or tracking."
   keywords="local browser ai chat, webgpu chatbot, offline ai assistant, qwen webgpu chat, private ai chatbot"
   toolSchema={schema}
   faq={faqItems}
@@ -201,7 +201,7 @@ const schema = {
                 type="text"
                 class="w-full bg-surface-2 border border-surface-2 rounded-lg px-3 py-1.5 text-xs text-primary placeholder:text-muted focus:outline-none focus:border-violet-500/50 transition-all"
                 placeholder="Search messages..."
-                autocomplete="off"
+                autocomplete="off" aria-label="Search messages"
               />
               <span id="search-count" class="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] text-muted"></span>
             </div>
@@ -362,7 +362,7 @@ const schema = {
                 type="text"
                 class="flex-1 bg-surface-2 border border-surface-2 rounded-xl px-3.5 py-2.5 text-sm text-primary placeholder:text-muted focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20 transition-all"
                 placeholder="Ask about tools or try a command..."
-                autocomplete="off"
+                autocomplete="off" aria-label="Chat message"
               />
               <button
                 type="submit"

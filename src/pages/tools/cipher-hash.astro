@@ -103,7 +103,7 @@ const useCases = [
 ---
 
 <MainLayout
-  title="Client-Side SHA-256, SHA-512 & HMAC Web Crypto Hash Generator | NumanX Tools"
+  title="SHA-256, SHA-512 & HMAC Hash Generator | NumanX"
   description="Generate SHA-1, SHA-256, SHA-512, and HMAC cryptographic checksums for text and files locally in your browser. 100% private with zero cloud uploads."
   keywords="client side sha256, sha512 generator, hmac hash generator, web crypto hash, file checksum online"
   toolSchema={chSchema}
@@ -165,7 +165,7 @@ const useCases = [
             <textarea
               id="raw-hash-text"
               class="w-full h-32 px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-rose-500/50 focus:outline-none transition-all resize-none font-mono"
-              placeholder="Enter some secret text to compute SHA-256..."></textarea>
+              placeholder="Enter some secret text to compute SHA-256..." aria-label="Text to hash"></textarea>
 
             <div class="flex justify-end">
               <button
@@ -234,9 +234,9 @@ const useCases = [
 
           <!-- Output Arrays (Always Visible and Updating Live) -->
           <div class="mt-8 pt-8 border-t border-surface space-y-4">
-            <h4 class="text-xs font-bold text-rose-400 uppercase tracking-widest mb-1">
+            <h2 class="text-xs font-bold text-rose-400 uppercase tracking-widest mb-1">
               Generated Cryptographic Hashes
-            </h4>
+            </h2>
 
             <div class="space-y-3">
               <div class="bg-surface-1 border border-surface-2 rounded-xl p-3 relative">

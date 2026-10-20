@@ -101,7 +101,7 @@ const useCases = [
 ---
 
 <MainLayout
-  title="Merge PDF Files Online - Secure & Free PDF Merger"
+  title="Merge PDF Files Online — Free & Secure | NumanX"
   description="Combine multiple PDF files into a single document instantly. 100% secure, offline, and free online PDF merger. No uploads required."
   keywords="merge pdf, combine pdf, pdf merger, join pdf files, secure pdf merge"
   toolSchema={schema}
@@ -130,10 +130,10 @@ const useCases = [
       <ShareBar />
       <div class="max-w-3xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6 md:p-10 relative text-center">
-           <input type="file" id="file-input" multiple accept="application/pdf" class="hidden" />
+           <input type="file" id="file-input" multiple accept="application/pdf" class="hidden" aria-label="Upload PDF files to merge" />
            <div id="drop-zone" class="border-2 border-dashed border-surface-2 hover:border-red-500/50 rounded-2xl p-10 cursor-pointer transition-all mb-8">
               <div class="text-4xl mb-4">📄</div>
-              <h3 class="text-xl font-semibold text-white mb-2">Drag & Drop PDF files here</h3>
+              <h2 class="text-xl font-semibold text-white mb-2">Drag & Drop PDF files here</h2>
               <p class="text-sm text-muted">Or click to browse from your device</p>
            </div>
            
@@ -224,7 +224,7 @@ const useCases = [
       dropZone?.classList.remove('p-6');
       if (dropZone) dropZone.innerHTML = `
         <div class="text-4xl mb-4">📄</div>
-        <h3 class="text-xl font-semibold text-white mb-2">Drag & Drop PDF files here</h3>
+        <h2 class="text-xl font-semibold text-white mb-2">Drag & Drop PDF files here</h2>
         <p class="text-sm text-muted">Or click to browse from your device</p>
       `;
     }

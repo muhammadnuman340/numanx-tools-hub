@@ -8,10 +8,18 @@ const blogPosts = Object.entries(postModules)
     slug: path.replace('./', '').replace('.md', ''),
   }))
   .sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
-const featured = blogPosts[0];
-const latest = blogPosts;
 
 const categories = ['All', 'AI Tools', 'Image Tools', 'Creator Tools', 'Cricket Tools', 'Productivity'];
+
+// Category color mapping
+const categoryColors: Record<string, { bg: string; text: string; border: string }> = {
+  'AI Tools': { bg: 'bg-blue-500/15', text: 'text-blue-300', border: 'border-blue-500/30' },
+  'Image Tools': { bg: 'bg-purple-500/15', text: 'text-purple-300', border: 'border-purple-500/30' },
+  'Creator Tools': { bg: 'bg-pink-500/15', text: 'text-pink-300', border: 'border-pink-500/30' },
+  'Cricket Tools': { bg: 'bg-amber-500/15', text: 'text-amber-300', border: 'border-amber-500/30' },
+  'Productivity': { bg: 'bg-emerald-500/15', text: 'text-emerald-300', border: 'border-emerald-500/30' },
+  'General': { bg: 'bg-zinc-500/15', text: 'text-zinc-300', border: 'border-zinc-500/30' },
+};
 ---
 
 <MainLayout
@@ -25,163 +33,73 @@ const categories = ['All', 'AI Tools', 'Image Tools', 'Creator Tools', 'Cricket 
   ]}
 >
   <main class="min-h-screen pt-8 pb-20 px-6 relative overflow-hidden">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-12">
-        <div
-          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6"
-        >
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
-          </span>
-          Our Blog
-        </div>
-        <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-none">
-          NumanX Tools
-          <span
-            class="block mt-2 bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent"
-          >
+    <div class="max-w-5xl mx-auto">
+      <!-- Breadcrumb Navigation -->
+      <nav aria-label="Breadcrumb" class="mb-6">
+        <ol class="flex items-center gap-1.5 text-xs sm:text-sm text-zinc-400">
+          <li>
+            <a href="/" class="hover:text-white transition-colors">Home</a>
+          </li>
+          <li class="text-zinc-600 select-none" aria-hidden="true">&gt;</li>
+          <li class="text-zinc-200 font-semibold" aria-current="page">
             Blog
-          </span>
+          </li>
+        </ol>
+      </nav>
+
+      <!-- Header -->
+      <div class="text-center mb-10">
+        <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-none text-white">
+          Blog
         </h1>
-        <p class="mt-6 text-tertiary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+        <p class="mt-4 text-zinc-400 text-base md:text-lg max-w-xl mx-auto">
           Tips, guides, and resources to help you work smarter.
-          <span class="text-secondary"> Tools, AI, and productivity insights.</span>
         </p>
       </div>
 
-      {
-        featured && (
-          <a
-            href={'/blog/' + featured.slug + '/'}
-            class="group block card-spotlight bg-surface-1/80 border border-surface rounded-3xl hover:-translate-y-1 transition-all duration-300 p-6 md:p-10 mb-12 overflow-hidden relative audio-trigger"
+      <!-- Search Bar -->
+      <div class="max-w-2xl mx-auto mb-6">
+        <div class="relative">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none"
+          ><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Search articles..."
+            class="w-full bg-surface-1 border border-surface rounded-2xl py-3.5 pl-12 pr-12 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 transition-all duration-200" aria-label="Search articles"
+          />
+          <button
+            id="search-clear"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors hidden"
+            aria-label="Clear search"
           >
-            <div class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
-            <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-start relative z-10">
-              <div class="w-full md:w-[280px] shrink-0 aspect-video md:aspect-[4/3] rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center border border-zinc-800 overflow-hidden group-hover:scale-105 transition-transform duration-300">
-                {featured.frontmatter.image ? (
-                  <img
-                    src={featured.frontmatter.image}
-                    alt={featured.frontmatter.title}
-                    class="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="40"
-                    height="40"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#a855f7"
-                    stroke-width="1"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="opacity-60"
-                  >
-                    <>
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
-                    </>
-                  </svg>
-                )}
-              </div>
-              <div class="flex-1 min-w-0">
-                <div class="flex items-center gap-3 mb-3">
-                  <span class="inline-flex px-2.5 py-0.5 rounded-full bg-purple-600/15 border border-purple-500/30 text-purple-300 text-xs font-medium">
-                    {featured.frontmatter.category}
-                  </span>
-                  <span class="text-xs text-dim">{featured.frontmatter.date}</span>
-                </div>
-                <h2 class="text-xl md:text-2xl font-bold text-white group-hover:text-purple-300 transition-colors duration-200 leading-snug">
-                  {featured.frontmatter.title}
-                </h2>
-                <p class="text-sm text-tertiary mt-2 leading-relaxed line-clamp-2">
-                  {featured.frontmatter.description}
-                </p>
-                <div class="flex items-center gap-3 mt-4 text-sm text-muted">
-                  <span>{featured.frontmatter.readingTime || '5 min read'}</span>
-                </div>
-                <span class="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-purple-400 group-hover:text-purple-300 transition-colors">
-                  Read Article
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="group-hover:translate-x-1 transition-transform"
-                  >
-                    <>
-                      <line x1="5" y1="12" x2="19" y2="12" />
-                      <polyline points="12 5 19 12 12 19" />
-                    </>
-                  </svg>
-                </span>
-              </div>
-            </div>
-          </a>
-        )
-      }
-
-      <!-- Search & Filters Command Bar -->
-      <div class="bg-zinc-900/30 border border-zinc-800/80 p-5 rounded-2xl mb-8">
-        <div class="flex flex-col sm:flex-row gap-3 items-stretch">
-          <div class="relative flex-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none z-10"
-              ><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg
-            >
-            <input
-              id="search-input"
-              type="text"
-              placeholder="Search articles..."
-              class="w-full bg-[#0a0a0c]/90 border border-white/10 focus:border-purple-500/50 rounded-2xl py-4 pl-12 pr-12 text-white placeholder-zinc-500 text-sm focus:outline-none transition-all duration-200 audio-trigger shadow-inner"
-            />
-            <button
-              id="search-clear"
-              class="absolute right-4 top-1/2 -translate-y-1/2 text-dim hover:text-tertiary transition-colors hidden z-10"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                ><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg
-              >
-            </button>
-          </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
         </div>
-        <div id="category-filters" class="flex gap-2 flex-wrap mt-4">
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="max-w-2xl mx-auto mb-10">
+        <div id="category-filters" class="flex gap-2 flex-wrap justify-center">
           {
             categories.map((cat) => {
               const active = cat === 'All';
               return (
                 <button
-                  class={`cat-btn relative px-4 py-2 text-xs font-bold rounded-xl transition-all audio-trigger ${
+                  class={`cat-btn px-4 py-2 text-sm font-semibold rounded-full transition-all ${
                     active
-                      ? 'bg-purple-600/10 border border-purple-500/30 text-purple-400'
-                      : 'bg-[#0a0a0c]/80 text-zinc-400 border border-white/5 hover:border-white/10 hover:text-white'
+                      ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/30'
+                      : 'bg-surface-1 text-zinc-400 border border-surface hover:border-zinc-600 hover:text-white'
                   }`}
                   data-category={cat}
                   data-active={active ? 'true' : 'false'}
@@ -194,103 +112,72 @@ const categories = ['All', 'AI Tools', 'Image Tools', 'Creator Tools', 'Cricket 
         </div>
       </div>
 
-      <!-- 3D Grid Layout with Perspective -->
+      <!-- Blog Post Cards Grid -->
+      <h2 class="sr-only">Latest articles</h2>
       <div
         id="cards-container-blog"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 group-section preserve-3d"
+        class="grid grid-cols-1 sm:grid-cols-2 gap-5"
       >
         {
-          latest.map((post) => (
-            <a
-              href={'/blog/' + post.slug + '/'}
-              class="post-card group card-spotlight bg-surface-1/80 border border-surface rounded-3xl p-6 hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-300 block audio-trigger"
-              data-category={post.frontmatter.category || 'General'}
-            >
-              <div class="w-full aspect-video rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mb-4 border border-zinc-800 overflow-hidden group-hover:scale-[1.03] transition-transform">
-                {post.frontmatter.image ? (
-                  <img
-                    src={post.frontmatter.image}
-                    alt={post.frontmatter.title}
-                    class="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#a855f7"
-                    stroke-width="1"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="opacity-60"
-                  >
-                    <>
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
-                    </>
-                  </svg>
-                )}
-              </div>
-              <span class="inline-flex px-2 py-0.5 rounded-full bg-purple-600/15 border border-purple-500/30 text-purple-300 text-[10px] font-medium mb-2.5">
-                {post.frontmatter.category || 'General'}
-              </span>
-              <h3 class="text-base font-bold text-white group-hover:text-purple-300 transition-colors duration-200 leading-snug">
-                {post.frontmatter.title}
-              </h3>
-              <p class="text-xs text-tertiary mt-2 leading-relaxed line-clamp-2">{post.frontmatter.description}</p>
-              <div class="flex items-center gap-2 mt-3 text-[11px] text-dim">
-                <span>{post.frontmatter.date}</span>
-                <span>·</span>
-                <span>{post.frontmatter.readingTime || '5 min read'}</span>
-              </div>
-            </a>
-          ))
+          blogPosts.map((post) => {
+            const cat = post.frontmatter.category || 'General';
+            const colors = categoryColors[cat] || categoryColors['General'];
+            return (
+              <a
+                href={'/blog/' + post.slug + '/'}
+                class="post-card group block bg-surface-1/80 border border-surface rounded-2xl p-6 hover:border-purple-500/30 hover:-translate-y-0.5 transition-all duration-300"
+                data-category={cat}
+              >
+                <div class="flex items-center gap-3 mb-3">
+                  <span class={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold border ${colors.bg} ${colors.text} ${colors.border}`}>
+                    {cat}
+                  </span>
+                  <span class="text-xs text-zinc-500">{post.frontmatter.date}</span>
+                  <span class="text-xs text-zinc-600">·</span>
+                  <span class="text-xs text-zinc-500">{post.frontmatter.readingTime || '5 min read'}</span>
+                </div>
+                <h3 class="text-base font-bold text-white group-hover:text-purple-300 transition-colors duration-200 leading-snug mb-2">
+                  {post.frontmatter.title}
+                </h3>
+                <p class="text-sm text-zinc-400 leading-relaxed line-clamp-2">
+                  {post.frontmatter.description}
+                </p>
+              </a>
+            );
+          })
         }
       </div>
 
+      <!-- Empty State -->
       <div id="empty-state" class="hidden mt-10 text-center py-16">
         <div class="w-14 h-14 rounded-2xl bg-zinc-900/60 flex items-center justify-center mx-auto mb-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="text-dim"
-            ><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-zinc-600"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         </div>
-        <p class="text-tertiary text-sm font-medium">No articles found</p>
-        <p class="text-dim text-xs mt-1">Try a different search term or category.</p>
+        <p class="text-zinc-400 text-sm font-medium">No articles found</p>
+        <p class="text-zinc-600 text-xs mt-1">Try a different search term or category.</p>
       </div>
 
-      <div class="mt-16 bg-zinc-900/30 border border-zinc-800/80 p-8 md:p-10 rounded-2xl text-center">
+      <!-- Newsletter CTA -->
+      <div class="mt-16 bg-surface-1/60 border border-surface p-8 md:p-10 rounded-2xl text-center">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight">
           Stay
           <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Updated</span>
         </h2>
-        <p class="text-tertiary mt-3 max-w-md mx-auto text-sm">
+        <p class="text-zinc-400 mt-3 max-w-md mx-auto text-sm">
           Get the latest tools, tips, and guides delivered to your inbox.
         </p>
         <form class="blog-newsletter-form mt-6 max-w-md mx-auto flex flex-col sm:flex-row gap-3">
           <input
+            id="newsletter-email"
+            aria-label="Email address"
             type="email"
             placeholder="Enter your email"
             required
-            class="flex-1 px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-700 text-white placeholder-zinc-500 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500/60 transition-all duration-200 audio-trigger"
+            class="flex-1 px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-700 text-white placeholder-zinc-500 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500/60 transition-all duration-200"
           />
           <button
             type="submit"
-            class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm active:scale-[0.97] transition-all duration-200 shrink-0 audio-trigger"
+            class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm active:scale-[0.97] transition-all duration-200 shrink-0"
           >
             Subscribe
           </button>
@@ -302,44 +189,7 @@ const categories = ['All', 'AI Tools', 'Image Tools', 'Creator Tools', 'Cricket 
 </MainLayout>
 
 <script>
-  const handleOnMouseMove = (e: MouseEvent, containerId: string) => {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    const cards = container.getElementsByClassName('card-spotlight');
-    for (const card of cards as any) {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-      if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -4;
-        const rotateY = ((x - centerX) / centerX) * 4;
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px) scale(1.02)`;
-        card.style.zIndex = '50';
-      } else {
-        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
-        card.style.zIndex = '1';
-      }
-    }
-  };
-
   const initBlogPage = () => {
-    // 3D Tilt initialization
-    const container = document.getElementById('cards-container-blog');
-    if (container) {
-      container.addEventListener('mousemove', (e) => handleOnMouseMove(e, 'cards-container-blog'));
-      container.addEventListener('mouseleave', () => {
-        const cards = container.getElementsByClassName('card-spotlight');
-        for (const card of cards as any) {
-          card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
-          card.style.zIndex = '1';
-        }
-      });
-    }
-
     const searchInput = document.getElementById('search-input') as HTMLInputElement | null;
     const searchClear = document.getElementById('search-clear');
     const catBtns = document.querySelectorAll('.cat-btn');
@@ -350,13 +200,11 @@ const categories = ['All', 'AI Tools', 'Image Tools', 'Creator Tools', 'Cricket 
 
     const updateBtnStyles = () => {
       catBtns.forEach((b: any) => {
-        const active = b.dataset.active === 'true';
-        if (active) {
-          b.className =
-            'cat-btn relative px-4 py-2 text-xs font-bold rounded-xl transition-all bg-purple-600/10 border border-purple-500/30 text-purple-400 audio-trigger';
+        const isActive = b.dataset.active === 'true';
+        if (isActive) {
+          b.className = 'cat-btn px-4 py-2 text-sm font-semibold rounded-full transition-all bg-purple-600 text-white shadow-lg shadow-purple-900/30';
         } else {
-          b.className =
-            'cat-btn relative px-4 py-2 text-xs font-bold rounded-xl transition-all bg-[#0a0a0c]/80 text-zinc-400 border border-white/5 hover:border-white/10 hover:text-white audio-trigger';
+          b.className = 'cat-btn px-4 py-2 text-sm font-semibold rounded-full transition-all bg-surface-1 text-zinc-400 border border-surface hover:border-zinc-600 hover:text-white';
         }
       });
     };
@@ -364,12 +212,7 @@ const categories = ['All', 'AI Tools', 'Image Tools', 'Creator Tools', 'Cricket 
     // Set initial active category from URL
     if (activeCat !== 'All') {
       catBtns.forEach((b: any) => {
-        const cat = b.dataset.category;
-        if (cat === activeCat) {
-          b.dataset.active = 'true';
-        } else {
-          b.dataset.active = 'false';
-        }
+        b.dataset.active = b.dataset.category === activeCat ? 'true' : 'false';
       });
       updateBtnStyles();
     }
@@ -379,8 +222,8 @@ const categories = ['All', 'AI Tools', 'Image Tools', 'Creator Tools', 'Cricket 
       const query = searchInput.value.toLowerCase().trim();
       let visibleCount = 0;
       posts.forEach((card: any) => {
-        const title = card.querySelector('h3').textContent.toLowerCase();
-        const desc = card.querySelector('p').textContent.toLowerCase();
+        const title = card.querySelector('h3')?.textContent?.toLowerCase() || '';
+        const desc = card.querySelector('p')?.textContent?.toLowerCase() || '';
         const cat = card.dataset.category;
         const matchesSearch = !query || title.includes(query) || desc.includes(query);
         const matchesCat = activeCat === 'All' || cat === activeCat;
@@ -406,9 +249,7 @@ const categories = ['All', 'AI Tools', 'Image Tools', 'Creator Tools', 'Cricket 
 
     catBtns.forEach((btn: any) => {
       btn.addEventListener('click', () => {
-        catBtns.forEach((b: any) => {
-          b.dataset.active = 'false';
-        });
+        catBtns.forEach((b: any) => { b.dataset.active = 'false'; });
         btn.dataset.active = 'true';
         activeCat = btn.dataset.category || 'All';
         updateBtnStyles();
@@ -416,10 +257,13 @@ const categories = ['All', 'AI Tools', 'Image Tools', 'Creator Tools', 'Cricket 
       });
     });
 
+    // Run initial filter
+    filterPosts();
+
     // Newsletter form
     document.querySelector('.blog-newsletter-form')?.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const input = e.target.querySelector("input[type='email']") as HTMLInputElement;
+      const input = (e.target as HTMLFormElement).querySelector("input[type='email']") as HTMLInputElement;
       const msgEl = document.getElementById('nl-msg');
       const email = input.value;
       try {

@@ -95,7 +95,7 @@ const useCases = [
 ---
 
 <MainLayout
-  title="Color Converter & Palette Extractor — HEX, RGB, HSL & Image Color Picker | NumanX Tools"
+  title="Color Converter — HEX, RGB, HSL & Picker | NumanX"
   description="Convert colors between HEX, RGB, and HSL formats with live color preview and visual picker. Extract color codes and palettes online free."
   keywords="color converter, hex to rgb, rgb to hex, extract hex color palette from image, color picker, hsl converter"
   toolSchema={cSchema}
@@ -149,7 +149,7 @@ const useCases = [
               id="color-picker"
               type="color"
               value="#7c3aed"
-              class="w-16 h-16 rounded-xl border border-surface-2 cursor-pointer bg-transparent"
+              class="w-16 h-16 rounded-xl border border-surface-2 cursor-pointer bg-transparent" aria-label="Pick a color"
             />
             <div class="flex-1">
               <label class="block text-xs font-medium text-tertiary mb-1.5">HEX</label>
@@ -157,7 +157,7 @@ const useCases = [
                 id="hex-input"
                 type="text"
                 value="#7c3aed"
-                class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-purple-500/50 focus:outline-none transition-all"
+                class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-purple-500/50 focus:outline-none transition-all" aria-label="HEX color value"
               />
             </div>
           </div>
@@ -171,21 +171,21 @@ const useCases = [
                   min="0"
                   max="255"
                   value="124"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Red value"
                 /><span class="text-muted self-center">,</span><input
                   id="g-input"
                   type="number"
                   min="0"
                   max="255"
                   value="58"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Green value"
                 /><span class="text-muted self-center">,</span><input
                   id="b-input"
                   type="number"
                   min="0"
                   max="255"
                   value="237"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Blue value"
                 />
               </div>
             </div>
@@ -198,21 +198,21 @@ const useCases = [
                   min="0"
                   max="360"
                   value="263"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Hue"
                 /><span class="text-muted self-center text-xs">H</span><input
                   id="s-input"
                   type="number"
                   min="0"
                   max="100"
                   value="83"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Saturation"
                 /><span class="text-muted self-center text-xs">%</span><input
                   id="l-input"
                   type="number"
                   min="0"
                   max="100"
                   value="58"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Lightness"
                 /><span class="text-muted self-center text-xs">%</span>
               </div>
             </div>
@@ -225,28 +225,28 @@ const useCases = [
                   min="0"
                   max="100"
                   value="48"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Cyan"
                 /><span class="text-muted self-center text-xs">C%</span><input
                   id="cmyk-m"
                   type="number"
                   min="0"
                   max="100"
                   value="76"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Magenta"
                 /><span class="text-muted self-center text-xs">M%</span><input
                   id="cmyk-y"
                   type="number"
                   min="0"
                   max="100"
                   value="0"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Yellow"
                 /><span class="text-muted self-center text-xs">Y%</span><input
                   id="cmyk-k"
                   type="number"
                   min="0"
                   max="100"
                   value="7"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Black"
                 /><span class="text-muted self-center text-xs">K%</span>
               </div>
             </div>

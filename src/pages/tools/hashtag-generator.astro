@@ -144,8 +144,8 @@ const useCases = [
 ---
 
 <MainLayout
-  title="Free AI Hashtag Generator [2026] — TikTok, YouTube Shorts & Instagram SEO | NumanX Tools"
-  description="Generate viral, trending, and niche hashtags for TikTok, YouTube Shorts, and Instagram SEO. Multi-platform AI hashtag generator with popularity scores, tone filters, and JSON export."
+  title="AI Hashtag Generator — TikTok, Shorts & Reels | NumanX"
+  description="Generate trending hashtags for TikTok, YouTube Shorts and Instagram. Popularity scores, tone filters and JSON export."
   keywords="ai hashtag generator, tiktok hashtag generator, youtube shorts hashtags, instagram hashtag generator, viral hashtags, seo hashtags, copy hashtag json"
   toolSchema={htSchema}
   faq={faqItems}
@@ -365,7 +365,7 @@ const useCases = [
           <div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <div>
-                <h3 class="text-sm font-semibold text-primary">Generated Hashtags</h3>
+                <h2 class="text-sm font-semibold text-primary">Generated Hashtags</h2>
                 <p id="hashtag-count" class="text-xs text-muted mt-0.5"></p>
               </div>
               <div class="flex items-center gap-2 flex-wrap">
@@ -425,7 +425,7 @@ const useCases = [
                 title="Share">🔗</button
               >
               <select
-                id="export-format"
+                id="export-format" aria-label="Export file format"
                 class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5 ml-auto"
               >
                 <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option

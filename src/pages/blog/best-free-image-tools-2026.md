@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: 'Best Free Image Tools in 2026: Fast, Private, and Browser-Based'
-description: 'Discover the best free image tools for compression, conversion, resizing, and editing in 2026. Learn how browser-based WASM and Canvas tools compare against traditional server-side alternatives.'
+title: 'Best Free Image Tools in 2026'
+description: 'Compare the best free image tools for compression, conversion, resizing and editing in 2026, including browser-based options.'
 date: 'Jun 1, 2026'
 author: 'NumanX Tools'
 category: 'Image Tools'

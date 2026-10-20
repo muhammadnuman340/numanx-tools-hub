@@ -33,7 +33,7 @@ const schema = {
 ---
 
 <MainLayout
-  title="Giveaway Winner Picker & Fisher-Yates Random List Shuffler Online | NumanX Tools"
+  title="Random List Shuffler & Giveaway Picker | NumanX"
   description="Randomize lists and pick unbiased giveaway winners using the Fisher-Yates shuffle algorithm. Free online random list shuffler and item picker."
   keywords="giveaway winner picker, random list shuffler, fisher yates shuffle, unbiased name wheel, random item picker"
   toolSchema={schema}
@@ -142,7 +142,7 @@ Item 3"></textarea>
               type="number"
               min="1"
               value="1"
-              class="w-16 px-2 py-1.5 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-teal-400/50 focus:outline-none transition-all"
+              class="w-16 px-2 py-1.5 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-teal-400/50 focus:outline-none transition-all" aria-label="Number of items to pick"
             />
           </div>
           <div class="flex flex-wrap gap-2">
@@ -167,7 +167,7 @@ Item 3"></textarea>
               >Download</button
             >
             <select
-              id="export-format"
+              id="export-format" aria-label="Export file format"
               class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
             >
               <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option

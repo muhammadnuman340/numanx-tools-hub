@@ -32,7 +32,7 @@ Modern social media recommendation engines (TikTok's Monolith, Instagram's Graph
     <a href="/tools/hashtag-generator/" class="text-[11px] font-semibold text-indigo-400 hover:text-indigo-300 no-underline">Launch Full Tool →</a>
   </div>
   <div class="flex gap-2 mb-3">
-    <input type="text" id="mini-hashtag-input" placeholder="e.g. travel, tech, fitness..." class="flex-1 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" />
+    <input type="text" id="mini-hashtag-input" placeholder="e.g. travel, tech, fitness..." class="flex-1 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" aria-label="Keywords for hashtags" />
     <button type="button" id="mini-hashtag-btn" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-bold text-white transition">Generate</button>
   </div>
   <div id="mini-hashtag-results" class="text-xs font-mono p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-indigo-300 min-h-[38px] flex items-center flex-wrap gap-1.5">

@@ -98,7 +98,7 @@ const schema = {
 ---
 
 <MainLayout
-  title="YouTube Video Tag & Meta Keyword Generator Online Free | NumanX Tools"
+  title="YouTube Tag & Meta Keyword Generator | NumanX"
   description="Generate relevant tags, keywords, and hashtags from any content or video transcript using client-side extraction. Cross-linked with viral hashtag generator."
   keywords="youtube video tag generator, meta keyword generator, video tags extractor, content tags online, free tag generator"
   toolSchema={schema}
@@ -204,7 +204,7 @@ const schema = {
             <label class="text-xs text-tertiary font-medium">Number of tags:</label>
             <select
               id="tag-count"
-              class="bg-surface-2 border border-surface-3 text-white text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-violet-500"
+              class="bg-surface-2 border border-surface-3 text-white text-xs rounded-lg px-3 py-2 focus:outline-none focus:border-violet-500" aria-label="Number of tags"
             >
               <option value="5">5</option>
               <option value="10" selected>10</option>
@@ -219,7 +219,7 @@ const schema = {
           >
           <div class="flex gap-2 mt-3">
             <select
-              id="export-format"
+              id="export-format" aria-label="Export file format"
               class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
             >
               <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option

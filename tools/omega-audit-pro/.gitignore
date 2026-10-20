@@ -1,0 +1,7 @@
+node_modules/
+audit-reports/
+.env
+.env.*
+!.env.example
+*auth-headers*.json
+*oauth*.json

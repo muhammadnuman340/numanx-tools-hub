@@ -130,10 +130,10 @@ const useCases = [
       <ShareBar />
       <div class="max-w-3xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6 md:p-10 relative text-center">
-           <input type="file" id="file-input" accept="application/pdf" class="hidden" />
+           <input type="file" id="file-input" accept="application/pdf" class="hidden" aria-label="Upload PDF to convert" />
            <div id="drop-zone" class="border-2 border-dashed border-surface-2 hover:border-red-500/50 rounded-2xl p-10 cursor-pointer transition-all mb-8">
               <div class="text-4xl mb-4">🖼️</div>
-              <h3 class="text-xl font-semibold text-white mb-2">Upload a PDF file</h3>
+              <h2 class="text-xl font-semibold text-white mb-2">Upload a PDF file</h2>
               <p class="text-sm text-muted">Drag & Drop or click to browse</p>
            </div>
            
@@ -189,7 +189,11 @@ const useCases = [
 <script>
   // @ts-ignore
   const pdfjsLib = window['pdfjs-dist/build/pdf'];
-  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  // Engine comes from a CDN; guard setup so a blocked or slow request
+  // cannot crash the page before a file is even selected.
+  if (pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
 
   const dropZone = document.getElementById('drop-zone');
   const fileInput = document.getElementById('file-input') as HTMLInputElement;
@@ -244,6 +248,15 @@ const useCases = [
 
   async function handleFile(file: File) {
     if (file.type !== 'application/pdf') return;
+
+    if (!pdfjsLib) {
+      if (statusText) {
+        statusText.textContent = 'PDF engine failed to load. Please check your connection and reload the page.';
+        statusText.classList.remove('hidden');
+        statusText.classList.add('text-red-400');
+      }
+      return;
+    }
     
     try {
       selectedFile = file;
@@ -331,6 +344,8 @@ const useCases = [
       if (progressText) progressText.textContent = '100%';
       convertBtn.textContent = 'Zipping files...';
 
+      // @ts-ignore
+      if (!window.fflate) throw new Error('ZIP engine failed to load. Please check your connection and reload the page.');
       // @ts-ignore
       const { zipSync } = window.fflate;
       const zippedBlob = new Blob([zipSync(zipData)], { type: 'application/zip' });

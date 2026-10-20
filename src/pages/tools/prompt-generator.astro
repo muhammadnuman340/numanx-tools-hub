@@ -108,8 +108,8 @@ const schema = {
 ---
 
 <MainLayout
-  title="ChatGPT, Claude & Midjourney System Prompt Builder & Template Generator | NumanX Tools"
-  description="Build high-performance system prompts for ChatGPT, Claude 3.5, and Midjourney v6 using proven Role-Task-Format and Chain-of-Thought engineering frameworks. 100% free and client-side."
+  title="AI Prompt Generator for ChatGPT, Claude & Midjourney | NumanX"
+  description="Build high-performance prompts for ChatGPT, Claude and Midjourney with proven frameworks. Free, local and private."
   keywords="chatgpt prompt builder, midjourney prompt generator, claude system prompt maker, prompt engineering templates, ai prompt generator free"
   toolSchema={schema}
   faq={faqItems}
@@ -179,7 +179,7 @@ const schema = {
                 id="task-input"
                 rows="3"
                 placeholder="e.g., Write a blog post about the benefits of remote work, focusing on productivity and mental health."
-                class="w-full bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-y focus:outline-none focus:border-violet-500/60 transition-all"
+                class="w-full bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-y focus:outline-none focus:border-violet-500/60 transition-all" aria-label="Task or topic"
               ></textarea>
             </div>
 
@@ -188,7 +188,7 @@ const schema = {
                 <label class="block text-sm font-medium text-tertiary mb-2">Framework</label>
                 <select
                   id="framework-select"
-                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer"
+                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer" aria-label="Prompt framework"
                 >
                   <option value="rtf">Role-Task-Format (Best for General Use)</option>
                   <option value="cot">Chain of Thought (Best for Logic/Math)</option>
@@ -201,7 +201,7 @@ const schema = {
                 <label class="block text-sm font-medium text-tertiary mb-2">Persona / Tone</label>
                 <select
                   id="persona-select"
-                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer"
+                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer" aria-label="Persona or tone"
                 >
                   <option value="expert">Industry Expert</option>
                   <option value="professional">Professional / Corporate</option>
@@ -216,7 +216,7 @@ const schema = {
                 <label class="block text-sm font-medium text-tertiary mb-2">Output Format</label>
                 <select
                   id="format-select"
-                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer"
+                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer" aria-label="Output format"
                 >
                   <option value="markdown">Markdown (Default)</option>
                   <option value="bullet">Bullet Points</option>
@@ -230,7 +230,7 @@ const schema = {
                 <label class="block text-sm font-medium text-tertiary mb-2">Target Audience</label>
                 <select
                   id="audience-select"
-                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer"
+                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer" aria-label="Target audience"
                 >
                   <option value="general">General Public</option>
                   <option value="beginners">Beginners / Novices</option>
@@ -244,6 +244,7 @@ const schema = {
               <label class="block text-sm font-medium text-tertiary mb-2">Examples (Required for Few-Shot)</label>
               <textarea
                 id="examples-input"
+                aria-label="Few-shot examples"
                 rows="3"
                 placeholder="Example 1: Input -> Output
 Example 2: Input -> Output"
@@ -295,7 +296,7 @@ Example 2: Input -> Output"
               rows="8"
               readonly
               placeholder="Your optimized prompt will appear here ready to copy..."
-              class="w-full bg-black/40 border border-surface-3 rounded-xl p-5 text-sm text-purple-100 placeholder-zinc-600 resize-y focus:outline-none transition-all font-mono leading-relaxed"
+              class="w-full bg-black/40 border border-surface-3 rounded-xl p-5 text-sm text-purple-100 placeholder-zinc-600 resize-y focus:outline-none transition-all font-mono leading-relaxed" aria-label="Generated prompt"
             ></textarea>
           </div>
         </div>

@@ -143,8 +143,8 @@ const useCases = [
 ---
 
 <MainLayout
-  title="Exact Age Calculator Online — Years, Months, Days, Hours & Next Birthday | NumanX Tools"
-  description="Calculate your exact age in years, months, days, hours, and minutes. Free online age calculator with next birthday countdown, zodiac sign, and fun life statistics."
+  title="Exact Age Calculator — Years, Months, Days & Hours | NumanX"
+  description="Calculate your exact age in years, months, days and hours, with next birthday countdown, zodiac sign and life statistics."
   keywords="exact age calculator, age calculator, calculate age, age in years months days, birthday countdown, next birthday calculator, zodiac sign"
   toolSchema={acSchema}
   faq={faqItems}
@@ -242,6 +242,7 @@ const useCases = [
                     <div class="relative">
                       <select
                         id={`dob-${field}`}
+                        aria-label={isMonth ? 'Birth month' : isYear ? 'Birth year' : 'Birth day'}
                         class="w-full bg-zinc-950 text-primary text-sm px-3 py-3 rounded-xl border border-surface appearance-none focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all cursor-pointer"
                       >
                         <option value="" disabled selected>
