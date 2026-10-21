@@ -156,12 +156,14 @@ const useCases = [
   </main>
 </MainLayout>
 
-<script src="https://unpkg.com/cronstrue@2.48.0/dist/cronstrue.min.js" is:inline></script>
 <script>
-  const input = document.getElementById('cron-input') as HTMLInputElement;
+  import cronstrue from 'cronstrue';
+
+  const input = document.getElementById('cron-input') as HTMLInputElement | null;
   const result = document.getElementById('result-text');
 
   function update() {
+    if (!input || !result) return;
     const val = input.value.trim();
     if (!val) {
       result.textContent = 'Enter a cron expression';
@@ -169,7 +171,6 @@ const useCases = [
       return;
     }
     try {
-      // @ts-ignore
       const text = cronstrue.toString(val);
       result.textContent = text;
       result.className = 'text-xl md:text-2xl font-medium text-emerald-400';
@@ -179,5 +180,5 @@ const useCases = [
     }
   }
 
-  input.addEventListener('input', update);
+  input?.addEventListener('input', update);
 </script>

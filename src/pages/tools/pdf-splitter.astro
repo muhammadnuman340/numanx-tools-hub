@@ -178,8 +178,9 @@ const useCases = [
   </main>
 </MainLayout>
 
-<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" is:inline></script>
 <script>
+  import { PDFDocument } from 'pdf-lib';
+
   const dropZone = document.getElementById('drop-zone');
   const fileInput = document.getElementById('file-input') as HTMLInputElement;
   const fileInfo = document.getElementById('file-info');
@@ -244,8 +245,7 @@ const useCases = [
       splitBtn.disabled = true;
 
       const arrayBuffer = await file.arrayBuffer();
-      // @ts-ignore
-      pdfDoc = await window.PDFLib.PDFDocument.load(arrayBuffer);
+      pdfDoc = await PDFDocument.load(arrayBuffer);
       totalPages = pdfDoc.getPageCount();
       
       if (pageCountText) pageCountText.textContent = `${totalPages} pages total`;
@@ -312,15 +312,13 @@ const useCases = [
         statusText.classList.replace('text-red-400', 'text-muted');
       }
 
-      // @ts-ignore
-      const { PDFDocument } = window.PDFLib;
       const newPdf = await PDFDocument.create();
       
       const copiedPages = await newPdf.copyPages(pdfDoc, indicesToExtract);
       copiedPages.forEach((page: any) => newPdf.addPage(page));
 
       const pdfBytes = await newPdf.save();
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const blob = new Blob([pdfBytes as BlobPart], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       
       const a = document.createElement('a');
