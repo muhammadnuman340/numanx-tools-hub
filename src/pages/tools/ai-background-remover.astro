@@ -268,7 +268,7 @@ const useCases = [
       // We must explicitly configure publicPath to use a CDN because Astro doesn't
       // package the WASM and ONNX files from node_modules automatically in the same way Vite does without extra config.
       const config = {
-        publicPath: "https://unpkg.com/@imgly/background-removal@1.7.0/dist/",
+        publicPath: "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/",
         progress: (key: string, current: number, total: number) => {
             const percent = Math.round((current / total) * 100);
             if(progressBar) progressBar.style.width = `${percent}%`;
