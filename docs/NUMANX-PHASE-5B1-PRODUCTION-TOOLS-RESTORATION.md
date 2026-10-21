@@ -4,8 +4,8 @@
 > **Date:** October 21, 2026  
 > **Branch:** `fix/phase-5b1-production-tools`  
 > **Starting Baseline HEAD:** `2c442f696521e4b15d378c3744de0586a9d40582`  
-> **Target Scope:** 6 CSP-Broken Production Tools Restored  
-> **Security Policy:** Zero CSP Weakening (unpkg.com & cdnjs.cloudflare.com 100% Eliminated)  
+> **Target Scope:** 6 CSP-Broken Production Tools Restored
+> **Security Policy:** Approved Narrow CSP connect-src Exception (unpkg.com & cdnjs.cloudflare.com 100% Eliminated)
 
 ---
 
@@ -162,9 +162,10 @@ Final Content Security Policy in `public/_headers`:
 Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https://www.google-analytics.com https://pagead2.googlesyndication.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://cdn.jsdelivr.net https://staticimgly.com; worker-src 'self' blob:; frame-src 'self' https://www.googletagmanager.com https://googleads.g.doubleclick.net
 ```
 
+- **CSP Policy Classification:** `APPROVED NARROW CSP CONNECT-SRC EXCEPTION`
 - `default-src`: Unchanged (`'self'`).
-- `script-src`: **Zero relaxation.** Neither `unpkg.com`, `cdnjs.cloudflare.com`, nor `staticimgly.com` was added to `script-src`.
-- `connect-src`: Added `https://staticimgly.com` strictly for binary ONNX/WASM model fetches.
+- `script-src`: **Zero relaxation.** Strict `'self'` maintained. Neither `unpkg.com`, `cdnjs.cloudflare.com`, nor `staticimgly.com` was added to `script-src`.
+- `connect-src`: Added `https://staticimgly.com` exclusively for binary ONNX/WASM model chunk downloads (approved narrow exception avoiding 79 MB binary Git repository bloat).
 - `worker-src`: Standardized to `'self' blob:`.
 
 ---
@@ -204,7 +205,7 @@ Inspection of build chunks in `dist/_astro/`:
 | **PDF Splitter** | **FULLY OFFLINE AFTER APP ASSETS CACHED** | Zero network calls needed. |
 | **PDF to Image** | **FULLY OFFLINE AFTER APP ASSETS CACHED** | Worker and bundled code cached same-origin. |
 | **AI Image Upscaler** | **OFFLINE AFTER FIRST MODEL LOAD** | Model cached in same-origin HTTP cache / Service Worker. |
-| **AI Background Remover** | **OFFLINE AFTER FIRST MODEL LOAD** | ONNX weights cached in browser Cache Storage API. |
+| **AI Background Remover** | **PARTIAL / CACHE-DEPENDENT** | Relies on browser HTTP disk cache (max-age=14400) for cross-origin staticimgly.com ONNX/WASM chunks; sw.js intercepts only same-origin requests. |
 
 ---
 
