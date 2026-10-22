@@ -1094,19 +1094,6 @@ export const tools: Tool[] = [
     relatedIds: ['pdf-merger', 'image-compressor', 'jpg-to-png'],
   },
   {
-    id: 'sheet-secret-scanner',
-    name: 'Spreadsheet Secret & Key Scanner',
-    description: 'Scan CSV, TSV, and spreadsheet data for leaked API keys, tokens, passwords, and private credentials.',
-    longDescription:
-      'Client-side credential auditor scanning text data for AWS keys, OpenAI tokens, Google API keys, and private credentials before publishing.',
-    category: 'developer-tools',
-    icon: 'code',
-    url: '/tools/sheet-secret-scanner/',
-    isNew: true,
-    keywords: ['secret scanner', 'credential leak detector', 'api key scanner', 'csv security scanner', 'audit spreadsheet'],
-    relatedIds: ['sheet-backend-generator', 'jwt-decoder', 'cipher-hash'],
-  },
-  {
     id: 'strike-rate-average-calculator',
     name: 'Batting Strike Rate & Average Calculator',
     description: 'Calculate batting strike rate and averages with 1-click 1080x1920 mobile Shorts/Reels stat card export.',
