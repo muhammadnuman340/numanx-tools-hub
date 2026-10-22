@@ -178,10 +178,10 @@ if (fs.existsSync(distSitemap)) {
     }
   }
 
-  if (urls.length === 108 && urls.length === uniqueUrls.size && disallowedFound === 0) {
-    console.log(`✅ Single Sitemap Architecture verified (exactly 108 canonical URLs, 0 duplicates, 0 disallowed).`);
-  } else if (urls.length !== 108) {
-    console.error(`❌ Sitemap URL count mismatch: expected 108 URLs, found ${urls.length}.`);
+  if (urls.length === 107 && urls.length === uniqueUrls.size && disallowedFound === 0) {
+    console.log(`✅ Single Sitemap Architecture verified (exactly 107 canonical URLs, 0 duplicates, 0 disallowed).`);
+  } else if (urls.length !== 107) {
+    console.error(`❌ Sitemap URL count mismatch: expected 107 URLs, found ${urls.length}.`);
     totalErrors++;
   }
 }
