@@ -10,7 +10,7 @@ This document is the definitive Cloud Ops manual for NumanX Tools Hub. It define
 - **Compute Layer:** Cloudflare Edge Network (Static Delivery)
 - **Build Engine:** Astro SSG (`npm run build`)
 - **DNS Registrar:** Cloudflare (Proxied `Orange Cloud` mode)
-- **Domain:** `numanxtools.site`
+- **Domain:** `numanx-tools.pages.dev`
 
 ---
 

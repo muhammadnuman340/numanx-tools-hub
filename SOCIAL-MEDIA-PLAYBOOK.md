@@ -52,7 +52,7 @@ Instead of running a dark ad, post the video organically to your `@NumanXTools` 
 
 ### 2.3 Retargeting Strategy (Advanced)
 - **Meta Pixel:** Ensure the Facebook/Meta Pixel is installed in your Astro `MainLayout` `<head>`.
-- **The Campaign:** Create an ad campaign targeting users who visited `numanxtools.site` but "Bounced" (left without using a tool). 
+- **The Campaign:** Create an ad campaign targeting users who visited `https://numanx-tools.pages.dev` but "Bounced" (left without using a tool).
 - **The Creative:** "Forgot to compress that image? Come back, it's still 100% free."
 
 ---
@@ -89,5 +89,5 @@ Never shoot a video for just one platform.
 ## 4. Crucial Account Setup Rules
 
 1. **The Link In Bio:** TikTok requires 1,000 followers before you can put a clickable link in your bio. To bypass this, switch your account to a **Registered Business Account**. This allows you to add a link immediately.
-2. **Linktree Alternative:** Do not use Linktree. Create a page at `numanxtools.site/links/` that looks like Linktree but keeps users on your own domain (massive SEO benefit).
+2. **Linktree Alternative:** Do not use Linktree. Create a page at `https://numanx-tools.pages.dev/links/` that looks like Linktree but keeps users on your own domain (massive SEO benefit).
 3. **Visual Branding:** Ensure your TikTok avatar, YouTube banner, and Instagram highlights all use the exact same NumanX purple/dark-mode branding for instant recognition.
