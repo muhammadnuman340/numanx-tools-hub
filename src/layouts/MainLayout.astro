@@ -21,6 +21,7 @@ import AmbientBackground from '../components/AmbientBackground.astro';
 import ClientRouter from 'astro/components/ClientRouter.astro';
 
 const GA_ID = import.meta.env.PUBLIC_GA_ID || '';
+const GTM_ID = import.meta.env.PUBLIC_GTM_ID || 'GTM-TBXFNLDB';
 const ADSENSE_ID = import.meta.env.PUBLIC_ADSENSE_ID || '';
 
 const {
@@ -66,7 +67,6 @@ const {
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
     <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
     {ADSENSE_ID && <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin />}
 
     <SEO
@@ -86,36 +86,8 @@ const {
       type={type}
     />
 
-    {GA_ID && <Analytics id={GA_ID} />}
+    <Analytics gaId={GA_ID} gtmId={GTM_ID} />
     <AdSense />
-
-    <!-- Google Tag Manager (lazy, after interaction) -->
-    <script>
-      var gt = document.documentElement;
-      ['touchstart', 'click', 'keydown', 'scroll'].forEach(function (e) {
-        gt.addEventListener(
-          e,
-          function () {
-            setTimeout(function () {
-              var w = window,
-                d = document,
-                s = 'script',
-                l = 'dataLayer',
-                i = 'GTM-TBXFNLDB';
-              w[l] = w[l] || [];
-              w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-              var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-              j.async = true;
-              j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-              f.parentNode.insertBefore(j, f);
-            }, 1e3);
-          },
-          { once: true },
-        );
-      });
-    </script>
 
     <ClientRouter fallback="animate" />
     <slot name="head" />
@@ -129,15 +101,6 @@ const {
     >
       Skip to main content
     </a>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-TBXFNLDB"
-        height="0"
-        width="0"
-        style="display:none;visibility:hidden"></iframe></noscript
-    >
-    <!-- End Google Tag Manager (noscript) -->
     <!-- Top Scroll Progress Bar -->
     <div
       id="scroll-progress"
