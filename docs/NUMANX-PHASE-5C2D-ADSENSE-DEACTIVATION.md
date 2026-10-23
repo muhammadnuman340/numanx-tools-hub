@@ -97,8 +97,12 @@ Audited across root (`/`), `/tools/json-formatter/`, and `/tools/image-resizer/`
 
 ---
 
-## 5. Diagnostics
-- **TypeScript**: 1285 errors / 830 hints (no regression from baseline 1284 / 832).
+## 5. Diagnostics & TypeScript Delta Resolution
+- **TypeScript Delta Investigation**:
+  - Initial Candidate Commit (`646c5fd`): 1285 errors / 830 hints (+1 error over baseline 1284 / 832).
+  - Cause: In `src/components/AdUnit.astro`, passing `format={format}` (which included `'auto'`) to `<MonetizationSlot>` caused ts(2322) because `MonetizationSlot` expects `'horizontal' | 'vertical' | 'rectangle' | 'leaderboard' | 'in-feed'`.
+  - Resolution: Narrowed `format` via `const resolvedFormat = format === 'auto' ? 'horizontal' : format;` in `src/components/AdUnit.astro`.
+  - Post-Fix TypeScript: 1284 errors / 830 hints (0 new Phase 5C.2D errors; hints improved from 832 to 830).
 - **ESLint**: 4 errors / 2 warnings (improved from baseline 5 errors / 2 warnings).
 - **Git diff**: 0 whitespace issues.
 

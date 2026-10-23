@@ -12,6 +12,8 @@ interface Props {
 }
 
 const { format = 'horizontal', class: className = '', category = 'utility' } = Astro.props;
+const resolvedFormat: 'horizontal' | 'vertical' | 'rectangle' | 'leaderboard' | 'in-feed' =
+  format === 'auto' ? 'horizontal' : format;
 ---
 
-<MonetizationSlot slotType="in-content-banner" format={format} category={category} class={className} />
+<MonetizationSlot slotType="in-content-banner" format={resolvedFormat} category={category} class={className} />
