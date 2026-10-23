@@ -308,6 +308,16 @@
                   class="inline-flex items-center min-h-6 text-sm font-medium text-zinc-400 hover:text-purple-300 transition-colors">Terms of Service</a
                 >
               </li>
+              <li>
+                <button
+                  type="button"
+                  id="open-cookie-settings"
+                  class="inline-flex items-center min-h-6 text-sm font-medium text-zinc-400 hover:text-purple-300 transition-colors cursor-pointer text-left focus:outline-none focus:text-purple-300"
+                  aria-label="Open cookie preferences and consent settings"
+                >
+                  Cookie Settings
+                </button>
+              </li>
             </ul>
           </nav>
         </div>
@@ -349,17 +359,24 @@
 </style>
 
 <script is:inline>
-  // Mouse tracking spotlight effect
+  // Mouse tracking spotlight effect and Cookie Settings handler
   document.addEventListener('astro:page-load', () => {
     const footer = document.getElementById('god-tier-footer');
-    if (!footer) return;
+    if (footer) {
+      footer.addEventListener('mousemove', (e) => {
+        const rect = footer.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        footer.style.setProperty('--mouse-x', `${x}px`);
+        footer.style.setProperty('--mouse-y', `${y}px`);
+      });
+    }
 
-    footer.addEventListener('mousemove', (e) => {
-      const rect = footer.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      footer.style.setProperty('--mouse-x', `${x}px`);
-      footer.style.setProperty('--mouse-y', `${y}px`);
-    });
+    const cookieSettingsBtn = document.getElementById('open-cookie-settings');
+    if (cookieSettingsBtn) {
+      cookieSettingsBtn.addEventListener('click', () => {
+        window.dispatchEvent(new CustomEvent('numanx:open-cookie-settings'));
+      });
+    }
   });
 </script>
