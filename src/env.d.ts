@@ -3,6 +3,7 @@
 interface ImportMetaEnv {
   readonly PUBLIC_GA_ID: string;
   readonly PUBLIC_ADSENSE_ID: string;
+  readonly PUBLIC_GTM_ID?: string;
 }
 
 interface ImportMeta {

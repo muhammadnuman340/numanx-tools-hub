@@ -131,5 +131,12 @@
     });
   }
 
-  document.addEventListener('astro:page-load', initCookieConsent);
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCookieConsent);
+    } else {
+      initCookieConsent();
+    }
+    document.addEventListener('astro:page-load', initCookieConsent);
+  }
 </script>

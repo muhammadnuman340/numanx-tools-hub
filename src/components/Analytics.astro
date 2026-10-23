@@ -1,13 +1,40 @@
 ---
-const { id = 'G-XXXXXXXXXX' } = Astro.props;
+/**
+ * Analytics.astro — Consent-Gated Analytics Component (Phase 5C.2C)
+ *
+ * Renders zero executable analytics script tags or network requests in initial HTML.
+ * Instead, delegates initialization to the central analytics consent loader
+ * (src/lib/analyticsConsent.ts), which strictly gates GA4 and GTM behind explicit consent.
+ */
+
+interface Props {
+  id?: string;
+  gaId?: string;
+  gtmId?: string;
+}
+
+const {
+  id,
+  gaId = id || import.meta.env.PUBLIC_GA_ID || '',
+  gtmId = import.meta.env.PUBLIC_GTM_ID || 'GTM-TBXFNLDB',
+} = Astro.props;
 ---
 
-<script async src={`https://www.googletagmanager.com/gtag/js?id=${id}`}></script>
+<div
+  id="nx-analytics-config"
+  data-ga-id={gaId}
+  data-gtm-id={gtmId}
+  class="hidden"
+  aria-hidden="true"
+>
+</div>
+
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag('js', new Date());
-  gtag('config', '${id}');
+  import { setupAnalyticsConsent } from '../lib/analyticsConsent';
+
+  const configEl = document.getElementById('nx-analytics-config');
+  const gaId = configEl?.getAttribute('data-ga-id') || '';
+  const gtmId = configEl?.getAttribute('data-gtm-id') || '';
+
+  setupAnalyticsConsent({ gaId, gtmId });
 </script>
