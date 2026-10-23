@@ -1,6 +1,6 @@
 ---
 // FILE: src/components/AdUnit.astro
-// Clean Monetization Fallback Engine (Volume 4 Specification)
+// Clean Monetization Fallback Engine — Phase 5C.2D (AdSense Fully Deactivated)
 import MonetizationSlot from './MonetizationSlot.astro';
 
 interface Props {
@@ -12,29 +12,6 @@ interface Props {
 }
 
 const { format = 'horizontal', class: className = '', category = 'utility' } = Astro.props;
-const ADSENSE_ID = import.meta.env.PUBLIC_ADSENSE_ID || '';
-const hasValidAdSense = Boolean(ADSENSE_ID && ADSENSE_ID !== 'ca-pub-XXXXXXXXXXXXXXXX');
 ---
 
-{hasValidAdSense ? (
-  <aside
-    aria-label="Advertisement"
-    class={`relative overflow-hidden rounded-2xl border border-surface bg-surface-1 min-h-[90px] block w-full ${className}`}
-  >
-    <span class="absolute top-1 right-2 text-[9px] text-muted font-medium select-none z-10 opacity-60">Ad</span>
-    <ins
-      class="adsbygoogle block w-full"
-      style="display:block"
-      data-ad-client={ADSENSE_ID}
-      data-ad-format="auto"
-      data-full-width-responsive="true"
-    />
-    <script is:inline>
-      try {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      } catch (e) {}
-    </script>
-  </aside>
-) : (
-  <MonetizationSlot slotType="in-content-banner" category={category} class={className} />
-)}
+<MonetizationSlot slotType="in-content-banner" format={format} category={category} class={className} />

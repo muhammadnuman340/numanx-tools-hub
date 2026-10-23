@@ -12,7 +12,6 @@ import SEO from '../components/SEO.astro';
 import SearchBar from '../components/SearchBar.astro';
 import BackToTop from '../components/BackToTop.astro';
 import Analytics from '../components/Analytics.astro';
-import AdSense from '../components/AdSense.astro';
 import Toast from '../components/ui/Toast.astro';
 import FeedbackButton from '../components/FeedbackButton.astro';
 import InstallPrompt from '../components/InstallPrompt.astro';
@@ -22,7 +21,6 @@ import ClientRouter from 'astro/components/ClientRouter.astro';
 
 const GA_ID = import.meta.env.PUBLIC_GA_ID || '';
 const GTM_ID = import.meta.env.PUBLIC_GTM_ID || 'GTM-TBXFNLDB';
-const ADSENSE_ID = import.meta.env.PUBLIC_ADSENSE_ID || '';
 
 const {
   title,
@@ -65,9 +63,7 @@ const {
 
     <!-- ─── Resource Hints ─── -->
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
     <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-    {ADSENSE_ID && <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin />}
 
     <SEO
       {title}
@@ -87,7 +83,6 @@ const {
     />
 
     <Analytics gaId={GA_ID} gtmId={GTM_ID} />
-    <AdSense />
 
     <ClientRouter fallback="animate" />
     <slot name="head" />
