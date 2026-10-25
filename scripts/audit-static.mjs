@@ -44,6 +44,7 @@ if (fs.existsSync(robotsPath)) {
     console.error('❌ robots.txt is missing Google-Extended or single sitemap.xml reference.');
     totalErrors++;
   }
+
 } else {
   console.error('❌ robots.txt missing in public directory.');
   totalErrors++;
@@ -184,6 +185,21 @@ if (fs.existsSync(distSitemap)) {
     console.error(`❌ Sitemap URL count mismatch: expected 107 URLs, found ${urls.length}.`);
     totalErrors++;
   }
+
+  const lastmodMatches = [...sitemapXml.matchAll(/<lastmod>([^<]*)<\/lastmod>/g)];
+  let invalidLastmodCount = 0;
+  for (const m of lastmodMatches) {
+    const val = m[1].trim();
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(val) || isNaN(new Date(val).getTime())) {
+      console.error(`❌ Invalid <lastmod> date format in sitemap.xml: "${val}" (must be W3C YYYY-MM-DD).`);
+      invalidLastmodCount++;
+      totalErrors++;
+    }
+  }
+  if (lastmodMatches.length > 0 && invalidLastmodCount === 0) {
+    console.log(`✅ Sitemap lastmod dates verified (all ${lastmodMatches.length} match strict W3C YYYY-MM-DD).`);
+  }
+
 }
 
 console.log('\n----------------------------------------');

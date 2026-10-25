@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: "Understanding Cricket Run Rate: A Beginner's Guide"
 description: 'Learn what run rate means in cricket, how to calculate it, and why it matters for match strategy.'
-date: 'May 28, 2026'
+date: '2026-05-28'
 author: 'NumanX Tools'
 category: 'Cricket Tools'
 tags: ['cricket', 'run rate', 'cricket analytics', 'sports', 'cricket strategy']

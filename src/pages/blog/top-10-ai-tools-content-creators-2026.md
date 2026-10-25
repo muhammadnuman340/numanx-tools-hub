@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'Top 10 AI Tools for Content Creators in 2026'
 description: 'Discover the best AI-powered tools revolutionizing content creation in 2026, from video editing to copywriting.'
-date: 'May 28, 2026'
+date: '2026-05-28'
 author: 'NumanX Tools'
 category: 'AI Tools'
 tags: ['AI tools', 'content creation', 'video editing', 'copywriting', 'productivity']

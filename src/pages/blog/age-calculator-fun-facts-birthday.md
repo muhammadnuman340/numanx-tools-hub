@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'Age Calculator Fun Facts About Your Birthday'
 description: 'Discover fascinating facts about your birth date, zodiac signs, historical events, and how old you really are.'
-date: 'May 30, 2026'
+date: '2026-05-30'
 author: 'NumanX Tools'
 category: 'Productivity'
 tags: ['age calculator', 'birthday fun facts', 'zodiac', 'time alive', 'trivia']

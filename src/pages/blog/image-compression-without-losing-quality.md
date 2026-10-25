@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'Image Compression Without Losing Quality'
 description: 'Learn how to dramatically reduce image file sizes while maintaining visual quality for web and print.'
-date: 'May 29, 2026'
+date: '2026-05-29'
 author: 'NumanX Tools'
 category: 'Image Tools'
 tags: ['image compression', 'file size', 'quality', 'optimization', 'web performance']
