@@ -3,6 +3,18 @@ import { tools, categories } from '../data/tools';
 const site = 'https://numanx-tools.pages.dev';
 const today = new Date().toISOString().split('T')[0];
 
+function toW3CDate(raw: unknown, fallback: string): string {
+  if (!raw || typeof raw !== 'string') return fallback;
+  const trimmed = raw.trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) return trimmed;
+  const parsed = new Date(trimmed);
+  if (isNaN(parsed.getTime())) return fallback;
+  const y = parsed.getFullYear();
+  const m = String(parsed.getMonth() + 1).padStart(2, '0');
+  const d = String(parsed.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
 interface PostFrontmatter {
   frontmatter?: { date?: string; lastmod?: string };
 }
@@ -46,7 +58,7 @@ export async function GET() {
   const blogPages: SitemapEntry[] = Object.entries(blogModules).map(([path, mod]) => {
     const slug = path.replace('./blog/', '').replace('.md', '');
     const post = mod as PostFrontmatter;
-    const date = post?.frontmatter?.lastmod || post?.frontmatter?.date || today;
+    const date = toW3CDate(post?.frontmatter?.lastmod || post?.frontmatter?.date, today);
     return {
       url: `/blog/${slug}/`,
       priority: '0.7',
@@ -59,7 +71,7 @@ export async function GET() {
   const guidePages: SitemapEntry[] = Object.entries(guideModules).map(([path, mod]) => {
     const slug = path.replace('./guides/', '').replace('.md', '');
     const guide = mod as PostFrontmatter;
-    const date = guide?.frontmatter?.lastmod || guide?.frontmatter?.date || today;
+    const date = toW3CDate(guide?.frontmatter?.lastmod || guide?.frontmatter?.date, today);
     return {
       url: `/guides/${slug}/`,
       priority: '0.7',
@@ -72,7 +84,7 @@ export async function GET() {
   const comparisonPages: SitemapEntry[] = Object.entries(comparisonModules).map(([path, mod]) => {
     const slug = path.replace('./comparisons/', '').replace('.md', '');
     const comp = mod as PostFrontmatter;
-    const date = comp?.frontmatter?.lastmod || comp?.frontmatter?.date || today;
+    const date = toW3CDate(comp?.frontmatter?.lastmod || comp?.frontmatter?.date, today);
     return {
       url: `/comparisons/${slug}/`,
       priority: '0.7',

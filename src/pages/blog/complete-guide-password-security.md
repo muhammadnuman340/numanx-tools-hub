@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'The Complete Guide to Password Security'
 description: 'Everything you need to know about creating, managing, and storing secure passwords in 2026.'
-date: 'May 28, 2026'
+date: '2026-05-28'
 author: 'NumanX Tools'
 category: 'Productivity'
 tags: ['password security', 'cybersecurity', 'password manager', '2FA', 'online safety']

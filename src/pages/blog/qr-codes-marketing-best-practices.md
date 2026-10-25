@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'QR Codes in Marketing: Best Practices for 2026'
 description: 'How to use QR codes effectively in your marketing campaigns with proven strategies and designs.'
-date: 'May 29, 2026'
+date: '2026-05-29'
 author: 'NumanX Tools'
 category: 'Creator Tools'
 tags: ['QR codes', 'marketing', 'digital marketing', 'QR code best practices', 'campaign']

@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'How to Compress Images Without Losing Quality'
 description: 'Learn the best techniques to reduce image file sizes while keeping visual quality intact — perfect for websites and social media.'
-date: 'May 25, 2026'
+date: '2026-05-25'
 author: 'NumanX Tools'
 category: 'Image Tools'
 tags: ['image compression', 'optimization', 'web performance', 'SEO', 'tutorial']

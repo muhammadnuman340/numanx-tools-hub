@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'Best AI Tools for Students in 2026'
 description: 'Boost your grades and save time with these powerful AI tools designed for students and academic success.'
-date: 'May 28, 2026'
+date: '2026-05-28'
 author: 'NumanX Tools'
 category: 'AI Tools'
 tags: ['AI tools', 'students', 'productivity', 'study tools', 'education']

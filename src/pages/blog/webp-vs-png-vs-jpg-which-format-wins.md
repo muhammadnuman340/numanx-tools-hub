@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'WebP vs PNG vs JPG: Which Image Format Wins in 2026?'
 description: 'Compare the pros and cons of WebP, PNG, and JPG formats to choose the best one for any use case.'
-date: 'May 29, 2026'
+date: '2026-05-29'
 author: 'NumanX Tools'
 category: 'Image Tools'
 tags: ['WebP', 'PNG', 'JPG', 'image formats', 'web optimization', 'comparison']

@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'Best YouTube Tools for Creators in 2026'
 description: 'Grow your YouTube channel faster with these essential tools for thumbnails, SEO, analytics, and content creation.'
-date: 'May 22, 2026'
+date: '2026-05-22'
 author: 'NumanX Tools'
 category: 'Creator Tools'
 tags: ['YouTube', 'creators', 'thumbnail', 'SEO', 'content creation']

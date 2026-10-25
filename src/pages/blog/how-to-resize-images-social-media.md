@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'How to Resize Images for Social Media'
 description: 'Perfect image sizes for Instagram, TikTok, YouTube, Twitter, LinkedIn, and Facebook — with free resizing tools.'
-date: 'May 30, 2026'
+date: '2026-05-30'
 author: 'NumanX Tools'
 category: 'Image Tools'
 tags: ['image resizing', 'social media', 'image sizes', 'instagram sizes', 'youtube thumbnails']

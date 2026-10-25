@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'Hashtag Strategy for Viral Growth on Social Media'
 description: 'Master the art of hashtag research and strategy to maximize reach and engagement on every platform.'
-date: 'May 29, 2026'
+date: '2026-05-29'
 author: 'NumanX Tools'
 category: 'Creator Tools'
 tags: ['hashtags', 'social media', 'viral growth', 'instagram', 'tiktok', 'twitter']

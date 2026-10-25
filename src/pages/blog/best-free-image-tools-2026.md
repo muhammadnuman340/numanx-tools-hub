@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'Best Free Image Tools in 2026'
 description: 'Compare the best free image tools for compression, conversion, resizing and editing in 2026, including browser-based options.'
-date: 'Jun 1, 2026'
+date: '2026-06-01'
 author: 'NumanX Tools'
 category: 'Image Tools'
 tags: ['image tools', 'free tools', 'compression', 'conversion', '2026', 'seo']
