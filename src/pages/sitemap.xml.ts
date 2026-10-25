@@ -39,7 +39,6 @@ export async function GET() {
     { url: '/blog/', priority: '0.8', changefreq: 'weekly', lastmod: today },
     { url: '/guides/', priority: '0.8', changefreq: 'weekly', lastmod: today },
     { url: '/comparisons/', priority: '0.8', changefreq: 'weekly', lastmod: today },
-    { url: '/chat/', priority: '0.8', changefreq: 'weekly', lastmod: today },
     { url: '/recommended/', priority: '0.7', changefreq: 'monthly', lastmod: today },
     { url: '/about/', priority: '0.7', changefreq: 'monthly', lastmod: today },
     { url: '/contact/', priority: '0.6', changefreq: 'monthly', lastmod: today },
