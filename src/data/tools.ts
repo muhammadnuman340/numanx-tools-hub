@@ -837,10 +837,11 @@ export const tools: Tool[] = [
   },
   {
     id: 'ai-image-generator',
-    name: 'AI Image Generator',
-    description: 'Generate pixel art, ASCII art, patterns, and geometric images from text prompts.',
+    name: 'Procedural Art Generator',
+    description:
+      'Generate procedural pixel art, ASCII art, patterns, and geometric visual compositions from text prompts.',
     longDescription:
-      'Generate unique images from text descriptions using client-side algorithms. Choose from Pixel Art, ASCII Art, Pattern, and Geometric styles. All rendering is done in your browser using HTML Canvas — no API calls, no external services, no server uploads.',
+      'Generate unique visual compositions from text descriptions using procedural client-side algorithms. Choose from Pixel Art, ASCII Art, Pattern, and Geometric styles. All rendering is done in your browser using HTML5 Canvas — no AI API calls, no external models, no server uploads.',
     category: 'image-tools',
     icon: 'image',
     url: '/tools/ai-image-generator/',

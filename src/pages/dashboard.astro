@@ -7,16 +7,9 @@ const dashboardTools = allTools.map((t) => ({
   slug: t.id,
   cat: catInfos.find((c) => c.id === t.category)?.title || t.category,
   status: 'Active',
-  completion: 100,
-  latency: ['14ms', '8ms', '12ms', '18ms', '6ms', '5ms', '24ms', '16ms', '22ms', '20ms'][
-    Math.floor(Math.random() * 11)
-  ],
-  reliability: Math.random() > 0.2 ? '100%' : '99.9%',
-  trend: Array.from({ length: 7 }, () => Math.floor(Math.random() * 80) + 10),
+  mode: 'Client-Side',
 }));
 
-const growthValues = ['+32%', '+24%', '+40%', '+15%', '+28%', '+35%'];
-const progressValues = [85, 70, 95, 60, 50, 75];
 const colorValues = [
   'from-purple-500 to-pink-500',
   'from-blue-500 to-cyan-500',
@@ -34,14 +27,17 @@ const shadowValues = [
   'shadow-cyan-500/10',
 ];
 
-const categories = catInfos.map((c, i) => ({
-  name: c.title,
-  count: c.count,
-  growth: growthValues[i] || '+20%',
-  progress: progressValues[i] || 75,
-  color: colorValues[i] || 'from-purple-500 to-pink-500',
-  shadow: shadowValues[i] || 'shadow-purple-500/10',
-}));
+const categories = catInfos.map((c, i) => {
+  const share = allTools.length > 0 ? Math.round((c.count / allTools.length) * 100) : 0;
+  return {
+    name: c.title,
+    count: c.count,
+    share: `${share}% of catalog`,
+    progress: share,
+    color: colorValues[i] || 'from-purple-500 to-pink-500',
+    shadow: shadowValues[i] || 'shadow-purple-500/10',
+  };
+});
 
 const activeCategoryCount = catInfos.filter((c) => c.count > 0).length;
 
@@ -49,14 +45,15 @@ const activeCategoryCount = catInfos.filter((c) => c.count > 0).length;
 const blogPostModules = import.meta.glob('./blog/*.md', { eager: true });
 const blogPostEntries = Object.entries(blogPostModules).map(([path, mod]) => ({
   title: (mod as any).frontmatter?.title || path,
-  views: '—',
-  conversion: '—%',
+  category: (mod as any).frontmatter?.category || 'Guide',
+  date: (mod as any).frontmatter?.date || '',
 }));
+
+const blogCategories = new Set(blogPostEntries.map((p) => p.category));
 
 const blogAnalytics = {
   published: blogPostEntries.length,
-  planned: 6,
-  seoScore: 98,
+  categoriesCount: blogCategories.size,
   posts: blogPostEntries.slice(0, 8),
 };
 
@@ -192,17 +189,16 @@ const roadmap = [
                 ></span>
                 <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              ALL SYSTEMS OPERATIONAL
+              LOCAL BROWSER WORKSPACE
             </div>
             <h1 class="text-3xl md:text-5xl font-black tracking-tight text-white leading-none">
-              NumanX Platform
+              NumanX Local
               <span class="bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent"
-                >Dashboard</span
+                >Workspace</span
               >
             </h1>
             <p class="mt-3 text-tertiary text-sm md:text-base max-w-xl">
-              Track real-time compilation weights, categorised directory paths, publishing velocity, and roadmap
-              metrics.
+              Track your local browser tool usage, saved favorites, category distributions, and ecosystem roadmap.
             </p>
           </div>
 
@@ -246,11 +242,10 @@ const roadmap = [
           <div
             class="text-3xl sm:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent mt-2"
           >
-            <span class="stat-counter" data-target={allTools.length}>{allTools.length}</span>+
+            <span class="stat-counter" data-target={allTools.length}>{allTools.length}</span>
           </div>
-          <div class="flex items-center gap-1 text-[10px] text-emerald-400 mt-2 font-medium">
-            <span>↑ 18.2%</span>
-            <span class="text-dim">vs last month</span>
+          <div class="flex items-center gap-1 text-[10px] text-dim mt-2 font-medium">
+            <span>Production tools</span>
           </div>
         </div>
 
@@ -333,14 +328,14 @@ const roadmap = [
             class="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors"
           >
           </div>
-          <p class="text-xs font-semibold text-muted uppercase tracking-widest">Future Projects</p>
+          <p class="text-xs font-semibold text-muted uppercase tracking-widest">Local Sandbox</p>
           <div
             class="text-3xl sm:text-5xl font-black bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent mt-2"
           >
-            <span class="stat-counter" data-target="10">0</span>+
+            <span>Active</span>
           </div>
           <div class="flex items-center gap-1 text-[10px] text-purple-400 mt-2 font-medium">
-            <span>On roadmap</span>
+            <span>Zero server uploads</span>
           </div>
         </div>
       </section>
@@ -367,9 +362,8 @@ const roadmap = [
                   <tr class="border-b border-zinc-800 text-[10px] font-bold text-muted uppercase tracking-widest">
                     <th class="pb-3 font-semibold">Tool Name</th>
                     <th class="pb-3 font-semibold">Division</th>
-                    <th class="pb-3 font-semibold">Execution Latency</th>
-                    <th class="pb-3 font-semibold">Stability</th>
-                    <th class="pb-3 font-semibold text-right">Progress</th>
+                    <th class="pb-3 font-semibold">Execution Mode</th>
+                    <th class="pb-3 font-semibold text-right">Local Usage</th>
                   </tr>
                 </thead>
                 <tbody id="tool-usage-body" class="divide-y divide-zinc-900/60 text-xs text-secondary">
@@ -385,9 +379,8 @@ const roadmap = [
                             {t.cat}
                           </span>
                         </td>
-                        <td class="py-3.5 font-mono text-tertiary">{t.latency}</td>
-                        <td class="py-3.5 font-mono text-emerald-400">{t.reliability}</td>
-                        <td class="py-3.5 text-right font-mono text-purple-400 font-bold">{t.completion}%</td>
+                        <td class="py-3.5 font-mono text-tertiary">{t.mode}</td>
+                        <td class="py-3.5 text-right font-mono text-zinc-500">—</td>
                       </tr>
                     ))
                   }
@@ -406,11 +399,11 @@ const roadmap = [
                   <div class={`glass-card rounded-xl p-5 ${c.shadow}`}>
                     <div class="flex justify-between items-center mb-3">
                       <span class="text-sm font-semibold text-primary">{c.name}</span>
-                      <span class="text-xs font-bold text-emerald-400">{c.growth}</span>
+                      <span class="text-xs font-bold text-emerald-400">{c.share}</span>
                     </div>
                     <div class="flex justify-between text-xs text-muted mb-1.5">
-                      <span>{c.count} Active</span>
-                      <span>{c.progress}% Target Weight</span>
+                      <span>{c.count} Active Tools</span>
+                      <span>{c.progress}% of catalog</span>
                     </div>
                     <div class="w-full h-1.5 bg-zinc-950 rounded-full overflow-hidden">
                       <div class={`h-full bg-gradient-to-r ${c.color} rounded-full`} style={`width: ${c.progress}%`} />
@@ -423,14 +416,16 @@ const roadmap = [
 
           <!-- Tool Activity Chart -->
           <div class="glass-card rounded-2xl p-6 shadow-xl">
-            <h2 class="text-lg font-bold text-white mb-6">Tool Activity Trends (7 days)</h2>
+            <h2 class="text-lg font-bold text-white mb-2">Local Activity (Recent Days)</h2>
+            <p class="text-xs text-muted mb-6">Executions recorded in your browser's local sandbox.</p>
             <div class="grid grid-cols-7 gap-2 items-end h-32">
               {
-                ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, i) => (
+                ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, i) => (
                   <div class="flex flex-col items-center gap-2 h-full justify-end">
                     <div
-                      class="w-full bg-gradient-to-t from-purple-500 to-blue-500 rounded-t-md transition-all duration-500"
-                      style={`height: ${[60, 75, 55, 85, 70, 90, 65][i]}%`}
+                      data-day={i}
+                      class="w-full bg-gradient-to-t from-purple-500 to-blue-500 rounded-t-md transition-all duration-500 min-h-[4px]"
+                      style="height: 4px"
                     />
                     <span class="text-[9px] text-dim font-medium">{day}</span>
                   </div>
@@ -446,18 +441,14 @@ const roadmap = [
           <div class="glass-card rounded-2xl p-6 shadow-xl">
             <h2 class="text-lg font-bold text-white mb-4">Blog Growth Engine</h2>
 
-            <div class="grid grid-cols-3 gap-3 text-center mb-6">
+            <div class="grid grid-cols-2 gap-3 text-center mb-6">
               <div class="p-3 bg-zinc-900/40 rounded-xl border border-zinc-800/80">
-                <span class="text-[10px] font-bold text-muted uppercase tracking-widest">Active</span>
+                <span class="text-[10px] font-bold text-muted uppercase tracking-widest">Published</span>
                 <p class="text-lg font-black text-purple-400 mt-1">{blogAnalytics.published}</p>
               </div>
               <div class="p-3 bg-zinc-900/40 rounded-xl border border-zinc-800/80">
-                <span class="text-[10px] font-bold text-muted uppercase tracking-widest">Planned</span>
-                <p class="text-lg font-black text-blue-400 mt-1">{blogAnalytics.planned}</p>
-              </div>
-              <div class="p-3 bg-zinc-900/40 rounded-xl border border-zinc-800/80">
-                <span class="text-[10px] font-bold text-muted uppercase tracking-widest">SEO Score</span>
-                <p class="text-lg font-black text-emerald-400 mt-1">{blogAnalytics.seoScore}%</p>
+                <span class="text-[10px] font-bold text-muted uppercase tracking-widest">Categories</span>
+                <p class="text-lg font-black text-blue-400 mt-1">{blogAnalytics.categoriesCount}</p>
               </div>
             </div>
 
@@ -467,9 +458,9 @@ const roadmap = [
                   <div class="p-3 rounded-xl border border-zinc-800/40 bg-zinc-900/10 flex items-center justify-between">
                     <div class="min-w-0 flex-1 pr-3">
                       <p class="text-xs font-semibold text-primary truncate">{post.title}</p>
-                      <p class="text-[10px] text-muted">Click Rate: {post.conversion}</p>
+                      <p class="text-[10px] text-muted">{post.category}</p>
                     </div>
-                    <span class="text-[10px] font-bold font-mono text-purple-400 shrink-0">{post.views} Views</span>
+                    <span class="text-[10px] font-mono text-zinc-400 shrink-0">{post.date}</span>
                   </div>
                 ))
               }
@@ -646,12 +637,8 @@ const roadmap = [
                   ${t.name}
                 </td>
                 <td class="py-3.5"><span class="px-2 py-0.5 rounded-md bg-zinc-900 border border-zinc-800 text-[10px] text-tertiary">${t.category}</span></td>
-                <td class="py-3.5 font-mono text-tertiary">${count > 0 ? count + ' uses' : '—'}</td>
-                <td class="py-3.5 text-right">
-                  <div class="w-24 h-1.5 bg-zinc-800 rounded-full ml-auto overflow-hidden">
-                    <div class="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all" style="width:${barW}%"></div>
-                  </div>
-                </td>
+                <td class="py-3.5 font-mono text-tertiary">Client-Side</td>
+                <td class="py-3.5 text-right font-mono ${count > 0 ? 'text-purple-400 font-bold' : 'text-zinc-500'}">${count > 0 ? count + ' uses' : '0 uses'}</td>
               </tr>
             `;
             })
