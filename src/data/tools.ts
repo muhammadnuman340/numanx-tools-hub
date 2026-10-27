@@ -206,9 +206,9 @@ export const tools: Tool[] = [
   {
     id: 'image-compressor',
     name: 'Image Compressor',
-    description: 'Compress images without losing quality, with batch processing support.',
+    description: 'Compress images with visual quality presets and batch processing support.',
     longDescription:
-      'Lossless client-side image compression to reduce file sizes up to 90% with quality presets and batch processing.',
+      'High-efficiency client-side image compression to reduce file sizes up to 90% with visual quality presets and batch processing.',
     category: 'image-tools',
     icon: 'compress',
     url: '/tools/image-compressor/',
@@ -934,9 +934,9 @@ export const tools: Tool[] = [
   {
     id: 'cricket-dls-calculator',
     name: 'Cricket DLS Calculator',
-    description: 'Calculate rain-interrupted target scores and par scores using official Duckworth-Lewis-Stern formulas.',
+    description: 'Calculate rain-curtailed revised targets and par scores using the DLS Standard Edition model.',
     longDescription:
-      'Broadcast-grade DLS resource table calculator for rain-affected T20 and ODI cricket matches. Compute revised targets and winning par scores accurately.',
+      'DLS Standard Edition resource table calculator for rain-curtailed T20 and ODI matches. Compute revised targets and par score estimates.',
     category: 'cricket-tools',
     icon: 'trophy',
     url: '/tools/cricket-dls-calculator/',
@@ -1042,9 +1042,9 @@ export const tools: Tool[] = [
   {
     id: 'net-run-rate-calculator',
     name: 'Cricket Net Run Rate (NRR) Calculator',
-    description: 'Official ICC Law 16.10.2 Net Run Rate calculator and tournament playoff qualification simulator.',
+    description: 'Cricket Net Run Rate calculator following ICC Clause 16.10.2 and tournament playoff qualification simulator.',
     longDescription:
-      'Calculate official ICC Net Run Rate (NRR) with all-out quota handling and interactive tournament scenario simulations for PSL, IPL, and World Cup.',
+      'Calculate tournament Net Run Rate (NRR) with all-out quota handling adhering to ICC Clause 16.10.2 for PSL, IPL, and World Cup qualification.',
     category: 'cricket-tools',
     icon: 'trophy',
     url: '/tools/net-run-rate-calculator/',
