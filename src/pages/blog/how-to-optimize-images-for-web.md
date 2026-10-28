@@ -10,7 +10,7 @@ layout: '../../layouts/BlogLayout.astro'
 
 Images often account for the largest percentage of bytes transferred during web page loads. Optimizing your images can lead to dramatic improvements in page load speeds, user engagement, and SEO rankings.
 
-> ⚡ **Optimize Web Images Instantly:** Convert PNG/JPG assets to high-efficiency WebP with our free [**PNG to WebP Converter**](/tools/png-to-webp/) and compress them with our [**Smart Image Compressor**](/tools/image-compressor/). 100% client-side, zero latency, zero cloud uploads.
+> ⚡ **Optimize Web Images Instantly:** Convert PNG/JPG assets to high-efficiency WebP with our free [**PNG to WebP Converter**](/tools/png-to-webp/) and compress them with our [**Smart Image Compressor**](/tools/image-compressor/). 100% client-side, fast local processing, zero cloud uploads.
 
 In this guide, we will explore the best practices for modern web image optimization and show you how to do it instantly in your browser using our [**PNG to WebP Converter**](/tools/png-to-webp/) and [**Smart Image Compressor**](/tools/image-compressor/).
 

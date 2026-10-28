@@ -52,12 +52,12 @@ export const PRO_TOOL_CONTENT: Record<string, any> = {
   },
   "net-run-rate-calculator": {
     toolName: "Tournament Net Run Rate (NRR) Calculator",
-    formulaTitle: "Official ICC Tournament NRR & All-Out Full-Quota Penalty Rule",
+    formulaTitle: "ICC Clause 16.10.2 Tournament NRR & All-Out Full-Quota Penalty Rule",
     formulaExplanation: "Computes cumulative team Net Run Rate across tournament matches. Enforces the mandatory ICC rule that any team bowled out before completing their quota is charged the full 20 or 50 overs.",
     formulaCode: "NRR = (TotalRunsScored / TotalOversFaced_QuotaAdjusted) - (TotalRunsConceded / TotalOversBowled_QuotaAdjusted)"
   },
   "image-compressor": {
-    toolName: "Image Compressor Pro",
+    toolName: "Image Compressor",
     formulaTitle: "OffscreenCanvas Chroma Subsampling & DCT Quantization",
     formulaExplanation: "Decodes high-resolution bitmaps inside a non-blocking Web Worker and re-encodes via JPEG or WebP quantization matrices, reducing byte size by 70%-90% locally with zero server uploads.",
     formulaCode: "ByteSavings(%) = ((OriginalBytes - CompressedBlob.size) / OriginalBytes) * 100"

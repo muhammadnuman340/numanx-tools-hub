@@ -16,7 +16,7 @@ const faqItems = [
   {
     question: 'What is the ICC All-Out rule for Net Run Rate?',
     answer:
-      'Under ICC Law 16.10.2, if a team is bowled out (all-out) before completing their allocated overs, their Net Run Rate calculation uses the full quota of overs (e.g. 20.0 overs for T20, 50.0 overs for ODI) rather than the overs actually batted.',
+      'Under ICC Clause 16.10.2, if a team is bowled out (all-out) before completing their allocated overs, their Net Run Rate calculation uses the full quota of overs (e.g. 20.0 overs for T20, 50.0 overs for ODI) rather than the overs actually batted.',
   },
   {
     question: 'How does the Tournament Playoff Chase Solver work?',
@@ -34,9 +34,9 @@ const nrrSchema = {
   name: 'Net Run Rate Calculator Pro',
   applicationCategory: 'Sports',
   description:
-    'Calculate cricket tournament Net Run Rate (NRR) with official ICC all-out quota rules and playoff chase overs solver.',
+    'Calculate cricket tournament Net Run Rate (NRR) following ICC Clause 16.10.2 all-out quota rules and playoff chase overs solver.',
   featureList: [
-    'Official ICC Law 16.10.2 all-out full quota penalty enforcement',
+    'Formula follows ICC Clause 16.10.2 all-out full quota penalty specification',
     'Playoff qualification chase solver for target NRR scenarios',
     'T20, ODI, and custom match formats with base-6 ball precision',
     'Client-side computation — 100% private and real-time',
@@ -46,8 +46,8 @@ const nrrSchema = {
 const benefits = [
   {
     icon: '⚖️',
-    title: 'Official ICC Rules',
-    desc: 'Fully compliant with ICC Law 16.10.2 all-out quota rules. Evaluates decimal overs (17.3 = 17.5) with zero rounding errors.',
+    title: 'ICC Playing Conditions',
+    desc: 'Follows ICC Clause 16.10.2 all-out quota rules. Evaluates decimal overs (17.3 = 17.5) with standard cricket mathematical precision.',
   },
   {
     icon: '🎯',
@@ -109,14 +109,14 @@ const useCases = [
 ---
 
 <MainLayout
-  title="Cricket Net Run Rate Calculator — ICC Rule | NumanX"
-  description="Calculate cricket Net Run Rate (NRR) online with official ICC Law 16.10.2 All-Out full-quota penalty rules and tournament playoff chase qualification simulator."
+  title="Cricket Net Run Rate Calculator — ICC Clause 16.10.2 | NumanX"
+  description="Calculate cricket Net Run Rate (NRR) online following ICC Clause 16.10.2 All-Out full-quota penalty rules and tournament playoff chase qualification simulator."
   keywords="cricket net run rate calculator, nrr calculator, net run rate formula, icc all out rule, cricket playoff simulator, t20 nrr calculator, odi nrr"
   toolSchema={nrrSchema}
   faq={faqItems}
   howto={{
     name: 'How to Calculate Net Run Rate',
-    description: 'Calculate official ICC Net Run Rate and playoff chase requirements in 4 steps.',
+    description: 'Calculate ICC Net Run Rate and playoff chase requirements following standard Clause 16.10.2.',
     steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
     totalTime: 'PT1M',
   }}
@@ -131,8 +131,8 @@ const useCases = [
       <ToolHeader
         title="Net Run Rate"
         gradient="Calculator Pro"
-        desc="Calculate tournament Net Run Rate (NRR) with official ICC All-Out quota rules and playoff chase overs solver."
-        badge="✦ ICC Rule Certified"
+        desc="Calculate tournament Net Run Rate (NRR) following ICC Clause 16.10.2 All-Out quota rules and playoff chase overs solver."
+        badge="✦ Formula Follows ICC Clause 16.10.2"
         slug="net-run-rate-calculator"
       />
 

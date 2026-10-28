@@ -17,7 +17,7 @@ const faqItems = [
   {
     question: 'What is a DLS Par Score?',
     answer:
-      'The Par Score is the exact number of runs the chasing team needs to have scored at any specific ball or wicket loss to tie the match if play is called off. Scoring one run more than the Par Score results in a win.',
+      'The Par Score is the calculated benchmark of runs the chasing team needs to have scored at any specific ball or wicket loss to tie the match if play is called off. Scoring one run more than the Par Score results in a win.',
   },
   {
     question: 'Why does a revised target sometimes increase?',
@@ -37,7 +37,7 @@ const dlsSchema = {
   description:
     'Calculate revised targets, par scores, and required run rates for rain-curtailed T20 and ODI cricket matches.',
   featureList: [
-    'Official DLS Standard Edition resource percentage engine',
+    'DLS Standard Edition resource percentage model (Public Estimate)',
     'Supports both ODI (50 overs) and T20 (20 overs) match formats',
     'Live par score, target calculation, and required run rate simulator',
     'Over-by-over resource curve and par score progression',
@@ -87,7 +87,7 @@ const howToSteps = [
   {
     num: '4',
     title: 'Read Revised Target & Pacing',
-    desc: 'View the official DLS Target, Par Score, and Required Run Rate per over.',
+    desc: 'View the DLS Target, Par Score, and Required Run Rate estimates per over.',
   },
 ];
 ---
@@ -109,8 +109,8 @@ const howToSteps = [
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="Cricket DLS Method Calculator"
-        description="Official Duckworth-Lewis-Stern (DLS) revised target and par score calculator for rain-curtailed T20 and ODI cricket matches."
-        badge="ICC DLS Engine"
+        description="Duckworth-Lewis-Stern (DLS) Standard Edition revised target and par score calculator for rain-curtailed T20 and ODI matches."
+        badge="✦ DLS Standard Model"
       />
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 my-8">
@@ -259,7 +259,7 @@ const howToSteps = [
             </div>
             <div class="flex items-center justify-between text-xs">
               <span class="text-zinc-400">DLS Standard Edition Model</span>
-              <span class="font-mono text-emerald-400">ICC Clause 16 Standard</span>
+              <span class="font-mono text-emerald-400">Standard Model Estimate</span>
             </div>
             <button
               type="button"
