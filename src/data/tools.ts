@@ -1044,7 +1044,7 @@ export const tools: Tool[] = [
     name: 'Cricket Net Run Rate (NRR) Calculator',
     description: 'Cricket Net Run Rate calculator following ICC Clause 16.10.2 and tournament playoff qualification simulator.',
     longDescription:
-      'Calculate tournament Net Run Rate (NRR) with all-out quota handling adhering to ICC Clause 16.10.2 for PSL, IPL, and World Cup qualification.',
+      'Calculate tournament Net Run Rate (NRR) with all-out quota handling following ICC Clause 16.10.2 for PSL, IPL, and World Cup qualification.',
     category: 'cricket-tools',
     icon: 'trophy',
     url: '/tools/net-run-rate-calculator/',
