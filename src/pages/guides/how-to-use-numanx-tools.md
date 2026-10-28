@@ -33,7 +33,7 @@ NumanX Tools uses a **Client-Side Execution Protocol**. We utilize advanced brow
 - When you use the AI Background Remover, the AI model is downloaded to your browser cache and runs locally.
 - **Your files never leave your device. They never touch our servers.**
 
-Because we do not use expensive cloud servers to process your files, we don't have to pay massive hosting bills. This is how we can offer 60+ premium tools **completely free, without ads blocking your workflow, and without file-size limits.**
+Because we do not use expensive cloud servers to process your files, we don't have to pay massive hosting bills. This is how we can offer 70 browser tools **completely free, without ads blocking your workflow, and without file-size limits.**
 
 ---
 
@@ -95,9 +95,9 @@ If you are on an airplane, underground on the subway, or simply lose your Wi-Fi 
 
 ---
 
-## 4. The Global Command Palette (Jarvis AI)
+## 4. The Global Command Palette
 
-With over 60 tools, clicking through menus can be slow. We built the Global Command Search to make navigation frictionless.
+With 70 tools, clicking through menus can be slow. We built the Global Command Search to make navigation frictionless.
 
 ### Triggering the Command Palette
 - **Desktop Keyboard Shortcut:** Press `Cmd + K` (on Mac) or `Ctrl + K` (on Windows) from anywhere inside the app.
@@ -110,7 +110,7 @@ The search engine understands **intent**, not just exact matches.
 - Instead of "QR Generator", you can type *"make a barcode link"*.
 
 ### Voice Commands
-If your device supports a microphone, click the **Voice (Mic) Icon** inside the search bar. You can speak directly to the app: *"Jarvis, I need to generate a secure password"* and it will instantly pull up the Password Generator tool.
+If your device supports a microphone, click the **Voice (Mic) Icon** inside the search bar. You can speak directly to the app: *"Generate a secure password"* and it will instantly pull up the Password Generator tool.
 
 ---
 
