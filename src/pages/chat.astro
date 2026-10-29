@@ -4,7 +4,7 @@ import MainLayout from '../layouts/MainLayout.astro';
 const mockMessages = [
   {
     sender: 'ai',
-    text: 'Welcome to NumanX AI Chat. I am Jarvis, your assistant for the NumanX Operating Brain. How can I help you Build, Create, or Analyze today?',
+    text: 'Welcome to the NumanX Assistant Prototype. How can I help you explore our tools, creator hub, or roadmap today?',
     time: '10:00 AM',
   },
   {
@@ -14,21 +14,21 @@ const mockMessages = [
   },
   {
     sender: 'ai',
-    text: 'We currently have over 11 free, privacy-first tools including the Image Compressor, QR Code Generator, AI Prompt Generator, Word Counter, JSON Formatter, and specific Cricket Calculators. All processing runs 100% locally in your browser.',
+    text: 'We currently have 70 free browser tools including the Image Compressor, QR Code Generator, AI Prompt Generator, Word Counter, JSON Formatter, and specific Cricket Calculators. All processing runs 100% locally in your browser.',
     time: '10:03 AM',
   },
 ];
 ---
 
 <MainLayout
-  title="AI Chat Assistant - NumanX Studio"
-  description="Experience Jarvis, the premium NumanX AI Chatbot prototype. Ask questions about NumanX Tools, Creator Hub, and Cricket Analytics."
-  keywords="ai chat, jarvis, numanx assistant, artificial intelligence, numanx studio, virtual assistant"
+  title="Platform Assistant Prototype - NumanX Studio"
+  description="Interactive platform assistant prototype. Ask questions about NumanX Tools, Creator Hub, and ecosystem roadmap."
+  keywords="assistant prototype, numanx assistant, platform assistant, numanx studio, interactive tools"
   canonical="https://numanx-tools.pages.dev/chat/"
   noindex={true}
   breadcrumbs={[
     { name: 'Home', url: '/' },
-    { name: 'AI Chat', url: '/chat/' },
+    { name: 'Assistant Prototype', url: '/chat/' },
   ]}
 >
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden bg-[#050505]">
@@ -58,25 +58,25 @@ const mockMessages = [
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
           </span>
-          Jarvis AI v1.0
+          Prototype Assistant v1.0
         </div>
         <h1 class="text-5xl md:text-7xl font-black tracking-tighter leading-none reveal-text">
-          Neural
+          Interactive
           <span
             class="block mt-2 bg-gradient-to-r from-purple-400 via-purple-500 to-amber-500 bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(234,88,12,0.15)]"
           >
-            Chat Interface
+            Assistant Prototype
           </span>
         </h1>
         <p class="mt-4 text-tertiary text-sm md:text-base max-w-xl mx-auto leading-relaxed reveal-text">
-          Interact with the operating brain prototype. Ask anything about our productivity tools, cricket analytics, or
+          Explore our client-side prototype. Ask anything about our productivity tools, cricket analytics, or
           future roadmap.
         </p>
       </section>
 
       <!-- Chat Container Grid -->
       <div id="cards-container-chat" class="w-full mb-12 group-section preserve-3d">
-        <!-- Premium Chat Box -->
+        <!-- Chat Interface Box -->
         <div
           class="card-spotlight bg-[#0a0a0c]/90 border border-white/10 rounded-3xl p-6 shadow-2xl relative overflow-hidden min-h-[550px] flex flex-col justify-between transition-all duration-300"
         >
@@ -106,7 +106,7 @@ const mockMessages = [
                 >
               </div>
               <div>
-                <h2 class="text-sm font-bold text-white font-mono tracking-tight">Jarvis Brain</h2>
+                <h2 class="text-sm font-bold text-white font-mono tracking-tight">Assistant Prototype</h2>
                 <p class="text-[10px] text-emerald-400 flex items-center gap-1 font-mono uppercase">
                   <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
                   Online
@@ -280,7 +280,7 @@ const mockMessages = [
 
         // Simulate AI response delay
         setTimeout(() => {
-          const aiResponseText = getJarvisResponse(text);
+          const aiResponseText = getPrototypeResponse(text);
           const aiMsg = document.createElement('div');
           aiMsg.className = 'flex flex-col items-start';
           aiMsg.innerHTML = `
@@ -330,7 +330,7 @@ const mockMessages = [
     }
   };
 
-  const getJarvisResponse = (input: string): string => {
+  const getPrototypeResponse = (input: string): string => {
     const lower = input.toLowerCase();
     if (lower.includes('hello') || lower.includes('hi')) {
       return 'Hello! How can I assist you with the NumanX Tools Hub today?';
@@ -344,7 +344,7 @@ const mockMessages = [
     if (lower.includes('owner') || lower.includes('creator') || lower.includes('numan')) {
       return 'NumanX Tools was architected and built by Muhammad Numan Usmani, an IT student and digital ecosystem builder.';
     }
-    return 'I have received your neural transmission. This prototype is configured to respond to queries about NumanX Tools, Creator Hub, and general roadmap phases.';
+    return 'This prototype is configured to respond to queries about NumanX Tools, Creator Hub, and general roadmap phases.';
   };
 
   document.addEventListener('astro:page-load', initChatPage);

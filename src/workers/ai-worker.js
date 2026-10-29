@@ -46,7 +46,7 @@ self.addEventListener('message', async (event) => {
       return;
     }
 
-    // High-Speed Statistical NLP Fallback (0.1s Extractive TF-IDF + Sentence Scoring)
+    // High-Speed Statistical NLP Fallback (0.1s Extractive Term Frequency + Sentence Scoring)
     self.postMessage({ status: 'loading', progress: 70 });
 
     const sentences = text

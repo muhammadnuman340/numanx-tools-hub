@@ -105,7 +105,7 @@ export const tools: Tool[] = [
     name: 'QR Generator',
     description: 'Generate QR codes from URLs, text, and messages instantly.',
     longDescription:
-      'Generate premium custom QR codes from URLs, text, and messages instantly with multiple templates and theme presets.',
+      'Generate custom QR codes from URLs, text, and messages instantly with multiple templates and theme presets.',
     category: 'creator-tools',
     icon: 'qr',
     url: '/tools/qr-generator/',
@@ -709,7 +709,7 @@ export const tools: Tool[] = [
     name: 'AI Keyword Extractor',
     description: 'Extract key topics and phrases from any text automatically.',
     longDescription:
-      'Automatically identify the most important keywords and keyphrases from your text. Uses intelligent frequency analysis, TF-IDF scoring, and phrase detection. Perfect for SEO, content analysis, and research.',
+      'Automatically identify the most important keywords and keyphrases from your text. Uses n-gram frequency analysis and phrase detection. Perfect for SEO, content analysis, and research.',
     category: 'ai-tools',
     icon: 'search',
     url: '/tools/ai-keyword-extractor/',
@@ -729,7 +729,7 @@ export const tools: Tool[] = [
     name: 'AI Language Detector',
     description: 'Detect the language of any text with high accuracy.',
     longDescription:
-      'Identify the language of any text instantly. Supports 80+ languages including English, Spanish, French, German, Chinese, Arabic, and more. Uses character n-gram analysis for accurate detection.',
+      'Identify the language of any text instantly. Supports 29 languages including English, Spanish, French, German, Chinese, Arabic, and more. Uses character n-gram analysis for accurate detection.',
     category: 'ai-tools',
     icon: 'globe2',
     url: '/tools/ai-language-detector/',
@@ -813,7 +813,7 @@ export const tools: Tool[] = [
   },
   {
     id: 'ai-code-assistant',
-    name: 'AI Code Assistant',
+    name: 'Code Formatter & Minifier',
     description: 'Format, minify, and validate code in JavaScript, Python, HTML, CSS, SQL, and more.',
     longDescription:
       'Format, minify, and validate code across multiple languages including JavaScript, TypeScript, Python, HTML, CSS, SQL, and JSON. Get syntax validation, line counts, and character stats. All processing is client-side with zero server uploads.',

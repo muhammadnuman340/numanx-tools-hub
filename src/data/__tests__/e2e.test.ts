@@ -145,12 +145,12 @@ describe('NumanX Tools Hub - E2E Build Structural Validation', () => {
 
   // Chat Page assertions (13 assertions)
   describe('Chat Page (chat.astro)', () => {
-    it('should satisfy premium chatbot UI, ambient glows, scanlines, and mock messages', () => {
+    it('should satisfy assistant prototype UI, ambient glows, scanlines, and mock messages', () => {
       const html = readHtml('dist/chat/index.html');
 
       // Main layouts & flows
-      expect(html).toContain('Neural');
-      expect(html).toContain('Chat Interface');
+      expect(html).toContain('Interactive');
+      expect(html).toContain('Assistant Prototype');
       expect(html).toContain('id="cards-container-chat"');
       expect(html).toContain('card-spotlight');
 
@@ -162,9 +162,9 @@ describe('NumanX Tools Hub - E2E Build Structural Validation', () => {
       expect(html).toContain('id="btn-clear-chat"');
 
       // Content structures & mock conversation
-      expect(html).toContain('Jarvis Brain');
+      expect(html).toContain('Assistant Prototype');
       expect(html).toContain('Online');
-      expect(html).toContain('Welcome to NumanX AI Chat');
+      expect(html).toContain('Welcome to the NumanX Assistant Prototype');
 
       // Ambient overlays and glows
       expect(html).toContain('blur-[120px]');

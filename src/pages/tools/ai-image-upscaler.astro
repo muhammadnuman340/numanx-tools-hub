@@ -9,7 +9,7 @@ import ToolContentSections from '../../components/ToolContentSections.astro';
 const faqItems = [
   {
     question: 'How does AI image upscaling work?',
-    answer: 'The tool uses a neural network (ESRGAN) to analyze the low-resolution image and "guess" missing details by predicting how the image should look at a higher resolution, rather than just stretching the pixels.',
+    answer: 'The tool uses a neural network (RDN - Residual Dense Network) to analyze the low-resolution image and "guess" missing details by predicting how the image should look at a higher resolution, rather than just stretching the pixels.',
   },
   {
     question: 'Are my images uploaded to the cloud?',
@@ -28,10 +28,10 @@ const faqItems = [
 const schema = {
   name: 'AI Image Upscaler',
   applicationCategory: 'Multimedia',
-  description: 'Enhance and upscale images locally in your browser using AI (ESRGAN).',
+  description: 'Enhance and upscale images locally in your browser using AI (RDN - Residual Dense Network).',
   featureList: [
     '100% client-side upscaling (no uploads)',
-    '2x Super Resolution (ESRGAN)',
+    '2x Super Resolution (RDN)',
     'Privacy-first architecture',
     'TensorFlow.js Edge AI integration',
   ],
