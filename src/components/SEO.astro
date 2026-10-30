@@ -57,9 +57,9 @@ const siteKeywords =
   'free tools, online tools, file converters, cricket calculators, word counter, qr generator, image compressor';
 const siteUrl = canonical || Astro.url.href;
 
-const ogImage = image || 'https://numanx-tools.pages.dev/og-default-1200.png';
+const ogImage = image || 'https://toolshub.numanxstudio.com/og-default-1200.png';
 
-const orgUrl = 'https://numanx-tools.pages.dev';
+const orgUrl = 'https://toolshub.numanxstudio.com';
 
 const pageTitle = title ? (title.includes('NumanX') ? title : `${title} | ${siteName}`) : siteName;
 
@@ -73,7 +73,7 @@ const breadcrumbsSchema =
           '@type': 'ListItem',
           position: idx + 1,
           name: b.name,
-          item: b.url.startsWith('http') ? b.url : `https://numanx-tools.pages.dev${b.url}`,
+          item: b.url.startsWith('http') ? b.url : `https://toolshub.numanxstudio.com${b.url}`,
         })),
       }
     : null;
@@ -123,7 +123,7 @@ const itemListSchema =
         itemListElement: itemList.map((item, idx) => ({
           '@type': 'ListItem',
           position: idx + 1,
-          url: item.url.startsWith('http') ? item.url : `https://numanx-tools.pages.dev${item.url}`,
+          url: item.url.startsWith('http') ? item.url : `https://toolshub.numanxstudio.com${item.url}`,
           name: item.name,
           ...(item.description ? { description: item.description } : {}),
         })),

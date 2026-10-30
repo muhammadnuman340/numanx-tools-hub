@@ -15,14 +15,14 @@ Do NOT use the "URL Prefix" method. You want the **Domain Level** property to en
 
 1. Go to [Search Console](https://search.google.com/search-console).
 2. Click **Add Property**.
-3. Select the **Domain** box (left side) and enter `numanx-tools.pages.dev` (or URL prefix `https://numanx-tools.pages.dev`).
+3. Select the **Domain** box (left side) and enter `toolshub.numanxstudio.com` (or URL prefix `https://toolshub.numanxstudio.com`).
 4. Google will give you a TXT record.
 5. Go to your Cloudflare Dashboard > DNS > Records.
 6. Add a new `TXT` record with the name `@` and paste the Google value.
 7. Wait 2 minutes and click "Verify" in GSC.
 
 ### Step 2: The Sitemap Injection
-Astro generates your sitemap automatically at `https://numanx-tools.pages.dev/sitemap.xml`.
+Astro generates your sitemap automatically at `https://toolshub.numanxstudio.com/sitemap.xml`.
 1. In GSC, click **Sitemaps** on the left menu.
 2. Enter `sitemap-index.xml` (or `sitemap.xml` depending on your Astro config) and click **Submit**.
 3. *Checkpoint:* Ensure it says "Success" and reads the correct number of URLs (~90+ including tools, blogs, and legal pages).
@@ -36,7 +36,7 @@ Google is notoriously slow at indexing new websites. To speed this up, you must 
 **The Strategy:**
 1. Open your `indexing-pages.md` tracker document.
 2. Go to GSC and click the search bar at the top (**URL Inspection Tool**).
-3. Paste the URL of your highest-priority tool (e.g., `https://numanx-tools.pages.dev/tools/image-compressor/`).
+3. Paste the URL of your highest-priority tool (e.g., `https://toolshub.numanxstudio.com/tools/image-compressor/`).
 4. Hit Enter. Google will say "URL is not on Google."
 5. Click the **Request Indexing** button. 
 6. Wait 1-2 minutes for the live test to finish.
@@ -68,7 +68,7 @@ When scaling to 100+ tools, you *will* get errors in the **Pages > Page Indexing
 - **The Fix:** Usually just waiting. If it's a high-priority tool, manually force it via the URL Inspection tool. Building internal links from your Homepage to the tool also signals importance.
 
 ### Error 3: "Duplicate without user-selected canonical"
-- **What it means:** Google found `numanx-tools.pages.dev/tools/word-counter` and `numanx-tools.pages.dev/tools/word-counter/` (with a trailing slash) and doesn't know which one is the real one.
+- **What it means:** Google found `toolshub.numanxstudio.com/tools/word-counter` and `toolshub.numanxstudio.com/tools/word-counter/` (with a trailing slash) and doesn't know which one is the real one.
 - **The Fix:** Ensure your `astro.config.mjs` has `trailingSlash: 'always'` configured. Ensure your `<link rel="canonical" href="..." />` tag perfectly matches the URL with the trailing slash.
 
 ### Error 4: "Soft 404"

@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Cloudflare Pages](https://img.shields.io/badge/Deployed%20on-Cloudflare%20Pages-F38020?logo=cloudflare&logoColor=white)](https://numanx-tools.pages.dev)
+[![Cloudflare Pages](https://img.shields.io/badge/Deployed%20on-Cloudflare%20Pages-F38020?logo=cloudflare&logoColor=white)](https://toolshub.numanxstudio.com)
 [![Astro 6.4](https://img.shields.io/badge/Astro-6.4%20SSG-BC52EE?logo=astro&logoColor=white)](https://astro.build)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind-v4.3-38BDF8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![Vitest](https://img.shields.io/badge/Vitest-43%2F43%20Passed-4ADE80?logo=vitest&logoColor=white)](https://vitest.dev)
@@ -14,7 +14,7 @@
 **High-Performance, Privacy-First Browser Utilities with Zero Server Latency**  
 *Built for creators, developers, cricket analysts, and everyday internet users.*
 
-[Explore Live Production Platform](https://numanx-tools.pages.dev) • [View Architecture](#-technical-architecture--feature-showcase) • [Developer Setup](#-quick-start-developer-commands)
+[Explore Live Production Platform](https://toolshub.numanxstudio.com) • [View Architecture](#-technical-architecture--feature-showcase) • [Developer Setup](#-quick-start-developer-commands)
 
 </div>
 

@@ -38,7 +38,7 @@ console.log(`✅ Checked ${totalFilesChecked} source files for encoding integrit
 const robotsPath = path.join(PUBLIC_DIR, 'robots.txt');
 if (fs.existsSync(robotsPath)) {
   const robots = fs.readFileSync(robotsPath, 'utf8');
-  if (robots.includes('Google-Extended') && robots.includes('Sitemap: https://numanx-tools.pages.dev/sitemap.xml')) {
+  if (robots.includes('Google-Extended') && robots.includes('Sitemap: https://toolshub.numanxstudio.com/sitemap.xml')) {
     console.log('✅ robots.txt properly configured with Google-Extended and single sitemap.xml.');
   } else {
     console.error('❌ robots.txt is missing Google-Extended or single sitemap.xml reference.');
@@ -160,7 +160,7 @@ if (fs.existsSync(distSitemapIndex) || fs.existsSync(distSitemap0)) {
 
 if (fs.existsSync(distSitemap)) {
   const sitemapXml = fs.readFileSync(distSitemap, 'utf8');
-  const locMatches = [...sitemapXml.matchAll(/<loc>(https:\/\/numanx-tools\.pages\.dev\/[^<]*)<\/loc>/g)];
+  const locMatches = [...sitemapXml.matchAll(/<loc>(https:\/\/toolshub\.numanxstudio\.com\/[^<]*)<\/loc>/g)];
   const urls = locMatches.map(m => m[1]);
   const uniqueUrls = new Set(urls);
 

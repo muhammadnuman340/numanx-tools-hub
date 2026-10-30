@@ -101,7 +101,7 @@ describe('Central Analytics Consent Loader (Phase 5C.2C)', () => {
         }
         return true;
       },
-      location: { hostname: 'numanx-tools.pages.dev', pathname: '/' },
+      location: { hostname: 'toolshub.numanxstudio.com', pathname: '/' },
     };
 
     (globalThis as any).window = mockWindow;
