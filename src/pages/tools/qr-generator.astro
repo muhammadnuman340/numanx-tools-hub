@@ -586,7 +586,7 @@ const useCases = [
   const rmqrOptions = document.getElementById('rmqr-options');
 
   let currentMode: 'square' | 'rmqr' = 'square';
-  let currentData = 'https://numanx-tools.pages.dev';
+  let currentData = 'https://toolshub.numanxstudio.com';
   let currentTemplate = 'Website';
   let lastValidRMQRVersion = 'R11x139';
 
@@ -632,12 +632,12 @@ const useCases = [
       case 'YouTube':
         return (document.getElementById('youtube-url') as HTMLInputElement)?.value || 'https://youtube.com';
       default:
-        return qrText?.value || 'https://numanx-tools.pages.dev';
+        return qrText?.value || 'https://toolshub.numanxstudio.com';
     }
   }
 
   async function generateBarcode() {
-    currentData = getQRData() || 'https://numanx-tools.pages.dev';
+    currentData = getQRData() || 'https://toolshub.numanxstudio.com';
     const fg = fgColor?.value || '#000000';
     const bg = bgColor?.value || '#ffffff';
 

@@ -17,4 +17,4 @@ Allow: /
 User-agent: ClaudeBot
 Allow: /
 
-Sitemap: https://numanx-tools.pages.dev/sitemap.xml
+Sitemap: https://toolshub.numanxstudio.com/sitemap.xml

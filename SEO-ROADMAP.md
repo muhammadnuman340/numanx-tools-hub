@@ -147,7 +147,7 @@ Use this template to reach out to bloggers who write "Top 10 Tools for X" listic
 
 To maximize content ROI, republish your best `/blog/` and `/guides/` articles to developer communities:
 1. **Dev.to / Hashnode / Medium:** Publish the article 7 days after it goes live on NumanX.
-2. **Crucial Step:** You MUST use the platform's "Canonical URL" setting to point back to the original `https://numanx-tools.pages.dev/blog/...` URL. This tells Google that NumanX is the original author and passes the SEO authority back to your site.
+2. **Crucial Step:** You MUST use the platform's "Canonical URL" setting to point back to the original `https://toolshub.numanxstudio.com/blog/...` URL. This tells Google that NumanX is the original author and passes the SEO authority back to your site.
 
 ---
 

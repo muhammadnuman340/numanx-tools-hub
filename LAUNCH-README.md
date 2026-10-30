@@ -118,7 +118,7 @@ If you find it useful, a RT on the first tweet helps me take down the ad-filled 
 ### T-Minus 2 Hours (10:00 PM PST)
 - [ ] Run final `npm run build` locally. Verify 0 errors.
 - [ ] Deploy to Cloudflare Pages.
-- [ ] Test the live `https://numanx-tools.pages.dev` on Mobile and Desktop (Disable adblockers to test).
+- [ ] Test the live `https://toolshub.numanxstudio.com` on Mobile and Desktop (Disable adblockers to test).
 - [ ] Submit `sitemap.xml` to Google Search Console (Mandatory).
 - [ ] Do a manual "Request Indexing" on the Homepage via GSC.
 

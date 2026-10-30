@@ -25,7 +25,7 @@ const {
   steps = [],
 } = Astro.props;
 
-const SITE_URL = 'https://numanx-tools.pages.dev';
+const SITE_URL = 'https://toolshub.numanxstudio.com';
 const rawPath = Astro.url.pathname;
 const normalizedPath = rawPath.endsWith('/') ? rawPath : `${rawPath}/`;
 const canonicalURL = new URL(normalizedPath, SITE_URL).toString();

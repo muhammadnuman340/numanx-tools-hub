@@ -1,6 +1,6 @@
 import { tools, categories } from '../data/tools';
 
-const site = 'https://numanx-tools.pages.dev';
+const site = 'https://toolshub.numanxstudio.com';
 const today = new Date().toISOString().split('T')[0];
 
 function toW3CDate(raw: unknown, fallback: string): string {

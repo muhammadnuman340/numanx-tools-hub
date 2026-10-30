@@ -44,7 +44,7 @@ To get the best experience, you should install NumanX Tools directly to your dev
 ### For Desktop Users (Windows / macOS / Linux)
 
 **Using Google Chrome:**
-1. Navigate to [numanx-tools.pages.dev](https://numanx-tools.pages.dev) in Google Chrome.
+1. Navigate to [toolshub.numanxstudio.com](https://toolshub.numanxstudio.com) in Google Chrome.
 2. Look at the right side of the URL address bar. You will see a small icon that looks like a monitor with a downward-pointing arrow (Install NumanX Tools).
 3. Click that icon and select **Install**.
 4. A dedicated app window will open. The app will now appear in your Windows Start Menu or your macOS Applications folder/Launchpad.

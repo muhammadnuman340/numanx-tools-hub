@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://numanx-tools.pages.dev',
+  site: 'https://toolshub.numanxstudio.com',
   output: 'static',
   trailingSlash: 'always',
   build: {
