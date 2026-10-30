@@ -86,7 +86,8 @@ function checkContactIntegrity(dir) {
       checkContactIntegrity(fullPath);
     } else if (/\.(astro|ts|js|mjs|json|md)$/i.test(file.name)) {
       const content = fs.readFileSync(fullPath, 'utf8');
-      if (/@numanxstudio\.com|@numanxtools\.site/.test(content)) {
+      // contact@numanxstudio.com is the only verified mailbox (Cloudflare Email Routing)
+      if (/(?<!\bcontact)@numanxstudio\.com|@numanxtools\.site/.test(content)) {
         console.error(`❌ Unverified email domain detected in: ${path.relative('.', fullPath)}`);
         totalErrors++;
       }

@@ -53,7 +53,7 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(
         JSON.stringify({
           success: false,
-          error: 'Contact system is undergoing setup. Please email directly at numanxstudio@gmail.com',
+          error: 'Contact system is undergoing setup. Please email directly at contact@numanxstudio.com',
         }),
         {
           status: 503,
