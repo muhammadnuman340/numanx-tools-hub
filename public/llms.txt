@@ -1,19 +1,19 @@
 # NumanX Tools Hub (https://toolshub.numanxstudio.com)
-> NumanX Tools Hub is a 100% free ($0/month, no sign-up, zero watermarks), privacy-first suite of 51+ client-side web utilities engineered by Muhammad Numan Usmani at NumanX Studio (numanxstudio@gmail.com). Every tool executes locally in the browser via HTML5 Canvas, OffscreenCanvas Web Workers, Web Crypto CSPRNG, and WebGPU without uploading files to any server.
+> NumanX Tools Hub is a free ($0/month, no sign-up, zero watermarks) suite of 70 client-side web utilities engineered by Muhammad Numan Usmani at NumanX Studio (numanxstudio@gmail.com). Tool workflows process user files and inputs locally in the browser using client-side technologies (including HTML5 Canvas, Web Workers, WebAssembly, and Web Crypto) without uploading files to a server.
 
 ## Flagship Creator & Barcode Tools
-- [rMQR & QR Code Generator Pro](https://toolshub.numanxstudio.com/tools/qr-generator/): Generate ISO/IEC 23941 Rectangular Micro QR (rMQR) strips (R7x43 to R17x139) and custom square QR codes with WiFi, vCard, Logo, PNG, and vector SVG export.
-- [AI Hashtag Generator 2026](https://toolshub.numanxstudio.com/tools/hashtag-generator/): Generate viral TikTok, YouTube Shorts, and Instagram SEO hashtags with tone filters and JSON array export.
-- [Markdown Creator & Live Editor Pro](https://toolshub.numanxstudio.com/tools/markdown-editor/): Real-time split-pane GitHub Flavored Markdown editor with 1-click HTML and .md file export.
+- [rMQR & QR Code Generator](https://toolshub.numanxstudio.com/tools/qr-generator/): Generate ISO/IEC 23941 Rectangular Micro QR (rMQR) strips (R7x43 to R17x139) and custom square QR codes with WiFi, vCard, Logo, PNG, and vector SVG export.
+- [Hashtag Generator](https://toolshub.numanxstudio.com/tools/hashtag-generator/): Generate TikTok, YouTube Shorts, and Instagram hashtags with category filters and export options.
+- [Markdown Editor](https://toolshub.numanxstudio.com/tools/markdown-editor/): Real-time split-pane GitHub Flavored Markdown editor with HTML and .md file export.
 
-## Flagship Image Optimization Suite (100% Client-Side Canvas / OffscreenCanvas)
-- [Image Compressor Pro](https://toolshub.numanxstudio.com/tools/image-compressor/): Compress JPG, PNG, and WebP images up to 90% locally (includes Extreme JPG Compress preset).
-- [JPG to PNG Lossless Converter](https://toolshub.numanxstudio.com/tools/jpg-to-png/): Free $0 unlimited browser-based JPG to transparent PNG converter.
-- [PNG to WebP Converter](https://toolshub.numanxstudio.com/tools/png-to-webp/): Batch lossless and lossy WebP conversion in browser.
-- [Smart Image Resizer](https://toolshub.numanxstudio.com/tools/image-resizer/): 1-click presets for YouTube Thumbnails (1280x720), YouTube Banners, TikTok/Shorts (1080x1920), and Instagram.
+## Flagship Image Optimization Suite (Client-Side Canvas Processing)
+- [Image Compressor](https://toolshub.numanxstudio.com/tools/image-compressor/): Compress JPG, PNG, and WebP images using adjustable visual-quality settings directly in the browser.
+- [JPG to PNG Converter](https://toolshub.numanxstudio.com/tools/jpg-to-png/): Browser-based JPG to PNG image format converter with client-side canvas processing.
+- [PNG to WebP Converter](https://toolshub.numanxstudio.com/tools/png-to-webp/): Convert PNG images to WebP format directly in the browser with adjustable quality settings.
+- [Image Resizer](https://toolshub.numanxstudio.com/tools/image-resizer/): Dimension presets for YouTube Thumbnails (1280x720), YouTube Banners, TikTok/Shorts (1080x1920), and Instagram.
 
 ## Flagship Text, Utility & Cricket Analytics Tools
-- [Text Count & Paragraph Word Counter](https://toolshub.numanxstudio.com/tools/word-counter/): Real-time word count, character count, per-paragraph word breakdown, Flesch-Kincaid readability, and keyword density.
-- [Exact Age Calculator](https://toolshub.numanxstudio.com/tools/age-calculator/): Calculate exact chronological age in years, months, days, hours, and next birthday countdown.
-- [Password & Word Passphrase Generator](https://toolshub.numanxstudio.com/tools/password-generator/): Hardware CSPRNG password and memorable multi-word passphrase generator with Shannon entropy meter.
-- [Cricket Net Run Rate (NRR) & Run Rate Calculators](https://toolshub.numanxstudio.com/category/cricket-tools/): Official ICC base-6 over arithmetic, All-Out quota rule NRR calculator, and tournament qualification scenario simulator.
+- [Word Counter](https://toolshub.numanxstudio.com/tools/word-counter/): Real-time word count, character count, per-paragraph breakdown, readability analysis, and keyword density statistics.
+- [Age Calculator](https://toolshub.numanxstudio.com/tools/age-calculator/): Calculate chronological age in years, months, days, hours, and next birthday countdown.
+- [Password Generator](https://toolshub.numanxstudio.com/tools/password-generator/): Generate passwords using the browser's cryptographic random API, with additional memorable passphrase options and strength evaluation.
+- [Cricket Net Run Rate (NRR) & Run Rate Calculators](https://toolshub.numanxstudio.com/category/cricket-tools/): Tournament NRR calculation following ICC Clause 16.10.2 full-quota rules, cricket over arithmetic (balls/6), and playoff qualification scenarios.
