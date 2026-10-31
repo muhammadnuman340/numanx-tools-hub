@@ -181,6 +181,9 @@ const useCases = [
             <!-- File Dropzone -->
             <label
               id="drag-dropzone"
+              role="button"
+              tabindex="0"
+              aria-label="Choose a file, or drop it here"
               class="flex flex-col items-center justify-center border-2 border-dashed border-zinc-800 hover:border-rose-500/40 bg-surface-1/40 rounded-2xl h-44 cursor-pointer transition-all p-6 group"
             >
               <input type="file" id="file-uploader" class="hidden" />
@@ -239,7 +242,7 @@ const useCases = [
               <div class="bg-surface-1 border border-surface-2 rounded-xl p-3 relative">
                 <div class="flex items-center justify-between">
                   <span class="text-[10px] uppercase font-mono text-muted">SHA-256 Cipher (Most Secure)</span>
-                  <button class="text-[10px] text-purple-400 hover:text-white" data-copy-target="out-sha256"
+                  <button class="inline-flex items-center min-h-6 px-1.5 text-xs text-purple-400 hover:text-white" data-copy-target="out-sha256"
                     >Copy</button
                   >
                 </div>
@@ -251,7 +254,7 @@ const useCases = [
               <div class="bg-surface-1 border border-surface-2 rounded-xl p-3 relative">
                 <div class="flex items-center justify-between">
                   <span class="text-[10px] uppercase font-mono text-muted">SHA-512 Cipher</span>
-                  <button class="text-[10px] text-purple-400 hover:text-white" data-copy-target="out-sha512"
+                  <button class="inline-flex items-center min-h-6 px-1.5 text-xs text-purple-400 hover:text-white" data-copy-target="out-sha512"
                     >Copy</button
                   >
                 </div>
@@ -263,7 +266,7 @@ const useCases = [
               <div class="bg-surface-1 border border-surface-2 rounded-xl p-3 relative bg-surface-1/50">
                 <div class="flex items-center justify-between">
                   <span class="text-[10px] uppercase font-mono text-muted">SHA-1 Cipher (Legacy)</span>
-                  <button class="text-[10px] text-purple-400 hover:text-white" data-copy-target="out-sha1">Copy</button>
+                  <button class="inline-flex items-center min-h-6 px-1.5 text-xs text-purple-400 hover:text-white" data-copy-target="out-sha1">Copy</button>
                 </div>
                 <div id="out-sha1" class="text-xs font-mono text-rose-300 mt-1 break-all select-all">
                   adc83b19e793491b1c6ea0fd8b46cd9f32e592fc

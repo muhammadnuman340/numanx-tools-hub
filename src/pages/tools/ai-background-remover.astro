@@ -124,7 +124,7 @@ const useCases = [
       
       <div class="w-full max-w-3xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6 relative">
-           <div id="dropzone" class="relative rounded-2xl border-2 border-dashed border-surface-3 bg-surface-1 p-10 md:p-16 text-center cursor-pointer hover:border-purple-500/50 hover:bg-surface-2 transition-all duration-300 group">
+           <div id="dropzone" role="button" tabindex="0" aria-label="Choose an image to remove the background from, or drop it here" class="relative rounded-2xl border-2 border-dashed border-surface-3 bg-surface-1 p-10 md:p-16 text-center cursor-pointer hover:border-purple-500/50 hover:bg-surface-2 transition-all duration-300 group">
             <input id="file-input" type="file" accept="image/*" class="hidden" aria-label="Upload image to remove background" />
             <div id="dropzone-content">
               <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300">
@@ -196,6 +196,8 @@ const useCases = [
 </MainLayout>
 
 <script>
+  import { setToolStatus } from '../../lib/toolStatus';
+
   // Dynamic import to prevent SSR issues and load only when needed
   let removeBackground: any = null;
 
@@ -238,6 +240,10 @@ const useCases = [
     if(!loadingState?.classList.contains('hidden')) return;
     const file = e.dataTransfer?.files?.[0];
     if (file && file.type.startsWith('image/')) processImage(file);
+    else if (file) {
+      setToolStatus('error');
+      (window as any).__showToast?.({ message: "That file isn't an image. Try a JPG, PNG or WebP.", variant: 'error' });
+    }
   });
 
   async function processImage(file: File) {
@@ -250,6 +256,7 @@ const useCases = [
     // Set original preview
     const objectURL = URL.createObjectURL(file);
     originalPreview.src = objectURL;
+    setToolStatus('processing', 'Removing the background. The first run downloads the model, which can take a minute.');
     
     try {
       if(!removeBackground) {
@@ -289,6 +296,7 @@ const useCases = [
       dropzoneContent?.classList.remove('hidden');
       progressBarContainer?.classList.add('hidden');
       if(fileInput) (fileInput as HTMLInputElement).value = ''; 
+      setToolStatus('complete', 'Background removed. The result is ready to download.');
       
     } catch (err) {
       console.error(err);
@@ -297,7 +305,8 @@ const useCases = [
       dropzoneContent?.classList.remove('hidden');
       progressBarContainer?.classList.add('hidden');
       if ((window as any).__showToast) {
-        (window as any).__showToast({ message: 'Failed to process image. Check console for details.', variant: 'error' });
+        setToolStatus('error'); // the toast announces the message
+        (window as any).__showToast({ message: "Couldn't remove the background from this image. Try another image or reload the page.", variant: 'error' });
       } else {
         alert('Failed to process image.');
       }

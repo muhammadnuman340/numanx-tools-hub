@@ -256,6 +256,8 @@ const schema = {
 </MainLayout>
 
 <script>
+  import { setToolStatus } from '../../lib/toolStatus';
+
   const input = document.getElementById('json-input') as HTMLTextAreaElement;
   const output = document.getElementById('json-output');
   const formatBtn = document.getElementById('format-btn');
@@ -305,6 +307,9 @@ const schema = {
       statusBadge.textContent = 'empty';
       statusBadge.className = 'text-[10px] font-mono text-dim px-2 py-0.5 rounded-full border border-surface';
       statsPanel.classList.add('hidden');
+      input.removeAttribute('aria-invalid');
+      input.removeAttribute('aria-describedby');
+      setToolStatus('ready', 'Paste some JSON to get started.');
       return;
     }
 
@@ -329,6 +334,9 @@ const schema = {
 
       // Store formatted for copy
       (output as HTMLElement).dataset.plainText = result;
+      input.removeAttribute('aria-invalid');
+      input.removeAttribute('aria-describedby');
+      setToolStatus('complete'); // the toast announces success
       triggerToast(mode === 'format' ? 'JSON beautified successfully!' : 'JSON minified successfully!', 'success');
     } catch (e) {
       const msg = e instanceof SyntaxError ? e.message : 'Invalid JSON';
@@ -337,6 +345,10 @@ const schema = {
       statusBadge.className =
         'text-[10px] font-mono text-red-400 px-2 py-0.5 rounded-full bg-red-500/10 border border-red-500/20';
       statsPanel.classList.add('hidden');
+      // Tie the parse error to the input so it's read when the field gets focus
+      input.setAttribute('aria-invalid', 'true');
+      input.setAttribute('aria-describedby', 'json-output');
+      setToolStatus('error', `Invalid JSON: ${msg}`);
       triggerToast('Invalid JSON syntax detected!', 'error');
     }
   }

@@ -8,7 +8,10 @@
  */
 export type ToolState = 'ready' | 'processing' | 'complete' | 'error';
 
+let pending: ReturnType<typeof setTimeout> | undefined;
+
 export function setToolStatus(state: ToolState, message = ''): void {
+  clearTimeout(pending);
   const el = document.getElementById('tool-status');
   if (!el) return;
   el.dataset.agentStatus = state;
@@ -19,4 +22,13 @@ export function setToolStatus(state: ToolState, message = ''): void {
       el.textContent = message;
     });
   }
+}
+
+/**
+ * For tools that recalculate on every keystroke: announce only once the visitor
+ * pauses typing, so screen readers aren't interrupted on each character.
+ */
+export function setToolStatusSoon(state: ToolState, message = '', delay = 900): void {
+  clearTimeout(pending);
+  pending = setTimeout(() => setToolStatus(state, message), delay);
 }

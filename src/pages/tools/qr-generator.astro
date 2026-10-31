@@ -566,6 +566,7 @@ const useCases = [
 <script>
   import QRCode from 'qrcode';
   import bwipjs from 'bwip-js/browser';
+  import { setToolStatus, setToolStatusSoon } from '../../lib/toolStatus';
 
   const canvas = document.getElementById('qr-canvas') as HTMLCanvasElement;
   const qrText = document.getElementById('qr-text') as HTMLInputElement;
@@ -632,6 +633,14 @@ const useCases = [
     }
   }
 
+  // Announce changes after the first render (the page-load render isn't news)
+  let hasRendered = false;
+  function announce(ok: boolean, message: string) {
+    if (!hasRendered) return;
+    if (ok) setToolStatusSoon('complete', message);
+    else setToolStatus('error', message);
+  }
+
   async function generateBarcode() {
     currentData = getQRData() || 'https://toolshub.numanxstudio.com';
     const fg = fgColor?.value || '#000000';
@@ -646,8 +655,11 @@ const useCases = [
           color: { dark: fg, light: bg },
           errorCorrectionLevel: (qrErrorLevel?.value as any) || 'H',
         });
+        announce(true, `QR code updated, ${size} by ${size} pixels.`);
       } catch (e) {
         console.error('Square QR generation error:', e);
+        if (sizeBadge) sizeBadge.textContent = 'Too much data for one QR code';
+        announce(false, 'Too much data for one QR code. Shorten the text or lower the error correction level.');
       }
     } else {
       // rMQR Strip mode (ISO/IEC 23941)
@@ -668,13 +680,16 @@ const useCases = [
         if (sizeBadge) {
           sizeBadge.textContent = `rMQR ${actualVersion} (${canvas.width}×${canvas.height}px)`;
         }
+        announce(true, `rMQR code updated, version ${actualVersion}.`);
       } catch (err: any) {
         console.warn('rMQR generation error:', err);
         if (sizeBadge) {
           sizeBadge.textContent = `Capacity exceeded for ${actualVersion}`;
         }
+        announce(false, `Too much data for rMQR version ${actualVersion}. Shorten the text or pick a larger version.`);
       }
     }
+    hasRendered = true;
   }
 
   formatModeBtns.forEach((btn) => {

@@ -175,6 +175,9 @@ const useCases = [
 
           <div
             id="dropzone"
+            role="button"
+            tabindex="0"
+            aria-label="Choose an image to crop, or drop it here"
             class="relative rounded-2xl border-2 border-dashed border-surface-3 bg-surface-1 p-10 md:p-16 text-center cursor-pointer hover:border-purple-500/50 hover:bg-surface-2 transition-all duration-300 group"
           >
             <input id="file-input" type="file" accept="image/png,image/jpeg" class="hidden" aria-label="Upload image to crop" />
@@ -358,18 +361,22 @@ const useCases = [
                 <button
                   class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
                   data-color="purple"
+                  aria-label="Purple accent colour"
                   style="background:#a855f7"></button>
                 <button
                   class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
                   data-color="blue"
+                  aria-label="Blue accent colour"
                   style="background:#3b82f6"></button>
                 <button
                   class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
                   data-color="green"
+                  aria-label="Green accent colour"
                   style="background:#22c55e"></button>
                 <button
                   class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
                   data-color="pink"
+                  aria-label="Pink accent colour"
                   style="background:#ec4899"></button>
               </div>
             </div>

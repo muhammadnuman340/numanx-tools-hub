@@ -301,11 +301,14 @@ const howToSteps = [
 
 <script>
   import { calculateDLSTarget, getDLSResourcePercentage } from '../../utils/cricketAnalytics.js';
+  import { setToolStatusSoon } from '../../lib/toolStatus';
 
   let currentFormat = 'T20';
   let currentWickets = 0;
 
-  function recalculateDLS() {
+  function recalculateDLS(e?: Event | boolean) {
+    // Announce only changes the visitor makes, not the first calculation on load
+    const announce = Boolean(e);
     const t1RunsInput = document.getElementById('dls-t1-runs') as HTMLInputElement;
     const t1OversInput = document.getElementById('dls-t1-overs') as HTMLInputElement;
     const t2Slider = document.getElementById('dls-t2-overs-slider') as HTMLInputElement;
@@ -335,6 +338,12 @@ const howToSteps = [
     if (rrrEl) rrrEl.textContent = result.requiredRunRate.toFixed(2);
     if (resourceEl) resourceEl.textContent = `${result.team2Resource.toFixed(1)}%`;
     if (t1SummaryEl) t1SummaryEl.textContent = `${t1Runs} in ${t1Overs}.0 overs`;
+    if (announce) {
+      setToolStatusSoon(
+        'complete',
+        `Revised target: ${result.target} runs in ${t2Overs} overs. Required run rate ${result.requiredRunRate.toFixed(2)}.`,
+      );
+    }
   }
 
   function initDLS() {
@@ -361,7 +370,7 @@ const howToSteps = [
       }
       if (minOversEl) minOversEl.textContent = '5 Overs (Min T20)';
       if (maxOversEl) maxOversEl.textContent = '20 Overs (Full)';
-      recalculateDLS();
+      recalculateDLS(true);
     });
 
     btnODI?.addEventListener('click', () => {
@@ -378,7 +387,7 @@ const howToSteps = [
       }
       if (minOversEl) minOversEl.textContent = '20 Overs (Min ODI)';
       if (maxOversEl) maxOversEl.textContent = '50 Overs (Full)';
-      recalculateDLS();
+      recalculateDLS(true);
     });
 
     slider?.addEventListener('input', recalculateDLS);
@@ -402,10 +411,6 @@ const howToSteps = [
     recalculateDLS();
   }
 
+  // astro:page-load also fires on the first load, so this runs once per page
   document.addEventListener('astro:page-load', initDLS);
-  if (document.readyState === 'complete') {
-    initDLS();
-  } else {
-    window.addEventListener('DOMContentLoaded', initDLS);
-  }
 </script>

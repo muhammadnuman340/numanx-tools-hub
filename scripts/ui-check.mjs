@@ -129,10 +129,18 @@ function measure() {
   const interactive = [
     ...document.querySelectorAll('a[href], button, input:not([type=hidden]), select, textarea'),
   ].filter(visible);
+  // WCAG 2.5.8: links inside running text (incl. table cells) are exempt; visually hidden elements
+  // (skip link, sr-only inputs) aren't targets until shown; a checkbox/radio counts its clickable label.
   const smallTargets = interactive.filter((el) => {
-    const r = el.getBoundingClientRect();
-    const inline = el.tagName === 'A' && getComputedStyle(el).display === 'inline' && el.closest('p, li');
-    return !inline && (r.width < 24 || r.height < 24);
+    let r = el.getBoundingClientRect();
+    if (r.width <= 1 && r.height <= 1) return false;
+    const inline = el.tagName === 'A' && getComputedStyle(el).display === 'inline' && el.closest('p, li, td, th');
+    if (inline) return false;
+    if (el.type === 'checkbox' || el.type === 'radio') {
+      const label = el.closest('label') || (el.id && document.querySelector(`label[for="${CSS.escape(el.id)}"]`));
+      if (label) r = label.getBoundingClientRect();
+    }
+    return r.width < 24 || r.height < 24;
   }).length;
 
   const unnamedButtons = [...document.querySelectorAll('button, [role=button]')].filter(

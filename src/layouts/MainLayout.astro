@@ -282,6 +282,29 @@ const isToolPage = /^\/tools\/[^/]+\/?$/.test(Astro.url.pathname);
 
       gsap.registerPlugin(ScrollTrigger);
 
+      // Pages whose scripts bind once at load (all tools, home, dashboard, favorites, search, terms)
+      // break when the client router swaps them in a second time: Astro doesn't re-run a page's
+      // bundled script. Entering or leaving them is a normal page load instead, so the tool works on
+      // every visit and its document-level listeners (e.g. keyboard shortcuts) don't leak onto the
+      // next page. Other pages keep client-side transitions.
+      const FULL_LOAD_PAGES = ['/', '/dashboard/', '/favorites/', '/search/', '/terms-of-service/'];
+      const needsFullLoad = (path: string) => {
+        const p = path.endsWith('/') ? path : `${path}/`;
+        return /^\/tools\/[^/]+\/$/.test(p) || FULL_LOAD_PAGES.includes(p);
+      };
+      document.addEventListener('astro:before-preparation', (e) => {
+        if (needsFullLoad(e.from.pathname) || needsFullLoad(e.to.pathname)) e.preventDefault();
+      });
+
+      // Non-button elements marked role="button" (e.g. file drop zones) work with Enter and Space
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const el = e.target as HTMLElement | null;
+        if (!el?.matches?.('[role="button"][tabindex]:not(button, a, input, select, textarea)')) return;
+        e.preventDefault();
+        el.click();
+      });
+
       // Visitors who ask for less motion get native scrolling and no reveal animations (DESIGN.md §6)
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

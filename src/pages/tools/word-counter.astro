@@ -726,6 +726,8 @@ const useCases = [
 </MainLayout>
 
 <script>
+  import { setToolStatusSoon } from '../../lib/toolStatus';
+
   function playPing() {
     try {
       const a = new (window.AudioContext || window.webkitAudioContext)();
@@ -926,6 +928,9 @@ const useCases = [
 
   textarea.addEventListener('input', () => {
     updateStats();
+    const wc = Number(wordCount.textContent) || 0;
+    const cc = textarea.value.length;
+    setToolStatusSoon('complete', `${wc} word${wc === 1 ? '' : 's'}, ${cc} character${cc === 1 ? '' : 's'}.`);
     try {
       localStorage.setItem('nt_wc_text', textarea.value);
     } catch {}

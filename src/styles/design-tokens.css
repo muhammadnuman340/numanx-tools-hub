@@ -257,10 +257,12 @@ html[data-theme='dark'] {
   }
 }
 
+/* Content entrance: starts at 60% opacity so text is never invisible, even if the
+   animation is throttled (busy or background tab) — DESIGN.md §6 */
 @keyframes fadeInUp {
   from {
-    opacity: 0;
-    transform: translateY(16px);
+    opacity: 0.6;
+    transform: translateY(8px);
   }
   to {
     opacity: 1;

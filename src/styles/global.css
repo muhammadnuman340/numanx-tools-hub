@@ -100,9 +100,42 @@ body {
 
 /* ─── Focus Styles ─── */
 *:focus-visible {
-  outline: 2px solid var(--purple-500);
+  outline: 2px solid var(--focus);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
+}
+
+/* Keep focused items and #anchor targets clear of the 56px sticky header */
+html {
+  scroll-padding-top: 72px;
+}
+
+/* Colour-theme dots in tool toolbars: 14px dot, 24px tap area (WCAG 2.5.8) */
+.theme-swatch {
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  padding: 5px;
+  border-color: transparent;
+  background-clip: content-box !important; /* the colour comes from an inline style */
+  flex-shrink: 0;
+}
+
+/* Sliders: the visible track stays thin (h-1.5 / h-2), the tap area grows to ≥ 24px */
+input[type='range'] {
+  box-sizing: content-box;
+  padding-block: 9px;
+  background-clip: content-box;
+}
+
+/* A− / A+ text-size buttons in tool toolbars: at least 24×24px */
+.font-dec,
+.font-inc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 24px;
 }
 
 /* ─── Selection ─── */
@@ -158,6 +191,7 @@ select {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important; /* a delayed 'both' animation holds its first frame until it starts */
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
@@ -353,9 +387,6 @@ article img {
 }
 
 /* ─── Custom Scrollbar ─── */
-html {
-  scroll-behavior: smooth;
-}
 
 /* ─── Image Loading ─── */
 img {

@@ -28,7 +28,7 @@
         .map(
           (item) => `
         <li>
-          <a href="#${item.id}" class="toc-link block ${item.tag === 'H3' ? 'pl-3' : ''} text-xs ${item.tag === 'H3' ? 'text-dim' : 'text-muted'} hover:text-purple-400 transition-colors truncate">
+          <a href="#${item.id}" class="toc-link block py-1 ${item.tag === 'H3' ? 'pl-3' : ''} text-xs ${item.tag === 'H3' ? 'text-dim' : 'text-muted'} hover:text-purple-400 transition-colors truncate">
             ${item.text}
           </a>
         </li>

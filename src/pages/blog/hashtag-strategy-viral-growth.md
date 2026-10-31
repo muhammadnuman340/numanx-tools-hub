@@ -29,7 +29,7 @@ Modern social media recommendation engines (TikTok's Monolith, Instagram's Graph
       <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
       Interactive Mini Hashtag Generator
     </span>
-    <a href="/tools/hashtag-generator/" class="text-[11px] font-semibold text-indigo-400 hover:text-indigo-300 no-underline">Launch Full Tool →</a>
+    <a href="/tools/hashtag-generator/" class="inline-flex items-center min-h-6 text-xs font-semibold text-indigo-400 hover:text-indigo-300 no-underline">Open the full tool →</a>
   </div>
   <div class="flex gap-2 mb-3">
     <input type="text" id="mini-hashtag-input" placeholder="e.g. travel, tech, fitness..." class="flex-1 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" aria-label="Keywords for hashtags" />

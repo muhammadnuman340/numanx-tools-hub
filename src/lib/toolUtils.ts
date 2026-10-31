@@ -139,7 +139,7 @@ const THEME_SWATCH_HTML = (colors: string[]) =>
   colors
     .map(
       (c) =>
-        `<button class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="${c}" style="background:var(--swatch-${c})"></button>`,
+        `<button type="button" class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="${c}" aria-label="${c.charAt(0).toUpperCase() + c.slice(1)} accent colour" style="background:var(--swatch-${c})"></button>`,
     )
     .join('');
 
