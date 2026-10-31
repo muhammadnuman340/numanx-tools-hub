@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
 
@@ -282,8 +281,8 @@ const useCases = [
         {benefits}
         howToSteps={howToSteps}
         useCases={useCases}
+        faq={faqItems}
       />
-      <RelatedTools current="cipher-hash" />
     </div>
   </main>
 </MainLayout>

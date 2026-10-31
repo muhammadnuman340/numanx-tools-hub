@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import HowToUse from '../../components/HowToUse.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
@@ -772,15 +771,14 @@ const useCases = [
       ]}
     />
 
-    <RelatedTools current="png-to-webp" />
 
     <ToolContentSections
       toolSlug="png-to-webp"
       toolName="PNG to WebP Converter"
       category="Image Tools"
       {benefits}
-      howToSteps={howToSteps}
       useCases={useCases}
+      faq={faqItems}
     />
 
     <section class="mt-16 text-center">

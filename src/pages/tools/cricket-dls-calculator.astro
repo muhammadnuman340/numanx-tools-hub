@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
@@ -295,7 +294,6 @@ const howToSteps = [
         </div>
       </section>
 
-      <RelatedTools currentSlug="cricket-dls-calculator" />
       <KeyboardHints hints={[{ keys: 'Tab', label: 'Navigate inputs' }, { keys: 'Space', label: 'Toggle format' }]} />
     </div>
   </main>

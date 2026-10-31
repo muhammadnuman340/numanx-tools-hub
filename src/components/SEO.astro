@@ -78,16 +78,20 @@ const breadcrumbsSchema =
       }
     : null;
 
-// FAQ schema
+// FAQ schema — accepts { question, answer } and { title, content } (the About page uses the latter);
+// items without both parts are dropped so the schema never contains empty questions.
+const faqEntries = (faq || [])
+  .map((item: any) => ({ q: item.question ?? item.title ?? '', a: item.answer ?? item.content ?? '' }))
+  .filter((e) => e.q && e.a);
 const faqSchema =
-  faq && faq.length > 0
+  faqEntries.length > 0
     ? {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
-        mainEntity: faq.map((item) => ({
+        mainEntity: faqEntries.map((e) => ({
           '@type': 'Question',
-          name: item.question,
-          acceptedAnswer: { '@type': 'Answer', text: item.answer },
+          name: e.q,
+          acceptedAnswer: { '@type': 'Answer', text: e.a },
         })),
       }
     : null;

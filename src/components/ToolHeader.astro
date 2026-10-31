@@ -47,6 +47,9 @@ const showFact = fact.length > 0 && !/^(client[- ]side|free online tool|100% cli
   <p class="mt-2 max-w-3xl text-soft text-sm sm:text-base leading-relaxed">{desc}</p>
 
   {showFact && <p class="mt-2 font-mono text-[11px] uppercase tracking-wider text-faint">{fact}</p>}
+
+  <!-- Live status for screen readers and browser agents; tools update it via src/lib/toolStatus.ts -->
+  <div id="tool-status" role="status" aria-live="polite" data-agent-status="ready" class="sr-only"></div>
 </header>
 
 <script define:vars={{ slug }}>

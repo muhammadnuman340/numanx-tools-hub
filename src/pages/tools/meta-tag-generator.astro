@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
@@ -322,9 +321,9 @@ const useCases = [
         {benefits}
         howToSteps={howToSteps}
         useCases={useCases}
+        faq={faqItems}
       />
 
-      <RelatedTools current="meta-tag-generator" />
     </div>
   </main>
 </MainLayout>

@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
 
@@ -220,7 +219,6 @@ const useCases = [
         howToSteps={howToSteps}
         useCases={useCases}
       />
-      <RelatedTools current="color-contrast-checker" />
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
           Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"

@@ -1,7 +1,11 @@
 ---
+// Accepts both shapes used across the site: { title, content } and FAQ-style { question, answer }.
+// Pages passing question/answer previously rendered empty rows.
 interface Item {
-  title: string;
-  content: string;
+  title?: string;
+  content?: string;
+  question?: string;
+  answer?: string;
 }
 
 interface Props {
@@ -9,7 +13,10 @@ interface Props {
   class?: string;
 }
 
-const { items, class: className } = Astro.props;
+const { items: rawItems, class: className } = Astro.props;
+const items = rawItems
+  .map((i) => ({ title: i.title ?? i.question ?? '', content: i.content ?? i.answer ?? '' }))
+  .filter((i) => i.title);
 ---
 
 <div class={`space-y-2 ${className || ''}`}>

@@ -589,6 +589,11 @@ const useCases = [
       ]}
     />
 
+    <!-- Visible FAQ: matches the FAQPage schema built from faqItems -->
+    <section class="mt-16 max-w-3xl mx-auto" aria-labelledby="faq-heading">
+      <h2 id="faq-heading" class="text-2xl font-bold text-white mb-6">Frequently Asked Questions</h2>
+      <Accordion items={faqItems} />
+    </section>
     <RelatedTools current="jpg-to-png" />
     <div
       id="toast"

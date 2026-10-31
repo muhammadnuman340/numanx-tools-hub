@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
 
@@ -308,8 +307,8 @@ const schema = {
         {benefits}
         howToSteps={howToSteps}
         useCases={useCases}
+        faq={faqItems}
       />
-      <RelatedTools current="ai-keyword-extractor" />
       <div class="mt-20 max-w-3xl mx-auto px-4">
         <div
           class="bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-fuchsia-500/10 border border-violet-500/20 rounded-2xl p-8 md:p-12 text-center"

@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
@@ -731,7 +730,6 @@ const useCases = [
         toolName="Hashtag Generator"
         category="Creator Tools"
         {benefits}
-        howToSteps={howToSteps}
         useCases={useCases}
       />
 
@@ -767,7 +765,6 @@ const useCases = [
         </div>
       </section>
 
-      <RelatedTools current="hashtag-generator" />
     </div>
   </main>
 </MainLayout>
