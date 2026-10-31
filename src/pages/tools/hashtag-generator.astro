@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
@@ -161,17 +160,16 @@ const useCases = [
     { name: 'Hashtag Generator', url: '/tools/hashtag-generator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="Hashtag"
-        gradient="Generator Pro"
+        gradient="Generator"
         desc="Generate viral, trending, and niche hashtags for any platform. Popularity scores, reach estimates, and save favorites — free and unlimited."
         badge="✦ Client-Side"
         slug="hashtag-generator"
       />
 
-      <ShareBar />
 
       <!-- ─── Tool Interface (Later/Hootsuite style) ─── -->
       <div class="mt-8 space-y-4">

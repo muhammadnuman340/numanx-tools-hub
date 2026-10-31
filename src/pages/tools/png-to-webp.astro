@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import HowToUse from '../../components/HowToUse.astro';
@@ -162,11 +161,11 @@ const useCases = [
     { name: 'PNG to WebP', url: '/tools/png-to-webp/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="PNG to WebP"
-        gradient="Converter Pro"
+        gradient="Converter"
         desc="Convert PNG to WebP instantly in your browser with batch processing, quality presets, before/after preview, and real-time analytics. Smaller files, faster sites, better SEO."
         badge="✦ Client-Side"
         slug="png-to-webp"
@@ -744,7 +743,6 @@ const useCases = [
       </div>
     </div>
 
-    <ShareBar />
 
     <HowToUse
       steps={[

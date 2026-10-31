@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
@@ -86,17 +85,16 @@ const useCases = [
     { name: 'Cricket Target Calculator', url: '/tools/cricket-target-calculator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="Cricket Target"
-        gradient="Calculator Pro"
+        gradient="Calculator"
         desc="Calculate chase targets, required run rates, and projected totals for T20, ODI, and club matches."
         badge="✦ Match Engine"
         slug="cricket-target-calculator"
       />
 
-      <ShareBar />
 
       <div class="max-w-2xl mx-auto mt-8 space-y-6">
         <div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6 space-y-4">

@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
@@ -61,17 +60,16 @@ const schema = {
     { name: 'JSON Formatter', url: '/tools/json-formatter/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="JSON"
-        gradient="Formatter Pro"
+        gradient="Formatter"
         desc="Format, validate, and minify JSON in real-time. Syntax highlighting, detailed error messages, and one-click copy — all in your browser."
         badge="✦ Client-Side"
         slug="json-formatter"
       />
 
-      <ShareBar />
 
       <!-- Tool Interface -->
       <div class="mt-8 space-y-4">

@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
@@ -160,17 +159,16 @@ const useCases = [
     { name: 'Run Rate Calculator', url: '/tools/run-rate-calculator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="Run Rate"
-        gradient="Calculator Pro"
+        gradient="Calculator"
         desc="Calculate current and required run rates for T20, ODI, and Test matches. Chase difficulty, match pressure, and over-by-over projections included."
         badge="✦ Client-Side"
         slug="run-rate-calculator"
       />
 
-      <ShareBar />
 
       <!-- ─── Format Selector (Cricbuzz-style) ─── -->
       <div class="max-w-xl mx-auto mt-8 space-y-4">

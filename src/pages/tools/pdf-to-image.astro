@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
@@ -118,7 +117,7 @@ const useCases = [
     { name: 'PDF to Image', url: '/tools/pdf-to-image/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="PDF to"
@@ -127,7 +126,6 @@ const useCases = [
         badge="✦ Secure Tool"
         slug="pdf-to-image"
       />
-      <ShareBar />
       <div class="max-w-3xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6 md:p-10 relative text-center">
            <input type="file" id="file-input" accept="application/pdf" class="hidden" aria-label="Upload PDF to convert" />

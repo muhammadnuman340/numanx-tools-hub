@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
@@ -116,7 +115,7 @@ const howToSteps = [
     onload="this.media='all'"
   />
 
-  <main class="min-h-screen pt-20 pb-24 px-4 sm:px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-24 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-7xl mx-auto">
       <ToolHeader
         title="Markdown to PDF Converter"
@@ -263,7 +262,6 @@ const howToSteps = [
         />
       </div>
 
-      <ShareBar title="Markdown to PDF Converter" />
       <ToolContentSections
         toolSlug="markdown-to-pdf"
         toolName="Markdown to PDF Converter"

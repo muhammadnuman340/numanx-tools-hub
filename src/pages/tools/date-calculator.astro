@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
 
@@ -134,7 +133,7 @@ const useCases = [
     { name: 'Date Calculator', url: '/tools/date-calculator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="Business Days &"
@@ -144,7 +143,6 @@ const useCases = [
         slug="date-calculator"
       />
 
-      <ShareBar />
 
       <!-- Interactive Calculator Card -->
       <div class="max-w-2xl mx-auto mt-8 bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-6 md:p-8 backdrop-blur-xl shadow-2xl">

@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import HowToUse from '../../components/HowToUse.astro';
@@ -156,11 +155,11 @@ const useCases = [
     { name: 'JPG to PNG', url: '/tools/jpg-to-png/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="JPG to PNG"
-        gradient="Converter Pro"
+        gradient="Converter"
         desc="Convert JPG to PNG instantly in your browser with batch processing, before/after preview, file size comparison, and privacy-first client-side conversion."
         badge="✦ Client-Side"
         slug="jpg-to-png"
@@ -514,7 +513,6 @@ const useCases = [
       </div>
     </div>
 
-    <ShareBar />
 
     <!-- 2026 $0 Free vs Cloud SaaS Pricing Table -->
     <div class="mt-16 max-w-4xl mx-auto px-4">

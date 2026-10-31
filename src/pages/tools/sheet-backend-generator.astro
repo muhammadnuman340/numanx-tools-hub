@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
@@ -197,7 +196,7 @@ async function getRows() {
     { name: 'Sheet Backend Generator', url: '/tools/sheet-backend-generator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="Sheet"
@@ -206,7 +205,6 @@ async function getRows() {
         badge="✦ Developer Utility"
         slug="sheet-backend-generator"
       />
-      <ShareBar />
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
         <!-- Steps and Info -->

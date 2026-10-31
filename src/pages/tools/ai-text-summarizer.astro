@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
@@ -147,16 +146,15 @@ const schema = {
     { name: 'AI Text Summarizer', url: '/tools/ai-text-summarizer/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="AI Text"
-        gradient="Summarizer Pro"
+        gradient="Summarizer"
         desc="Summarize long articles, documents, and any text in seconds. Extract key sentences while preserving the original meaning."
         badge="✦ Extractive Summarization"
         slug="ai-text-summarizer"
       />
-      <ShareBar />
       <div class="max-w-xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6 space-y-4 relative">
           <div class="flex items-center justify-between mb-4">

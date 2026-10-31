@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
@@ -105,7 +104,7 @@ const howToSteps = [
     { name: 'Cricket DLS Calculator', url: '/tools/cricket-dls-calculator/' },
   ]}
 >
-  <main class="min-h-screen pt-20 pb-24 px-4 sm:px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-24 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="Cricket DLS Method Calculator"
@@ -281,7 +280,6 @@ const howToSteps = [
         />
       </div>
 
-      <ShareBar title="Cricket DLS Method Calculator" />
       <ToolContentSections
         toolSlug="cricket-dls-calculator"
         toolName="Cricket DLS Method Calculator"

@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
@@ -126,17 +125,16 @@ const useCases = [
     { name: 'Net Run Rate Calculator', url: '/tools/net-run-rate-calculator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="Net Run Rate"
-        gradient="Calculator Pro"
+        gradient="Calculator"
         desc="Calculate tournament Net Run Rate (NRR) following ICC Clause 16.10.2 All-Out quota rules and playoff chase overs solver."
         badge="✦ Formula Follows ICC Clause 16.10.2"
         slug="net-run-rate-calculator"
       />
 
-      <ShareBar />
 
       <div class="max-w-2xl mx-auto mt-8 space-y-6">
         <!-- Match Format Selector -->

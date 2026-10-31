@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
@@ -160,17 +159,16 @@ const useCases = [
     { name: 'Age Calculator', url: '/tools/age-calculator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="Age"
-        gradient="Calculator Pro"
+        gradient="Calculator"
         desc="Calculate your exact age in years, months, days, hours, and minutes. Discover zodiac signs, birthday countdown, and life analytics."
         badge="✦ Client-Side"
         slug="age-calculator"
       />
 
-      <ShareBar />
 
       <!-- ─── Input Card ─── -->
       <div class="max-w-xl mx-auto mt-8">

@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
 
@@ -130,7 +129,7 @@ const useCases = [
     { name: 'Meta Tag Generator', url: '/tools/meta-tag-generator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="Meta Tag Generator &"
@@ -140,7 +139,6 @@ const useCases = [
         slug="meta-tag-generator"
       />
 
-      <ShareBar />
 
       <!-- Interactive Generator Workspace -->
       <div class="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8">

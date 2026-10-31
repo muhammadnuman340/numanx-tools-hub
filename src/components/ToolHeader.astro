@@ -1,76 +1,53 @@
 ---
+/**
+ * Compact tool header (DESIGN.md §4.1, UI plan Phase 2):
+ * breadcrumb → left-aligned H1 with Save/Share on the same row → one short intro line.
+ * Keeps the tool workspace within the first ~300px of the page.
+ *
+ * `title` + `gradient` are kept as props for compatibility; they now render as one plain name.
+ * `badge` is shown only when it carries a fact (e.g. an ICC rule), not generic labels.
+ */
 import FavoriteButton from './FavoriteButton.astro';
+import ShareBar from './ShareBar.astro';
 
 interface Props {
   title: string;
-  gradient: string;
+  gradient?: string;
   desc: string;
   badge?: string;
   slug?: string;
 }
-const { title, gradient, desc, badge = 'Free Online Tool', slug } = Astro.props;
-const toolDisplayName = `${title} ${gradient}`.trim();
+const { title, gradient = '', desc, badge = '', slug } = Astro.props;
+const toolDisplayName = `${title} ${gradient}`.replace(/\s+/g, ' ').trim();
+const fact = badge.replace(/^[\s✦•·]+/, '').trim();
+const showFact = fact.length > 0 && !/^(client[- ]side|free online tool|100% client[- ]side)$/i.test(fact);
 ---
 
-<div class="w-full mb-8 text-left">
-  <nav aria-label="Breadcrumb" class="space-y-2">
-    <ol class="flex items-center gap-1.5 text-xs sm:text-sm text-zinc-400">
-      <li>
-        <a href="/" class="hover:text-white transition-colors">Home</a>
-      </li>
-      <li class="text-zinc-600 select-none" aria-hidden="true">&gt;</li>
-      <li>
-        <a href="/tools/" class="hover:text-white transition-colors">Tools</a>
-      </li>
-      <li class="text-zinc-600 select-none" aria-hidden="true">&gt;</li>
-      <li class="text-zinc-200 font-semibold truncate" aria-current="page">
-        {toolDisplayName}
-      </li>
+<header class="tool-header mb-6 sm:mb-8">
+  <nav aria-label="Breadcrumb">
+    <ol class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm text-soft">
+      <li><a href="/" class="hover:text-fg transition-colors">Home</a></li>
+      <li class="text-faint select-none" aria-hidden="true">/</li>
+      <li><a href="/tools/" class="hover:text-fg transition-colors">Tools</a></li>
+      <li class="text-faint select-none" aria-hidden="true">/</li>
+      <li class="text-fg font-medium truncate max-w-[60vw]" aria-current="page">{toolDisplayName}</li>
     </ol>
-    <div>
-      <a
-        href="/tools/"
-        class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-zinc-300 hover:text-white transition-colors group"
-      >
-        <span class="transition-transform group-hover:-translate-x-1" aria-hidden="true">&larr;</span>
-        <span>All Tools</span>
-      </a>
-    </div>
   </nav>
-</div>
 
-<div class="text-center mb-8 reveal-text">
-  <div
-    class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-surface bg-surface-1 backdrop-blur-sm text-tertiary text-xs font-semibold tracking-wider uppercase mb-6"
-  >
-    <span class="relative flex h-2 w-2">
-      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-      <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
-    </span>
-    {badge}
+  <div class="mt-3 flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+    <h1 class="min-w-0 text-fg font-extrabold tracking-tight leading-tight text-balance" style="font-size: var(--step-3);">
+      {toolDisplayName}
+    </h1>
+    <div class="flex items-center gap-2 shrink-0 pt-1">
+      {slug && <FavoriteButton slug={slug} />}
+      <ShareBar />
+    </div>
   </div>
-  <h1
-    class="text-5xl sm:text-6xl lg:text-[5.5rem] font-black tracking-tighter leading-none text-transparent bg-clip-text bg-gradient-to-br from-white via-zinc-200 to-zinc-600 mb-6 drop-shadow-2xl"
-  >
-    {title}
-    <span
-      class="block mt-2 bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-peach-400 to-violet-400 animate-gradient-x"
-    >
-      {gradient}
-    </span>
-  </h1>
-  <p class="mt-6 text-tertiary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-    {desc}
-  </p>
-  {
-    slug && (
-      <div class="mt-6 flex items-center justify-center gap-3">
-        <FavoriteButton slug={slug} />
-      </div>
-    )
-  }
-</div>
 
+  <p class="mt-2 max-w-3xl text-soft text-sm sm:text-base leading-relaxed">{desc}</p>
+
+  {showFact && <p class="mt-2 font-mono text-[11px] uppercase tracking-wider text-faint">{fact}</p>}
+</header>
 
 <script define:vars={{ slug }}>
   if (slug) {
@@ -88,19 +65,3 @@ const toolDisplayName = `${title} ${gradient}`.trim();
     } catch (e) {}
   }
 </script>
-
-<style>
-  .animate-gradient-x {
-    background-size: 200% 200%;
-    animation: gradient-x 5s ease infinite;
-  }
-  @keyframes gradient-x {
-    0%,
-    100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
-</style>

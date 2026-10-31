@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
@@ -135,16 +134,15 @@ const schema = {
     { name: 'AI Sentiment Analyzer', url: '/tools/ai-sentiment-analyzer/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="AI Sentiment"
-        gradient="Analyzer Pro"
+        gradient="Analyzer"
         desc="Detect the emotional tone of any text — positive, negative, or neutral. See a detailed breakdown of emotions and key sentiment-driving words."
         badge="✦ Lexicon Sentiment"
         slug="ai-sentiment-analyzer"
       />
-      <ShareBar />
       <div class="max-w-xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6 space-y-4 relative">
           <div class="flex items-center justify-between mb-4">

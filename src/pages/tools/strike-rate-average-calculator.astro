@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
@@ -126,17 +125,16 @@ const useCases = [
     { name: 'Strike Rate & Average', url: '/tools/strike-rate-average-calculator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="Strike Rate & Average"
-        gradient="Calculator Pro"
+        gradient="Calculator"
         desc="Calculate batting average and strike rate with real-time stats and export 1080×1920 social media stat cards."
         badge="✦ WWS Shorts Edition"
         slug="strike-rate-average-calculator"
       />
 
-      <ShareBar />
 
       <div class="max-w-2xl mx-auto mt-8 space-y-6">
         <!-- Input Form -->
