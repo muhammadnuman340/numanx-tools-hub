@@ -1,58 +1,61 @@
 :root,
 html[data-theme='dark'] {
-  /* ─── Brand Colors ─── */
-  --purple-50: #fff5f5;
-  --purple-100: #ffe3e3;
-  --purple-200: #ffc9c9;
-  --purple-300: #ffa3a3;
-  --purple-400: #fb7185; /* Sunset Rose */
-  --purple-500: #ff5a36; /* Glowing Orange-Red */
-  --purple-600: #f43f5e; /* Vivid Rose-Crimson */
-  --purple-700: #ea580c; /* High-intensity Orange */
-  --purple-800: #c2410c; /* Volcanic sunset */
-  --purple-900: #9a3412; /* Coals burn */
-  --purple-950: #431407; /* Volcano black */
+  /* ─── Legacy colour names → DESIGN.md amber tokens (Phase 6) ───
+     These names are used thousands of times across the site. They now point at the
+     tokens defined in the DESIGN.md block below, so old markup picks up the amber
+     brand, warm neutrals and AA-contrast greys. New code uses the DESIGN.md names. */
+  --purple-50: oklch(0.97 0.02 var(--hue));
+  --purple-100: oklch(0.94 0.045 var(--hue));
+  --purple-200: oklch(0.9 0.08 var(--hue));
+  --purple-300: oklch(0.86 0.12 var(--hue));
+  --purple-400: oklch(0.84 0.14 var(--hue));
+  --purple-500: var(--accent);
+  --purple-600: oklch(0.72 0.15 70);
+  --purple-700: oklch(0.62 0.14 65);
+  --purple-800: oklch(0.52 0.12 60);
+  --purple-900: oklch(0.42 0.1 58);
+  --purple-950: oklch(0.3 0.07 55);
 
-  --blue-400: #fb923c;
-  --blue-500: #f97316;
-  --blue-600: #ea580c;
+  --blue-400: var(--purple-400);
+  --blue-500: var(--accent);
+  --blue-600: var(--purple-600);
 
-  --emerald-400: #34d399;
-  --emerald-500: #10b981;
+  --emerald-400: var(--success);
+  --emerald-500: var(--success);
 
-  --amber-400: #fbbf24;
-  --amber-500: #f59e0b;
+  --amber-400: var(--purple-400);
+  --amber-500: var(--accent);
 
-  --red-400: #f87171;
-  --red-500: #ef4444;
+  --red-400: var(--danger);
+  --red-500: var(--danger);
 
   /* ─── Neutral Palette ─── */
-  --bg-base: #0a0a0b;
-  --bg-surface: #111113;
-  --bg-elevated: #18181b;
-  --bg-overlay: rgba(24, 24, 27, 0.7);
-  --bg-glass: rgba(24, 24, 27, 0.3);
+  --bg-base: var(--bg);
+  --bg-surface: var(--panel);
+  --bg-elevated: var(--panel-2);
+  --bg-overlay: oklch(0.2 0.014 var(--hue) / 0.92);
+  --bg-glass: var(--panel);
 
-  --border-subtle: rgba(39, 39, 42, 0.5);
-  --border-default: rgba(39, 39, 42, 0.8);
-  --border-hover: rgba(63, 63, 70, 0.9);
-  --border-accent: rgba(251, 113, 133, 0.35);
-  --border-accent-hover: rgba(251, 113, 133, 0.55);
+  --border-subtle: var(--line);
+  --border-default: var(--line-strong);
+  --border-hover: oklch(0.98 0.005 var(--hue) / 0.26);
+  --border-accent: oklch(0.8 var(--accent-c) var(--hue) / 0.35);
+  --border-accent-hover: oklch(0.8 var(--accent-c) var(--hue) / 0.55);
 
-  --surface-1: rgba(255, 255, 255, 0.02);
-  --surface-2: rgba(255, 255, 255, 0.04);
-  --surface-3: rgba(255, 255, 255, 0.06);
-  --surface-nav: rgba(10, 10, 11, 0.9);
-  --surface-search: rgba(0, 0, 0, 0.85);
-  --border-surface: rgba(255, 255, 255, 0.06);
-  --border-surface-2: rgba(255, 255, 255, 0.08);
-  --border-surface-3: rgba(255, 255, 255, 0.1);
+  --surface-1: oklch(0.98 0.01 var(--hue) / 0.03);
+  --surface-2: oklch(0.98 0.01 var(--hue) / 0.05);
+  --surface-3: oklch(0.98 0.01 var(--hue) / 0.07);
+  --surface-nav: var(--panel);
+  --surface-search: oklch(0.13 0.01 var(--hue) / 0.9);
+  --border-surface: var(--line);
+  --border-surface-2: oklch(0.98 0.005 var(--hue) / 0.14);
+  --border-surface-3: var(--line-strong);
 
-  --text-primary: #f4f4f5;
-  --text-secondary: #d4d4d8;
-  --text-tertiary: #a1a1aa;
-  --text-muted: #8a8a95;
-  --text-dim: #767680;
+  --text-primary: var(--text);
+  --text-secondary: oklch(0.87 0.01 var(--hue));
+  --text-tertiary: var(--text-soft);
+  --text-muted: oklch(0.7 0.014 var(--hue)); /* was #8a8a95 */
+  --text-dim: oklch(0.66 0.014 var(--hue)); /* was #767680, failed AA on cards */
 
   /* ─── Typography ─── */
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -89,12 +92,13 @@ html[data-theme='dark'] {
   --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.5);
   --shadow-2xl: 0 30px 80px rgba(0, 0, 0, 0.6);
 
-  --shadow-glow-purple: 0 0 40px rgba(255, 90, 54, 0.22);
-  --shadow-glow-blue: 0 0 40px rgba(249, 115, 22, 0.22);
-  --shadow-glow-emerald: 0 0 40px rgba(16, 185, 129, 0.25);
+  /* Glows are banned (DESIGN.md §1); names kept so old classes still resolve */
+  --shadow-glow-purple: 0 0 0 0 transparent;
+  --shadow-glow-blue: 0 0 0 0 transparent;
+  --shadow-glow-emerald: 0 0 0 0 transparent;
 
   --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
-  --shadow-card-hover: 0 10px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(251, 113, 133, 0.35);
+  --shadow-card-hover: 0 10px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--border-accent);
 
   /* ─── Border Radius ─── */
   --radius-sm: 0.5rem;
@@ -168,83 +172,52 @@ html[data-theme='dark'] {
   --step-4: clamp(2.44rem, 1.9rem + 2.7vw, 3.6rem);
 }
 
-/* ─── Glassmorphism Utilities ─── */
+/* ─── Surfaces (DESIGN.md §1: hairlines and surface shifts, no glass, glow or blur) ───
+   The old class names stay so existing markup keeps working. */
 .glass {
-  background: var(--bg-glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-subtle);
+  background: var(--panel);
+  border: 1px solid var(--line);
 }
 
 .glass-strong {
-  background: var(--bg-overlay);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border-default);
+  background: var(--panel-2);
+  border: 1px solid var(--line-strong);
 }
 
 .glass-card {
-  background: linear-gradient(135deg, rgba(24, 24, 27, 0.4), rgba(24, 24, 27, 0.2));
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-subtle);
-  box-shadow: var(--shadow-card);
-  transition: all var(--transition-base);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  transition:
+    border-color var(--transition-base),
+    background-color var(--transition-base);
 }
 
-.glass-card:hover {
-  border-color: var(--border-accent);
-  box-shadow: var(--shadow-card-hover), var(--shadow-glow-purple);
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .glass-card:hover {
+    border-color: var(--line-strong);
+  }
 }
 
-/* ─── Gradient Text ─── */
-.gradient-text {
-  background: linear-gradient(135deg, var(--purple-400), var(--purple-500), var(--blue-500));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
+/* ─── Former gradient text: solid colour (gradient text is banned, DESIGN.md §9) ─── */
+.gradient-text,
 .gradient-text-amber {
-  background: linear-gradient(135deg, var(--amber-400), var(--amber-500));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--accent);
 }
 
-/* ─── Glow Effects ─── */
-.glow-purple {
-  box-shadow: var(--shadow-glow-purple);
-}
-
+/* ─── Former glow effects: no glow ─── */
+.glow-purple,
 .glow-blue {
-  box-shadow: var(--shadow-glow-blue);
+  box-shadow: none;
 }
 
 .glow-border {
-  position: relative;
+  transition: border-color var(--transition-base);
 }
 
-.glow-border::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, var(--purple-500), transparent, var(--blue-500));
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity var(--transition-base);
-}
-
-.glow-border:hover::before {
-  opacity: 1;
+@media (hover: hover) {
+  .glow-border:hover {
+    border-color: var(--line-strong);
+  }
 }
 
 /* ─── Animations ─── */
