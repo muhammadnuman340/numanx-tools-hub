@@ -120,6 +120,54 @@ html[data-theme='dark'] {
   --z-toast: 400;
 }
 
+/* ─── DESIGN.md tokens (amber brand, OKLCH) ───
+   New system from DESIGN.md §2. Names never clash with the older tokens above,
+   so adding them changes nothing until components switch over (plan Phase 6). */
+:root,
+html[data-theme='dark'] {
+  --hue: 75;
+  --accent-c: 0.15;
+
+  --bg: oklch(0.16 0.012 var(--hue));
+  --panel: oklch(0.2 0.014 var(--hue));
+  --panel-2: oklch(0.24 0.016 var(--hue));
+  --well: oklch(0.13 0.01 var(--hue));
+  --line: oklch(0.98 0.005 var(--hue) / 0.1);
+  --line-strong: oklch(0.98 0.005 var(--hue) / 0.18);
+
+  --text: oklch(0.95 0.008 var(--hue));
+  --text-soft: oklch(0.76 0.014 var(--hue));
+  --text-faint: oklch(0.66 0.014 var(--hue));
+
+  --accent: oklch(0.8 var(--accent-c) var(--hue));
+  --accent-fg: oklch(0.18 0.02 var(--hue));
+  --focus: oklch(0.9 0.1 var(--hue));
+
+  --success: oklch(0.74 0.15 150);
+  --warning: oklch(0.72 0.17 50);
+  --danger: oklch(0.68 0.19 27);
+
+  --radius-outer: 14px;
+  --pad: 6px;
+  --radius-inner: calc(var(--radius-outer) - var(--pad));
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
+  --step-1: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
+  --step-2: clamp(1.56rem, 1.38rem + 0.9vw, 2.1rem);
+  --step-3: clamp(1.95rem, 1.62rem + 1.6vw, 2.6rem);
+  --step-4: clamp(2.44rem, 1.9rem + 2.7vw, 3.6rem);
+}
+
 /* ─── Glassmorphism Utilities ─── */
 .glass {
   background: var(--bg-glass);
