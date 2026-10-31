@@ -1,28 +1,39 @@
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  // The button is replaced on every client-side navigation, so look it up on each scroll and
+  // bind its click on astro:page-load (fires on first load too). The scroll listener is added once.
+  let ticking = false;
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const btn = document.getElementById('back-to-top');
+        const hide = window.scrollY < 400;
+        btn?.classList.toggle('opacity-0', hide);
+        btn?.classList.toggle('pointer-events-none', hide);
+        btn?.classList.toggle('translate-y-4', hide);
+        ticking = false;
+      });
+    },
+    { passive: true },
+  );
+
+  document.addEventListener('astro:page-load', () => {
     const btn = document.getElementById('back-to-top');
-    if (!btn) return;
-    let ticking = false;
-    const onScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          btn.classList.toggle('opacity-0', window.scrollY < 400);
-          btn.classList.toggle('pointer-events-none', window.scrollY < 400);
-          btn.classList.toggle('translate-y-4', window.scrollY < 400);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    if (!btn || btn.dataset.bound === '1') return;
+    btn.dataset.bound = '1';
+    btn.addEventListener('click', () => {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
   });
 </script>
 
 <button
   id="back-to-top"
   aria-label="Scroll to top"
-  class="fixed bottom-6 right-6 z-[90] w-11 h-11 rounded-full border border-surface-2 var(--surface-nav) backdrop-blur-xl flex items-center justify-center text-tertiary hover:text-white hover:border-purple-500/40 hover:shadow-lg hover:shadow-purple-900/20 transition-all duration-300 opacity-0 pointer-events-none translate-y-4"
+  class="fixed bottom-6 right-6 z-[90] w-11 h-11 rounded-full border border-surface-2 bg-[#0a0a0c] flex items-center justify-center text-tertiary hover:text-white hover:border-purple-500/40 hover:shadow-lg hover:shadow-purple-900/20 transition-all duration-300 opacity-0 pointer-events-none translate-y-4"
 >
   <svg
     class="w-4 h-4"
