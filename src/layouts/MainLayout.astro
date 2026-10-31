@@ -282,32 +282,11 @@ const isToolPage = /^\/tools\/[^/]+\/?$/.test(Astro.url.pathname);
 
       gsap.registerPlugin(ScrollTrigger);
 
-      // Global Web Audio Engine
-      let audioCtx: AudioContext | null = null;
-      const initAudio = () => {
-        if (!audioCtx) {
-          try {
-            audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-          } catch (e) {}
-        }
-      };
-      const playTick = () => {
-        if (!audioCtx || audioCtx.state === 'suspended') return;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.03);
-        gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.03);
-      };
+      // Visitors who ask for less motion get native scrolling and no reveal animations (DESIGN.md §6)
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      (function () {
-        // Initialize Lenis
+      // Smooth scrolling only when motion is allowed
+      if (!reduceMotion) {
         const lenis = new Lenis({
           duration: 1.2,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -318,65 +297,38 @@ const isToolPage = /^\/tools\/[^/]+\/?$/.test(Astro.url.pathname);
           smoothTouch: false,
           touchMultiplier: 2,
         });
-
-        function raf(time: number) {
+        const raf = (time: number) => {
           lenis.raf(time);
           requestAnimationFrame(raf);
-        }
+        };
         requestAnimationFrame(raf);
-      })();
+      }
 
-      // Card spotlight/tilt and hover audio (desktop only). Custom cursor removed in UI Phase 1;
-      // the remaining effects are reviewed in Phase 4 (motion).
+      // Card spotlight glow on desktop: only updates CSS variables, once per frame.
+      // The 3D tilt and hover sounds were removed in UI plan Phase 4.
       (function () {
-        if (!window.matchMedia('(min-width:1024px)').matches) return;
-
+        if (!window.matchMedia('(min-width: 1024px) and (hover: hover)').matches) return;
+        let pending: MouseEvent | null = null;
         window.addEventListener(
           'mousemove',
-          function (e) {
-            // Spotlight glow effect for cards globally
-            document.querySelectorAll('.card-glow, .glass-card, .card-spotlight').forEach(function (card) {
-              var rect = card.getBoundingClientRect();
-              var x = e.clientX - rect.left;
-              var y = e.clientY - rect.top;
-              (card as HTMLElement).style.setProperty('--mouse-x', x + 'px');
-              (card as HTMLElement).style.setProperty('--mouse-y', y + 'px');
-
-              // Advanced 3D Magnetic Tilt (apply to glass-card and card-spotlight)
-              if (card.classList.contains('glass-card') || card.classList.contains('card-spotlight')) {
-                if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
-                  const centerX = rect.width / 2;
-                  const centerY = rect.height / 2;
-                  const rotateX = ((y - centerY) / centerY) * -2; // Subtler 2 deg tilt globally
-                  const rotateY = ((x - centerX) / centerX) * 2;
-                  (card as HTMLElement).style.transform =
-                    `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(5px)`;
-                } else {
-                  (card as HTMLElement).style.transform =
-                    `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)`;
-                }
-              }
+          (e) => {
+            if (pending) {
+              pending = e;
+              return;
+            }
+            pending = e;
+            requestAnimationFrame(() => {
+              const ev = pending as MouseEvent;
+              pending = null;
+              document.querySelectorAll<HTMLElement>('.card-glow, .glass-card, .card-spotlight').forEach((card) => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--mouse-x', ev.clientX - rect.left + 'px');
+                card.style.setProperty('--mouse-y', ev.clientY - rect.top + 'px');
+              });
             });
           },
           { passive: true },
         );
-
-        // Global Hover & Audio setup
-        var interactiveSelectors =
-          'a, button, .hover-scale, .card-glow, .glass-card, input, select, textarea, [tabindex="0"], .audio-trigger';
-        function setupInteractions() {
-          document.addEventListener('click', initAudio, { once: true });
-          document.addEventListener('keydown', initAudio, { once: true });
-
-          document.querySelectorAll(interactiveSelectors).forEach(function (el) {
-            el.addEventListener('mouseenter', function () {
-              initAudio();
-              playTick();
-            });
-          });
-        }
-        setupInteractions();
-        document.addEventListener('astro:page-load', setupInteractions);
       })();
 
       if ('serviceWorker' in navigator)
@@ -402,50 +354,41 @@ const isToolPage = /^\/tools\/[^/]+\/?$/.test(Astro.url.pathname);
             ).observe(el);
           });
 
-          // Cinematic GSAP Reveals
+          // Optional reveal: a small fade/rise that runs once, only when motion is allowed.
+          // Content never starts invisible and never hides again on scroll-up (DESIGN.md §6).
+          let revealCtx: ReturnType<typeof gsap.matchMedia> | null = null;
           function setupReveals() {
-            // Text Blur Reveal
-            document.querySelectorAll('.reveal-text, .reveal').forEach((el) => {
-              gsap.fromTo(
-                el,
-                { opacity: 0, y: 30, filter: 'blur(10px)' },
-                {
-                  opacity: 1,
-                  y: 0,
-                  filter: 'blur(0px)',
-                  duration: 1,
+            revealCtx?.revert();
+            revealCtx = gsap.matchMedia();
+            revealCtx.add('(prefers-reduced-motion: no-preference)', () => {
+              document.querySelectorAll('.reveal-text, .reveal').forEach((el) => {
+                gsap.from(el, {
+                  opacity: 0.6,
+                  y: 8,
+                  duration: 0.26,
                   ease: 'power3.out',
-                  scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' },
-                },
-              );
-            });
-
-            // 3D Card Reveal
-            document.querySelectorAll('.group-section, .glass-card').forEach((section) => {
-              const cards = section.querySelectorAll('.card-spotlight, .glass-card > div');
-              const target = cards.length > 0 ? cards : section;
-              gsap.fromTo(
-                target,
-                { opacity: 0, y: 60, scale: 0.9, rotationX: 10 },
-                {
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                  rotationX: 0,
-                  duration: 1.2,
-                  stagger: 0.1,
-                  ease: 'back.out(1.5)',
-                  scrollTrigger: {
-                    trigger: section,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse',
-                  },
-                },
-              );
+                  scrollTrigger: { trigger: el, start: 'top 92%', once: true },
+                });
+              });
+              document.querySelectorAll('.group-section, .glass-card').forEach((section) => {
+                const cards = section.querySelectorAll('.card-spotlight, .glass-card > div');
+                gsap.from(cards.length > 0 ? cards : section, {
+                  opacity: 0.6,
+                  y: 8,
+                  duration: 0.26,
+                  stagger: 0.04,
+                  ease: 'power3.out',
+                  scrollTrigger: { trigger: section, start: 'top 92%', once: true },
+                });
+              });
             });
           }
-          setupReveals();
+          // astro:page-load also fires on first load, so this runs exactly once per page
           document.addEventListener('astro:page-load', setupReveals);
+          document.addEventListener('astro:before-swap', () => {
+            revealCtx?.revert();
+            revealCtx = null;
+          });
         }
       })();
 

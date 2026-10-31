@@ -26,14 +26,18 @@ const { mode = 'dual', accentColor = '0xffaa55' } = Astro.props;
 </div>
 
 <script>
+  // One animation loop at a time: stopped before each page swap (it used to keep drawing to the
+  // old, detached canvas) and paused while the tab is hidden. Skipped on phones and with reduced motion.
+  let stopCanvas: (() => void) | null = null;
+
   function setupNeuralCanvas() {
+    stopCanvas?.();
+    stopCanvas = null;
+
     const canvas = document.getElementById('numanx-neural-canvas') as HTMLCanvasElement | null;
     if (!canvas) return;
-
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
-
-    if (!isDesktop || prefersReduced) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!window.matchMedia('(min-width: 768px)').matches) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -41,27 +45,35 @@ const { mode = 'dual', accentColor = '0xffaa55' } = Astro.props;
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
     let animId = 0;
+    let running = true;
     const mouse = { x: -9999, y: -9999, radius: 130 };
     let voiceReactivity = 0;
 
-    window.addEventListener('mousemove', (e) => {
+    const onMove = (e: MouseEvent) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
-    }, { passive: true });
-
-    window.addEventListener('mouseleave', () => {
+    };
+    const onLeave = () => {
       mouse.x = -9999;
       mouse.y = -9999;
-    }, { passive: true });
-
-    window.addEventListener('resize', () => {
+    };
+    const onResize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
-    }, { passive: true });
+    };
+    const onVoice = (event: Event) => {
+      const detail = (event as CustomEvent).detail;
+      voiceReactivity = typeof detail === 'number' ? detail : 1;
+    };
+    const onVisibility = () => {
+      if (!document.hidden && running && !animId) animId = requestAnimationFrame(drawFrame);
+    };
 
-    window.addEventListener('jarvis-voice', (event: any) => {
-      voiceReactivity = typeof event.detail === 'number' ? event.detail : 1;
-    });
+    window.addEventListener('mousemove', onMove, { passive: true });
+    window.addEventListener('mouseleave', onLeave, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
+    window.addEventListener('jarvis-voice', onVoice);
+    document.addEventListener('visibilitychange', onVisibility);
 
     const PARTICLE_COUNT = 42;
     const nodes = Array.from({ length: PARTICLE_COUNT }, () => ({
@@ -69,33 +81,28 @@ const { mode = 'dual', accentColor = '0xffaa55' } = Astro.props;
       y: Math.random() * height,
       vx: (Math.random() - 0.5) * 0.45,
       vy: (Math.random() - 0.5) * 0.45,
-      r: Math.random() * 1.6 + 1.0
+      r: Math.random() * 1.6 + 1.0,
     }));
 
     function drawFrame() {
-      if (!ctx || document.hidden) {
-        animId = requestAnimationFrame(drawFrame);
-        return;
-      }
+      animId = 0;
+      if (!running || !ctx) return;
+      if (document.hidden) return; // resumes on visibilitychange
 
       ctx.clearRect(0, 0, width, height);
-
       const currentRadius = voiceReactivity > 0 ? mouse.radius * 1.4 : mouse.radius;
 
       for (let i = 0; i < PARTICLE_COUNT; i++) {
         const n = nodes[i];
         n.x += n.vx;
         n.y += n.vy;
-
         if (n.x < 0 || n.x > width) n.vx *= -1;
         if (n.y < 0 || n.y > height) n.vy *= -1;
 
-        // Subtle mouse interaction
         const dxMouse = n.x - mouse.x;
         const dyMouse = n.y - mouse.y;
         const distMouse = Math.hypot(dxMouse, dyMouse);
-
-        if (distMouse < currentRadius) {
+        if (distMouse < currentRadius && distMouse > 0) {
           n.x += (dxMouse / distMouse) * 0.8;
           n.y += (dyMouse / distMouse) * 0.8;
         }
@@ -108,29 +115,39 @@ const { mode = 'dual', accentColor = '0xffaa55' } = Astro.props;
         for (let j = i + 1; j < PARTICLE_COUNT; j++) {
           const m = nodes[j];
           const dist = Math.hypot(n.x - m.x, n.y - m.y);
-
           if (dist < 135) {
             const alpha = (1 - dist / 135) * 0.22;
             ctx.beginPath();
             ctx.moveTo(n.x, n.y);
             ctx.lineTo(m.x, m.y);
-            ctx.strokeStyle = `rgba(99, 102, 241, ${alpha.toFixed(3)})`;
+            ctx.strokeStyle = 'rgba(99, 102, 241, ' + alpha.toFixed(3) + ')';
             ctx.lineWidth = 0.8;
             ctx.stroke();
           }
         }
       }
 
-      if (voiceReactivity > 0) {
-        voiceReactivity *= 0.95;
-      }
-
+      if (voiceReactivity > 0) voiceReactivity *= 0.95;
       animId = requestAnimationFrame(drawFrame);
     }
 
-    drawFrame();
+    animId = requestAnimationFrame(drawFrame);
+
+    stopCanvas = () => {
+      running = false;
+      if (animId) cancelAnimationFrame(animId);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseleave', onLeave);
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('jarvis-voice', onVoice);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
   }
 
-  setupNeuralCanvas();
+  // astro:page-load fires on first load too, so the canvas is set up exactly once per page
   document.addEventListener('astro:page-load', setupNeuralCanvas);
+  document.addEventListener('astro:before-swap', () => {
+    stopCanvas?.();
+    stopCanvas = null;
+  });
 </script>

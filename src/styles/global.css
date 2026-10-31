@@ -120,10 +120,7 @@ select {
   transition: all var(--transition-fast);
 }
 
-/* ─── Smooth Page Entry ─── */
-main {
-  animation: fadeInUp 0.4s ease-out;
-}
+/* Page-entry fade on <main> removed (UI plan Phase 4): it re-animated the whole page on every navigation. */
 
 /* ─── Staggered Children Animation ─── */
 .animate-stagger > * {
@@ -618,17 +615,11 @@ html {
   opacity: 1;
 }
 
-/* ─── Scroll Reveal (triggered in-viewport) ─── */
+/* ─── Scroll Reveal ───
+   Content is visible by default (DESIGN.md §6). The optional small fade-in is added by
+   MainLayout's GSAP code only when the visitor allows motion; nothing is hidden by CSS. */
 .reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 0.6s ease-out,
-    transform 0.6s ease-out;
-}
-.reveal.visible {
   opacity: 1;
-  transform: translateY(0);
 }
 
 /* ─── Icon Bounce on Hover ─── */

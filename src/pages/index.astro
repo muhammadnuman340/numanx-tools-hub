@@ -633,49 +633,9 @@ const roadmap = [
 </style>
 
 <script>
-  import gsap from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
   import { getIconSvg } from '../lib/iconSvgs';
 
-  // Shared Audio Context for the whole page
-  let audioCtx: AudioContext | null = null;
-  const initAudio = () => {
-    if (!audioCtx) {
-      try {
-        audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-      } catch (e) {}
-    }
-  };
-  const playTick = () => {
-    if (!audioCtx || audioCtx.state === 'suspended') return;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.03);
-    gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.03);
-  };
-
   if (typeof window !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Initialize audio on first user interaction
-    document.addEventListener('click', initAudio, { once: true });
-    document.addEventListener('keydown', initAudio, { once: true });
-
-    // Attach audio to all triggers
-    document.querySelectorAll('.audio-trigger').forEach((el) => {
-      el.addEventListener('mouseenter', () => {
-        initAudio();
-        playTick();
-      });
-    });
-
     // Advanced Magnetic 3D Tracker for Grids
     const handleOnMouseMove = (e: MouseEvent, containerId: string) => {
       const container = document.getElementById(containerId);
@@ -687,21 +647,6 @@ const roadmap = [
         const y = e.clientY - rect.top;
         card.style.setProperty('--mouse-x', `${x}px`);
         card.style.setProperty('--mouse-y', `${y}px`);
-
-        // Magnetic Tilt Logic (Active only when hovered)
-        if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          const rotateX = ((y - centerY) / centerY) * -4; // Max 4 deg tilt
-          const rotateY = ((x - centerX) / centerX) * 4;
-          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px) scale(1.02)`;
-          card.style.zIndex = '50';
-          card.style.boxShadow = '0 30px 60px rgba(0,0,0,0.5), 0 0 20px rgba(251,191,36,0.1)';
-        } else {
-          card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
-          card.style.zIndex = '1';
-          card.style.boxShadow = 'none';
-        }
       }
     };
 
@@ -728,47 +673,7 @@ const roadmap = [
       });
     });
 
-    // Cinematic GSAP Scroll Animations
-    // Text Reveal Blur
-    document.querySelectorAll('.reveal-text').forEach((el) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, y: 30, filter: 'blur(10px)' },
-        {
-          opacity: 1,
-          y: 0,
-          filter: 'blur(0px)',
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' },
-        },
-      );
-    });
-
-    // 3D Card Reveal
-    document.querySelectorAll('.group-section').forEach((section) => {
-      const cards = section.querySelectorAll('.card-spotlight');
-      if (cards.length > 0) {
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 60, scale: 0.9, rotationX: 10 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            rotationX: 0,
-            duration: 1.2,
-            stagger: 0.1,
-            ease: 'back.out(1.5)',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 80%',
-              toggleActions: 'play none none reverse',
-            },
-          },
-        );
-      }
-    });
+    // Scroll reveals are handled once, site-wide, in MainLayout (UI plan Phase 4)
 
     // Newsletter Form Logic
     document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
@@ -881,14 +786,6 @@ const roadmap = [
               a.innerHTML = `<span class="text-amber-400 bg-amber-500/10 p-2.5 rounded-xl relative z-10 group-hover/rec:bg-amber-500/20 transition-colors">${getIconSvg(t.icon)}</span><span class="text-sm font-black text-zinc-300 group-hover/rec:text-white transition-colors relative z-10 pointer-events-none">${t.name}</span>`;
               grid.appendChild(a);
             }
-          });
-
-          // Re-attach audio trigger for dynamic nodes
-          grid.querySelectorAll('.audio-trigger').forEach((el) => {
-            el.addEventListener('mouseenter', () => {
-              initAudio();
-              playTick();
-            });
           });
 
           // Attach magnetic listener
