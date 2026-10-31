@@ -191,7 +191,7 @@ const schema = {
           <div id="letter-freq" class="mt-2 flex flex-wrap gap-1.5 hidden" role="region" aria-label="Character frequency breakdown"></div>
           <button
             id="extract-btn"
-            class="w-full py-2.5 bg-gradient-to-r from-amber-600 to-amber-600 hover:from-amber-500 hover:to-amber-500 text-white text-sm font-semibold rounded-xl transition-all"
+            class="w-full py-2.5 text-accent-fg text-sm font-semibold rounded-xl transition-all bg-amber-600"
             >Extract Keywords</button
           >
           <div class="flex gap-2">
@@ -258,7 +258,7 @@ const schema = {
           <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">AI Technology</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
-            How It <span class="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent"
+            How It <span class="text-amber-400"
               >Works</span
             >
           </h2>
@@ -289,10 +289,10 @@ const schema = {
       />
       <div class="mt-20 max-w-3xl mx-auto px-4">
         <div
-          class="bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-amber-500/10 border border-amber-500/20 rounded-2xl p-8 md:p-12 text-center"
+          class="border border-amber-500/20 rounded-2xl p-8 md:p-12 text-center bg-amber-500/10"
         >
           <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-4">
-            Ready to <span class="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent"
+            Ready to <span class="text-amber-400"
               >Extract</span
             > Keywords?
           </h2>
@@ -302,7 +302,7 @@ const schema = {
           </p>
           <a
             href="#main-content"
-            class="inline-block px-8 py-3 bg-gradient-to-r from-amber-600 to-amber-600 hover:from-amber-500 hover:to-amber-500 text-white text-sm font-semibold rounded-xl transition-all"
+            class="inline-block px-8 py-3 text-accent-fg text-sm font-semibold rounded-xl transition-all bg-amber-600"
             >Extract Now</a
           >
         </div>
@@ -644,33 +644,6 @@ const schema = {
     return 0.5 + normalized * 0.5;
   }
 
-  function getColor(i) {
-    const colors = [
-      'from-amber-400',
-      'from-blue-400',
-      'from-amber-400',
-      'from-amber-400',
-      'from-amber-400',
-      'from-teal-400',
-      'from-cyan-400',
-      'from-rose-400',
-      'from-amber-400',
-      'from-sky-400',
-    ];
-    const toColors = [
-      'to-amber-600',
-      'to-amber-600',
-      'to-amber-600',
-      'to-blue-600',
-      'to-amber-600',
-      'to-teal-600',
-      'to-cyan-600',
-      'to-rose-600',
-      'to-amber-600',
-      'to-sky-600',
-    ];
-    return { from: colors[i % colors.length], to: toColors[i % toColors.length] };
-  }
 
   function drawKeywordChart(canvasId, keywords) {
     const canvas = document.getElementById(canvasId);
@@ -748,7 +721,7 @@ const schema = {
         <span class="text-xs text-dim w-5 text-right">${i + 1}</span>
         <span class="text-xs text-secondary font-medium w-32 truncate">${word}</span>
         <div class="flex-1 h-2 rounded-full bg-zinc-800 overflow-hidden">
-          <div class="h-full rounded-full bg-gradient-to-r from-amber-500 to-amber-500 transition-all" style="width:${barW}%"></div>
+          <div class="h-full rounded-full transition-all bg-amber-500" style="width:${barW}%"></div>
         </div>
         <span class="text-xs text-dim w-12 text-right tabular-nums">${count}x</span>
       </div>`;
@@ -762,8 +735,7 @@ const schema = {
       .map(([word, count], i) => {
         const size = getFontSize(count, maxCount, minCount);
         const opacity = getOpacity(count, maxCount, minCount);
-        const c = getColor(i);
-        return `<span class="inline-block bg-gradient-to-r ${c.from} ${c.to} bg-clip-text text-transparent font-bold transition-all hover:scale-110 cursor-default" style="font-size:${size}px;opacity:${opacity}">${word}</span>`;
+        return `<span class="inline-block text-amber-300 font-bold transition-all hover:scale-110 cursor-default" style="font-size:${size}px;opacity:${opacity}">${word}</span>`;
       })
       .join('');
 

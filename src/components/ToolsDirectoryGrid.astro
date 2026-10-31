@@ -45,7 +45,7 @@ const filterTabs = [
         id="directory-search-input"
         type="search"
         placeholder="Filter all 51+ tools by keyword, task, or name (e.g. 'compress', 'qr', 'nrr', 'uuid')..."
-        class="w-full bg-[#0a0a0c]/90 text-white placeholder-zinc-500 pl-12 pr-12 py-4 rounded-2xl border border-white/10 focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/30 transition-all text-sm shadow-inner backdrop-blur-xl"
+        class="w-full bg-[#0a0a0c]/90 text-white placeholder-zinc-500 pl-12 pr-12 py-4 rounded-2xl border border-white/10 focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/30 transition-all text-sm shadow-inner"
         autocomplete="off"
       />
       <button
@@ -100,7 +100,7 @@ const filterTabs = [
           <>
             <a
               href={tool.url}
-              class="tool-card group relative flex flex-col justify-between rounded-2xl bg-[#0a0a0c]/80 backdrop-blur-xl border border-white/5 p-6 transition-all duration-300 hover:border-white/20 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+              class="tool-card group relative flex flex-col justify-between rounded-2xl bg-[#0a0a0c]/80 border border-white/5 p-6 transition-all duration-300 hover:border-white/20 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
               data-category={tool.category}
               data-name={tool.name.toLowerCase()}
               data-keywords={tool.keywords ? tool.keywords.join(' ').toLowerCase() : ''}

@@ -115,7 +115,7 @@ const schema = {
           </div>
           <button
             id="generate-btn"
-            class="w-full bg-gradient-to-r from-amber-400 to-rose-500 text-white font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all"
+            class="w-full text-accent-fg font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all bg-amber-400"
             >Generate</button
           >
           <div id="results-area" class="mt-6 pt-6 border-t border-surface hidden">
@@ -161,7 +161,7 @@ const schema = {
           <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Learn</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
-            Random Number <span class="bg-gradient-to-r from-amber-400 to-rose-500 bg-clip-text text-transparent"
+            Random Number <span class="text-amber-400"
               >Generation</span
             >
           </h2>
@@ -177,7 +177,7 @@ const schema = {
       <RelatedTools current="random-number-generator" />
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
-          Frequently Asked <span class="bg-gradient-to-r from-amber-400 to-rose-500 bg-clip-text text-transparent"
+          Frequently Asked <span class="text-amber-400"
             >Questions</span
           >
         </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />

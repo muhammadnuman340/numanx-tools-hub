@@ -242,7 +242,7 @@ Real-world examples using NumanX Tools.
 
 In 2026, **WebP is the best all-around format** for web images. Use JPEG for maximum compatibility with legacy systems. Use PNG when you need lossless quality with transparency. Use AVIF when you want cutting-edge compression and can handle fallbacks. Convert between formats easily using the free tools at NumanX Tools.
 
-<div class="my-8 p-6 rounded-2xl bg-gradient-to-r from-amber-900/40 via-surface-1 to-blue-900/40 border border-amber-500/30 text-center space-y-3">
+<div class="my-8 p-6 rounded-2xl border border-amber-500/30 text-center space-y-3 bg-amber-900/40">
   <h3 class="text-lg font-bold text-white m-0">Convert &amp; Compress Images Instantly</h3>
   <p class="text-xs text-slate-300 max-w-lg mx-auto">Switch between JPG, PNG, and WebP in seconds with zero server uploads and 100% private in-browser conversion.</p>
   <div class="flex flex-wrap gap-3 justify-center">

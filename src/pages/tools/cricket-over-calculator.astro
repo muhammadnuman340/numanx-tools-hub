@@ -71,7 +71,7 @@ const schema = {
           <div class="flex gap-2 mb-4">
             <button
               id="mode-balls"
-              class="flex-1 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all"
+              class="flex-1 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all bg-yellow-400"
               >Balls → Overs</button
             >
             <button
@@ -93,7 +93,7 @@ const schema = {
             />
             <button
               id="convert-balls-btn"
-              class="w-full bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all"
+              class="w-full text-black font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all bg-yellow-400"
               >Convert to Overs</button
             >
             <div id="balls-result" class="mt-4 pt-4 border-t border-surface hidden">
@@ -127,7 +127,7 @@ const schema = {
             />
             <button
               id="convert-overs-btn"
-              class="w-full bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all"
+              class="w-full text-black font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all bg-yellow-400"
               >Convert to Balls</button
             >
             <div id="overs-result" class="mt-4 pt-4 border-t border-surface hidden">
@@ -169,7 +169,7 @@ const schema = {
           <span class="text-xs font-semibold text-yellow-400 uppercase tracking-wider">Learn</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
-            Cricket <span class="bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent"
+            Cricket <span class="text-amber-400"
               >Over Conversions</span
             >
           </h2>
@@ -185,7 +185,7 @@ const schema = {
       <RelatedTools current="cricket-over-calculator" />
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
-          Frequently Asked <span class="bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent"
+          Frequently Asked <span class="text-amber-400"
             >Questions</span
           >
         </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
@@ -214,7 +214,7 @@ const schema = {
 
   modeBallsBtn.addEventListener('click', () => {
     modeBallsBtn.className =
-      'flex-1 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all';
+      'flex-1 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all bg-yellow-400';
     modeOversBtn.className =
       'flex-1 bg-surface-2 text-tertiary hover:text-primary text-xs font-medium px-4 py-2 rounded-xl border border-surface-3 transition-all';
     ballsMode.classList.remove('hidden');
@@ -223,7 +223,7 @@ const schema = {
 
   modeOversBtn.addEventListener('click', () => {
     modeOversBtn.className =
-      'flex-1 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all';
+      'flex-1 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all bg-yellow-400';
     modeBallsBtn.className =
       'flex-1 bg-surface-2 text-tertiary hover:text-primary text-xs font-medium px-4 py-2 rounded-xl border border-surface-3 transition-all';
     oversMode.classList.remove('hidden');

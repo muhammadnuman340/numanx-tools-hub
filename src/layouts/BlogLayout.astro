@@ -63,7 +63,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
 >
   <!-- Reading progress indicator -->
   <div class="sticky top-[56px] left-0 w-full h-[2px] bg-white/[0.05] z-40">
-    <div id="progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-amber-500 w-0 transition-all duration-75">
+    <div id="progress-bar" class="h-full w-0 transition-all duration-75 bg-amber-500">
     </div>
   </div>
   <main class="min-h-screen pt-8 pb-20 px-6 relative overflow-hidden">
@@ -129,7 +129,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
 
           <div class="flex items-center gap-4 pb-8 border-b border-surface mb-10">
             <div
-              class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-600 to-blue-600 flex items-center justify-center text-sm font-bold text-white shrink-0 overflow-hidden relative"
+              class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-accent-fg shrink-0 overflow-hidden relative bg-amber-600"
             >
               <span class="absolute inset-0 flex items-center justify-center"
                 >{author ? author.charAt(0).toUpperCase() : 'N'}</span
@@ -179,7 +179,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
           </div>
 
           <!-- Interactive In-Article Tool Conversion Banner -->
-          <aside class="my-10 p-6 md:p-8 rounded-2xl bg-gradient-to-br from-amber-950/60 via-surface-1 to-blue-950/40 border border-amber-500/30 relative overflow-hidden shadow-2xl">
+          <aside class="my-10 p-6 md:p-8 rounded-2xl border border-amber-500/30 relative overflow-hidden shadow-2xl bg-amber-950/60">
             <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 relative z-10">
               <div class="space-y-2">
@@ -194,7 +194,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
               </div>
               <a
                 href={`/tools/${matchedTool.slug}/`}
-                class="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-600 to-blue-600 hover:from-amber-500 hover:to-blue-500 text-white font-semibold text-sm shadow-xl shadow-amber-950/50 hover:shadow-amber-900/60 active:scale-95 transition-all"
+                class="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-accent-fg font-semibold text-sm shadow-xl shadow-amber-950/50 hover:shadow-amber-900/60 active:scale-95 transition-all bg-amber-600"
               >
                 <span>Launch {matchedTool.name}</span>
                 <span class="text-base">→</span>
@@ -220,7 +220,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
           <div class="mt-10 flex items-center justify-between p-5 rounded-xl border border-surface bg-surface-1">
             <div class="flex items-center gap-3">
               <div
-                class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-600 to-blue-600 flex items-center justify-center text-sm font-bold text-white shrink-0 overflow-hidden relative"
+                class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-accent-fg shrink-0 overflow-hidden relative bg-amber-600"
               >
                 <span class="absolute inset-0 flex items-center justify-center"
                   >{author ? author.charAt(0).toUpperCase() : 'N'}</span
@@ -342,7 +342,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
 
         <aside class="hidden lg:block w-56 shrink-0">
           <!-- Matched Tool Quick Launch in Sidebar -->
-          <div class="mb-6 p-4 rounded-2xl bg-gradient-to-br from-amber-900/30 to-blue-900/20 border border-amber-500/30 shadow-lg">
+          <div class="mb-6 p-4 rounded-2xl border border-amber-500/30 shadow-lg bg-amber-900/30">
             <div class="flex items-center gap-2 mb-2">
               <span class="text-lg">{matchedTool.icon}</span>
               <span class="text-[10px] font-bold uppercase tracking-wider text-amber-300">Try Online Free</span>

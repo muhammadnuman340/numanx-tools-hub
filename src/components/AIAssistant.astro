@@ -23,14 +23,14 @@ const catJson = JSON.stringify(categories.map((c) => ({ title: c.title, count: c
   <!-- Chat Panel -->
   <div
     id="ai-chat-panel"
-    class="hidden mb-3 w-[360px] max-w-[calc(100vw-2rem)] rounded-2xl border border-surface bg-surface-nav backdrop-blur-2xl shadow-2xl overflow-hidden transition-all duration-300 origin-bottom-right animate-[scaleIn_0.2s_ease-out]"
+    class="hidden mb-3 w-[360px] max-w-[calc(100vw-2rem)] rounded-2xl border border-surface bg-surface-nav shadow-2xl overflow-hidden transition-all duration-300 origin-bottom-right animate-[scaleIn_0.2s_ease-out]"
   >
     <!-- Chat Header -->
     <div
-      class="flex items-center justify-between px-4 py-3 border-b border-surface bg-gradient-to-r from-amber-600/10 to-blue-600/5"
+      class="flex items-center justify-between px-4 py-3 border-b border-surface bg-amber-600/10"
     >
       <div class="flex items-center gap-2.5">
-        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-blue-600 flex items-center justify-center">
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-amber-500">
           <svg
             class="w-4 h-4 text-white"
             xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +76,7 @@ const catJson = JSON.stringify(categories.map((c) => ({ title: c.title, count: c
     <div id="ai-messages" class="h-[380px] overflow-y-auto p-4 space-y-3 scrollbar-hide">
       <div class="flex items-start gap-2.5">
         <div
-          class="w-6 h-6 rounded-lg bg-gradient-to-br from-amber-500 to-blue-600 flex items-center justify-center shrink-0 mt-0.5"
+          class="w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5 bg-amber-500"
         >
           <svg
             class="w-3 h-3 text-white"
@@ -157,7 +157,7 @@ const catJson = JSON.stringify(categories.map((c) => ({ title: c.title, count: c
   <button
     id="ai-fab"
     hidden
-    class="w-12 h-12 rounded-full bg-black/40 backdrop-blur-3xl border border-white/10 text-amber-400 hover:text-white hover:bg-white/5 hover:border-white/20 shadow-xl shadow-amber-900/30 hover:shadow-amber-500/50 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer group"
+    class="w-12 h-12 rounded-full bg-black/40 border border-white/10 text-amber-400 hover:text-white hover:bg-white/5 hover:border-white/20 shadow-xl shadow-amber-900/30 hover:shadow-amber-500/50 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer group"
     aria-label="Open AI assistant"
   >
     <svg
@@ -2536,7 +2536,7 @@ const catJson = JSON.stringify(categories.map((c) => ({ title: c.title, count: c
       </div>
     `
       : `
-      <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-amber-500 to-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+      <div class="w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5 bg-amber-500">
         <svg class="w-3 h-3 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       </div>
       <div class="${bubbleClass} px-3.5 py-2.5 max-w-[90%] ${isResult ? 'w-full' : ''}">

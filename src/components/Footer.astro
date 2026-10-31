@@ -3,46 +3,23 @@
 ---
 
 <footer id="god-tier-footer" class="relative z-10 w-full overflow-hidden pb-24 sm:pb-32 mt-32 group">
-  <!-- Mouse Tracking Spotlight -->
-  <div
-    class="pointer-events-none absolute inset-0 z-0 transition duration-300 opacity-0 group-hover:opacity-100"
-    style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(168, 85, 247, 0.15), transparent 40%);"
-  >
-  </div>
-
-  <!-- Massive Background Glow for Footer -->
-  <div class="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
-    <div
-      class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-amber-500/30 to-transparent"
-    >
-    </div>
-    <div
-      class="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-[500px] bg-amber-900/10 blur-[120px] rounded-full mix-blend-screen"
-    >
-    </div>
-  </div>
+  <!-- Top hairline -->
+  <div class="absolute top-0 inset-x-0 h-px bg-line pointer-events-none" aria-hidden="true"></div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-8 relative z-10">
     <!-- Animated Glowing Border Wrapper -->
-    <div class="relative rounded-3xl p-[1px] overflow-hidden">
-      <!-- Rotating Gradient Border -->
-      <div
-        class="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(168,85,247,0.3)_50%,transparent_75%,transparent_100%)] bg-[length:250%_250%,100%_100%] animate-[bg-spin_3s_linear_infinite] opacity-50 z-0"
-      >
-      </div>
-
-      <!-- Inner Glassmorphic Container -->
-      <div class="relative bg-black/60 backdrop-blur-3xl rounded-3xl p-8 sm:p-12 border border-white/5 z-10">
+    <div class="relative rounded-3xl">
+      <div class="relative bg-panel rounded-3xl p-8 sm:p-12 border border-line z-10">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-16 border-b border-white/5 pb-16">
           <!-- Brand Column -->
           <div class="col-span-2 md:col-span-1">
             <a href="/" class="group/brand relative inline-block" aria-label="NumanX Tools Homepage">
               <span
-                class="text-2xl font-black tracking-tighter bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+                class="text-2xl font-black tracking-tighter drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] text-amber-400"
                 >NumanX Tools</span
               >
               <div
-                class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-400 to-amber-400 group-hover/brand:w-full transition-all duration-300"
+                class="absolute -bottom-1 left-0 w-0 h-0.5 group-hover/brand:w-full transition-all duration-300 bg-amber-400"
               >
               </div>
             </a>
@@ -373,7 +350,7 @@
     <div
       aria-hidden="true"
       role="presentation"
-      class="text-[18vw] leading-none font-black tracking-tighter bg-gradient-to-b from-white/10 via-amber-500/10 to-transparent bg-clip-text text-transparent transform translate-y-12 animate-[pulse_4s_ease-in-out_infinite] blur-[1px]"
+      class="text-[18vw] leading-none font-black tracking-tighter transform translate-y-12 animate-[pulse_4s_ease-in-out_infinite] blur-[1px] text-fg/10"
     >
       NUMANX
     </div>
@@ -389,19 +366,8 @@
 </style>
 
 <script is:inline>
-  // Mouse tracking spotlight effect and Cookie Settings handler
+  // Cookie Settings handler
   document.addEventListener('astro:page-load', () => {
-    const footer = document.getElementById('god-tier-footer');
-    if (footer) {
-      footer.addEventListener('mousemove', (e) => {
-        const rect = footer.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        footer.style.setProperty('--mouse-x', `${x}px`);
-        footer.style.setProperty('--mouse-y', `${y}px`);
-      });
-    }
-
     const cookieSettingsBtn = document.getElementById('open-cookie-settings');
     if (cookieSettingsBtn) {
       cookieSettingsBtn.addEventListener('click', () => {

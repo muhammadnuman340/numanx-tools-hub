@@ -175,7 +175,7 @@ const useCases = [
           <div class="glass-card rounded-xl p-3 text-center hover:border-amber-500/30 transition-all">
             <span
               id="stat-chars"
-              class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-amber-400 to-blue-500 bg-clip-text text-transparent tabular-nums"
+              class="block text-xl sm:text-2xl font-extrabold tabular-nums text-amber-400"
               >0</span
             >
             <span class="text-xs font-semibold uppercase tracking-wider text-muted">Chars</span>
@@ -183,7 +183,7 @@ const useCases = [
           <div class="glass-card rounded-xl p-3 text-center hover:border-amber-500/30 transition-all">
             <span
               id="stat-chars-ns"
-              class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-amber-400 to-blue-500 bg-clip-text text-transparent tabular-nums"
+              class="block text-xl sm:text-2xl font-extrabold tabular-nums text-amber-400"
               >0</span
             >
             <span class="text-xs font-semibold uppercase tracking-wider text-muted">No Spaces</span>
@@ -193,7 +193,7 @@ const useCases = [
           >
             <span
               id="stat-words"
-              class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-amber-400 to-blue-500 bg-clip-text text-transparent tabular-nums"
+              class="block text-xl sm:text-2xl font-extrabold tabular-nums text-amber-400"
               >0</span
             >
             <span class="text-xs font-semibold uppercase tracking-wider text-muted">Words</span>
@@ -203,7 +203,7 @@ const useCases = [
           >
             <span
               id="stat-sentences"
-              class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-amber-400 to-blue-500 bg-clip-text text-transparent tabular-nums"
+              class="block text-xl sm:text-2xl font-extrabold tabular-nums text-amber-400"
               >0</span
             >
             <span class="text-xs font-semibold uppercase tracking-wider text-muted">Sentences</span>
@@ -213,7 +213,7 @@ const useCases = [
           >
             <span
               id="stat-paragraphs"
-              class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-amber-400 to-blue-500 bg-clip-text text-transparent tabular-nums"
+              class="block text-xl sm:text-2xl font-extrabold tabular-nums text-amber-400"
               >0</span
             >
             <span class="text-xs font-semibold uppercase tracking-wider text-muted">Paragraphs</span>
@@ -223,7 +223,7 @@ const useCases = [
           >
             <span
               id="stat-lines"
-              class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-amber-400 to-blue-500 bg-clip-text text-transparent tabular-nums"
+              class="block text-xl sm:text-2xl font-extrabold tabular-nums text-amber-400"
               >0</span
             >
             <span class="text-xs font-semibold uppercase tracking-wider text-muted">Lines</span>
@@ -233,7 +233,7 @@ const useCases = [
           >
             <span
               id="stat-read"
-              class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-amber-400 to-blue-500 bg-clip-text text-transparent tabular-nums"
+              class="block text-xl sm:text-2xl font-extrabold tabular-nums text-amber-400"
               >0m</span
             >
             <span class="text-xs font-semibold uppercase tracking-wider text-muted">Read Time</span>
@@ -243,7 +243,7 @@ const useCases = [
           >
             <span
               id="stat-speak"
-              class="block text-xl sm:text-2xl font-extrabold bg-gradient-to-br from-amber-400 to-blue-500 bg-clip-text text-transparent tabular-nums"
+              class="block text-xl sm:text-2xl font-extrabold tabular-nums text-amber-400"
               >0m</span
             >
             <span class="text-xs font-semibold uppercase tracking-wider text-muted">Speak Time</span>
@@ -429,7 +429,7 @@ const useCases = [
           <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Learn</span>
           <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">
             Why Character Count
-            <span class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent">Matters</span>
+            <span class="text-amber-400">Matters</span>
           </h2>
         </div>
         <div class="space-y-4 text-sm text-tertiary leading-relaxed">
@@ -449,7 +449,7 @@ const useCases = [
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
           Frequently Asked
-          <span class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+          <span class="text-amber-400">Questions</span>
         </h2>
         <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
@@ -466,11 +466,11 @@ const useCases = [
       <!-- ─── CTA Section ─── -->
       <section class="mt-16 text-center">
         <div
-          class="max-w-2xl mx-auto bg-gradient-to-br from-amber-600/10 to-blue-600/5 border border-amber-500/20 rounded-2xl p-8 md:p-10"
+          class="max-w-2xl mx-auto border border-amber-500/20 rounded-2xl p-8 md:p-10 bg-amber-600/10"
         >
           <h2 class="text-2xl md:text-3xl font-black tracking-tight">
             Start Counting
-            <span class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent">
+            <span class="text-amber-400">
               Characters Free</span
             >
           </h2>

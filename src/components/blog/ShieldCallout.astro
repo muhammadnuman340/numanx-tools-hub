@@ -29,7 +29,7 @@ const { title, variant = 'emerald' } = Astro.props;
 const vs = variantStyles[variant];
 ---
 
-<div class="my-8 p-5 rounded-xl {vs.container} border backdrop-blur-sm flex gap-4 items-start relative overflow-hidden">
+<div class="my-8 p-5 rounded-xl {vs.container} border flex gap-4 items-start relative overflow-hidden">
   <div class="absolute -right-6 -bottom-6 {vs.svg} pointer-events-none">
     <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 20 20">
       <path

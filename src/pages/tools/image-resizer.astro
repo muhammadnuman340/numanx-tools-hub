@@ -182,7 +182,7 @@ const useCases = [
             <input id="file-input" type="file" accept="image/*" multiple class="hidden" aria-label="Upload images to resize" />
             <div id="dropzone-content">
               <div
-                class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-600/20 to-blue-600/20 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300"
+                class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300 bg-amber-600/20"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -360,10 +360,10 @@ const useCases = [
             <div class="flex gap-3">
               <button
                 id="resize-all-btn"
-                class="flex-1 relative overflow-hidden rounded-xl bg-gradient-to-r from-amber-600 to-blue-600 p-[1px] transition-all duration-300 hover:shadow-xl hover:shadow-amber-500/25 active:scale-[0.99]"
+                class="flex-1 relative overflow-hidden rounded-xl p-[1px] transition-all duration-300 hover:shadow-xl hover:shadow-amber-500/25 active:scale-[0.99] bg-amber-600"
               >
                 <div
-                  class="relative flex items-center justify-center gap-2.5 rounded-[11px] bg-gradient-to-r from-amber-600 to-blue-600 px-6 py-3.5 text-white font-semibold transition-all duration-300 hover:from-amber-500 hover:to-blue-500"
+                  class="relative flex items-center justify-center gap-2.5 rounded-[11px] px-6 py-3.5 text-accent-fg font-semibold transition-all duration-300 bg-amber-600"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -511,14 +511,14 @@ const useCases = [
     <div class="mt-16">
       <h2 class="text-3xl md:text-4xl font-black tracking-tight text-center mb-10">
         Why Use
-        <span class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent">This Tool</span>
+        <span class="text-amber-400">This Tool</span>
       </h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div
           class="group rounded-xl border border-surface bg-surface-1 p-5 text-center hover:border-surface-3 transition-all duration-300"
         >
           <div
-            class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600/20 to-blue-600/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300"
+            class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 bg-amber-600/20"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -542,7 +542,7 @@ const useCases = [
           class="group rounded-xl border border-surface bg-surface-1 p-5 text-center hover:border-surface-3 transition-all duration-300"
         >
           <div
-            class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600/20 to-blue-600/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300"
+            class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 bg-amber-600/20"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -567,7 +567,7 @@ const useCases = [
           class="group rounded-xl border border-surface bg-surface-1 p-5 text-center hover:border-surface-3 transition-all duration-300"
         >
           <div
-            class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600/20 to-blue-600/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300"
+            class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 bg-amber-600/20"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -590,7 +590,7 @@ const useCases = [
           class="group rounded-xl border border-surface bg-surface-1 p-5 text-center hover:border-surface-3 transition-all duration-300"
         >
           <div
-            class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-600/20 to-blue-600/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300"
+            class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 bg-amber-600/20"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -807,7 +807,7 @@ const useCases = [
     card.innerHTML = `
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-2.5 min-w-0">
-          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-600/20 to-blue-600/20 flex items-center justify-center shrink-0">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-amber-600/20">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           </div>
           <div class="min-w-0">
@@ -990,7 +990,7 @@ const useCases = [
                 <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-600/20 text-blue-400">${scalePct}%</span>
                 <span>${formatSize(blob.size)}</span>
               </div>
-              <a href="${dataUrl}" download="${f.name.replace(/\.[^.]+$/, '')}-${newW}x${newH}.${ext}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-600 to-blue-600 text-white text-xs font-semibold hover:from-amber-500 hover:to-blue-500 active:scale-95 transition-all duration-200">
+              <a href="${dataUrl}" download="${f.name.replace(/\.[^.]+$/, '')}-${newW}x${newH}.${ext}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-accent-fg text-xs font-semibold active:scale-95 transition-all duration-200 bg-amber-600">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 Download
               </a>
