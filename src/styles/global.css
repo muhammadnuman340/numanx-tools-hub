@@ -152,17 +152,6 @@ html {
   scroll-padding-top: 72px;
 }
 
-/* Colour-theme dots in tool toolbars: 14px dot, 24px tap area (WCAG 2.5.8) */
-.theme-swatch {
-  box-sizing: border-box;
-  width: 24px;
-  height: 24px;
-  padding: 5px;
-  border-color: transparent;
-  background-clip: content-box !important; /* the colour comes from an inline style */
-  flex-shrink: 0;
-}
-
 /* Sliders: the visible track stays thin (h-1.5 / h-2), the tap area grows to ≥ 24px */
 input[type='range'] {
   box-sizing: content-box;

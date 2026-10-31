@@ -72,32 +72,10 @@ const schema = {
               <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
               <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
-              <div class="flex gap-1" role="group" aria-label="Theme color swatches">
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="purple"
-                  aria-label="Set purple theme"
-                  style="background:#a855f7"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="blue"
-                  aria-label="Set blue theme"
-                  style="background:#3b82f6"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="green"
-                  aria-label="Set green theme"
-                  style="background:#22c55e"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="pink"
-                  aria-label="Set pink theme"
-                  style="background:#ec4899"></button>
-              </div>
               <button
                 id="fullscreen-btn"
                 aria-label="Toggle fullscreen"
-                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
                 title="Fullscreen">&#x26F6;</button
               >
             </div>
@@ -126,14 +104,14 @@ const schema = {
           <select
             id="lang-select"
             aria-label="Select programming language"
-            class="w-full mb-3 bg-surface-2 border border-surface-3 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-violet-500/60 transition-all"
+            class="w-full mb-3 bg-surface-2 border border-surface-3 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500/60 transition-all"
             ><option value="javascript">JavaScript</option><option value="python">Python</option><option value="html"
               >HTML</option
             ><option value="css">CSS</option><option value="sql">SQL</option><option value="json">JSON</option><option
               value="typescript">TypeScript</option
             ></select
           >
-          <div class="flex h-[240px] rounded-xl bg-black/40 border border-surface focus-within:border-violet-500 focus-within:ring-1 focus-within:ring-violet-500 transition-all overflow-hidden relative">
+          <div class="flex h-[240px] rounded-xl bg-black/40 border border-surface focus-within:border-amber-500 focus-within:ring-1 focus-within:ring-amber-500 transition-all overflow-hidden relative">
             <div
               id="line-nums"
               class="w-12 shrink-0 h-full select-none overflow-hidden font-mono text-sm leading-6 text-right pr-3.5 py-3 text-zinc-500/80 bg-zinc-950/60 border-r border-white/5 whitespace-pre pointer-events-none tabular-nums"
@@ -152,15 +130,15 @@ const schema = {
           <div class="flex gap-2 mt-3">
             <button
               id="format-btn"
-              class="flex-1 py-2 rounded-lg text-xs font-semibold border transition-all bg-surface-2 text-tertiary border-surface-3 hover:text-white hover:border-violet-500/40"
+              class="flex-1 py-2 rounded-lg text-xs font-semibold border transition-all bg-surface-2 text-tertiary border-surface-3 hover:text-white hover:border-amber-500/40"
               >Format</button
             ><button
               id="minify-btn"
-              class="flex-1 py-2 rounded-lg text-xs font-semibold border transition-all bg-surface-2 text-tertiary border-surface-3 hover:text-white hover:border-violet-500/40"
+              class="flex-1 py-2 rounded-lg text-xs font-semibold border transition-all bg-surface-2 text-tertiary border-surface-3 hover:text-white hover:border-amber-500/40"
               >Minify</button
             ><button
               id="validate-btn"
-              class="flex-1 py-2 rounded-lg text-xs font-semibold border transition-all bg-surface-2 text-tertiary border-surface-3 hover:text-white hover:border-violet-500/40"
+              class="flex-1 py-2 rounded-lg text-xs font-semibold border transition-all bg-surface-2 text-tertiary border-surface-3 hover:text-white hover:border-amber-500/40"
               >Validate</button
             >
           </div>
@@ -206,10 +184,10 @@ const schema = {
       </div>
       <section class="mt-20 max-w-3xl mx-auto">
         <div class="text-center mb-8">
-          <span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">Developer Tool</span><h2
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Developer Tool</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
-            How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+            How It <span class="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent"
               >Works</span
             >
           </h2>
@@ -228,7 +206,7 @@ const schema = {
       <RelatedTools current="ai-code-assistant" />
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
-          Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+          Frequently Asked <span class="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent"
             >Questions</span
           >
         </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
@@ -736,23 +714,4 @@ const schema = {
     });
     u();
   }
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      let c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500')
-          .replace(/from-(purple|violet)-\d+/g, 'from-' + c + '-500')
-          .replace(/to-purple-\d+/g, 'to-' + c + '-600');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    let c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector('.theme-swatch[data-color="' + c + '"]')?.click();
-  } catch (e) {}
 </script>

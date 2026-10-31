@@ -133,61 +133,6 @@ export function setupFullscreenToggle(btn: HTMLElement, container: HTMLElement) 
   });
 }
 
-const THEME_COLORS = ['purple', 'blue', 'green', 'pink', 'orange'];
-
-const THEME_SWATCH_HTML = (colors: string[]) =>
-  colors
-    .map(
-      (c) =>
-        `<button type="button" class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface" data-color="${c}" aria-label="${c.charAt(0).toUpperCase() + c.slice(1)} accent colour" style="background:var(--swatch-${c})"></button>`,
-    )
-    .join('');
-
-export function getThemeSwatchesHTML(): string {
-  return THEME_SWATCH_HTML(THEME_COLORS);
-}
-
-export function setupThemeSwatches(
-  container: HTMLElement | string | NodeList | NodeListOf<Element>,
-  storageKey = 'nt_theme',
-) {
-  let parent: HTMLElement | null = null;
-  if (typeof container === 'string') {
-    parent = document.querySelector(container);
-  } else if (container instanceof NodeList) {
-    // Legacy: old code passed querySelectorAll result directly — use the first swatch's parent
-    const first = container[0] as HTMLElement;
-    parent = first?.parentElement || null;
-  } else {
-    parent = container;
-  }
-  if (!parent) return;
-
-  parent.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = (s as HTMLElement).dataset.color;
-      if (!c) return;
-      document.querySelectorAll('[class*="purple"]').forEach((el) => {
-        el.className = el.className.replace(
-          /(?<=^|[\s:])(bg|text|border|from|to|ring|shadow|hover:bg|hover:border|placeholder|decoration|outline|divide|accent)-purple-(\d+)(?:\/\d+)?(?=\s|$)/g,
-          (_, p1, p2) => `${p1}${c}-${p2}`,
-        );
-      });
-      try {
-        localStorage.setItem(storageKey, c!);
-      } catch {}
-    });
-  });
-
-  try {
-    const c = localStorage.getItem(storageKey);
-    if (c) {
-      const swatch = parent.querySelector(`.theme-swatch[data-color="${c}"]`) as HTMLElement;
-      if (swatch) swatch.click();
-    }
-  } catch {}
-}
-
 export function clearAllInputs(ids: string[]) {
   ids.forEach((id) => {
     const el = document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null;

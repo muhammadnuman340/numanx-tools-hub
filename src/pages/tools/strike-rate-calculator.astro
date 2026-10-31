@@ -173,7 +173,7 @@ const useCases = [
         <!-- Tab Switcher -->
         <div class="bg-zinc-950 p-1.5 rounded-xl border border-surface flex gap-2">
           <button
-            class="calc-tab flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5"
+            class="calc-tab flex-1 bg-amber-600 text-accent-fg text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5"
             data-tab="batting"
           >
             🚀 Batting SR
@@ -190,34 +190,12 @@ const useCases = [
         <div class="glass-card rounded-2xl p-5 md:p-6 relative">
           <button
             id="fullscreen-btn"
-            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
             title="Fullscreen">⛶</button
           >
 
           <div class="flex items-center gap-2 mb-3">
             <span id="usage-badge" class="text-xs text-muted"></span>
-            <div class="flex gap-1 ml-auto">
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="purple"
-                aria-label="Purple accent colour"
-                style="background:#a855f7"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="blue"
-                aria-label="Blue accent colour"
-                style="background:#3b82f6"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="green"
-                aria-label="Green accent colour"
-                style="background:#22c55e"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="pink"
-                aria-label="Pink accent colour"
-                style="background:#ec4899"></button>
-            </div>
           </div>
 
           <!-- Batting Panel -->
@@ -231,7 +209,7 @@ const useCases = [
                   type="number"
                   id="bat-runs"
                   placeholder="0"
-                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm"
                 />
               </div>
               <div class="space-y-2">
@@ -242,13 +220,13 @@ const useCases = [
                   type="number"
                   id="bat-balls"
                   placeholder="0"
-                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm"
                 />
               </div>
             </div>
             <div class="glass-card rounded-xl p-4 text-center space-y-1">
               <span class="text-[10px] uppercase font-semibold tracking-wider text-muted">Calculated Strike Rate</span>
-              <div class="text-3xl font-extrabold text-purple-400 tracking-tight tabular-nums">
+              <div class="text-3xl font-extrabold text-amber-400 tracking-tight tabular-nums">
                 <span id="sr-output">0.00</span>
               </div>
               <p id="sr-feedback" class="text-xs text-muted italic pt-1">Enter stats to see performance tier</p>
@@ -266,7 +244,7 @@ const useCases = [
                   type="number"
                   id="bowl-balls"
                   placeholder="0"
-                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm"
                 />
               </div>
               <div class="space-y-2">
@@ -277,13 +255,13 @@ const useCases = [
                   type="number"
                   id="bowl-wkts"
                   placeholder="0"
-                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm"
                 />
               </div>
             </div>
             <div class="bg-surface-1 border border-zinc-800/60 rounded-xl p-4 text-center space-y-1">
               <span class="text-[10px] uppercase font-semibold tracking-wider text-muted">Bowling Strike Rate</span>
-              <div class="text-3xl font-extrabold text-purple-400 tracking-tight tabular-nums">
+              <div class="text-3xl font-extrabold text-amber-400 tracking-tight tabular-nums">
                 <span id="bowl-sr-output">0.00</span>
               </div>
               <p id="bowl-sr-feedback" class="text-xs text-muted italic pt-1">Enter stats to see performance tier</p>
@@ -305,7 +283,7 @@ const useCases = [
                 { name: 'Andre Russell', runs: 48, balls: 19, emoji: '🏝️' },
               ].map((p) => (
                 <button
-                  class="preset-btn flex flex-col items-center gap-1 rounded-xl py-2.5 px-1 text-[10px] font-medium border transition-all bg-surface-1 border-surface text-tertiary hover:border-purple-500/40 hover:text-purple-300"
+                  class="preset-btn flex flex-col items-center gap-1 rounded-xl py-2.5 px-1 text-[10px] font-medium border transition-all bg-surface-1 border-surface text-tertiary hover:border-amber-500/40 hover:text-amber-300"
                   data-runs={p.runs}
                   data-balls={p.balls}
                 >
@@ -336,7 +314,7 @@ const useCases = [
                 <div class="mt-1 text-3xl font-black tabular-nums">
                   <span
                     id="bat-sr-value"
-                    class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span
+                    class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent">0.00</span
                   >
                 </div>
               </div>
@@ -347,7 +325,7 @@ const useCases = [
                 <div class="mt-1 text-3xl font-black tabular-nums">
                   <span
                     id="bowl-sr-value"
-                    class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span
+                    class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent">0.00</span
                   >
                 </div>
               </div>
@@ -491,7 +469,7 @@ const useCases = [
               <div class="rounded-xl bg-zinc-950/40 border border-surface p-4">
                 <div class="flex items-center gap-2 mb-3">
                   <span
-                    class="w-6 h-6 rounded-full bg-purple-600/20 flex items-center justify-center text-[10px] font-bold text-purple-400"
+                    class="w-6 h-6 rounded-full bg-amber-600/20 flex items-center justify-center text-[10px] font-bold text-amber-400"
                     >A</span
                   >
                   <span class="text-xs font-semibold text-secondary">Player A</span>
@@ -504,7 +482,7 @@ const useCases = [
                       type="number"
                       min="0"
                       placeholder="0"
-                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" aria-label="Player A runs"
+                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-amber-500 text-xs mt-1" aria-label="Player A runs"
                     />
                   </div>
                   <div>
@@ -514,7 +492,7 @@ const useCases = [
                       type="number"
                       min="0"
                       placeholder="0"
-                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" aria-label="Player A balls faced"
+                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-amber-500 text-xs mt-1" aria-label="Player A balls faced"
                     />
                   </div>
                 </div>
@@ -539,7 +517,7 @@ const useCases = [
                       type="number"
                       min="0"
                       placeholder="0"
-                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" aria-label="Player B runs"
+                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-amber-500 text-xs mt-1" aria-label="Player B runs"
                     />
                   </div>
                   <div>
@@ -549,7 +527,7 @@ const useCases = [
                       type="number"
                       min="0"
                       placeholder="0"
-                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" aria-label="Player B balls faced"
+                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-amber-500 text-xs mt-1" aria-label="Player B balls faced"
                     />
                   </div>
                 </div>
@@ -567,7 +545,7 @@ const useCases = [
           </div>
 
           <!-- WWS 1080x1920 Shorts / Reels Stat Card Exporter -->
-          <div class="rounded-2xl p-5 bg-gradient-to-r from-emerald-950/40 via-surface-1 to-indigo-950/40 border border-emerald-500/30 text-center space-y-3">
+          <div class="rounded-2xl p-5 bg-gradient-to-r from-emerald-950/40 via-surface-1 to-amber-950/40 border border-emerald-500/30 text-center space-y-3">
             <div class="flex items-center justify-center gap-2">
               <span class="text-xl">📱</span>
               <h3 class="text-sm font-bold text-white uppercase tracking-wider">Social Media Shorts / Reels Stat Card</h3>
@@ -589,10 +567,10 @@ const useCases = [
       <!-- ─── Cricket Knowledge ─── -->
       <section class="mt-16">
         <div class="text-center mb-8">
-          <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Learn</span>
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Learn</span>
           <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">
             Cricket
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Knowledge</span>
+            <span class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent">Knowledge</span>
           </h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -660,7 +638,7 @@ const useCases = [
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
           Frequently Asked
-          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+          <span class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
         </h2>
         <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
@@ -676,11 +654,11 @@ const useCases = [
 
       <section class="mt-16 text-center">
         <div
-          class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10"
+          class="max-w-2xl mx-auto bg-gradient-to-br from-amber-600/10 to-blue-600/5 border border-amber-500/20 rounded-2xl p-8 md:p-10"
         >
           <h2 class="text-2xl md:text-3xl font-black tracking-tight">
             Master Cricket
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
+            <span class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent">
               Strike Rate Analysis</span
             >
           </h2>
@@ -691,7 +669,7 @@ const useCases = [
           <div class="mt-6 flex gap-3 justify-center flex-wrap">
             <button
               onclick="document.querySelector('#bat-runs')?.focus()"
-              class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30"
+              class="px-6 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-accent-fg font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-amber-900/30"
             >
               Start Calculating
             </button>
@@ -1046,11 +1024,11 @@ const useCases = [
   calcTabs.forEach((tab) => {
     tab.addEventListener('click', () => {
       calcTabs.forEach((t) => {
-        t.classList.remove('bg-purple-600', 'text-white');
+        t.classList.remove('bg-amber-600', 'text-accent-fg');
         t.classList.add('text-tertiary', 'hover:text-primary');
       });
       tab.classList.remove('text-tertiary', 'hover:text-primary');
-      tab.classList.add('bg-purple-600', 'text-white');
+      tab.classList.add('bg-amber-600', 'text-accent-fg');
       if (tab.dataset.tab === 'batting') {
         battingPanel.classList.remove('hidden');
         bowlingPanel.classList.add('hidden');
@@ -1209,24 +1187,6 @@ const useCases = [
     } catch (e) {}
   }
 
-  // ─── Color theme picker ───
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 
   // ─── WWS Shorts / Reels Stat Card Exporter ───
   import { exportWWSStatCardPNG } from '../../utils/cricketAnalytics.js';

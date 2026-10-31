@@ -143,7 +143,7 @@ const useCases = [
           <div class="p-5 rounded-xl bg-zinc-950 border border-surface text-center space-y-2">
             <span class="text-[10px] uppercase font-bold tracking-wider text-muted">Required Equation</span>
             <div class="text-2xl font-black text-white" id="equation-display">
-              Need <span class="text-purple-400 font-mono">85 runs</span> in <span class="text-blue-400 font-mono">52 balls</span>
+              Need <span class="text-amber-400 font-mono">85 runs</span> in <span class="text-blue-400 font-mono">52 balls</span>
             </div>
             <div class="text-3xl font-black text-emerald-400 font-mono" id="rrr-display">
               RRR: 9.81 RPO
@@ -156,7 +156,7 @@ const useCases = [
         <div class="max-w-3xl mx-auto">
           <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
             Frequently Asked
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+            <span class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
           </h2>
           <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
         </div>
@@ -207,7 +207,7 @@ const useCases = [
     const rrr = oversLeft > 0 ? (runsNeeded / oversLeft).toFixed(2) : '0.00';
 
     if (eqDisplay) {
-      eqDisplay.innerHTML = `Need <span class="text-purple-400 font-mono">${runsNeeded} runs</span> in <span class="text-blue-400 font-mono">${ballsLeft} balls</span>`;
+      eqDisplay.innerHTML = `Need <span class="text-amber-400 font-mono">${runsNeeded} runs</span> in <span class="text-blue-400 font-mono">${ballsLeft} balls</span>`;
     }
     if (rrrDisplay) {
       rrrDisplay.textContent = `RRR: ${rrr} RPO`;

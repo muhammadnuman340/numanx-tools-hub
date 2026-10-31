@@ -30,15 +30,15 @@ const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
           class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6"
         >
           <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
           </span>
           Guides
         </div>
         <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-none">
           NumanX Tools
           <span
-            class="block mt-2 bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent"
+            class="block mt-2 bg-gradient-to-r from-amber-400 via-amber-500 to-blue-500 bg-clip-text text-transparent"
           >
             Guides
           </span>
@@ -56,10 +56,10 @@ const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
         featured && (
           <a
             href={'/guides/' + featured.slug + '/'}
-            class="group block glass-card rounded-3xl hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-300 p-6 md:p-10 mb-12 overflow-hidden"
+            class="group block glass-card rounded-3xl hover:border-amber-500/40 hover:-translate-y-1 transition-all duration-300 p-6 md:p-10 mb-12 overflow-hidden"
           >
             <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
-              <div class="w-full md:w-[280px] shrink-0 aspect-video md:aspect-[4/3] rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center border border-zinc-800 overflow-hidden">
+              <div class="w-full md:w-[280px] shrink-0 aspect-video md:aspect-[4/3] rounded-xl bg-gradient-to-br from-amber-600/20 to-blue-600/20 flex items-center justify-center border border-zinc-800 overflow-hidden">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="40"
@@ -82,12 +82,12 @@ const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
               </div>
               <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-3 mb-3">
-                  <span class="inline-flex px-2.5 py-0.5 rounded-full bg-purple-600/15 border border-purple-500/30 text-purple-300 text-xs font-medium">
+                  <span class="inline-flex px-2.5 py-0.5 rounded-full bg-amber-600/15 border border-amber-500/30 text-amber-300 text-xs font-medium">
                     {featured.frontmatter.category}
                   </span>
                   <span class="text-xs text-dim">{featured.frontmatter.date}</span>
                 </div>
-                <h2 class="text-xl md:text-2xl font-bold text-white group-hover:text-purple-300 transition-colors duration-200 leading-snug">
+                <h2 class="text-xl md:text-2xl font-bold text-white group-hover:text-amber-300 transition-colors duration-200 leading-snug">
                   {featured.frontmatter.title}
                 </h2>
                 <p class="text-sm text-tertiary mt-2 leading-relaxed line-clamp-2">
@@ -96,7 +96,7 @@ const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
                 <div class="flex items-center gap-3 mt-4 text-sm text-muted">
                   <span>{featured.frontmatter.readingTime || '5 min read'}</span>
                 </div>
-                <span class="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-purple-400 group-hover:text-purple-300 transition-colors">
+                <span class="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-amber-400 group-hover:text-amber-300 transition-colors">
                   Read Guide
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -127,9 +127,9 @@ const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
           guides.map((guide) => (
             <a
               href={'/guides/' + guide.slug + '/'}
-              class="group glass-card rounded-2xl p-6 hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-300 block"
+              class="group glass-card rounded-2xl p-6 hover:border-amber-500/40 hover:-translate-y-1 transition-all duration-300 block"
             >
-              <div class="w-full aspect-video rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mb-4 border border-zinc-800">
+              <div class="w-full aspect-video rounded-xl bg-gradient-to-br from-amber-600/20 to-blue-600/20 flex items-center justify-center mb-4 border border-zinc-800">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="28"
@@ -150,10 +150,10 @@ const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
                   </>
                 </svg>
               </div>
-              <span class="inline-flex px-2 py-0.5 rounded-full bg-purple-600/15 border border-purple-500/30 text-purple-300 text-[10px] font-medium mb-2.5">
+              <span class="inline-flex px-2 py-0.5 rounded-full bg-amber-600/15 border border-amber-500/30 text-amber-300 text-[10px] font-medium mb-2.5">
                 {guide.frontmatter.category || 'General'}
               </span>
-              <h3 class="text-base font-bold text-white group-hover:text-purple-300 transition-colors duration-200 leading-snug">
+              <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors duration-200 leading-snug">
                 {guide.frontmatter.title}
               </h3>
               <p class="text-xs text-tertiary mt-2 leading-relaxed line-clamp-2">{guide.frontmatter.description}</p>
@@ -174,7 +174,7 @@ const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
       <div class="mt-16 bg-zinc-900/30 border border-zinc-800/80 p-8 md:p-10 rounded-2xl text-center">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight">
           Need Help With
-          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
+          <span class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent">
             a Specific Tool?</span
           >
         </h2>
@@ -184,7 +184,7 @@ const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
         <div class="mt-6 flex gap-3 justify-center">
           <a
             href="/tools/"
-            class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm active:scale-[0.97] transition-all duration-200"
+            class="px-6 py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-accent-fg font-semibold text-sm active:scale-[0.97] transition-all duration-200"
           >
             Browse Tools
           </a>

@@ -174,34 +174,12 @@ const useCases = [
         <div class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6 space-y-4 relative">
           <button
             id="fullscreen-btn"
-            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
             title="Fullscreen">⛶</button
           >
 
           <div class="flex items-center gap-2 mb-3">
             <span id="usage-badge" class="text-xs text-muted"></span>
-            <div class="flex gap-1 ml-auto pr-9">
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="purple"
-                aria-label="Purple accent colour"
-                style="background:#a855f7"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="blue"
-                aria-label="Blue accent colour"
-                style="background:#3b82f6"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="green"
-                aria-label="Green accent colour"
-                style="background:#22c55e"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="pink"
-                aria-label="Pink accent colour"
-                style="background:#ec4899"></button>
-            </div>
           </div>
 
           <!-- Presets -->
@@ -244,7 +222,7 @@ const useCases = [
                       <select
                         id={`dob-${field}`}
                         aria-label={isMonth ? 'Birth month' : isYear ? 'Birth year' : 'Birth day'}
-                        class="w-full bg-zinc-950 text-primary text-sm px-3 py-3 rounded-xl border border-surface appearance-none focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all cursor-pointer"
+                        class="w-full bg-zinc-950 text-primary text-sm px-3 py-3 rounded-xl border border-surface appearance-none focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all cursor-pointer"
                       >
                         <option value="" disabled selected>
                           {isMonth ? 'Month' : isYear ? 'Year' : 'Day'}
@@ -282,7 +260,7 @@ const useCases = [
 
           <button
             id="calc-btn"
-            class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3.5 rounded-xl transition-all shadow-lg shadow-purple-900/20 text-sm"
+            class="w-full bg-gradient-to-r from-amber-600 to-blue-600 hover:from-amber-500 hover:to-blue-500 text-white font-semibold py-3.5 rounded-xl transition-all shadow-lg shadow-amber-900/20 text-sm"
           >
             Calculate My Age
           </button>
@@ -295,7 +273,7 @@ const useCases = [
         <div
           class="bg-gradient-to-br from-zinc-900/60 to-zinc-950/60 border border-surface rounded-2xl p-6 md:p-8 overflow-hidden relative"
         >
-          <div class="absolute top-0 right-0 w-48 h-48 bg-purple-600/5 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute top-0 right-0 w-48 h-48 bg-amber-600/5 rounded-full blur-3xl pointer-events-none"></div>
           <div class="flex items-center justify-between mb-5">
             <h2 class="text-sm font-bold text-secondary flex items-center gap-2">
               <svg
@@ -308,7 +286,7 @@ const useCases = [
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="text-purple-400"
+                class="text-amber-400"
                 ><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect
                   x="14"
                   y="14"
@@ -320,7 +298,7 @@ const useCases = [
             <div class="flex items-center gap-2">
               <span
                 id="zodiac-badge"
-                class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-semibold border transition-all bg-purple-600/15 border-purple-500/50 text-purple-300 hidden"
+                class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-semibold border transition-all bg-amber-600/15 border-amber-500/50 text-amber-300 hidden"
               ></span>
               <span
                 id="chinese-zodiac-badge"
@@ -333,7 +311,7 @@ const useCases = [
           <div class="grid grid-cols-3 gap-4 md:gap-6 mb-5">
             <div class="text-center">
               <div class="text-4xl md:text-6xl font-black tabular-nums">
-                <span id="age-years" class="bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent"
+                <span id="age-years" class="bg-gradient-to-br from-amber-400 to-blue-500 bg-clip-text text-transparent"
                   >0</span
                 >
               </div>
@@ -343,14 +321,14 @@ const useCases = [
               <div class="text-4xl md:text-6xl font-black tabular-nums">
                 <span
                   id="age-months"
-                  class="bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent">0</span
+                  class="bg-gradient-to-br from-amber-400 to-blue-500 bg-clip-text text-transparent">0</span
                 >
               </div>
               <div class="text-[11px] font-semibold text-muted uppercase tracking-wider mt-1">Months</div>
             </div>
             <div class="text-center">
               <div class="text-4xl md:text-6xl font-black tabular-nums">
-                <span id="age-days" class="bg-gradient-to-br from-purple-400 to-blue-500 bg-clip-text text-transparent"
+                <span id="age-days" class="bg-gradient-to-br from-amber-400 to-blue-500 bg-clip-text text-transparent"
                   >0</span
                 >
               </div>
@@ -362,12 +340,12 @@ const useCases = [
           <div id="next-birthday" class="rounded-xl bg-zinc-950/50 border border-surface p-4">
             <div class="flex items-center justify-between">
               <span class="text-[10px] font-semibold text-muted uppercase tracking-wider">Next Birthday</span>
-              <span id="birthday-countdown" class="text-sm font-bold text-purple-400 font-mono">-- days</span>
+              <span id="birthday-countdown" class="text-sm font-bold text-amber-400 font-mono">-- days</span>
             </div>
             <div class="mt-2 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
               <div
                 id="birthday-bar"
-                class="h-full rounded-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-700"
+                class="h-full rounded-full bg-gradient-to-r from-amber-500 to-blue-500 transition-all duration-700"
                 style="width:0%"
               >
               </div>
@@ -535,10 +513,10 @@ const useCases = [
       <!-- ─── How It Works ─── -->
       <section class="mt-16 max-w-3xl mx-auto">
         <div class="text-center mb-8">
-          <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">How It Works</span>
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">How It Works</span>
           <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">
             Your Life in
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Numbers</span>
+            <span class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent">Numbers</span>
           </h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
@@ -546,7 +524,7 @@ const useCases = [
             class="text-center p-5 rounded-xl border border-surface bg-surface-1 hover:border-surface-3 transition-all"
           >
             <div
-              class="w-9 h-9 rounded-full bg-purple-600/20 flex items-center justify-center text-purple-400 text-sm font-bold mx-auto mb-3"
+              class="w-9 h-9 rounded-full bg-amber-600/20 flex items-center justify-center text-amber-400 text-sm font-bold mx-auto mb-3"
             >
               1
             </div>
@@ -557,7 +535,7 @@ const useCases = [
             class="text-center p-5 rounded-xl border border-surface bg-surface-1 hover:border-surface-3 transition-all"
           >
             <div
-              class="w-9 h-9 rounded-full bg-purple-600/20 flex items-center justify-center text-purple-400 text-sm font-bold mx-auto mb-3"
+              class="w-9 h-9 rounded-full bg-amber-600/20 flex items-center justify-center text-amber-400 text-sm font-bold mx-auto mb-3"
             >
               2
             </div>
@@ -568,7 +546,7 @@ const useCases = [
             class="text-center p-5 rounded-xl border border-surface bg-surface-1 hover:border-surface-3 transition-all"
           >
             <div
-              class="w-9 h-9 rounded-full bg-purple-600/20 flex items-center justify-center text-purple-400 text-sm font-bold mx-auto mb-3"
+              class="w-9 h-9 rounded-full bg-amber-600/20 flex items-center justify-center text-amber-400 text-sm font-bold mx-auto mb-3"
             >
               3
             </div>
@@ -579,7 +557,7 @@ const useCases = [
             class="text-center p-5 rounded-xl border border-surface bg-surface-1 hover:border-surface-3 transition-all"
           >
             <div
-              class="w-9 h-9 rounded-full bg-purple-600/20 flex items-center justify-center text-purple-400 text-sm font-bold mx-auto mb-3"
+              class="w-9 h-9 rounded-full bg-amber-600/20 flex items-center justify-center text-amber-400 text-sm font-bold mx-auto mb-3"
             >
               4
             </div>
@@ -594,7 +572,7 @@ const useCases = [
         <div class="mt-20 max-w-3xl mx-auto">
           <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
             Frequently Asked
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+            <span class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
           </h2>
           <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
         </div>
@@ -620,11 +598,11 @@ const useCases = [
       <!-- ─── CTA Section ─── -->
       <section class="mt-16 text-center">
         <div
-          class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10"
+          class="max-w-2xl mx-auto bg-gradient-to-br from-amber-600/10 to-blue-600/5 border border-amber-500/20 rounded-2xl p-8 md:p-10"
         >
           <h2 class="text-2xl md:text-3xl font-black tracking-tight">
             Calculate Your
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> Age Free</span>
+            <span class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent"> Age Free</span>
           </h2>
           <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
             No sign-up required. No limits. Calculate exact age, discover zodiac signs, and explore life analytics
@@ -633,7 +611,7 @@ const useCases = [
           <div class="mt-6 flex gap-3 justify-center flex-wrap">
             <button
               onclick="document.querySelector('#dob-day')?.focus()"
-              class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30"
+              class="px-6 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-accent-fg font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-amber-900/30"
             >
               Calculate Now
             </button>
@@ -645,7 +623,7 @@ const useCases = [
             </a>
             <a
               href="/blog/age-calculator-fun-facts-birthday/"
-              class="px-6 py-3 rounded-xl bg-purple-900/30 hover:bg-purple-900/50 text-purple-300 font-semibold text-sm transition-all border border-purple-500/30"
+              class="px-6 py-3 rounded-xl bg-amber-900/30 hover:bg-amber-900/50 text-amber-300 font-semibold text-sm transition-all border border-amber-500/30"
             >
               Birthday Fun Facts Guide →
             </a>
@@ -813,12 +791,12 @@ const useCases = [
     btn.addEventListener('click', () => {
       presetBtns.forEach((b) => {
         b.dataset.active = 'false';
-        b.classList.remove('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
+        b.classList.remove('bg-amber-600/15', 'border-amber-500/50', 'text-amber-300');
         b.classList.add('bg-surface-2', 'border-surface', 'text-tertiary');
       });
       btn.dataset.active = 'true';
       btn.classList.remove('bg-surface-2', 'border-surface', 'text-tertiary');
-      btn.classList.add('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
+      btn.classList.add('bg-amber-600/15', 'border-amber-500/50', 'text-amber-300');
 
       const years = parseInt(btn.dataset.years);
       const months = parseInt(btn.dataset.months);
@@ -944,22 +922,4 @@ const useCases = [
     } catch (e) {}
   }
 
-  // ─── Color theme picker ───
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 </script>

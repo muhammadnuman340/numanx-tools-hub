@@ -69,7 +69,7 @@ const schema = {
           <div class="flex items-center justify-between px-4 py-3 border-b border-surface">
             <div class="flex items-center gap-2.5">
               <div
-                class="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center"
+                class="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center"
               >
                 <svg
                   class="w-4 h-4 text-white"
@@ -93,32 +93,10 @@ const schema = {
               </div>
             </div>
             <div class="flex items-center gap-2">
-              <div class="flex gap-1">
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="purple"
-                  aria-label="Purple accent colour"
-                  style="background:#a855f7"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="blue"
-                  aria-label="Blue accent colour"
-                  style="background:#3b82f6"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="green"
-                  aria-label="Green accent colour"
-                  style="background:#22c55e"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="pink"
-                  aria-label="Pink accent colour"
-                  style="background:#ec4899"></button>
-              </div>
               <div class="relative">
                 <button
                   id="search-toggle-btn"
-                  class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-violet-500/40 transition-all text-xs"
+                  class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
                   title="Search conversation"
                 >
                   <svg
@@ -137,7 +115,7 @@ const schema = {
               <div class="relative" id="export-container">
                 <button
                   id="export-btn"
-                  class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-violet-500/40 transition-all text-xs"
+                  class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
                   title="Export conversation"
                 >
                   <svg
@@ -176,7 +154,7 @@ const schema = {
               </div>
               <button
                 id="clear-chat-btn"
-                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-violet-500/40 transition-all text-xs"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
                 title="Clear conversation"
               >
                 <svg
@@ -201,7 +179,7 @@ const schema = {
               <input
                 id="chat-search"
                 type="text"
-                class="w-full bg-surface-2 border border-surface-2 rounded-lg px-3 py-1.5 text-xs text-primary placeholder:text-muted focus:outline-none focus:border-violet-500/50 transition-all"
+                class="w-full bg-surface-2 border border-surface-2 rounded-lg px-3 py-1.5 text-xs text-primary placeholder:text-muted focus:outline-none focus:border-amber-500/50 transition-all"
                 placeholder="Search messages..."
                 autocomplete="off" aria-label="Search messages"
               />
@@ -213,7 +191,7 @@ const schema = {
           <div id="chat-messages" class="h-[420px] overflow-y-auto p-4 space-y-3 scrollbar-hide">
             <div class="flex items-start gap-2.5">
               <div
-                class="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shrink-0 mt-0.5"
+                class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shrink-0 mt-0.5"
               >
                 <svg
                   class="w-3.5 h-3.5 text-white"
@@ -240,7 +218,7 @@ const schema = {
           <div id="typing-indicator" class="hidden px-4 py-2">
             <div class="flex items-start gap-2.5">
               <div
-                class="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shrink-0"
+                class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shrink-0"
               >
                 <svg
                   class="w-3.5 h-3.5 text-white"
@@ -253,9 +231,9 @@ const schema = {
                 >
               </div>
               <div class="flex-1 bg-surface-2 rounded-xl rounded-tl-none px-3.5 py-3">
-                <span class="typing-dot inline-block w-1.5 h-1.5 rounded-full bg-purple-400 mx-0.5"></span>
-                <span class="typing-dot inline-block w-1.5 h-1.5 rounded-full bg-purple-400 mx-0.5"></span>
-                <span class="typing-dot inline-block w-1.5 h-1.5 rounded-full bg-purple-400 mx-0.5"></span>
+                <span class="typing-dot inline-block w-1.5 h-1.5 rounded-full bg-amber-400 mx-0.5"></span>
+                <span class="typing-dot inline-block w-1.5 h-1.5 rounded-full bg-amber-400 mx-0.5"></span>
+                <span class="typing-dot inline-block w-1.5 h-1.5 rounded-full bg-amber-400 mx-0.5"></span>
               </div>
             </div>
           </div>
@@ -263,95 +241,95 @@ const schema = {
           <!-- Quick suggestions -->
           <div id="suggestions" class="flex flex-wrap gap-1.5 px-4 pb-2 pt-0">
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >What tools do you have?</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >hash: hello</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >color #ff8800</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >calculate 2+3*4</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >bmi 70 kg 175 cm</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >roll d20</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >strength: MyP@ss</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >quote</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >convert 255 to binary</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >rot13: hello world</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >sort: banana, apple, cherry</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >frequency: hello world</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >ascii A</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >day 2026-06-04</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >leap 2024</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >prime 17</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >palindrome: racecar</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >fibonacci 10</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >lottery</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >slug: Hello World</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >text to binary: hello</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >timer 5 seconds</button
             >
             <button
-              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-violet-500/20 text-tertiary hover:text-violet-300 border border-surface-2 transition-all cursor-pointer"
+              class="suggestion-chip text-[10px] px-2.5 py-1 rounded-lg bg-surface-3 hover:bg-amber-500/20 text-tertiary hover:text-amber-300 border border-surface-2 transition-all cursor-pointer"
               >morse encode: hello</button
             >
           </div>
@@ -362,14 +340,14 @@ const schema = {
               <input
                 id="chat-input"
                 type="text"
-                class="flex-1 bg-surface-2 border border-surface-2 rounded-xl px-3.5 py-2.5 text-sm text-primary placeholder:text-muted focus:outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20 transition-all"
+                class="flex-1 bg-surface-2 border border-surface-2 rounded-xl px-3.5 py-2.5 text-sm text-primary placeholder:text-muted focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all"
                 placeholder="Ask about tools or try a command..."
                 autocomplete="off" aria-label="Chat message"
               />
               <button
                 type="submit"
                 id="send-btn"
-                class="w-9 h-9 rounded-xl bg-violet-600 hover:bg-violet-500 flex items-center justify-center text-white transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+                class="w-9 h-9 rounded-xl bg-amber-600 hover:bg-amber-500 flex items-center justify-center text-accent-fg transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
                 aria-label="Send message"
               >
                 <svg
@@ -388,7 +366,7 @@ const schema = {
               <button
                 type="button"
                 id="voice-btn"
-                class="voice-btn w-9 h-9 rounded-xl bg-surface-2 border border-surface-2 hover:border-violet-500/40 flex items-center justify-center text-tertiary hover:text-white transition-all cursor-pointer shrink-0"
+                class="voice-btn w-9 h-9 rounded-xl bg-surface-2 border border-surface-2 hover:border-amber-500/40 flex items-center justify-center text-tertiary hover:text-white transition-all cursor-pointer shrink-0"
                 aria-label="Voice input"
               >
                 <svg
@@ -415,10 +393,10 @@ const schema = {
       <!-- How It Works -->
       <section class="mt-20 max-w-3xl mx-auto">
         <div class="text-center mb-8">
-          <span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">AI Technology</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
-            How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+            How It <span class="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent"
               >Works</span
             >
           </h2>
@@ -445,7 +423,7 @@ const schema = {
       <RelatedTools current="ai-chat" />
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
-          Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+          Frequently Asked <span class="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent"
             >Questions</span
           >
         </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
@@ -741,11 +719,11 @@ const schema = {
   ];
 
   const catColors = {
-    'AI Tools': 'text-violet-400',
+    'AI Tools': 'text-amber-400',
     'Developer Tools': 'text-cyan-400',
     'Utility Tools': 'text-green-400',
     'Creator Tools': 'text-blue-400',
-    'Image Tools': 'text-pink-400',
+    'Image Tools': 'text-amber-400',
     'Cricket Tools': 'text-amber-400',
   };
 
@@ -2640,7 +2618,7 @@ const schema = {
     let content = text;
     // Fenced code blocks (must be first)
     content = content.replace(/```(\w*)\n?([\s\S]*?)```/g, function (m, lang, code) {
-      var cls = 'text-[10px] leading-relaxed text-purple-300';
+      var cls = 'text-[10px] leading-relaxed text-amber-300';
       if (lang) cls += ' language-' + lang;
       return (
         '<pre class="bg-surface-1 rounded-lg p-2.5 my-1.5 overflow-x-auto"><code class="' +
@@ -2652,19 +2630,19 @@ const schema = {
     });
     content = content.replace(
       /\[([^\]]+)\]\(([^)]+)\)/g,
-      '<a href="$2" class="text-violet-400 hover:underline">$1</a>',
+      '<a href="$2" class="text-amber-400 hover:underline">$1</a>',
     );
     content = content.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-primary">$1</strong>');
     content = content.replace(
       /`([^`]+)`/g,
-      '<code class="text-purple-300 bg-surface-1 px-1 py-0.5 rounded text-[10px]">$1</code>',
+      '<code class="text-amber-300 bg-surface-1 px-1 py-0.5 rounded text-[10px]">$1</code>',
     );
     // Horizontal rules
     content = content.replace(/^---$/gm, '<hr class="border-surface my-2">');
     // Blockquotes (already entity-encoded &gt; from escapeHtml)
     content = content.replace(
       /^&gt;\s+(.+)$/gm,
-      '<blockquote class="border-l-2 border-violet-500/40 pl-2.5 italic text-muted my-1">$1</blockquote>',
+      '<blockquote class="border-l-2 border-amber-500/40 pl-2.5 italic text-muted my-1">$1</blockquote>',
     );
     // Unordered lists
     content = content.replace(/^[\s]*[-*]\s+(.+)$/gm, '<li class="list-disc ml-4">$1</li>');
@@ -2690,11 +2668,11 @@ const schema = {
     div.className = 'flex items-start gap-2.5 ' + (isUser ? 'flex-row-reverse' : '');
 
     const avatar = isUser
-      ? `<div class="w-7 h-7 rounded-lg bg-violet-500/20 flex items-center justify-center shrink-0 mt-0.5"><svg class="w-3.5 h-3.5 text-violet-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>`
-      : `<div class="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shrink-0 mt-0.5"><svg class="w-3.5 h-3.5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>`;
+      ? `<div class="w-7 h-7 rounded-lg bg-amber-500/20 flex items-center justify-center shrink-0 mt-0.5"><svg class="w-3.5 h-3.5 text-amber-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>`
+      : `<div class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shrink-0 mt-0.5"><svg class="w-3.5 h-3.5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>`;
 
     const bubbleClass = isUser
-      ? 'bg-violet-500/10 border border-violet-500/20 rounded-xl rounded-tr-none'
+      ? 'bg-amber-500/10 border border-amber-500/20 rounded-xl rounded-tr-none'
       : 'bg-surface-2 rounded-xl rounded-tl-none';
 
     let content = markdownToHtml(html);
@@ -3248,26 +3226,6 @@ const schema = {
   // Ask for name on first visit
   askNameIfNeeded();
 
-  // Theme swatches
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-violet'], button[class*='bg-purple']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(violet)-\d+/g, 'hover:bg-' + c + '-500')
-          .replace(/from-(violet)-\d+/g, 'from-' + c + '-500')
-          .replace(/to-purple-\d+/g, 'to-' + c + '-600');
-      });
-      try {
-        localStorage.setItem('nt_chat_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_chat_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 
   // Typing dots animation
   const style = document.createElement('style');

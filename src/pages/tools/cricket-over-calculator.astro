@@ -62,33 +62,11 @@ const schema = {
         <div class="glass-card rounded-2xl p-6 relative">
           <button
             id="fullscreen-btn"
-            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
             title="Fullscreen">⛶</button
           >
           <div class="flex items-center gap-2 mb-3">
             <span id="usage-badge" class="text-xs text-muted"></span>
-            <div class="flex gap-1 ml-auto">
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="purple"
-                aria-label="Purple accent colour"
-                style="background:#a855f7"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="blue"
-                aria-label="Blue accent colour"
-                style="background:#3b82f6"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="green"
-                aria-label="Green accent colour"
-                style="background:#22c55e"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="pink"
-                aria-label="Pink accent colour"
-                style="background:#ec4899"></button>
-            </div>
           </div>
           <div class="flex gap-2 mb-4">
             <button
@@ -376,22 +354,4 @@ const schema = {
     } catch (e) {}
   }
 
-  // ─── Color theme picker ───
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 </script>

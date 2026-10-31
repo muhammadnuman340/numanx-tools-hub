@@ -65,35 +65,9 @@ const regexSchema = {
               <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
             <div class="flex items-center gap-2">
-              <div class="flex gap-1">
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="purple"
-                  style="background:#a855f7"
-                  aria-label="Purple theme accent"
-                  title="Purple theme accent"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="blue"
-                  style="background:#3b82f6"
-                  aria-label="Blue theme accent"
-                  title="Blue theme accent"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="green"
-                  style="background:#22c55e"
-                  aria-label="Green theme accent"
-                  title="Green theme accent"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="pink"
-                  style="background:#ec4899"
-                  aria-label="Pink theme accent"
-                  title="Pink theme accent"></button>
-              </div>
               <button
                 id="fullscreen-btn"
-                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
                 title="Fullscreen"
                 aria-label="Fullscreen">⛶</button
               >
@@ -104,7 +78,7 @@ const regexSchema = {
               <label for="regex-pattern" class="block text-xs font-semibold text-zinc-300 mb-1.5">Pattern</label>
               <input
                 id="regex-pattern"
-                class="w-full px-4 py-2.5 rounded-xl border border-surface bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all font-mono"
+                class="w-full px-4 py-2.5 rounded-xl border border-surface bg-surface-1 text-white text-sm focus:border-amber-500/50 focus:outline-none transition-all font-mono"
                 placeholder="Enter regex pattern..."
               />
             </div>
@@ -112,7 +86,7 @@ const regexSchema = {
               <label for="regex-flags" class="block text-xs font-semibold text-zinc-300 mb-1.5">Flags</label>
               <input
                 id="regex-flags"
-                class="w-full px-4 py-2.5 rounded-xl border border-surface bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all font-mono"
+                class="w-full px-4 py-2.5 rounded-xl border border-surface bg-surface-1 text-white text-sm focus:border-amber-500/50 focus:outline-none transition-all font-mono"
                 placeholder="gim"
               />
             </div>
@@ -137,7 +111,7 @@ const regexSchema = {
               <span class="text-xs text-muted ml-2">Ctrl+Enter to process</span>
             </div>
           </div>
-          <div class="flex h-[220px] rounded-xl bg-black/40 border border-surface focus-within:border-purple-500 focus-within:ring-1 focus-within:ring-purple-500 transition-all overflow-hidden relative">
+          <div class="flex h-[220px] rounded-xl bg-black/40 border border-surface focus-within:border-amber-500 focus-within:ring-1 focus-within:ring-amber-500 transition-all overflow-hidden relative">
             <div
               id="line-nums"
               class="w-12 shrink-0 h-full select-none overflow-hidden font-mono text-sm leading-6 text-right pr-3.5 py-3 text-zinc-500/80 bg-zinc-950/60 border-r border-white/5 whitespace-pre pointer-events-none tabular-nums"
@@ -197,10 +171,10 @@ const regexSchema = {
       </div>
       <section class="mt-20 max-w-3xl mx-auto">
         <div class="text-center mb-8">
-          <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Learn</span><h2
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Learn</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
-            Why Use a <span class="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent"
+            Why Use a <span class="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent"
               >Regex Tester?</span
             >
           </h2>
@@ -215,7 +189,7 @@ const regexSchema = {
       <RelatedTools current="regex-tester" />
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
-          Frequently Asked <span class="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent"
+          Frequently Asked <span class="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent"
             >Questions</span
           >
         </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
@@ -409,26 +383,9 @@ const regexSchema = {
       el.innerHTML = s
         .map(
           ([c, n]) =>
-            `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white/5 border border-white/5 text-xs font-mono"><strong class="text-purple-400 uppercase">${c}</strong><span class="text-zinc-400">${n}</span></span>`,
+            `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white/5 border border-white/5 text-xs font-mono"><strong class="text-amber-400 uppercase">${c}</strong><span class="text-zinc-400">${n}</span></span>`,
         )
         .join('');
     });
   }
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 </script>

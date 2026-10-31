@@ -36,9 +36,9 @@ const related = allPosts
         {related.map((post) => (
           <a
             href={`/blog/${post.slug}/`}
-            class="group rounded-xl border border-surface bg-surface-1 p-4 hover:border-purple-500/40 transition-all duration-300"
+            class="group rounded-xl border border-surface bg-surface-1 p-4 hover:border-amber-500/40 transition-all duration-300"
           >
-            <span class="text-[10px] text-purple-400 font-medium">{post.frontmatter.category}</span>
+            <span class="text-[10px] text-amber-400 font-medium">{post.frontmatter.category}</span>
             <h4 class="text-sm font-semibold text-primary group-hover:text-white mt-1 transition-colors">
               {post.frontmatter.title}
             </h4>

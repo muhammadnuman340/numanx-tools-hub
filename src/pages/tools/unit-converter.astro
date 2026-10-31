@@ -209,31 +209,9 @@ const useCases = [
             <span id="usage-badge" class="text-xs text-muted"></span>
             <button
               id="share-btn"
-              class="rounded-xl border border-surface-2 px-3 py-1.5 text-xs font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98] flex items-center gap-1.5"
+              class="rounded-xl border border-surface-2 px-3 py-1.5 text-xs font-semibold text-secondary hover:text-white hover:border-amber-500/50 hover:bg-amber-600/10 transition-all duration-200 active:scale-[0.98] flex items-center gap-1.5"
               title="Share">🔗</button
             >
-            <div class="flex gap-1 ml-auto">
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="purple"
-                aria-label="Purple accent colour"
-                style="background:#a855f7"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="blue"
-                aria-label="Blue accent colour"
-                style="background:#3b82f6"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="green"
-                aria-label="Green accent colour"
-                style="background:#22c55e"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="pink"
-                aria-label="Pink accent colour"
-                style="background:#ec4899"></button>
-            </div>
           </div>
         </div>
 
@@ -242,24 +220,24 @@ const useCases = [
           <div class="grid grid-cols-[1fr,auto,1fr] gap-3 items-end">
             <div>
               <label for="unit-from" class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2">From</label>
-              <select id="unit-from" aria-label="From unit" class="w-full bg-black/40 border border-surface text-primary text-sm px-3 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"></select>
+              <select id="unit-from" aria-label="From unit" class="w-full bg-black/40 border border-surface text-primary text-sm px-3 py-3 rounded-xl focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"></select>
             </div>
             <button id="swap-btn" type="button" aria-label="Swap from and to units" class="mt-6 p-2.5 rounded-xl bg-surface-2 hover:bg-surface-nav border border-surface text-tertiary hover:text-white transition-all active:scale-90 text-lg" title="Swap units">⇄</button>
             <div>
               <label for="unit-to" class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2">To</label>
-              <select id="unit-to" aria-label="To unit" class="w-full bg-black/40 border border-surface text-primary text-sm px-3 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"></select>
+              <select id="unit-to" aria-label="To unit" class="w-full bg-black/40 border border-surface text-primary text-sm px-3 py-3 rounded-xl focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"></select>
             </div>
           </div>
 
           <div class="grid grid-cols-[1fr,auto,1fr] gap-3 items-center">
             <div>
               <label for="input-value" class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2">Value</label>
-              <input id="input-value" type="number" inputmode="decimal" value="1" step="any" aria-label="Value to convert" class="w-full bg-black/40 border border-surface text-primary text-2xl font-mono px-4 py-3 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all" />
+              <input id="input-value" type="number" inputmode="decimal" value="1" step="any" aria-label="Value to convert" class="w-full bg-black/40 border border-surface text-primary text-2xl font-mono px-4 py-3 rounded-xl focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all" />
             </div>
             <div class="text-dim text-2xl mt-6" aria-hidden="true">=</div>
             <div>
               <span class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-2">Result</span>
-              <div id="result-display" role="region" aria-label="Converted unit result" tabindex="0" class="w-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-2xl font-mono px-4 py-3 rounded-xl select-all cursor-copy" title="Click to copy">--</div>
+              <div id="result-display" role="region" aria-label="Converted unit result" tabindex="0" class="w-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-2xl font-mono px-4 py-3 rounded-xl select-all cursor-copy" title="Click to copy">--</div>
             </div>
           </div>
 
@@ -293,7 +271,7 @@ const useCases = [
     <div class="mt-20 max-w-3xl mx-auto">
       <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
         Frequently Asked
-        <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+        <span class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
       </h2>
       <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
     </div>
@@ -318,11 +296,11 @@ const useCases = [
     <!-- ─── CTA Section ─── -->
     <section class="mt-16 text-center">
       <div
-        class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10"
+        class="max-w-2xl mx-auto bg-gradient-to-br from-amber-600/10 to-blue-600/5 border border-amber-500/20 rounded-2xl p-8 md:p-10"
       >
         <h2 class="text-2xl md:text-3xl font-black tracking-tight">
           Start Converting
-          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"> Units Free</span>
+          <span class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent"> Units Free</span>
         </h2>
         <p class="text-tertiary mt-3 max-w-lg mx-auto text-sm leading-relaxed">
           No sign-up required. No limits. Convert 100+ units across 8 categories completely free.
@@ -330,7 +308,7 @@ const useCases = [
         <div class="mt-6 flex gap-3 justify-center flex-wrap">
           <button
             onclick="document.querySelector('#input-value')?.focus()"
-            class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30"
+            class="px-6 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-accent-fg font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-amber-900/30"
           >
             Convert Now
           </button>
@@ -544,11 +522,11 @@ const useCases = [
   categoryTabs.forEach((btn) => {
     btn.addEventListener('click', () => {
       categoryTabs.forEach((b) => {
-        b.classList.remove('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
+        b.classList.remove('bg-amber-600/15', 'border-amber-500/50', 'text-amber-300');
         b.classList.add('bg-surface-2', 'border-surface', 'text-tertiary');
       });
       btn.classList.remove('bg-surface-2', 'border-surface', 'text-tertiary');
-      btn.classList.add('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
+      btn.classList.add('bg-amber-600/15', 'border-amber-500/50', 'text-amber-300');
       currentCategory = btn.dataset.cat;
       populateUnits(currentCategory);
     });
@@ -606,11 +584,11 @@ const useCases = [
       convert();
     } else {
       populateUnits('Length');
-      categoryTabs[0]?.classList.add('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
+      categoryTabs[0]?.classList.add('bg-amber-600/15', 'border-amber-500/50', 'text-amber-300');
     }
   } catch {
     populateUnits('Length');
-    categoryTabs[0]?.classList.add('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
+    categoryTabs[0]?.classList.add('bg-amber-600/15', 'border-amber-500/50', 'text-amber-300');
   }
 
   // Fullscreen toggle
@@ -681,21 +659,4 @@ const useCases = [
       o.stop(a.currentTime + 0.12);
     } catch (e) {}
   }
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 </script>

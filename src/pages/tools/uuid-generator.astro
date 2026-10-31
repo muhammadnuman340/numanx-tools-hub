@@ -127,35 +127,13 @@ const useCases = [
               <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
             <div class="flex items-center gap-2">
-              <div class="flex gap-1">
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="purple"
-                  aria-label="Purple accent colour"
-                  style="background:#a855f7"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="blue"
-                  aria-label="Blue accent colour"
-                  style="background:#3b82f6"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="green"
-                  aria-label="Green accent colour"
-                  style="background:#22c55e"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="pink"
-                  aria-label="Pink accent colour"
-                  style="background:#ec4899"></button>
-              </div>
             </div>
           </div>
           <div class="flex items-center justify-between mb-4">
             <div class="flex gap-2">
               <button
                 id="v4-btn"
-                class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-purple-600 text-white"
+                class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-amber-600 text-accent-fg"
                 >UUID v4</button
               >
               <button
@@ -172,7 +150,7 @@ const useCases = [
                 value="1"
                 min="1"
                 max="100"
-                class="w-16 px-2 py-1.5 rounded-lg border border-surface-2 bg-surface-1 text-white text-xs text-center focus:border-purple-500/50 focus:outline-none" aria-label="Number of UUIDs"
+                class="w-16 px-2 py-1.5 rounded-lg border border-surface-2 bg-surface-1 text-white text-xs text-center focus:border-amber-500/50 focus:outline-none" aria-label="Number of UUIDs"
               />
             </div>
           </div>
@@ -181,7 +159,7 @@ const useCases = [
           </div>
           <button
             id="generate-btn"
-            class="w-full bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold py-2.5 rounded-xl transition-all mb-4"
+            class="w-full bg-amber-600 hover:bg-amber-500 text-accent-fg text-sm font-semibold py-2.5 rounded-xl transition-all mb-4"
             >Generate</button
           >
           <div id="uuid-list" class="space-y-1.5 max-h-64 overflow-y-auto">
@@ -229,7 +207,7 @@ const useCases = [
       />
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
-          Frequently Asked <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"
+          Frequently Asked <span class="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent"
             >Questions</span
           >
         </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
@@ -256,16 +234,16 @@ const useCases = [
   let uuids = [];
   document.getElementById('v4-btn').addEventListener('click', () => {
     useV7 = false;
-    document.getElementById('v4-btn').classList.add('bg-purple-600', 'text-white');
+    document.getElementById('v4-btn').classList.add('bg-amber-600', 'text-accent-fg');
     document.getElementById('v4-btn').classList.remove('bg-surface-2', 'text-tertiary', 'hover:text-primary');
-    document.getElementById('v7-btn').classList.remove('bg-purple-600', 'text-white');
+    document.getElementById('v7-btn').classList.remove('bg-amber-600', 'text-accent-fg');
     document.getElementById('v7-btn').classList.add('bg-surface-2', 'text-tertiary', 'hover:text-primary');
   });
   document.getElementById('v7-btn').addEventListener('click', () => {
     useV7 = true;
-    document.getElementById('v7-btn').classList.add('bg-purple-600', 'text-white');
+    document.getElementById('v7-btn').classList.add('bg-amber-600', 'text-accent-fg');
     document.getElementById('v7-btn').classList.remove('bg-surface-2', 'text-tertiary', 'hover:text-primary');
-    document.getElementById('v4-btn').classList.remove('bg-purple-600', 'text-white');
+    document.getElementById('v4-btn').classList.remove('bg-amber-600', 'text-accent-fg');
     document.getElementById('v4-btn').classList.add('bg-surface-2', 'text-tertiary', 'hover:text-primary');
   });
   function generateUUIDv4() {
@@ -295,7 +273,7 @@ const useCases = [
     el.innerHTML = uuids
       .map(
         (u, i) =>
-          `<div class="flex items-center gap-2 bg-surface-1 rounded-lg px-3 py-1.5"><span class="text-xs text-muted w-5">${i + 1}.</span><code class="flex-1 text-xs text-primary font-mono truncate">${u}</code><button class="copy-uuid text-[10px] text-purple-400 hover:text-purple-300 font-medium shrink-0" data-uuid="${u}">Copy</button></div>`,
+          `<div class="flex items-center gap-2 bg-surface-1 rounded-lg px-3 py-1.5"><span class="text-xs text-muted w-5">${i + 1}.</span><code class="flex-1 text-xs text-primary font-mono truncate">${u}</code><button class="copy-uuid text-[10px] text-amber-400 hover:text-amber-300 font-medium shrink-0" data-uuid="${u}">Copy</button></div>`,
       )
       .join('');
     el.querySelectorAll('.copy-uuid').forEach((btn) =>
@@ -388,23 +366,6 @@ const useCases = [
     const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
     const b = document.getElementById('usage-badge');
     if (b && u['uuid']) b.textContent = 'Used ' + u['uuid'] + '×';
-  } catch (e) {}
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
   } catch (e) {}
 
   // ─── Fullscreen ───

@@ -64,7 +64,7 @@ const popularItems = getPopularTools(5);
         aria-label="Filter by category"
       >
         <button
-          class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-purple-600 text-white"
+          class="search-cat-btn rounded-lg px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap bg-amber-600 text-accent-fg"
           data-cat="all"
           role="tab"
           aria-selected="true">All</button
@@ -118,7 +118,7 @@ const popularItems = getPopularTools(5);
                   href={item.url}
                   class="search-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-surface-3 transition-all group/item"
                 >
-                  <span class="w-8 h-8 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 shrink-0 group-hover/item:scale-110 transition-transform">
+                  <span class="w-8 h-8 rounded-xl bg-amber-600/10 flex items-center justify-center text-amber-400 shrink-0 group-hover/item:scale-110 transition-transform">
                     <ToolIcon name={item.icon} />
                   </span>
                   <div class="min-w-0 flex-1">
@@ -715,7 +715,7 @@ const popularItems = getPopularTools(5);
     if (searchEmpty) searchEmpty.classList.add('hidden');
     activeCat = 'all';
     catBtns.forEach((b) => {
-      b.classList.remove('bg-purple-600', 'text-white');
+      b.classList.remove('bg-amber-600', 'text-accent-fg');
       b.classList.add('bg-surface-2', 'text-tertiary', 'hover:text-primary', 'hover:bg-surface-3');
     });
     (catBtns[0] as HTMLElement)?.classList.remove(
@@ -724,7 +724,7 @@ const popularItems = getPopularTools(5);
       'hover:text-primary',
       'hover:bg-surface-3',
     );
-    (catBtns[0] as HTMLElement)?.classList.add('bg-purple-600', 'text-white');
+    (catBtns[0] as HTMLElement)?.classList.add('bg-amber-600', 'text-accent-fg');
     if (searchTriggerEl) {
       searchTriggerEl.focus();
       searchTriggerEl = null;
@@ -781,7 +781,7 @@ const popularItems = getPopularTools(5);
         'search-result-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-surface-3 transition-all cursor-pointer group/item';
       a.dataset.index = String(i);
       a.innerHTML = `
-        <span class="w-8 h-8 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400 shrink-0 group-hover/item:scale-110 transition-transform">${getIconSvg(item.icon)}</span>
+        <span class="w-8 h-8 rounded-xl bg-amber-600/10 flex items-center justify-center text-amber-400 shrink-0 group-hover/item:scale-110 transition-transform">${getIconSvg(item.icon)}</span>
         <div class="min-w-0 flex-1">
           <p class="text-sm font-medium text-primary">${item.name}</p>
           <p class="text-xs text-tertiary truncate">${item.desc}</p>
@@ -798,11 +798,11 @@ const popularItems = getPopularTools(5);
   catBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       catBtns.forEach((b) => {
-        b.classList.remove('bg-purple-600', 'text-white');
+        b.classList.remove('bg-amber-600', 'text-accent-fg');
         b.classList.add('bg-surface-2', 'text-muted', 'hover:text-primary', 'hover:bg-surface-3');
       });
       btn.classList.remove('bg-surface-2', 'text-muted', 'hover:text-primary', 'hover:bg-surface-3');
-      btn.classList.add('bg-purple-600', 'text-white');
+      btn.classList.add('bg-amber-600', 'text-accent-fg');
       activeCat = btn.dataset.cat;
       filterResults();
     });

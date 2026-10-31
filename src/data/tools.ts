@@ -40,7 +40,7 @@ export const categories: CategoryInfo[] = [
     title: 'Image Tools',
     description: 'Convert, compress, crop, and resize images inside your browser with zero server uploads.',
     icon: 'image',
-    gradient: 'from-purple-500/20 to-pink-500/20 text-purple-400',
+    gradient: 'from-amber-500/20 to-amber-500/20 text-amber-400',
     get count() {
       return getCategoryCount('image-tools');
     },
@@ -81,7 +81,7 @@ export const categories: CategoryInfo[] = [
     description:
       'Powerful AI-powered utilities for content generation, translation, and intelligent text processing — all running locally in your browser.',
     icon: 'sparkles',
-    gradient: 'from-violet-500/20 to-purple-500/20 text-violet-400',
+    gradient: 'from-amber-500/20 to-amber-500/20 text-amber-400',
     get count() {
       return getCategoryCount('ai-tools');
     },

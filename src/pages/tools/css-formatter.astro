@@ -127,35 +127,9 @@ const useCases = [
               <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
             <div class="flex items-center gap-2">
-              <div class="flex gap-1">
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="purple"
-                  style="background:#a855f7"
-                  aria-label="Purple theme accent"
-                  title="Purple theme accent"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="blue"
-                  style="background:#3b82f6"
-                  aria-label="Blue theme accent"
-                  title="Blue theme accent"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="green"
-                  style="background:#22c55e"
-                  aria-label="Green theme accent"
-                  title="Green theme accent"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="pink"
-                  style="background:#ec4899"
-                  aria-label="Pink theme accent"
-                  title="Pink theme accent"></button>
-              </div>
               <button
                 id="fullscreen-btn"
-                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
                 title="Fullscreen"
                 aria-label="Fullscreen">⛶</button
               >
@@ -476,26 +450,9 @@ const useCases = [
       el.innerHTML = s
         .map(
           ([c, n]) =>
-            `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white/5 border border-white/5 text-xs font-mono"><strong class="text-purple-400 uppercase">${c}</strong><span class="text-zinc-400">${n}</span></span>`,
+            `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white/5 border border-white/5 text-xs font-mono"><strong class="text-amber-400 uppercase">${c}</strong><span class="text-zinc-400">${n}</span></span>`,
         )
         .join('');
     });
   }
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-blue'],button[class*='bg-cyan']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(blue|cyan)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(blue|cyan)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 </script>
