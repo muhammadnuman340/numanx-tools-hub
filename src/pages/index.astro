@@ -4,6 +4,8 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import MonetizationSlot from '../components/MonetizationSlot.astro';
 import ToolIcon from '../components/icons/ToolIcon.astro';
+import PostCard from '../components/ui/PostCard.astro';
+import { CATEGORY_STYLE } from '../data/categoryStyle';
 import { highlight } from '../lib/codeHighlight';
 import { tools, categories, type Tool, type ToolCategory } from '../data/tools';
 
@@ -32,15 +34,8 @@ const CATEGORY_ORDER: ToolCategory[] = [
   'creator-tools',
   'ai-tools',
 ];
-// Each category has its own hue (icon tile and top edge only; text stays neutral)
-const STYLE: Record<ToolCategory, { short: string; icon: string; hue: number }> = {
-  'image-tools': { short: 'image', icon: 'image', hue: 200 },
-  'developer-tools': { short: 'developer', icon: 'json', hue: 255 },
-  'cricket-tools': { short: 'cricket', icon: 'cricket', hue: 145 },
-  'utility-tools': { short: 'utility', icon: 'utility', hue: 75 },
-  'creator-tools': { short: 'creator', icon: 'creator', hue: 25 },
-  'ai-tools': { short: 'text & AI', icon: 'bolt', hue: 305 },
-};
+// Each category has its own hue (shared with every tool card: src/data/categoryStyle.ts)
+const STYLE = CATEGORY_STYLE;
 // The four tools each card leads with (most-used first)
 const TOP: Record<ToolCategory, string[]> = {
   'image-tools': ['image-compressor', 'image-resizer', 'jpg-to-png', 'ai-background-remover'],
@@ -297,15 +292,7 @@ const description =
           <ul class="grid gap-4 md:grid-cols-3">
             {blogPosts.map((p) => (
               <li>
-                <a href={p.url} class="home-post">
-                  <span class="home-post-meta num">
-                    <span class="home-post-cat">{p.cat}</span>
-                    {p.time && <span>{p.time}</span>}
-                  </span>
-                  <span class="home-post-title">{p.title}</span>
-                  <span class="home-post-desc">{p.desc}</span>
-                  <span class="home-post-read">Read →</span>
-                </a>
+                <PostCard url={p.url} title={p.title} desc={p.desc} tag={p.cat} meta={p.time} />
               </li>
             ))}
           </ul>
@@ -912,59 +899,6 @@ const description =
     border-radius: 11px;
     background: oklch(0.8 0.15 75 / 0.14);
     border: 1px solid oklch(0.8 0.15 75 / 0.28);
-    color: var(--accent);
-  }
-
-  /* Blog cards */
-  .home-post {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    height: 100%;
-    padding: 18px;
-    border-radius: 16px;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    transition: border-color 150ms;
-  }
-  .home-post:hover {
-    border-color: oklch(0.8 0.15 75 / 0.4);
-  }
-  .home-post-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    font-size: 11px;
-    color: var(--text-faint);
-  }
-  .home-post-cat {
-    padding: 2px 8px;
-    border-radius: 999px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--accent);
-    background: oklch(0.8 0.15 75 / 0.12);
-  }
-  .home-post-title {
-    font-weight: 700;
-    font-size: 1.0625rem;
-    line-height: 1.35;
-    color: var(--text);
-  }
-  .home-post-desc {
-    font-size: 0.875rem;
-    color: var(--text-soft);
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .home-post-read {
-    margin-top: auto;
-    padding-top: 4px;
-    font-size: 0.875rem;
-    font-weight: 600;
     color: var(--accent);
   }
 

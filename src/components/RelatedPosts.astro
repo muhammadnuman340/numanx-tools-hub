@@ -1,4 +1,5 @@
 ---
+import PostCard from './ui/PostCard.astro';
 interface Props {
   currentSlug?: string;
   category?: string;
@@ -34,16 +35,14 @@ const related = allPosts
       <h3 class="text-lg font-bold text-white mb-5">Related Articles</h3>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {related.map((post) => (
-          <a
-            href={`/blog/${post.slug}/`}
-            class="group rounded-xl border border-surface bg-surface-1 p-4 hover:border-amber-500/40 transition-all duration-300"
-          >
-            <span class="text-[10px] text-amber-400 font-medium">{post.frontmatter.category}</span>
-            <h4 class="text-sm font-semibold text-primary group-hover:text-white mt-1 transition-colors">
-              {post.frontmatter.title}
-            </h4>
-            <p class="text-xs text-muted mt-1 line-clamp-2">{post.frontmatter.description}</p>
-          </a>
+          <PostCard
+            url={`/blog/${post.slug}/`}
+            title={post.frontmatter.title}
+            desc={post.frontmatter.description}
+            tag={post.frontmatter.category || 'Blog'}
+            meta={post.frontmatter.readingTime || ''}
+            headingLevel="h4"
+          />
         ))}
       </div>
     </div>
