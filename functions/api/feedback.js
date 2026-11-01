@@ -46,9 +46,12 @@ export async function onRequest(context) {
         const resp = await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
+          // The secret proves the request came from this site; it is never stored
+          body: JSON.stringify({ ...payload, secret: env.WEBHOOK_SECRET || '' }),
         });
-        sheetStored = resp.ok;
+        // Apps Script answers 200 even on errors, so read its reply
+        const out = await resp.json().catch(() => ({}));
+        sheetStored = resp.ok && out.success !== false;
       } catch (_) {}
     }
 

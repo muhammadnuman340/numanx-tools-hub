@@ -550,12 +550,10 @@ const roadmap = [
                 type="submit"
                 class="w-full sm:w-auto bg-white text-black hover:bg-amber-400 hover:shadow-[0_0_30px_rgba(251,191,36,0.4)] font-black text-sm px-10 py-5 rounded-2xl shrink-0 transition-all duration-300 hover:-translate-y-1 active:scale-95 audio-trigger"
               >
-                Initialize
+                Subscribe
               </button>
             </form>
-            <p id="newsletter-msg" class="text-sm text-emerald-400 mt-6 hidden font-bold tracking-wide">
-              Connection established.
-            </p>
+            <p id="newsletter-msg" class="text-sm text-emerald-400 mt-6 hidden font-bold tracking-wide" role="status"></p>
           </div>
         </div>
       </section>
@@ -679,18 +677,17 @@ const roadmap = [
         });
         const data = await res.json();
         if (res.ok && data.success) {
-          msgEl.textContent = data.message || 'Connection established.';
+          msgEl.textContent = data.message || 'Thanks! Check your inbox to confirm.';
           msgEl.classList.remove('hidden', 'text-red-400');
           msgEl.classList.add('text-amber-400');
           (document.getElementById('newsletter-form') as HTMLFormElement).reset();
-          setTimeout(() => msgEl.classList.add('hidden'), 5000);
         } else {
-          msgEl.textContent = data.error || 'Connection failed.';
+          msgEl.textContent = data.error || 'Something went wrong. Please try again.';
           msgEl.classList.remove('hidden', 'text-amber-400');
           msgEl.classList.add('text-red-400');
         }
       } catch (err) {
-        msgEl.textContent = 'Network array disconnected.';
+        msgEl.textContent = 'Network error. Check your connection and try again.';
         msgEl.classList.remove('hidden', 'text-amber-400');
         msgEl.classList.add('text-red-400');
       }
