@@ -347,3 +347,34 @@ function sendTestEmail() {
   });
   Logger.log('Test email sent to ' + NOTIFICATION_EMAIL + '. Secret set: ' + Boolean(PropertiesService.getScriptProperties().getProperty('WEBHOOK_SECRET')));
 }
+
+/**
+ * Sends one test of each form. "Visitor" emails go to your own inbox through Gmail's
+ * plus-addressing (name+test@gmail.com arrives at name@gmail.com). Test rows are marked TEST
+ * in the sheet; delete them afterwards. Run it after deploying, so the newsletter links work.
+ */
+function testAllForms() {
+  const [user, domain] = NOTIFICATION_EMAIL.split('@');
+  const stamp = Date.now();
+  const visitor = (tag) => `${user}+${tag}${stamp}@${domain}`;
+  const results = [];
+
+  results.push('Contact: ' + JSON.stringify(handleContact({
+    name: 'TEST Contact', email: visitor('contact'), subject: 'bug', topic: 'Bug Report',
+    message: 'TEST message from testAllForms(). <b>This should show as text, not bold.</b>',
+    site: SITE_URL.replace('https://', ''),
+  })));
+  results.push('Feedback: ' + JSON.stringify(handleFeedback({
+    rating: 5, name: 'TEST Feedback', email: visitor('feedback'), page: '/tools/run-rate-calculator/',
+    message: 'TEST feedback from testAllForms().', site: SITE_URL.replace('https://', ''),
+  })));
+  if (webAppUrl()) {
+    results.push('Newsletter: ' + JSON.stringify(handleSubscribe({ email: visitor('newsletter'), site: 'TEST' })));
+  } else {
+    results.push('Newsletter: skipped — deploy the web app first (Deploy → New deployment), then run again');
+  }
+
+  Logger.log(results.join('\n'));
+  Logger.log('Check ' + NOTIFICATION_EMAIL + ' for up to 5 emails: contact (2), feedback (2), newsletter confirm (1). ' +
+    'Click the confirm link to get the 6th: "New newsletter subscriber". Emails left today: ' + MailApp.getRemainingDailyQuota());
+}
