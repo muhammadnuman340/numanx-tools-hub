@@ -154,6 +154,7 @@ const schema = {
               </div>
               <textarea
                 id="sql-input"
+                data-code-lang="sql"
                 aria-label="SQL query input"
                 class="flex-1 min-w-0 h-full bg-transparent text-zinc-100 placeholder:text-zinc-500 text-sm leading-6 px-4 py-3 focus:outline-none font-mono resize-none border-0 overflow-y-auto"
                 style="line-height: 24px; font-size: 14px;"
@@ -183,6 +184,7 @@ const schema = {
             </div>
             <textarea
               id="sql-output"
+                data-code-lang="sql"
               aria-label="Formatted SQL output"
               class="w-full h-[240px] px-4 py-3 rounded-xl border border-surface bg-black/40 text-zinc-100 placeholder:text-zinc-500 text-sm leading-6 focus:outline-none transition-all resize-none font-mono overflow-y-auto"
               style="line-height: 24px; font-size: 14px;"
@@ -203,6 +205,8 @@ const schema = {
   </main>
 </MainLayout>
 <script>
+  import { initCodeHighlight } from '../../lib/codeHighlight';
+  initCodeHighlight();
   const sqlInput = document.getElementById('sql-input') as HTMLTextAreaElement;
   const sqlOutput = document.getElementById('sql-output') as HTMLTextAreaElement;
   const formatBtn = document.getElementById('format-btn');

@@ -215,6 +215,7 @@ const howToSteps = [
             >1</div>
             <textarea
               id="markdown-input"
+                data-code-lang="markdown"
               aria-label="Markdown source input"
               class="flex-1 min-w-0 h-full bg-transparent text-zinc-100 placeholder:text-zinc-500 text-sm leading-6 px-4 py-3 focus:outline-none font-mono resize-none border-0 overflow-y-auto"
               style="line-height: 24px; font-size: 14px;"
@@ -436,6 +437,9 @@ const howToSteps = [
 <script is:inline async src="https://cdn.jsdelivr.net/npm/mermaid@10.8.0/dist/mermaid.min.js"></script>
 
 <script>
+  import { initCodeHighlight } from '../../lib/codeHighlight';
+  initCodeHighlight();
+
   declare const marked: any;
   declare const DOMPurify: any;
   declare const renderMathInElement: any;

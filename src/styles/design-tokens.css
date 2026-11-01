@@ -132,6 +132,19 @@ html[data-theme='dark'] {
   --warning: oklch(0.72 0.17 50);
   --danger: oklch(0.68 0.19 27);
 
+  /* Syntax colours for code boxes (data colours, not brand): all ≥ 4.5:1 on --well */
+  --code-text: oklch(0.92 0.01 var(--hue));
+  --code-keyword: oklch(0.8 0.14 var(--hue)); /* amber: SELECT, const, if */
+  --code-string: oklch(0.8 0.13 145); /* green */
+  --code-number: oklch(0.8 0.1 300); /* lilac: numbers, true/false/null, #hex */
+  --code-function: oklch(0.82 0.1 235); /* blue: count(), map() */
+  --code-property: oklch(0.84 0.09 195); /* cyan: JSON keys, CSS properties */
+  --code-tag: oklch(0.76 0.13 25); /* coral: HTML tags, CSS selectors */
+  --code-attr: oklch(0.85 0.1 95); /* yellow: HTML attributes */
+  --code-type: oklch(0.83 0.09 170); /* teal: types, class names */
+  --code-comment: oklch(0.66 0.02 var(--hue));
+  --code-punct: oklch(0.72 0.014 var(--hue));
+
   --radius-outer: 14px;
   --pad: 6px;
   --radius-inner: calc(var(--radius-outer) - var(--pad));

@@ -164,6 +164,7 @@ const useCases = [
             </div>
             <textarea
               id="input-text"
+                data-code-lang="html"
               aria-label="HTML code input"
               class="flex-1 min-w-0 h-full bg-transparent text-zinc-100 placeholder:text-zinc-500 text-sm leading-6 px-4 py-3 focus:outline-none font-mono resize-none border-0 overflow-y-auto"
               style="line-height: 24px; font-size: 14px;"
@@ -186,6 +187,7 @@ const useCases = [
             <label for="output-text" class="block text-xs font-semibold text-zinc-300 mb-2">Result</label>
             <textarea
               id="output-text"
+                data-code-lang="html"
               aria-label="Formatted HTML output"
               class="w-full h-[240px] px-4 py-3 rounded-xl border border-surface bg-black/40 text-zinc-100 placeholder:text-zinc-500 text-sm leading-6 focus:outline-none resize-none font-mono overflow-y-auto"
               style="line-height: 24px; font-size: 14px;"
@@ -241,6 +243,8 @@ const useCases = [
   </main>
 </MainLayout>
 <script>
+  import { initCodeHighlight } from '../../lib/codeHighlight';
+  initCodeHighlight();
   const input = document.getElementById('input-text');
   const output = document.getElementById('output-text');
   const copyBtn = document.getElementById('copy-btn');

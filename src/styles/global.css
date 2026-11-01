@@ -470,6 +470,60 @@ img {
   border-radius: var(--radius-lg);
 }
 
+/* ─── Syntax colours (src/lib/codeHighlight.ts) ─── */
+.code-hl {
+  position: absolute;
+  z-index: 1;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: transparent;
+  color: var(--code-text);
+  pointer-events: none;
+}
+.code-hl-input {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+  caret-color: var(--text);
+}
+.code-hl-input::selection {
+  background: oklch(0.8 0.15 75 / 0.32);
+}
+@media (forced-colors: active) {
+  .code-hl {
+    display: none;
+  }
+  .code-hl-input {
+    color: CanvasText !important;
+    -webkit-text-fill-color: CanvasText;
+  }
+}
+.tok-kw { color: var(--code-keyword); }
+.tok-str { color: var(--code-string); }
+.tok-num,
+.tok-const { color: var(--code-number); }
+.tok-fn { color: var(--code-function); }
+.tok-prop { color: var(--code-property); }
+.tok-tag { color: var(--code-tag); }
+.tok-attr { color: var(--code-attr); }
+.tok-type { color: var(--code-type); }
+.tok-var { color: var(--code-attr); }
+.tok-com { color: var(--code-comment); font-style: italic; }
+.tok-punct,
+.tok-op { color: var(--code-punct); }
+.tok-strong { color: var(--code-text); font-weight: 700; }
+.tok-em { color: var(--code-text); font-style: italic; }
+/* Over a textarea, letters must keep the exact width of the hidden text under them */
+.code-hl .tok-com,
+.code-hl .tok-strong,
+.code-hl .tok-em {
+  font-style: inherit;
+  font-weight: inherit;
+}
+.code-hl .tok-strong { color: var(--code-keyword); }
+.code-hl .tok-em { color: var(--code-string); }
+
 /* ─── Hide scrollbar (usable) ─── */
 .scrollbar-hide {
   -ms-overflow-style: none;

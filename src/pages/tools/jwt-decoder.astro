@@ -270,6 +270,7 @@ const useCases = [
   </main>
 </MainLayout>
 <script>
+  import { highlight } from '../../lib/codeHighlight';
   const tokenInput = document.getElementById('token-input') as HTMLTextAreaElement;
   const decodeBtn = document.getElementById('decode-btn');
   const resultArea = document.getElementById('result-area');
@@ -285,12 +286,7 @@ const useCases = [
   }
 
   function syntaxHighlight(json: string): string {
-    return escapeHtml(json)
-      .replace(/("(?:[^"\\]|\\.)*")\s*:/g, '<span class="text-orange-300">$1</span>:')
-      .replace(/("(?:[^"\\]|\\.)*")/g, '<span class="text-emerald-300">$1</span>')
-      .replace(/\b(-?\d+\.?\d*(?:[eE][+-]?\d+)?)\b/g, '<span class="text-amber-300">$1</span>')
-      .replace(/\b(true|false)\b/g, '<span class="text-blue-400">$1</span>')
-      .replace(/\b(null)\b/g, '<span class="text-red-400">$1</span>');
+    return highlight(json, 'json');
   }
 
   function base64UrlDecode(str: string): string {

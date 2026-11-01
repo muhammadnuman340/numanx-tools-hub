@@ -215,6 +215,7 @@ const schema = {
   </main>
 </MainLayout>
 <script>
+  import { attachCodeHighlight } from '../../lib/codeHighlight';
   function playPing() {
     try {
       const a = new (window.AudioContext || window.webkitAudioContext)();
@@ -233,6 +234,14 @@ const schema = {
     oEl = document.getElementById('output-text'),
     lSel = document.getElementById('lang-select'),
     sEl = document.getElementById('code-stats');
+  // Syntax colours follow the language picker
+  const codeLang = () => (lSel as HTMLSelectElement | null)?.value || 'javascript';
+  const hlIn = attachCodeHighlight(iEl as HTMLTextAreaElement, codeLang);
+  const hlOut = attachCodeHighlight(oEl as HTMLTextAreaElement, codeLang);
+  lSel?.addEventListener('change', () => {
+    hlIn?.refresh();
+    hlOut?.refresh();
+  });
   function tT(m, v) {
     if (window.__showToast) window.__showToast({ message: m, variant: v });
   }
