@@ -158,7 +158,7 @@ export const PRO_TOOL_DOCS_REGISTRY: Record<string, ProToolDocEntry> = {
     },
     methodologyNotes: [
       'All operations executed on client GPU/CPU memory with zero cloud transfer.',
-      'Instant before/after visual inspection comparing original and compressed outputs.',
+      'Before/after view comparing the original and compressed images.',
       'Batch conversion handles multiple files simultaneously using parallel Canvas instances.'
     ]
   },
@@ -224,7 +224,7 @@ export const PRO_TOOL_DOCS_REGISTRY: Record<string, ProToolDocEntry> = {
     methodologyNotes: [
       'WWS (World Wide Sports) stat cards render locally via 2D Canvas context without external font lag.',
       'Supports custom batter names, opponent badges, and match summaries.',
-      'High-DPI 1080x1920 PNG export triggers instant browser download on both desktop and mobile.'
+      'High-DPI 1080x1920 PNG export downloads straight from the browser on both desktop and mobile.'
     ]
   },
   'color-contrast-checker': {
@@ -344,7 +344,7 @@ export const PRO_TOOL_DOCS_REGISTRY: Record<string, ProToolDocEntry> = {
     workedExample: {
       input: 'Markdown technical document with 2 diagrams, 4 LaTeX equations, and 3 page breaks.',
       stepByStepCalculation: 'Marked parses tokens -> DOMPurify sanitizes -> Mermaid compiles diagram SVGs -> KaTeX renders formulas -> Browser print engine compiles native vector PDF with 0 raster distortion.',
-      expectedOutput: 'Searchable, high-DPI vector PDF (A4/Letter) ready for instant download or printing.'
+      expectedOutput: 'Searchable, high-DPI vector PDF (A4/Letter) ready to download or print.'
     },
     methodologyNotes: [
       '100% client-side: document source text and generated PDFs never leave browser memory.',
@@ -384,7 +384,7 @@ export function getProToolDoc(slug: string, toolName: string, category: string):
     },
     methodologyNotes: [
       'No data is stored on remote servers or tracked across user sessions.',
-      'Instant offline support: works smoothly without an active internet connection once loaded.',
+      'Offline support: works without an active internet connection once loaded.',
       'Accessible across desktop and mobile devices with keyboard shortcut navigation.'
     ]
   };

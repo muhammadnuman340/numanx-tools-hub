@@ -282,7 +282,7 @@ export const tools: Tool[] = [
     name: 'PNG to JPG',
     description: 'Convert PNG images to JPG format with quality control.',
     longDescription:
-      'Convert PNG images to JPG format with adjustable quality. Client-side conversion with drag-and-drop support and instant download.',
+      'Convert PNG images to JPG format with adjustable quality. Client-side conversion with drag-and-drop support and one-click download.',
     category: 'image-tools',
     icon: 'jpg2png',
     url: '/tools/png-to-jpg/',
@@ -875,7 +875,7 @@ export const tools: Tool[] = [
   {
     id: 'ai-background-remover',
     name: 'AI Background Remover',
-    description: 'Remove backgrounds from images instantly in your browser with zero server uploads.',
+    description: 'Remove backgrounds from images in your browser with zero server uploads.',
     longDescription:
       'Client-side AI background removal using WebAssembly and neural models running directly in your browser. Complete privacy with zero image uploads.',
     category: 'image-tools',
