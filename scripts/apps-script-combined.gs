@@ -420,5 +420,5 @@ function testAllForms() {
 
   Logger.log(results.join('\n'));
   Logger.log('Check ' + NOTIFICATION_EMAIL + ' for up to 13 emails: contact 5 topics × 2, feedback (2), newsletter confirm (1). ' +
-    'Click the confirm link to get the 6th: "New newsletter subscriber". Emails left today: ' + MailApp.getRemainingDailyQuota());
+    'Click the confirm link to get the 14th: "New newsletter subscriber". Emails left today: ' + MailApp.getRemainingDailyQuota());
 }
