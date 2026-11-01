@@ -7,7 +7,11 @@ import {
   solveChaseOversForTargetNRR,
   getDLSResourcePercentage,
   calculateDLSTarget,
-  simulatePointsTable
+  simulatePointsTable,
+  parseOvers,
+  parseWholeNumber,
+  formatForOvers,
+  FORMAT_MAX_OVERS
 } from '../src/utils/cricketAnalytics.js';
 
 describe('ICC Cricket Analytics & NRR Engine', () => {
@@ -81,5 +85,68 @@ describe('ICC Cricket Analytics & NRR Engine', () => {
     expect(standings[0].rank).toBe(1);
     expect(standings[0].qualified).toBe(true);
     expect(standings[0].nrr).toBeGreaterThan(standings[1].nrr);
+  });
+});
+
+describe('Strict overs and count input checks', () => {
+  it('accepts overs.balls within the format limit', () => {
+    expect(parseOvers('12.3', { maxOvers: 20 })).toEqual({ ok: true, decimal: 12.5, balls: 75 });
+    expect(parseOvers('20', { maxOvers: 20 }).ok).toBe(true);
+    expect(parseOvers('50.0', { maxOvers: FORMAT_MAX_OVERS.ODI }).ok).toBe(true);
+  });
+
+  it('rejects more overs than the format allows (T20 20, ODI 50)', () => {
+    const t20 = parseOvers('777', { maxOvers: FORMAT_MAX_OVERS.T20, label: 'Overs bowled' });
+    expect(t20.ok).toBe(false);
+    expect(t20.error).toMatch(/T20 innings has at most 20 overs/);
+    expect(parseOvers('20.1', { maxOvers: 20 }).ok).toBe(false);
+    expect(parseOvers('50.1', { maxOvers: FORMAT_MAX_OVERS.ODI }).error).toMatch(/ODI/);
+  });
+
+  it('rejects invalid notation instead of guessing', () => {
+    expect(parseOvers('12.6').ok).toBe(false);
+    expect(parseOvers('12.9').error).toMatch(/0–5/);
+    expect(parseOvers('12abc').ok).toBe(false);
+    expect(parseOvers('12.3.4').ok).toBe(false);
+    expect(parseOvers('-3').error).toMatch(/negative/);
+    expect(parseOvers('').ok).toBe(false);
+    expect(parseOvers('0').ok).toBe(false);
+    expect(parseOvers('0', { allowZero: true }).ok).toBe(true);
+  });
+
+  it('checks whole-number counts', () => {
+    expect(parseWholeNumber('145')).toEqual({ ok: true, value: 145 });
+    expect(parseWholeNumber('14.5').ok).toBe(false);
+    expect(parseWholeNumber('-1').error).toMatch(/negative/);
+    expect(parseWholeNumber('0', { min: 1 }).ok).toBe(false);
+    expect(parseWholeNumber('51', { max: 50 }).ok).toBe(false);
+    expect(formatForOvers(50)).toBe('ODI');
+  });
+});
+
+describe('NRR chase solver edge cases', () => {
+  const base = {
+    prevRunsScored: 640, prevOversFaced: 80, prevRunsConceded: 650, prevOversBowled: 80,
+    matchRunsConceded: 150, matchOversBowled: 20, targetRunsToScore: 151,
+  };
+
+  it('treats a limit beyond the full quota as "any win qualifies", not impossible', () => {
+    const res = solveChaseOversForTargetNRR({ ...base, rivalNRR: -5 });
+    expect(res.possible).toBe(true);
+    expect(res.withinFullQuota).toBe(true);
+    expect(res.maxChaseOversCricket).toBe('20.0');
+  });
+
+  it('rounds the chase limit down to whole balls', () => {
+    const res = solveChaseOversForTargetNRR({ ...base, rivalNRR: 0.25 });
+    const [o, b] = res.maxChaseOversCricket.split('.').map(Number);
+    const balls = o * 6 + b;
+    // Chasing in exactly that many balls must still beat the rival
+    const nrr = (640 + 151) / (80 + balls / 6) - (650 + 150) / 100;
+    expect(nrr).toBeGreaterThan(0.25);
+  });
+
+  it('reports impossible when even one ball is too slow', () => {
+    expect(solveChaseOversForTargetNRR({ ...base, rivalNRR: 5 }).possible).toBe(false);
   });
 });

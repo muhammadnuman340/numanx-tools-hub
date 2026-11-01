@@ -13,6 +13,60 @@ export function cricketOversToDecimal(oversNotation, isAllOut = false, maxQuotaO
 }
 
 /**
+ * Most overs one innings can have in each format. A Test innings has no fixed
+ * limit, so its cap is the most a whole match can hold (5 days × 90 overs).
+ */
+export const FORMAT_MAX_OVERS = { T10: 10, T20: 20, ODI: 50, Test: 450 };
+
+/** Format name for an overs quota, e.g. 20 -> 'T20'. */
+export function formatForOvers(maxOvers) {
+  return Object.keys(FORMAT_MAX_OVERS).find((k) => FORMAT_MAX_OVERS[k] === Number(maxOvers)) || '';
+}
+
+function limitMessage(label, maxOvers) {
+  const format = formatForOvers(maxOvers);
+  if (format === 'Test') return `${label} can't be more than ${maxOvers} (5 days of 90 overs).`;
+  if (format) return `A ${format} innings has at most ${maxOvers} overs, so ${label.toLowerCase()} can't be more than ${maxOvers}.`;
+  return `${label} can't be more than ${maxOvers}.`;
+}
+
+/**
+ * Reads overs typed as "overs.balls" (e.g. "12.3" = 12 overs and 3 balls) and checks it.
+ * Unlike cricketOversToDecimal, nothing is silently corrected: "12.7" or "12abc" is an error.
+ * @returns {{ ok: true, decimal: number, balls: number } | { ok: false, error: string }}
+ */
+export function parseOvers(value, { maxOvers = Infinity, allowZero = false, label = 'Overs' } = {}) {
+  const raw = String(value ?? '').trim();
+  if (!raw) return { ok: false, error: `Enter ${label.toLowerCase()}.` };
+  if (raw.startsWith('-')) return { ok: false, error: `${label} can't be negative.` };
+  const match = /^(\d{1,4})(?:\.(\d))?$/.exec(raw);
+  if (!match) return { ok: false, error: `Type ${label.toLowerCase()} as overs.balls, for example 12.3.` };
+  const balls = match[2] === undefined ? 0 : Number(match[2]);
+  if (balls > 5) {
+    return { ok: false, error: `An over has 6 balls, so the number after the dot must be 0–5 (12.5 is followed by 13.0).` };
+  }
+  const totalBalls = Number(match[1]) * 6 + balls;
+  if (!allowZero && totalBalls === 0) return { ok: false, error: `${label} must be more than 0.` };
+  if (totalBalls > maxOvers * 6) return { ok: false, error: limitMessage(label, maxOvers) };
+  return { ok: true, decimal: totalBalls / 6, balls: totalBalls };
+}
+
+/**
+ * Reads a whole-number count (runs, balls, wickets) and checks its range.
+ * @returns {{ ok: true, value: number } | { ok: false, error: string }}
+ */
+export function parseWholeNumber(value, { min = 0, max = Infinity, label = 'Value' } = {}) {
+  const raw = String(value ?? '').trim();
+  if (!raw) return { ok: false, error: `Enter ${label.toLowerCase()}.` };
+  if (/^-\d/.test(raw)) return { ok: false, error: `${label} can't be negative.` };
+  if (!/^\d+$/.test(raw)) return { ok: false, error: `${label} must be a whole number.` };
+  const n = Number(raw);
+  if (n < min) return { ok: false, error: min === 1 ? `${label} must be at least 1.` : `${label} must be at least ${min}.` };
+  if (n > max) return { ok: false, error: `${label} can't be more than ${max}.` };
+  return { ok: true, value: n };
+}
+
+/**
  * Converts decimal overs (e.g. 17.5) back to cricket notation (e.g. 17.3).
  */
 export function decimalToCricketOvers(decimalOvers) {
@@ -63,9 +117,13 @@ export function solveChaseOversForTargetNRR({
   }
   const maxTotalOversAllowed = (prevRunsScored + targetRunsToScore) / requiredScoringRate;
   const maxChaseOversDec = maxTotalOversAllowed - prevOversFaced;
+  // Round down to whole balls: rounding up would let the chase take one ball too many
+  const maxBalls = Math.min(Math.floor(maxChaseOversDec * 6 + 1e-9), matchOversBowled * 6);
   return {
-    possible: maxChaseOversDec >= 1.0 && maxChaseOversDec <= matchOversBowled,
-    maxChaseOversCricket: decimalToCricketOvers(Math.min(Math.max(0, maxChaseOversDec), matchOversBowled))
+    // Any chase finished inside the quota qualifies when the limit is above the quota
+    possible: maxBalls >= 1,
+    withinFullQuota: maxChaseOversDec >= matchOversBowled,
+    maxChaseOversCricket: decimalToCricketOvers(Math.max(0, maxBalls) / 6)
   };
 }
 
@@ -96,10 +154,11 @@ export function exportWWSStatCardPNG({
 
   const numRuns = Number(runs) || 0;
   const numBalls = Math.max(1, Number(balls) || 1);
-  const numDismissals = Math.max(1, Number(dismissals) || 1);
+  const numDismissals = Math.max(0, Number(dismissals) || 0);
 
   const sr = ((numRuns / numBalls) * 100).toFixed(2);
-  const avg = (numRuns / numDismissals).toFixed(2);
+  // Never dismissed: a batting average is undefined
+  const avg = numDismissals > 0 ? (numRuns / numDismissals).toFixed(2) : '—';
 
   ctx.fillStyle = '#34d399';
   ctx.font = 'bold 40px sans-serif';

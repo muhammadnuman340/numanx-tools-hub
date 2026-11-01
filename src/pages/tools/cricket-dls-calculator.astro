@@ -150,7 +150,7 @@ const howToSteps = [
                     type="number"
                     id="dls-t1-runs"
                     value="180"
-                    min="1"
+                    min="0"
                     max="600"
                     class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white font-mono text-lg focus:border-amber-500 focus:outline-none" aria-label="First innings runs"
                   />
@@ -162,7 +162,7 @@ const howToSteps = [
                     id="dls-t1-overs"
                     value="20"
                     min="5"
-                    max="50"
+                    max="20"
                     class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white font-mono text-lg focus:border-amber-500 focus:outline-none" aria-label="First innings allocated overs"
                   />
                 </div>
@@ -302,6 +302,11 @@ const howToSteps = [
 <script>
   import { calculateDLSTarget, getDLSResourcePercentage } from '../../utils/cricketAnalytics.js';
   import { setToolStatusSoon } from '../../lib/toolStatus';
+  import { parseWholeNumber } from '../../utils/cricketAnalytics.js';
+  import { checkField } from '../../lib/fieldError';
+
+  // A DLS result needs at least 5 overs each in a T20 and 20 in an ODI
+  const OVERS_RANGE = { T20: { min: 5, max: 20 }, ODI: { min: 20, max: 50 } };
 
   let currentFormat = 'T20';
   let currentWickets = 0;
@@ -313,12 +318,32 @@ const howToSteps = [
     const t1OversInput = document.getElementById('dls-t1-overs') as HTMLInputElement;
     const t2Slider = document.getElementById('dls-t2-overs-slider') as HTMLInputElement;
 
-    const t1Runs = parseInt(t1RunsInput?.value || '180', 10);
-    const t1Overs = parseInt(t1OversInput?.value || (currentFormat === 'T20' ? '20' : '50'), 10);
+    const range = OVERS_RANGE[currentFormat as 'T20' | 'ODI'];
+    const runsCheck = checkField(t1RunsInput, parseWholeNumber(t1RunsInput?.value, { label: 'First innings runs' }), false);
+    const oversCheck = checkField(
+      t1OversInput,
+      parseWholeNumber(t1OversInput?.value, {
+        min: range.min,
+        max: range.max,
+        label: `${currentFormat} allocated overs`,
+      }),
+      false,
+    );
     const t2Overs = parseInt(t2Slider?.value || '15', 10);
 
     const badge = document.getElementById('dls-overs-badge');
     if (badge) badge.textContent = `${t2Overs}.0 Overs`;
+
+    if (!runsCheck.ok || !oversCheck.ok) {
+      const targetEl = document.getElementById('dls-target-result');
+      const subtextEl = document.getElementById('dls-target-subtext');
+      if (targetEl) targetEl.textContent = '—';
+      if (subtextEl) subtextEl.textContent = 'Fix the highlighted field to see the revised target';
+      if (announce) setToolStatusSoon('error', (runsCheck.ok ? oversCheck : runsCheck).error || '');
+      return;
+    }
+    const t1Runs = runsCheck.value;
+    const t1Overs = oversCheck.value;
 
     const result = calculateDLSTarget({
       team1Runs: t1Runs,
@@ -361,7 +386,11 @@ const howToSteps = [
       btnT20.className = 'px-3 py-1 rounded-lg text-xs font-semibold bg-amber-600 text-accent-fg transition-all cursor-pointer';
       btnODI.className = 'px-3 py-1 rounded-lg text-xs font-semibold text-zinc-400 hover:text-white transition-all cursor-pointer';
       if (formatBadge) formatBadge.textContent = 'T20 MATCH';
-      if (t1OversInput) t1OversInput.value = '20';
+      if (t1OversInput) {
+        t1OversInput.value = '20';
+        t1OversInput.min = '5';
+        t1OversInput.max = '20';
+      }
       if (t1RunsInput) t1RunsInput.value = '180';
       if (slider) {
         slider.min = '5';
@@ -378,7 +407,11 @@ const howToSteps = [
       btnODI.className = 'px-3 py-1 rounded-lg text-xs font-semibold bg-amber-600 text-accent-fg transition-all cursor-pointer';
       btnT20.className = 'px-3 py-1 rounded-lg text-xs font-semibold text-zinc-400 hover:text-white transition-all cursor-pointer';
       if (formatBadge) formatBadge.textContent = 'ODI MATCH';
-      if (t1OversInput) t1OversInput.value = '50';
+      if (t1OversInput) {
+        t1OversInput.value = '50';
+        t1OversInput.min = '20';
+        t1OversInput.max = '50';
+      }
       if (t1RunsInput) t1RunsInput.value = '280';
       if (slider) {
         slider.min = '20';

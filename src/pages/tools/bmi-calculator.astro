@@ -311,6 +311,9 @@ const useCases = [
 </MainLayout>
 
 <script>
+  import { checkField, clearFieldError } from '../../lib/fieldError';
+  import { setToolStatusSoon } from '../../lib/toolStatus';
+
   const unitMetric = document.getElementById('unit-metric');
   const unitImperial = document.getElementById('unit-imperial');
   const metricInputs = document.getElementById('metric-inputs');
@@ -335,24 +338,60 @@ const useCases = [
     return 'text-red-400';
   }
 
-  function computeBMI() {
-    let bmi, weight, heightCm;
+  // Ranges cover every recorded adult and child; anything outside is a typo
+  function readNumber(input, label, min, max, unit) {
+    const raw = input.value.trim();
+    const n = Number(raw);
+    let error = '';
+    if (!raw) error = `Enter ${label.toLowerCase()}.`;
+    else if (!Number.isFinite(n)) error = `${label} must be a number.`;
+    else if (n < min || n > max) error = `${label} should be between ${min} and ${max} ${unit}.`;
+    return checkField(input, error ? { ok: false, error } : { ok: true, value: n }, false);
+  }
+
+  function showNoResult(message) {
+    bmiValue.textContent = '—';
+    bmiCategory.textContent = message;
+    bmiCategory.className = 'text-sm font-semibold mt-1 text-muted';
+    bmiBar.style.width = '0%';
+    healthyRange.textContent = '—';
+  }
+
+  function computeBMI(e) {
+    let bmi, heightCm;
+    let checks;
     if (useMetric) {
-      weight = parseFloat(weightMetric.value) || 0;
-      heightCm = parseFloat(heightMetric.value) || 1;
-      const heightM = heightCm / 100;
-      bmi = weight / (heightM * heightM);
+      checks = [
+        readNumber(weightMetric, 'Weight', 2, 650, 'kg'),
+        readNumber(heightMetric, 'Height', 40, 275, 'cm'),
+      ];
     } else {
-      weight = parseFloat(weightImp.value) || 0;
-      const ft = parseFloat(heightFt.value) || 0;
-      const inc = parseFloat(heightIn.value) || 0;
+      // Inches may be left empty when the height is a whole number of feet
+      if (!heightIn.value.trim()) clearFieldError(heightIn);
+      checks = [
+        readNumber(weightImp, 'Weight', 4, 1430, 'lbs'),
+        readNumber(heightFt, 'Feet', 1, 9, 'ft'),
+        heightIn.value.trim() ? readNumber(heightIn, 'Inches', 0, 11.99, 'in') : { ok: true, value: 0 },
+      ];
+    }
+    const bad = checks.find((c) => !c.ok);
+    if (bad) {
+      showNoResult('Check the highlighted field');
+      if (e) setToolStatusSoon('error', bad.error);
+      return;
+    }
+    if (useMetric) {
+      const [weight, cm] = checks.map((c) => c.value);
+      heightCm = cm;
+      bmi = weight / ((cm / 100) * (cm / 100));
+    } else {
+      const [weight, ft, inc] = checks.map((c) => c.value);
       const heightTotalIn = ft * 12 + inc;
       heightCm = heightTotalIn * 2.54;
       bmi = (weight / (heightTotalIn * heightTotalIn)) * 703;
     }
 
     bmi = Math.round(bmi * 10) / 10;
-    if (!isFinite(bmi) || bmi <= 0) bmi = 0;
 
     let cat = 'Underweight';
     if (bmi >= 30) cat = 'Obese';

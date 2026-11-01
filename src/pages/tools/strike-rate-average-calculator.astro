@@ -187,7 +187,7 @@ const useCases = [
               <input
                 id="total-outs"
                 type="number"
-                min="1"
+                min="0"
                 value="10"
                 class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-amber-500 text-sm font-mono font-bold"
               />
@@ -261,7 +261,9 @@ const useCases = [
 </MainLayout>
 
 <script>
-  import { exportWWSStatCardPNG } from '../../utils/cricketAnalytics.js';
+  import { exportWWSStatCardPNG, parseWholeNumber } from '../../utils/cricketAnalytics.js';
+  import { checkField } from '../../lib/fieldError';
+  import { setToolStatusSoon } from '../../lib/toolStatus';
 
   const nameInput = document.getElementById('player-name') as HTMLInputElement | null;
   const tourInput = document.getElementById('tournament-name') as HTMLInputElement | null;
@@ -272,16 +274,37 @@ const useCases = [
   const avgDisplay = document.getElementById('bat-avg-display');
   const srDisplay = document.getElementById('bat-sr-display');
 
-  function updateStats() {
-    const runs = parseFloat(runsInput?.value || '0') || 0;
-    const balls = Math.max(1, parseFloat(ballsInput?.value || '1') || 1);
-    const outs = Math.max(1, parseFloat(outsInput?.value || '1') || 1);
+  function readStats(announce = false) {
+    const runs = checkField(runsInput, parseWholeNumber(runsInput?.value, { label: 'Total runs' }), false);
+    const balls = checkField(ballsInput, parseWholeNumber(ballsInput?.value, { min: 1, label: 'Balls faced' }), false);
+    const outs = checkField(outsInput, parseWholeNumber(outsInput?.value, { label: 'Dismissals' }), false);
+    const bad = [runs, balls, outs].find((r) => !r.ok);
+    if (bad) {
+      if (announce) setToolStatusSoon('error', bad.error || '');
+      return null;
+    }
+    return { runs: runs.value, balls: balls.value, outs: outs.value };
+  }
 
-    const avg = (runs / outs).toFixed(2);
-    const sr = ((runs / balls) * 100).toFixed(2);
+  function updateStats(e?: Event) {
+    const stats = readStats(Boolean(e));
+    if (!stats) {
+      if (avgDisplay) avgDisplay.textContent = '—';
+      if (srDisplay) srDisplay.textContent = '—';
+      return;
+    }
+    // With no dismissals a batting average is undefined (never out)
+    const avg = stats.outs > 0 ? (stats.runs / stats.outs).toFixed(2) : '—';
+    const sr = ((stats.runs / stats.balls) * 100).toFixed(2);
 
     if (avgDisplay) avgDisplay.textContent = avg;
     if (srDisplay) srDisplay.textContent = sr;
+    if (e) {
+      setToolStatusSoon(
+        'complete',
+        `Strike rate ${sr}. ${stats.outs > 0 ? `Average ${avg}.` : 'No dismissals, so no average yet.'}`,
+      );
+    }
   }
 
   [runsInput, ballsInput, outsInput].forEach((el) => {
@@ -291,9 +314,10 @@ const useCases = [
   document.getElementById('export-wws-card-btn')?.addEventListener('click', () => {
     const playerName = nameInput?.value?.trim() || 'Cricket Star';
     const tournament = tourInput?.value?.trim() || 'T20 Statistical Breakdown';
-    const runs = parseFloat(runsInput?.value || '0') || 0;
-    const balls = parseFloat(ballsInput?.value || '1') || 1;
-    const dismissals = parseFloat(outsInput?.value || '1') || 1;
+    const stats = readStats(true);
+    if (!stats) return;
+    const { runs, balls } = stats;
+    const dismissals = stats.outs;
 
     exportWWSStatCardPNG({
       playerName,

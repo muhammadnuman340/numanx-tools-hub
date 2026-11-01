@@ -85,9 +85,10 @@ const schema = {
             <input
               id="balls-input"
               type="number"
+              inputmode="numeric"
               min="0"
               step="1"
-              value="0"
+              value=""
               class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-yellow-400/50 focus:outline-none transition-all mb-4"
               placeholder="e.g. 87" aria-label="Total balls"
             />
@@ -118,10 +119,9 @@ const schema = {
             <label class="block text-xs font-medium text-tertiary mb-1.5">Overs (e.g. 12.3)</label>
             <input
               id="overs-input"
-              type="number"
-              min="0"
-              step="0.1"
-              value="0"
+              type="text"
+              inputmode="decimal"
+              value=""
               class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-yellow-400/50 focus:outline-none transition-all mb-4"
               placeholder="e.g. 12.3" aria-label="Overs"
             />
@@ -194,6 +194,10 @@ const schema = {
   </main>
 </MainLayout>
 <script>
+  import { parseOvers, parseWholeNumber } from '../../utils/cricketAnalytics.js';
+  import { checkField, clearFieldError } from '../../lib/fieldError';
+  import { setToolStatus } from '../../lib/toolStatus';
+
   const modeBallsBtn = document.getElementById('mode-balls');
   const modeOversBtn = document.getElementById('mode-overs');
   const ballsMode = document.getElementById('balls-mode');
@@ -231,24 +235,41 @@ const schema = {
   });
 
   convertBallsBtn.addEventListener('click', () => {
-    const balls = parseInt(ballsInput.value) || 0;
+    const parsed = checkField(ballsInput, parseWholeNumber(ballsInput.value, { max: 99999, label: 'Total balls' }));
+    if (!parsed.ok) {
+      ballsInput.focus();
+      ballsResult.classList.add('hidden');
+      return;
+    }
+    const balls = parsed.value;
     const oversInt = Math.floor(balls / 6);
     const remBalls = balls % 6;
-    const oversNotation = oversInt + '.' + remBalls;
-    oversOutput.textContent = oversNotation;
-    totalBallsDisplay.textContent = balls;
-    completeOvers.textContent = oversInt;
-    remainingBalls.textContent = remBalls;
+    oversOutput.textContent = oversInt + '.' + remBalls;
+    totalBallsDisplay.textContent = String(balls);
+    completeOvers.textContent = String(oversInt);
+    remainingBalls.textContent = String(remBalls);
     ballsResult.classList.remove('hidden');
+    setToolStatus('complete', `${balls} balls is ${oversInt}.${remBalls} overs.`);
   });
 
   convertOversBtn.addEventListener('click', () => {
-    const oversRaw = parseFloat(oversInput.value) || 0;
-    const whole = Math.floor(oversRaw);
-    const frac = Math.round((oversRaw - whole) * 10);
-    const totalBalls = whole * 6 + (frac > 6 ? 6 : frac);
-    ballsOutput.textContent = totalBalls;
+    const parsed = checkField(oversInput, parseOvers(oversInput.value, { allowZero: true, label: 'Overs' }));
+    if (!parsed.ok) {
+      oversInput.focus();
+      oversResult.classList.add('hidden');
+      return;
+    }
+    ballsOutput.textContent = String(parsed.balls);
     oversResult.classList.remove('hidden');
+    setToolStatus('complete', `${oversInput.value.trim()} overs is ${parsed.balls} balls.`);
+  });
+
+  [ballsInput, oversInput].forEach((el) => el.addEventListener('input', () => clearFieldError(el)));
+  ballsInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') convertBallsBtn.click();
+  });
+  oversInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') convertOversBtn.click();
   });
 
   // ─── Copy ───
@@ -283,7 +304,10 @@ const schema = {
 
   // ─── Clear ───
   document.getElementById('clear-btn')?.addEventListener('click', () => {
-    document.querySelectorAll('input[type=number]').forEach((i) => (i.value = '0'));
+    [ballsInput, oversInput].forEach((i) => {
+      i.value = '';
+      clearFieldError(i);
+    });
     document.querySelectorAll("[id$='result']").forEach((el) => el.classList.add('hidden'));
   });
 

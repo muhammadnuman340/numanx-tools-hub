@@ -406,14 +406,24 @@ const useCases = [
         label = `${a}% of ${b} = ${result.toFixed(2)}`;
         break;
       case 'x-of-y':
-        result = b !== 0 ? (a / b) * 100 : 0;
+        if (b === 0) {
+          label = 'Can’t work out a percentage of 0 — enter a total other than 0';
+          break;
+        }
+        result = (a / b) * 100;
         label = `${a} is ${result.toFixed(2)}% of ${b}`;
         break;
-      case 'change':
-        result = b !== 0 ? ((b - a) / Math.abs(a)) * 100 : 0;
+      case 'change': {
+        // Change is measured against the original value, so it can't be 0
+        if (a === 0) {
+          label = 'Percentage change from 0 is undefined — enter an original value other than 0';
+          break;
+        }
+        result = ((b - a) / Math.abs(a)) * 100;
         const sign = result >= 0 ? '+' : '';
         label = `${sign}${result.toFixed(2)}% change (${a} → ${b})`;
         break;
+      }
       case 'diff':
         const avg = (a + b) / 2;
         result = avg !== 0 ? (Math.abs(b - a) / Math.abs(avg)) * 100 : 0;

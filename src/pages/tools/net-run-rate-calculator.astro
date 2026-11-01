@@ -183,6 +183,7 @@ const useCases = [
                 <input
                   id="bat-overs"
                   type="text"
+                  inputmode="decimal"
                   placeholder="e.g. 20.0"
                   class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-amber-500 text-sm font-mono"
                 />
@@ -215,6 +216,7 @@ const useCases = [
                 <input
                   id="bowl-overs"
                   type="text"
+                  inputmode="decimal"
                   placeholder="e.g. 20.0"
                   class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-blue-500 text-sm font-mono"
                 />
@@ -291,8 +293,31 @@ const useCases = [
               </label>
               <input
                 id="solver-prev-overs-for"
-                type="number"
-                value="80"
+                type="text"
+                inputmode="decimal"
+                value="80.0"
+                class="w-full bg-zinc-950 text-white px-3 py-2 rounded-xl border border-surface font-mono"
+              />
+            </div>
+            <div>
+              <label for="solver-prev-runs-against" class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-1">
+                Prior Runs Conceded (Tournament)
+              </label>
+              <input
+                id="solver-prev-runs-against"
+                type="number" inputmode="numeric" min="0"
+                value="650"
+                class="w-full bg-zinc-950 text-white px-3 py-2 rounded-xl border border-surface font-mono"
+              />
+            </div>
+            <div>
+              <label for="solver-prev-overs-against" class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-1">
+                Prior Overs Bowled (Tournament)
+              </label>
+              <input
+                id="solver-prev-overs-against"
+                type="text" inputmode="decimal"
+                value="80.0"
                 class="w-full bg-zinc-950 text-white px-3 py-2 rounded-xl border border-surface font-mono"
               />
             </div>
@@ -386,12 +411,13 @@ const useCases = [
 
 <script>
   import {
-    calculateTournamentNRR,
-    cricketOversToDecimal,
+    parseOvers,
+    parseWholeNumber,
     solveChaseOversForTargetNRR,
     exportWWSNRRCardPNG
   } from '../../utils/cricketAnalytics.js';
   import { setToolStatus, setToolStatusSoon } from '../../lib/toolStatus';
+  import { checkField } from '../../lib/fieldError';
 
   let currentQuota = 20;
 
@@ -421,20 +447,43 @@ const useCases = [
   const forRateEl = document.getElementById('for-rate');
   const againstRateEl = document.getElementById('against-rate');
 
+  // Empty fields fall back to their examples; anything typed must be valid for the format
+  function readRuns(input: HTMLInputElement | null, label: string) {
+    if (!input?.value.trim()) {
+      checkField(input, { ok: true });
+      return { ok: true as const, value: 0 };
+    }
+    return checkField(input, parseWholeNumber(input.value, { label }), false);
+  }
+  function readOvers(input: HTMLInputElement | null, allOut: boolean, label: string) {
+    // Bowled out: the full quota counts, whatever was typed
+    if (allOut || !input?.value.trim()) {
+      checkField(input, { ok: true });
+      return { ok: true as const, decimal: currentQuota };
+    }
+    return checkField(input, parseOvers(input.value, { maxOvers: currentQuota, label }), false);
+  }
+
   function recalcNRR(e?: Event | boolean) {
-    const bRuns = parseFloat(batRuns?.value || '0') || 0;
-    const bOversNotation = batOvers?.value?.trim() || `${currentQuota}.0`;
-    const isBatOut = batAllOut?.checked || false;
+    const bRuns = readRuns(batRuns, 'Runs scored');
+    const bOvers = readOvers(batOvers, batAllOut?.checked || false, 'Overs faced');
+    const blRuns = readRuns(bowlRuns, 'Runs conceded');
+    const blOvers = readOvers(bowlOvers, bowlAllOut?.checked || false, 'Overs bowled');
 
-    const blRuns = parseFloat(bowlRuns?.value || '0') || 0;
-    const blOversNotation = bowlOvers?.value?.trim() || `${currentQuota}.0`;
-    const isBowlOut = bowlAllOut?.checked || false;
+    const firstError = [bRuns, bOvers, blRuns, blOvers].find((r) => !r.ok);
+    if (firstError) {
+      if (forRateEl) forRateEl.textContent = '—';
+      if (againstRateEl) againstRateEl.textContent = '—';
+      if (nrrValue) {
+        nrrValue.textContent = '—';
+        nrrValue.className = 'text-zinc-300';
+      }
+      if (e) setToolStatusSoon('error', firstError.error || '');
+      return;
+    }
 
-    const effectiveBatOvers = cricketOversToDecimal(bOversNotation, isBatOut, currentQuota);
-    const effectiveBowlOvers = cricketOversToDecimal(blOversNotation, isBowlOut, currentQuota);
-
-    const forRate = effectiveBatOvers > 0 ? bRuns / effectiveBatOvers : 0;
-    const againstRate = effectiveBowlOvers > 0 ? blRuns / effectiveBowlOvers : 0;
+    const forRate = bRuns.value / bOvers.decimal;
+    const againstRate = blRuns.value / blOvers.decimal;
     const nrr = forRate - againstRate;
 
     if (forRateEl) forRateEl.textContent = forRate.toFixed(4);
@@ -461,28 +510,56 @@ const useCases = [
 
   // Solver Button Handler
   document.getElementById('solve-chase-btn')?.addEventListener('click', () => {
-    const target = parseFloat((document.getElementById('solver-target') as HTMLInputElement)?.value || '161');
-    const rivalNRR = parseFloat((document.getElementById('solver-rival-nrr') as HTMLInputElement)?.value || '0.35');
-    const prevRuns = parseFloat((document.getElementById('solver-prev-runs-for') as HTMLInputElement)?.value || '640');
-    const prevOvers = parseFloat((document.getElementById('solver-prev-overs-for') as HTMLInputElement)?.value || '80');
+    const el = (id: string) => document.getElementById(id) as HTMLInputElement | null;
+    const resText = document.getElementById('solver-result-text');
+    const rivalRaw = el('solver-rival-nrr')?.value.trim() || '';
+    const checks = [
+      checkField(el('solver-target'), parseWholeNumber(el('solver-target')?.value, { min: 1, label: 'Target score' })),
+      checkField(
+        el('solver-rival-nrr'),
+        /^-?\d+(\.\d+)?$/.test(rivalRaw)
+          ? { ok: true }
+          : { ok: false, error: 'Enter the rival NRR as a number, for example 0.35 or -0.12.' },
+      ),
+      checkField(el('solver-prev-runs-for'), parseWholeNumber(el('solver-prev-runs-for')?.value, { label: 'Prior runs scored' })),
+      checkField(
+        el('solver-prev-overs-for'),
+        parseOvers(el('solver-prev-overs-for')?.value, { allowZero: true, label: 'Prior overs batted' }),
+      ),
+      checkField(
+        el('solver-prev-runs-against'),
+        parseWholeNumber(el('solver-prev-runs-against')?.value, { label: 'Prior runs conceded' }),
+      ),
+      checkField(
+        el('solver-prev-overs-against'),
+        parseOvers(el('solver-prev-overs-against')?.value, { allowZero: true, label: 'Prior overs bowled' }),
+      ),
+    ] as any[];
+    if (checks.some((c) => !c.ok)) {
+      if (resText) resText.textContent = 'Fix the highlighted field to solve.';
+      return;
+    }
+    const [target, , prevRunsFor, prevOversFor, prevRunsAgainst, prevOversAgainst] = checks;
 
     const result = solveChaseOversForTargetNRR({
-      prevRunsScored: prevRuns,
-      prevOversFaced: prevOvers,
-      prevRunsConceded: 650,
-      prevOversBowled: 80,
-      matchRunsConceded: target - 1,
+      prevRunsScored: prevRunsFor.value,
+      prevOversFaced: prevOversFor.decimal,
+      prevRunsConceded: prevRunsAgainst.value,
+      prevOversBowled: prevOversAgainst.decimal,
+      // The opponent set the target, so they made one run less in their full quota
+      matchRunsConceded: target.value - 1,
       matchOversBowled: currentQuota,
-      targetRunsToScore: target,
-      rivalNRR: rivalNRR
+      targetRunsToScore: target.value,
+      rivalNRR: Number(rivalRaw),
     });
 
-    const resText = document.getElementById('solver-result-text');
     if (resText) {
-      if (result.possible) {
+      if (result.possible && result.withinFullQuota) {
+        resText.innerHTML = `Any win inside the full <strong class="text-emerald-400 font-mono text-base">${currentQuota} overs</strong> takes you past your rival on NRR.`;
+      } else if (result.possible) {
         resText.innerHTML = `Chase the target in <strong class="text-emerald-400 font-mono text-base">${result.maxChaseOversCricket} overs</strong> or fewer to surpass your rival on NRR!`;
       } else {
-        resText.innerHTML = `<span class="text-rose-400">Target cannot be achieved within ${currentQuota} overs at the required rate to overtake NRR.</span>`;
+        resText.innerHTML = `<span class="text-rose-400">Even winning off the first ball would not lift your NRR above ${Number(rivalRaw).toFixed(2)}.</span>`;
       }
       setToolStatus('complete', resText.textContent || '');
     }

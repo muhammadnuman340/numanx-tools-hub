@@ -112,6 +112,10 @@ const useCases = [
               <input
                 id="chase-total-overs"
                 type="number"
+                inputmode="numeric"
+                min="1"
+                max="50"
+                step="1"
                 value="20"
                 class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface text-sm font-mono font-bold"
               />
@@ -133,6 +137,7 @@ const useCases = [
               <input
                 id="chase-current-overs"
                 type="text"
+                inputmode="decimal"
                 value="11.2"
                 class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface text-sm font-mono font-bold"
               />
@@ -183,7 +188,9 @@ const useCases = [
 </MainLayout>
 
 <script>
-  import { cricketOversToDecimal } from '../../utils/cricketAnalytics.js';
+  import { parseOvers, parseWholeNumber, FORMAT_MAX_OVERS } from '../../utils/cricketAnalytics.js';
+  import { checkField } from '../../lib/fieldError';
+  import { setToolStatusSoon } from '../../lib/toolStatus';
 
   const targetInput = document.getElementById('chase-target') as HTMLInputElement | null;
   const matchOversInput = document.getElementById('chase-total-overs') as HTMLInputElement | null;
@@ -193,25 +200,59 @@ const useCases = [
   const eqDisplay = document.getElementById('equation-display');
   const rrrDisplay = document.getElementById('rrr-display');
 
-  function updateChase() {
-    const target = parseFloat(targetInput?.value || '0') || 0;
-    const matchOvers = parseFloat(matchOversInput?.value || '20') || 20;
-    const currentRuns = parseFloat(runsInput?.value || '0') || 0;
-    const oversNotation = oversInput?.value?.trim() || '0.0';
+  function show(equation: string, rate: string) {
+    if (eqDisplay) eqDisplay.innerHTML = equation;
+    if (rrrDisplay) rrrDisplay.textContent = rate;
+  }
 
-    const runsNeeded = Math.max(0, target - currentRuns);
-    const bowledDecimal = cricketOversToDecimal(oversNotation, false, matchOvers);
-    const oversLeft = Math.max(0, matchOvers - bowledDecimal);
-    const ballsLeft = Math.max(0, Math.round(oversLeft * 6));
+  function updateChase(e?: Event) {
+    // Errors appear under the field the visitor is editing; announce only after a pause
+    const announce = Boolean(e);
+    const target = checkField(targetInput, parseWholeNumber(targetInput?.value, { min: 1, label: 'Target' }), false);
+    const matchOvers = checkField(
+      matchOversInput,
+      parseWholeNumber(matchOversInput?.value, { min: 1, max: FORMAT_MAX_OVERS.ODI, label: 'Total match overs' }),
+      false,
+    );
+    const runs = checkField(runsInput, parseWholeNumber(runsInput?.value, { label: 'Current runs' }), false);
+    const bowled = checkField(
+      oversInput,
+      parseOvers(oversInput?.value, {
+        maxOvers: matchOvers.ok ? matchOvers.value : FORMAT_MAX_OVERS.ODI,
+        allowZero: true,
+        label: 'Overs bowled',
+      }),
+      false,
+    );
 
-    const rrr = oversLeft > 0 ? (runsNeeded / oversLeft).toFixed(2) : '0.00';
-
-    if (eqDisplay) {
-      eqDisplay.innerHTML = `Need <span class="text-amber-400 font-mono">${runsNeeded} runs</span> in <span class="text-blue-400 font-mono">${ballsLeft} balls</span>`;
+    const firstError = [target, matchOvers, runs, bowled].find((r) => !r.ok);
+    if (firstError) {
+      show('<span class="text-muted">Fix the highlighted field</span>', 'RRR: —');
+      if (announce) setToolStatusSoon('error', firstError.error || '');
+      return;
     }
-    if (rrrDisplay) {
-      rrrDisplay.textContent = `RRR: ${rrr} RPO`;
+
+    const runsNeeded = target.value - runs.value;
+    const ballsLeft = matchOvers.value * 6 - bowled.balls;
+
+    if (runsNeeded <= 0) {
+      show('<span class="text-emerald-400">Target reached — the chasing side has won</span>', 'RRR: —');
+    } else if (ballsLeft <= 0) {
+      // Scores level (one run short of the target) is a tie
+      const margin = runsNeeded - 1;
+      show(
+        `<span class="text-red-400">No balls left — ${margin === 0 ? 'match tied' : `lost by ${margin} run${margin === 1 ? '' : 's'}`}</span>`,
+        'RRR: —',
+      );
+    } else {
+      const rrr = (runsNeeded / ballsLeft) * 6;
+      show(
+        `Need <span class="text-amber-400 font-mono">${runsNeeded} run${runsNeeded === 1 ? '' : 's'}</span> in <span class="text-blue-400 font-mono">${ballsLeft} ball${ballsLeft === 1 ? '' : 's'}</span>`,
+        // More than 36 an over needs extras on top of six sixes
+        `RRR: ${rrr.toFixed(2)} RPO${rrr > 36 ? ' (more than six sixes an over)' : ''}`,
+      );
     }
+    if (announce) setToolStatusSoon('complete', `${eqDisplay?.textContent?.trim()}. ${rrrDisplay?.textContent}`);
   }
 
   [targetInput, matchOversInput, runsInput, oversInput].forEach((el) => {

@@ -227,8 +227,8 @@ const useCases = [
                 <label for="crr-overs" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
                   >Overs Bowled</label
                 >
-                <span class="text-[9px] font-medium text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded"
-                  >overs.balls (e.g. 12.3)</span
+                <span id="crr-overs-hint" class="text-[9px] font-medium text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded"
+                  >overs.balls, max 20</span
                 >
               </div>
               <input
@@ -276,9 +276,14 @@ const useCases = [
               </div>
             </div>
             <div class="space-y-2">
-              <label for="rrr-overs" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
-                >Overs Remaining</label
-              >
+              <div class="flex justify-between items-center">
+                <label for="rrr-overs" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
+                  >Overs Remaining</label
+                >
+                <span id="rrr-overs-hint" class="text-[9px] font-medium text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded"
+                  >overs.balls, max 20</span
+                >
+              </div>
               <input
                 id="rrr-overs"
                 type="text"
@@ -287,6 +292,7 @@ const useCases = [
                 class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm"
               />
             </div>
+            <p id="rrr-notice" class="hidden text-xs font-medium text-success" role="status"></p>
             <button
               id="calc-rrr-btn"
               class="w-full text-accent-fg font-semibold py-3 rounded-xl transition-all shadow-lg shadow-amber-900/20 text-sm bg-amber-600"
@@ -596,6 +602,9 @@ const useCases = [
 </MainLayout>
 
 <script>
+  import { parseOvers, parseWholeNumber, FORMAT_MAX_OVERS } from '../../utils/cricketAnalytics.js';
+  import { checkField, clearFieldError } from '../../lib/fieldError';
+
   const crrRuns = document.getElementById('crr-runs');
   const crrOvers = document.getElementById('crr-overs');
   const calcCrrBtn = document.getElementById('calc-crr-btn');
@@ -625,16 +634,51 @@ const useCases = [
   let oversUsed = 0;
   let oversRemaining = 0;
 
-  function parseOvers(input) {
-    const raw = input.trim();
-    if (!raw) return NaN;
-    const parts = raw.split('.');
-    const overs = parseInt(parts[0]);
-    if (isNaN(overs) || overs < 0) return NaN;
-    if (parts.length === 1) return overs;
-    const balls = parseInt(parts[1]);
-    if (isNaN(balls) || balls < 0 || balls > 5) return NaN;
-    return overs + balls / 6;
+  const rrrNotice = document.getElementById('rrr-notice');
+  const crrOversHint = document.getElementById('crr-overs-hint');
+  const rrrOversHint = document.getElementById('rrr-overs-hint');
+
+  // The Test preset projects a 90-over day, but an innings can run longer than that
+  function maxOversForFormat() {
+    return activeOvers === 90 ? FORMAT_MAX_OVERS.Test : activeOvers;
+  }
+
+  function updateOversHints() {
+    const text = activeOvers === 90 ? 'overs.balls (e.g. 112.3)' : `overs.balls, max ${activeOvers}`;
+    if (crrOversHint) crrOversHint.textContent = text;
+    if (rrrOversHint) rrrOversHint.textContent = text;
+  }
+
+  // Each check shows its message under the field; only the first problem is announced
+  function checkCurrentForm() {
+    const runs = checkField(crrRuns, parseWholeNumber(crrRuns.value, { label: 'Runs scored' }));
+    const overs = checkField(
+      crrOvers,
+      parseOvers(crrOvers.value, { maxOvers: maxOversForFormat(), label: 'Overs bowled' }),
+      runs.ok,
+    );
+    if (!runs.ok) crrRuns.focus();
+    else if (!overs.ok) crrOvers.focus();
+    return runs.ok && overs.ok ? { runs: runs.value, overs: overs.decimal } : null;
+  }
+
+  function checkRequiredForm() {
+    const target = checkField(rrrTarget, parseWholeNumber(rrrTarget.value, { min: 1, label: 'Target score' }));
+    const current = checkField(rrrCurrent, parseWholeNumber(rrrCurrent.value, { label: 'Current score' }), target.ok);
+    const overs = checkField(
+      rrrOvers,
+      parseOvers(rrrOvers.value, { maxOvers: maxOversForFormat(), label: 'Overs remaining' }),
+      target.ok && current.ok,
+    );
+    const firstBad = [
+      [target, rrrTarget],
+      [current, rrrCurrent],
+      [overs, rrrOvers],
+    ].find(([r]) => !r.ok);
+    if (firstBad) firstBad[1].focus();
+    return target.ok && current.ok && overs.ok
+      ? { target: target.value, current: current.value, overs: overs.decimal }
+      : null;
   }
 
   function formatRR(value) {
@@ -781,58 +825,36 @@ const useCases = [
   }
 
   calcCrrBtn.addEventListener('click', () => {
-    const runs = parseInt(crrRuns.value);
-    const oversDecimal = parseOvers(crrOvers.value);
-    if (isNaN(runs) || runs < 0 || isNaN(oversDecimal) || oversDecimal <= 0) {
-      if (isNaN(runs) || runs < 0) {
-        crrRuns.focus();
-        crrRuns.classList.add('ring-2', 'ring-red-500/40', 'border-red-500/60');
-        setTimeout(() => crrRuns.classList.remove('ring-2', 'ring-red-500/40', 'border-red-500/60'), 1500);
-      }
-      if (isNaN(oversDecimal) || oversDecimal <= 0) {
-        crrOvers.focus();
-        crrOvers.classList.add('ring-2', 'ring-red-500/40', 'border-red-500/60');
-        setTimeout(() => crrOvers.classList.remove('ring-2', 'ring-red-500/40', 'border-red-500/60'), 1500);
-      }
-      return;
-    }
-    currentRR = runs / oversDecimal;
-    oversUsed = oversDecimal;
-    oversRemaining = activeOvers - oversUsed;
+    const values = checkCurrentForm();
+    if (!values) return;
+    currentRR = values.runs / values.overs;
+    oversUsed = values.overs;
+    oversRemaining = Math.max(0, activeOvers - oversUsed);
     updateStats();
   });
 
   calcRrrBtn.addEventListener('click', () => {
-    const target = parseInt(rrrTarget.value);
-    const current = parseInt(rrrCurrent.value);
-    const oversRem = parseOvers(rrrOvers.value);
-    if (isNaN(target) || target <= 0 || isNaN(current) || current < 0 || isNaN(oversRem) || oversRem <= 0) {
-      if (isNaN(target) || target <= 0) {
-        rrrTarget.focus();
-        rrrTarget.classList.add('ring-2', 'ring-red-500/40', 'border-red-500/60');
-        setTimeout(() => rrrTarget.classList.remove('ring-2', 'ring-red-500/40', 'border-red-500/60'), 1500);
-      }
-      if (isNaN(current) || current < 0) {
-        rrrCurrent.focus();
-        rrrCurrent.classList.add('ring-2', 'ring-red-500/40', 'border-red-500/60');
-        setTimeout(() => rrrCurrent.classList.remove('ring-2', 'ring-red-500/40', 'border-red-500/60'), 1500);
-      }
-      if (isNaN(oversRem) || oversRem <= 0) {
-        rrrOvers.focus();
-        rrrOvers.classList.add('ring-2', 'ring-red-500/40', 'border-red-500/60');
-        setTimeout(() => rrrOvers.classList.remove('ring-2', 'ring-red-500/40', 'border-red-500/60'), 1500);
-      }
-      return;
-    }
-    if (current >= target) {
+    rrrNotice?.classList.add('hidden');
+    const values = checkRequiredForm();
+    if (!values) return;
+    if (values.current >= values.target) {
       requiredRR = 0;
+      if (rrrNotice) {
+        rrrNotice.textContent = `Target reached: ${values.current} is already at or above ${values.target}, so no more runs are needed.`;
+        rrrNotice.classList.remove('hidden');
+      }
       updateStats();
       return;
     }
-    requiredRR = (target - current) / oversRem;
-    oversRemaining = oversRem;
+    requiredRR = (values.target - values.current) / values.overs;
+    oversRemaining = values.overs;
     updateStats();
   });
+
+  // Clear a field's error as soon as it is edited
+  [crrRuns, crrOvers, rrrTarget, rrrCurrent, rrrOvers].forEach((el) =>
+    el.addEventListener('input', () => clearFieldError(el)),
+  );
 
   // Enter key handlers
   [crrRuns, crrOvers].forEach((el) =>
@@ -881,7 +903,18 @@ const useCases = [
       btn.classList.remove('bg-surface-1', 'border-surface-3', 'text-tertiary');
       btn.classList.add('bg-amber-600/15', 'border-amber-500/50', 'text-amber-300');
       activeOvers = parseInt(btn.dataset.overs);
-      if (currentRR > 0) updateStats();
+      updateOversHints();
+      // Values that fit the old format may be too many overs for the new one
+      if (currentRR > 0) {
+        const values = checkCurrentForm();
+        if (values) {
+          currentRR = values.runs / values.overs;
+          oversUsed = values.overs;
+          oversRemaining = Math.max(0, activeOvers - oversUsed);
+        } else currentRR = 0;
+      }
+      if (requiredRR > 0 && !checkRequiredForm()) requiredRR = 0;
+      updateStats();
     });
   });
 

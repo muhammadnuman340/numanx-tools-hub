@@ -226,8 +226,9 @@ const useCases = [
                 type="number"
                 id="days-count"
                 value="10"
-                min="1"
-                max="10000"
+                min="0"
+                max="100000"
+                step="1"
                 class="w-full px-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-700 text-white text-sm focus:border-amber-500 focus:outline-none"
               />
             </div>
@@ -350,6 +351,23 @@ const useCases = [
       return day === 0 || day === 6;
     }
 
+    // Error under the days field (this script is inline, so it can't import the shared helper)
+    function showDaysError(message) {
+      let el = document.getElementById('days-count-error');
+      if (!el && daysCountEl) {
+        el = document.createElement('p');
+        el.id = 'days-count-error';
+        el.className = 'field-error mt-1.5 text-xs font-medium text-danger';
+        daysCountEl.insertAdjacentElement('afterend', el);
+        daysCountEl.setAttribute('aria-describedby', el.id);
+      }
+      if (!el) return;
+      el.textContent = message;
+      el.hidden = !message;
+      if (message) daysCountEl.setAttribute('aria-invalid', 'true');
+      else daysCountEl.removeAttribute('aria-invalid');
+    }
+
     function compute() {
       if (activeMode === 'between') {
         if (!startDateEl?.value || !endDateEl?.value) return;
@@ -384,8 +402,15 @@ const useCases = [
         if (resWks) resWks.textContent = (calDays / 7).toFixed(1);
       } else {
         if (!baseDateEl?.value || !daysCountEl?.value) return;
+        // Whole days from 0 to 100,000 (about 270 years); larger counts would freeze the page
+        const raw = daysCountEl.value.trim();
+        const count = Number(raw);
+        let countError = '';
+        if (!/^\d+$/.test(raw)) countError = raw.startsWith('-') ? 'Use Subtract instead of a negative number of days.' : 'Number of days must be a whole number.';
+        else if (count > 100000) countError = 'Number of days can’t be more than 100,000 (about 270 years).';
+        showDaysError(countError);
+        if (countError) return;
         const start = new Date(baseDateEl.value);
-        const count = parseInt(daysCountEl.value, 10) || 0;
         const op = operationEl?.value || 'add';
         const typeEl = document.querySelector('input[name="day-type"]:checked');
         const isBiz = typeEl?.value === 'business';

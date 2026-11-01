@@ -72,19 +72,19 @@ const schema = {
           <input
             id="runs-input"
             type="number"
+            inputmode="numeric"
             min="0"
             step="1"
-            value="0"
+            value=""
             class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-400/50 focus:outline-none transition-all mb-4"
             placeholder="e.g. 42" aria-label="Runs conceded"
           />
           <label class="block text-xs font-medium text-tertiary mb-1.5">Overs Bowled (e.g. 7.3)</label>
           <input
             id="overs-input"
-            type="number"
-            min="0"
-            step="0.1"
-            value="0"
+            type="text"
+            inputmode="decimal"
+            value=""
             class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-400/50 focus:outline-none transition-all mb-4"
             placeholder="e.g. 7.3" aria-label="Overs bowled"
           />
@@ -172,6 +172,10 @@ const schema = {
   </main>
 </MainLayout>
 <script>
+  import { parseOvers, parseWholeNumber } from '../../utils/cricketAnalytics.js';
+  import { checkField, clearFieldError } from '../../lib/fieldError';
+  import { setToolStatus } from '../../lib/toolStatus';
+
   const runsInput = document.getElementById('runs-input');
   const oversInput = document.getElementById('overs-input');
   const calculateBtn = document.getElementById('calculate-btn');
@@ -180,29 +184,27 @@ const schema = {
   const totalRuns = document.getElementById('total-runs');
   const totalOvers = document.getElementById('total-overs');
 
-  function fractionalOversToDecimal(overs) {
-    const whole = Math.floor(overs);
-    const frac = Math.round((overs - whole) * 10);
-    const balls = frac > 6 ? frac - 6 : frac;
-    const actualOvers = balls > 6 ? whole + 1 : whole;
-    const actualBalls = balls > 6 ? balls - 6 : balls;
-    return actualOvers + actualBalls / 6;
-  }
-
   calculateBtn.addEventListener('click', () => {
-    const runs = parseFloat(runsInput.value) || 0;
-    const oversRaw = parseFloat(oversInput.value) || 0;
-    const oversDecimal = fractionalOversToDecimal(oversRaw);
-    const rate = oversDecimal > 0 ? runs / oversDecimal : 0;
-
-    const whole = Math.floor(oversRaw);
-    const frac = Math.round((oversRaw - whole) * 10);
-    const ballsPart = frac > 6 ? frac - 6 : frac;
-
+    const runs = checkField(runsInput, parseWholeNumber(runsInput.value, { label: 'Runs conceded' }));
+    const overs = checkField(oversInput, parseOvers(oversInput.value, { label: 'Overs bowled' }), runs.ok);
+    if (!runs.ok || !overs.ok) {
+      (!runs.ok ? runsInput : oversInput).focus();
+      resultDiv.classList.add('hidden');
+      return;
+    }
+    const rate = runs.value / overs.decimal;
     economyRate.textContent = rate.toFixed(2);
-    totalRuns.textContent = runs;
-    totalOvers.textContent = whole + '.' + ballsPart;
+    totalRuns.textContent = String(runs.value);
+    totalOvers.textContent = `${Math.floor(overs.balls / 6)}.${overs.balls % 6}`;
     resultDiv.classList.remove('hidden');
+    setToolStatus('complete', `Economy rate: ${rate.toFixed(2)} runs per over.`);
+  });
+
+  [runsInput, oversInput].forEach((el) => {
+    el.addEventListener('input', () => clearFieldError(el));
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') calculateBtn.click();
+    });
   });
 
   // ─── Copy ───
@@ -231,8 +233,10 @@ const schema = {
 
   // ─── Clear ───
   document.getElementById('clear-btn')?.addEventListener('click', () => {
-    runsInput.value = '0';
-    oversInput.value = '0';
+    runsInput.value = '';
+    oversInput.value = '';
+    clearFieldError(runsInput);
+    clearFieldError(oversInput);
     resultDiv.classList.add('hidden');
   });
 

@@ -635,6 +635,8 @@ const useCases = [
 </MainLayout>
 
 <script>
+  import { showFieldError, clearFieldError } from '../../lib/fieldError';
+
   const presetBtns = document.querySelectorAll('.preset-btn');
   const dobDay = document.getElementById('dob-day');
   const dobMonth = document.getElementById('dob-month');
@@ -720,7 +722,22 @@ const useCases = [
     const birth = new Date(year, month - 1, day);
     const today = new Date();
 
-    if (isNaN(birth.getTime()) || birth > today) {
+    clearFieldError(dobDay);
+    if (isNaN(day) || isNaN(month) || isNaN(year)) {
+      showFieldError(dobDay, 'Choose a day, month and year.');
+      resultsSection.classList.add('hidden');
+      return;
+    }
+    // new Date() rolls 31 February over into March, so check the date really exists
+    if (birth.getDate() !== day || birth.getMonth() !== month - 1) {
+      const daysInMonth = new Date(year, month, 0).getDate();
+      const name = new Date(year, month - 1, 1).toLocaleString('en-US', { month: 'long' });
+      showFieldError(dobDay, `${name} ${year} has only ${daysInMonth} days.`);
+      resultsSection.classList.add('hidden');
+      return;
+    }
+    if (birth > today) {
+      showFieldError(dobDay, 'That date is in the future. Choose a date of birth up to today.');
       resultsSection.classList.add('hidden');
       return;
     }
