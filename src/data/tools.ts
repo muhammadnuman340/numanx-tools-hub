@@ -26,7 +26,6 @@ export interface CategoryInfo {
   title: string;
   description: string;
   icon: string;
-  gradient: string;
   count: number;
 }
 
@@ -40,7 +39,6 @@ export const categories: CategoryInfo[] = [
     title: 'Image Tools',
     description: 'Convert, compress, crop, and resize images inside your browser with zero server uploads.',
     icon: 'image',
-    gradient: 'from-amber-500/20 to-amber-500/20 text-amber-400',
     get count() {
       return getCategoryCount('image-tools');
     },
@@ -50,7 +48,6 @@ export const categories: CategoryInfo[] = [
     title: 'Creator Tools',
     description: 'Smart hashtag generators, QR builders, and text processors to scale your social footprint.',
     icon: 'creator',
-    gradient: 'from-blue-500/20 to-cyan-500/20 text-blue-400',
     get count() {
       return getCategoryCount('creator-tools');
     },
@@ -60,7 +57,6 @@ export const categories: CategoryInfo[] = [
     title: 'Utility Tools',
     description: 'Secure password creation, precise age calculations, and text structure counters.',
     icon: 'utility',
-    gradient: 'from-green-500/20 to-emerald-500/20 text-green-400',
     get count() {
       return getCategoryCount('utility-tools');
     },
@@ -70,7 +66,6 @@ export const categories: CategoryInfo[] = [
     title: 'Cricket Tools',
     description: 'Professional match run rate calculators and batting/bowling strike rate models.',
     icon: 'cricket',
-    gradient: 'from-amber-500/20 to-orange-500/20 text-amber-400',
     get count() {
       return getCategoryCount('cricket-tools');
     },
@@ -81,7 +76,6 @@ export const categories: CategoryInfo[] = [
     description:
       'Powerful AI-powered utilities for content generation, translation, and intelligent text processing — all running locally in your browser.',
     icon: 'sparkles',
-    gradient: 'from-amber-500/20 to-amber-500/20 text-amber-400',
     get count() {
       return getCategoryCount('ai-tools');
     },
@@ -92,7 +86,6 @@ export const categories: CategoryInfo[] = [
     description:
       'Essential utilities for developers — JSON formatter, Base64 encoder, UUID generator, color converter, and more.',
     icon: 'utility',
-    gradient: 'from-cyan-500/20 to-blue-500/20 text-cyan-400',
     get count() {
       return getCategoryCount('developer-tools');
     },

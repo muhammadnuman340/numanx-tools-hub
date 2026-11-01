@@ -1,33 +1,18 @@
 :root,
 html[data-theme='dark'] {
-  /* ─── Legacy colour names → DESIGN.md amber tokens (Phase 6) ───
-     These names are used thousands of times across the site. They now point at the
-     tokens defined in the DESIGN.md block below, so old markup picks up the amber
-     brand, warm neutrals and AA-contrast greys. New code uses the DESIGN.md names. */
-  --purple-50: oklch(0.97 0.02 var(--hue));
-  --purple-100: oklch(0.94 0.045 var(--hue));
-  --purple-200: oklch(0.9 0.08 var(--hue));
-  --purple-300: oklch(0.86 0.12 var(--hue));
-  --purple-400: oklch(0.84 0.14 var(--hue));
-  --purple-500: var(--accent);
-  --purple-600: oklch(0.72 0.15 70);
-  --purple-700: oklch(0.62 0.14 65);
-  --purple-800: oklch(0.52 0.12 60);
-  --purple-900: oklch(0.42 0.1 58);
-  --purple-950: oklch(0.3 0.07 55);
-
-  --blue-400: var(--purple-400);
-  --blue-500: var(--accent);
-  --blue-600: var(--purple-600);
-
-  --emerald-400: var(--success);
-  --emerald-500: var(--success);
-
-  --amber-400: var(--purple-400);
-  --amber-500: var(--accent);
-
-  --red-400: var(--danger);
-  --red-500: var(--danger);
+  /* ─── Accent ramp (amber, hue 75) ───
+     Lighter and darker steps of --accent for text on dark panels, borders and hovers.
+     These replace the old --purple-* / --blue-* / --amber-* names, which held amber values. */
+  --accent-50: oklch(0.97 0.02 var(--hue));
+  --accent-100: oklch(0.94 0.045 var(--hue));
+  --accent-200: oklch(0.9 0.08 var(--hue));
+  --accent-300: oklch(0.86 0.12 var(--hue));
+  --accent-400: oklch(0.84 0.14 var(--hue));
+  --accent-600: oklch(0.72 0.15 70);
+  --accent-700: oklch(0.62 0.14 65);
+  --accent-800: oklch(0.52 0.12 60);
+  --accent-900: oklch(0.42 0.1 58);
+  --accent-950: oklch(0.3 0.07 55);
 
   /* ─── Neutral Palette ─── */
   --bg-base: var(--bg);
@@ -92,10 +77,6 @@ html[data-theme='dark'] {
   --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.5);
   --shadow-2xl: 0 30px 80px rgba(0, 0, 0, 0.6);
 
-  /* Glows are banned (DESIGN.md §1); names kept so old classes still resolve */
-  --shadow-glow-purple: 0 0 0 0 transparent;
-  --shadow-glow-blue: 0 0 0 0 transparent;
-  --shadow-glow-emerald: 0 0 0 0 transparent;
 
   --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
   --shadow-card-hover: 0 10px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--border-accent);
@@ -202,12 +183,6 @@ html[data-theme='dark'] {
 .gradient-text,
 .gradient-text-amber {
   color: var(--accent);
-}
-
-/* ─── Former glow effects: no glow ─── */
-.glow-purple,
-.glow-blue {
-  box-shadow: none;
 }
 
 .glow-border {

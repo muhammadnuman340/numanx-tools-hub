@@ -133,7 +133,7 @@ const useCases = [
               <input
                 id="param-url"
                 type="url"
-                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
+                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-500/50 focus:outline-none transition-all"
                 placeholder="https://example.com" aria-label="Website URL"
               />
             </div>
@@ -142,7 +142,7 @@ const useCases = [
               <input
                 id="param-source"
                 type="text"
-                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
+                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-500/50 focus:outline-none transition-all"
                 placeholder="google, newsletter, facebook" aria-label="Campaign source"
               />
             </div>
@@ -151,7 +151,7 @@ const useCases = [
               <input
                 id="param-medium"
                 type="text"
-                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
+                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-500/50 focus:outline-none transition-all"
                 placeholder="cpc, banner, email" aria-label="Campaign medium"
               />
             </div>
@@ -160,7 +160,7 @@ const useCases = [
               <input
                 id="param-campaign"
                 type="text"
-                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
+                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-500/50 focus:outline-none transition-all"
                 placeholder="spring_sale" aria-label="Campaign name"
               />
             </div>
@@ -169,7 +169,7 @@ const useCases = [
               <input
                 id="param-term"
                 type="text"
-                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
+                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-500/50 focus:outline-none transition-all"
                 placeholder="running+shoes" aria-label="Campaign term"
               />
             </div>
@@ -178,7 +178,7 @@ const useCases = [
               <input
                 id="param-content"
                 type="text"
-                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-blue-500/50 focus:outline-none transition-all"
+                class="w-full px-3 py-2 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-500/50 focus:outline-none transition-all"
                 placeholder="logolink, textlink" aria-label="Campaign content"
               />
             </div>
@@ -194,7 +194,7 @@ const useCases = [
               ></textarea>
               <button
                 id="copy-btn"
-                class="w-full mt-4 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold py-3 rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                class="w-full mt-4 bg-amber-600 hover:bg-amber-500 text-accent-fg text-sm font-semibold py-3 rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled
               >
                 Copy URL
@@ -275,7 +275,7 @@ const useCases = [
       const originalText = copyBtn.textContent;
       copyBtn.textContent = 'Copied!';
       copyBtn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
-      copyBtn.classList.remove('bg-blue-600', 'hover:bg-blue-500');
+      copyBtn.classList.remove('bg-amber-600', 'hover:bg-amber-500');
       
       if ((window as any).__showToast) {
         (window as any).__showToast({ message: 'URL copied to clipboard!', variant: 'success' });
@@ -284,7 +284,7 @@ const useCases = [
       setTimeout(() => {
         copyBtn.textContent = originalText;
         copyBtn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
-        copyBtn.classList.add('bg-blue-600', 'hover:bg-blue-500');
+        copyBtn.classList.add('bg-amber-600', 'hover:bg-amber-500');
       }, 2000);
     } catch (err) {
       if ((window as any).__showToast) {
