@@ -906,7 +906,7 @@ const useCases = [
       const impact = calcImpactRating(batSr, batR);
       impactRating.textContent = impact;
       impactBar.style.width = impact + '%';
-      impactBar.style.background = impact >= 70 ? '#22c55e' : impact >= 45 ? '#f59e0b' : '#ef4444';
+      impactBar.style.background = impact >= 70 ? 'var(--success)' : impact >= 45 ? 'var(--warning)' : 'var(--danger)';
       impactDesc.textContent =
         impact >= 70 ? 'High impact performance' : impact >= 45 ? 'Moderate impact' : 'Low impact';
 
@@ -914,7 +914,7 @@ const useCases = [
       const influence = calcMatchInfluence(batSr, batR, batB);
       influenceScore.textContent = influence;
       influenceBar.style.width = influence + '%';
-      influenceBar.style.background = influence >= 70 ? '#22c55e' : influence >= 45 ? '#f59e0b' : '#ef4444';
+      influenceBar.style.background = influence >= 70 ? 'var(--success)' : influence >= 45 ? 'var(--warning)' : 'var(--danger)';
       influenceDesc.textContent =
         influence >= 70 ? 'Match-winning influence' : influence >= 45 ? 'Contributing player' : 'Minor influence';
 

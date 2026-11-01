@@ -133,10 +133,10 @@ const roadmap = [
     <div class="max-w-7xl mx-auto space-y-32 relative z-10">
       <!-- ================= SCROLLING MARQUEE ================= -->
       <section
-        class="relative w-[100vw] left-1/2 -ml-[50vw] overflow-hidden py-12 border-y border-white/5 bg-[#0a0a0c]/80 shadow-[0_0_50px_rgba(0,0,0,0.5)]"
+        class="relative w-[100vw] left-1/2 -ml-[50vw] overflow-hidden py-12 border-y border-white/5 bg-page/80 shadow-[0_0_50px_rgba(0,0,0,0.5)]"
       >
         <div
-          class="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-[#050505] z-10 pointer-events-none w-full h-full"
+          class="absolute inset-0 bg-gradient-to-r from-well via-transparent to-well z-10 pointer-events-none w-full h-full"
         >
         </div>
         <div class="marquee-container flex w-[200%]">
@@ -193,7 +193,7 @@ const roadmap = [
         >
           <!-- Big Stat Card (2x2) -->
           <div
-            class="card-spotlight col-span-1 md:col-span-2 lg:col-span-2 row-span-2 rounded-3xl bg-[#0a0a0c]/80 border border-white/5 p-10 flex flex-col justify-between relative group/card transform-gpu transition-all duration-300 audio-trigger"
+            class="card-spotlight col-span-1 md:col-span-2 lg:col-span-2 row-span-2 rounded-3xl bg-page/80 border border-white/5 p-10 flex flex-col justify-between relative group/card transform-gpu transition-all duration-300 audio-trigger"
           >
             <div
               class="absolute -right-20 -top-20 w-64 h-64 bg-amber-600/10 blur-[80px] rounded-full group-hover/card:bg-amber-500/20 transition-colors duration-500 pointer-events-none"
@@ -232,7 +232,7 @@ const roadmap = [
 
           <!-- Small Card 1 -->
           <div
-            class="card-spotlight rounded-3xl bg-[#0a0a0c]/80 border border-white/5 p-8 flex flex-col justify-between group/card relative transform-gpu transition-all duration-300 audio-trigger"
+            class="card-spotlight rounded-3xl bg-page/80 border border-white/5 p-8 flex flex-col justify-between group/card relative transform-gpu transition-all duration-300 audio-trigger"
           >
             <div
               class="absolute -right-10 -bottom-10 w-40 h-40 bg-amber-600/10 blur-[50px] rounded-full pointer-events-none"
@@ -251,7 +251,7 @@ const roadmap = [
 
           <!-- Small Card 2 -->
           <div
-            class="card-spotlight rounded-3xl bg-[#0a0a0c]/80 border border-white/5 p-8 flex flex-col justify-between group/card relative transform-gpu transition-all duration-300 audio-trigger"
+            class="card-spotlight rounded-3xl bg-page/80 border border-white/5 p-8 flex flex-col justify-between group/card relative transform-gpu transition-all duration-300 audio-trigger"
           >
             <div
               class="absolute -left-10 -bottom-10 w-40 h-40 bg-amber-600/10 blur-[50px] rounded-full pointer-events-none"
@@ -272,7 +272,7 @@ const roadmap = [
 
           <!-- Medium Horizontal Card -->
           <div
-            class="card-spotlight col-span-1 md:col-span-2 lg:col-span-2 rounded-3xl bg-[#0a0a0c]/80 border border-white/5 p-8 flex items-center justify-between group/card transform-gpu transition-all duration-300 audio-trigger"
+            class="card-spotlight col-span-1 md:col-span-2 lg:col-span-2 rounded-3xl bg-page/80 border border-white/5 p-8 flex items-center justify-between group/card transform-gpu transition-all duration-300 audio-trigger"
           >
             <div class="relative z-10 max-w-[60%] pointer-events-none">
               <span
@@ -334,7 +334,7 @@ const roadmap = [
             featuredTools.map((tool, idx) => (
               <a
                 href={tool.url}
-                class="card-spotlight group/tool relative rounded-3xl border border-white/5 bg-[#0a0a0c]/80 p-8 flex flex-col justify-between transform-gpu transition-all duration-300 block audio-trigger hover:border-white/10"
+                class="card-spotlight group/tool relative rounded-3xl border border-white/5 bg-page/80 p-8 flex flex-col justify-between transform-gpu transition-all duration-300 block audio-trigger hover:border-white/10"
               >
                 <div class="absolute right-0 top-0 w-32 h-32 bg-amber-500/5 rounded-bl-full pointer-events-none group-hover/tool:bg-amber-500/10 transition-colors" />
 
@@ -407,7 +407,7 @@ const roadmap = [
           {
             whyNumanX.map((item) => (
               <div
-                class={`card-spotlight ${item.span} rounded-3xl bg-[#0a0a0c]/80 border border-white/5 p-10 relative transform-gpu transition-all duration-300 group/why audio-trigger`}
+                class={`card-spotlight ${item.span} rounded-3xl bg-page/80 border border-white/5 p-10 relative transform-gpu transition-all duration-300 group/why audio-trigger`}
               >
                 <div class="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover/why:opacity-100 transition-opacity pointer-events-none rounded-3xl" />
                 <div class="relative z-10 pointer-events-none">
@@ -449,7 +449,7 @@ const roadmap = [
               blogPosts.slice(0, 2).map((post) => (
                 <a
                   href={post.url}
-                  class="card-spotlight group/post rounded-3xl bg-[#0a0a0c]/80 border border-white/5 overflow-hidden flex flex-col h-full hover:border-white/10 transform-gpu transition-all duration-300 audio-trigger"
+                  class="card-spotlight group/post rounded-3xl bg-page/80 border border-white/5 overflow-hidden flex flex-col h-full hover:border-white/10 transform-gpu transition-all duration-300 audio-trigger"
                 >
                   <div class="h-56 w-full bg-black relative flex items-center justify-center overflow-hidden border-b border-white/5 pointer-events-none">
                     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(251,191,36,0.15),transparent_70%)] group-hover/post:opacity-80 transition-opacity" />
@@ -493,7 +493,7 @@ const roadmap = [
 
           <div
             id="cards-container-5"
-            class="card-spotlight rounded-3xl bg-[#0a0a0c]/80 border border-white/5 p-10 flex-1 relative transform-gpu transition-all duration-300 audio-trigger"
+            class="card-spotlight rounded-3xl bg-page/80 border border-white/5 p-10 flex-1 relative transform-gpu transition-all duration-300 audio-trigger"
           >
             <div class="absolute top-0 right-0 w-64 h-64 bg-amber-600/10 blur-[80px] rounded-full pointer-events-none">
             </div>
@@ -502,7 +502,7 @@ const roadmap = [
                 roadmap.map((step, idx) => (
                   <div class="relative pl-8 pb-8 border-l border-white/10 last:border-transparent last:pb-0">
                     <div
-                      class={`absolute left-[-7px] top-1 w-3.5 h-3.5 rounded-full border-[3px] border-[#0a0a0c] ${step.status === 'Active' ? 'bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(52,211,153,0.8)]' : step.status === 'Upcoming' ? 'bg-amber-400' : 'bg-zinc-700'}`}
+                      class={`absolute left-[-7px] top-1 w-3.5 h-3.5 rounded-full border-[3px] border-page ${step.status === 'Active' ? 'bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(52,211,153,0.8)]' : step.status === 'Upcoming' ? 'bg-amber-400' : 'bg-zinc-700'}`}
                     />
                     <span class="text-[10px] font-black font-mono tracking-widest text-zinc-500 uppercase">
                       {step.phase} &bull; {step.status}
@@ -521,7 +521,7 @@ const roadmap = [
       <section class="group-section pb-16">
         <div
           id="cards-container-6"
-          class="card-spotlight relative rounded-[3rem] border border-white/10 bg-[#050505] p-12 md:p-20 text-center overflow-hidden transform-gpu transition-all duration-300"
+          class="card-spotlight relative rounded-[3rem] border border-white/10 bg-well p-12 md:p-20 text-center overflow-hidden transform-gpu transition-all duration-300"
         >
           <!-- Reactor Glow -->
           <div
@@ -782,7 +782,7 @@ const roadmap = [
               const a = document.createElement('a');
               a.href = t.url;
               a.className =
-                'card-spotlight flex items-center gap-3 p-5 rounded-2xl bg-[#0a0a0c]/80 border border-white/5 hover:-translate-y-1 transform-gpu transition-all duration-300 group/rec relative overflow-hidden audio-trigger';
+                'card-spotlight flex items-center gap-3 p-5 rounded-2xl bg-page/80 border border-white/5 hover:-translate-y-1 transform-gpu transition-all duration-300 group/rec relative overflow-hidden audio-trigger';
               a.innerHTML = `<span class="text-amber-400 bg-amber-500/10 p-2.5 rounded-xl relative z-10 group-hover/rec:bg-amber-500/20 transition-colors">${getIconSvg(t.icon)}</span><span class="text-sm font-black text-zinc-300 group-hover/rec:text-white transition-colors relative z-10 pointer-events-none">${t.name}</span>`;
               grid.appendChild(a);
             }

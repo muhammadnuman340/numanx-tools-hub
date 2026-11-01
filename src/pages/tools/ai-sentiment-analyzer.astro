@@ -941,9 +941,9 @@ const schema = {
     ctx.clearRect(0, 0, 200, 200);
     const total = posPct + negPct + neutPct || 100;
     const data = [
-      { pct: (posPct / total) * 100, color: '#22c55e' },
-      { pct: (negPct / total) * 100, color: '#f43f5e' },
-      { pct: (neutPct / total) * 100, color: '#71717a' },
+      { pct: (posPct / total) * 100, color: 'oklch(0.74 0.15 150)' },
+      { pct: (negPct / total) * 100, color: 'oklch(0.68 0.19 27)' },
+      { pct: (neutPct / total) * 100, color: 'oklch(0.69 0.013 75)' },
     ];
     let startAngle = -Math.PI / 2;
     data.forEach((d) => {
@@ -956,12 +956,12 @@ const schema = {
       ctx.fill();
       startAngle += angle;
     });
-    ctx.fillStyle = '#e4e4e7';
+    ctx.fillStyle = 'oklch(0.92 0.006 75)';
     ctx.font = 'bold 18px sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(posPct + '%', cx, cy - 10);
-    ctx.fillStyle = '#a1a1aa';
+    ctx.fillStyle = 'oklch(0.77 0.012 75)';
     ctx.font = '11px sans-serif';
     ctx.fillText('Positive', cx, cy + 12);
   }
@@ -976,7 +976,7 @@ const schema = {
     const labels = Object.keys(emotions);
     const values = Object.values(emotions);
     const max = Math.max(...values, 1);
-    const colors = ['#22c55e', '#ef4444', '#3b82f6', '#a855f7', '#f59e0b'];
+    const colors = ['oklch(0.74 0.15 150)', 'oklch(0.68 0.19 27)', 'oklch(0.72 0.1 240)', 'oklch(0.8 0.15 75)', 'oklch(0.72 0.17 50)'];
     const barW = 36;
     const gap = 16;
     const startX = 20;
@@ -990,9 +990,9 @@ const schema = {
       ctx.beginPath();
       ctx.roundRect(x - barW / 2, y, barW, barH, 3);
       ctx.fill();
-      ctx.fillStyle = '#a1a1aa';
+      ctx.fillStyle = 'oklch(0.77 0.012 75)';
       ctx.fillText(label[0].toUpperCase() + label.slice(1, 4), x, h - 12);
-      ctx.fillStyle = '#e4e4e7';
+      ctx.fillStyle = 'oklch(0.92 0.006 75)';
       ctx.font = 'bold 10px sans-serif';
       ctx.fillText(values[i] + '%', x, y - 5);
       ctx.font = '10px sans-serif';

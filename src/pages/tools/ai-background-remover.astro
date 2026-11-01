@@ -128,7 +128,7 @@ const useCases = [
             <input id="file-input" type="file" accept="image/*" class="hidden" aria-label="Upload image to remove background" />
             <div id="dropzone-content">
               <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300 bg-amber-600/20">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" style="stroke:var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                   <polyline points="17 8 12 3 7 8"></polyline>
                   <line x1="12" y1="3" x2="12" y2="15"></line>
@@ -161,7 +161,7 @@ const useCases = [
                 </div>
                 <div>
                   <h3 class="text-sm font-semibold text-tertiary mb-3 text-center">Result</h3>
-                  <div class="rounded-xl overflow-hidden border border-surface-2 aspect-video flex items-center justify-center relative p-2" style="background-image: repeating-linear-gradient(45deg, #1f2937 25%, transparent 25%, transparent 75%, #1f2937 75%, #1f2937), repeating-linear-gradient(45deg, #1f2937 25%, #111827 25%, #111827 75%, #1f2937 75%, #1f2937); background-position: 0 0, 10px 10px; background-size: 20px 20px;">
+                  <div class="rounded-xl overflow-hidden border border-surface-2 aspect-video flex items-center justify-center relative p-2" style="background-image: repeating-linear-gradient(45deg, oklch(0.27 0.012 75) 25%, transparent 25%, transparent 75%, oklch(0.27 0.012 75) 75%, oklch(0.27 0.012 75)), repeating-linear-gradient(45deg, oklch(0.27 0.012 75) 25%, oklch(0.21 0.012 75) 25%, oklch(0.21 0.012 75) 75%, oklch(0.27 0.012 75) 75%, oklch(0.27 0.012 75)); background-position: 0 0, 10px 10px; background-size: 20px 20px;">
                      <img id="result-preview" alt="Background removed processed image preview" class="max-w-full max-h-full object-contain drop-shadow-2xl rounded-lg" />
                   </div>
                 </div>

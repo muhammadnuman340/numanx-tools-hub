@@ -127,7 +127,7 @@ const useCases = [
             <input
               id="color-picker"
               type="color"
-              value="#7c3aed"
+              value="#f5ae39"
               class="w-16 h-16 rounded-xl border border-surface-2 cursor-pointer bg-transparent" aria-label="Pick a color"
             />
             <div class="flex-1">
@@ -135,7 +135,7 @@ const useCases = [
               <input
                 id="hex-input"
                 type="text"
-                value="#7c3aed"
+                value="#f5ae39"
                 class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-amber-500/50 focus:outline-none transition-all" aria-label="HEX color value"
               />
             </div>
@@ -512,8 +512,8 @@ const useCases = [
     URL.revokeObjectURL(a.href);
   });
   document.getElementById('clear-btn')?.addEventListener('click', () => {
-    hexInput.value = '#7c3aed';
-    picker.value = '#7c3aed';
+    hexInput.value = '#f5ae39';
+    picker.value = '#f5ae39';
     updateFromHex();
     playPing();
   });

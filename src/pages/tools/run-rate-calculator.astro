@@ -411,7 +411,7 @@ const useCases = [
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#a855f7"
+                  style="stroke:var(--accent)"
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg
@@ -645,20 +645,20 @@ const useCases = [
   function getChaseDifficulty(crr, rrr) {
     if (crr <= 0 || rrr <= 0) return null;
     const diff = crr - rrr;
-    if (diff >= 0) return { level: 'Easy', pct: 10, color: '#22c55e', desc: 'Batting side is ahead of the rate' };
-    if (diff > -1) return { level: 'Moderate', pct: 30, color: '#f59e0b', desc: 'Within striking distance' };
-    if (diff > -2) return { level: 'Hard', pct: 50, color: '#f97316', desc: 'Need to accelerate' };
-    if (diff > -4) return { level: 'Very Hard', pct: 75, color: '#ef4444', desc: 'Significant acceleration needed' };
-    return { level: 'Extreme', pct: 95, color: '#dc2626', desc: 'Almost impossible chase' };
+    if (diff >= 0) return { level: 'Easy', pct: 10, color: 'var(--success)', desc: 'Batting side is ahead of the rate' };
+    if (diff > -1) return { level: 'Moderate', pct: 30, color: 'var(--warning)', desc: 'Within striking distance' };
+    if (diff > -2) return { level: 'Hard', pct: 50, color: 'color-mix(in oklch, var(--warning), var(--danger))', desc: 'Need to accelerate' };
+    if (diff > -4) return { level: 'Very Hard', pct: 75, color: 'var(--danger)', desc: 'Significant acceleration needed' };
+    return { level: 'Extreme', pct: 95, color: 'color-mix(in oklch, var(--danger), black 20%)', desc: 'Almost impossible chase' };
   }
 
   function getPressure(crr, rrr) {
     if (crr <= 0 || rrr <= 0) return null;
     const diff = crr - rrr;
-    if (diff >= 0) return { level: 'Low', pct: 10, color: '#22c55e' };
-    if (diff > -1) return { level: 'Medium', pct: 35, color: '#f59e0b' };
-    if (diff > -2) return { level: 'High', pct: 65, color: '#f97316' };
-    return { level: 'Critical', pct: 90, color: '#dc2626' };
+    if (diff >= 0) return { level: 'Low', pct: 10, color: 'var(--success)' };
+    if (diff > -1) return { level: 'Medium', pct: 35, color: 'var(--warning)' };
+    if (diff > -2) return { level: 'High', pct: 65, color: 'color-mix(in oklch, var(--warning), var(--danger))' };
+    return { level: 'Critical', pct: 90, color: 'color-mix(in oklch, var(--danger), black 20%)' };
   }
 
   function buildProjection() {

@@ -3234,8 +3234,8 @@ const schema = {
   .typing-dot { animation: typing 1.4s infinite ease-in-out; }
   .typing-dot:nth-child(2) { animation-delay: 0.2s; }
   .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-  .voice-btn.listening { border-color: #ef4444; background: rgba(239,68,68,0.15); }
-  .voice-dot { width: 10px; height: 10px; border-radius: 50%; background: #ef4444; animation: voicePulse 1s ease-in-out infinite; display: block; }
+  .voice-btn.listening { border-color: var(--danger); background: rgba(239,68,68,0.15); }
+  .voice-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--danger); animation: voicePulse 1s ease-in-out infinite; display: block; }
   @keyframes voicePulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.7); } 50% { box-shadow: 0 0 0 6px rgba(239,68,68,0); } }
   .search-highlight { background: rgba(139,92,246,0.15); border-radius: 4px; }
   .search-highlight.search-active { background: rgba(139,92,246,0.35); outline: 2px solid rgb(139,92,246); outline-offset: 1px; }

@@ -31,7 +31,7 @@ const mockMessages = [
     { name: 'Assistant Prototype', url: '/chat/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden bg-[#050505]">
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden bg-well">
     <!-- Ambient Background Glows -->
     <div
       class="absolute top-[10%] left-[5%] w-[400px] h-[400px] rounded-full bg-amber-600/5 blur-[120px] pointer-events-none -z-10 animate-pulse"
@@ -78,7 +78,7 @@ const mockMessages = [
       <div id="cards-container-chat" class="w-full mb-12 group-section preserve-3d">
         <!-- Chat Interface Box -->
         <div
-          class="card-spotlight bg-[#0a0a0c]/90 border border-white/10 rounded-3xl p-6 shadow-2xl relative overflow-hidden min-h-[550px] flex flex-col justify-between transition-all duration-300"
+          class="card-spotlight bg-page/90 border border-white/10 rounded-3xl p-6 shadow-2xl relative overflow-hidden min-h-[550px] flex flex-col justify-between transition-all duration-300"
         >
           <div
             class="absolute inset-x-0 -top-px h-px bg-amber-500/50"
@@ -177,7 +177,7 @@ const mockMessages = [
                   type="text"
                   placeholder="Type a message or command..."
                   required
-                  class="w-full bg-[#050507] text-white placeholder-zinc-550 px-5 py-3.5 pr-12 rounded-2xl border border-white/10 focus:outline-none focus:border-amber-500/50 transition-all text-xs shadow-inner audio-trigger" aria-label="Chat message"
+                  class="w-full bg-well text-white placeholder-zinc-550 px-5 py-3.5 pr-12 rounded-2xl border border-white/10 focus:outline-none focus:border-amber-500/50 transition-all text-xs shadow-inner audio-trigger" aria-label="Chat message"
                 />
                 <button
                   type="submit"

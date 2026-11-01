@@ -40,7 +40,7 @@ const sizeClasses: Record<ButtonSize, string> = {
   lg: 'text-base px-6 py-3 rounded-xl',
 };
 
-const buttonClass = `inline-flex items-center justify-center gap-2 font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0b] select-none ${variantClasses[variant]} ${sizeClasses[size]} ${disabled ? 'opacity-50 pointer-events-none' : 'cursor-pointer'} ${className || ''}`;
+const buttonClass = `inline-flex items-center justify-center gap-2 font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 focus-visible:ring-offset-page select-none ${variantClasses[variant]} ${sizeClasses[size]} ${disabled ? 'opacity-50 pointer-events-none' : 'cursor-pointer'} ${className || ''}`;
 ---
 
 {

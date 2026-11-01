@@ -658,12 +658,12 @@ const schema = {
     const gap = 4;
     const startX = 70;
     const startY = 20;
-    const colors = ['#a855f7', '#8b5cf6', '#7c3aed', '#6d28d9', '#5b21b6', '#4c1d95', '#3b0764', '#2e1065'];
+    const colors = [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.42, 0.35].map((a) => `oklch(0.8 0.15 75 / ${a})`);
     ctx.font = '10px sans-serif';
     top10.forEach(([word, count], i) => {
       const y = startY + i * (barH + gap);
       const barW = (count / max) * (w - startX - 20);
-      ctx.fillStyle = '#a1a1aa';
+      ctx.fillStyle = 'oklch(0.77 0.012 75)';
       ctx.textAlign = 'right';
       ctx.fillText(word.length > 10 ? word.slice(0, 10) + '...' : word, startX - 5, y + 10);
       ctx.fillStyle = colors[i % colors.length];
@@ -680,7 +680,7 @@ const schema = {
       ctx.arcTo(startX, y, startX + r, y, r);
       ctx.closePath();
       ctx.fill();
-      ctx.fillStyle = '#e4e4e7';
+      ctx.fillStyle = 'oklch(0.92 0.006 75)';
       ctx.textAlign = 'left';
       ctx.font = 'bold 10px sans-serif';
       ctx.fillText(count + 'x', startX + barW + 5, y + 10);
