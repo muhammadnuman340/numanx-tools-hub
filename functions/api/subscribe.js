@@ -1,3 +1,5 @@
+import { postToSheet } from '../../src/lib/sheetWebhook.js';
+
 export async function onRequest(context) {
   const { request, env } = context;
 
@@ -21,33 +23,12 @@ export async function onRequest(context) {
     const normalizedEmail = email.toLowerCase().trim();
 
     // Google Apps Script saves the signup and emails a confirm link (double opt-in)
-    let status = '';
-    const webhookUrl = env.NEWSLETTER_WEBHOOK_URL || env.CONTACT_WEBHOOK_URL;
-    if (webhookUrl) {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 6000);
-      try {
-        const resp = await fetch(webhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            type: 'subscribe',
-            email: normalizedEmail,
-            site: new URL(request.url).hostname,
-            timestamp: new Date().toISOString(),
-            // Proves the request came from this site; never stored
-            secret: env.WEBHOOK_SECRET || '',
-          }),
-          signal: controller.signal,
-        });
-        const out = await resp.json().catch(() => ({}));
-        if (resp.ok && out.success !== false) status = out.status || 'saved';
-      } catch (_) {
-        // Webhook down or slow: fall back to KV below
-      } finally {
-        clearTimeout(timeoutId);
-      }
-    }
+    const sheet = await postToSheet(
+      env.NEWSLETTER_WEBHOOK_URL || env.CONTACT_WEBHOOK_URL,
+      { type: 'subscribe', email: normalizedEmail, site: new URL(request.url).hostname, timestamp: new Date().toISOString() },
+      env.WEBHOOK_SECRET,
+    );
+    const status = sheet.ok ? (sheet.data && sheet.data.status) || 'saved' : '';
 
     // Backup copy in Cloudflare KV if it is bound
     let kvStored = false;
@@ -66,7 +47,7 @@ export async function onRequest(context) {
     }
 
     if (!status && !kvStored) {
-      return new Response(JSON.stringify({ error: 'Signup is not available right now. Please try again later.' }), {
+      return new Response(JSON.stringify({ error: 'Signup is not available right now. Please try again later.', delivery: sheet.reason }), {
         status: 503,
         headers: { 'Content-Type': 'application/json' },
       });
@@ -79,7 +60,7 @@ export async function onRequest(context) {
           ? 'Almost done: check your inbox and click the link to confirm.'
           : 'Thanks! You are on the list.';
 
-    return new Response(JSON.stringify({ success: true, message, email: normalizedEmail }), {
+    return new Response(JSON.stringify({ success: true, message, email: normalizedEmail, delivery: sheet.reason }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
