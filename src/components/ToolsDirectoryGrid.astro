@@ -1,7 +1,7 @@
 ---
 // FILE: src/components/ToolsDirectoryGrid.astro
 import { tools, categories as categoryInfos, type Tool } from '../data/tools';
-import ToolIcon from './icons/ToolIcon.astro';
+import ToolCard from './ui/ToolCard.astro';
 import MonetizationSlot from './MonetizationSlot.astro';
 
 interface Props {
@@ -98,55 +98,15 @@ const filterTabs = [
       tools.map((tool: Tool, index: number) => {
         return (
           <>
-            <a
-              href={tool.url}
-              class="tool-card group relative flex flex-col justify-between rounded-2xl bg-page/80 border border-white/5 p-6 transition-all duration-300 hover:border-white/20 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+            <ToolCard
+              tool={tool}
+              badge
+              class="tool-card"
               data-category={tool.category}
               data-name={tool.name.toLowerCase()}
               data-keywords={tool.keywords ? tool.keywords.join(' ').toLowerCase() : ''}
               data-desc={tool.description.toLowerCase()}
-            >
-              <!-- Card Content -->
-              <div>
-                <div class="flex items-start justify-between mb-4">
-                  <div class="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-amber-400 group-hover:scale-110 group-hover:bg-amber-500/10 group-hover:border-amber-500/30 transition-all duration-300 shadow-sm">
-                    <ToolIcon name={tool.icon} class="w-5 h-5" />
-                  </div>
-                  {tool.isNew && (
-                    <span class="text-[9px] font-black uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
-                      New
-                    </span>
-                  )}
-                  {tool.isPopular && (
-                    <span class="text-[9px] font-black uppercase tracking-wider text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full">
-                      Popular
-                    </span>
-                  )}
-                  {tool.isFeatured && !tool.isNew && !tool.isPopular && (
-                    <span class="text-[9px] font-black uppercase tracking-wider text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full">
-                      Featured
-                    </span>
-                  )}
-                </div>
-
-                <h3 class="text-base font-bold text-white group-hover:text-amber-400 transition-colors tracking-tight line-clamp-1">
-                  {tool.name}
-                </h3>
-                <p class="text-xs text-zinc-400 mt-2 font-medium line-clamp-2 leading-relaxed">
-                  {tool.description}
-                </p>
-              </div>
-
-              <!-- Card Footer -->
-              <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-[11px] font-medium text-zinc-500">
-                <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-400">
-                  {categoryMap[tool.category] || tool.category}
-                </span>
-                <span class="inline-flex items-center gap-1 text-amber-400 group-hover:translate-x-1 transition-transform font-bold">
-                  Open Tool &rarr;
-                </span>
-              </div>
-            </a>
+            />
 
             {/* In-feed monetization slot every 12 cards */}
             {showMonetization && (index === 7 || index === 23 || index === 39) && (

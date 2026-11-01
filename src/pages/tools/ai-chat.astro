@@ -637,7 +637,7 @@ const schema = {
   };
 
   let msgIndex = 0;
-  let context = { lastTopic: null, toolCount: null };
+  let context = { lastTopic: null, toolCount: null, userName: '', awaitingName: false };
 
   function escapeHtml(str) {
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -2109,9 +2109,34 @@ const schema = {
   // COMMAND PARSER
   //
 
+  /** Saves a name from a reply; returns the answer, or null when it doesn't look like a name. */
+  function saveName(raw) {
+    const name = String(raw)
+      .replace(/[.!]+$/, '')
+      .trim()
+      .split(/\s+/)
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ');
+    if (name.length < 2 || name.length > 30 || !/^[\p{L}][\p{L}' .-]*$/u.test(name)) return null;
+    try {
+      localStorage.setItem('nt_user_name', name);
+    } catch (e) {}
+    context.userName = name;
+    return 'Nice to meet you, **' + escapeHtml(name) + "**! I'll remember your name for our chat.";
+  }
+
   function processCommand(text) {
     const q = text.trim();
     const lq = q.toLowerCase();
+
+    // Right after "what's your name?", a short reply of one to three words is the name
+    if (context.awaitingName) {
+      context.awaitingName = false;
+      if (q.split(/\s+/).length <= 3 && !/[\d:=+*/#@]/.test(q)) {
+        const r = saveName(q);
+        if (r) return r;
+      }
+    }
 
     // Greetings
     if (/^(hi|hello|hey|howdy|sup|yo|good morning|good evening|good afternoon)[.!]*$/i.test(lq)) {
@@ -2592,17 +2617,11 @@ const schema = {
     m = lq.match(/^(?:lottery|lotto)\s*(?:\s+(\d+)(?:\s*\/\s*(\d+))?)?/i);
     if (m) return execLottery(m[1] ? +m[1] : 6, m[2] ? +m[2] : 49);
 
-    // Name capture: "my name is X" / "i'm X" / "call me X"
-    m = lq.match(/^(?:my name is|i am|i'm|call me)\s+(.+)/i);
+    // Name capture: "my name is X" / "i'm X" / "call me X" / "it's X" (keeps the capitals typed)
+    m = q.match(/^(?:my name is|my name's|i am|i'm|im|call me|it's|its|this is)\s+(.+)/i);
     if (m) {
-      const name = m[1].replace(/[.!]+$/, '').trim();
-      if (name.length > 1 && name.length < 30) {
-        try {
-          localStorage.setItem('nt_user_name', name);
-        } catch (e) {}
-        context.userName = name;
-        return 'Nice to meet you, **' + escapeHtml(name) + "**! I'll remember your name for our chat.";
-      }
+      const r = saveName(m[1]);
+      if (r) return r;
     }
 
     // Stats command
@@ -3251,6 +3270,7 @@ const schema = {
         localStorage.setItem('nt_name_asked', '1');
         setTimeout(function () {
           addMessage("By the way, what's your name? I'd love to personalize our chat!", false);
+          context.awaitingName = true;
         }, 600);
       }
     } catch (e) {}
