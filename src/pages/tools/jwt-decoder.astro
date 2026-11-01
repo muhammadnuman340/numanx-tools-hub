@@ -1,8 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
 
@@ -118,16 +116,15 @@ const useCases = [
     { name: 'JWT Decoder', url: '/tools/jwt-decoder/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="JWT"
-        gradient="Decoder Pro"
+        gradient="Decoder"
         desc="Decode JWT tokens instantly — inspect the header, payload, and signature in a clean interface."
         badge="✦ New Tool"
         slug="jwt-decoder"
       />
-      <ShareBar />
       <div class="max-w-xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6 relative">
           <div class="flex items-center justify-between mb-4">
@@ -136,32 +133,10 @@ const useCases = [
               <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
             <div class="flex items-center gap-2">
-              <div class="flex gap-1" role="group" aria-label="Theme color swatches">
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="purple"
-                  aria-label="Set purple theme"
-                  style="background:#a855f7"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="blue"
-                  aria-label="Set blue theme"
-                  style="background:#3b82f6"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="green"
-                  aria-label="Set green theme"
-                  style="background:#22c55e"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="pink"
-                  aria-label="Set pink theme"
-                  style="background:#ec4899"></button>
-              </div>
               <button
                 id="fullscreen-btn"
                 aria-label="Toggle fullscreen"
-                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
                 title="Fullscreen">⛶</button
               >
             </div>
@@ -284,10 +259,9 @@ const useCases = [
         howToSteps={howToSteps}
         useCases={useCases}
       />
-      <RelatedTools current="jwt-decoder" />
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
-          Frequently Asked <span class="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent"
+          Frequently Asked <span class="text-amber-400"
             >Questions</span
           >
         </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
@@ -296,6 +270,7 @@ const useCases = [
   </main>
 </MainLayout>
 <script>
+  import { highlight } from '../../lib/codeHighlight';
   const tokenInput = document.getElementById('token-input') as HTMLTextAreaElement;
   const decodeBtn = document.getElementById('decode-btn');
   const resultArea = document.getElementById('result-area');
@@ -311,12 +286,7 @@ const useCases = [
   }
 
   function syntaxHighlight(json: string): string {
-    return escapeHtml(json)
-      .replace(/("(?:[^"\\]|\\.)*")\s*:/g, '<span class="text-orange-300">$1</span>:')
-      .replace(/("(?:[^"\\]|\\.)*")/g, '<span class="text-emerald-300">$1</span>')
-      .replace(/\b(-?\d+\.?\d*(?:[eE][+-]?\d+)?)\b/g, '<span class="text-amber-300">$1</span>')
-      .replace(/\b(true|false)\b/g, '<span class="text-blue-400">$1</span>')
-      .replace(/\b(null)\b/g, '<span class="text-red-400">$1</span>');
+    return highlight(json, 'json');
   }
 
   function base64UrlDecode(str: string): string {
@@ -522,21 +492,4 @@ const useCases = [
         .join('');
     });
   }
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-orange'],button[class*='bg-amber']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(orange|amber)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(orange|amber)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 </script>

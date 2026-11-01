@@ -1,8 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
 
@@ -129,16 +127,15 @@ const schema = {
     { name: 'AI Grammar Checker', url: '/tools/ai-grammar-checker/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="AI Grammar"
-        gradient="Checker Pro"
+        gradient="Checker"
         desc="Catch grammar mistakes, confused words, punctuation errors, and common misspellings. Clean up your writing in seconds."
         badge="✦ Rule-Based Grammar"
         slug="ai-grammar-checker"
       />
-      <ShareBar />
       <div class="max-w-xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6 space-y-4 relative">
           <div class="flex items-center justify-between mb-4">
@@ -147,31 +144,9 @@ const schema = {
               <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
             <div class="flex items-center gap-2">
-              <div class="flex gap-1">
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="purple"
-                  aria-label="Set purple theme"
-                  style="background:#a855f7"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="blue"
-                  aria-label="Set blue theme"
-                  style="background:#3b82f6"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="green"
-                  aria-label="Set green theme"
-                  style="background:#22c55e"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="pink"
-                  aria-label="Set pink theme"
-                  style="background:#ec4899"></button>
-              </div>
               <button
                 id="fullscreen-btn"
-                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
                 title="Fullscreen">⛶</button
               >
             </div>
@@ -196,7 +171,7 @@ const schema = {
               <span class="text-xs text-muted ml-2">Ctrl+Enter to process</span>
             </div>
           </div>
-          <div class="flex h-[220px] rounded-xl bg-black/40 border border-surface focus-within:border-purple-500 focus-within:ring-1 focus-within:ring-purple-500 transition-all overflow-hidden relative">
+          <div class="flex h-[220px] rounded-xl bg-black/40 border border-surface focus-within:border-amber-500 focus-within:ring-1 focus-within:ring-amber-500 transition-all overflow-hidden relative">
             <div
               id="line-nums"
               class="w-12 shrink-0 h-full select-none overflow-hidden font-mono text-sm leading-6 text-right pr-3.5 py-3 text-zinc-500/80 bg-zinc-950/60 border-r border-white/5 whitespace-pre pointer-events-none tabular-nums"
@@ -212,7 +187,7 @@ const schema = {
               style="line-height: 24px; font-size: 14px;"
             ></textarea>
             <button
-              class="paste-btn absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+              class="paste-btn absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
               data-target="input-text"
               aria-label="Paste from clipboard"
               title="Paste">📋</button
@@ -227,7 +202,7 @@ const schema = {
           <div id="letter-freq" class="mt-2 flex flex-wrap gap-1.5 hidden" role="region" aria-label="Character frequency breakdown"></div>
           <button
             id="check-btn"
-            class="w-full py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all"
+            class="w-full py-2.5 text-accent-fg text-sm font-semibold rounded-xl transition-all bg-amber-600"
             >Check Grammar</button
           >
           <div class="flex gap-2">
@@ -271,10 +246,10 @@ const schema = {
       </div>
       <section class="mt-20 max-w-3xl mx-auto">
         <div class="text-center mb-8">
-          <span class="text-xs font-semibold text-violet-400 uppercase tracking-wider">AI Technology</span><h2
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">AI Technology</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
-            How It <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+            How It <span class="text-amber-400"
               >Works</span
             >
           </h2>
@@ -309,14 +284,14 @@ const schema = {
         {benefits}
         howToSteps={howToSteps}
         useCases={useCases}
+        faq={faqItems}
       />
-      <RelatedTools current="ai-grammar-checker" />
       <div class="mt-20 max-w-3xl mx-auto px-4">
         <div
-          class="bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-fuchsia-500/10 border border-violet-500/20 rounded-2xl p-8 md:p-12 text-center"
+          class="border border-amber-500/20 rounded-2xl p-8 md:p-12 text-center bg-amber-500/10"
         >
           <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mb-4">
-            Ready to <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+            Ready to <span class="text-amber-400"
               >Check</span
             > Your Grammar?
           </h2>
@@ -326,7 +301,7 @@ const schema = {
           </p>
           <a
             href="#main-content"
-            class="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all"
+            class="inline-block px-8 py-3 text-accent-fg text-sm font-semibold rounded-xl transition-all bg-amber-600"
             >Start Checking</a
           >
         </div>
@@ -741,10 +716,10 @@ const schema = {
         dot: 'bg-orange-400',
       },
       repeated: {
-        bg: 'bg-fuchsia-500/15',
-        border: 'border-fuchsia-500/30',
-        text: 'text-fuchsia-300',
-        dot: 'bg-fuchsia-400',
+        bg: 'bg-amber-500/15',
+        border: 'border-amber-500/30',
+        text: 'text-amber-300',
+        dot: 'bg-amber-400',
       },
     };
     return (
@@ -1013,30 +988,10 @@ const schema = {
       el.innerHTML = s
         .map(
           ([c, n]) =>
-            `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white/5 border border-white/5 text-xs font-mono"><strong class="text-purple-400 uppercase">${c}</strong><span class="text-zinc-400">${n}</span></span>`,
+            `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white/5 border border-white/5 text-xs font-mono"><strong class="text-amber-400 uppercase">${c}</strong><span class="text-zinc-400">${n}</span></span>`,
         )
         .join('');
     });
   }
 
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      const map = { purple: '#a855f7', blue: '#3b82f6', green: '#22c55e', pink: '#ec4899', orange: '#f97316' };
-      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500')
-          .replace(/from-(purple|violet)-\d+/g, 'from-' + c + '-500')
-          .replace(/to-purple-\d+/g, 'to-' + c + '-600');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 </script>

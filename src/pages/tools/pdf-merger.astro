@@ -1,8 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
 
@@ -118,7 +116,7 @@ const useCases = [
     { name: 'PDF Merger', url: '/tools/pdf-merger/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="PDF"
@@ -127,11 +125,10 @@ const useCases = [
         badge="✦ Secure Tool"
         slug="pdf-merger"
       />
-      <ShareBar />
       <div class="max-w-3xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6 md:p-10 relative text-center">
            <input type="file" id="file-input" multiple accept="application/pdf" class="hidden" aria-label="Upload PDF files to merge" />
-           <div id="drop-zone" class="border-2 border-dashed border-surface-2 hover:border-red-500/50 rounded-2xl p-10 cursor-pointer transition-all mb-8">
+           <div id="drop-zone" role="button" tabindex="0" aria-label="Choose PDF files to merge, or drop them here" class="border-2 border-dashed border-surface-2 hover:border-red-500/50 rounded-2xl p-10 cursor-pointer transition-all mb-8">
               <div class="text-4xl mb-4">📄</div>
               <h2 class="text-xl font-semibold text-white mb-2">Drag & Drop PDF files here</h2>
               <p class="text-sm text-muted">Or click to browse from your device</p>
@@ -158,14 +155,15 @@ const useCases = [
         {benefits}
         howToSteps={howToSteps}
         useCases={useCases}
+        faq={faqItems}
       />
-      <RelatedTools current="pdf-merger" />
     </div>
   </main>
 </MainLayout>
 
 <script>
   import { PDFDocument } from 'pdf-lib';
+  import { setToolStatus } from '../../lib/toolStatus';
 
   const dropZone = document.getElementById('drop-zone');
   const fileInput = document.getElementById('file-input') as HTMLInputElement;
@@ -177,6 +175,10 @@ const useCases = [
   let selectedFiles: File[] = [];
 
   dropZone?.addEventListener('click', () => fileInput.click());
+  // Enter / Space on the drop zone is handled site-wide for [role="button"] elements (MainLayout)
+
+  const escapeHtml = (t: string) =>
+    t.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
 
   dropZone?.addEventListener('dragover', (e) => {
     e.preventDefault();
@@ -198,12 +200,22 @@ const useCases = [
   });
 
   function handleFiles(files: FileList) {
+    let skipped = 0;
     for (let i = 0; i < files.length; i++) {
       if (files[i].type === 'application/pdf') {
         selectedFiles.push(files[i]);
+      } else {
+        skipped++;
       }
     }
     renderFileList();
+    const n = selectedFiles.length;
+    const ready = n < 2 ? `${n} PDF added. Add at least one more to merge.` : `${n} PDFs ready to merge.`;
+    const note = skipped ? ` Skipped ${skipped} file${skipped > 1 ? 's' : ''} that ${skipped > 1 ? "aren't PDFs" : "isn't a PDF"}.` : '';
+    setToolStatus('ready', ready + note);
+    if (skipped && (window as any).__showToast) {
+      (window as any).__showToast({ message: note.trim(), variant: 'warning' });
+    }
   }
 
   function removeFile(index: number) {
@@ -235,9 +247,9 @@ const useCases = [
         <div class="flex items-center justify-between p-3 bg-surface border border-surface-2 rounded-lg">
            <div class="flex items-center gap-3 overflow-hidden">
               <span class="text-xl">📄</span>
-              <span class="text-sm text-white truncate">${file.name}</span>
+              <span class="text-sm text-white truncate">${escapeHtml(file.name)}</span>
            </div>
-           <button class="remove-btn text-xs text-red-400 hover:text-red-300 px-2" data-index="${i}">Remove</button>
+           <button type="button" class="remove-btn inline-flex items-center min-h-6 text-xs text-red-400 hover:text-red-300 px-2" data-index="${i}" aria-label="Remove ${escapeHtml(file.name)}">Remove</button>
         </div>
       `).join('');
 
@@ -261,6 +273,7 @@ const useCases = [
     try {
       mergeBtn.disabled = true;
       mergeBtn.textContent = 'Processing...';
+      setToolStatus('processing', `Merging ${selectedFiles.length} PDFs…`);
       if (statusText) {
         statusText.textContent = 'Merging PDFs... This might take a moment.';
         statusText.classList.remove('hidden');
@@ -292,12 +305,15 @@ const useCases = [
         statusText.classList.replace('text-muted', 'text-emerald-400');
       }
       
+      // The toast announces itself; the status region records the state
+      setToolStatus('complete');
       if ((window as any).__showToast) {
         (window as any).__showToast({ message: 'PDFs merged successfully!', variant: 'success' });
       }
 
     } catch (err: any) {
       console.error(err);
+      setToolStatus('error', 'Could not merge the PDFs: ' + err.message);
       if (statusText) {
         statusText.textContent = 'Error merging PDFs: ' + err.message;
         statusText.classList.replace('text-muted', 'text-red-400');

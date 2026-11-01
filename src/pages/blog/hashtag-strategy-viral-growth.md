@@ -29,13 +29,13 @@ Modern social media recommendation engines (TikTok's Monolith, Instagram's Graph
       <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
       Interactive Mini Hashtag Generator
     </span>
-    <a href="/tools/hashtag-generator/" class="text-[11px] font-semibold text-indigo-400 hover:text-indigo-300 no-underline">Launch Full Tool →</a>
+    <a href="/tools/hashtag-generator/" class="inline-flex items-center min-h-6 text-xs font-semibold text-amber-400 hover:text-amber-300 no-underline">Open the full tool →</a>
   </div>
   <div class="flex gap-2 mb-3">
-    <input type="text" id="mini-hashtag-input" placeholder="e.g. travel, tech, fitness..." class="flex-1 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500" aria-label="Keywords for hashtags" />
-    <button type="button" id="mini-hashtag-btn" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-bold text-white transition">Generate</button>
+    <input type="text" id="mini-hashtag-input" placeholder="e.g. travel, tech, fitness..." class="flex-1 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500" aria-label="Keywords for hashtags" />
+    <button type="button" id="mini-hashtag-btn" class="px-3.5 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-xs font-bold text-accent-fg transition">Generate</button>
   </div>
-  <div id="mini-hashtag-results" class="text-xs font-mono p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-indigo-300 min-h-[38px] flex items-center flex-wrap gap-1.5">
+  <div id="mini-hashtag-results" class="text-xs font-mono p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-amber-300 min-h-[38px] flex items-center flex-wrap gap-1.5">
     <span class="text-slate-500 font-sans text-[11px]">Type a niche keyword above to generate viral tags instantly...</span>
   </div>
 </div>
@@ -58,7 +58,7 @@ Modern social media recommendation engines (TikTok's Monolith, Instagram's Graph
         '#' + q + '2026', '#' + q + 'growth', '#' + q + 'viral', '#' + q + 'daily',
         '#' + q + 'community', '#learn' + q
       ];
-      res.innerHTML = tags.map(t => '<span class="px-2 py-0.5 rounded bg-indigo-950/80 border border-indigo-500/30 text-indigo-300 cursor-pointer hover:bg-indigo-900 transition" title="Click to copy">' + t + '</span>').join(' ');
+      res.innerHTML = tags.map(t => '<span class="px-2 py-0.5 rounded bg-amber-950/80 border border-amber-500/30 text-amber-300 cursor-pointer hover:bg-amber-900 transition" title="Click to copy">' + t + '</span>').join(' ');
       res.querySelectorAll('span').forEach(el => {
         el.addEventListener('click', () => {
           navigator.clipboard.writeText(el.innerText);

@@ -8,9 +8,14 @@ const { slug, class: className } = Astro.props;
 ---
 
 <button
-  class="favorite-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-surface text-xs font-medium transition-all duration-200 hover:border-purple-500/40 cursor-pointer {className || ''}"
+  type="button"
+  class:list={[
+    'favorite-btn inline-flex items-center gap-1.5 min-h-9 px-3 rounded-lg border border-line text-soft text-xs font-medium transition-colors hover:text-fg hover:border-line-strong cursor-pointer',
+    className,
+  ]}
   data-slug={slug}
-  aria-label="Toggle favorite"
+  aria-pressed="false"
+  aria-label="Save this tool to favorites"
 >
   <svg
     class="favorite-icon w-4 h-4"
@@ -21,6 +26,7 @@ const { slug, class: className } = Astro.props;
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
+    aria-hidden="true"
   >
     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
     ></polygon>
@@ -29,45 +35,46 @@ const { slug, class: className } = Astro.props;
 </button>
 
 <script>
-  document.querySelectorAll('.favorite-btn').forEach((btn) => {
-    const slug = btn.dataset.slug;
-    const icon = btn.querySelector('.favorite-icon');
-    const text = btn.querySelector('.favorite-text');
+  // Buttons are replaced on every client-side navigation, so bind on astro:page-load
+  // (fires on first load too) and mark each button once.
+  const KEY = 'nt_favorites';
 
-    function updateState(isFav: boolean) {
-      if (isFav) {
-        icon.setAttribute('fill', 'currentColor');
-        btn.classList.add('text-amber-400', 'border-amber-500/30', 'bg-amber-500/10');
-        btn.classList.remove('text-tertiary', 'border-surface');
-        if (text) text.textContent = 'Saved';
-      } else {
-        icon.setAttribute('fill', 'none');
-        btn.classList.remove('text-amber-400', 'border-amber-500/30', 'bg-amber-500/10');
-        btn.classList.add('text-tertiary', 'border-surface');
-        if (text) text.textContent = 'Save';
-      }
-    }
-
+  const read = (): string[] => {
     try {
-      const favorites: string[] = JSON.parse(localStorage.getItem('nt_favorites') || '[]');
-      updateState(favorites.includes(slug));
+      return JSON.parse(localStorage.getItem(KEY) || '[]');
     } catch {
-      updateState(false);
+      return [];
     }
+  };
 
-    btn.addEventListener('click', () => {
-      try {
-        let favorites: string[] = JSON.parse(localStorage.getItem('nt_favorites') || '[]');
+  function setState(btn: HTMLElement, isFav: boolean) {
+    btn.setAttribute('aria-pressed', String(isFav));
+    btn.querySelector('.favorite-icon')?.setAttribute('fill', isFav ? 'currentColor' : 'none');
+    btn.classList.toggle('text-accent', isFav);
+    btn.classList.toggle('border-accent', isFav);
+    btn.classList.toggle('text-soft', !isFav);
+    const text = btn.querySelector('.favorite-text');
+    if (text) text.textContent = isFav ? 'Saved' : 'Save';
+  }
+
+  function initFavorites() {
+    document.querySelectorAll<HTMLElement>('.favorite-btn').forEach((btn) => {
+      if (btn.dataset.bound === '1') return;
+      btn.dataset.bound = '1';
+      const slug = btn.dataset.slug || '';
+      setState(btn, read().includes(slug));
+      btn.addEventListener('click', () => {
+        const favorites = read();
         const idx = favorites.indexOf(slug);
-        if (idx >= 0) {
-          favorites.splice(idx, 1);
-          updateState(false);
-        } else {
-          favorites.push(slug);
-          updateState(true);
-        }
-        localStorage.setItem('nt_favorites', JSON.stringify(favorites));
-      } catch {}
+        if (idx >= 0) favorites.splice(idx, 1);
+        else favorites.push(slug);
+        try {
+          localStorage.setItem(KEY, JSON.stringify(favorites));
+        } catch {}
+        setState(btn, idx < 0);
+      });
     });
-  });
+  }
+
+  document.addEventListener('astro:page-load', initFavorites);
 </script>

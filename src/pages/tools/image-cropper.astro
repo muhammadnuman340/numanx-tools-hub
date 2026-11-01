@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
@@ -155,34 +154,36 @@ const useCases = [
     { name: 'Image Cropper', url: '/tools/image-cropper/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="Image"
-        gradient="Cropper Pro"
+        gradient="Cropper"
         desc="Crop images to any dimension with customizable aspect ratios. Drag to adjust crop area, preview in real-time, and download the result."
         badge="✦ New Tool"
         slug="image-cropper"
       />
 
-      <ShareBar />
 
       <div class="w-full max-w-2xl mx-auto mt-10">
         <div class="bg-surface-1 border border-surface rounded-2xl p-6 relative">
           <button
             id="fullscreen-btn"
-            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
             title="Fullscreen">⛶</button
           >
 
           <div
             id="dropzone"
-            class="relative rounded-2xl border-2 border-dashed border-surface-3 bg-surface-1 p-10 md:p-16 text-center cursor-pointer hover:border-purple-500/50 hover:bg-surface-2 transition-all duration-300 group"
+            role="button"
+            tabindex="0"
+            aria-label="Choose an image to crop, or drop it here"
+            class="relative rounded-2xl border-2 border-dashed border-surface-3 bg-surface-1 p-10 md:p-16 text-center cursor-pointer hover:border-amber-500/50 hover:bg-surface-2 transition-all duration-300 group"
           >
             <input id="file-input" type="file" accept="image/png,image/jpeg" class="hidden" aria-label="Upload image to crop" />
             <div id="dropzone-content">
               <div
-                class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300"
+                class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300 bg-amber-600/20"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -190,7 +191,7 @@ const useCases = [
                   height="28"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#a855f7"
+                  style="stroke:var(--accent)"
                   stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -202,7 +203,7 @@ const useCases = [
               </div>
               <h2 class="text-lg font-semibold text-primary mb-2">Drop your image here</h2>
               <p class="text-sm text-muted mb-4">
-                or <span class="text-purple-400 underline underline-offset-2 font-medium">browse files</span>
+                or <span class="text-amber-400 underline underline-offset-2 font-medium">browse files</span>
               </p>
               <p class="text-xs text-dim">Supports PNG and JPG</p>
             </div>
@@ -211,7 +212,7 @@ const useCases = [
           <div id="editor-section" class="hidden mt-6 space-y-5">
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
               <button
-                class="ar-btn rounded-xl border px-3 py-2 text-xs font-medium transition-all bg-purple-600 text-white border-purple-500/30"
+                class="ar-btn rounded-xl border px-3 py-2 text-xs font-medium transition-all bg-amber-600 text-accent-fg border-amber-500/30"
                 data-ar="free"
                 data-active="true">Freeform</button
               >
@@ -242,26 +243,26 @@ const useCases = [
                 <div id="crop-overlay" class="absolute inset-0 pointer-events-none">
                   <div
                     id="crop-box"
-                    class="absolute border-2 border-purple-400 cursor-move pointer-events-auto"
+                    class="absolute border-2 border-amber-400 cursor-move pointer-events-auto"
                     style="display:none;"
                   >
                     <div
-                      class="absolute -top-3 -left-3 w-6 h-6 rounded-full bg-purple-600 border-2 border-white cursor-nwse-resize pointer-events-auto"
+                      class="absolute -top-3 -left-3 w-6 h-6 rounded-full bg-amber-600 border-2 border-white cursor-nwse-resize pointer-events-auto"
                       data-handle="nw"
                     >
                     </div>
                     <div
-                      class="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-purple-600 border-2 border-white cursor-nesw-resize pointer-events-auto"
+                      class="absolute -top-3 -right-3 w-6 h-6 rounded-full bg-amber-600 border-2 border-white cursor-nesw-resize pointer-events-auto"
                       data-handle="ne"
                     >
                     </div>
                     <div
-                      class="absolute -bottom-3 -left-3 w-6 h-6 rounded-full bg-purple-600 border-2 border-white cursor-nesw-resize pointer-events-auto"
+                      class="absolute -bottom-3 -left-3 w-6 h-6 rounded-full bg-amber-600 border-2 border-white cursor-nesw-resize pointer-events-auto"
                       data-handle="sw"
                     >
                     </div>
                     <div
-                      class="absolute -bottom-3 -right-3 w-6 h-6 rounded-full bg-purple-600 border-2 border-white cursor-nwse-resize pointer-events-auto"
+                      class="absolute -bottom-3 -right-3 w-6 h-6 rounded-full bg-amber-600 border-2 border-white cursor-nwse-resize pointer-events-auto"
                       data-handle="se"
                     >
                     </div>
@@ -277,7 +278,7 @@ const useCases = [
                   id="crop-w"
                   type="number"
                   min="1"
-                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all" aria-label="Crop width in pixels"
+                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-500/50 focus:outline-none transition-all" aria-label="Crop width in pixels"
                 />
               </div>
               <div>
@@ -286,7 +287,7 @@ const useCases = [
                   id="crop-h"
                   type="number"
                   min="1"
-                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-purple-500/50 focus:outline-none transition-all" aria-label="Crop height in pixels"
+                  class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-500/50 focus:outline-none transition-all" aria-label="Crop height in pixels"
                 />
               </div>
             </div>
@@ -315,14 +316,14 @@ const useCases = [
                     min="10"
                     max="100"
                     value="92"
-                    class="w-20 align-middle accent-purple-500" aria-label="Image quality"
+                    class="w-20 align-middle accent-amber-500" aria-label="Image quality"
                   />
                   <span id="quality-label" class="text-xs text-tertiary">92%</span>
                 </div>
               </div>
               <button
                 id="copy-btn"
-                class="rounded-xl border border-surface-2 px-3 py-2.5 text-xs font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98]"
+                class="rounded-xl border border-surface-2 px-3 py-2.5 text-xs font-semibold text-secondary hover:text-white hover:border-amber-500/50 hover:bg-amber-600/10 transition-all duration-200 active:scale-[0.98]"
                 title="Copy result text"
               >
                 <svg
@@ -343,7 +344,7 @@ const useCases = [
               </button>
               <button
                 id="crop-btn"
-                class="bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold px-5 py-2.5 rounded-xl transition-all"
+                class="bg-amber-600 hover:bg-amber-500 text-accent-fg text-xs font-semibold px-5 py-2.5 rounded-xl transition-all"
               >
                 Crop & Download
               </button>
@@ -353,27 +354,9 @@ const useCases = [
               <span id="usage-badge" class="text-xs text-muted"></span>
               <button
                 id="share-btn"
-                class="rounded-xl border border-surface-2 px-3 py-1.5 text-xs font-semibold text-secondary hover:text-white hover:border-purple-500/50 hover:bg-purple-600/10 transition-all duration-200 active:scale-[0.98] flex items-center gap-1.5"
+                class="rounded-xl border border-surface-2 px-3 py-1.5 text-xs font-semibold text-secondary hover:text-white hover:border-amber-500/50 hover:bg-amber-600/10 transition-all duration-200 active:scale-[0.98] flex items-center gap-1.5"
                 title="Share">🔗</button
               >
-              <div class="flex gap-1 ml-auto">
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="purple"
-                  style="background:#a855f7"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="blue"
-                  style="background:#3b82f6"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="green"
-                  style="background:#22c55e"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="pink"
-                  style="background:#ec4899"></button>
-              </div>
             </div>
           </div>
         </div>
@@ -382,10 +365,10 @@ const useCases = [
 
     <section class="mt-20 max-w-3xl mx-auto">
       <div class="text-center mb-8">
-        <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Learn</span>
+        <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Learn</span>
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">
           Smart Image
-          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Cropping</span>
+          <span class="text-amber-400">Cropping</span>
         </h2>
       </div>
       <div class="space-y-4 text-sm text-tertiary leading-relaxed">
@@ -406,7 +389,7 @@ const useCases = [
     <div class="mt-20 max-w-3xl mx-auto">
       <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
         Frequently Asked
-        <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+        <span class="text-amber-400">Questions</span>
       </h2>
       <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
     </div>
@@ -572,23 +555,23 @@ const useCases = [
   });
   dropzone.addEventListener('dragover', (e) => {
     e.preventDefault();
-    dropzone.classList.add('border-purple-500');
+    dropzone.classList.add('border-amber-500');
   });
-  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('border-purple-500'));
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('border-amber-500'));
   dropzone.addEventListener('drop', (e) => {
     e.preventDefault();
-    dropzone.classList.remove('border-purple-500');
+    dropzone.classList.remove('border-amber-500');
     if (e.dataTransfer.files[0]) loadImage(e.dataTransfer.files[0]);
   });
 
   arBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       arBtns.forEach((b) => {
-        b.classList.remove('bg-purple-600', 'text-white', 'border-purple-500/30');
+        b.classList.remove('bg-amber-600', 'text-accent-fg', 'border-amber-500/30');
         b.classList.add('bg-surface-1', 'border-surface-3', 'text-tertiary', 'hover:text-primary');
       });
       btn.classList.remove('bg-surface-1', 'border-surface-3', 'text-tertiary', 'hover:text-primary');
-      btn.classList.add('bg-purple-600', 'text-white', 'border-purple-500/30');
+      btn.classList.add('bg-amber-600', 'text-accent-fg', 'border-amber-500/30');
       currentAR = btn.dataset.ar;
       if (currentAR !== 'free') applyARConstraint();
       showCropBox();
@@ -841,21 +824,4 @@ const useCases = [
       o.stop(a.currentTime + 0.12);
     } catch (e) {}
   }
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 </script>

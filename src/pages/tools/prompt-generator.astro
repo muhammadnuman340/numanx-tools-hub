@@ -1,8 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
 
@@ -125,16 +123,15 @@ const schema = {
     { name: 'AI Prompt Generator', url: '/tools/prompt-generator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="AI Prompt"
-        gradient="Generator Pro"
+        gradient="Generator"
         desc="Stop guessing what to ask. Generate highly optimized, structured prompts for ChatGPT, Claude, and Midjourney in seconds."
         badge="✦ Prompt Engineering"
         slug="prompt-generator"
       />
-      <ShareBar />
 
       <div class="max-w-2xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6 md:p-8 space-y-6 relative">
@@ -144,27 +141,9 @@ const schema = {
               <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
             <div class="flex items-center gap-2">
-              <div class="flex gap-1">
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="purple"
-                  style="background:#a855f7"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="blue"
-                  style="background:#3b82f6"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="green"
-                  style="background:#22c55e"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="pink"
-                  style="background:#ec4899"></button>
-              </div>
               <button
                 id="fullscreen-btn"
-                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
                 title="Fullscreen">⛶</button
               >
             </div>
@@ -179,7 +158,7 @@ const schema = {
                 id="task-input"
                 rows="3"
                 placeholder="e.g., Write a blog post about the benefits of remote work, focusing on productivity and mental health."
-                class="w-full bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-y focus:outline-none focus:border-violet-500/60 transition-all" aria-label="Task or topic"
+                class="w-full bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-y focus:outline-none focus:border-amber-500/60 transition-all" aria-label="Task or topic"
               ></textarea>
             </div>
 
@@ -188,7 +167,7 @@ const schema = {
                 <label class="block text-sm font-medium text-tertiary mb-2">Framework</label>
                 <select
                   id="framework-select"
-                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer" aria-label="Prompt framework"
+                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-amber-500/60 transition-all appearance-none cursor-pointer" aria-label="Prompt framework"
                 >
                   <option value="rtf">Role-Task-Format (Best for General Use)</option>
                   <option value="cot">Chain of Thought (Best for Logic/Math)</option>
@@ -201,7 +180,7 @@ const schema = {
                 <label class="block text-sm font-medium text-tertiary mb-2">Persona / Tone</label>
                 <select
                   id="persona-select"
-                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer" aria-label="Persona or tone"
+                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-amber-500/60 transition-all appearance-none cursor-pointer" aria-label="Persona or tone"
                 >
                   <option value="expert">Industry Expert</option>
                   <option value="professional">Professional / Corporate</option>
@@ -216,7 +195,7 @@ const schema = {
                 <label class="block text-sm font-medium text-tertiary mb-2">Output Format</label>
                 <select
                   id="format-select"
-                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer" aria-label="Output format"
+                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-amber-500/60 transition-all appearance-none cursor-pointer" aria-label="Output format"
                 >
                   <option value="markdown">Markdown (Default)</option>
                   <option value="bullet">Bullet Points</option>
@@ -230,7 +209,7 @@ const schema = {
                 <label class="block text-sm font-medium text-tertiary mb-2">Target Audience</label>
                 <select
                   id="audience-select"
-                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-violet-500/60 transition-all appearance-none cursor-pointer" aria-label="Target audience"
+                  class="w-full bg-surface-2 border border-surface-3 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-amber-500/60 transition-all appearance-none cursor-pointer" aria-label="Target audience"
                 >
                   <option value="general">General Public</option>
                   <option value="beginners">Beginners / Novices</option>
@@ -248,13 +227,13 @@ const schema = {
                 rows="3"
                 placeholder="Example 1: Input -> Output
 Example 2: Input -> Output"
-                class="w-full bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-y focus:outline-none focus:border-violet-500/60 transition-all"
+                class="w-full bg-surface-2 border border-surface-3 rounded-xl p-4 text-sm text-white placeholder-zinc-500 resize-y focus:outline-none focus:border-amber-500/60 transition-all"
               ></textarea>
             </div>
 
             <button
               id="generate-btn"
-              class="w-full py-3.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-purple-500/20 active:scale-[0.98]"
+              class="w-full py-3.5 text-accent-fg text-sm font-semibold rounded-xl transition-all shadow-lg shadow-amber-500/20 active:scale-[0.98] bg-amber-600"
               >Generate Prompt</button
             >
           </div>
@@ -272,7 +251,7 @@ Example 2: Input -> Output"
                 >
                 <button
                   id="copy-btn"
-                  class="px-3 py-1.5 bg-violet-500/20 hover:bg-violet-500/30 text-violet-300 border border-violet-500/30 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5"
+                  class="px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -296,7 +275,7 @@ Example 2: Input -> Output"
               rows="8"
               readonly
               placeholder="Your optimized prompt will appear here ready to copy..."
-              class="w-full bg-black/40 border border-surface-3 rounded-xl p-5 text-sm text-purple-100 placeholder-zinc-600 resize-y focus:outline-none transition-all font-mono leading-relaxed" aria-label="Generated prompt"
+              class="w-full bg-black/40 border border-surface-3 rounded-xl p-5 text-sm text-amber-100 placeholder-zinc-600 resize-y focus:outline-none transition-all font-mono leading-relaxed" aria-label="Generated prompt"
             ></textarea>
           </div>
         </div>
@@ -310,12 +289,11 @@ Example 2: Input -> Output"
         howToSteps={howToSteps}
         useCases={useCases}
       />
-      <RelatedTools current="prompt-generator" />
 
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
           Frequently Asked
-          <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent">Questions</span>
+          <span class="text-amber-400">Questions</span>
         </h2>
         <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
@@ -487,24 +465,4 @@ Example 2: Input -> Output"
     if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
 
-  // Theme switching
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'], button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500')
-          .replace(/from-(purple|violet)-\d+/g, 'from-' + c + '-500')
-          .replace(/to-purple-\d+/g, 'to-' + c + '-600');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 </script>

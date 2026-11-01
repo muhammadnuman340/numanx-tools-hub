@@ -78,16 +78,20 @@ const breadcrumbsSchema =
       }
     : null;
 
-// FAQ schema
+// FAQ schema — accepts { question, answer } and { title, content } (the About page uses the latter);
+// items without both parts are dropped so the schema never contains empty questions.
+const faqEntries = (faq || [])
+  .map((item: any) => ({ q: item.question ?? item.title ?? '', a: item.answer ?? item.content ?? '' }))
+  .filter((e) => e.q && e.a);
 const faqSchema =
-  faq && faq.length > 0
+  faqEntries.length > 0
     ? {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
-        mainEntity: faq.map((item) => ({
+        mainEntity: faqEntries.map((e) => ({
           '@type': 'Question',
-          name: item.question,
-          acceptedAnswer: { '@type': 'Answer', text: item.answer },
+          name: e.q,
+          acceptedAnswer: { '@type': 'Answer', text: e.a },
         })),
       }
     : null;
@@ -230,7 +234,7 @@ const organizationSchema = {
     'https://facebook.com/numanxstudio',
     'https://youtube.com/@numanxstudio',
   ],
-  contactPoint: { '@type': 'ContactPoint', email: 'numanxstudio@gmail.com', contactType: 'customer service' },
+  contactPoint: { '@type': 'ContactPoint', email: 'contact@numanxstudio.com', contactType: 'customer service' },
   address: { '@type': 'PostalAddress', addressLocality: 'Karachi', addressCountry: 'PK' },
   foundingDate: '2024',
   founder: { '@type': 'Person', name: 'Muhammad Numan Usmani' },
@@ -298,10 +302,10 @@ const schemaGraph = {
       ? 'index, nofollow'
       : 'index, follow, max-snippet:-1, max-image-preview:large'}
 />
-<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#05080f" />
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="#05080f" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#100d08" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#100d08" />
 <meta name="application-name" content={siteName} />
-<meta name="msapplication-TileColor" content="#05080f" />
+<meta name="msapplication-TileColor" content="#100d08" />
 
 <!-- Google Search Console -->
 <meta name="google-site-verification" content="google56b08745d0fdbc9e" />

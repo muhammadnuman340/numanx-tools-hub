@@ -1,908 +1,787 @@
 ---
+// Homepage (DESIGN.md §4.2, UI plan Phase 7): search first, categories as ledger rows,
+// how it works, latest posts, support bar, early-access form.
 import MainLayout from '../layouts/MainLayout.astro';
-import { tools, getFeaturedTools, getPopularTools, categories as catInfos } from '../data/tools';
-import CarbonAd from '../components/CarbonAd.astro';
-import ValueCard from '../components/ui/ValueCard.astro';
-import ToolIcon from '../components/icons/ToolIcon.astro';
-import AdUnit from '../components/AdUnit.astro';
 import MonetizationSlot from '../components/MonetizationSlot.astro';
-import HeroJarvis from '../components/HeroJarvis.astro';
+import { tools, categories, type Tool, type ToolCategory } from '../data/tools';
 
-const activeCategoryCount = catInfos.filter((c) => c.count > 0).length;
+const toolCount = tools.length;
 
-const featuredTools = getFeaturedTools(6).map((t) => ({
-  name: t.name,
-  desc: t.longDescription,
-  url: t.url,
-  icon: t.icon,
-  cat: catInfos.find((c) => c.id === t.category)?.title || t.category,
-}));
-
-const categories = catInfos
-  .filter((c) => c.count > 0)
-  .map((c) => ({
-    title: c.title,
-    desc: c.description,
-    count: `${c.count} Tools`,
-    icon: c.icon,
-    gradient: c.gradient,
-  }));
-
-const whyNumanX = [
-  {
-    title: 'Zero Server Processing',
-    desc: 'Files process securely in your browser via WebAssembly and Canvas. No uploads, instant local execution, private by design.',
-    icon: 'bolt',
-    span: 'col-span-1 md:col-span-2 row-span-2',
-  },
-  {
-    title: 'Zero-Upload Local Privacy',
-    desc: 'Files and inputs process on your device without server uploads.',
-    icon: 'lock',
-    span: 'col-span-1',
-  },
-  {
-    title: 'Enterprise Quality, Free',
-    desc: 'No subscriptions, hidden costs, or watermarks. Pure utility.',
-    icon: 'target',
-    span: 'col-span-1',
-  },
-  {
-    title: 'Progressive Web Tools',
-    desc: 'Works offline with Service Workers. Install as an app.',
-    icon: 'mobile',
-    span: 'col-span-1',
-  },
-  {
-    title: 'Instant Execution',
-    desc: 'No queues or wait times. Output generated in milliseconds.',
-    icon: 'rocket',
-    span: 'col-span-1 md:col-span-2',
-  },
+// Shown under the search box: the tools people come for most
+const POPULAR: [id: string, label: string][] = [
+  ['image-compressor', 'Image Compressor'],
+  ['qr-generator', 'QR Generator'],
+  ['word-counter', 'Word Counter'],
+  ['net-run-rate-calculator', 'Net Run Rate'],
+  ['json-formatter', 'JSON Formatter'],
+  ['pdf-merger', 'PDF Merger'],
 ];
+const popular = POPULAR.map(([id, label]) => ({ label, url: tools.find((t) => t.id === id)?.url })).filter(
+  (p) => p.url,
+);
 
-const popularTools = getPopularTools(5).map((t) => ({
-  name: t.name,
-  url: t.url,
-  icon: t.icon,
-  badge: t.isNew ? 'New' : t.isPopular ? 'Popular' : 'Trending',
+// Category rows: image and cricket first (most searched), then the rest
+const CATEGORY_ORDER: ToolCategory[] = [
+  'image-tools',
+  'developer-tools',
+  'cricket-tools',
+  'utility-tools',
+  'creator-tools',
+  'ai-tools',
+];
+const SHORT_NAME: Record<ToolCategory, string> = {
+  'image-tools': 'image',
+  'developer-tools': 'developer',
+  'cricket-tools': 'cricket',
+  'utility-tools': 'utility',
+  'creator-tools': 'creator',
+  'ai-tools': 'AI',
+};
+// The four tools each row leads with (most-used first)
+const TOP: Record<ToolCategory, string[]> = {
+  'image-tools': ['image-compressor', 'image-resizer', 'jpg-to-png', 'ai-background-remover'],
+  'developer-tools': ['json-formatter', 'uuid-generator', 'base64-tool', 'regex-tester'],
+  'cricket-tools': ['net-run-rate-calculator', 'run-rate-calculator', 'cricket-dls-calculator', 'cricket-target-calculator'],
+  'utility-tools': ['word-counter', 'password-generator', 'pdf-merger', 'age-calculator'],
+  'creator-tools': ['qr-generator', 'hashtag-generator', 'youtube-title-generator', 'markdown-editor'],
+  'ai-tools': ['ai-chat', 'ai-text-summarizer', 'ai-grammar-checker', 'prompt-generator'],
+};
+const categoryRows = CATEGORY_ORDER.map((id) => {
+  const info = categories.find((c) => c.id === id)!;
+  const list = tools.filter((t) => t.category === id);
+  const top = TOP[id].map((tid) => list.find((t) => t.id === tid)).filter(Boolean) as Tool[];
+  return { id, title: info.title, count: list.length, top, short: SHORT_NAME[id] };
+});
+
+// Search index for the hero box (all tools, small fields only)
+const searchIndex = tools.map((t) => ({
+  n: t.name,
+  d: t.description,
+  u: t.url,
+  c: categories.find((c) => c.id === t.category)?.title || '',
+  k: t.keywords.join(' '),
 }));
 
 const blogPostModules = import.meta.glob('./blog/*.md', { eager: true });
-const allBlogPosts = Object.entries(blogPostModules).map(([path, mod]) => {
-  const fm = (mod as any).frontmatter || {};
-  const slug = path.replace('./blog/', '').replace('.md', '');
-  return {
-    title: fm.title || slug,
-    desc: fm.description || '',
-    url: `/blog/${slug}/`,
-    time: fm.readingTime || '5 min read',
-    imgText: (fm.category || 'Blog').replace(' Tools', ''),
-  };
-});
-const blogPosts = allBlogPosts.slice(0, 3);
+const blogPosts = Object.entries(blogPostModules)
+  .map(([path, mod]) => {
+    const fm = (mod as any).frontmatter || {};
+    const slug = path.replace('./blog/', '').replace('.md', '');
+    return {
+      title: fm.title || slug,
+      desc: fm.description || '',
+      url: `/blog/${slug}/`,
+      time: fm.readingTime || '',
+      date: String(fm.date || ''),
+    };
+  })
+  .sort((a, b) => b.date.localeCompare(a.date))
+  .slice(0, 3);
 
-const roadmap = [
+const steps = [
   {
-    phase: 'Phase 1',
-    title: 'NumanX Tools',
-    desc: 'High-performance online tools for image optimization, text analysis, and productivity.',
-    status: 'Active',
+    title: 'Open a tool',
+    desc: 'No account, no install. Every tool works on a phone or a laptop.',
   },
   {
-    phase: 'Phase 2',
-    title: 'Creator Hub',
-    desc: 'A resource ecosystem for templates, overlay packs, assets, and guides.',
-    status: 'Upcoming',
+    title: 'Your files stay on your device',
+    desc: 'Images, PDFs and text are processed by your browser. Nothing is uploaded to a server.',
   },
   {
-    phase: 'Phase 3',
-    title: 'Sports Analytics',
-    desc: 'Advanced database structures for cricket modeling and form analysis.',
-    status: 'Planned',
-  },
-  {
-    phase: 'Phase 4',
-    title: 'Client AI Edge',
-    desc: 'In-browser machine learning and procedural utilities running directly on your device.',
-    status: 'Future',
+    title: 'Download or copy the result',
+    desc: 'No watermark and no sign-up wall. Close the tab and nothing is kept.',
   },
 ];
+
+const title = `${toolCount} Free Online Tools — Images, QR, PDF & Text | NumanX`;
+const description =
+  'Free online tools that run in your browser: compress and convert images, make QR codes, merge PDFs, count words, format JSON and work out cricket run rates.';
 ---
 
 <MainLayout
-  title="NumanX Tools — Next-Gen Utilities for Creators & Developers"
-  description="Free browser-based tools for images, QR codes, text, cricket and productivity. Fast, private and serverless."
-  keywords="free online tools, image compressor, image converter, qr code generator, word counter, cricket calculator, password generator, creator tools, productivity tools, browser based tools, free online tools for students, best free online tools"
+  {title}
+  {description}
+  keywords="free online tools, image compressor, image converter, qr code generator, pdf merger, word counter, json formatter, cricket run rate calculator, browser based tools"
 >
-  <HeroJarvis />
+  <main id="main-content" class="home relative">
+    <!-- ── Hero: search is the main action ── -->
+    <section class="home-wrap pt-10 sm:pt-16 pb-10 sm:pb-14" aria-labelledby="home-title">
+      <p class="home-label">Free · No sign-up · Runs in your browser</p>
+      <h1 id="home-title" class="home-h1">
+        <span class="num">{toolCount}</span> free tools that run in your browser
+      </h1>
+      <p class="mt-4 max-w-[62ch] text-soft text-base sm:text-lg leading-relaxed">
+        Compress images, make QR codes, merge PDFs, format JSON or work out a cricket run rate. Nothing is uploaded
+        and there's nothing to install.
+      </p>
 
-  <main id="main-content" class="min-h-screen pt-12 pb-32 px-4 sm:px-6 relative z-10 preserve-3d bg-transparent">
-    <!-- Ambient Content Orbs -->
-    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-      <div
-        class="absolute top-[20%] left-[-10%] w-[40vw] h-[40vw] bg-fuchsia-600/5 blur-[150px] rounded-full mix-blend-screen"
-      >
+      <form id="home-search-form" class="home-search mt-8" role="search" action="/search/" method="get">
+        <label for="home-search" class="sr-only">Search {toolCount} tools</label>
+        <svg
+          class="home-search-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg
+        >
+        <input
+          id="home-search"
+          name="q"
+          type="search"
+          role="combobox"
+          aria-expanded="false"
+          aria-controls="home-search-results"
+          aria-autocomplete="list"
+          autocomplete="off"
+          spellcheck="false"
+          enterkeyhint="search"
+          placeholder='Try "compress", "NRR" or "json"'
+        />
+        <kbd class="home-search-kbd" aria-hidden="true">/</kbd>
+        <ul id="home-search-results" class="home-results hidden" role="listbox" aria-label="Matching tools"></ul>
+      </form>
+      <p id="home-search-status" class="sr-only" role="status" aria-live="polite"></p>
+
+      <div class="mt-5 flex flex-wrap items-center gap-2">
+        <span class="home-label !mb-0 mr-1">Popular</span>
+        {
+          popular.map((t) => (
+            <a href={t.url} class="home-pill">
+              {t.label}
+            </a>
+          ))
+        }
       </div>
-      <div
-        class="absolute bottom-[30%] right-[-10%] w-[50vw] h-[50vw] bg-amber-600/5 blur-[150px] rounded-full mix-blend-screen"
-      >
+    </section>
+
+    <!-- ── Categories as ledger rows ── -->
+    <section class="home-wrap pb-14" aria-labelledby="home-cats">
+      <div class="flex items-end justify-between gap-4 mb-4">
+        <h2 id="home-cats" class="home-h2">Tools by category</h2>
+        <a href="/tools/" class="home-more">All {toolCount} tools →</a>
       </div>
+      <div class="home-ledger grid sm:grid-cols-2 lg:grid-cols-3">
+        {
+          categoryRows.map((cat) => (
+            <section class="home-cat" aria-labelledby={`cat-${cat.id}`}>
+              <h3 id={`cat-${cat.id}`} class="home-cat-head">
+                <a href={`/category/${cat.id}/`}>{cat.title}</a>
+                <span class="num text-faint">{cat.count}</span>
+              </h3>
+              <ul class="home-cat-list">
+                {cat.top.map((t) => (
+                  <li>
+                    <a href={t.url} class="home-tool">
+                      <span class="home-tool-name">{t.name}</span>
+                      <span class="home-tool-desc">{t.description}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <a href={`/category/${cat.id}/`} class="home-more mt-auto">
+                All {cat.count} {cat.short} tools →
+              </a>
+            </section>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ── Recently used (only when this browser has used tools) ── -->
+    <section id="recently-used-section" class="home-wrap pb-14 hidden" aria-labelledby="home-recent">
+      <h2 id="home-recent" class="home-h2 mb-4">Used recently on this device</h2>
+      <ul id="recently-used-grid" class="flex flex-wrap gap-2"></ul>
+    </section>
+
+    <!-- ── How it works ── -->
+    <section class="home-wrap pb-14" aria-labelledby="home-how">
+      <h2 id="home-how" class="home-h2 mb-4">How it works</h2>
+      <ol class="home-steps grid md:grid-cols-3">
+        {
+          steps.map((s, i) => (
+            <li class="home-step">
+              <span class="num home-step-no">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="text-base font-semibold text-fg mt-2">{s.title}</h3>
+              <p class="text-sm text-soft mt-1.5 leading-relaxed">{s.desc}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <!-- ── Latest posts ── -->
+    {
+      blogPosts.length > 0 && (
+        <section class="home-wrap pb-10" aria-labelledby="home-blog">
+          <div class="flex items-end justify-between gap-4 mb-4">
+            <h2 id="home-blog" class="home-h2">From the blog</h2>
+            <a href="/blog/" class="home-more">
+              All posts →
+            </a>
+          </div>
+          <ul class="home-posts">
+            {blogPosts.map((p) => (
+              <li>
+                <a href={p.url} class="home-post">
+                  <span class="home-post-title">{p.title}</span>
+                  <span class="home-post-desc">{p.desc}</span>
+                  {p.time && <span class="num home-post-time">{p.time}</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <!-- ── Support bar (below the categories, DESIGN.md §4.2) ── -->
+    <div class="home-wrap">
+      <MonetizationSlot slotType="pakistan-support-bar" />
     </div>
 
-    <div class="max-w-7xl mx-auto space-y-32 relative z-10">
-      <!-- ================= SCROLLING MARQUEE ================= -->
-      <section
-        class="relative w-[100vw] left-1/2 -ml-[50vw] overflow-hidden py-12 border-y border-white/5 bg-[#0a0a0c]/80 backdrop-blur-xl shadow-[0_0_50px_rgba(0,0,0,0.5)]"
-      >
-        <div
-          class="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-[#050505] z-10 pointer-events-none w-full h-full"
-        >
-        </div>
-        <div class="marquee-container flex w-[200%]">
-          <div class="marquee-content flex justify-around w-1/2 min-w-full items-center gap-12 px-4">
-            {
-              tools
-                .map((t) => (
-                  <div class="flex items-center gap-3 text-zinc-600 font-black uppercase tracking-widest text-sm hover:text-amber-400 hover:drop-shadow-[0_0_10px_rgba(251,191,36,0.5)] transition-all duration-300 cursor-pointer shrink-0 audio-trigger">
-                    <ToolIcon name={t.icon} class="w-6 h-6 opacity-80 pointer-events-none" />
-                    <span class="pointer-events-none">{t.name}</span>
-                  </div>
-                ))
-                .slice(0, 15)
-            }
-          </div>
-          <div class="marquee-content flex justify-around w-1/2 min-w-full items-center gap-12 px-4" aria-hidden="true" role="presentation">
-            {
-              tools
-                .map((t) => (
-                  <div class="flex items-center gap-3 text-zinc-600 font-black uppercase tracking-widest text-sm hover:text-amber-400 hover:drop-shadow-[0_0_10px_rgba(251,191,36,0.5)] transition-all duration-300 cursor-pointer shrink-0 audio-trigger">
-                    <ToolIcon name={t.icon} class="w-6 h-6 opacity-80 pointer-events-none" />
-                    <span class="pointer-events-none">{t.name}</span>
-                  </div>
-                ))
-                .slice(0, 15)
-            }
-          </div>
-        </div>
-      </section>
-
-      <div class="max-w-4xl mx-auto px-4 my-8">
-        <MonetizationSlot slotType="pakistan-support-bar" />
-      </div>
-
-      <!-- ================= BENTO BOX: STATS & ECOSYSTEM ================= -->
-      <section id="ecosystem" class="relative group-section pt-10">
-        <div class="text-center max-w-3xl mx-auto mb-20 px-4 reveal-text">
-          <h2
-            class="text-4xl md:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/30"
-          >
-            The Scale of
-            <span class="bg-gradient-to-r from-amber-400 to-peach-400 bg-clip-text text-transparent drop-shadow-lg"
-              >Innovation</span
-            >
-          </h2>
-          <p class="text-zinc-400 mt-6 text-lg font-medium">
-            A massive ecosystem of powerful utilities designed to accelerate your workflow without costing a dime.
+    <!-- ── Early access (ids and /api/subscribe call unchanged) ── -->
+    <section class="home-wrap pt-4 pb-24" aria-labelledby="home-news">
+      <div class="home-news">
+        <div>
+          <h2 id="home-news" class="home-h2">Get new tools by email</h2>
+          <p class="text-sm text-soft mt-1.5 max-w-[52ch]">
+            A short email when new tools or guides go live, at most a couple a month. You confirm by email first and
+            can unsubscribe from any message.
           </p>
         </div>
-
-        <div
-          id="cards-container-1"
-          class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[180px] preserve-3d"
-        >
-          <!-- Big Stat Card (2x2) -->
-          <div
-            class="card-spotlight col-span-1 md:col-span-2 lg:col-span-2 row-span-2 rounded-3xl bg-[#0a0a0c]/80 border border-white/5 p-10 flex flex-col justify-between relative group/card transform-gpu transition-all duration-300 audio-trigger backdrop-blur-xl"
+        <form id="newsletter-form" class="flex flex-col sm:flex-row gap-2 w-full md:max-w-md">
+          <label for="newsletter-email" class="sr-only">Email address</label>
+          <input
+            id="newsletter-email"
+            type="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            required
+            class="w-full sm:flex-1 min-w-0 h-11 px-4 rounded-lg bg-well border border-line-strong text-fg placeholder:text-faint focus:outline-none focus:border-amber-500/60"
+          />
+          <button
+            type="submit"
+            class="h-11 px-5 rounded-lg bg-accent text-accent-fg font-semibold hover:bg-amber-400 active:scale-[0.98] transition shrink-0"
+            >Subscribe</button
           >
-            <div
-              class="absolute -right-20 -top-20 w-64 h-64 bg-amber-600/10 blur-[80px] rounded-full group-hover/card:bg-amber-500/20 transition-colors duration-500 pointer-events-none"
-            >
-            </div>
-            <div class="relative z-10 pointer-events-none">
-              <span
-                class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-8 border border-amber-500/20 shadow-lg shadow-amber-900/20"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  ><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"
-                  ></polyline><polyline points="2 12 12 17 22 12"></polyline></svg
-                >
-              </span>
-              <div class="text-7xl lg:text-9xl font-black text-white tracking-tighter drop-shadow-xl">
-                <span class="stat-counter" data-target={tools.length}>{tools.length}</span><span class="text-amber-500"
-                  >+</span
-                >
-              </div>
-              <h3 class="text-2xl font-black text-zinc-200 mt-4">Free Tools Available</h3>
-              <p class="text-base text-zinc-500 mt-2 max-w-sm font-medium">
-                A continuously expanding suite of image converters, AI generators, calculators, and developer tools
-                ready for production use.
-              </p>
-            </div>
-          </div>
-
-          <!-- Small Card 1 -->
-          <div
-            class="card-spotlight rounded-3xl bg-[#0a0a0c]/80 border border-white/5 p-8 flex flex-col justify-between group/card relative transform-gpu transition-all duration-300 audio-trigger backdrop-blur-xl"
-          >
-            <div
-              class="absolute -right-10 -bottom-10 w-40 h-40 bg-violet-600/10 blur-[50px] rounded-full pointer-events-none"
-            >
-            </div>
-            <div class="relative z-10 pointer-events-none">
-              <div class="text-5xl font-black text-white drop-shadow-lg">100%</div>
-              <h3 class="text-lg font-bold text-zinc-200 mt-3">Free & Open</h3>
-              <p class="text-sm text-zinc-500 mt-1 font-medium">No limits, subscriptions, or paywalls ever.</p>
-            </div>
-            <ToolIcon
-              name="target"
-              class="absolute right-6 top-6 text-violet-500/20 w-16 h-16 rotate-12 group-hover/card:scale-110 group-hover/card:text-violet-500/40 transition-all pointer-events-none"
-            />
-          </div>
-
-          <!-- Small Card 2 -->
-          <div
-            class="card-spotlight rounded-3xl bg-[#0a0a0c]/80 border border-white/5 p-8 flex flex-col justify-between group/card relative transform-gpu transition-all duration-300 audio-trigger backdrop-blur-xl"
-          >
-            <div
-              class="absolute -left-10 -bottom-10 w-40 h-40 bg-fuchsia-600/10 blur-[50px] rounded-full pointer-events-none"
-            >
-            </div>
-            <div class="relative z-10 pointer-events-none">
-              <div class="text-5xl font-black text-white drop-shadow-lg">
-                <span class="stat-counter" data-target={activeCategoryCount}>{activeCategoryCount}</span>
-              </div>
-              <h3 class="text-lg font-bold text-zinc-200 mt-3">Core Categories</h3>
-              <p class="text-sm text-zinc-500 mt-1 font-medium">From images to AI and specialized analytics.</p>
-            </div>
-            <ToolIcon
-              name="layout"
-              class="absolute right-6 top-6 text-fuchsia-500/20 w-16 h-16 -rotate-12 group-hover/card:scale-110 group-hover/card:text-fuchsia-500/40 transition-all pointer-events-none"
-            />
-          </div>
-
-          <!-- Medium Horizontal Card -->
-          <div
-            class="card-spotlight col-span-1 md:col-span-2 lg:col-span-2 rounded-3xl bg-[#0a0a0c]/80 border border-white/5 p-8 flex items-center justify-between group/card transform-gpu transition-all duration-300 audio-trigger backdrop-blur-xl"
-          >
-            <div class="relative z-10 max-w-[60%] pointer-events-none">
-              <span
-                class="inline-block px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-black uppercase tracking-widest border border-emerald-500/20 mb-4 shadow-[0_0_15px_rgba(52,211,153,0.2)]"
-                >Security First</span
-              >
-              <h3 class="text-2xl font-black text-white drop-shadow-md">Client-Side File Privacy</h3>
-              <p class="text-sm text-zinc-400 mt-2 font-medium">
-                Zero file uploads. Tool processing executes locally in your browser sandbox.
-              </p>
-            </div>
-            <div class="relative w-28 h-28 flex items-center justify-center shrink-0 mr-4 pointer-events-none">
-              <div
-                class="absolute inset-0 border-[5px] border-emerald-500/10 rounded-full animate-[spin_4s_linear_infinite]"
-              >
-              </div>
-              <div
-                class="absolute inset-2 border-[5px] border-emerald-500/30 border-t-emerald-400 rounded-full animate-[spin_3s_linear_infinite_reverse] shadow-[0_0_20px_rgba(52,211,153,0.3)]"
-              >
-              </div>
-              <ToolIcon name="lock" class="w-10 h-10 text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= FEATURED TOOLS (Bento Variant) ================= -->
-      <section class="group-section">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 px-4 gap-6 reveal-text">
-          <div>
-            <h2 class="text-4xl md:text-5xl font-black tracking-tight text-white">
-              Featured <span class="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent"
-                >Utilities</span
-              >
-            </h2>
-            <p class="text-zinc-400 mt-3 font-medium text-lg">Hand-picked power tools to elevate your productivity.</p>
-          </div>
-          <a
-            href="/tools/"
-            class="group flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-sm border border-white/10 transition-all backdrop-blur-md shrink-0 audio-trigger hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]"
-          >
-            Explore Directory
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-              class="transition-transform group-hover:translate-x-1"
-              ><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg
-            >
-          </a>
-        </div>
-
-        <div id="cards-container-2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 preserve-3d">
-          {
-            featuredTools.map((tool, idx) => (
-              <a
-                href={tool.url}
-                class="card-spotlight group/tool relative rounded-3xl border border-white/5 bg-[#0a0a0c]/80 backdrop-blur-xl p-8 flex flex-col justify-between transform-gpu transition-all duration-300 block audio-trigger hover:border-white/10"
-              >
-                <div class="absolute right-0 top-0 w-32 h-32 bg-amber-500/5 rounded-bl-full pointer-events-none group-hover/tool:bg-amber-500/10 transition-colors" />
-
-                <div class="relative z-10 pointer-events-none">
-                  <div class="flex items-center justify-between mb-8">
-                    <span class="w-14 h-14 rounded-2xl bg-zinc-900 border border-white/5 flex items-center justify-center text-zinc-400 shrink-0 group-hover/tool:scale-110 group-hover/tool:bg-amber-500/10 group-hover/tool:border-amber-500/20 group-hover/tool:text-amber-400 transition-all duration-300 shadow-xl shadow-black">
-                      <ToolIcon name={tool.icon} class="w-6 h-6" />
-                    </span>
-                    <span class="text-[10px] font-black text-zinc-600 tracking-widest uppercase bg-white/5 border border-white/5 px-4 py-1.5 rounded-full shadow-inner">
-                      {tool.cat}
-                    </span>
-                  </div>
-                  <h3 class="text-2xl font-black text-zinc-100 group-hover/tool:text-white transition-colors">
-                    {tool.name}
-                  </h3>
-                  <p class="text-sm text-zinc-400 mt-3 leading-relaxed font-medium line-clamp-2">{tool.desc}</p>
-                </div>
-
-                <div class="relative z-10 mt-8 flex items-center justify-between border-t border-white/5 pt-5 pointer-events-none">
-                  <span class="text-xs font-bold text-zinc-500 group-hover/tool:text-amber-400 flex items-center gap-1.5 transition-colors uppercase tracking-widest">
-                    Launch Tool
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="3"
-                      class="transition-transform group-hover/tool:translate-x-1"
-                    >
-                      <>
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                        <polyline points="12 5 19 12 12 19" />
-                      </>
-                    </svg>
-                  </span>
-                  <span class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-600 group-hover/tool:bg-amber-500/20 group-hover/tool:text-amber-400 transition-all duration-300 scale-90 group-hover/tool:scale-100">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                    >
-                      <path d="M7 17l9.2-9.2M17 17V7H7" />
-                    </svg>
-                  </span>
-                </div>
-              </a>
-            ))
-          }
-        </div>
-      </section>
-
-      <!-- ================= WHY NUMANX ================= -->
-      <section class="group-section">
-        <div class="text-center max-w-3xl mx-auto mb-16 px-4 reveal-text">
-          <span
-            class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-[10px] font-black tracking-widest uppercase mb-4"
-          >
-            <span class="w-1.5 h-1.5 rounded-full bg-violet-400 animate-ping"></span> Core Architecture
-          </span>
-          <h2 class="text-4xl md:text-5xl font-black tracking-tight text-white">Built Uncompromisingly</h2>
-        </div>
-
-        <div id="cards-container-3" class="grid grid-cols-1 md:grid-cols-3 gap-6 preserve-3d">
-          {
-            whyNumanX.map((item) => (
-              <div
-                class={`card-spotlight ${item.span} rounded-3xl bg-[#0a0a0c]/80 backdrop-blur-xl border border-white/5 p-10 relative transform-gpu transition-all duration-300 group/why audio-trigger`}
-              >
-                <div class="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover/why:opacity-100 transition-opacity pointer-events-none rounded-3xl" />
-                <div class="relative z-10 pointer-events-none">
-                  <ToolIcon
-                    name={item.icon}
-                    class="w-12 h-12 text-zinc-600 group-hover/why:text-violet-400 transition-colors mb-6 drop-shadow-md"
-                  />
-                  <h3 class="text-2xl font-black text-white">{item.title}</h3>
-                  <p class="text-base text-zinc-400 mt-4 leading-relaxed font-medium">{item.desc}</p>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </section>
-
-      <!-- ================= RECENTLY USED (Client Only) ================= -->
-      <section id="recently-used-section" class="group-section" style="display:none">
-        <div class="mb-12 px-4 reveal-text">
-          <h2 class="text-3xl font-black tracking-tight text-white">Your Workspace</h2>
-          <p class="text-zinc-400 mt-2 text-sm font-medium">Jump back into your recently used tools.</p>
-        </div>
-        <div id="recently-used-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 preserve-3d"></div>
-      </section>
-
-      <!-- ================= BLOG & ROADMAP DUAL GRID ================= -->
-      <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 group-section">
-        <!-- Blog Column -->
-        <div class="lg:col-span-8 flex flex-col h-full">
-          <div class="flex items-end justify-between mb-10 px-2 reveal-text">
-            <h2 class="text-3xl font-black text-white">Creator Insights</h2>
-            <a href="/blog/" class="text-sm font-bold text-amber-400 hover:text-amber-300 audio-trigger"
-              >View All &rarr;</a
-            >
-          </div>
-
-          <div id="cards-container-4" class="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1 preserve-3d">
-            {
-              blogPosts.slice(0, 2).map((post) => (
-                <a
-                  href={post.url}
-                  class="card-spotlight group/post rounded-3xl bg-[#0a0a0c]/80 backdrop-blur-xl border border-white/5 overflow-hidden flex flex-col h-full hover:border-white/10 transform-gpu transition-all duration-300 audio-trigger"
-                >
-                  <div class="h-56 w-full bg-black relative flex items-center justify-center overflow-hidden border-b border-white/5 pointer-events-none">
-                    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(251,191,36,0.15),transparent_70%)] group-hover/post:opacity-80 transition-opacity" />
-                    <div class="absolute w-full h-full bg-[url('/noise.png')] opacity-20 mix-blend-overlay" />
-                    <span class="px-5 py-2 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[10px] font-black text-amber-400 tracking-widest uppercase z-10 shadow-2xl">
-                      {post.imgText}
-                    </span>
-                  </div>
-                  <div class="p-8 flex-1 flex flex-col justify-between pointer-events-none">
-                    <div>
-                      <span class="text-[11px] font-mono font-bold text-zinc-600 tracking-wider uppercase">
-                        {post.time}
-                      </span>
-                      <h3 class="text-xl font-black text-zinc-100 mt-3 group-hover/post:text-amber-400 transition-colors line-clamp-2 leading-snug">
-                        {post.title}
-                      </h3>
-                      <p class="text-sm text-zinc-400 mt-3 line-clamp-2 font-medium">{post.desc}</p>
-                    </div>
-                  </div>
-                </a>
-              ))
-            }
-          </div>
-          <div class="mt-4 flex flex-wrap items-center gap-2 text-xs text-zinc-400 px-2">
-            <span class="text-zinc-500 font-mono text-[11px] uppercase tracking-wider">Trending Guides:</span>
-            <a href="/blog/age-calculator-fun-facts-birthday/" class="text-zinc-300 hover:text-amber-400 transition-colors">Birthday Fun Facts & Math</a>
-            <span class="text-zinc-700">•</span>
-            <a href="/blog/webp-vs-png-vs-jpg-which-format-wins/" class="text-zinc-300 hover:text-amber-400 transition-colors">WebP vs PNG vs JPG</a>
-            <span class="text-zinc-700">•</span>
-            <a href="/blog/hashtag-strategy-viral-growth/" class="text-zinc-300 hover:text-amber-400 transition-colors">Viral Hashtag Strategy</a>
-            <span class="text-zinc-700">•</span>
-            <a href="/guides/" class="text-purple-400 hover:text-purple-300 font-semibold transition-colors">Explore All Guides &rarr;</a>
-          </div>
-        </div>
-
-        <!-- Roadmap Column -->
-        <div class="lg:col-span-4 flex flex-col h-full">
-          <div class="mb-10 px-2 reveal-text">
-            <h2 class="text-3xl font-black text-white">Roadmap</h2>
-          </div>
-
-          <div
-            id="cards-container-5"
-            class="card-spotlight rounded-3xl bg-[#0a0a0c]/80 backdrop-blur-xl border border-white/5 p-10 flex-1 relative transform-gpu transition-all duration-300 audio-trigger"
-          >
-            <div class="absolute top-0 right-0 w-64 h-64 bg-violet-600/10 blur-[80px] rounded-full pointer-events-none">
-            </div>
-            <div class="space-y-8 relative z-10 pointer-events-none">
-              {
-                roadmap.map((step, idx) => (
-                  <div class="relative pl-8 pb-8 border-l border-white/10 last:border-transparent last:pb-0">
-                    <div
-                      class={`absolute left-[-7px] top-1 w-3.5 h-3.5 rounded-full border-[3px] border-[#0a0a0c] ${step.status === 'Active' ? 'bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(52,211,153,0.8)]' : step.status === 'Upcoming' ? 'bg-amber-400' : 'bg-zinc-700'}`}
-                    />
-                    <span class="text-[10px] font-black font-mono tracking-widest text-zinc-500 uppercase">
-                      {step.phase} &bull; {step.status}
-                    </span>
-                    <h3 class="text-base font-black text-white mt-2">{step.title}</h3>
-                    <p class="text-sm text-zinc-400 mt-1.5 font-medium">{step.desc}</p>
-                  </div>
-                ))
-              }
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= NEWSLETTER & FOOTER CTA (Reactor Core) ================= -->
-      <section class="group-section pb-16">
-        <div
-          id="cards-container-6"
-          class="card-spotlight relative rounded-[3rem] border border-white/10 bg-[#050505] p-12 md:p-20 text-center overflow-hidden transform-gpu transition-all duration-300"
-        >
-          <!-- Reactor Glow -->
-          <div
-            class="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(251,191,36,0.15)_0%,transparent_60%)] pointer-events-none"
-          >
-          </div>
-          <div class="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay pointer-events-none"></div>
-          <div
-            class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[60%] bg-amber-600/20 blur-[150px] rounded-t-full pointer-events-none"
-          >
-          </div>
-
-          <div class="relative z-10 max-w-2xl mx-auto pointer-events-auto">
-            <span
-              class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-[10px] font-black tracking-widest uppercase mb-8 shadow-[0_0_20px_rgba(251,191,36,0.1)] hover:bg-amber-500/20 transition-colors audio-trigger"
-            >
-              <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span> Connect Node
-            </span>
-            <h2 class="text-5xl md:text-6xl font-black text-white tracking-tighter drop-shadow-2xl">
-              Join the Early Access List
-            </h2>
-            <p class="text-zinc-400 mt-6 text-lg font-medium">
-              Get notified when Phase 2 (Creator Hub) and Phase 3 (Sports Analytics) launch. Pure value, zero spam.
-            </p>
-
-            <form id="newsletter-form" class="mt-12 flex flex-col sm:flex-row items-center gap-4 max-w-lg mx-auto">
-              <input
-                id="newsletter-email"
-                type="email"
-                placeholder="Enter your email address"
-                aria-label="Enter your email address"
-                required
-                class="w-full px-6 py-5 rounded-2xl border border-white/10 bg-white/5 text-white placeholder-zinc-500 text-base font-medium focus:border-amber-500/50 focus:outline-none focus:ring-2 focus:ring-amber-500/30 transition-all backdrop-blur-2xl shadow-inner audio-trigger"
-              />
-              <button
-                type="submit"
-                class="w-full sm:w-auto bg-white text-black hover:bg-amber-400 hover:shadow-[0_0_30px_rgba(251,191,36,0.4)] font-black text-sm px-10 py-5 rounded-2xl shrink-0 transition-all duration-300 hover:-translate-y-1 active:scale-95 audio-trigger"
-              >
-                Initialize
-              </button>
-            </form>
-            <p id="newsletter-msg" class="text-sm text-emerald-400 mt-6 hidden font-bold tracking-wide">
-              Connection established.
-            </p>
-          </div>
-        </div>
-      </section>
-    </div>
+        </form>
+        <p id="newsletter-msg" class="text-sm hidden md:col-span-2" role="status"></p>
+      </div>
+    </section>
   </main>
 </MainLayout>
 
+<script is:inline type="application/json" id="home-search-data" set:html={JSON.stringify(searchIndex).replace(/</g, String.raw`\u003c`)} />
+
 <style is:global>
-  /* Advanced Spotlight Effect */
-  .card-spotlight {
+  .home-wrap {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+  @media (min-width: 768px) {
+    .home-wrap {
+      padding-inline: 32px;
+    }
+  }
+  .home-label {
+    margin-bottom: 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .home-h1 {
+    max-width: 18ch;
+    font-size: var(--step-4);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-wrap: balance;
+  }
+  .home-h2 {
+    font-size: var(--step-1);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Search box */
+  .home-search {
     position: relative;
-    --mouse-x: -1000px;
-    --mouse-y: -1000px;
+    max-width: 720px;
   }
-  .card-spotlight::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: radial-gradient(
-      800px circle at var(--mouse-x) var(--mouse-y),
-      rgba(255, 255, 255, 0.05),
-      transparent 40%
-    );
-    z-index: 0;
-    pointer-events: none;
-    transition: background 0.1s;
+  .home-search input {
+    width: 100%;
+    height: 56px;
+    padding: 0 52px 0 50px;
+    border-radius: 14px;
+    background: var(--well);
+    border: 1px solid var(--line-strong);
+    color: var(--text);
+    font-size: 1.0625rem;
+    transition: border-color 150ms;
   }
-  .card-spotlight::after {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    background: radial-gradient(
-      400px circle at var(--mouse-x) var(--mouse-y),
-      rgba(251, 191, 36, 0.2),
-      transparent 40%
-    );
-    z-index: -1;
-    pointer-events: none;
-    transition: background 0.1s;
-  }
-
-  /* Marquee Animation */
-  .marquee-container {
-    animation: marquee 40s linear infinite;
-  }
-  .marquee-container:hover {
-    animation-play-state: paused;
-  }
-  @keyframes marquee {
-    0% {
-      transform: translateX(0%);
-    }
-    100% {
-      transform: translateX(-50%);
+  @media (max-width: 767px) {
+    .home-search input {
+      padding-right: 16px;
     }
   }
+  .home-search input::placeholder {
+    color: var(--text-faint);
+  }
+  .home-search input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .home-search input::-webkit-search-cancel-button {
+    display: none;
+  }
+  .home-search-icon {
+    position: absolute;
+    left: 18px;
+    top: 28px;
+    width: 20px;
+    height: 20px;
+    transform: translateY(-50%);
+    color: var(--text-faint);
+    pointer-events: none;
+  }
+  .home-search-kbd {
+    position: absolute;
+    right: 16px;
+    top: 28px;
+    transform: translateY(-50%);
+    min-width: 24px;
+    height: 24px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-faint);
+    pointer-events: none;
+  }
+  @media (hover: hover) and (min-width: 768px) {
+    .home-search-kbd {
+      display: inline-flex;
+    }
+  }
+  .home-results {
+    position: absolute;
+    z-index: 30;
+    left: 0;
+    right: 0;
+    top: calc(100% + 6px);
+    max-height: min(60vh, 420px);
+    overflow-y: auto;
+    padding: 6px;
+    border-radius: 14px;
+    background: var(--panel-2);
+    border: 1px solid var(--line-strong);
+    box-shadow: var(--shadow-lg);
+  }
+  .home-results a {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: var(--text);
+  }
+  .home-results [aria-selected='true'] a,
+  .home-results a:hover {
+    background: oklch(0.8 0.15 75 / 0.12);
+  }
+  .home-results .r-name {
+    font-weight: 600;
+  }
+  .home-results .r-cat {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-faint);
+    align-self: center;
+  }
+  .home-results .r-desc {
+    grid-column: 1 / -1;
+    font-size: 0.8125rem;
+    color: var(--text-soft);
+  }
+  .home-results .r-empty {
+    padding: 12px;
+    font-size: 0.875rem;
+    color: var(--text-soft);
+  }
+  .home-results mark {
+    background: none;
+    color: var(--accent);
+  }
 
-  /* Depth utility */
-  .preserve-3d {
-    transform-style: preserve-3d;
-    perspective: 1200px;
+  .home-pill {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    font-size: 0.875rem;
+    color: var(--text-soft);
+    transition:
+      color 150ms,
+      border-color 150ms;
+  }
+  .home-pill:hover {
+    color: var(--text);
+    border-color: oklch(0.8 0.15 75 / 0.5);
+  }
+  .home-more {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .home-more:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Category ledger: hairline grid, no floating cards */
+  .home-ledger {
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .home-cat {
+    display: flex;
+    flex-direction: column;
+    padding: 18px 20px 14px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .home-cat-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .home-cat-head a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    color: var(--text);
+  }
+  .home-cat-head a:hover {
+    color: var(--accent);
+  }
+  .home-cat-list {
+    margin: 10px 0 8px;
+  }
+  .home-tool {
+    display: block;
+    padding: 8px 0;
+    border-top: 1px solid var(--line);
+  }
+  .home-cat-list li:first-child .home-tool {
+    border-top: 0;
+  }
+  .home-tool-name {
+    display: block;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .home-tool-desc {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.8125rem;
+    color: var(--text-soft);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .home-tool:hover .home-tool-name {
+    color: var(--accent);
+  }
+
+  .home-steps {
+    border-top: 1px solid var(--line);
+  }
+  .home-step {
+    padding: 18px 20px 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (min-width: 768px) {
+    .home-step {
+      border-bottom: 0;
+      padding-right: 32px;
+    }
+  }
+  .home-step-no {
+    font-size: 13px;
+    color: var(--accent);
+  }
+
+  .home-posts {
+    border-top: 1px solid var(--line);
+  }
+  .home-post {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .home-post-title {
+    font-weight: 600;
+    color: var(--text);
+  }
+  .home-post:hover .home-post-title {
+    color: var(--accent);
+  }
+  .home-post-desc {
+    grid-column: 1;
+    font-size: 0.875rem;
+    color: var(--text-soft);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .home-post-time {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 12px;
+    color: var(--text-faint);
+    white-space: nowrap;
+  }
+
+  .home-news {
+    display: grid;
+    gap: 16px;
+    align-items: center;
+    padding: 20px;
+    border-radius: var(--radius-outer);
+    background: var(--panel);
+    border: 1px solid var(--line);
+  }
+  @media (min-width: 768px) {
+    .home-news {
+      grid-template-columns: 1fr auto;
+      padding: 24px 28px;
+    }
   }
 </style>
 
 <script>
-  import gsap from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  import { getIconSvg } from '../lib/iconSvgs';
+  type Item = { n: string; d: string; u: string; c: string; k: string };
+  const data: Item[] = JSON.parse(document.getElementById('home-search-data')?.textContent || '[]');
 
-  // Shared Audio Context for the whole page
-  let audioCtx: AudioContext | null = null;
-  const initAudio = () => {
-    if (!audioCtx) {
-      try {
-        audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-      } catch (e) {}
-    }
-  };
-  const playTick = () => {
-    if (!audioCtx || audioCtx.state === 'suspended') return;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.03);
-    gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.03);
+  // ── Hero search: all tools, ranked by where the words match ──
+  const form = document.getElementById('home-search-form') as HTMLFormElement | null;
+  const input = document.getElementById('home-search') as HTMLInputElement | null;
+  const list = document.getElementById('home-search-results') as HTMLUListElement | null;
+  const status = document.getElementById('home-search-status');
+  let active = -1;
+  let shown: Item[] = [];
+
+  // Short forms people type
+  const ALIASES: Record<string, string> = {
+    nrr: 'net run rate',
+    dls: 'duckworth lewis',
+    img: 'image',
+    pic: 'image',
+    photo: 'image',
+    pw: 'password',
+    b64: 'base64',
   };
 
-  if (typeof window !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Initialize audio on first user interaction
-    document.addEventListener('click', initAudio, { once: true });
-    document.addEventListener('keydown', initAudio, { once: true });
-
-    // Attach audio to all triggers
-    document.querySelectorAll('.audio-trigger').forEach((el) => {
-      el.addEventListener('mouseenter', () => {
-        initAudio();
-        playTick();
-      });
-    });
-
-    // Advanced Magnetic 3D Tracker for Grids
-    const handleOnMouseMove = (e: MouseEvent, containerId: string) => {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-      const cards = container.getElementsByClassName('card-spotlight');
-      for (const card of cards as any) {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
-
-        // Magnetic Tilt Logic (Active only when hovered)
-        if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          const rotateX = ((y - centerY) / centerY) * -4; // Max 4 deg tilt
-          const rotateY = ((x - centerX) / centerX) * 4;
-          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px) scale(1.02)`;
-          card.style.zIndex = '50';
-          card.style.boxShadow = '0 30px 60px rgba(0,0,0,0.5), 0 0 20px rgba(251,191,36,0.1)';
-        } else {
-          card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
-          card.style.zIndex = '1';
-          card.style.boxShadow = 'none';
-        }
-      }
-    };
-
-    // Attach to containers
-    [
-      'cards-container-1',
-      'cards-container-2',
-      'cards-container-3',
-      'cards-container-4',
-      'cards-container-5',
-      'cards-container-6',
-    ].forEach((id) => {
-      document.getElementById(id)?.parentElement?.addEventListener('mousemove', (e) => handleOnMouseMove(e, id));
-      document.getElementById(id)?.parentElement?.addEventListener('mouseleave', () => {
-        // Reset all cards on leave
-        const cards = document.getElementById(id)?.getElementsByClassName('card-spotlight');
-        if (cards) {
-          for (const card of cards as any) {
-            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
-            card.style.zIndex = '1';
-            card.style.boxShadow = 'none';
-          }
-        }
-      });
-    });
-
-    // Cinematic GSAP Scroll Animations
-    // Text Reveal Blur
-    document.querySelectorAll('.reveal-text').forEach((el) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, y: 30, filter: 'blur(10px)' },
-        {
-          opacity: 1,
-          y: 0,
-          filter: 'blur(0px)',
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' },
-        },
-      );
-    });
-
-    // 3D Card Reveal
-    document.querySelectorAll('.group-section').forEach((section) => {
-      const cards = section.querySelectorAll('.card-spotlight');
-      if (cards.length > 0) {
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 60, scale: 0.9, rotationX: 10 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            rotationX: 0,
-            duration: 1.2,
-            stagger: 0.1,
-            ease: 'back.out(1.5)',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 80%',
-              toggleActions: 'play none none reverse',
-            },
-          },
-        );
-      }
-    });
-
-    // Newsletter Form Logic
-    document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = (document.getElementById('newsletter-email') as HTMLInputElement).value;
-      const msgEl = document.getElementById('newsletter-msg');
-      if (!msgEl) return;
-      try {
-        const res = await fetch('/api/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
-        });
-        const data = await res.json();
-        if (res.ok && data.success) {
-          msgEl.textContent = data.message || 'Connection established.';
-          msgEl.classList.remove('hidden', 'text-red-400');
-          msgEl.classList.add('text-amber-400');
-          (document.getElementById('newsletter-form') as HTMLFormElement).reset();
-          setTimeout(() => msgEl.classList.add('hidden'), 5000);
-        } else {
-          msgEl.textContent = data.error || 'Connection failed.';
-          msgEl.classList.remove('hidden', 'text-amber-400');
-          msgEl.classList.add('text-red-400');
-        }
-      } catch (err) {
-        msgEl.textContent = 'Network array disconnected.';
-        msgEl.classList.remove('hidden', 'text-amber-400');
-        msgEl.classList.add('text-red-400');
-      }
-    });
-
-    // Stat Counter Logic
-    const counters = document.querySelectorAll('.stat-counter');
-    if (counters.length > 0) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const el = entry.target as HTMLElement;
-              const target = parseInt(el.dataset.target || '0');
-              let current = 0;
-              el.textContent = '0';
-              const step = Math.ceil(target / 30);
-              const interval = setInterval(() => {
-                current += step;
-                if (current >= target) {
-                  current = target;
-                  clearInterval(interval);
-                }
-                el.textContent = current.toString();
-              }, 30);
-              observer.unobserve(el);
-            }
-          });
-        },
-        { threshold: 0.5 },
-      );
-      counters.forEach((c) => observer.observe(c));
+  const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const mark = (text: string, words: string[]) => {
+    let out = esc(text);
+    for (const w of words) {
+      if (w.length < 2) continue;
+      const re = new RegExp('(' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
+      out = out.replace(re, '<mark>$1</mark>');
     }
+    return out;
+  };
 
-    // Recently Used Tools Grid Construction
-    const allToolsData = [
-      { id: 'qr-generator', name: 'QR Generator', icon: 'qr', url: '/tools/qr-generator/' },
-      { id: 'word-counter', name: 'Word Counter', icon: 'word', url: '/tools/word-counter/' },
-      { id: 'age-calculator', name: 'Age Calculator', icon: 'age', url: '/tools/age-calculator/' },
-      { id: 'password-generator', name: 'Password Generator', icon: 'password', url: '/tools/password-generator/' },
-      { id: 'hashtag-generator', name: 'Hashtag Generator', icon: 'hashtag', url: '/tools/hashtag-generator/' },
-      { id: 'run-rate-calculator', name: 'Run Rate Calculator', icon: 'runrate', url: '/tools/run-rate-calculator/' },
-      {
-        id: 'strike-rate-calculator',
-        name: 'Strike Rate Calculator',
-        icon: 'strikerate',
-        url: '/tools/strike-rate-calculator/',
-      },
-      { id: 'jpg-to-png', name: 'JPG to PNG', icon: 'jpg2png', url: '/tools/jpg-to-png/' },
-      { id: 'image-compressor', name: 'Image Compressor', icon: 'compress', url: '/tools/image-compressor/' },
-      { id: 'png-to-webp', name: 'PNG to WebP', icon: 'webp', url: '/tools/png-to-webp/' },
-      { id: 'image-resizer', name: 'Image Resizer', icon: 'resize', url: '/tools/image-resizer/' },
-      { id: 'unit-converter', name: 'Unit Converter', icon: 'unit', url: '/tools/unit-converter/' },
-      { id: 'markdown-editor', name: 'Markdown Editor', icon: 'markdown', url: '/tools/markdown-editor/' },
-      { id: 'json-formatter', name: 'JSON Formatter', icon: 'json', url: '/tools/json-formatter/' },
-      { id: 'png-to-jpg', name: 'PNG to JPG', icon: 'jpg2png', url: '/tools/png-to-jpg/' },
-      { id: 'character-counter', name: 'Character Counter', icon: 'word', url: '/tools/character-counter/' },
-      { id: 'image-cropper', name: 'Image Cropper', icon: 'resize', url: '/tools/image-cropper/' },
-      { id: 'percentage-calculator', name: 'Percentage Calculator', icon: 'age', url: '/tools/percentage-calculator/' },
-      { id: 'bmi-calculator', name: 'BMI Calculator', icon: 'age', url: '/tools/bmi-calculator/' },
-      { id: 'ai-text-summarizer', name: 'AI Summarizer', icon: 'ai', url: '/tools/ai-text-summarizer/' },
-      { id: 'prompt-generator', name: 'Prompt Generator', icon: 'sparkles', url: '/tools/prompt-generator/' },
-    ];
-
-    try {
-      const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
-      const sorted = Object.entries(u)
-        .sort((a: any, b: any) => b[1] - a[1])
-        .slice(0, 6)
-        .map((x) => x[0]);
-      if (sorted.length > 0) {
-        const sect = document.getElementById('recently-used-section');
-        const grid = document.getElementById('recently-used-grid');
-        if (sect && grid) {
-          sect.style.display = 'block';
-          sorted.forEach((id) => {
-            const t = allToolsData.find((x) => x.id === id);
-            if (t) {
-              const a = document.createElement('a');
-              a.href = t.url;
-              a.className =
-                'card-spotlight flex items-center gap-3 p-5 rounded-2xl bg-[#0a0a0c]/80 border border-white/5 hover:-translate-y-1 transform-gpu transition-all duration-300 group/rec relative overflow-hidden audio-trigger';
-              a.innerHTML = `<span class="text-amber-400 bg-amber-500/10 p-2.5 rounded-xl relative z-10 group-hover/rec:bg-amber-500/20 transition-colors">${getIconSvg(t.icon)}</span><span class="text-sm font-black text-zinc-300 group-hover/rec:text-white transition-colors relative z-10 pointer-events-none">${t.name}</span>`;
-              grid.appendChild(a);
-            }
-          });
-
-          // Re-attach audio trigger for dynamic nodes
-          grid.querySelectorAll('.audio-trigger').forEach((el) => {
-            el.addEventListener('mouseenter', () => {
-              initAudio();
-              playTick();
-            });
-          });
-
-          // Attach magnetic listener
-          grid.addEventListener('mousemove', (e) => handleOnMouseMove(e, 'recently-used-grid'));
-          grid.addEventListener('mouseleave', () => {
-            const cards = grid.getElementsByClassName('card-spotlight');
-            for (const card of cards as any) {
-              card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
-              card.style.zIndex = '1';
-              card.style.boxShadow = 'none';
-            }
-          });
-        }
-      }
-    } catch (e) {}
+  function score(item: Item, words: string[]): number {
+    const name = item.n.toLowerCase();
+    const rest = (item.d + ' ' + item.k + ' ' + item.c).toLowerCase();
+    let total = 0;
+    for (const w of words) {
+      if (name.startsWith(w)) total += 30;
+      else if (new RegExp('\\b' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).test(name)) total += 20;
+      else if (name.includes(w)) total += 12;
+      else if (rest.includes(w)) total += 5;
+      else return 0; // every word must match somewhere
+    }
+    return total;
   }
+
+  function search(q: string): Item[] {
+    const raw = q.toLowerCase().trim();
+    if (!raw) return [];
+    const expanded = ALIASES[raw] || raw;
+    const words = expanded.split(/\s+/).filter(Boolean);
+    return data
+      .map((item) => ({ item, s: score(item, words) }))
+      .filter((x) => x.s > 0)
+      .sort((a, b) => b.s - a.s || a.item.n.localeCompare(b.item.n))
+      .slice(0, 8)
+      .map((x) => x.item);
+  }
+
+  function setActive(i: number) {
+    if (!list || !input) return;
+    const opts = list.querySelectorAll('[role="option"]');
+    active = opts.length ? (i + opts.length) % opts.length : -1;
+    opts.forEach((o, j) => o.setAttribute('aria-selected', String(j === active)));
+    if (active >= 0) {
+      input.setAttribute('aria-activedescendant', opts[active].id);
+      opts[active].scrollIntoView({ block: 'nearest' });
+    } else input.removeAttribute('aria-activedescendant');
+  }
+
+  function close() {
+    list?.classList.add('hidden');
+    input?.setAttribute('aria-expanded', 'false');
+    input?.removeAttribute('aria-activedescendant');
+    active = -1;
+  }
+
+  function render() {
+    if (!list || !input) return;
+    const q = input.value;
+    shown = search(q);
+    if (!q.trim()) {
+      close();
+      if (status) status.textContent = '';
+      return;
+    }
+    const words = (ALIASES[q.toLowerCase().trim()] || q.toLowerCase()).split(/\s+/);
+    list.innerHTML = shown.length
+      ? shown
+          .map(
+            (it, i) =>
+              `<li role="option" id="hs-opt-${i}" aria-selected="false"><a href="${it.u}" tabindex="-1"><span class="r-name">${mark(it.n, words)}</span><span class="r-cat">${esc(it.c.replace(' Tools', ''))}</span><span class="r-desc">${esc(it.d)}</span></a></li>`,
+          )
+          .join('')
+      : `<li class="r-empty">No tool matches “${esc(q.trim())}”. Press Enter to search the blog and guides too.</li>`;
+    list.classList.remove('hidden');
+    input.setAttribute('aria-expanded', 'true');
+    if (status)
+      status.textContent = shown.length
+        ? `${shown.length} tool${shown.length === 1 ? '' : 's'} found. Use the arrow keys to choose.`
+        : 'No tools found.';
+    setActive(shown.length ? 0 : -1);
+  }
+
+  input?.addEventListener('input', render);
+  input?.addEventListener('focus', () => input.value.trim() && render());
+  input?.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (list?.classList.contains('hidden')) render();
+      else setActive(active + 1);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActive(active - 1);
+    } else if (e.key === 'Escape') {
+      if (list && !list.classList.contains('hidden')) {
+        e.preventDefault();
+        close();
+      } else input.value = '';
+    }
+  });
+  // Enter opens the highlighted tool; with no match the form goes to /search/?q=…
+  form?.addEventListener('submit', (e) => {
+    const pick = active >= 0 ? shown[active] : null;
+    if (pick) {
+      e.preventDefault();
+      location.href = pick.u;
+    } else if (!input?.value.trim()) e.preventDefault();
+  });
+  document.addEventListener('click', (e) => {
+    if (form && !form.contains(e.target as Node)) close();
+  });
+  // "/" jumps to the search box (unless you're typing somewhere)
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
+    const t = e.target as HTMLElement;
+    if (t.closest('input, textarea, select, [contenteditable="true"]')) return;
+    e.preventDefault();
+    input?.focus();
+  });
+
+  // ── Early access form (same /api/subscribe call as before) ──
+  document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = (document.getElementById('newsletter-email') as HTMLInputElement).value;
+    const msgEl = document.getElementById('newsletter-msg');
+    if (!msgEl) return;
+    const show = (text: string, ok: boolean) => {
+      msgEl.textContent = text;
+      msgEl.classList.remove('hidden', ok ? 'text-danger' : 'text-success');
+      msgEl.classList.add(ok ? 'text-success' : 'text-danger');
+    };
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        show(data.message || 'Thanks! Check your inbox to confirm.', true);
+        (document.getElementById('newsletter-form') as HTMLFormElement).reset();
+      } else {
+        show(data.error || 'Something went wrong. Please try again.', false);
+      }
+    } catch {
+      show('Network error. Check your connection and try again.', false);
+    }
+  });
+
+  // ── Recently used on this device (from the tools' own usage counter) ──
+  try {
+    const usage = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}') as Record<string, number>;
+    const byUrl = new Map(data.map((d) => [d.u.replace(/^\/tools\/|\/$/g, ''), d]));
+    const recent = Object.entries(usage)
+      .sort((a, b) => b[1] - a[1])
+      .map(([id]) => byUrl.get(id))
+      .filter(Boolean)
+      .slice(0, 8) as Item[];
+    const sect = document.getElementById('recently-used-section');
+    const grid = document.getElementById('recently-used-grid');
+    if (recent.length && sect && grid) {
+      grid.innerHTML = recent
+        .map((t) => `<li><a href="${t.u}" class="home-pill">${esc(t.n)}</a></li>`)
+        .join('');
+      sect.classList.remove('hidden');
+    }
+  } catch {
+    /* storage blocked: the section stays hidden */
+  }
+
 </script>

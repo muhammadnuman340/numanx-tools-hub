@@ -22,7 +22,7 @@ In this comprehensive guide, we'll break down the very best free, privacy-first,
 Modern developers and UI engineers require precision image extractor and serialization utilities that execute without uploading source files to remote APIs. Whether extracting exact HEX/RGB palettes from UI mockups or embedding images directly into stylesheets as base64 data URIs:
 
 <div class="my-4 flex flex-wrap gap-2.5">
-  <a href="/tools/color-converter/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 text-xs font-semibold no-underline">
+  <a href="/tools/color-converter/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/30 text-xs font-semibold no-underline">
     ⚡ Launch Color Picker & Palette Extractor →
   </a>
   <a href="/tools/base64-tool/" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 text-xs font-semibold no-underline">

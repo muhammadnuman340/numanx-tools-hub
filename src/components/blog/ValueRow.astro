@@ -25,10 +25,10 @@ const { icon, title, description, variant = 'default' } = Astro.props;
 
 const isIndigo = variant === 'indigo';
 const containerClass = isIndigo
-  ? 'bg-indigo-950/10 border-indigo-500/10 hover:border-indigo-500/20'
+  ? 'bg-amber-950/10 border-amber-500/10 hover:border-amber-500/20'
   : 'bg-white/[0.01] border-white/5 hover:border-white/10';
 const iconContainerClass = isIndigo
-  ? 'bg-indigo-500/10 text-indigo-400'
+  ? 'bg-amber-500/10 text-amber-400'
   : 'bg-white/[0.04] text-slate-400 group-hover:text-slate-200';
 ---
 

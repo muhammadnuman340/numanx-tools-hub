@@ -31,10 +31,10 @@ const mockMessages = [
     { name: 'Assistant Prototype', url: '/chat/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden bg-[#050505]">
+  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden bg-well">
     <!-- Ambient Background Glows -->
     <div
-      class="absolute top-[10%] left-[5%] w-[400px] h-[400px] rounded-full bg-purple-600/5 blur-[120px] pointer-events-none -z-10 animate-pulse"
+      class="absolute top-[10%] left-[5%] w-[400px] h-[400px] rounded-full bg-amber-600/5 blur-[120px] pointer-events-none -z-10 animate-pulse"
     >
     </div>
     <div
@@ -52,7 +52,7 @@ const mockMessages = [
       <!-- Hero -->
       <section class="text-center mb-10 pt-8 animate-[fadeInUp_0.6s_ease-out] group-section">
         <div
-          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-surface bg-surface-1 backdrop-blur-sm text-tertiary text-xs font-semibold tracking-wider uppercase mb-6 audio-trigger"
+          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-surface bg-surface-1 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6 audio-trigger"
         >
           <span class="relative flex h-2 w-2">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -63,7 +63,7 @@ const mockMessages = [
         <h1 class="text-5xl md:text-7xl font-black tracking-tighter leading-none reveal-text">
           Interactive
           <span
-            class="block mt-2 bg-gradient-to-r from-purple-400 via-purple-500 to-amber-500 bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(234,88,12,0.15)]"
+            class="block mt-2 drop-shadow-[0_2px_12px_rgba(234,88,12,0.15)] text-amber-400"
           >
             Assistant Prototype
           </span>
@@ -78,10 +78,10 @@ const mockMessages = [
       <div id="cards-container-chat" class="w-full mb-12 group-section preserve-3d">
         <!-- Chat Interface Box -->
         <div
-          class="card-spotlight bg-[#0a0a0c]/90 border border-white/10 rounded-3xl p-6 shadow-2xl relative overflow-hidden min-h-[550px] flex flex-col justify-between transition-all duration-300"
+          class="card-spotlight bg-page/90 border border-white/10 rounded-3xl p-6 shadow-2xl relative overflow-hidden min-h-[550px] flex flex-col justify-between transition-all duration-300"
         >
           <div
-            class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
+            class="absolute inset-x-0 -top-px h-px bg-amber-500/50"
           >
           </div>
 
@@ -135,7 +135,7 @@ const mockMessages = [
                   <div
                     class={`max-w-[80%] rounded-2xl p-4 text-xs leading-relaxed ${
                       msg.sender === 'user'
-                        ? 'bg-purple-600/20 border border-purple-500/30 text-white rounded-tr-none'
+                        ? 'bg-amber-600/20 border border-amber-500/30 text-white rounded-tr-none'
                         : 'bg-zinc-900/80 border border-zinc-800 text-zinc-300 rounded-tl-none'
                     }`}
                   >
@@ -177,11 +177,11 @@ const mockMessages = [
                   type="text"
                   placeholder="Type a message or command..."
                   required
-                  class="w-full bg-[#050507] text-white placeholder-zinc-550 px-5 py-3.5 pr-12 rounded-2xl border border-white/10 focus:outline-none focus:border-purple-500/50 transition-all text-xs shadow-inner audio-trigger" aria-label="Chat message"
+                  class="w-full bg-well text-white placeholder-zinc-550 px-5 py-3.5 pr-12 rounded-2xl border border-white/10 focus:outline-none focus:border-amber-500/50 transition-all text-xs shadow-inner audio-trigger" aria-label="Chat message"
                 />
                 <button
                   type="submit"
-                  class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl bg-purple-600 hover:bg-purple-500 text-white flex items-center justify-center transition-all hover:scale-105 active:scale-95 audio-trigger"
+                  class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl bg-amber-600 hover:bg-amber-500 text-accent-fg flex items-center justify-center transition-all hover:scale-105 active:scale-95 audio-trigger"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -269,7 +269,7 @@ const mockMessages = [
         const userMsg = document.createElement('div');
         userMsg.className = 'flex flex-col items-end';
         userMsg.innerHTML = `
-          <div class="max-w-[80%] rounded-2xl p-4 text-xs leading-relaxed bg-purple-600/20 border border-purple-500/30 text-white rounded-tr-none">
+          <div class="max-w-[80%] rounded-2xl p-4 text-xs leading-relaxed bg-amber-600/20 border border-amber-500/30 text-white rounded-tr-none">
             <p>${text}</p>
           </div>
           <span class="text-[9px] text-zinc-555 mt-1 px-1 font-mono">${time}</span>

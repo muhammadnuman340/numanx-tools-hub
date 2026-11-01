@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
@@ -61,17 +60,16 @@ const schema = {
     { name: 'JSON Formatter', url: '/tools/json-formatter/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="JSON"
-        gradient="Formatter Pro"
+        gradient="Formatter"
         desc="Format, validate, and minify JSON in real-time. Syntax highlighting, detailed error messages, and one-click copy — all in your browser."
         badge="✦ Client-Side"
         slug="json-formatter"
       />
 
-      <ShareBar />
 
       <!-- Tool Interface -->
       <div class="mt-8 space-y-4">
@@ -81,32 +79,6 @@ const schema = {
             <span id="usage-badge" class="text-xs text-muted"></span>
           </div>
           <div class="flex items-center gap-2">
-            <div class="flex gap-1">
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="purple"
-                style="background:#a855f7"
-                aria-label="Purple theme accent"
-                title="Purple theme accent"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="blue"
-                style="background:#3b82f6"
-                aria-label="Blue theme accent"
-                title="Blue theme accent"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="green"
-                style="background:#22c55e"
-                aria-label="Green theme accent"
-                title="Green theme accent"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="pink"
-                style="background:#ec4899"
-                aria-label="Pink theme accent"
-                title="Pink theme accent"></button>
-            </div>
           </div>
         </div>
 
@@ -114,7 +86,7 @@ const schema = {
         <div class="flex flex-wrap gap-2">
           <button
             id="format-btn"
-            class="bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95"
+            class="bg-amber-600 hover:bg-amber-500 text-accent-fg text-sm font-medium px-5 py-2.5 rounded-xl transition-all active:scale-95"
             >Format</button
           >
           <button
@@ -182,7 +154,7 @@ const schema = {
                 </div>
               </div>
             </div>
-            <div class="flex h-[480px] rounded-xl bg-black/40 border border-surface focus-within:border-purple-500 focus-within:ring-1 focus-within:ring-purple-500 transition-all overflow-hidden relative">
+            <div class="flex h-[480px] rounded-xl bg-black/40 border border-surface focus-within:border-amber-500 focus-within:ring-1 focus-within:ring-amber-500 transition-all overflow-hidden relative">
               <div
                 id="line-nums"
                 class="w-12 shrink-0 h-full select-none overflow-hidden font-mono text-sm leading-6 text-right pr-3.5 py-3 text-zinc-500/80 bg-zinc-950/60 border-r border-white/5 whitespace-pre pointer-events-none tabular-nums"
@@ -190,6 +162,7 @@ const schema = {
               >1</div>
               <textarea
                 id="json-input"
+                data-code-lang="json"
                 aria-label="JSON text input"
                 class="flex-1 min-w-0 h-full bg-transparent text-zinc-100 placeholder:text-zinc-500 text-sm leading-6 px-4 py-3 focus:outline-none font-mono resize-none border-0 overflow-y-auto"
                 style="line-height: 24px; font-size: 14px;"
@@ -210,7 +183,7 @@ const schema = {
               <div class="flex items-center gap-2">
                 <span
                   id="status-badge"
-                  class="text-xs font-mono text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/20">ready</span>
+                  class="text-xs font-mono text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">ready</span>
               </div>
             </div>
             <pre
@@ -218,7 +191,7 @@ const schema = {
               role="region"
               aria-label="JSON Output"
               tabindex="0"
-              class="w-full h-[480px] overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm font-mono text-zinc-200 whitespace-pre-wrap focus:outline-none focus:ring-1 focus:ring-purple-500">Click "Format" to begin</pre>
+              class="w-full h-[480px] overflow-y-auto bg-black/40 border border-surface rounded-xl px-4 py-3 text-sm font-mono text-zinc-200 whitespace-pre-wrap focus:outline-none focus:ring-1 focus:ring-amber-500">Click "Format" to begin</pre>
             <div class="flex items-center justify-between text-xs text-zinc-400 mt-2 px-1">
               <span class="text-zinc-500 text-[11px]">Formatted output</span>
               <span class="text-zinc-500 text-[11px]">Client-side only</span>
@@ -239,7 +212,7 @@ const schema = {
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
           Frequently Asked
-          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+          <span class="text-amber-400">Questions</span>
         </h2>
         <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
@@ -258,6 +231,10 @@ const schema = {
 </MainLayout>
 
 <script>
+  import { highlight, initCodeHighlight } from '../../lib/codeHighlight';
+  initCodeHighlight();
+  import { setToolStatus } from '../../lib/toolStatus';
+
   const input = document.getElementById('json-input') as HTMLTextAreaElement;
   const output = document.getElementById('json-output');
   const formatBtn = document.getElementById('format-btn');
@@ -276,12 +253,7 @@ const schema = {
   }
 
   function syntaxHighlight(json: string): string {
-    return escapeHtml(json)
-      .replace(/("(?:[^"\\]|\\.)*")\s*:/g, '<span class="text-purple-300">$1</span>:')
-      .replace(/("(?:[^"\\]|\\.)*")/g, '<span class="text-emerald-300">$1</span>')
-      .replace(/\b(-?\d+\.?\d*(?:[eE][+-]?\d+)?)\b/g, '<span class="text-amber-300">$1</span>')
-      .replace(/\b(true|false)\b/g, '<span class="text-blue-400">$1</span>')
-      .replace(/\b(null)\b/g, '<span class="text-red-400">$1</span>');
+    return highlight(json, 'json');
   }
 
   function countKeys(obj: unknown): number {
@@ -307,6 +279,9 @@ const schema = {
       statusBadge.textContent = 'empty';
       statusBadge.className = 'text-[10px] font-mono text-dim px-2 py-0.5 rounded-full border border-surface';
       statsPanel.classList.add('hidden');
+      input.removeAttribute('aria-invalid');
+      input.removeAttribute('aria-describedby');
+      setToolStatus('ready', 'Paste some JSON to get started.');
       return;
     }
 
@@ -331,6 +306,9 @@ const schema = {
 
       // Store formatted for copy
       (output as HTMLElement).dataset.plainText = result;
+      input.removeAttribute('aria-invalid');
+      input.removeAttribute('aria-describedby');
+      setToolStatus('complete'); // the toast announces success
       triggerToast(mode === 'format' ? 'JSON beautified successfully!' : 'JSON minified successfully!', 'success');
     } catch (e) {
       const msg = e instanceof SyntaxError ? e.message : 'Invalid JSON';
@@ -339,6 +317,10 @@ const schema = {
       statusBadge.className =
         'text-[10px] font-mono text-red-400 px-2 py-0.5 rounded-full bg-red-500/10 border border-red-500/20';
       statsPanel.classList.add('hidden');
+      // Tie the parse error to the input so it's read when the field gets focus
+      input.setAttribute('aria-invalid', 'true');
+      input.setAttribute('aria-describedby', 'json-output');
+      setToolStatus('error', `Invalid JSON: ${msg}`);
       triggerToast('Invalid JSON syntax detected!', 'error');
     }
   }
@@ -526,28 +508,11 @@ const schema = {
       el.innerHTML = s
         .map(
           ([c, n]) =>
-            `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white/5 border border-white/5 text-xs font-mono"><strong class="text-purple-400 uppercase">${c}</strong><span class="text-zinc-400">${n}</span></span>`,
+            `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white/5 border border-white/5 text-xs font-mono"><strong class="text-amber-400 uppercase">${c}</strong><span class="text-zinc-400">${n}</span></span>`,
         )
         .join('');
     });
   }
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 
   // ─── Fullscreen ───
   (function() {

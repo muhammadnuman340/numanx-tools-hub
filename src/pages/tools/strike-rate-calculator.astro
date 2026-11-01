@@ -1,8 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
@@ -160,23 +158,22 @@ const useCases = [
     { name: 'Strike Rate Calculator', url: '/tools/strike-rate-calculator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="Strike Rate"
-        gradient="Calculator Pro"
+        gradient="Calculator"
         desc="Calculate batting and bowling strike rates with impact rating, match influence score, aggression meter, and player comparison. ESPN Cricinfo inspired."
         badge="✦ Client-Side"
         slug="strike-rate-calculator"
       />
 
-      <ShareBar />
 
       <div class="max-w-xl mx-auto mt-8 space-y-4">
         <!-- Tab Switcher -->
         <div class="bg-zinc-950 p-1.5 rounded-xl border border-surface flex gap-2">
           <button
-            class="calc-tab flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5"
+            class="calc-tab flex-1 bg-amber-600 text-accent-fg text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all flex items-center justify-center gap-1.5"
             data-tab="batting"
           >
             🚀 Batting SR
@@ -193,30 +190,12 @@ const useCases = [
         <div class="glass-card rounded-2xl p-5 md:p-6 relative">
           <button
             id="fullscreen-btn"
-            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
             title="Fullscreen">⛶</button
           >
 
           <div class="flex items-center gap-2 mb-3">
             <span id="usage-badge" class="text-xs text-muted"></span>
-            <div class="flex gap-1 ml-auto">
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="purple"
-                style="background:#a855f7"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="blue"
-                style="background:#3b82f6"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="green"
-                style="background:#22c55e"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="pink"
-                style="background:#ec4899"></button>
-            </div>
           </div>
 
           <!-- Batting Panel -->
@@ -230,7 +209,7 @@ const useCases = [
                   type="number"
                   id="bat-runs"
                   placeholder="0"
-                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm"
                 />
               </div>
               <div class="space-y-2">
@@ -241,13 +220,13 @@ const useCases = [
                   type="number"
                   id="bat-balls"
                   placeholder="0"
-                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm"
                 />
               </div>
             </div>
             <div class="glass-card rounded-xl p-4 text-center space-y-1">
               <span class="text-[10px] uppercase font-semibold tracking-wider text-muted">Calculated Strike Rate</span>
-              <div class="text-3xl font-extrabold text-purple-400 tracking-tight tabular-nums">
+              <div class="text-3xl font-extrabold text-amber-400 tracking-tight tabular-nums">
                 <span id="sr-output">0.00</span>
               </div>
               <p id="sr-feedback" class="text-xs text-muted italic pt-1">Enter stats to see performance tier</p>
@@ -265,7 +244,7 @@ const useCases = [
                   type="number"
                   id="bowl-balls"
                   placeholder="0"
-                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm"
                 />
               </div>
               <div class="space-y-2">
@@ -276,13 +255,13 @@ const useCases = [
                   type="number"
                   id="bowl-wkts"
                   placeholder="0"
-                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm"
                 />
               </div>
             </div>
             <div class="bg-surface-1 border border-zinc-800/60 rounded-xl p-4 text-center space-y-1">
               <span class="text-[10px] uppercase font-semibold tracking-wider text-muted">Bowling Strike Rate</span>
-              <div class="text-3xl font-extrabold text-purple-400 tracking-tight tabular-nums">
+              <div class="text-3xl font-extrabold text-amber-400 tracking-tight tabular-nums">
                 <span id="bowl-sr-output">0.00</span>
               </div>
               <p id="bowl-sr-feedback" class="text-xs text-muted italic pt-1">Enter stats to see performance tier</p>
@@ -304,7 +283,7 @@ const useCases = [
                 { name: 'Andre Russell', runs: 48, balls: 19, emoji: '🏝️' },
               ].map((p) => (
                 <button
-                  class="preset-btn flex flex-col items-center gap-1 rounded-xl py-2.5 px-1 text-[10px] font-medium border transition-all bg-surface-1 border-surface text-tertiary hover:border-purple-500/40 hover:text-purple-300"
+                  class="preset-btn flex flex-col items-center gap-1 rounded-xl py-2.5 px-1 text-[10px] font-medium border transition-all bg-surface-1 border-surface text-tertiary hover:border-amber-500/40 hover:text-amber-300"
                   data-runs={p.runs}
                   data-balls={p.balls}
                 >
@@ -324,7 +303,7 @@ const useCases = [
               <h2 class="text-[10px] font-semibold text-muted uppercase tracking-wider">Performance Dashboard</h2>
               <span
                 id="impact-badge"
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all hidden"
+                class="[&:not(.hidden)]:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all hidden"
               ></span>
             </div>
             <div class="grid grid-cols-2 gap-3">
@@ -335,7 +314,7 @@ const useCases = [
                 <div class="mt-1 text-3xl font-black tabular-nums">
                   <span
                     id="bat-sr-value"
-                    class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span
+                    class="text-amber-400">0.00</span
                   >
                 </div>
               </div>
@@ -346,7 +325,7 @@ const useCases = [
                 <div class="mt-1 text-3xl font-black tabular-nums">
                   <span
                     id="bowl-sr-value"
-                    class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span
+                    class="text-amber-400">0.00</span
                   >
                 </div>
               </div>
@@ -490,7 +469,7 @@ const useCases = [
               <div class="rounded-xl bg-zinc-950/40 border border-surface p-4">
                 <div class="flex items-center gap-2 mb-3">
                   <span
-                    class="w-6 h-6 rounded-full bg-purple-600/20 flex items-center justify-center text-[10px] font-bold text-purple-400"
+                    class="w-6 h-6 rounded-full bg-amber-600/20 flex items-center justify-center text-[10px] font-bold text-amber-400"
                     >A</span
                   >
                   <span class="text-xs font-semibold text-secondary">Player A</span>
@@ -503,7 +482,7 @@ const useCases = [
                       type="number"
                       min="0"
                       placeholder="0"
-                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" aria-label="Player A runs"
+                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-amber-500 text-xs mt-1" aria-label="Player A runs"
                     />
                   </div>
                   <div>
@@ -513,7 +492,7 @@ const useCases = [
                       type="number"
                       min="0"
                       placeholder="0"
-                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" aria-label="Player A balls faced"
+                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-amber-500 text-xs mt-1" aria-label="Player A balls faced"
                     />
                   </div>
                 </div>
@@ -538,7 +517,7 @@ const useCases = [
                       type="number"
                       min="0"
                       placeholder="0"
-                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" aria-label="Player B runs"
+                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-amber-500 text-xs mt-1" aria-label="Player B runs"
                     />
                   </div>
                   <div>
@@ -548,7 +527,7 @@ const useCases = [
                       type="number"
                       min="0"
                       placeholder="0"
-                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-purple-500 text-xs mt-1" aria-label="Player B balls faced"
+                      class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-3 py-2 rounded-lg border border-surface focus:outline-none focus:border-amber-500 text-xs mt-1" aria-label="Player B balls faced"
                     />
                   </div>
                 </div>
@@ -566,7 +545,7 @@ const useCases = [
           </div>
 
           <!-- WWS 1080x1920 Shorts / Reels Stat Card Exporter -->
-          <div class="rounded-2xl p-5 bg-gradient-to-r from-emerald-950/40 via-surface-1 to-indigo-950/40 border border-emerald-500/30 text-center space-y-3">
+          <div class="rounded-2xl p-5 border border-emerald-500/30 text-center space-y-3 bg-emerald-950/40">
             <div class="flex items-center justify-center gap-2">
               <span class="text-xl">📱</span>
               <h3 class="text-sm font-bold text-white uppercase tracking-wider">Social Media Shorts / Reels Stat Card</h3>
@@ -576,7 +555,7 @@ const useCases = [
             </p>
             <button
               id="export-wws-stat-card-btn"
-              class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-lg shadow-emerald-950/50 active:scale-95 transition-all"
+              class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-white font-bold text-xs shadow-lg shadow-emerald-950/50 active:scale-95 transition-all bg-emerald-600"
             >
               <span>📱</span>
               <span>Download 1080×1920 WWS Shorts/Reels Stat Card (PNG)</span>
@@ -588,10 +567,10 @@ const useCases = [
       <!-- ─── Cricket Knowledge ─── -->
       <section class="mt-16">
         <div class="text-center mb-8">
-          <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Learn</span>
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Learn</span>
           <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">
             Cricket
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Knowledge</span>
+            <span class="text-amber-400">Knowledge</span>
           </h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -655,12 +634,11 @@ const useCases = [
         ]}
       />
 
-      <RelatedTools current="strike-rate-calculator" />
 
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
           Frequently Asked
-          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+          <span class="text-amber-400">Questions</span>
         </h2>
         <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
@@ -676,11 +654,11 @@ const useCases = [
 
       <section class="mt-16 text-center">
         <div
-          class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10"
+          class="max-w-2xl mx-auto border border-amber-500/20 rounded-2xl p-8 md:p-10 bg-amber-600/10"
         >
           <h2 class="text-2xl md:text-3xl font-black tracking-tight">
             Master Cricket
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
+            <span class="text-amber-400">
               Strike Rate Analysis</span
             >
           </h2>
@@ -691,7 +669,7 @@ const useCases = [
           <div class="mt-6 flex gap-3 justify-center flex-wrap">
             <button
               onclick="document.querySelector('#bat-runs')?.focus()"
-              class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30"
+              class="px-6 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-accent-fg font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-amber-900/30"
             >
               Start Calculating
             </button>
@@ -758,7 +736,7 @@ const useCases = [
         color: 'text-emerald-300',
         bg: 'bg-emerald-600/15 border-emerald-500/30',
         pct: 100,
-        bar: 'bg-gradient-to-r from-emerald-500 to-emerald-400',
+        bar: 'bg-emerald-500',
       };
     if (sr >= 130)
       return {
@@ -766,7 +744,7 @@ const useCases = [
         color: 'text-lime-300',
         bg: 'bg-lime-600/15 border-lime-500/30',
         pct: 80,
-        bar: 'bg-gradient-to-r from-lime-500 to-lime-400',
+        bar: 'bg-lime-500',
       };
     if (sr >= 110)
       return {
@@ -774,7 +752,7 @@ const useCases = [
         color: 'text-blue-300',
         bg: 'bg-blue-600/15 border-blue-500/30',
         pct: 60,
-        bar: 'bg-gradient-to-r from-blue-500 to-blue-400',
+        bar: 'bg-blue-500',
       };
     if (sr >= 90)
       return {
@@ -782,7 +760,7 @@ const useCases = [
         color: 'text-yellow-300',
         bg: 'bg-yellow-600/15 border-yellow-500/30',
         pct: 40,
-        bar: 'bg-gradient-to-r from-yellow-500 to-yellow-400',
+        bar: 'bg-yellow-500',
       };
     if (sr >= 70)
       return {
@@ -790,14 +768,14 @@ const useCases = [
         color: 'text-orange-300',
         bg: 'bg-orange-600/15 border-orange-500/30',
         pct: 25,
-        bar: 'bg-gradient-to-r from-orange-500 to-orange-400',
+        bar: 'bg-orange-500',
       };
     return {
       label: 'Poor ⚠️',
       color: 'text-red-300',
       bg: 'bg-red-600/15 border-red-500/30',
       pct: 10,
-      bar: 'bg-gradient-to-r from-red-500 to-red-400',
+      bar: 'bg-red-500',
     };
   }
 
@@ -809,7 +787,7 @@ const useCases = [
         color: 'text-emerald-300',
         bg: 'bg-emerald-600/15 border-emerald-500/30',
         pct: 100,
-        bar: 'bg-gradient-to-r from-emerald-500 to-emerald-400',
+        bar: 'bg-emerald-500',
       };
     if (sr <= 20)
       return {
@@ -817,7 +795,7 @@ const useCases = [
         color: 'text-lime-300',
         bg: 'bg-lime-600/15 border-lime-500/30',
         pct: 80,
-        bar: 'bg-gradient-to-r from-lime-500 to-lime-400',
+        bar: 'bg-lime-500',
       };
     if (sr <= 25)
       return {
@@ -825,7 +803,7 @@ const useCases = [
         color: 'text-blue-300',
         bg: 'bg-blue-600/15 border-blue-500/30',
         pct: 60,
-        bar: 'bg-gradient-to-r from-blue-500 to-blue-400',
+        bar: 'bg-blue-500',
       };
     if (sr <= 30)
       return {
@@ -833,7 +811,7 @@ const useCases = [
         color: 'text-yellow-300',
         bg: 'bg-yellow-600/15 border-yellow-500/30',
         pct: 40,
-        bar: 'bg-gradient-to-r from-yellow-500 to-yellow-400',
+        bar: 'bg-yellow-500',
       };
     if (sr <= 40)
       return {
@@ -841,14 +819,14 @@ const useCases = [
         color: 'text-orange-300',
         bg: 'bg-orange-600/15 border-orange-500/30',
         pct: 25,
-        bar: 'bg-gradient-to-r from-orange-500 to-orange-400',
+        bar: 'bg-orange-500',
       };
     return {
       label: 'Poor ⚠️',
       color: 'text-red-300',
       bg: 'bg-red-600/15 border-red-500/30',
       pct: 10,
-      bar: 'bg-gradient-to-r from-red-500 to-red-400',
+      bar: 'bg-red-500',
     };
   }
 
@@ -882,14 +860,25 @@ const useCases = [
     return { level: 'Defensive', pct: 10, color: 'text-blue-400 bg-blue-500/10 border-blue-500/30' };
   }
 
+  // Empty fields count as "not entered" (null); anything typed must be a whole number
+  function readCount(input, label) {
+    if (!input.value.trim() && !input.validity?.badInput) {
+      clearFieldError(input);
+      return null;
+    }
+    const r = checkField(input, parseWholeNumber(input.value, { label }), false);
+    return r.ok ? r.value : null;
+  }
+
   // ─── Update all ───
   function updateResults() {
-    const batR = parseInt(batRuns.value) || 0;
-    const batB = parseInt(batBalls.value) || 0;
-    const bowlB = parseInt(bowlBalls.value) || 0;
-    const bowlW = parseInt(bowlWkts.value) || 0;
+    const batR = readCount(batRuns, 'Runs scored');
+    const batB = readCount(batBalls, 'Balls faced');
+    const bowlB = readCount(bowlBalls, 'Balls bowled');
+    const bowlW = readCount(bowlWkts, 'Wickets taken');
 
-    let hasBat = batR > 0 && batB > 0;
+    // 0 runs off some balls is a valid strike rate (0.00); bowling needs at least one wicket
+    let hasBat = batR !== null && batB > 0;
     let hasBowl = bowlB > 0 && bowlW > 0;
 
     if (!hasBat && !hasBowl) {
@@ -912,7 +901,7 @@ const useCases = [
       const level = getBattingLevel(batSr);
       impactBadge.textContent = level.label;
       impactBadge.className =
-        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all ' +
+        '[&:not(.hidden)]:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all ' +
         level.color +
         ' ' +
         level.bg;
@@ -928,7 +917,7 @@ const useCases = [
       const impact = calcImpactRating(batSr, batR);
       impactRating.textContent = impact;
       impactBar.style.width = impact + '%';
-      impactBar.style.background = impact >= 70 ? '#22c55e' : impact >= 45 ? '#f59e0b' : '#ef4444';
+      impactBar.style.background = impact >= 70 ? 'var(--success)' : impact >= 45 ? 'var(--warning)' : 'var(--danger)';
       impactDesc.textContent =
         impact >= 70 ? 'High impact performance' : impact >= 45 ? 'Moderate impact' : 'Low impact';
 
@@ -936,7 +925,7 @@ const useCases = [
       const influence = calcMatchInfluence(batSr, batR, batB);
       influenceScore.textContent = influence;
       influenceBar.style.width = influence + '%';
-      influenceBar.style.background = influence >= 70 ? '#22c55e' : influence >= 45 ? '#f59e0b' : '#ef4444';
+      influenceBar.style.background = influence >= 70 ? 'var(--success)' : influence >= 45 ? 'var(--warning)' : 'var(--danger)';
       influenceDesc.textContent =
         influence >= 70 ? 'Match-winning influence' : influence >= 45 ? 'Contributing player' : 'Minor influence';
 
@@ -951,7 +940,7 @@ const useCases = [
       const bowlLabel = level.label.replace('🐐', '🎯').replace('⚡', '🎯').replace('⚠️', '⚠️');
       impactBadge.textContent = bowlLabel;
       impactBadge.className =
-        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all ' +
+        '[&:not(.hidden)]:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all ' +
         level.color +
         ' ' +
         level.bg;
@@ -970,10 +959,10 @@ const useCases = [
 
   // ─── Comparison ───
   function updateComparison() {
-    const aR = parseInt(compARuns.value) || 0;
-    const aB = parseInt(compABalls.value) || 0;
-    const bR = parseInt(compBRuns.value) || 0;
-    const bB = parseInt(compBBalls.value) || 0;
+    const aR = readCount(compARuns, 'Player A runs') ?? 0;
+    const aB = readCount(compABalls, 'Player A balls') ?? 0;
+    const bR = readCount(compBRuns, 'Player B runs') ?? 0;
+    const bB = readCount(compBBalls, 'Player B balls') ?? 0;
 
     const aSr = aB > 0 ? (aR / aB) * 100 : 0;
     const bSr = bB > 0 ? (bR / bB) * 100 : 0;
@@ -1010,11 +999,11 @@ const useCases = [
 
   // ─── Live batting ───
   function updateLiveBatting() {
-    const r = parseFloat(batRuns.value) || 0;
-    const b = parseFloat(batBalls.value) || 0;
-    const sr = b > 0 ? (r / b) * 100 : 0;
+    const r = readCount(batRuns, 'Runs scored');
+    const b = readCount(batBalls, 'Balls faced');
+    const sr = r !== null && b > 0 ? (r / b) * 100 : 0;
     srOutput.textContent = sr.toFixed(2);
-    if (r > 0 && b > 0) {
+    if (r !== null && b > 0) {
       if (sr >= 150) srFeedback.textContent = 'World-Class! 🔥';
       else if (sr >= 130) srFeedback.textContent = 'Excellent! ⚡';
       else if (sr >= 110) srFeedback.textContent = 'Solid Strike Rate';
@@ -1027,11 +1016,13 @@ const useCases = [
 
   // ─── Live bowling ───
   function updateLiveBowling() {
-    const b = parseFloat(bowlBalls.value) || 0;
-    const w = parseFloat(bowlWkts.value) || 0;
+    const b = readCount(bowlBalls, 'Balls bowled') ?? 0;
+    const w = readCount(bowlWkts, 'Wickets taken') ?? 0;
     const sr = w > 0 ? b / w : 0;
-    bowlSrOutput.textContent = sr.toFixed(2);
-    if (b > 0 && w > 0) {
+    bowlSrOutput.textContent = w > 0 && b > 0 ? sr.toFixed(2) : '0.00';
+    if (b > 0 && w === 0) {
+      bowlSrFeedback.textContent = 'No wickets yet: bowling strike rate needs at least 1 wicket';
+    } else if (b > 0 && w > 0) {
       if (sr <= 15) bowlSrFeedback.textContent = 'World-Class! 🐐';
       else if (sr <= 20) bowlSrFeedback.textContent = 'Excellent! ⚡';
       else if (sr <= 25) bowlSrFeedback.textContent = 'Tight Bowling';
@@ -1046,11 +1037,11 @@ const useCases = [
   calcTabs.forEach((tab) => {
     tab.addEventListener('click', () => {
       calcTabs.forEach((t) => {
-        t.classList.remove('bg-purple-600', 'text-white');
+        t.classList.remove('bg-amber-600', 'text-accent-fg');
         t.classList.add('text-tertiary', 'hover:text-primary');
       });
       tab.classList.remove('text-tertiary', 'hover:text-primary');
-      tab.classList.add('bg-purple-600', 'text-white');
+      tab.classList.add('bg-amber-600', 'text-accent-fg');
       if (tab.dataset.tab === 'batting') {
         battingPanel.classList.remove('hidden');
         bowlingPanel.classList.add('hidden');
@@ -1209,27 +1200,11 @@ const useCases = [
     } catch (e) {}
   }
 
-  // ─── Color theme picker ───
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 
   // ─── WWS Shorts / Reels Stat Card Exporter ───
   import { exportWWSStatCardPNG } from '../../utils/cricketAnalytics.js';
+  import { parseWholeNumber } from '../../utils/cricketAnalytics.js';
+  import { checkField, clearFieldError } from '../../lib/fieldError';
 
   document.getElementById('export-wws-stat-card-btn')?.addEventListener('click', () => {
     const runs = parseInt((document.getElementById('bat-runs') as HTMLInputElement)?.value) || 72;

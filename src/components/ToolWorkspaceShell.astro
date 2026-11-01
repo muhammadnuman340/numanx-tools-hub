@@ -25,9 +25,9 @@ const cleanCategory = categorySlug.replace('-tools', '').replace('tools', '').tr
   <!-- Compact Breadcrumb + Privacy Telemetry Row -->
   <div class="flex flex-wrap items-center justify-between gap-2 mb-3 text-xs text-slate-400">
     <nav aria-label="Breadcrumb" class="flex items-center gap-1.5">
-      <a href="/" class="hover:text-indigo-400 transition no-underline text-slate-400">Home</a>
+      <a href="/" class="hover:text-amber-400 transition no-underline text-slate-400">Home</a>
       <span>/</span>
-      <a href={`/category/${categorySlug}/`} class="hover:text-indigo-400 transition no-underline text-slate-400">{categoryName}</a>
+      <a href={`/category/${categorySlug}/`} class="hover:text-amber-400 transition no-underline text-slate-400">{categoryName}</a>
       <span>/</span>
       <span class="text-slate-200 font-medium">{title}</span>
     </nav>
@@ -36,7 +36,7 @@ const cleanCategory = categorySlug.replace('-tools', '').replace('tools', '').tr
         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
         100% Local Browser Sandbox · 0 Uploads
       </span>
-      <span class="px-2.5 py-0.5 rounded-full bg-indigo-950/80 border border-indigo-500/30 text-indigo-300 text-[11px] font-semibold">
+      <span class="px-2.5 py-0.5 rounded-full bg-amber-950/80 border border-amber-500/30 text-amber-300 text-[11px] font-semibold">
         {badgeText}
       </span>
     </div>
@@ -53,7 +53,7 @@ const cleanCategory = categorySlug.replace('-tools', '').replace('tools', '').tr
   </header>
 
   <!-- Main Interactive Tool Workspace (Zero CLS, High Contrast Border) -->
-  <div class="rounded-2xl bg-slate-900/90 backdrop-blur-md border border-slate-800/90 shadow-2xl p-5 sm:p-6">
+  <div class="rounded-2xl bg-slate-900/90 border border-slate-800/90 shadow-2xl p-5 sm:p-6">
     <slot />
   </div>
 

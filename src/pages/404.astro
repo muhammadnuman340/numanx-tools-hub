@@ -6,33 +6,15 @@ import AdUnit from '../components/AdUnit.astro';
 
 <MainLayout title="404 - Page Not Found | NumanX Tools" description="The page you are looking for could not be found. Check out our other free online creator tools at NumanX Tools." keywords="404, page not found, numanx tools" noindex={true}>
   <main class="min-h-screen pt-20 pb-24 px-6 relative overflow-hidden flex items-center justify-center">
-    <!-- Floating background orbs -->
-    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      <div
-        class="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-purple-600/10 blur-3xl animate-pulse"
-        style="animation-duration: 6s;"
-      >
-      </div>
-      <div
-        class="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-blue-600/10 blur-3xl animate-pulse"
-        style="animation-duration: 8s; animation-delay: 1s;"
-      >
-      </div>
-      <div
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-purple-500/5 blur-3xl animate-pulse"
-        style="animation-duration: 10s; animation-delay: 2s;"
-      >
-      </div>
-    </div>
 
     <div class="max-w-2xl mx-auto text-center">
       <div class="text-[8rem] md:text-[12rem] font-black leading-none tracking-tighter select-none">
-        <span class="bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent">4</span>
+        <span class="text-amber-400">4</span>
         <span
-          class="bg-gradient-to-r from-purple-500 via-blue-500 to-purple-400 bg-clip-text text-transparent animate-pulse"
+          class="animate-pulse text-amber-400"
           style="animation-duration: 3s;">0</span
         >
-        <span class="bg-gradient-to-r from-blue-500 to-purple-400 bg-clip-text text-transparent">4</span>
+        <span class="text-amber-400">4</span>
       </div>
 
       <h1 class="text-2xl md:text-3xl font-bold text-white mt-4">Looks like this page went missing.</h1>
@@ -43,7 +25,7 @@ import AdUnit from '../components/AdUnit.astro';
       <div class="flex items-center justify-center gap-4 mt-8">
         <a
           href="/"
-          class="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm px-6 py-3 rounded-xl transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-purple-900/30"
+          class="bg-amber-600 hover:bg-amber-700 text-accent-fg font-semibold text-sm px-6 py-3 rounded-xl transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-amber-900/30"
         >
           Return Home
         </a>
@@ -64,32 +46,32 @@ import AdUnit from '../components/AdUnit.astro';
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <a
             href="/tools/qr-generator/"
-            class="group glass-card rounded-2xl p-4 text-center hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-300"
+            class="group glass-card rounded-2xl p-4 text-center hover:border-amber-500/40 hover:-translate-y-1 transition-all duration-300"
           >
-            <div class="text-purple-400 mx-auto w-fit mb-2"><ToolIcon name="qr" /></div>
+            <div class="text-amber-400 mx-auto w-fit mb-2"><ToolIcon name="qr" /></div>
             <p class="text-xs font-medium text-secondary group-hover:text-white transition-colors">QR Generator</p>
           </a>
           <a
             href="/tools/word-counter/"
-            class="group glass-card rounded-2xl p-4 text-center hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-300"
+            class="group glass-card rounded-2xl p-4 text-center hover:border-amber-500/40 hover:-translate-y-1 transition-all duration-300"
           >
-            <div class="text-purple-400 mx-auto w-fit mb-2"><ToolIcon name="word" /></div>
+            <div class="text-amber-400 mx-auto w-fit mb-2"><ToolIcon name="word" /></div>
             <p class="text-xs font-medium text-secondary group-hover:text-white transition-colors">Word Counter</p>
           </a>
           <a
             href="/tools/password-generator/"
-            class="group glass-card rounded-2xl p-4 text-center hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-300"
+            class="group glass-card rounded-2xl p-4 text-center hover:border-amber-500/40 hover:-translate-y-1 transition-all duration-300"
           >
-            <div class="text-purple-400 mx-auto w-fit mb-2"><ToolIcon name="password" /></div>
+            <div class="text-amber-400 mx-auto w-fit mb-2"><ToolIcon name="password" /></div>
             <p class="text-xs font-medium text-secondary group-hover:text-white transition-colors">
               Password Generator
             </p>
           </a>
           <a
             href="/tools/run-rate-calculator/"
-            class="group glass-card rounded-2xl p-4 text-center hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-300"
+            class="group glass-card rounded-2xl p-4 text-center hover:border-amber-500/40 hover:-translate-y-1 transition-all duration-300"
           >
-            <div class="text-purple-400 mx-auto w-fit mb-2"><ToolIcon name="cricket" /></div>
+            <div class="text-amber-400 mx-auto w-fit mb-2"><ToolIcon name="cricket" /></div>
             <p class="text-xs font-medium text-secondary group-hover:text-white transition-colors">
               Run Rate Calculator
             </p>

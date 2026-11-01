@@ -1,8 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
@@ -126,17 +124,16 @@ const useCases = [
     { name: 'Net Run Rate Calculator', url: '/tools/net-run-rate-calculator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="Net Run Rate"
-        gradient="Calculator Pro"
+        gradient="Calculator"
         desc="Calculate tournament Net Run Rate (NRR) following ICC Clause 16.10.2 All-Out quota rules and playoff chase overs solver."
         badge="✦ Formula Follows ICC Clause 16.10.2"
         slug="net-run-rate-calculator"
       />
 
-      <ShareBar />
 
       <div class="max-w-2xl mx-auto mt-8 space-y-6">
         <!-- Match Format Selector -->
@@ -147,7 +144,7 @@ const useCases = [
             </span>
             <div class="flex gap-2">
               <button
-                class="format-btn px-4 py-1.5 rounded-xl border text-xs font-semibold transition-all bg-purple-600 border-purple-500 text-white"
+                class="format-btn px-4 py-1.5 rounded-xl border text-xs font-semibold transition-all bg-amber-600 border-amber-500 text-accent-fg"
                 data-quota="20"
               >
                 T20 (20 Overs)
@@ -164,9 +161,9 @@ const useCases = [
           <!-- Batting Section -->
           <div class="p-4 rounded-xl bg-surface-2/60 border border-surface-3 space-y-3">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-purple-300">Your Team (Batting)</span>
-              <label class="flex items-center gap-2 text-xs text-amber-300 font-medium cursor-pointer select-none">
-                <input type="checkbox" id="bat-all-out" class="rounded border-zinc-700 bg-zinc-900 text-purple-500" />
+              <span class="text-xs font-bold text-amber-300">Your Team (Batting)</span>
+              <label class="flex items-center min-h-6 gap-2 text-xs text-amber-300 font-medium cursor-pointer select-none">
+                <input type="checkbox" id="bat-all-out" class="rounded border-zinc-700 bg-zinc-900 text-amber-500" />
                 <span>Team Bowled Out (Count Full Quota)</span>
               </label>
             </div>
@@ -178,7 +175,7 @@ const useCases = [
                   type="number"
                   min="0"
                   placeholder="e.g. 175"
-                  class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-purple-500 text-sm font-mono"
+                  class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-amber-500 text-sm font-mono"
                 />
               </div>
               <div>
@@ -186,8 +183,9 @@ const useCases = [
                 <input
                   id="bat-overs"
                   type="text"
+                  inputmode="decimal"
                   placeholder="e.g. 20.0"
-                  class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-purple-500 text-sm font-mono"
+                  class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-amber-500 text-sm font-mono"
                 />
               </div>
             </div>
@@ -197,7 +195,7 @@ const useCases = [
           <div class="p-4 rounded-xl bg-surface-2/60 border border-surface-3 space-y-3">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold text-blue-300">Opponent Team (Bowling)</span>
-              <label class="flex items-center gap-2 text-xs text-amber-300 font-medium cursor-pointer select-none">
+              <label class="flex items-center min-h-6 gap-2 text-xs text-amber-300 font-medium cursor-pointer select-none">
                 <input type="checkbox" id="bowl-all-out" class="rounded border-zinc-700 bg-zinc-900 text-blue-500" />
                 <span>Opponent Bowled Out (Count Full Quota)</span>
               </label>
@@ -218,6 +216,7 @@ const useCases = [
                 <input
                   id="bowl-overs"
                   type="text"
+                  inputmode="decimal"
                   placeholder="e.g. 20.0"
                   class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-blue-500 text-sm font-mono"
                 />
@@ -248,7 +247,7 @@ const useCases = [
                 <p class="text-[11px] text-muted m-0">Calculate how quickly your team must chase to surpass a rival</p>
               </div>
             </div>
-            <span class="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/30">
+            <span class="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30">
               Live Simulator
             </span>
           </div>
@@ -294,8 +293,31 @@ const useCases = [
               </label>
               <input
                 id="solver-prev-overs-for"
-                type="number"
-                value="80"
+                type="text"
+                inputmode="decimal"
+                value="80.0"
+                class="w-full bg-zinc-950 text-white px-3 py-2 rounded-xl border border-surface font-mono"
+              />
+            </div>
+            <div>
+              <label for="solver-prev-runs-against" class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-1">
+                Prior Runs Conceded (Tournament)
+              </label>
+              <input
+                id="solver-prev-runs-against"
+                type="number" inputmode="numeric" min="0"
+                value="650"
+                class="w-full bg-zinc-950 text-white px-3 py-2 rounded-xl border border-surface font-mono"
+              />
+            </div>
+            <div>
+              <label for="solver-prev-overs-against" class="text-[10px] font-semibold text-muted uppercase tracking-wider block mb-1">
+                Prior Overs Bowled (Tournament)
+              </label>
+              <input
+                id="solver-prev-overs-against"
+                type="text" inputmode="decimal"
+                value="80.0"
                 class="w-full bg-zinc-950 text-white px-3 py-2 rounded-xl border border-surface font-mono"
               />
             </div>
@@ -303,20 +325,20 @@ const useCases = [
 
           <button
             id="solve-chase-btn"
-            class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white text-xs font-bold transition-all shadow-lg active:scale-98"
+            class="w-full py-3 rounded-xl text-accent-fg text-xs font-bold transition-all shadow-lg active:scale-98 bg-amber-600"
           >
             Solve Maximum Chase Overs
           </button>
 
-          <div id="solver-result-box" class="p-4 rounded-xl bg-purple-950/30 border border-purple-500/30 text-center space-y-1">
-            <span class="text-[10px] uppercase font-bold text-purple-300">Qualification Target</span>
+          <div id="solver-result-box" class="p-4 rounded-xl bg-amber-950/30 border border-amber-500/30 text-center space-y-1">
+            <span class="text-[10px] uppercase font-bold text-amber-300">Qualification Target</span>
             <div id="solver-result-text" class="text-sm font-semibold text-white">
               Chase the target in <strong class="text-emerald-400 font-mono text-base">14.2 overs</strong> or fewer to surpass your rival on NRR!
             </div>
           </div>
 
           <!-- WWS Shorts 1080x1920 NRR Card Exporter -->
-          <div class="rounded-xl p-5 bg-gradient-to-r from-emerald-950/40 via-surface-1 to-indigo-950/40 border border-emerald-500/30 text-center space-y-3 mt-6">
+          <div class="rounded-xl p-5 border border-emerald-500/30 text-center space-y-3 mt-6 bg-emerald-950/40">
             <div class="flex items-center justify-center gap-2">
               <span class="text-xl">📱</span>
               <h3 class="text-xs font-bold text-white uppercase tracking-wider">WWS Social Media Shorts NRR Card</h3>
@@ -346,7 +368,7 @@ const useCases = [
             </div>
             <button
               id="export-wws-nrr-card-btn"
-              class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-lg shadow-emerald-950/50 active:scale-98 transition-all flex items-center justify-center gap-2"
+              class="w-full py-3.5 rounded-xl text-white font-bold text-xs shadow-lg shadow-emerald-950/50 active:scale-98 transition-all flex items-center justify-center gap-2 bg-emerald-600"
             >
               <span>📱</span>
               <span>Download 1080×1920 WWS NRR Shorts/Reels Stat Card (PNG)</span>
@@ -360,7 +382,7 @@ const useCases = [
         <div class="max-w-3xl mx-auto">
           <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
             Frequently Asked
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+            <span class="text-amber-400">Questions</span>
           </h2>
           <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
         </div>
@@ -383,18 +405,19 @@ const useCases = [
         useCases={useCases}
       />
 
-      <RelatedTools current="net-run-rate-calculator" />
     </div>
   </main>
 </MainLayout>
 
 <script>
   import {
-    calculateTournamentNRR,
-    cricketOversToDecimal,
+    parseOvers,
+    parseWholeNumber,
     solveChaseOversForTargetNRR,
     exportWWSNRRCardPNG
   } from '../../utils/cricketAnalytics.js';
+  import { setToolStatus, setToolStatusSoon } from '../../lib/toolStatus';
+  import { checkField } from '../../lib/fieldError';
 
   let currentQuota = 20;
 
@@ -402,13 +425,13 @@ const useCases = [
   formatBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       formatBtns.forEach((b) => {
-        b.classList.remove('bg-purple-600', 'border-purple-500', 'text-white');
+        b.classList.remove('bg-amber-600', 'border-amber-500', 'text-accent-fg');
         b.classList.add('bg-surface-2', 'border-surface', 'text-tertiary');
       });
       btn.classList.remove('bg-surface-2', 'border-surface', 'text-tertiary');
-      btn.classList.add('bg-purple-600', 'border-purple-500', 'text-white');
+      btn.classList.add('bg-amber-600', 'border-amber-500', 'text-accent-fg');
       currentQuota = parseInt((btn as HTMLElement).dataset.quota || '20', 10);
-      recalcNRR();
+      recalcNRR(true);
     });
   });
 
@@ -424,20 +447,43 @@ const useCases = [
   const forRateEl = document.getElementById('for-rate');
   const againstRateEl = document.getElementById('against-rate');
 
-  function recalcNRR() {
-    const bRuns = parseFloat(batRuns?.value || '0') || 0;
-    const bOversNotation = batOvers?.value?.trim() || `${currentQuota}.0`;
-    const isBatOut = batAllOut?.checked || false;
+  // Empty fields fall back to their examples; anything typed must be valid for the format
+  function readRuns(input: HTMLInputElement | null, label: string) {
+    if (!input?.value.trim()) {
+      checkField(input, { ok: true });
+      return { ok: true as const, value: 0 };
+    }
+    return checkField(input, parseWholeNumber(input.value, { label }), false);
+  }
+  function readOvers(input: HTMLInputElement | null, allOut: boolean, label: string) {
+    // Bowled out: the full quota counts, whatever was typed
+    if (allOut || !input?.value.trim()) {
+      checkField(input, { ok: true });
+      return { ok: true as const, decimal: currentQuota };
+    }
+    return checkField(input, parseOvers(input.value, { maxOvers: currentQuota, label }), false);
+  }
 
-    const blRuns = parseFloat(bowlRuns?.value || '0') || 0;
-    const blOversNotation = bowlOvers?.value?.trim() || `${currentQuota}.0`;
-    const isBowlOut = bowlAllOut?.checked || false;
+  function recalcNRR(e?: Event | boolean) {
+    const bRuns = readRuns(batRuns, 'Runs scored');
+    const bOvers = readOvers(batOvers, batAllOut?.checked || false, 'Overs faced');
+    const blRuns = readRuns(bowlRuns, 'Runs conceded');
+    const blOvers = readOvers(bowlOvers, bowlAllOut?.checked || false, 'Overs bowled');
 
-    const effectiveBatOvers = cricketOversToDecimal(bOversNotation, isBatOut, currentQuota);
-    const effectiveBowlOvers = cricketOversToDecimal(blOversNotation, isBowlOut, currentQuota);
+    const firstError = [bRuns, bOvers, blRuns, blOvers].find((r) => !r.ok);
+    if (firstError) {
+      if (forRateEl) forRateEl.textContent = '—';
+      if (againstRateEl) againstRateEl.textContent = '—';
+      if (nrrValue) {
+        nrrValue.textContent = '—';
+        nrrValue.className = 'text-zinc-300';
+      }
+      if (e) setToolStatusSoon('error', firstError.error || '');
+      return;
+    }
 
-    const forRate = effectiveBatOvers > 0 ? bRuns / effectiveBatOvers : 0;
-    const againstRate = effectiveBowlOvers > 0 ? blRuns / effectiveBowlOvers : 0;
+    const forRate = bRuns.value / bOvers.decimal;
+    const againstRate = blRuns.value / blOvers.decimal;
     const nrr = forRate - againstRate;
 
     if (forRateEl) forRateEl.textContent = forRate.toFixed(4);
@@ -453,6 +499,7 @@ const useCases = [
       } else {
         nrrValue.className = 'text-zinc-300';
       }
+      if (e) setToolStatusSoon('complete', `Net run rate: ${nrrValue.textContent}.`);
     }
   }
 
@@ -463,29 +510,58 @@ const useCases = [
 
   // Solver Button Handler
   document.getElementById('solve-chase-btn')?.addEventListener('click', () => {
-    const target = parseFloat((document.getElementById('solver-target') as HTMLInputElement)?.value || '161');
-    const rivalNRR = parseFloat((document.getElementById('solver-rival-nrr') as HTMLInputElement)?.value || '0.35');
-    const prevRuns = parseFloat((document.getElementById('solver-prev-runs-for') as HTMLInputElement)?.value || '640');
-    const prevOvers = parseFloat((document.getElementById('solver-prev-overs-for') as HTMLInputElement)?.value || '80');
+    const el = (id: string) => document.getElementById(id) as HTMLInputElement | null;
+    const resText = document.getElementById('solver-result-text');
+    const rivalRaw = el('solver-rival-nrr')?.value.trim() || '';
+    const checks = [
+      checkField(el('solver-target'), parseWholeNumber(el('solver-target')?.value, { min: 1, label: 'Target score' })),
+      checkField(
+        el('solver-rival-nrr'),
+        /^-?\d+(\.\d+)?$/.test(rivalRaw)
+          ? { ok: true }
+          : { ok: false, error: 'Enter the rival NRR as a number, for example 0.35 or -0.12.' },
+      ),
+      checkField(el('solver-prev-runs-for'), parseWholeNumber(el('solver-prev-runs-for')?.value, { label: 'Prior runs scored' })),
+      checkField(
+        el('solver-prev-overs-for'),
+        parseOvers(el('solver-prev-overs-for')?.value, { allowZero: true, label: 'Prior overs batted' }),
+      ),
+      checkField(
+        el('solver-prev-runs-against'),
+        parseWholeNumber(el('solver-prev-runs-against')?.value, { label: 'Prior runs conceded' }),
+      ),
+      checkField(
+        el('solver-prev-overs-against'),
+        parseOvers(el('solver-prev-overs-against')?.value, { allowZero: true, label: 'Prior overs bowled' }),
+      ),
+    ] as any[];
+    if (checks.some((c) => !c.ok)) {
+      if (resText) resText.textContent = 'Fix the highlighted field to solve.';
+      return;
+    }
+    const [target, , prevRunsFor, prevOversFor, prevRunsAgainst, prevOversAgainst] = checks;
 
     const result = solveChaseOversForTargetNRR({
-      prevRunsScored: prevRuns,
-      prevOversFaced: prevOvers,
-      prevRunsConceded: 650,
-      prevOversBowled: 80,
-      matchRunsConceded: target - 1,
+      prevRunsScored: prevRunsFor.value,
+      prevOversFaced: prevOversFor.decimal,
+      prevRunsConceded: prevRunsAgainst.value,
+      prevOversBowled: prevOversAgainst.decimal,
+      // The opponent set the target, so they made one run less in their full quota
+      matchRunsConceded: target.value - 1,
       matchOversBowled: currentQuota,
-      targetRunsToScore: target,
-      rivalNRR: rivalNRR
+      targetRunsToScore: target.value,
+      rivalNRR: Number(rivalRaw),
     });
 
-    const resText = document.getElementById('solver-result-text');
     if (resText) {
-      if (result.possible) {
+      if (result.possible && result.withinFullQuota) {
+        resText.innerHTML = `Any win inside the full <strong class="text-emerald-400 font-mono text-base">${currentQuota} overs</strong> takes you past your rival on NRR.`;
+      } else if (result.possible) {
         resText.innerHTML = `Chase the target in <strong class="text-emerald-400 font-mono text-base">${result.maxChaseOversCricket} overs</strong> or fewer to surpass your rival on NRR!`;
       } else {
-        resText.innerHTML = `<span class="text-rose-400">Target cannot be achieved within ${currentQuota} overs at the required rate to overtake NRR.</span>`;
+        resText.innerHTML = `<span class="text-rose-400">Even winning off the first ball would not lift your NRR above ${Number(rivalRaw).toFixed(2)}.</span>`;
       }
+      setToolStatus('complete', resText.textContent || '');
     }
   });
 

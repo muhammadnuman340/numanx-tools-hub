@@ -45,14 +45,14 @@ const categories = ['All', ...categoryInfos.map((c) => categoryMap[c.id] || c.ti
           class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-surface bg-surface-1 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6"
         >
           <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
           </span>
           {tools.length} Free Tools
         </div>
         <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-none">
           Free Online
-          <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-amber-400 bg-clip-text text-transparent">
+          <span class="text-amber-400">
             Tools
           </span>
         </h1>
@@ -73,7 +73,7 @@ const categories = ['All', ...categoryInfos.map((c) => categoryMap[c.id] || c.ti
             id="search-input"
             type="search"
             placeholder="Search tools..."
-            class="w-full bg-[#0a0a0c]/80 text-white placeholder-zinc-500 pl-11 pr-24 py-3.5 rounded-2xl border border-white/5 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 transition-all text-sm shadow-inner"
+            class="w-full bg-page/80 text-white placeholder-zinc-500 pl-11 pr-24 py-3.5 rounded-2xl border border-white/5 focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all text-sm shadow-inner"
             autocomplete="off" aria-label="Search tools"
           />
           <div class="absolute right-3 flex items-center gap-1.5 pointer-events-none">
@@ -91,8 +91,8 @@ const categories = ['All', ...categoryInfos.map((c) => categoryMap[c.id] || c.ti
               <button
                 class={`category-btn relative px-4 py-2 text-xs font-bold rounded-xl transition-all audio-trigger ${
                   cat === 'All'
-                    ? 'bg-purple-600/10 border border-purple-500/30 text-purple-400'
-                    : 'bg-[#0a0a0c]/80 text-zinc-400 border border-white/5 hover:border-white/10 hover:text-white'
+                    ? 'bg-amber-600/10 border border-amber-500/30 text-amber-400'
+                    : 'bg-page/80 text-zinc-400 border border-white/5 hover:border-white/10 hover:text-white'
                 }`}
                 data-active={cat === 'All' ? 'true' : 'false'}
                 data-category={cat}
@@ -128,7 +128,7 @@ const categories = ['All', ...categoryInfos.map((c) => categoryMap[c.id] || c.ti
                       <span class="font-bold text-sm relative z-10 font-mono tracking-wider">{initials}</span>
                       <span class="absolute inset-0 bg-radial-gradient from-amber-500/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
-                    <h3 class="text-base font-semibold text-primary group-hover:text-purple-300 transition-colors">
+                    <h3 class="text-base font-semibold text-primary group-hover:text-amber-300 transition-colors">
                       {tool.name}
                     </h3>
                   </div>
@@ -136,7 +136,7 @@ const categories = ['All', ...categoryInfos.map((c) => categoryMap[c.id] || c.ti
                 </div>
                 <a
                   href={tool.url}
-                  class="mt-5 w-full bg-surface-2 hover:bg-purple-650 text-secondary hover:text-white text-xs font-semibold py-3 rounded-xl border border-surface-2 hover:border-purple-500/50 text-center transition-all group-hover:scale-[1.02] shadow-inner audio-trigger"
+                  class="mt-5 w-full bg-surface-2 hover:bg-surface-3 text-secondary hover:text-white text-xs font-semibold py-3 rounded-xl border border-surface-2 hover:border-amber-500/50 text-center transition-all group-hover:scale-[1.02] shadow-inner audio-trigger"
                 >
                   Open Tool
                 </a>
@@ -153,7 +153,7 @@ const categories = ['All', ...categoryInfos.map((c) => categoryMap[c.id] || c.ti
               height="24"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#a855f7"
+              style="stroke:var(--accent)"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -225,10 +225,10 @@ const categories = ['All', ...categoryInfos.map((c) => categoryMap[c.id] || c.ti
         const active = b.dataset.active === 'true';
         if (active) {
           b.className =
-            'category-btn relative px-4 py-2 text-xs font-bold rounded-xl transition-all bg-purple-600/10 border border-purple-500/30 text-purple-400 audio-trigger';
+            'category-btn relative px-4 py-2 text-xs font-bold rounded-xl transition-all bg-amber-600/10 border border-amber-500/30 text-amber-400 audio-trigger';
         } else {
           b.className =
-            'category-btn relative px-4 py-2 text-xs font-bold rounded-xl transition-all bg-[#0a0a0c]/80 text-zinc-400 border border-white/5 hover:border-white/10 hover:text-white audio-trigger';
+            'category-btn relative px-4 py-2 text-xs font-bold rounded-xl transition-all bg-page/80 text-zinc-400 border border-white/5 hover:border-white/10 hover:text-white audio-trigger';
         }
       });
     };

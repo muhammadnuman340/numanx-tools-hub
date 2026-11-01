@@ -1,8 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
@@ -160,17 +158,16 @@ const useCases = [
     { name: 'Run Rate Calculator', url: '/tools/run-rate-calculator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="Run Rate"
-        gradient="Calculator Pro"
+        gradient="Calculator"
         desc="Calculate current and required run rates for T20, ODI, and Test matches. Chase difficulty, match pressure, and over-by-over projections included."
         badge="✦ Client-Side"
         slug="run-rate-calculator"
       />
 
-      <ShareBar />
 
       <!-- ─── Format Selector (Cricbuzz-style) ─── -->
       <div class="max-w-xl mx-auto mt-8 space-y-4">
@@ -199,7 +196,7 @@ const useCases = [
         <div class="bg-zinc-950 p-1.5 rounded-xl border border-surface flex gap-2">
           <button
             id="tab-current"
-            class="flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all"
+            class="flex-1 bg-amber-600 text-accent-fg text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all"
             >Current RR</button
           >
           <button
@@ -222,7 +219,7 @@ const useCases = [
                 min="0"
                 step="1"
                 placeholder="e.g. 145"
-                class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm"
               />
             </div>
             <div class="space-y-2">
@@ -230,8 +227,8 @@ const useCases = [
                 <label for="crr-overs" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
                   >Overs Bowled</label
                 >
-                <span class="text-[9px] font-medium text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded"
-                  >overs.balls (e.g. 12.3)</span
+                <span id="crr-overs-hint" class="text-[9px] font-medium text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded"
+                  >overs.balls, max 20</span
                 >
               </div>
               <input
@@ -239,12 +236,12 @@ const useCases = [
                 type="text"
                 inputmode="decimal"
                 placeholder="e.g. 12.3"
-                class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm"
               />
             </div>
             <button
               id="calc-crr-btn"
-              class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 rounded-xl transition-all shadow-lg shadow-purple-900/20 text-sm"
+              class="w-full text-accent-fg font-semibold py-3 rounded-xl transition-all shadow-lg shadow-amber-900/20 text-sm bg-amber-600"
               >Calculate Current RR</button
             >
           </div>
@@ -261,7 +258,7 @@ const useCases = [
                   min="0"
                   step="1"
                   placeholder="e.g. 280"
-                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm"
                 />
               </div>
               <div class="space-y-2">
@@ -274,25 +271,31 @@ const useCases = [
                   min="0"
                   step="1"
                   placeholder="e.g. 120"
-                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                  class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm"
                 />
               </div>
             </div>
             <div class="space-y-2">
-              <label for="rrr-overs" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
-                >Overs Remaining</label
-              >
+              <div class="flex justify-between items-center">
+                <label for="rrr-overs" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
+                  >Overs Remaining</label
+                >
+                <span id="rrr-overs-hint" class="text-[9px] font-medium text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded"
+                  >overs.balls, max 20</span
+                >
+              </div>
               <input
                 id="rrr-overs"
                 type="text"
                 inputmode="decimal"
                 placeholder="e.g. 37.0"
-                class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-purple-500 transition-all text-sm"
+                class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm"
               />
             </div>
+            <p id="rrr-notice" class="hidden text-xs font-medium text-success" role="status"></p>
             <button
               id="calc-rrr-btn"
-              class="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 rounded-xl transition-all shadow-lg shadow-purple-900/20 text-sm"
+              class="w-full text-accent-fg font-semibold py-3 rounded-xl transition-all shadow-lg shadow-amber-900/20 text-sm bg-amber-600"
               >Calculate Required RR</button
             >
           </div>
@@ -303,29 +306,11 @@ const useCases = [
           <div class="glass-card rounded-2xl p-5 md:p-6 relative">
             <button
               id="fullscreen-btn"
-              class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+              class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
               title="Fullscreen">⛶</button
             >
             <div class="flex items-center gap-2 mb-3">
               <span id="usage-badge" class="text-xs text-muted"></span>
-              <div class="flex gap-1 ml-auto">
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="purple"
-                  style="background:#a855f7"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="blue"
-                  style="background:#3b82f6"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="green"
-                  style="background:#22c55e"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="pink"
-                  style="background:#ec4899"></button>
-              </div>
             </div>
             <h2 class="text-[10px] font-semibold text-muted uppercase tracking-wider mb-4">Match Stats</h2>
             <div class="grid grid-cols-3 gap-3">
@@ -334,7 +319,7 @@ const useCases = [
               >
                 <span class="text-[9px] font-semibold text-dim uppercase tracking-wider">Current RR</span>
                 <div class="mt-1 text-2xl md:text-3xl font-black tabular-nums">
-                  <span id="rr-value" class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"
+                  <span id="rr-value" class="text-amber-400"
                     >0.00</span
                   >
                 </div>
@@ -346,7 +331,7 @@ const useCases = [
                 <div class="mt-1 text-2xl md:text-3xl font-black tabular-nums">
                   <span
                     id="required-rr-value"
-                    class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0.00</span
+                    class="text-amber-400">0.00</span
                   >
                 </div>
               </div>
@@ -357,7 +342,7 @@ const useCases = [
                 <div class="mt-1 text-2xl md:text-3xl font-black tabular-nums">
                   <span
                     id="projected-value"
-                    class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">0</span
+                    class="text-amber-400">0</span
                   >
                 </div>
               </div>
@@ -424,7 +409,7 @@ const useCases = [
           <div id="pace-analysis" class="hidden bg-surface-1 border border-surface rounded-2xl p-5">
             <div class="flex items-start gap-3">
               <div
-                class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center shrink-0 mt-0.5"
+                class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5 bg-amber-600/20"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -432,7 +417,7 @@ const useCases = [
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#a855f7"
+                  style="stroke:var(--accent)"
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg
@@ -497,10 +482,10 @@ const useCases = [
       <!-- ─── Cricket Insights ─── -->
       <section class="mt-16">
         <div class="text-center mb-8">
-          <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Learn</span>
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Learn</span>
           <h2 class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1">
             Cricket
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Insights</span>
+            <span class="text-amber-400">Insights</span>
           </h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -564,12 +549,11 @@ const useCases = [
         ]}
       />
 
-      <RelatedTools current="run-rate-calculator" />
 
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
           Frequently Asked
-          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+          <span class="text-amber-400">Questions</span>
         </h2>
         <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
       </div>
@@ -585,11 +569,11 @@ const useCases = [
 
       <section class="mt-16 text-center">
         <div
-          class="max-w-2xl mx-auto bg-gradient-to-br from-purple-600/10 to-blue-600/5 border border-purple-500/20 rounded-2xl p-8 md:p-10"
+          class="max-w-2xl mx-auto border border-amber-500/20 rounded-2xl p-8 md:p-10 bg-amber-600/10"
         >
           <h2 class="text-2xl md:text-3xl font-black tracking-tight">
             Master Cricket
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
+            <span class="text-amber-400">
               Run Rate Analysis</span
             >
           </h2>
@@ -600,7 +584,7 @@ const useCases = [
           <div class="mt-6 flex gap-3 justify-center flex-wrap">
             <button
               onclick="document.querySelector('#crr-runs')?.focus()"
-              class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-purple-900/30"
+              class="px-6 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-accent-fg font-semibold text-sm transition-all active:scale-[0.97] shadow-lg shadow-amber-900/30"
             >
               Start Calculating
             </button>
@@ -618,6 +602,9 @@ const useCases = [
 </MainLayout>
 
 <script>
+  import { parseOvers, parseWholeNumber, FORMAT_MAX_OVERS } from '../../utils/cricketAnalytics.js';
+  import { checkField, clearFieldError } from '../../lib/fieldError';
+
   const crrRuns = document.getElementById('crr-runs');
   const crrOvers = document.getElementById('crr-overs');
   const calcCrrBtn = document.getElementById('calc-crr-btn');
@@ -647,16 +634,51 @@ const useCases = [
   let oversUsed = 0;
   let oversRemaining = 0;
 
-  function parseOvers(input) {
-    const raw = input.trim();
-    if (!raw) return NaN;
-    const parts = raw.split('.');
-    const overs = parseInt(parts[0]);
-    if (isNaN(overs) || overs < 0) return NaN;
-    if (parts.length === 1) return overs;
-    const balls = parseInt(parts[1]);
-    if (isNaN(balls) || balls < 0 || balls > 5) return NaN;
-    return overs + balls / 6;
+  const rrrNotice = document.getElementById('rrr-notice');
+  const crrOversHint = document.getElementById('crr-overs-hint');
+  const rrrOversHint = document.getElementById('rrr-overs-hint');
+
+  // The Test preset projects a 90-over day, but an innings can run longer than that
+  function maxOversForFormat() {
+    return activeOvers === 90 ? FORMAT_MAX_OVERS.Test : activeOvers;
+  }
+
+  function updateOversHints() {
+    const text = activeOvers === 90 ? 'overs.balls (e.g. 112.3)' : `overs.balls, max ${activeOvers}`;
+    if (crrOversHint) crrOversHint.textContent = text;
+    if (rrrOversHint) rrrOversHint.textContent = text;
+  }
+
+  // Each check shows its message under the field; only the first problem is announced
+  function checkCurrentForm() {
+    const runs = checkField(crrRuns, parseWholeNumber(crrRuns.value, { label: 'Runs scored' }));
+    const overs = checkField(
+      crrOvers,
+      parseOvers(crrOvers.value, { maxOvers: maxOversForFormat(), label: 'Overs bowled' }),
+      runs.ok,
+    );
+    if (!runs.ok) crrRuns.focus();
+    else if (!overs.ok) crrOvers.focus();
+    return runs.ok && overs.ok ? { runs: runs.value, overs: overs.decimal } : null;
+  }
+
+  function checkRequiredForm() {
+    const target = checkField(rrrTarget, parseWholeNumber(rrrTarget.value, { min: 1, label: 'Target score' }));
+    const current = checkField(rrrCurrent, parseWholeNumber(rrrCurrent.value, { label: 'Current score' }), target.ok);
+    const overs = checkField(
+      rrrOvers,
+      parseOvers(rrrOvers.value, { maxOvers: maxOversForFormat(), label: 'Overs remaining' }),
+      target.ok && current.ok,
+    );
+    const firstBad = [
+      [target, rrrTarget],
+      [current, rrrCurrent],
+      [overs, rrrOvers],
+    ].find(([r]) => !r.ok);
+    if (firstBad) firstBad[1].focus();
+    return target.ok && current.ok && overs.ok
+      ? { target: target.value, current: current.value, overs: overs.decimal }
+      : null;
   }
 
   function formatRR(value) {
@@ -667,20 +689,20 @@ const useCases = [
   function getChaseDifficulty(crr, rrr) {
     if (crr <= 0 || rrr <= 0) return null;
     const diff = crr - rrr;
-    if (diff >= 0) return { level: 'Easy', pct: 10, color: '#22c55e', desc: 'Batting side is ahead of the rate' };
-    if (diff > -1) return { level: 'Moderate', pct: 30, color: '#f59e0b', desc: 'Within striking distance' };
-    if (diff > -2) return { level: 'Hard', pct: 50, color: '#f97316', desc: 'Need to accelerate' };
-    if (diff > -4) return { level: 'Very Hard', pct: 75, color: '#ef4444', desc: 'Significant acceleration needed' };
-    return { level: 'Extreme', pct: 95, color: '#dc2626', desc: 'Almost impossible chase' };
+    if (diff >= 0) return { level: 'Easy', pct: 10, color: 'var(--success)', desc: 'Batting side is ahead of the rate' };
+    if (diff > -1) return { level: 'Moderate', pct: 30, color: 'var(--warning)', desc: 'Within striking distance' };
+    if (diff > -2) return { level: 'Hard', pct: 50, color: 'color-mix(in oklch, var(--warning), var(--danger))', desc: 'Need to accelerate' };
+    if (diff > -4) return { level: 'Very Hard', pct: 75, color: 'var(--danger)', desc: 'Significant acceleration needed' };
+    return { level: 'Extreme', pct: 95, color: 'color-mix(in oklch, var(--danger), black 20%)', desc: 'Almost impossible chase' };
   }
 
   function getPressure(crr, rrr) {
     if (crr <= 0 || rrr <= 0) return null;
     const diff = crr - rrr;
-    if (diff >= 0) return { level: 'Low', pct: 10, color: '#22c55e' };
-    if (diff > -1) return { level: 'Medium', pct: 35, color: '#f59e0b' };
-    if (diff > -2) return { level: 'High', pct: 65, color: '#f97316' };
-    return { level: 'Critical', pct: 90, color: '#dc2626' };
+    if (diff >= 0) return { level: 'Low', pct: 10, color: 'var(--success)' };
+    if (diff > -1) return { level: 'Medium', pct: 35, color: 'var(--warning)' };
+    if (diff > -2) return { level: 'High', pct: 65, color: 'color-mix(in oklch, var(--warning), var(--danger))' };
+    return { level: 'Critical', pct: 90, color: 'color-mix(in oklch, var(--danger), black 20%)' };
   }
 
   function buildProjection() {
@@ -803,58 +825,36 @@ const useCases = [
   }
 
   calcCrrBtn.addEventListener('click', () => {
-    const runs = parseInt(crrRuns.value);
-    const oversDecimal = parseOvers(crrOvers.value);
-    if (isNaN(runs) || runs < 0 || isNaN(oversDecimal) || oversDecimal <= 0) {
-      if (isNaN(runs) || runs < 0) {
-        crrRuns.focus();
-        crrRuns.classList.add('ring-2', 'ring-red-500/40', 'border-red-500/60');
-        setTimeout(() => crrRuns.classList.remove('ring-2', 'ring-red-500/40', 'border-red-500/60'), 1500);
-      }
-      if (isNaN(oversDecimal) || oversDecimal <= 0) {
-        crrOvers.focus();
-        crrOvers.classList.add('ring-2', 'ring-red-500/40', 'border-red-500/60');
-        setTimeout(() => crrOvers.classList.remove('ring-2', 'ring-red-500/40', 'border-red-500/60'), 1500);
-      }
-      return;
-    }
-    currentRR = runs / oversDecimal;
-    oversUsed = oversDecimal;
-    oversRemaining = activeOvers - oversUsed;
+    const values = checkCurrentForm();
+    if (!values) return;
+    currentRR = values.runs / values.overs;
+    oversUsed = values.overs;
+    oversRemaining = Math.max(0, activeOvers - oversUsed);
     updateStats();
   });
 
   calcRrrBtn.addEventListener('click', () => {
-    const target = parseInt(rrrTarget.value);
-    const current = parseInt(rrrCurrent.value);
-    const oversRem = parseOvers(rrrOvers.value);
-    if (isNaN(target) || target <= 0 || isNaN(current) || current < 0 || isNaN(oversRem) || oversRem <= 0) {
-      if (isNaN(target) || target <= 0) {
-        rrrTarget.focus();
-        rrrTarget.classList.add('ring-2', 'ring-red-500/40', 'border-red-500/60');
-        setTimeout(() => rrrTarget.classList.remove('ring-2', 'ring-red-500/40', 'border-red-500/60'), 1500);
-      }
-      if (isNaN(current) || current < 0) {
-        rrrCurrent.focus();
-        rrrCurrent.classList.add('ring-2', 'ring-red-500/40', 'border-red-500/60');
-        setTimeout(() => rrrCurrent.classList.remove('ring-2', 'ring-red-500/40', 'border-red-500/60'), 1500);
-      }
-      if (isNaN(oversRem) || oversRem <= 0) {
-        rrrOvers.focus();
-        rrrOvers.classList.add('ring-2', 'ring-red-500/40', 'border-red-500/60');
-        setTimeout(() => rrrOvers.classList.remove('ring-2', 'ring-red-500/40', 'border-red-500/60'), 1500);
-      }
-      return;
-    }
-    if (current >= target) {
+    rrrNotice?.classList.add('hidden');
+    const values = checkRequiredForm();
+    if (!values) return;
+    if (values.current >= values.target) {
       requiredRR = 0;
+      if (rrrNotice) {
+        rrrNotice.textContent = `Target reached: ${values.current} is already at or above ${values.target}, so no more runs are needed.`;
+        rrrNotice.classList.remove('hidden');
+      }
       updateStats();
       return;
     }
-    requiredRR = (target - current) / oversRem;
-    oversRemaining = oversRem;
+    requiredRR = (values.target - values.current) / values.overs;
+    oversRemaining = values.overs;
     updateStats();
   });
+
+  // Clear a field's error as soon as it is edited
+  [crrRuns, crrOvers, rrrTarget, rrrCurrent, rrrOvers].forEach((el) =>
+    el.addEventListener('input', () => clearFieldError(el)),
+  );
 
   // Enter key handlers
   [crrRuns, crrOvers].forEach((el) =>
@@ -876,7 +876,7 @@ const useCases = [
 
   tabCurrent.addEventListener('click', () => {
     tabCurrent.className =
-      'flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all';
+      'flex-1 bg-amber-600 text-accent-fg text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all';
     tabRequired.className =
       'flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all';
     formCurrent.classList.remove('hidden');
@@ -884,7 +884,7 @@ const useCases = [
   });
   tabRequired.addEventListener('click', () => {
     tabRequired.className =
-      'flex-1 bg-purple-600 text-white text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all';
+      'flex-1 bg-amber-600 text-accent-fg text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all';
     tabCurrent.className =
       'flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all';
     formRequired.classList.remove('hidden');
@@ -896,14 +896,25 @@ const useCases = [
     btn.addEventListener('click', () => {
       presetBtns.forEach((b) => {
         b.dataset.active = 'false';
-        b.classList.remove('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
+        b.classList.remove('bg-amber-600/15', 'border-amber-500/50', 'text-amber-300');
         b.classList.add('bg-surface-1', 'border-surface-3', 'text-tertiary');
       });
       btn.dataset.active = 'true';
       btn.classList.remove('bg-surface-1', 'border-surface-3', 'text-tertiary');
-      btn.classList.add('bg-purple-600/15', 'border-purple-500/50', 'text-purple-300');
+      btn.classList.add('bg-amber-600/15', 'border-amber-500/50', 'text-amber-300');
       activeOvers = parseInt(btn.dataset.overs);
-      if (currentRR > 0) updateStats();
+      updateOversHints();
+      // Values that fit the old format may be too many overs for the new one
+      if (currentRR > 0) {
+        const values = checkCurrentForm();
+        if (values) {
+          currentRR = values.runs / values.overs;
+          oversUsed = values.overs;
+          oversRemaining = Math.max(0, activeOvers - oversUsed);
+        } else currentRR = 0;
+      }
+      if (requiredRR > 0 && !checkRequiredForm()) requiredRR = 0;
+      updateStats();
     });
   });
 
@@ -1024,22 +1035,4 @@ const useCases = [
     } catch (e) {}
   }
 
-  // ─── Color theme picker ───
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 </script>

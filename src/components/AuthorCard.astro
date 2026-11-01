@@ -17,7 +17,7 @@ const {
 <div class="rounded-xl border border-surface bg-surface-1 p-5">
   <div class="flex items-center gap-4">
     <div
-      class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-lg font-bold text-white shrink-0 overflow-hidden relative"
+      class="w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold text-accent-fg shrink-0 overflow-hidden relative bg-amber-600"
     >
       <span class="absolute inset-0 flex items-center justify-center" aria-hidden="true">{name.charAt(0)}</span>
       {
@@ -37,16 +37,18 @@ const {
       <p class="text-sm font-semibold text-primary">{name}</p>
       <p class="text-xs text-muted">{title}</p>
       <div class="flex items-center gap-3 mt-1.5">
-        <a href={url} class="text-[11px] text-purple-400 hover:text-purple-300 transition-colors font-medium">About</a>
+        <a href={url} class="inline-flex items-center justify-center min-h-6 min-w-6 text-xs text-amber-400 hover:text-amber-300 transition-colors font-medium">About</a>
         <a
           href="https://github.com/muhammadnuman340/numanx-tools-hub"
           target="_blank"
-          class="text-[11px] text-purple-400 hover:text-purple-300 transition-colors font-medium">GitHub</a
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center min-h-6 min-w-6 text-xs text-amber-400 hover:text-amber-300 transition-colors font-medium">GitHub</a
         >
         <a
           href="https://x.com/numanxstudio"
           target="_blank"
-          class="text-[11px] text-purple-400 hover:text-purple-300 transition-colors font-medium">X</a
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center min-h-6 min-w-6 text-xs text-amber-400 hover:text-amber-300 transition-colors font-medium">X</a
         >
       </div>
     </div>

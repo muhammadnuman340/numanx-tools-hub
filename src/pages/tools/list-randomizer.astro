@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
@@ -50,16 +49,15 @@ const schema = {
     { name: 'List Randomizer', url: '/tools/list-randomizer/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="List"
-        gradient="Randomizer Pro"
+        gradient="Randomizer"
         desc="Randomize lists with Fisher-Yates shuffle. Shuffle items, pick random entries, and manage your lists easily."
         badge="✦ New Tool"
         slug="list-randomizer"
       />
-      <ShareBar />
       <div class="max-w-xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6">
           <div class="flex items-center justify-between mb-4">
@@ -67,32 +65,10 @@ const schema = {
               <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
               <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
-              <div class="flex gap-1" role="group" aria-label="Theme color swatches">
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="purple"
-                  aria-label="Set purple theme"
-                  style="background:#a855f7"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="blue"
-                  aria-label="Set blue theme"
-                  style="background:#3b82f6"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="green"
-                  aria-label="Set green theme"
-                  style="background:#22c55e"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="pink"
-                  aria-label="Set pink theme"
-                  style="background:#ec4899"></button>
-              </div>
               <button
                 id="fullscreen-btn"
                 aria-label="Toggle fullscreen"
-                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
                 title="Fullscreen">⛶</button
               >
             </div>
@@ -148,7 +124,7 @@ Item 3"></textarea>
           <div class="flex flex-wrap gap-2">
             <button
               id="shuffle-btn"
-              class="bg-gradient-to-r from-teal-400 to-cyan-500 text-white font-bold text-xs px-4 py-2 rounded-xl hover:opacity-90 transition-all"
+              class="text-white font-bold text-xs px-4 py-2 rounded-xl hover:opacity-90 transition-all bg-teal-400"
               >Shuffle</button
             >
             <button
@@ -197,7 +173,7 @@ Item 3"></textarea>
           <span class="text-xs font-semibold text-teal-400 uppercase tracking-wider">Learn</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
-            List <span class="bg-gradient-to-r from-teal-400 to-cyan-500 bg-clip-text text-transparent"
+            List <span class="text-amber-400"
               >Randomization</span
             >
           </h2>
@@ -213,7 +189,7 @@ Item 3"></textarea>
       <RelatedTools current="list-randomizer" />
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
-          Frequently Asked <span class="bg-gradient-to-r from-teal-400 to-cyan-500 bg-clip-text text-transparent"
+          Frequently Asked <span class="text-amber-400"
             >Questions</span
           >
         </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
@@ -450,24 +426,6 @@ Item 3"></textarea>
     } catch (e) {}
   }
 
-  // ─── Color theme picker ───
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 
   // ─── Reading time ───
   const rt = document.getElementById('input-text') || document.querySelector('textarea:not([readonly])');

@@ -1,8 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
 
@@ -106,16 +104,15 @@ const useCases = [
     { name: 'Color Converter', url: '/tools/color-converter/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="Color"
-        gradient="Converter Pro"
+        gradient="Converter"
         desc="Convert colors between HEX, RGB, and HSL formats with a live color preview and visual picker."
         badge="✦ New Tool"
         slug="color-converter"
       />
-      <ShareBar />
       <div class="max-w-xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6">
           <div class="flex items-center justify-between mb-4">
@@ -124,31 +121,13 @@ const useCases = [
               <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
             <div class="flex items-center gap-2">
-              <div class="flex gap-1">
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="purple"
-                  style="background:#a855f7"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="blue"
-                  style="background:#3b82f6"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="green"
-                  style="background:#22c55e"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="pink"
-                  style="background:#ec4899"></button>
-              </div>
             </div>
           </div>
           <div class="flex items-center gap-4 mb-6">
             <input
               id="color-picker"
               type="color"
-              value="#7c3aed"
+              value="#f5ae39"
               class="w-16 h-16 rounded-xl border border-surface-2 cursor-pointer bg-transparent" aria-label="Pick a color"
             />
             <div class="flex-1">
@@ -156,8 +135,8 @@ const useCases = [
               <input
                 id="hex-input"
                 type="text"
-                value="#7c3aed"
-                class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-purple-500/50 focus:outline-none transition-all" aria-label="HEX color value"
+                value="#f5ae39"
+                class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-amber-500/50 focus:outline-none transition-all" aria-label="HEX color value"
               />
             </div>
           </div>
@@ -171,21 +150,21 @@ const useCases = [
                   min="0"
                   max="255"
                   value="124"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Red value"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-amber-500/50 focus:outline-none" aria-label="Red value"
                 /><span class="text-muted self-center">,</span><input
                   id="g-input"
                   type="number"
                   min="0"
                   max="255"
                   value="58"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Green value"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-amber-500/50 focus:outline-none" aria-label="Green value"
                 /><span class="text-muted self-center">,</span><input
                   id="b-input"
                   type="number"
                   min="0"
                   max="255"
                   value="237"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Blue value"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-amber-500/50 focus:outline-none" aria-label="Blue value"
                 />
               </div>
             </div>
@@ -198,21 +177,21 @@ const useCases = [
                   min="0"
                   max="360"
                   value="263"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Hue"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-amber-500/50 focus:outline-none" aria-label="Hue"
                 /><span class="text-muted self-center text-xs">H</span><input
                   id="s-input"
                   type="number"
                   min="0"
                   max="100"
                   value="83"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Saturation"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-amber-500/50 focus:outline-none" aria-label="Saturation"
                 /><span class="text-muted self-center text-xs">%</span><input
                   id="l-input"
                   type="number"
                   min="0"
                   max="100"
                   value="58"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Lightness"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-amber-500/50 focus:outline-none" aria-label="Lightness"
                 /><span class="text-muted self-center text-xs">%</span>
               </div>
             </div>
@@ -225,28 +204,28 @@ const useCases = [
                   min="0"
                   max="100"
                   value="48"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Cyan"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-amber-500/50 focus:outline-none" aria-label="Cyan"
                 /><span class="text-muted self-center text-xs">C%</span><input
                   id="cmyk-m"
                   type="number"
                   min="0"
                   max="100"
                   value="76"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Magenta"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-amber-500/50 focus:outline-none" aria-label="Magenta"
                 /><span class="text-muted self-center text-xs">M%</span><input
                   id="cmyk-y"
                   type="number"
                   min="0"
                   max="100"
                   value="0"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Yellow"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-amber-500/50 focus:outline-none" aria-label="Yellow"
                 /><span class="text-muted self-center text-xs">Y%</span><input
                   id="cmyk-k"
                   type="number"
                   min="0"
                   max="100"
                   value="7"
-                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-purple-500/50 focus:outline-none" aria-label="Black"
+                  class="flex-1 px-3 py-2.5 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm text-center focus:border-amber-500/50 focus:outline-none" aria-label="Black"
                 /><span class="text-muted self-center text-xs">K%</span>
               </div>
             </div>
@@ -283,10 +262,9 @@ const useCases = [
         howToSteps={howToSteps}
         useCases={useCases}
       />
-      <RelatedTools current="color-converter" />
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
-          Frequently Asked <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"
+          Frequently Asked <span class="text-amber-400"
             >Questions</span
           >
         </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
@@ -534,8 +512,8 @@ const useCases = [
     URL.revokeObjectURL(a.href);
   });
   document.getElementById('clear-btn')?.addEventListener('click', () => {
-    hexInput.value = '#7c3aed';
-    picker.value = '#7c3aed';
+    hexInput.value = '#f5ae39';
+    picker.value = '#f5ae39';
     updateFromHex();
     playPing();
   });
@@ -567,23 +545,6 @@ const useCases = [
     const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
     const b = document.getElementById('usage-badge');
     if (b && u['color']) b.textContent = 'Used ' + u['color'] + '×';
-  } catch (e) {}
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
   } catch (e) {}
 
   // ─── Fullscreen ───

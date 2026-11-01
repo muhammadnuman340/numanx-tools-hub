@@ -9,10 +9,19 @@ export async function onRequest(context) {
   }
 
   try {
-    const { rating, message, email, page } = await request.json();
+    const { rating, message, name, email, page } = await request.json();
+    const stars = parseInt(rating, 10);
+    const text = typeof message === 'string' ? message.trim() : '';
+    const cleanEmail = typeof email === 'string' ? email.toLowerCase().trim() : '';
 
-    if (!rating || !message) {
+    if (!(stars >= 1 && stars <= 5) || !text) {
       return new Response(JSON.stringify({ error: 'Rating and message are required' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    if (cleanEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+      return new Response(JSON.stringify({ error: 'That email address looks incomplete.' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });
@@ -20,10 +29,13 @@ export async function onRequest(context) {
 
     const payload = {
       type: 'feedback',
-      rating: parseInt(rating, 10),
-      message: message.trim(),
-      email: email ? email.toLowerCase().trim() : '',
-      page: page || '',
+      site: new URL(request.url).hostname,
+      rating: stars,
+      // Lengths match the form's maxlength, so a scripted request can't flood the sheet
+      message: text.slice(0, 5000),
+      name: typeof name === 'string' ? name.trim().slice(0, 80) : '',
+      email: cleanEmail.slice(0, 254),
+      page: typeof page === 'string' ? page.slice(0, 300) : '',
       timestamp: new Date().toISOString(),
     };
 
@@ -34,9 +46,12 @@ export async function onRequest(context) {
         const resp = await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
+          // The secret proves the request came from this site; it is never stored
+          body: JSON.stringify({ ...payload, secret: env.WEBHOOK_SECRET || '' }),
         });
-        sheetStored = resp.ok;
+        // Apps Script answers 200 even on errors, so read its reply
+        const out = await resp.json().catch(() => ({}));
+        sheetStored = resp.ok && out.success !== false;
       } catch (_) {}
     }
 

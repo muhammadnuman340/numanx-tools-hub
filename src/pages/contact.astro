@@ -24,7 +24,7 @@ const faqItems = [
 <MainLayout
   title="Contact NumanX Studio — Get in Touch"
   description="Have questions, suggestions, or feedback? Reach out to NumanX Studio. We respond within 24 hours."
-  keywords="contact numanx studio, numanx support, feedback, report issue, tool suggestion, numanxstudio@gmail.com"
+  keywords="contact numanx studio, numanx support, feedback, report issue, tool suggestion, contact@numanxstudio.com"
   canonical="https://toolshub.numanxstudio.com/contact/"
   breadcrumbs={[
     { name: 'Home', url: '/' },
@@ -32,19 +32,11 @@ const faqItems = [
   ]}
 >
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
-    <div
-      class="absolute top-[15%] left-[10%] w-[300px] h-[300px] rounded-full bg-purple-600/10 blur-[100px] pointer-events-none -z-10"
-    >
-    </div>
-    <div
-      class="absolute bottom-[20%] right-[10%] w-[350px] h-[350px] rounded-full bg-blue-600/10 blur-[100px] pointer-events-none -z-10"
-    >
-    </div>
     <div class="max-w-5xl mx-auto">
       <!-- Hero -->
       <section class="text-center mb-16 pt-8">
         <div
-          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-surface bg-surface-1 backdrop-blur-sm text-tertiary text-xs font-semibold tracking-wider uppercase mb-8"
+          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-surface bg-surface-1 text-tertiary text-xs font-semibold tracking-wider uppercase mb-8"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +48,7 @@ const faqItems = [
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="text-purple-400"
+            class="text-amber-400"
             ><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline
               points="22,6 12,13 2,6"></polyline></svg
           >
@@ -65,7 +57,7 @@ const faqItems = [
         <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-none">
           We&rsquo;d Love to Hear
           <span
-            class="block mt-2 bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent"
+            class="block mt-2 text-amber-400"
             >From You</span
           >
         </h1>
@@ -81,12 +73,12 @@ const faqItems = [
           <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
             <h2 class="text-base font-bold text-white m-0">Direct Email &amp; Sponsorships</h2>
             <p class="text-xs text-slate-400 mt-1 mb-2">Technical support, partnerships &amp; direct ad bookings:</p>
-            <a href="mailto:numanxstudio@gmail.com" class="text-sm font-semibold text-indigo-400 underline">numanxstudio@gmail.com</a>
+            <a href="mailto:contact@numanxstudio.com" class="inline-flex items-center min-h-6 text-sm font-semibold text-amber-400 underline">contact@numanxstudio.com</a>
           </div>
           <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
             <h2 class="text-base font-bold text-white m-0">Open-Source &amp; Developer Profile</h2>
             <p class="text-xs text-slate-400 mt-1 mb-2">Report issues or inspect our client-side architecture:</p>
-            <a href="https://github.com/muhammadnuman340/numanx-tools-hub" target="_blank" rel="noopener" class="text-sm font-semibold text-indigo-400 underline">github.com/muhammadnuman340/numanx-tools-hub</a>
+            <a href="https://github.com/muhammadnuman340/numanx-tools-hub" target="_blank" rel="noopener" class="inline-flex items-center min-h-6 text-sm font-semibold text-amber-400 underline">github.com/muhammadnuman340/numanx-tools-hub</a>
           </div>
         </div>
       </section>
@@ -98,12 +90,12 @@ const faqItems = [
           class="lg:col-span-3 card-spotlight bg-surface-1/80 border border-surface p-6 md:p-8 rounded-3xl shadow-xl relative overflow-hidden flex flex-col justify-between hover:bg-amber-500/5 transition-all audio-trigger"
         >
           <div
-            class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
+            class="absolute inset-x-0 -top-px h-px bg-amber-500/50"
           >
           </div>
           <div>
             <h2 class="text-xl font-bold text-white mb-6 font-mono tracking-tight flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-purple-500 animate-pulse"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
               Neural Interface Form
             </h2>
             <form id="contact-form" class="space-y-5">
@@ -137,12 +129,12 @@ const faqItems = [
                   id="subject"
                   class="w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/30 focus:border-amber-500/50 focus:outline-none transition-all text-secondary text-sm shadow-inner audio-trigger"
                 >
-                  <option value="" class="bg-[#0a0a0b] text-white">Select a topic</option>
-                  <option value="feedback" class="bg-[#0a0a0b] text-white">Feedback</option>
-                  <option value="bug" class="bg-[#0a0a0b] text-white">Bug Report</option>
-                  <option value="suggestion" class="bg-[#0a0a0b] text-white">Tool Suggestion</option>
-                  <option value="partnership" class="bg-[#0a0a0b] text-white">Partnership</option>
-                  <option value="other" class="bg-[#0a0a0b] text-white">Other</option>
+                  <option value="" class="bg-page text-white">Select a topic</option>
+                  <option value="feedback" class="bg-page text-white">Feedback</option>
+                  <option value="bug" class="bg-page text-white">Bug Report</option>
+                  <option value="suggestion" class="bg-page text-white">Tool Suggestion</option>
+                  <option value="partnership" class="bg-page text-white">Partnership</option>
+                  <option value="other" class="bg-page text-white">Other</option>
                 </select>
               </div>
               <div>
@@ -158,7 +150,7 @@ const faqItems = [
               <button
                 type="submit"
                 id="contact-submit"
-                class="w-full bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-all duration-200 shadow-lg shadow-purple-900/30 hover:shadow-purple-500/20 hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed audio-trigger flex items-center justify-center gap-2 relative overflow-hidden"
+                class="w-full bg-amber-600 hover:bg-amber-500 text-accent-fg font-semibold text-sm px-6 py-3.5 rounded-xl transition-all duration-200 shadow-lg shadow-amber-900/30 hover:shadow-amber-500/20 hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed audio-trigger flex items-center justify-center gap-2 relative overflow-hidden"
               >
                 <span id="submit-text" class="flex items-center gap-2">
                   <svg
@@ -177,7 +169,7 @@ const faqItems = [
                   >
                   Send Message
                 </span>
-                <span id="submit-spinner" class="hidden inline-flex items-center gap-2">
+                <span id="submit-spinner" class="hidden [&:not(.hidden)]:inline-flex items-center gap-2">
                   <svg class="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
@@ -185,7 +177,7 @@ const faqItems = [
                   Sending...
                 </span>
               </button>
-              <p id="contact-msg" class="text-xs text-center hidden"></p>
+              <p id="contact-msg" class="text-xs text-center hidden" role="status" aria-live="polite"></p>
             </form>
           </div>
         </div>
@@ -194,10 +186,10 @@ const faqItems = [
         <div class="lg:col-span-2 space-y-5">
           <!-- Coordinates Sidebar Widget -->
           <div
-            class="card-spotlight bg-surface-1/80 border border-surface p-6 rounded-3xl shadow-xl relative overflow-hidden hover:bg-purple-500/5 transition-all audio-trigger"
+            class="card-spotlight bg-surface-1/80 border border-surface p-6 rounded-3xl shadow-xl relative overflow-hidden hover:bg-amber-500/5 transition-all audio-trigger"
           >
             <div
-              class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
+              class="absolute inset-x-0 -top-px h-px bg-amber-500/50"
             >
             </div>
             <h3 class="text-sm font-bold text-white mb-4 font-mono tracking-tight flex items-center justify-between">
@@ -221,15 +213,15 @@ const faqItems = [
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="text-purple-400 mt-0.5 shrink-0"
+                  class="text-amber-400 mt-0.5 shrink-0"
                   ><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
                   ></path><polyline points="22,6 12,13 2,6"></polyline></svg
                 >
                 <div>
                   <p class="text-xs font-semibold text-secondary">General Inquiries</p>
                   <a
-                    href="mailto:numanxstudio@gmail.com"
-                    class="text-xs text-muted hover:text-purple-400 transition-colors">numanxstudio@gmail.com</a
+                    href="mailto:contact@numanxstudio.com"
+                    class="inline-flex items-center min-h-6 text-xs text-muted hover:text-amber-400 transition-colors">contact@numanxstudio.com</a
                   >
                 </div>
               </div>
@@ -244,15 +236,15 @@ const faqItems = [
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="text-purple-400 mt-0.5 shrink-0"
+                  class="text-amber-400 mt-0.5 shrink-0"
                   ><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 10h.01"
                   ></path><path d="M12 10h.01"></path><path d="M16 10h.01"></path></svg
                 >
                 <div>
                   <p class="text-xs font-semibold text-secondary">Support</p>
                   <a
-                    href="mailto:numanxstudio@gmail.com"
-                    class="text-xs text-muted hover:text-purple-400 transition-colors">numanxstudio@gmail.com</a
+                    href="mailto:contact@numanxstudio.com"
+                    class="inline-flex items-center min-h-6 text-xs text-muted hover:text-amber-400 transition-colors">contact@numanxstudio.com</a
                   >
                 </div>
               </div>
@@ -267,15 +259,15 @@ const faqItems = [
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="text-purple-400 mt-0.5 shrink-0"
+                  class="text-amber-400 mt-0.5 shrink-0"
                   ><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
                   ></path></svg
                 >
                 <div>
                   <p class="text-xs font-semibold text-secondary">Business / Partnerships</p>
                   <a
-                    href="mailto:numanxstudio@gmail.com"
-                    class="text-xs text-muted hover:text-purple-400 transition-colors">numanxstudio@gmail.com</a
+                    href="mailto:contact@numanxstudio.com"
+                    class="inline-flex items-center min-h-6 text-xs text-muted hover:text-amber-400 transition-colors">contact@numanxstudio.com</a
                   >
                 </div>
               </div>
@@ -290,7 +282,7 @@ const faqItems = [
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="text-purple-400 mt-0.5 shrink-0"
+                  class="text-amber-400 mt-0.5 shrink-0"
                   ><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"
                   ></circle></svg
                 >
@@ -298,7 +290,7 @@ const faqItems = [
                   <p class="text-xs font-semibold text-secondary">Location Coordinates</p>
                   <p class="text-xs text-muted">
                     Karachi, Pakistan <span
-                      class="font-mono text-[10px] text-purple-400 ml-1 bg-purple-950/40 px-1 py-0.5 rounded"
+                      class="font-mono text-[10px] text-amber-400 ml-1 bg-amber-950/40 px-1 py-0.5 rounded"
                       >[24.8607° N, 67.0011° E]</span
                     >
                   </p>
@@ -315,7 +307,7 @@ const faqItems = [
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="text-purple-400 mt-0.5 shrink-0"
+                  class="text-amber-400 mt-0.5 shrink-0"
                   ><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg
                 >
                 <div>
@@ -327,34 +319,34 @@ const faqItems = [
           </div>
 
           <div
-            class="card-spotlight bg-surface-1/80 border border-surface p-6 rounded-3xl shadow-xl relative overflow-hidden hover:bg-purple-500/5 transition-all audio-trigger"
+            class="card-spotlight bg-surface-1/80 border border-surface p-6 rounded-3xl shadow-xl relative overflow-hidden hover:bg-amber-500/5 transition-all audio-trigger"
           >
             <div
-              class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
+              class="absolute inset-x-0 -top-px h-px bg-amber-500/50"
             >
             </div>
             <h3 class="text-sm font-bold text-white mb-4 font-mono tracking-tight">Quick Links</h3>
-            <div class="space-y-2">
-              <a href="/about/" class="block text-xs text-tertiary hover:text-purple-400 transition-colors"
+            <div class="space-y-1">
+              <a href="/about/" class="flex items-center min-h-6 text-xs text-tertiary hover:text-amber-400 transition-colors"
                 >About NumanX Studio</a
               >
-              <a href="/privacy-policy/" class="block text-xs text-tertiary hover:text-purple-400 transition-colors"
+              <a href="/privacy-policy/" class="flex items-center min-h-6 text-xs text-tertiary hover:text-amber-400 transition-colors"
                 >Privacy Policy</a
               >
-              <a href="/terms-of-service/" class="block text-xs text-tertiary hover:text-purple-400 transition-colors"
+              <a href="/terms-of-service/" class="flex items-center min-h-6 text-xs text-tertiary hover:text-amber-400 transition-colors"
                 >Terms of Service</a
               >
-              <a href="/tools/" class="block text-xs text-tertiary hover:text-purple-400 transition-colors"
+              <a href="/tools/" class="flex items-center min-h-6 text-xs text-tertiary hover:text-amber-400 transition-colors"
                 >Browse Tools</a
               >
             </div>
           </div>
 
           <div
-            class="card-spotlight bg-surface-1/80 border border-surface p-6 rounded-3xl shadow-xl relative overflow-hidden hover:bg-purple-500/5 transition-all audio-trigger"
+            class="card-spotlight bg-surface-1/80 border border-surface p-6 rounded-3xl shadow-xl relative overflow-hidden hover:bg-amber-500/5 transition-all audio-trigger"
           >
             <div
-              class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
+              class="absolute inset-x-0 -top-px h-px bg-amber-500/50"
             >
             </div>
             <h3 class="text-sm font-bold text-white mb-4 font-mono tracking-tight">Follow Us</h3>
@@ -363,7 +355,7 @@ const faqItems = [
                 href="https://github.com/muhammadnuman340/numanx-tools-hub"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all audio-trigger"
+                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-amber-500/30 transition-all audio-trigger"
                 aria-label="GitHub"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
@@ -376,7 +368,7 @@ const faqItems = [
                 href="https://x.com/numanxstudio"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all audio-trigger"
+                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-amber-500/30 transition-all audio-trigger"
                 aria-label="Twitter / X"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
@@ -389,7 +381,7 @@ const faqItems = [
                 href="https://instagram.com/numanxstudio"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all audio-trigger"
+                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-amber-500/30 transition-all audio-trigger"
                 aria-label="Instagram"
               >
                 <svg
@@ -414,7 +406,7 @@ const faqItems = [
                 href="https://facebook.com/numanxstudio"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all audio-trigger"
+                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-amber-500/30 transition-all audio-trigger"
                 aria-label="Facebook"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
@@ -427,7 +419,7 @@ const faqItems = [
                 href="https://tiktok.com/@numanxstudio"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all audio-trigger"
+                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-amber-500/30 transition-all audio-trigger"
                 aria-label="TikTok"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
@@ -440,7 +432,7 @@ const faqItems = [
                 href="https://youtube.com/@numanxstudio"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-purple-500/30 transition-all audio-trigger"
+                class="w-9 h-9 rounded-xl bg-surface-2 border border-surface flex items-center justify-center text-tertiary hover:text-white hover:bg-surface-3 hover:border-amber-500/30 transition-all audio-trigger"
                 aria-label="YouTube"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
@@ -458,7 +450,7 @@ const faqItems = [
       <section>
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
           Frequently Asked
-          <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+          <span class="text-amber-400">Questions</span>
         </h2>
         <div class="max-w-3xl mx-auto">
           <Accordion items={faqItems} />
@@ -519,9 +511,27 @@ const faqItems = [
         const email = (document.getElementById('email') as HTMLInputElement).value.trim();
         const subject = (document.getElementById('subject') as HTMLSelectElement).value;
         const message = (document.getElementById('message') as HTMLTextAreaElement).value.trim();
-        if (!name || !email || !message) {
+        // Tie the error to the empty fields so screen readers read it on focus
+        const empty = (
+          [
+            ['name', name],
+            ['email', email],
+            ['message', message],
+          ] as const
+        ).filter(([, v]) => !v);
+        form.querySelectorAll('[aria-invalid]').forEach((f) => {
+          f.removeAttribute('aria-invalid');
+          f.removeAttribute('aria-describedby');
+        });
+        if (empty.length) {
+          empty.forEach(([id]) => {
+            const f = document.getElementById(id);
+            f?.setAttribute('aria-invalid', 'true');
+            f?.setAttribute('aria-describedby', 'contact-msg');
+          });
           msg.className = 'text-xs text-red-400 text-center mt-3 block';
           msg.textContent = 'Please fill in all required fields.';
+          document.getElementById(empty[0][0])?.focus();
           return;
         }
         msg.className = 'text-xs text-center hidden';
@@ -546,7 +556,7 @@ const faqItems = [
         } catch (err) {
           console.error('Contact form submission error:', err);
           msg.className = 'text-xs text-red-400 text-center mt-3 block';
-          msg.innerHTML = 'Unable to send message. Please email directly at <a href="mailto:numanxstudio@gmail.com" class="underline text-purple-400 font-bold">numanxstudio@gmail.com</a>';
+          msg.innerHTML = 'Unable to send message. Please email directly at <a href="mailto:contact@numanxstudio.com" class="underline text-amber-400 font-bold">contact@numanxstudio.com</a>';
         }
         submitBtn.disabled = false;
         submitText.classList.remove('hidden');

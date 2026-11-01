@@ -28,7 +28,7 @@
         .map(
           (item) => `
         <li>
-          <a href="#${item.id}" class="toc-link block ${item.tag === 'H3' ? 'pl-3' : ''} text-xs ${item.tag === 'H3' ? 'text-dim' : 'text-muted'} hover:text-purple-400 transition-colors truncate">
+          <a href="#${item.id}" class="toc-link block py-1 ${item.tag === 'H3' ? 'pl-3' : ''} text-xs ${item.tag === 'H3' ? 'text-dim' : 'text-muted'} hover:text-amber-400 transition-colors truncate">
             ${item.text}
           </a>
         </li>
@@ -41,9 +41,9 @@
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              links.forEach((l) => l.classList.remove('text-purple-400'));
+              links.forEach((l) => l.classList.remove('text-amber-400'));
               const active = toc.querySelector<HTMLAnchorElement>(`a[href="#${entry.target.id}"]`);
-              if (active) active.classList.add('text-purple-400');
+              if (active) active.classList.add('text-amber-400');
             }
           });
         },

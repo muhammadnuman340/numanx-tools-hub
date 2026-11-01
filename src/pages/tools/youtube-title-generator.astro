@@ -1,8 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
 
@@ -113,7 +111,7 @@ const useCases = [
     { name: 'YouTube Title Generator', url: '/tools/youtube-title-generator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="YouTube Title"
@@ -122,7 +120,6 @@ const useCases = [
         badge="✦ New Tool"
         slug="youtube-title-generator"
       />
-      <ShareBar />
       <div class="max-w-2xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6 relative">
           <label class="text-xs font-semibold text-muted uppercase tracking-wider mb-2 block">Main Topic or Keyword</label>
@@ -154,10 +151,9 @@ const useCases = [
         howToSteps={howToSteps}
         useCases={useCases}
       />
-      <RelatedTools current="youtube-title-generator" />
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
-          Frequently Asked <span class="bg-gradient-to-r from-red-400 to-orange-500 bg-clip-text text-transparent"
+          Frequently Asked <span class="text-amber-400"
             >Questions</span
           >
         </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />

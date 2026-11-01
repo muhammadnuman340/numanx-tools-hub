@@ -1,8 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
 
@@ -114,16 +112,15 @@ const useCases = [
     { name: 'Color Contrast Checker', url: '/tools/color-contrast-checker/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="Contrast"
-        gradient="Checker Pro"
+        gradient="Checker"
         desc="Check color contrast ratios for WCAG AA/AAA compliance. Enter foreground and background hex colors to verify accessibility."
         badge="✦ New Tool"
         slug="color-contrast-checker"
       />
-      <ShareBar />
       <div class="max-w-xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6">
           <div class="flex items-center justify-between mb-4">
@@ -132,24 +129,6 @@ const useCases = [
               <span id="usage-badge" class="text-xs text-muted"></span>
             </div>
             <div class="flex items-center gap-2">
-              <div class="flex gap-1">
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="purple"
-                  style="background:#a855f7"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="blue"
-                  style="background:#3b82f6"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="green"
-                  style="background:#22c55e"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="pink"
-                  style="background:#ec4899"></button>
-              </div>
             </div>
           </div>
           <div class="grid grid-cols-2 gap-4 mb-4">
@@ -159,7 +138,7 @@ const useCases = [
                 type="text"
                 value="#ffffff"
                 maxlength="7"
-                class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-violet-400/50 focus:outline-none transition-all uppercase" aria-label="Foreground color"
+                class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-amber-400/50 focus:outline-none transition-all uppercase" aria-label="Foreground color"
               /><div id="fg-preview" class="mt-2 h-12 rounded-xl border border-surface-3" style="background:#ffffff">
               </div>
             </div>
@@ -169,14 +148,14 @@ const useCases = [
                 type="text"
                 value="#000000"
                 maxlength="7"
-                class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-violet-400/50 focus:outline-none transition-all uppercase" aria-label="Background color"
+                class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm font-mono focus:border-amber-400/50 focus:outline-none transition-all uppercase" aria-label="Background color"
               /><div id="bg-preview" class="mt-2 h-12 rounded-xl border border-surface-3" style="background:#000000">
               </div>
             </div>
           </div>
           <button
             id="check-btn"
-            class="w-full bg-gradient-to-r from-violet-400 to-purple-500 text-white font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all"
+            class="w-full text-accent-fg font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all bg-amber-400"
             >Check Contrast</button
           >
           <div class="flex gap-2 mt-4">
@@ -222,10 +201,9 @@ const useCases = [
         howToSteps={howToSteps}
         useCases={useCases}
       />
-      <RelatedTools current="color-contrast-checker" />
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
-          Frequently Asked <span class="bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
+          Frequently Asked <span class="text-amber-400"
             >Questions</span
           >
         </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
@@ -373,23 +351,6 @@ const useCases = [
     const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
     const b = document.getElementById('usage-badge');
     if (b && u['contrast']) b.textContent = 'Used ' + u['contrast'] + '×';
-  } catch (e) {}
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-violet'],button[class*='bg-purple']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(violet|purple)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(violet|purple)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
   } catch (e) {}
   updatePreviews();
 

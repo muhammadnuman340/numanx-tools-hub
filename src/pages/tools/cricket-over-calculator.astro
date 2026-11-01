@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
@@ -50,48 +49,29 @@ const schema = {
     { name: 'Cricket Over Calculator', url: '/tools/cricket-over-calculator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="Cricket"
-        gradient="Overs Pro"
+        gradient="Overs"
         desc="Convert between balls and overs for cricket scoring. Enter balls to get overs or enter overs to get total balls."
         badge="✦ New Tool"
         slug="cricket-over-calculator"
       />
-      <ShareBar />
       <div class="max-w-xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6 relative">
           <button
             id="fullscreen-btn"
-            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
             title="Fullscreen">⛶</button
           >
           <div class="flex items-center gap-2 mb-3">
             <span id="usage-badge" class="text-xs text-muted"></span>
-            <div class="flex gap-1 ml-auto">
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="purple"
-                style="background:#a855f7"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="blue"
-                style="background:#3b82f6"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="green"
-                style="background:#22c55e"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="pink"
-                style="background:#ec4899"></button>
-            </div>
           </div>
           <div class="flex gap-2 mb-4">
             <button
               id="mode-balls"
-              class="flex-1 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all"
+              class="flex-1 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all bg-yellow-400"
               >Balls → Overs</button
             >
             <button
@@ -105,15 +85,16 @@ const schema = {
             <input
               id="balls-input"
               type="number"
+              inputmode="numeric"
               min="0"
               step="1"
-              value="0"
+              value=""
               class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-yellow-400/50 focus:outline-none transition-all mb-4"
               placeholder="e.g. 87" aria-label="Total balls"
             />
             <button
               id="convert-balls-btn"
-              class="w-full bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all"
+              class="w-full text-black font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all bg-yellow-400"
               >Convert to Overs</button
             >
             <div id="balls-result" class="mt-4 pt-4 border-t border-surface hidden">
@@ -138,16 +119,15 @@ const schema = {
             <label class="block text-xs font-medium text-tertiary mb-1.5">Overs (e.g. 12.3)</label>
             <input
               id="overs-input"
-              type="number"
-              min="0"
-              step="0.1"
-              value="0"
+              type="text"
+              inputmode="decimal"
+              value=""
               class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-yellow-400/50 focus:outline-none transition-all mb-4"
               placeholder="e.g. 12.3" aria-label="Overs"
             />
             <button
               id="convert-overs-btn"
-              class="w-full bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all"
+              class="w-full text-black font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all bg-yellow-400"
               >Convert to Balls</button
             >
             <div id="overs-result" class="mt-4 pt-4 border-t border-surface hidden">
@@ -189,7 +169,7 @@ const schema = {
           <span class="text-xs font-semibold text-yellow-400 uppercase tracking-wider">Learn</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
-            Cricket <span class="bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent"
+            Cricket <span class="text-amber-400"
               >Over Conversions</span
             >
           </h2>
@@ -205,7 +185,7 @@ const schema = {
       <RelatedTools current="cricket-over-calculator" />
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
-          Frequently Asked <span class="bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent"
+          Frequently Asked <span class="text-amber-400"
             >Questions</span
           >
         </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
@@ -214,6 +194,10 @@ const schema = {
   </main>
 </MainLayout>
 <script>
+  import { parseOvers, parseWholeNumber } from '../../utils/cricketAnalytics.js';
+  import { checkField, clearFieldError } from '../../lib/fieldError';
+  import { setToolStatus } from '../../lib/toolStatus';
+
   const modeBallsBtn = document.getElementById('mode-balls');
   const modeOversBtn = document.getElementById('mode-overs');
   const ballsMode = document.getElementById('balls-mode');
@@ -234,7 +218,7 @@ const schema = {
 
   modeBallsBtn.addEventListener('click', () => {
     modeBallsBtn.className =
-      'flex-1 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all';
+      'flex-1 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all bg-yellow-400';
     modeOversBtn.className =
       'flex-1 bg-surface-2 text-tertiary hover:text-primary text-xs font-medium px-4 py-2 rounded-xl border border-surface-3 transition-all';
     ballsMode.classList.remove('hidden');
@@ -243,7 +227,7 @@ const schema = {
 
   modeOversBtn.addEventListener('click', () => {
     modeOversBtn.className =
-      'flex-1 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all';
+      'flex-1 text-black font-bold text-xs px-4 py-2 rounded-xl transition-all bg-yellow-400';
     modeBallsBtn.className =
       'flex-1 bg-surface-2 text-tertiary hover:text-primary text-xs font-medium px-4 py-2 rounded-xl border border-surface-3 transition-all';
     oversMode.classList.remove('hidden');
@@ -251,24 +235,41 @@ const schema = {
   });
 
   convertBallsBtn.addEventListener('click', () => {
-    const balls = parseInt(ballsInput.value) || 0;
+    const parsed = checkField(ballsInput, parseWholeNumber(ballsInput.value, { max: 99999, label: 'Total balls' }));
+    if (!parsed.ok) {
+      ballsInput.focus();
+      ballsResult.classList.add('hidden');
+      return;
+    }
+    const balls = parsed.value;
     const oversInt = Math.floor(balls / 6);
     const remBalls = balls % 6;
-    const oversNotation = oversInt + '.' + remBalls;
-    oversOutput.textContent = oversNotation;
-    totalBallsDisplay.textContent = balls;
-    completeOvers.textContent = oversInt;
-    remainingBalls.textContent = remBalls;
+    oversOutput.textContent = oversInt + '.' + remBalls;
+    totalBallsDisplay.textContent = String(balls);
+    completeOvers.textContent = String(oversInt);
+    remainingBalls.textContent = String(remBalls);
     ballsResult.classList.remove('hidden');
+    setToolStatus('complete', `${balls} balls is ${oversInt}.${remBalls} overs.`);
   });
 
   convertOversBtn.addEventListener('click', () => {
-    const oversRaw = parseFloat(oversInput.value) || 0;
-    const whole = Math.floor(oversRaw);
-    const frac = Math.round((oversRaw - whole) * 10);
-    const totalBalls = whole * 6 + (frac > 6 ? 6 : frac);
-    ballsOutput.textContent = totalBalls;
+    const parsed = checkField(oversInput, parseOvers(oversInput.value, { allowZero: true, label: 'Overs' }));
+    if (!parsed.ok) {
+      oversInput.focus();
+      oversResult.classList.add('hidden');
+      return;
+    }
+    ballsOutput.textContent = String(parsed.balls);
     oversResult.classList.remove('hidden');
+    setToolStatus('complete', `${oversInput.value.trim()} overs is ${parsed.balls} balls.`);
+  });
+
+  [ballsInput, oversInput].forEach((el) => el.addEventListener('input', () => clearFieldError(el)));
+  ballsInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') convertBallsBtn.click();
+  });
+  oversInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') convertOversBtn.click();
   });
 
   // ─── Copy ───
@@ -303,7 +304,10 @@ const schema = {
 
   // ─── Clear ───
   document.getElementById('clear-btn')?.addEventListener('click', () => {
-    document.querySelectorAll('input[type=number]').forEach((i) => (i.value = '0'));
+    [ballsInput, oversInput].forEach((i) => {
+      i.value = '';
+      clearFieldError(i);
+    });
     document.querySelectorAll("[id$='result']").forEach((el) => el.classList.add('hidden'));
   });
 
@@ -374,22 +378,4 @@ const schema = {
     } catch (e) {}
   }
 
-  // ─── Color theme picker ───
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 </script>

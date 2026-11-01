@@ -1,58 +1,46 @@
 :root,
 html[data-theme='dark'] {
-  /* ─── Brand Colors ─── */
-  --purple-50: #fff5f5;
-  --purple-100: #ffe3e3;
-  --purple-200: #ffc9c9;
-  --purple-300: #ffa3a3;
-  --purple-400: #fb7185; /* Sunset Rose */
-  --purple-500: #ff5a36; /* Glowing Orange-Red */
-  --purple-600: #f43f5e; /* Vivid Rose-Crimson */
-  --purple-700: #ea580c; /* High-intensity Orange */
-  --purple-800: #c2410c; /* Volcanic sunset */
-  --purple-900: #9a3412; /* Coals burn */
-  --purple-950: #431407; /* Volcano black */
-
-  --blue-400: #fb923c;
-  --blue-500: #f97316;
-  --blue-600: #ea580c;
-
-  --emerald-400: #34d399;
-  --emerald-500: #10b981;
-
-  --amber-400: #fbbf24;
-  --amber-500: #f59e0b;
-
-  --red-400: #f87171;
-  --red-500: #ef4444;
+  /* ─── Accent ramp (amber, hue 75) ───
+     Lighter and darker steps of --accent for text on dark panels, borders and hovers.
+     These replace the old --purple-* / --blue-* / --amber-* names, which held amber values. */
+  --accent-50: oklch(0.97 0.02 var(--hue));
+  --accent-100: oklch(0.94 0.045 var(--hue));
+  --accent-200: oklch(0.9 0.08 var(--hue));
+  --accent-300: oklch(0.86 0.12 var(--hue));
+  --accent-400: oklch(0.84 0.14 var(--hue));
+  --accent-600: oklch(0.72 0.15 70);
+  --accent-700: oklch(0.62 0.14 65);
+  --accent-800: oklch(0.52 0.12 60);
+  --accent-900: oklch(0.42 0.1 58);
+  --accent-950: oklch(0.3 0.07 55);
 
   /* ─── Neutral Palette ─── */
-  --bg-base: #0a0a0b;
-  --bg-surface: #111113;
-  --bg-elevated: #18181b;
-  --bg-overlay: rgba(24, 24, 27, 0.7);
-  --bg-glass: rgba(24, 24, 27, 0.3);
+  --bg-base: var(--bg);
+  --bg-surface: var(--panel);
+  --bg-elevated: var(--panel-2);
+  --bg-overlay: oklch(0.2 0.014 var(--hue) / 0.92);
+  --bg-glass: var(--panel);
 
-  --border-subtle: rgba(39, 39, 42, 0.5);
-  --border-default: rgba(39, 39, 42, 0.8);
-  --border-hover: rgba(63, 63, 70, 0.9);
-  --border-accent: rgba(251, 113, 133, 0.35);
-  --border-accent-hover: rgba(251, 113, 133, 0.55);
+  --border-subtle: var(--line);
+  --border-default: var(--line-strong);
+  --border-hover: oklch(0.98 0.005 var(--hue) / 0.26);
+  --border-accent: oklch(0.8 var(--accent-c) var(--hue) / 0.35);
+  --border-accent-hover: oklch(0.8 var(--accent-c) var(--hue) / 0.55);
 
-  --surface-1: rgba(255, 255, 255, 0.02);
-  --surface-2: rgba(255, 255, 255, 0.04);
-  --surface-3: rgba(255, 255, 255, 0.06);
-  --surface-nav: rgba(10, 10, 11, 0.9);
-  --surface-search: rgba(0, 0, 0, 0.85);
-  --border-surface: rgba(255, 255, 255, 0.06);
-  --border-surface-2: rgba(255, 255, 255, 0.08);
-  --border-surface-3: rgba(255, 255, 255, 0.1);
+  --surface-1: oklch(0.98 0.01 var(--hue) / 0.03);
+  --surface-2: oklch(0.98 0.01 var(--hue) / 0.05);
+  --surface-3: oklch(0.98 0.01 var(--hue) / 0.07);
+  --surface-nav: var(--panel);
+  --surface-search: oklch(0.13 0.01 var(--hue) / 0.9);
+  --border-surface: var(--line);
+  --border-surface-2: oklch(0.98 0.005 var(--hue) / 0.14);
+  --border-surface-3: var(--line-strong);
 
-  --text-primary: #f4f4f5;
-  --text-secondary: #d4d4d8;
-  --text-tertiary: #a1a1aa;
-  --text-muted: #8a8a95;
-  --text-dim: #767680;
+  --text-primary: var(--text);
+  --text-secondary: oklch(0.87 0.01 var(--hue));
+  --text-tertiary: var(--text-soft);
+  --text-muted: oklch(0.7 0.014 var(--hue)); /* was #8a8a95 */
+  --text-dim: oklch(0.66 0.014 var(--hue)); /* was #767680, failed AA on cards */
 
   /* ─── Typography ─── */
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -89,12 +77,9 @@ html[data-theme='dark'] {
   --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.5);
   --shadow-2xl: 0 30px 80px rgba(0, 0, 0, 0.6);
 
-  --shadow-glow-purple: 0 0 40px rgba(255, 90, 54, 0.22);
-  --shadow-glow-blue: 0 0 40px rgba(249, 115, 22, 0.22);
-  --shadow-glow-emerald: 0 0 40px rgba(16, 185, 129, 0.25);
 
   --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
-  --shadow-card-hover: 0 10px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(251, 113, 133, 0.35);
+  --shadow-card-hover: 0 10px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--border-accent);
 
   /* ─── Border Radius ─── */
   --radius-sm: 0.5rem;
@@ -120,83 +105,107 @@ html[data-theme='dark'] {
   --z-toast: 400;
 }
 
-/* ─── Glassmorphism Utilities ─── */
+/* ─── DESIGN.md tokens (amber brand, OKLCH) ───
+   New system from DESIGN.md §2. Names never clash with the older tokens above,
+   so adding them changes nothing until components switch over (plan Phase 6). */
+:root,
+html[data-theme='dark'] {
+  --hue: 75;
+  --accent-c: 0.15;
+
+  --bg: oklch(0.16 0.012 var(--hue));
+  --panel: oklch(0.2 0.014 var(--hue));
+  --panel-2: oklch(0.24 0.016 var(--hue));
+  --well: oklch(0.13 0.01 var(--hue));
+  --line: oklch(0.98 0.005 var(--hue) / 0.1);
+  --line-strong: oklch(0.98 0.005 var(--hue) / 0.18);
+
+  --text: oklch(0.95 0.008 var(--hue));
+  --text-soft: oklch(0.76 0.014 var(--hue));
+  --text-faint: oklch(0.66 0.014 var(--hue));
+
+  --accent: oklch(0.8 var(--accent-c) var(--hue));
+  --accent-fg: oklch(0.18 0.02 var(--hue));
+  --focus: oklch(0.9 0.1 var(--hue));
+
+  --success: oklch(0.74 0.15 150);
+  --warning: oklch(0.72 0.17 50);
+  --danger: oklch(0.68 0.19 27);
+
+  /* Syntax colours for code boxes (data colours, not brand): all ≥ 4.5:1 on --well */
+  --code-text: oklch(0.92 0.01 var(--hue));
+  --code-keyword: oklch(0.8 0.14 var(--hue)); /* amber: SELECT, const, if */
+  --code-string: oklch(0.8 0.13 145); /* green */
+  --code-number: oklch(0.8 0.1 300); /* lilac: numbers, true/false/null, #hex */
+  --code-function: oklch(0.82 0.1 235); /* blue: count(), map() */
+  --code-property: oklch(0.84 0.09 195); /* cyan: JSON keys, CSS properties */
+  --code-tag: oklch(0.76 0.13 25); /* coral: HTML tags, CSS selectors */
+  --code-attr: oklch(0.85 0.1 95); /* yellow: HTML attributes */
+  --code-type: oklch(0.83 0.09 170); /* teal: types, class names */
+  --code-comment: oklch(0.66 0.02 var(--hue));
+  --code-punct: oklch(0.72 0.014 var(--hue));
+
+  --radius-outer: 14px;
+  --pad: 6px;
+  --radius-inner: calc(var(--radius-outer) - var(--pad));
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
+  --step-1: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
+  --step-2: clamp(1.56rem, 1.38rem + 0.9vw, 2.1rem);
+  --step-3: clamp(1.95rem, 1.62rem + 1.6vw, 2.6rem);
+  --step-4: clamp(2.44rem, 1.9rem + 2.7vw, 3.6rem);
+}
+
+/* ─── Surfaces (DESIGN.md §1: hairlines and surface shifts, no glass, glow or blur) ───
+   The old class names stay so existing markup keeps working. */
 .glass {
-  background: var(--bg-glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-subtle);
+  background: var(--panel);
+  border: 1px solid var(--line);
 }
 
 .glass-strong {
-  background: var(--bg-overlay);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border-default);
+  background: var(--panel-2);
+  border: 1px solid var(--line-strong);
 }
 
 .glass-card {
-  background: linear-gradient(135deg, rgba(24, 24, 27, 0.4), rgba(24, 24, 27, 0.2));
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-subtle);
-  box-shadow: var(--shadow-card);
-  transition: all var(--transition-base);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  transition:
+    border-color var(--transition-base),
+    background-color var(--transition-base);
 }
 
-.glass-card:hover {
-  border-color: var(--border-accent);
-  box-shadow: var(--shadow-card-hover), var(--shadow-glow-purple);
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .glass-card:hover {
+    border-color: var(--line-strong);
+  }
 }
 
-/* ─── Gradient Text ─── */
-.gradient-text {
-  background: linear-gradient(135deg, var(--purple-400), var(--purple-500), var(--blue-500));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
+/* ─── Former gradient text: solid colour (gradient text is banned, DESIGN.md §9) ─── */
+.gradient-text,
 .gradient-text-amber {
-  background: linear-gradient(135deg, var(--amber-400), var(--amber-500));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ─── Glow Effects ─── */
-.glow-purple {
-  box-shadow: var(--shadow-glow-purple);
-}
-
-.glow-blue {
-  box-shadow: var(--shadow-glow-blue);
+  color: var(--accent);
 }
 
 .glow-border {
-  position: relative;
+  transition: border-color var(--transition-base);
 }
 
-.glow-border::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, var(--purple-500), transparent, var(--blue-500));
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity var(--transition-base);
-}
-
-.glow-border:hover::before {
-  opacity: 1;
+@media (hover: hover) {
+  .glow-border:hover {
+    border-color: var(--line-strong);
+  }
 }
 
 /* ─── Animations ─── */
@@ -209,10 +218,12 @@ html[data-theme='dark'] {
   }
 }
 
+/* Content entrance: starts at 60% opacity so text is never invisible, even if the
+   animation is throttled (busy or background tab) — DESIGN.md §6 */
 @keyframes fadeInUp {
   from {
-    opacity: 0;
-    transform: translateY(16px);
+    opacity: 0.6;
+    transform: translateY(8px);
   }
   to {
     opacity: 1;

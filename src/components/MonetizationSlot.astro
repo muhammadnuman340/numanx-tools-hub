@@ -27,7 +27,7 @@ const PARTNER_OFFERS: Record<string, { badge: string; title: string; desc: strin
     desc: 'Discover high-velocity viral keywords, daily video ideas, and real-time competitor tag audits.',
     cta: 'Try VidIQ Free →',
     href: 'https://vidiq.com/?utm_source=numanx_tools',
-    accent: 'border-indigo-500/40 bg-indigo-950/30'
+    accent: 'border-amber-500/40 bg-amber-950/30'
   },
   utility: {
     badge: 'Security Recommendation',
@@ -50,7 +50,7 @@ const PARTNER_OFFERS: Record<string, { badge: string; title: string; desc: strin
     title: 'Stream Live PSL, IPL & ICC Tournaments Anywhere + Follow World Wonders & Sports',
     desc: 'Unblock HD sports broadcasts globally with high-speed VPN protection and get deep cricket statistical breakdowns.',
     cta: 'Explore Cricket Hub →',
-    href: 'mailto:numanxstudio@gmail.com?subject=Cricket%20Tool%20Sponsorship',
+    href: 'mailto:contact@numanxstudio.com?subject=Cricket%20Tool%20Sponsorship',
     accent: 'border-emerald-500/40 bg-emerald-950/30'
   },
   ai: {
@@ -58,8 +58,8 @@ const PARTNER_OFFERS: Record<string, { badge: string; title: string; desc: strin
     title: 'Scale Your Academic & Content Research with Pro AI Workspace Tools',
     desc: 'Combine NumanX local browser NLP with automated citation management and long-document synthesis.',
     cta: 'Explore AI Suite →',
-    href: 'mailto:numanxstudio@gmail.com?subject=AI%20Tool%20Partnership',
-    accent: 'border-purple-500/40 bg-purple-950/30'
+    href: 'mailto:contact@numanxstudio.com?subject=AI%20Tool%20Partnership',
+    accent: 'border-amber-500/40 bg-amber-950/30'
   },
   developer: {
     badge: 'Cloud & Edge Partner',
@@ -85,10 +85,10 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
 ---
 
 {slotType === 'post-tool-affiliate' && (
-  <aside aria-label="Recommended Tool Partner" class={`my-7 p-4 sm:p-5 rounded-xl border ${offer.accent} flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 backdrop-blur-md ${className}`}>
+  <aside aria-label="Recommended Tool Partner" class={`my-7 p-4 sm:p-5 rounded-xl border ${offer.accent} flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${className}`}>
     <div class="space-y-1">
       <div class="flex items-center gap-2">
-        <span class="text-xs font-semibold px-2.5 py-0.5 rounded-lg bg-zinc-900 text-purple-300 border border-zinc-700">
+        <span class="text-xs font-semibold px-2.5 py-0.5 rounded-lg bg-zinc-900 text-amber-300 border border-zinc-700">
           {offer.badge}
         </span>
         <span class="text-xs text-zinc-400"> keeps NumanX 100% free & zero-server</span>
@@ -100,7 +100,7 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
       href={offer.href}
       target="_blank"
       rel="sponsored noopener noreferrer"
-      class="shrink-0 px-4 py-2.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold transition no-underline shadow-lg hover:scale-105 active:scale-95"
+      class="shrink-0 px-4 py-2.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-accent-fg text-xs font-semibold transition no-underline shadow-lg hover:scale-105 active:scale-95"
     >
       {offer.cta}
     </a>
@@ -116,7 +116,7 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
       Instant setup via USDT, Payoneer, NayaPay, Easypaisa, or JazzCash.
     </div>
     <a
-      href="mailto:numanxstudio@gmail.com?subject=Sponsor%20NumanX%20Tools%20Hub"
+      href="mailto:contact@numanxstudio.com?subject=Sponsor%20NumanX%20Tools%20Hub"
       class="shrink-0 px-3.5 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 text-xs font-semibold no-underline transition"
     >
       Book Sponsor Slot →
@@ -125,7 +125,7 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
 )}
 
 {slotType === 'pakistan-support-bar' && (
-  <div class={`my-6 p-4 rounded-xl bg-gradient-to-r from-emerald-950/40 via-slate-900/80 to-indigo-950/40 border border-emerald-500/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs ${className}`}>
+  <div class={`my-6 p-4 rounded-xl bg-panel border border-line flex flex-col sm:flex-row items-center justify-between gap-3 text-xs ${className}`}>
     <div class="flex items-center gap-2.5 text-slate-300">
       <span class="flex h-2 w-2 relative">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -143,7 +143,7 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
   </div>
 
   <!-- ─── Pakistan & Global Direct Tip / Sponsor Modal ─── -->
-  <dialog id="numanx-tip-modal" class="fixed inset-0 m-auto p-0 bg-transparent backdrop:bg-slate-950/80 backdrop:backdrop-blur-sm z-50 max-w-lg w-[calc(100%-2rem)] rounded-2xl border border-slate-700 shadow-2xl overflow-hidden text-slate-200">
+  <dialog id="numanx-tip-modal" class="fixed inset-0 m-auto p-0 bg-transparent backdrop:bg-slate-950/80 z-50 max-w-lg w-[calc(100%-2rem)] rounded-2xl border border-slate-700 shadow-2xl overflow-hidden text-slate-200">
     <div class="bg-slate-900 p-6 space-y-4">
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
         <div class="flex items-center gap-2">
@@ -165,7 +165,7 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
           <button
             type="button"
             data-target={pm.id}
-            class={`tip-tab-btn flex-1 min-w-[70px] py-1.5 px-2 rounded-lg text-xs font-semibold transition text-center cursor-pointer ${idx === 0 ? 'bg-indigo-600 text-white shadow' : 'text-slate-400 hover:text-white'}`}
+            class={`tip-tab-btn flex-1 min-w-[70px] py-1.5 px-2 rounded-lg text-xs font-semibold transition text-center cursor-pointer ${idx === 0 ? 'bg-amber-600 text-white shadow' : 'text-slate-400 hover:text-white'}`}
           >
             <span class="mr-1">{pm.icon}</span>{pm.label}
           </button>
@@ -199,7 +199,7 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
                 <button
                   type="button"
                   aria-label={`Copy ${pm.name} account details`}
-                  class="copy-payment-btn shrink-0 px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition flex items-center gap-1 cursor-pointer active:scale-95"
+                  class="copy-payment-btn shrink-0 px-3.5 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-accent-fg text-xs font-bold transition flex items-center gap-1 cursor-pointer active:scale-95"
                   data-copy={pm.accountIdentifier}
                 >
                   Copy
@@ -215,7 +215,7 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
       </div>
 
       <div class="pt-2 text-center text-[11px] text-slate-500">
-        Brand sponsorships & custom tool requests: <a href="mailto:numanxstudio@gmail.com" class="text-indigo-400 hover:text-indigo-300 underline">numanxstudio@gmail.com</a>
+        Brand sponsorships & custom tool requests: <a href="mailto:contact@numanxstudio.com" class="text-amber-400 hover:text-amber-300 underline">contact@numanxstudio.com</a>
       </div>
     </div>
   </dialog>
@@ -254,10 +254,10 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
         btn.addEventListener('click', () => {
           const target = btn.getAttribute('data-target');
           tabBtns.forEach((b) => {
-            b.classList.remove('bg-indigo-600', 'text-white', 'shadow');
+            b.classList.remove('bg-amber-600', 'text-accent-fg', 'shadow');
             b.classList.add('text-slate-400');
           });
-          btn.classList.add('bg-indigo-600', 'text-white', 'shadow');
+          btn.classList.add('bg-amber-600', 'text-accent-fg', 'shadow');
           btn.classList.remove('text-slate-400');
 
           panels.forEach((p) => {

@@ -1,8 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
 
@@ -134,7 +132,7 @@ const useCases = [
     { name: 'Hardware Inspector', url: '/tools/browser-detector/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="Client Hardware"
@@ -143,20 +141,19 @@ const useCases = [
         badge="✦ Hidden Utility"
         slug="browser-detector"
       />
-      <ShareBar />
 
       <!-- ─── Action Toolbar ─── -->
       <div id="bd-card" class="grid grid-cols-1 md:grid-cols-12 gap-6 mt-10">
         <div class="md:col-span-12 flex flex-wrap items-center gap-2 mb-2">
-          <button id="copy-report-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-2 border border-surface text-xs font-semibold text-tertiary hover:text-white hover:border-purple-500/40 transition-all">
+          <button id="copy-report-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-2 border border-surface text-xs font-semibold text-tertiary hover:text-white hover:border-amber-500/40 transition-all">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
             Copy Report
           </button>
-          <button id="download-report-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-2 border border-surface text-xs font-semibold text-tertiary hover:text-white hover:border-purple-500/40 transition-all">
+          <button id="download-report-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-2 border border-surface text-xs font-semibold text-tertiary hover:text-white hover:border-amber-500/40 transition-all">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download .txt
           </button>
-          <button id="fullscreen-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-2 border border-surface text-xs font-semibold text-tertiary hover:text-white hover:border-purple-500/40 transition-all ml-auto" title="Fullscreen (F)">
+          <button id="fullscreen-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-2 border border-surface text-xs font-semibold text-tertiary hover:text-white hover:border-amber-500/40 transition-all ml-auto" title="Fullscreen (F)">
             ⛶ Fullscreen
           </button>
           <span class="text-[10px] text-muted hidden sm:inline">Press <kbd class="px-1.5 py-0.5 rounded bg-surface-2 border border-surface font-mono">C</kbd> to copy · <kbd class="px-1.5 py-0.5 rounded bg-surface-2 border border-surface font-mono">F</kbd> fullscreen</span>
@@ -238,7 +235,7 @@ const useCases = [
               <div class="bg-surface-1 border border-surface-2 rounded-xl p-4">
                 <div class="flex items-center justify-between mb-1">
                   <div class="text-xs text-muted">Canvas Graphic Fingerprint (SHA-256 Signature)</div>
-                  <button id="regen-fingerprint" class="text-xs text-purple-400 hover:text-white transition-colors"
+                  <button id="regen-fingerprint" class="inline-flex items-center min-h-6 text-xs text-amber-400 hover:text-white transition-colors"
                     >Re-evaluate</button
                   >
                 </div>
@@ -337,8 +334,8 @@ const useCases = [
         {benefits}
         howToSteps={howToSteps}
         useCases={useCases}
+        faq={faqItems}
       />
-      <RelatedTools current="browser-detector" />
     </div>
   </main>
 </MainLayout>

@@ -63,7 +63,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
 >
   <!-- Reading progress indicator -->
   <div class="sticky top-[56px] left-0 w-full h-[2px] bg-white/[0.05] z-40">
-    <div id="progress-bar" class="h-full bg-gradient-to-r from-purple-500 to-indigo-500 w-0 transition-all duration-75">
+    <div id="progress-bar" class="h-full w-0 transition-all duration-75 bg-amber-500">
     </div>
   </div>
   <main class="min-h-screen pt-8 pb-20 px-6 relative overflow-hidden">
@@ -96,7 +96,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
               <span class="text-zinc-600">·</span>
               <a
                 href={`/blog/?category=${encodeURIComponent(category || 'General')}`}
-                class="inline-flex items-center min-h-6 px-2.5 py-0.5 rounded-full bg-purple-600/15 border border-purple-500/30 text-purple-300 text-xs font-medium hover:bg-purple-600/25 transition-colors"
+                class="inline-flex items-center min-h-6 px-2.5 py-0.5 rounded-full bg-amber-600/15 border border-amber-500/30 text-amber-300 text-xs font-medium hover:bg-amber-600/25 transition-colors"
               >{category || 'General'}</a>
               <span class="text-zinc-600">·</span>
               <span class="text-xs text-zinc-500">{readingTime || '5 min read'}</span>
@@ -129,7 +129,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
 
           <div class="flex items-center gap-4 pb-8 border-b border-surface mb-10">
             <div
-              class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-sm font-bold text-white shrink-0 overflow-hidden relative"
+              class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-accent-fg shrink-0 overflow-hidden relative bg-amber-600"
             >
               <span class="absolute inset-0 flex items-center justify-center"
                 >{author ? author.charAt(0).toUpperCase() : 'N'}</span
@@ -159,14 +159,14 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
             prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-5 prose-h2:scroll-mt-24
             prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:scroll-mt-24
             prose-p:text-secondary prose-p:leading-relaxed prose-p:mb-5
-            prose-a:text-purple-400 prose-a:no-underline hover:prose-a:text-purple-300 prose-a:transition-colors
+            prose-a:text-amber-400 prose-a:no-underline hover:prose-a:text-amber-300 prose-a:transition-colors
             prose-strong:text-primary prose-strong:font-semibold
             prose-ul:text-secondary prose-ul:leading-relaxed prose-ul:space-y-2 prose-ul:list-disc prose-ul:pl-6
             prose-ol:text-secondary prose-ol:leading-relaxed prose-ol:space-y-2 prose-ol:list-decimal prose-ol:pl-6
             prose-li:my-1 prose-li:text-slate-300
-            prose-li::marker:text-purple-500
-            prose-blockquote:border-l-4 prose-blockquote:border-purple-500 prose-blockquote:bg-purple-600/10 prose-blockquote:py-3 prose-blockquote:px-6 prose-blockquote:rounded-r-xl prose-blockquote:text-secondary prose-blockquote:not-italic
-            prose-code:text-purple-300 prose-code:bg-surface-2 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-sm
+            prose-li::marker:text-amber-500
+            prose-blockquote:border-l-4 prose-blockquote:border-amber-500 prose-blockquote:bg-amber-600/10 prose-blockquote:py-3 prose-blockquote:px-6 prose-blockquote:rounded-r-xl prose-blockquote:text-secondary prose-blockquote:not-italic
+            prose-code:text-amber-300 prose-code:bg-surface-2 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-sm
             prose-pre:bg-surface-1 prose-pre:border prose-pre:border-surface prose-pre:rounded-xl prose-pre:shadow-xl
             prose-img:rounded-xl prose-img:border prose-img:border-surface
             prose-hr:border-surface prose-hr:my-12
@@ -179,11 +179,11 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
           </div>
 
           <!-- Interactive In-Article Tool Conversion Banner -->
-          <aside class="my-10 p-6 md:p-8 rounded-2xl bg-gradient-to-br from-purple-950/60 via-surface-1 to-blue-950/40 border border-purple-500/30 relative overflow-hidden shadow-2xl">
-            <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+          <aside class="my-10 p-6 md:p-8 rounded-2xl border border-amber-500/30 relative overflow-hidden shadow-2xl bg-amber-950/60">
+            <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 relative z-10">
               <div class="space-y-2">
-                <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-300 text-xs font-semibold">
+                <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-semibold">
                   <span>{matchedTool.icon}</span>
                   <span>Related Free Utility</span>
                 </div>
@@ -194,7 +194,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
               </div>
               <a
                 href={`/tools/${matchedTool.slug}/`}
-                class="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold text-sm shadow-xl shadow-purple-950/50 hover:shadow-purple-900/60 active:scale-95 transition-all"
+                class="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-accent-fg font-semibold text-sm shadow-xl shadow-amber-950/50 hover:shadow-amber-900/60 active:scale-95 transition-all bg-amber-600"
               >
                 <span>Launch {matchedTool.name}</span>
                 <span class="text-base">→</span>
@@ -220,7 +220,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
           <div class="mt-10 flex items-center justify-between p-5 rounded-xl border border-surface bg-surface-1">
             <div class="flex items-center gap-3">
               <div
-                class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-sm font-bold text-white shrink-0 overflow-hidden relative"
+                class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-accent-fg shrink-0 overflow-hidden relative bg-amber-600"
               >
                 <span class="absolute inset-0 flex items-center justify-center"
                   >{author ? author.charAt(0).toUpperCase() : 'N'}</span
@@ -323,7 +323,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
           <div class="mt-10 text-center">
             <a
               href="/blog/"
-              class="inline-flex items-center gap-2 min-h-6 text-sm text-muted hover:text-purple-400 transition-colors font-medium"
+              class="inline-flex items-center gap-2 min-h-6 text-sm text-muted hover:text-amber-400 transition-colors font-medium"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -342,16 +342,16 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
 
         <aside class="hidden lg:block w-56 shrink-0">
           <!-- Matched Tool Quick Launch in Sidebar -->
-          <div class="mb-6 p-4 rounded-2xl bg-gradient-to-br from-purple-900/30 to-blue-900/20 border border-purple-500/30 shadow-lg">
+          <div class="mb-6 p-4 rounded-2xl border border-amber-500/30 shadow-lg bg-amber-900/30">
             <div class="flex items-center gap-2 mb-2">
               <span class="text-lg">{matchedTool.icon}</span>
-              <span class="text-[10px] font-bold uppercase tracking-wider text-purple-300">Try Online Free</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-amber-300">Try Online Free</span>
             </div>
             <h3 class="text-xs font-bold text-white mb-1 leading-snug">{matchedTool.name}</h3>
             <p class="text-[11px] text-zinc-400 mb-3 leading-relaxed">{matchedTool.desc}</p>
             <a
               href={`/tools/${matchedTool.slug}/`}
-              class="block w-full py-2 px-3 text-center text-xs font-semibold rounded-xl bg-purple-600 hover:bg-purple-500 text-white transition-all shadow-md active:scale-95"
+              class="block w-full py-2 px-3 text-center text-xs font-semibold rounded-xl bg-amber-600 hover:bg-amber-500 text-accent-fg transition-all shadow-md active:scale-95"
             >
               Launch Tool →
             </a>
@@ -372,7 +372,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
     <button
       type="button"
       onclick="navigator.clipboard.writeText(window.location.href); this.classList.add('text-emerald-400'); setTimeout(() => this.classList.remove('text-emerald-400'), 2000);"
-      class="p-3 bg-slate-900 border border-white/10 text-slate-400 rounded-full shadow-xl transition-all duration-200 hover:text-white hover:border-purple-500/40 hover:bg-slate-800 active:scale-95 group"
+      class="p-3 bg-slate-900 border border-white/10 text-slate-400 rounded-full shadow-xl transition-all duration-200 hover:text-white hover:border-amber-500/40 hover:bg-slate-800 active:scale-95 group"
       title="Copy Link"
       aria-label="Copy article link to clipboard"
     >

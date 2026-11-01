@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
@@ -143,47 +142,24 @@ const useCases = [
     { name: 'SVG to PNG Converter', url: '/tools/svg-to-png/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="SVG →"
-        gradient="PNG Pro"
+        gradient="PNG"
         desc="Convert SVG code to PNG images instantly in your browser. Custom dimensions, live preview, and one-click download."
         badge="✦ New Tool"
         slug="svg-to-png"
       />
-      <ShareBar />
       <div class="max-w-xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6">
           <div class="flex items-center justify-between mb-4">
             <span class="text-xs font-semibold text-muted uppercase tracking-wider">Tool</span>
             <div class="flex items-center gap-2">
-              <div class="flex gap-1" role="group" aria-label="Theme color swatches">
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="purple"
-                  aria-label="Set purple theme"
-                  style="background:#a855f7"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="blue"
-                  aria-label="Set blue theme"
-                  style="background:#3b82f6"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="green"
-                  aria-label="Set green theme"
-                  style="background:#22c55e"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="pink"
-                  aria-label="Set pink theme"
-                  style="background:#ec4899"></button>
-              </div>
               <button
                 id="fullscreen-btn"
                 aria-label="Toggle fullscreen"
-                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+                class="p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
                 title="Fullscreen">⛶</button
               >
             </div>
@@ -218,6 +194,7 @@ const useCases = [
             </div>
             <textarea
               id="svg-input"
+                data-code-lang="svg"
               aria-label="SVG markup input"
               class="flex-1 min-w-0 h-full bg-transparent text-zinc-100 placeholder:text-zinc-500 text-sm leading-6 px-4 py-3 focus:outline-none font-mono resize-none border-0 overflow-y-auto"
               style="line-height: 24px; font-size: 14px;"
@@ -253,7 +230,7 @@ const useCases = [
           </div>
           <button
             id="convert-btn"
-            class="w-full bg-gradient-to-r from-green-400 to-emerald-500 text-white font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all"
+            class="w-full text-white font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all bg-green-400"
             >Convert to PNG</button
           >
           <div id="preview-area" class="mt-6 pt-6 border-t border-surface hidden">
@@ -286,24 +263,6 @@ const useCases = [
               <img id="preview-img" class="max-w-full h-auto" alt="PNG preview" />
             </div>
             <div class="flex justify-end mt-3">
-              <div class="flex gap-1">
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="purple"
-                  style="background:#a855f7"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="blue"
-                  style="background:#3b82f6"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="green"
-                  style="background:#22c55e"></button>
-                <button
-                  class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                  data-color="pink"
-                  style="background:#ec4899"></button>
-              </div>
             </div>
           </div>
         </div>
@@ -313,7 +272,7 @@ const useCases = [
           <span class="text-xs font-semibold text-green-400 uppercase tracking-wider">Learn</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
-            SVG to <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent"
+            SVG to <span class="text-amber-400"
               >PNG Conversion</span
             >
           </h2>
@@ -329,7 +288,7 @@ const useCases = [
       <RelatedTools current="svg-to-png" />
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
-          Frequently Asked <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent"
+          Frequently Asked <span class="text-amber-400"
             >Questions</span
           >
         </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
@@ -338,6 +297,8 @@ const useCases = [
   </main>
 </MainLayout>
 <script>
+  import { initCodeHighlight } from '../../lib/codeHighlight';
+  initCodeHighlight();
   const svgInput = document.getElementById('svg-input');
   const widthInput = document.getElementById('width-input');
   const heightInput = document.getElementById('height-input');
@@ -614,22 +575,4 @@ const useCases = [
     }
   })();
 
-  // Feature 10: Theme picker
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 </script>

@@ -69,7 +69,7 @@ const popular = allItems.slice(0, 5);
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="text-purple-400"
+            class="text-amber-400"
             ><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg
           >
           Global Search
@@ -77,7 +77,7 @@ const popular = allItems.slice(0, 5);
         <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-none">
           Find Any
           <span
-            class="block mt-2 bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500 bg-clip-text text-transparent"
+            class="block mt-2 text-amber-400"
           >
             Tool or Article
           </span>
@@ -87,7 +87,7 @@ const popular = allItems.slice(0, 5);
         </p>
         <div class="mt-8 max-w-xl mx-auto relative">
           <div
-            class="flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-zinc-700 bg-zinc-900/80 focus-within:border-purple-500/50 focus-within:shadow-lg focus-within:shadow-purple-900/10 transition-all duration-300"
+            class="flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-zinc-700 bg-zinc-900/80 focus-within:border-amber-500/50 focus-within:shadow-lg focus-within:shadow-amber-900/10 transition-all duration-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +136,7 @@ const popular = allItems.slice(0, 5);
           {
             searchCategories.map((cat) => (
               <button
-                class="page-cat-btn rounded-lg px-4 py-2 text-sm font-medium transition-all whitespace-nowrap {cat === 'All' ? 'bg-purple-600 text-white' : 'bg-zinc-800/60 text-tertiary hover:text-primary hover:bg-zinc-800'}"
+                class="page-cat-btn rounded-lg px-4 py-2 text-sm font-medium transition-all whitespace-nowrap {cat === 'All' ? 'bg-amber-600 text-white' : 'bg-zinc-800/60 text-tertiary hover:text-primary hover:bg-zinc-800'}"
                 data-cat="{cat}"
               >
                 {cat}
@@ -153,10 +153,10 @@ const popular = allItems.slice(0, 5);
             allItems.map((item) => (
               <a
                 href={item.url}
-                class="search-page-card glass-card rounded-2xl p-5 hover:border-purple-500/30 hover:-translate-y-1 transition-all duration-300 group"
+                class="search-page-card glass-card rounded-2xl p-5 hover:border-amber-500/30 hover:-translate-y-1 transition-all duration-300 group"
               >
                 <div class="flex items-center gap-3 mb-3">
-                  <span class="w-8 h-8 rounded-lg bg-purple-600/10 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-110 transition-transform duration-200">
+                  <span class="w-8 h-8 rounded-lg bg-amber-600/10 flex items-center justify-center text-amber-400 shrink-0 group-hover:scale-110 transition-transform duration-200">
                     <ToolIcon name={item.icon} />
                   </span>
                   <div>
@@ -368,9 +368,9 @@ const popular = allItems.slice(0, 5);
       results.innerHTML = filtered
         .map(
           (item) => `
-        <a href="${item.url}" class="search-page-card glass-card rounded-2xl p-5 hover:border-purple-500/30 hover:-translate-y-1 transition-all duration-300 group">
+        <a href="${item.url}" class="search-page-card glass-card rounded-2xl p-5 hover:border-amber-500/30 hover:-translate-y-1 transition-all duration-300 group">
           <div class="flex items-center gap-3 mb-3">
-            <span class="w-8 h-8 rounded-lg bg-purple-600/10 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-110 transition-transform duration-200">${getIconSvg(item.icon)}</span>
+            <span class="w-8 h-8 rounded-lg bg-amber-600/10 flex items-center justify-center text-amber-400 shrink-0 group-hover:scale-110 transition-transform duration-200">${getIconSvg(item.icon)}</span>
             <div>
               <h3 class="text-sm font-semibold text-primary group-hover:text-white transition-colors">${item.name}</h3>
               <span class="text-[10px] text-dim">${item.cat}</span>
@@ -386,14 +386,21 @@ const popular = allItems.slice(0, 5);
 
   input.addEventListener('input', filter);
 
+  // /search/?q=… (the homepage search box submits here when Enter is pressed with no pick)
+  const initialQuery = new URLSearchParams(location.search).get('q');
+  if (initialQuery) {
+    input.value = initialQuery;
+    filter();
+  }
+
   catBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       catBtns.forEach((b) => {
-        b.classList.remove('bg-purple-600', 'text-white');
+        b.classList.remove('bg-amber-600', 'text-accent-fg');
         b.classList.add('bg-zinc-800/60', 'text-tertiary', 'hover:text-primary', 'hover:bg-zinc-800');
       });
       btn.classList.remove('bg-zinc-800/60', 'text-tertiary', 'hover:text-primary', 'hover:bg-zinc-800');
-      btn.classList.add('bg-purple-600', 'text-white');
+      btn.classList.add('bg-amber-600', 'text-accent-fg');
       activeCat = btn.dataset.cat;
       filter();
     });

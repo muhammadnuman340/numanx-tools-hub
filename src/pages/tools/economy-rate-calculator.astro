@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
@@ -50,67 +49,48 @@ const schema = {
     { name: 'Economy Rate Calculator', url: '/tools/economy-rate-calculator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
         title="Economy"
-        gradient="Rate Pro"
+        gradient="Rate"
         desc="Calculate cricket bowling economy rate instantly. Enter runs conceded and overs bowled to get your economy rate."
         badge="✦ New Tool"
         slug="economy-rate-calculator"
       />
-      <ShareBar />
       <div class="max-w-xl mx-auto mt-10">
         <div class="glass-card rounded-2xl p-6 relative">
           <button
             id="fullscreen-btn"
-            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-purple-500/40 transition-all text-xs"
+            class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
             title="Fullscreen">⛶</button
           >
           <div class="flex items-center gap-2 mb-3">
             <span id="usage-badge" class="text-xs text-muted"></span>
-            <div class="flex gap-1 ml-auto">
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="purple"
-                style="background:#a855f7"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="blue"
-                style="background:#3b82f6"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="green"
-                style="background:#22c55e"></button>
-              <button
-                class="theme-swatch w-3.5 h-3.5 rounded-full border border-surface"
-                data-color="pink"
-                style="background:#ec4899"></button>
-            </div>
           </div>
           <label class="block text-xs font-medium text-tertiary mb-1.5">Runs Conceded</label>
           <input
             id="runs-input"
             type="number"
+            inputmode="numeric"
             min="0"
             step="1"
-            value="0"
+            value=""
             class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-400/50 focus:outline-none transition-all mb-4"
             placeholder="e.g. 42" aria-label="Runs conceded"
           />
           <label class="block text-xs font-medium text-tertiary mb-1.5">Overs Bowled (e.g. 7.3)</label>
           <input
             id="overs-input"
-            type="number"
-            min="0"
-            step="0.1"
-            value="0"
+            type="text"
+            inputmode="decimal"
+            value=""
             class="w-full px-4 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-400/50 focus:outline-none transition-all mb-4"
             placeholder="e.g. 7.3" aria-label="Overs bowled"
           />
           <button
             id="calculate-btn"
-            class="w-full bg-gradient-to-r from-amber-400 to-orange-500 text-black font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all"
+            class="w-full text-black font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all bg-amber-400"
             >Calculate Economy Rate</button
           >
           <div id="result" class="mt-6 pt-6 border-t border-surface hidden">
@@ -167,7 +147,7 @@ const schema = {
           <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Learn</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
-            Understanding <span class="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent"
+            Understanding <span class="text-amber-400"
               >Economy Rate</span
             >
           </h2>
@@ -183,7 +163,7 @@ const schema = {
       <RelatedTools current="economy-rate-calculator" />
       <div class="mt-20 max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
-          Frequently Asked <span class="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent"
+          Frequently Asked <span class="text-amber-400"
             >Questions</span
           >
         </h2><Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
@@ -192,6 +172,10 @@ const schema = {
   </main>
 </MainLayout>
 <script>
+  import { parseOvers, parseWholeNumber } from '../../utils/cricketAnalytics.js';
+  import { checkField, clearFieldError } from '../../lib/fieldError';
+  import { setToolStatus } from '../../lib/toolStatus';
+
   const runsInput = document.getElementById('runs-input');
   const oversInput = document.getElementById('overs-input');
   const calculateBtn = document.getElementById('calculate-btn');
@@ -200,29 +184,27 @@ const schema = {
   const totalRuns = document.getElementById('total-runs');
   const totalOvers = document.getElementById('total-overs');
 
-  function fractionalOversToDecimal(overs) {
-    const whole = Math.floor(overs);
-    const frac = Math.round((overs - whole) * 10);
-    const balls = frac > 6 ? frac - 6 : frac;
-    const actualOvers = balls > 6 ? whole + 1 : whole;
-    const actualBalls = balls > 6 ? balls - 6 : balls;
-    return actualOvers + actualBalls / 6;
-  }
-
   calculateBtn.addEventListener('click', () => {
-    const runs = parseFloat(runsInput.value) || 0;
-    const oversRaw = parseFloat(oversInput.value) || 0;
-    const oversDecimal = fractionalOversToDecimal(oversRaw);
-    const rate = oversDecimal > 0 ? runs / oversDecimal : 0;
-
-    const whole = Math.floor(oversRaw);
-    const frac = Math.round((oversRaw - whole) * 10);
-    const ballsPart = frac > 6 ? frac - 6 : frac;
-
+    const runs = checkField(runsInput, parseWholeNumber(runsInput.value, { label: 'Runs conceded' }));
+    const overs = checkField(oversInput, parseOvers(oversInput.value, { label: 'Overs bowled' }), runs.ok);
+    if (!runs.ok || !overs.ok) {
+      (!runs.ok ? runsInput : oversInput).focus();
+      resultDiv.classList.add('hidden');
+      return;
+    }
+    const rate = runs.value / overs.decimal;
     economyRate.textContent = rate.toFixed(2);
-    totalRuns.textContent = runs;
-    totalOvers.textContent = whole + '.' + ballsPart;
+    totalRuns.textContent = String(runs.value);
+    totalOvers.textContent = `${Math.floor(overs.balls / 6)}.${overs.balls % 6}`;
     resultDiv.classList.remove('hidden');
+    setToolStatus('complete', `Economy rate: ${rate.toFixed(2)} runs per over.`);
+  });
+
+  [runsInput, oversInput].forEach((el) => {
+    el.addEventListener('input', () => clearFieldError(el));
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') calculateBtn.click();
+    });
   });
 
   // ─── Copy ───
@@ -251,8 +233,10 @@ const schema = {
 
   // ─── Clear ───
   document.getElementById('clear-btn')?.addEventListener('click', () => {
-    runsInput.value = '0';
-    oversInput.value = '0';
+    runsInput.value = '';
+    oversInput.value = '';
+    clearFieldError(runsInput);
+    clearFieldError(oversInput);
     resultDiv.classList.add('hidden');
   });
 
@@ -323,22 +307,4 @@ const schema = {
     } catch (e) {}
   }
 
-  // ─── Color theme picker ───
-  document.querySelectorAll('.theme-swatch').forEach((s) => {
-    s.addEventListener('click', () => {
-      const c = s.dataset.color;
-      document.querySelectorAll("button[class*='bg-purple'],button[class*='bg-violet']").forEach((b) => {
-        b.className = b.className
-          .replace(/bg-(purple|violet)-\d+/g, 'bg-' + c + '-600')
-          .replace(/hover:bg-(purple|violet)-\d+/g, 'hover:bg-' + c + '-500');
-      });
-      try {
-        localStorage.setItem('nt_theme', c);
-      } catch (e) {}
-    });
-  });
-  try {
-    const c = localStorage.getItem('nt_theme');
-    if (c) document.querySelector(`.theme-swatch[data-color="${c}"]`)?.click();
-  } catch (e) {}
 </script>

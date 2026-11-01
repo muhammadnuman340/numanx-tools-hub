@@ -1,8 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
-import ShareBar from '../../components/ShareBar.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import KeyboardHints from '../../components/KeyboardHints.astro';
 import ToolContentSections from '../../components/ToolContentSections.astro';
@@ -126,17 +124,16 @@ const useCases = [
     { name: 'Strike Rate & Average', url: '/tools/strike-rate-average-calculator/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
+  <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
         title="Strike Rate & Average"
-        gradient="Calculator Pro"
+        gradient="Calculator"
         desc="Calculate batting average and strike rate with real-time stats and export 1080×1920 social media stat cards."
         badge="✦ WWS Shorts Edition"
         slug="strike-rate-average-calculator"
       />
 
-      <ShareBar />
 
       <div class="max-w-2xl mx-auto mt-8 space-y-6">
         <!-- Input Form -->
@@ -149,7 +146,7 @@ const useCases = [
                 type="text"
                 value="Babar Azam"
                 placeholder="e.g. Babar Azam"
-                class="w-full bg-zinc-950 text-white px-4 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-purple-500 text-sm font-semibold"
+                class="w-full bg-zinc-950 text-white px-4 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-amber-500 text-sm font-semibold"
               />
             </div>
             <div>
@@ -159,7 +156,7 @@ const useCases = [
                 type="text"
                 value="PSL / T20 Statistical Breakdown"
                 placeholder="e.g. ICC T20 World Cup"
-                class="w-full bg-zinc-950 text-white px-4 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-purple-500 text-sm"
+                class="w-full bg-zinc-950 text-white px-4 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-amber-500 text-sm"
               />
             </div>
           </div>
@@ -172,7 +169,7 @@ const useCases = [
                 type="number"
                 min="0"
                 value="568"
-                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-purple-500 text-sm font-mono font-bold"
+                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-amber-500 text-sm font-mono font-bold"
               />
             </div>
             <div>
@@ -182,7 +179,7 @@ const useCases = [
                 type="number"
                 min="1"
                 value="398"
-                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-purple-500 text-sm font-mono font-bold"
+                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-amber-500 text-sm font-mono font-bold"
               />
             </div>
             <div>
@@ -190,9 +187,9 @@ const useCases = [
               <input
                 id="total-outs"
                 type="number"
-                min="1"
+                min="0"
                 value="10"
-                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-purple-500 text-sm font-mono font-bold"
+                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-amber-500 text-sm font-mono font-bold"
               />
             </div>
           </div>
@@ -206,13 +203,13 @@ const useCases = [
             </div>
             <div class="p-4 rounded-xl bg-zinc-950 border border-surface text-center space-y-1">
               <span class="text-[10px] uppercase font-bold tracking-wider text-muted">Strike Rate (SR)</span>
-              <div class="text-3xl font-black text-purple-400 font-mono" id="bat-sr-display">142.71</div>
+              <div class="text-3xl font-black text-amber-400 font-mono" id="bat-sr-display">142.71</div>
               <p class="text-[10px] text-zinc-500">Runs / 100 Balls</p>
             </div>
           </div>
 
           <!-- WWS Shorts 1080x1920 Card Exporter -->
-          <div class="rounded-xl p-5 bg-gradient-to-r from-emerald-950/40 via-surface-1 to-indigo-950/40 border border-emerald-500/30 text-center space-y-3 mt-4">
+          <div class="rounded-xl p-5 border border-emerald-500/30 text-center space-y-3 mt-4 bg-emerald-950/40">
             <div class="flex items-center justify-center gap-2">
               <span class="text-xl">📱</span>
               <h2 class="text-xs font-bold text-white uppercase tracking-wider">WWS Social Media Shorts Stat Card</h2>
@@ -222,7 +219,7 @@ const useCases = [
             </p>
             <button
               id="export-wws-card-btn"
-              class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-lg shadow-emerald-950/50 active:scale-98 transition-all flex items-center justify-center gap-2"
+              class="w-full py-3.5 rounded-xl text-white font-bold text-xs shadow-lg shadow-emerald-950/50 active:scale-98 transition-all flex items-center justify-center gap-2 bg-emerald-600"
             >
               <span>📱</span>
               <span>Download 1080×1920 WWS Shorts/Reels Stat Card (PNG)</span>
@@ -236,7 +233,7 @@ const useCases = [
         <div class="max-w-3xl mx-auto">
           <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-10">
             Frequently Asked
-            <span class="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+            <span class="text-amber-400">Questions</span>
           </h2>
           <Accordion items={faqItems.map((i) => ({ title: i.question, content: i.answer }))} />
         </div>
@@ -259,13 +256,14 @@ const useCases = [
         useCases={useCases}
       />
 
-      <RelatedTools current="strike-rate-average-calculator" />
     </div>
   </main>
 </MainLayout>
 
 <script>
-  import { exportWWSStatCardPNG } from '../../utils/cricketAnalytics.js';
+  import { exportWWSStatCardPNG, parseWholeNumber } from '../../utils/cricketAnalytics.js';
+  import { checkField } from '../../lib/fieldError';
+  import { setToolStatusSoon } from '../../lib/toolStatus';
 
   const nameInput = document.getElementById('player-name') as HTMLInputElement | null;
   const tourInput = document.getElementById('tournament-name') as HTMLInputElement | null;
@@ -276,16 +274,37 @@ const useCases = [
   const avgDisplay = document.getElementById('bat-avg-display');
   const srDisplay = document.getElementById('bat-sr-display');
 
-  function updateStats() {
-    const runs = parseFloat(runsInput?.value || '0') || 0;
-    const balls = Math.max(1, parseFloat(ballsInput?.value || '1') || 1);
-    const outs = Math.max(1, parseFloat(outsInput?.value || '1') || 1);
+  function readStats(announce = false) {
+    const runs = checkField(runsInput, parseWholeNumber(runsInput?.value, { label: 'Total runs' }), false);
+    const balls = checkField(ballsInput, parseWholeNumber(ballsInput?.value, { min: 1, label: 'Balls faced' }), false);
+    const outs = checkField(outsInput, parseWholeNumber(outsInput?.value, { label: 'Dismissals' }), false);
+    const bad = [runs, balls, outs].find((r) => !r.ok);
+    if (bad) {
+      if (announce) setToolStatusSoon('error', bad.error || '');
+      return null;
+    }
+    return { runs: runs.value, balls: balls.value, outs: outs.value };
+  }
 
-    const avg = (runs / outs).toFixed(2);
-    const sr = ((runs / balls) * 100).toFixed(2);
+  function updateStats(e?: Event) {
+    const stats = readStats(Boolean(e));
+    if (!stats) {
+      if (avgDisplay) avgDisplay.textContent = '—';
+      if (srDisplay) srDisplay.textContent = '—';
+      return;
+    }
+    // With no dismissals a batting average is undefined (never out)
+    const avg = stats.outs > 0 ? (stats.runs / stats.outs).toFixed(2) : '—';
+    const sr = ((stats.runs / stats.balls) * 100).toFixed(2);
 
     if (avgDisplay) avgDisplay.textContent = avg;
     if (srDisplay) srDisplay.textContent = sr;
+    if (e) {
+      setToolStatusSoon(
+        'complete',
+        `Strike rate ${sr}. ${stats.outs > 0 ? `Average ${avg}.` : 'No dismissals, so no average yet.'}`,
+      );
+    }
   }
 
   [runsInput, ballsInput, outsInput].forEach((el) => {
@@ -295,9 +314,10 @@ const useCases = [
   document.getElementById('export-wws-card-btn')?.addEventListener('click', () => {
     const playerName = nameInput?.value?.trim() || 'Cricket Star';
     const tournament = tourInput?.value?.trim() || 'T20 Statistical Breakdown';
-    const runs = parseFloat(runsInput?.value || '0') || 0;
-    const balls = parseFloat(ballsInput?.value || '1') || 1;
-    const dismissals = parseFloat(outsInput?.value || '1') || 1;
+    const stats = readStats(true);
+    if (!stats) return;
+    const { runs, balls } = stats;
+    const dismissals = stats.outs;
 
     exportWWSStatCardPNG({
       playerName,

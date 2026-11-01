@@ -1,3 +1,12 @@
+// Human-readable labels for the contact form's subject <select> values
+const TOPIC_LABELS = {
+  feedback: 'Feedback',
+  bug: 'Bug Report',
+  suggestion: 'Tool Suggestion',
+  partnership: 'Business / Partnership',
+  other: 'Other',
+};
+
 export async function onRequest(context) {
   const { request, env } = context;
 
@@ -27,6 +36,8 @@ export async function onRequest(context) {
 
     const payload = {
       type: 'contact',
+      site: new URL(request.url).hostname,
+      topic: TOPIC_LABELS[subject] || 'General',
       name: name.trim(),
       email: email.toLowerCase().trim(),
       subject: subject || 'General',
@@ -44,10 +55,13 @@ export async function onRequest(context) {
         const resp = await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
+          // The secret proves the request came from this site; it is never stored
+          body: JSON.stringify({ ...payload, secret: env.WEBHOOK_SECRET || '' }),
           signal: controller.signal,
         });
-        sheetStored = resp.ok;
+        // Apps Script answers 200 even on errors, so read its reply
+        const out = await resp.json().catch(() => ({}));
+        sheetStored = resp.ok && out.success !== false;
       } catch (_) {
         // webhook unavailable or timed out — fall back to KV
       } finally {
