@@ -386,6 +386,13 @@ const popular = allItems.slice(0, 5);
 
   input.addEventListener('input', filter);
 
+  // /search/?q=… (the homepage search box submits here when Enter is pressed with no pick)
+  const initialQuery = new URLSearchParams(location.search).get('q');
+  if (initialQuery) {
+    input.value = initialQuery;
+    filter();
+  }
+
   catBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       catBtns.forEach((b) => {

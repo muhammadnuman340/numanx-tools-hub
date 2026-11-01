@@ -40,7 +40,8 @@ const {
 } = Astro.props;
 
 // Individual tool pages get a plain surface (DESIGN.md §9: no starfield/aurora behind tools)
-const isToolPage = /^\/tools\/[^/]+\/?$/.test(Astro.url.pathname);
+// and the homepage gets the same plain surface (UI plan Phase 7)
+const isToolPage = /^\/tools\/[^/]+\/?$/.test(Astro.url.pathname) || Astro.url.pathname === '/';
 ---
 
 <html lang="en" data-theme="dark">
