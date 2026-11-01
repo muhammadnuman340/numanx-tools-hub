@@ -21,13 +21,13 @@ export interface ProToolDocEntry {
 // FILE: src/data/proToolContent.ts — Unified Mathematical & RFC Documentation Registry
 export const PRO_TOOL_CONTENT: Record<string, any> = {
   "qr-generator": {
-    toolName: "rMQR & QR Code Generator Pro",
+    toolName: "rMQR & QR Code Generator",
     formulaTitle: "ISO/IEC 23941 Rectangular Micro QR & Reed-Solomon Error Correction",
     formulaExplanation: "Encodes binary, alphanumeric, or numeric strings into either a square ISO/IEC 18004 QR matrix (21x21 to 177x177 modules) or an elongated ISO/IEC 23941 Rectangular Micro QR (rMQR) strip (32 sizes from R7x43 to R17x139) using Reed-Solomon polynomial error correction over GF(2^8).",
     formulaCode: "rMQR Max Capacity (R17x139): 361 Numeric | 219 Alphanumeric | 150 Byte | EC Levels: M (15%) & H (30%)"
   },
   "hashtag-generator": {
-    toolName: "AI Hashtag Generator",
+    toolName: "Hashtag Generator",
     formulaTitle: "Lexical Co-Occurrence & Platform Competition Tiering",
     formulaExplanation: "Tokenizes your seed topic and maps tags into 3 algorithmic velocity tiers tailored to TikTok For You feeds, YouTube Shorts shelves, and Instagram Reels SEO.",
     formulaCode: "Optimal Ratio = 2 Broad High-Velocity (20%) + 5 Niche Topic SEO (50%) + 3 Micro-Community (30%)"
@@ -150,7 +150,7 @@ export const PRO_TOOL_DOCS_REGISTRY: Record<string, ProToolDocEntry> = {
       latex: '\\text{Compression Ratio} = \\left(1 - \\frac{\\text{Compressed File Size}}{\\text{Original File Size}}\\right) \\times 100\\%',
       description: 'Percentage reduction in payload byte size while maintaining perceptual structural similarity (SSIM).'
     },
-    technicalOverview: 'Image compression in NumanX Tools runs entirely within your browser via the HTML5 OffscreenCanvas / Canvas API. Images are decoded into raw pixel bitmaps, subsampled into 8x8 frequency blocks, and quantized using client-side WebP/JPEG encoders. This produces up to 90% file size reduction without sending private images to third-party cloud servers.',
+    technicalOverview: 'Image compression in NumanX Tools runs entirely within your browser via the HTML5 OffscreenCanvas / Canvas API. Images are decoded into raw pixel bitmaps, subsampled into 8x8 frequency blocks, and quantized using client-side WebP/JPEG encoders. This produces large file size reductions without sending private images to third-party cloud servers.',
     workedExample: {
       input: 'Raw PNG screenshot: 3.20 MB (3,355,443 bytes). Quality preset: 80% WebP.',
       stepByStepCalculation: 'Canvas decodes PNG to RGBA bitmap. WebP encoder performs predictive spatial coding and Huffman entropy coding. Output size = 328 KB (335,872 bytes).',

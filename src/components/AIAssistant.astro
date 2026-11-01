@@ -2411,7 +2411,7 @@ const catJson = JSON.stringify(categories.map((c) => ({ title: c.title, count: c
     if (/what'?s new|latest|recent/.test(lq))
       return `<a href="/tools/" class="text-amber-400 hover:underline">Check the latest tools</a> — we recently added AI tools, developer formatters, and more!`;
     if (/popular|best|top|trending/.test(lq))
-      return `Popular tools: <a href="/tools/" class="text-amber-400 hover:underline">QR Generator</a>, Word Counter, Password Generator, AI Grammar Checker, and Base64 Tool.`;
+      return `Popular tools: <a href="/tools/" class="text-amber-400 hover:underline">QR Generator</a>, Word Counter, Password Generator, Grammar Checker, and Base64 Tool.`;
 
     // 17) Tool search (fuzzy)
     const found = quickTools
@@ -2446,9 +2446,9 @@ const catJson = JSON.stringify(categories.map((c) => ({ title: c.title, count: c
     { name: 'Base64 Tool', cat: 'Developer', desc: 'Encode/decode Base64', url: '/tools/base64-tool/' },
     { name: 'UUID Generator', cat: 'Developer', desc: 'Generate UUIDs', url: '/tools/uuid-generator/' },
     { name: 'Unit Converter', cat: 'Utility', desc: 'Convert between units', url: '/tools/unit-converter/' },
-    { name: 'AI Text Summarizer', cat: 'AI', desc: 'Summarize text with AI', url: '/tools/ai-text-summarizer/' },
-    { name: 'AI Grammar Checker', cat: 'AI', desc: 'Check grammar with AI', url: '/tools/ai-grammar-checker/' },
-    { name: 'AI Sentiment Analyzer', cat: 'AI', desc: 'Analyze text sentiment', url: '/tools/ai-sentiment-analyzer/' },
+    { name: 'Text Summarizer', cat: 'AI', desc: 'Summarize long text', url: '/tools/ai-text-summarizer/' },
+    { name: 'Grammar Checker', cat: 'AI', desc: 'Check grammar and spelling', url: '/tools/ai-grammar-checker/' },
+    { name: 'Sentiment Analyzer', cat: 'AI', desc: 'Analyze text sentiment', url: '/tools/ai-sentiment-analyzer/' },
     {
       name: 'Color Converter',
       cat: 'Developer',
@@ -2469,7 +2469,7 @@ const catJson = JSON.stringify(categories.map((c) => ({ title: c.title, count: c
     },
     { name: 'URL Encoder', cat: 'Developer', desc: 'Encode/decode URLs', url: '/tools/url-encoder/' },
     { name: 'Case Converter', cat: 'Creator', desc: 'Convert text case', url: '/tools/case-converter/' },
-    { name: 'AI Chat Assistant', cat: 'AI', desc: 'Chat about tools and tasks', url: '/tools/ai-chat/' },
+    { name: 'Command Assistant', cat: 'AI', desc: 'Chat about tools and tasks', url: '/tools/ai-chat/' },
   ];
 
   function normalize(str) {

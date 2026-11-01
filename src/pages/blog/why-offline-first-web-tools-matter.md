@@ -37,4 +37,4 @@ Because modern browsers can cache layouts and code scripts (using Service Worker
 
 ## Conclusion
 
-NumanX is committed to a fully browser-native, offline-first future. By processing your assets entirely locally, we deliver a lightning-fast, zero-compromise developer experience that values your security above all.
+NumanX is committed to a fully browser-native, offline-first future. By processing your assets entirely locally, we skip the upload step entirely, for a faster developer experience that values your security above all.

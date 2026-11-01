@@ -27,7 +27,7 @@ const TOOL_MATCHES = [
   { match: /webp|png|jpg|jpeg|format|image converter/i, slug: 'jpg-to-png', name: 'JPG to PNG Converter', icon: '🔄', desc: 'Convert JPG, PNG, and WebP in your browser with format and quality controls' },
   { match: /compress|size|optimization|speed|reduce|kb|mb/i, slug: 'image-compressor', name: 'Image Compressor', icon: '🗜️', desc: 'Compress images using adjustable visual-quality settings' },
   { match: /resize|dimension|scale|crop|thumbnail|aspect/i, slug: 'image-resizer', name: 'Image Resizer Pro', icon: '📐', desc: 'Resize images with social media presets' },
-  { match: /hashtag|instagram|tiktok|social|reach|viral|shorts/i, slug: 'hashtag-generator', name: 'AI Hashtag Generator', icon: '#️⃣', desc: 'Generate trending hashtags with reach analytics' },
+  { match: /hashtag|instagram|tiktok|social|reach|viral|shorts/i, slug: 'hashtag-generator', name: 'Hashtag Generator', icon: '#️⃣', desc: 'Generate trending hashtags with reach analytics' },
   { match: /password|security|cyber|auth|hash|passphrase/i, slug: 'password-generator', name: 'Password Generator Pro', icon: '🔐', desc: 'Generate strong passwords & CSPRNG passphrases' },
   { match: /word|count|character|text|readability|flesch/i, slug: 'word-counter', name: 'Word Counter Pro', icon: '📝', desc: 'Real-time word, character, and paragraph counter' },
   { match: /markdown|md|readme|document|editor/i, slug: 'markdown-editor', name: 'Markdown Editor Online', icon: '✍️', desc: 'Live preview markdown editor with HTML export' },
@@ -353,7 +353,7 @@ const matchedTool = TOOL_MATCHES.find((t) => t.match.test(matchedContent)) || {
               href={`/tools/${matchedTool.slug}/`}
               class="block w-full py-2 px-3 text-center text-xs font-semibold rounded-xl bg-amber-600 hover:bg-amber-500 text-accent-fg transition-all shadow-md active:scale-95"
             >
-              Launch Tool →
+              Open tool →
             </a>
           </div>
 

@@ -70,11 +70,11 @@ Students deal with countless images, PDFs, and assignments. Tools from NumanX To
 | Tool | Purpose | Advantage |
 | :--- | :--- | :--- |
 | [**Word Counter**](/tools/word-counter/) | Track essay lengths & reading time | Real-time Flesch-Kincaid readability scoring |
-| [**Smart Text Summarizer**](/tools/ai-text-summarizer/) | Extract bulleted key points from chapters | Zero API key needed, runs directly in browser |
+| [**Text Summarizer**](/tools/ai-text-summarizer/) | Extract bulleted key points from chapters | Zero API key needed, runs directly in browser |
 | [**Markdown Editor**](/tools/markdown-editor/) | Format research papers & study notes | Instant live preview and HTML / PDF export |
-| [**Smart Image Compressor**](/tools/image-compressor/) | Reduce image sizes for portal submissions | Compresses up to 85% without visual quality loss |
+| [**Image Compressor**](/tools/image-compressor/) | Reduce image sizes for portal submissions | Compresses up to 85% without visual quality loss |
 | [**JPG to PNG Converter**](/tools/jpg-to-png/) | Convert diagram formats for slides | Preserves alpha transparency channels |
-| [**Smart Image Resizer**](/tools/image-resizer/) | Resize presentation graphics | 1-click presets for web, slides, and docs |
+| [**Image Resizer**](/tools/image-resizer/) | Resize presentation graphics | 1-click presets for web, slides, and docs |
 
 ## Tips for Using AI as a Student
 

@@ -46,7 +46,7 @@ export const categories: CategoryInfo[] = [
   {
     id: 'creator-tools',
     title: 'Creator Tools',
-    description: 'Smart hashtag generators, QR builders, and text processors to scale your social footprint.',
+    description: 'Hashtag generators, QR builders and text tools for posts, videos and print.',
     icon: 'creator',
     get count() {
       return getCategoryCount('creator-tools');
@@ -64,7 +64,7 @@ export const categories: CategoryInfo[] = [
   {
     id: 'cricket-tools',
     title: 'Cricket Tools',
-    description: 'Professional match run rate calculators and batting/bowling strike rate models.',
+    description: 'Run rate, net run rate, DLS target and strike rate calculators that follow ICC rules.',
     icon: 'cricket',
     get count() {
       return getCategoryCount('cricket-tools');
@@ -72,9 +72,9 @@ export const categories: CategoryInfo[] = [
   },
   {
     id: 'ai-tools',
-    title: 'AI Tools',
+    title: 'Text & AI Tools',
     description:
-      'Powerful AI-powered utilities for content generation, translation, and intelligent text processing — all running locally in your browser.',
+      'Summarize, check, rewrite and analyse text with rule-based tools, plus a prompt builder and command assistant. Everything runs in your browser.',
     icon: 'sparkles',
     get count() {
       return getCategoryCount('ai-tools');
@@ -201,7 +201,7 @@ export const tools: Tool[] = [
     name: 'Image Compressor',
     description: 'Compress images with visual quality presets and batch processing support.',
     longDescription:
-      'High-efficiency client-side image compression to reduce file sizes up to 90% with visual quality presets and batch processing.',
+      'Compress JPG, PNG and WebP images in your browser with quality presets, before/after sizes and batch processing.',
     category: 'image-tools',
     icon: 'compress',
     url: '/tools/image-compressor/',
@@ -637,10 +637,10 @@ export const tools: Tool[] = [
   },
   {
     id: 'ai-text-summarizer',
-    name: 'AI Text Summarizer',
+    name: 'Text Summarizer',
     description: 'Summarize long articles and text into concise, readable summaries.',
     longDescription:
-      'Extract the most important sentences from any text to create a concise summary. Uses intelligent sentence scoring based on keyword frequency, position, and length. Great for articles, papers, and reports.',
+      'Extract the most important sentences from any text to create a concise summary. Scores each sentence by keyword frequency, position, and length. Great for articles, papers, and reports.',
     category: 'ai-tools',
     icon: 'message',
     url: '/tools/ai-text-summarizer/',
@@ -658,10 +658,10 @@ export const tools: Tool[] = [
   },
   {
     id: 'ai-grammar-checker',
-    name: 'AI Grammar Checker',
-    description: 'Check grammar, spelling, and punctuation with AI-powered suggestions.',
+    name: 'Grammar Checker',
+    description: 'Check grammar, spelling, and punctuation with rule-based suggestions.',
     longDescription:
-      'Analyze your text for grammar errors, spelling mistakes, and punctuation issues. Get intelligent suggestions with explanations. Perfect for emails, essays, and professional writing.',
+      'Analyze your text for grammar errors, spelling mistakes, and punctuation issues. Get suggestions with explanations. Perfect for emails, essays, and professional writing.',
     category: 'ai-tools',
     icon: 'edit',
     url: '/tools/ai-grammar-checker/',
@@ -679,7 +679,7 @@ export const tools: Tool[] = [
   },
   {
     id: 'ai-sentiment-analyzer',
-    name: 'AI Sentiment Analyzer',
+    name: 'Sentiment Analyzer',
     description: 'Analyze text sentiment — positive, negative, or neutral with emotion detection.',
     longDescription:
       'Detect the emotional tone of any text. Get sentiment scores for positive, negative, and neutral content with keyword-level breakdown. Understand customer feedback, social media posts, and reviews.',
@@ -699,7 +699,7 @@ export const tools: Tool[] = [
   },
   {
     id: 'ai-keyword-extractor',
-    name: 'AI Keyword Extractor',
+    name: 'Keyword Extractor',
     description: 'Extract key topics and phrases from any text automatically.',
     longDescription:
       'Automatically identify the most important keywords and keyphrases from your text. Uses n-gram frequency analysis and phrase detection. Perfect for SEO, content analysis, and research.',
@@ -719,7 +719,7 @@ export const tools: Tool[] = [
   },
   {
     id: 'ai-language-detector',
-    name: 'AI Language Detector',
+    name: 'Language Detector',
     description: 'Detect the language of any text with high accuracy.',
     longDescription:
       'Identify the language of any text instantly. Supports 29 languages including English, Spanish, French, German, Chinese, Arabic, and more. Uses character n-gram analysis for accurate detection.',
@@ -739,7 +739,7 @@ export const tools: Tool[] = [
   },
   {
     id: 'ai-readability-analyzer',
-    name: 'AI Readability Analyzer',
+    name: 'Readability Analyzer',
     description: 'Analyze text readability with Flesch-Kincaid, Gunning Fog, and more scores.',
     longDescription:
       'Measure how readable your text is with industry-standard metrics: Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog Index, and SMOG score. Get actionable insights to improve clarity.',
@@ -759,7 +759,7 @@ export const tools: Tool[] = [
   },
   {
     id: 'ai-paraphraser',
-    name: 'AI Paraphraser',
+    name: 'Paraphraser',
     description: 'Rewrite any text with different phrasing while preserving meaning.',
     longDescription:
       'Paraphrase sentences and paragraphs to improve clarity, avoid plagiarism, or match a specific tone. Multiple rewriting modes: standard, fluent, formal, and creative. All processing is client-side.',
@@ -779,7 +779,7 @@ export const tools: Tool[] = [
   },
   {
     id: 'ai-tag-generator',
-    name: 'AI Tag Generator',
+    name: 'Tag Generator',
     description: 'Generate relevant tags and hashtags from your content automatically.',
     longDescription:
       'Analyze your content and suggest relevant tags, keywords, and hashtags. Perfect for blog posts, YouTube videos, social media content, and SEO optimization. Extract meaningful topics from any text.',
@@ -792,10 +792,10 @@ export const tools: Tool[] = [
   },
   {
     id: 'ai-chat',
-    name: 'AI Chat Assistant',
-    description: 'Chat with an AI assistant about tools, features, and get help with tasks.',
+    name: 'Command Assistant',
+    description: 'Ask about tools and run quick text, number and date commands.',
     longDescription:
-      'A full-page conversational AI assistant that can answer questions about tools, execute basic transformations (word count, JSON format, base64, etc.), and guide you through the platform. All responses are generated locally — no data sent to servers.',
+      'A command assistant that answers questions about tools, runs basic transformations (word count, JSON format, base64, etc.) and guides you through the site. It matches your request to built-in commands; nothing is sent to a server.',
     category: 'ai-tools',
     icon: 'message',
     url: '/tools/ai-chat/',
@@ -853,7 +853,7 @@ export const tools: Tool[] = [
   },
   {
     id: 'prompt-generator',
-    name: 'AI Prompt Generator',
+    name: 'Prompt Generator',
     description: 'Generate highly effective, optimized prompts for ChatGPT, Midjourney, and Claude.',
     longDescription:
       'Create highly effective, optimized prompts for AI models using proven prompt engineering frameworks like Role-Task-Format and Chain of Thought. Perfect for ChatGPT, Claude, and Midjourney.',

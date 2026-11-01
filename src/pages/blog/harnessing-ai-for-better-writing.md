@@ -27,4 +27,4 @@ Paraphrasing isn't about simply mechanical synonym-swapping—doing so often lea
 
 Many modern web writing assistants send every keystroke or paragraph you type to a central cloud server. This raises significant compliance and privacy concerns, especially for proprietary documentation, student essays, or draft business projects.
 
-Using client-side alternatives—like the **NumanX AI Paraphraser**—ensures your text is processed entirely within local memory, meaning your drafts never leave your browser under any circumstance.
+Using client-side alternatives—like the **NumanX Paraphraser**—ensures your text is processed entirely within local memory, meaning your drafts never leave your browser under any circumstance.

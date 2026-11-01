@@ -94,7 +94,7 @@ When you have hundreds of images to compress, batch processing saves hours.
 
 ### Our Batch Upload Feature
 
-Our **Smart Image Compressor** supports batch uploads with drag-and-drop. Upload up to 50 images at once, apply the same settings, and download them individually or in a zip file.
+Our **Image Compressor** supports batch uploads with drag-and-drop. Upload up to 50 images at once, apply the same settings, and download them individually or in a zip file.
 
 ## 5. Lossless vs. Lossy: Which to Choose
 
@@ -184,11 +184,11 @@ Aim for 60–80% file size reduction for photographs. Graphics can often be redu
 
 ### Can I compress images without uploading to a server?
 
-Yes. Our **Smart Image Compressor** runs entirely in your browser using WebAssembly. Images never leave your device, making it completely private and secure.
+Yes. Our **Image Compressor** runs entirely in your browser using WebAssembly. Images never leave your device, making it completely private and secure.
 
 ## Conclusion
 
-Image compression without quality loss is achievable with the right tools and settings. Focus on choosing the correct format, using quality settings in the 80–90% range, resizing before compressing, and leveraging modern formats like WebP. Use the **Smart Image Compressor** at NumanX Tools to start compressing your images in seconds.
+Image compression without quality loss is achievable with the right tools and settings. Focus on choosing the correct format, using quality settings in the 80–90% range, resizing before compressing, and leveraging modern formats like WebP. Use the **Image Compressor** at NumanX Tools to start compressing your images in seconds.
 
 <div class="my-8 p-6 rounded-2xl border border-amber-500/30 text-center space-y-3 bg-amber-900/40">
   <h3 class="text-lg font-bold text-white m-0">Compress Images in Your Browser</h3>

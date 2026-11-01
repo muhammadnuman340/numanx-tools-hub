@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/BlogLayout.astro
-title: 'The Ultimate Guide to Using NumanX Tools as a Web App'
+title: 'How to Use NumanX Tools as a Web App'
 description: 'Learn how to install the NumanX Tools PWA, work offline, protect your privacy and use keyboard shortcuts.'
 date: '2026-06-17'
 author: 'NumanX Studio'
@@ -124,7 +124,7 @@ You likely use 3 or 4 tools daily. You shouldn't have to search for them.
 2. In the top-right corner of the tool's interface, click the **Heart Icon** (Save to Favorites).
 3. Whenever you open the NumanX app, simply click the **Favorites** icon in the bottom navigation dock to instantly access your customized toolkit.
 
-### Using the God-Tier Dock
+### Using the Dock
 At the bottom of your screen is the macOS-inspired interactive dock. This is your mission control. 
 - Hovering over icons provides smooth, magnified interactions.
 - The dock provides instant access to **Home**, **Search**, **Favorites**, **Dashboard**, and the **AI Assistant**.
@@ -150,6 +150,6 @@ A: You don't have to! Our Service Workers check for updates in the background. W
 
 ## Ready to Build?
 
-Now that you know the secrets of the platform, you are ready to supercharge your productivity. Open the command palette (`Cmd + K`), search for a tool, and experience the speed of local computing.
+Now that you know the secrets of the platform, you are ready to get more done. Open the command palette (`Cmd + K`), search for a tool, and experience the speed of local computing.
 
 *[Explore the complete Tool Directory here](/tools/)*.

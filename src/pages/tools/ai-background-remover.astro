@@ -49,7 +49,7 @@ const benefits = [
   {
     icon: '🎯',
     title: 'High Precision',
-    desc: 'Uses state-of-the-art neural networks to cleanly separate foreground subjects from complex backgrounds, handling hair and edges smoothly.',
+    desc: 'A segmentation model separates the subject from the background, including fine edges such as hair, which simple colour-based tools miss.',
   },
   {
     icon: '💸',
@@ -117,7 +117,8 @@ const useCases = [
       <ToolHeader
         title="AI Background"
         gradient="Remover"
-        desc="Instantly separate subjects from their backgrounds. Runs 100% in your browser for absolute privacy."
+        desc="AI Background Remover cuts the subject out of a photo and gives you a PNG with a transparent background. It runs a machine-learning segmentation model in your browser: the model downloads once on first use, then each photo is processed on your device and never uploaded."
+        updated="2026-11-01"
         badge="✦ Edge AI"
         slug="ai-background-remover"
       />

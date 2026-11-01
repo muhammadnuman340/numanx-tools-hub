@@ -101,8 +101,8 @@ const faqItems = [
 ];
 
 const schema = {
-  name: 'AI Sentiment Analyzer',
-  applicationCategory: 'AI Tools',
+  name: 'Sentiment Analyzer',
+  applicationCategory: 'UtilitiesApplication',
   description:
     'Analyze the sentiment of any text — detect positive, negative, and neutral emotions with detailed emotional breakdown and score visualization.',
   featureList: [
@@ -122,21 +122,21 @@ const schema = {
   toolSchema={schema}
   faq={faqItems}
   howto={{
-    name: 'How to Analyze Sentiment with AI',
-    description: 'Learn how to use our AI sentiment analyzer to detect emotions and opinions in any text',
+    name: 'How to Analyze Sentiment',
+    description: 'Learn how to use our sentiment analyzer to detect emotions and opinions in any text',
     steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
     totalTime: 'PT1M',
   }}
   breadcrumbs={[
     { name: 'Home', url: '/' },
     { name: 'Tools', url: '/tools/' },
-    { name: 'AI Sentiment Analyzer', url: '/tools/ai-sentiment-analyzer/' },
+    { name: 'Sentiment Analyzer', url: '/tools/ai-sentiment-analyzer/' },
   ]}
 >
   <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
-        title="AI Sentiment"
+        title="Sentiment"
         gradient="Analyzer"
         desc="Detect the emotional tone of any text — positive, negative, or neutral. See a detailed breakdown of emotions and key sentiment-driving words."
         badge="✦ Lexicon Sentiment"
@@ -295,7 +295,7 @@ const schema = {
       </div>
       <section class="mt-20 max-w-3xl mx-auto">
         <div class="text-center mb-8">
-          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">AI Technology</span><h2
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Method</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
             How It <span class="text-amber-400"
@@ -304,7 +304,7 @@ const schema = {
           </h2>
         </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
           <p>
-            The AI Sentiment Analyzer uses a <strong class="text-primary">lexicon-based approach</strong> to evaluate the
+            The Sentiment Analyzer uses a <strong class="text-primary">lexicon-based approach</strong> to evaluate the
             emotional tone of your text. It maintains comprehensive dictionaries of sentiment-bearing words categorized by
             emotion type (joy, anger, sadness, fear, surprise) and polarity (positive, negative, neutral).
           </p><p>
@@ -321,7 +321,7 @@ const schema = {
       </section>
       <ToolContentSections
         toolSlug="ai-sentiment-analyzer"
-        toolName="AI Sentiment Analyzer"
+        toolName="Sentiment Analyzer"
         category="AI Tools"
         {benefits}
         howToSteps={howToSteps}
@@ -338,7 +338,7 @@ const schema = {
             > Sentiment?
           </h2>
           <p class="text-tertiary text-sm max-w-lg mx-auto mb-6">
-            Try our AI sentiment analyzer now — no sign-up required, completely free, and your data never leaves your
+            Try our sentiment analyzer now — no sign-up required, completely free, and your data never leaves your
             device.
           </p>
           <a

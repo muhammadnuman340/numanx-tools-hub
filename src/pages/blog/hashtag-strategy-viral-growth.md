@@ -13,7 +13,7 @@ image: '/images/blog/hashtag-strategy-viral-growth.svg'
 
 Hashtags remain one of the most effective ways to increase your content's reach on social media. But throwing random hashtags on your posts will not cut it anymore. In 2026, a strategic, researched approach to hashtags can be the difference between a handful of views and viral growth.
 
-> 🚀 **Generate Viral Hashtags in Seconds:** Use our free [**AI Hashtag Generator**](/tools/hashtag-generator/) to discover high-reach, low-competition tags for Instagram, TikTok, YouTube Shorts, and X with 1-click clipboard copying. 100% free with zero signups.
+> 🚀 **Generate Viral Hashtags in Seconds:** Use our free [**Hashtag Generator**](/tools/hashtag-generator/) to discover high-reach, low-competition tags for Instagram, TikTok, YouTube Shorts, and X with 1-click clipboard copying. 100% free with zero signups.
 
 ## Social Media Algorithm Viral Content Strategy Hashtags Metrics
 

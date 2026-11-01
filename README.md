@@ -5,13 +5,12 @@
 [![Cloudflare Pages](https://img.shields.io/badge/Deployed%20on-Cloudflare%20Pages-F38020?logo=cloudflare&logoColor=white)](https://toolshub.numanxstudio.com)
 [![Astro 6.4](https://img.shields.io/badge/Astro-6.4%20SSG-BC52EE?logo=astro&logoColor=white)](https://astro.build)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind-v4.3-38BDF8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![Vitest](https://img.shields.io/badge/Vitest-43%2F43%20Passed-4ADE80?logo=vitest&logoColor=white)](https://vitest.dev)
-[![Pages](https://img.shields.io/badge/Static%20Pages-112%20Routes-0EA5E9)](#)
-[![Sitemap](https://img.shields.io/badge/Clean%20Sitemap-103%20URLs-8B5CF6)](#)
+[![Vitest](https://img.shields.io/badge/Vitest-116%20tests-4ADE80?logo=vitest&logoColor=white)](https://vitest.dev)
+[![Tools](https://img.shields.io/badge/Tools-70-0EA5E9)](https://toolshub.numanxstudio.com/tools/)
+[![Pages](https://img.shields.io/badge/Static%20Pages-112-0EA5E9)](#)
 [![Privacy](https://img.shields.io/badge/Privacy-100%25%20Client--Side-10B981)](#)
-[![Core Web Vitals](https://img.shields.io/badge/CLS-0.00%20(Zero%20Shift)-F59E0B)](#)
 
-**High-Performance, Privacy-First Browser Utilities with Zero Server Latency**  
+**70 free tools that run in your browser: files stay on your device, no sign-up**  
 *Built for creators, developers, cricket analysts, and everyday internet users.*
 
 [Explore Live Production Platform](https://toolshub.numanxstudio.com) • [View Architecture](#-technical-architecture--feature-showcase) • [Developer Setup](#-quick-start-developer-commands)
@@ -25,10 +24,12 @@
 NumanX Tools Hub operates on a comprehensive documentation and playbook infrastructure. Access the specialized master playbooks below:
 
 ### 🏗️ 1. Architecture & Vision
-- 📖 **[PROJECT.md](./PROJECT.md)** — Executive vision, competitive moat (zero-server execution vs. server-side SaaS competitors), and god-tier glassmorphism UI psychology.
+- 📖 **[PROJECT.md](./PROJECT.md)** — Executive vision, and competitive moat (zero-server execution vs. server-side SaaS competitors). Its UI section is outdated; see DESIGN.md.
 - 🗺️ **[PROJECT_ROADMAP.md](./PROJECT_ROADMAP.md)** — 5-Phase scaling roadmap from 55 tools to a full developer ecosystem with Web APIs and pro features.
 - 🛠️ **[TOOL-ROADMAP.md](./TOOL-ROADMAP.md)** — Strict technical specifications, browser API constraints, and client-side processing boundaries.
-- 🧩 **[COMPONENT_SYSTEM.md](./COMPONENT_SYSTEM.md)** — Exhaustive design system matrix, Tailwind utility classes for 3-tier glassmorphism, and responsive UI components.
+- 🎨 **[DESIGN.md](./DESIGN.md)** — Current design system: amber OKLCH tokens, type scale, layout templates, components, motion and copy rules.
+- 📝 **[PRODUCT.md](./PRODUCT.md)** — Who the site is for, verified facts usable in copy, naming rules and voice.
+- 🧩 **[COMPONENT_SYSTEM.md](./COMPONENT_SYSTEM.md)** — Superseded by DESIGN.md (old glassmorphism system, kept for history).
 
 ### 🚀 2. Launch & Go-To-Market (GTM)
 - 🚀 **[LAUNCH-README.md](./LAUNCH-README.md)** — 24-hour Launch Day playbook with ready-to-post copy for Product Hunt, Reddit, and Twitter/X threads.
@@ -74,7 +75,7 @@ flowchart TD
 ### 2. 📄 Client-Side Markdown to PDF Converter (`/tools/markdown-to-pdf/`)
 - **Mathematical Typography**: Built-in **KaTeX** math engine renders inline `$E = mc^2$` and block `$$\int f(x) dx$$` formulas with publishing-grade typography.
 - **Vector Diagrams**: Embeds **Mermaid.js** diagrams (`flowchart`, `sequenceDiagram`, `stateDiagram`) rendered directly into the PDF preview.
-- **Enterprise Print Styles**: Native `@media print` CSS engine with custom margin controls, A4 / US Letter presets, page break inserters (`<div class="page-break"></div>`), and zero server transmission.
+- **Print Styles**: Native `@media print` CSS engine with custom margin controls, A4 / US Letter presets, page break inserters (`<div class="page-break"></div>`), and zero server transmission.
 
 ### 3. 🏏 ICC Cricket Analytics Suite (`/tools/net-run-rate-calculator/`)
 - **ICC Law 16.10.2 All-Out Enforcement**: Accurately handles the all-out rule by automatically counting the team's full allotted match quota (e.g., 20.0 or 50.0 overs) rather than fraction overs.
@@ -127,4 +128,3 @@ For step-by-step instructions on deploying commits to production, running edge v
 
 ---
 
-> *"NumanX doesn't just build tools. We build magic that executes instantly in your browser."*

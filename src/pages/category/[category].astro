@@ -23,15 +23,15 @@ const categoryGuides: Record<string, { title: string; paragraphs: string[]; high
     title: 'Client-Side Canvas & WebAssembly Image Processing Guide',
     paragraphs: [
       'Image optimization on NumanX Tools operates exclusively within your local browser sandbox via HTML5 Canvas, OffscreenCanvas Web Workers, and WebAssembly decoders. Unlike legacy cloud image processors that upload your private photos, creative assets, and client documents to remote cloud storage, our tools perform pixel transformations, bilinear resampling, and quantization directly on your device GPU and CPU threads.',
-      'Modern compression formats such as WebP, MozJPEG-equivalent 90% extreme compression, and PNG alpha stripping reduce bandwidth by up to 85% while preserving visual clarity. By utilizing client-side blobs and ArrayBuffers, you eliminate upload latency and achieve 60 FPS non-blocking background performance even when processing high-resolution 4K and RAW images.'
+      'Formats such as WebP, adjustable JPEG quality and PNG metadata stripping cut file size while keeping images sharp; each tool shows the before and after size so you can judge the result. Because files stay in the browser as local blobs, there is no upload step to wait for.'
     ],
-    highlights: ['100% Client-Side Privacy (0 Server Uploads)', 'Hardware-Accelerated OffscreenCanvas Workers', 'High-DPI 4K Resizing & WebP Conversion', 'Instant Zero-Latency Batch Processing']
+    highlights: ['100% Client-Side Privacy (0 Server Uploads)', 'Hardware-Accelerated OffscreenCanvas Workers', 'High-DPI 4K Resizing & WebP Conversion', 'Batch Compression of up to 20 Images']
   },
   'creator-tools': {
     title: 'High-Velocity Creator Workflows & Barcode Architecture',
     paragraphs: [
-      'Content creators, digital publishers, and packaging engineers require ultra-fast, high-precision tools that seamlessly integrate with modern media workflows. Our creator suite combines next-generation barcode generation, including industrial ISO/IEC 23941 Rectangular Micro QR (rMQR) strips designed for narrow physical surfaces, with real-time markdown documentation compilers and viral hashtag metadata analyzers.',
-      'Whether you are building YouTube Shorts and TikTok discovery tags, encoding compact product labels, or authoring technical guides with KaTeX equations and Mermaid diagrams, every tool is engineered with instant keyboard shortcuts, clipboard integration, and zero subscription barriers.'
+      'Content creators, digital publishers, and packaging engineers require ultra-fast, high-precision tools that seamlessly integrate with modern media workflows. Our creator suite combines barcode generation, including industrial ISO/IEC 23941 Rectangular Micro QR (rMQR) strips designed for narrow physical surfaces, with real-time markdown documentation compilers and viral hashtag metadata analyzers.',
+      'Whether you are building YouTube Shorts and TikTok discovery tags, encoding compact product labels, or authoring technical guides with KaTeX equations and Mermaid diagrams, every tool has keyboard shortcuts, clipboard integration, and zero subscription barriers.'
     ],
     highlights: ['ISO/IEC 23941 rMQR Slender Barcode Engine', 'TikTok FYP & YouTube Shorts Tag Extractors', 'Client-Side Markdown to Vector PDF', 'Live Interactive Canvas Previews']
   },
@@ -52,10 +52,10 @@ const categoryGuides: Record<string, { title: string; paragraphs: string[]; high
     highlights: ['ICC Clause 16.10.2 All-Out Quota Enforcement', 'Live Playoff Qualification Scenario Solvers', 'Duckworth-Lewis-Stern (DLS) Par Curves', '1080×1920 Mobile Shorts Stat Card Exporters']
   },
   'ai-tools': {
-    title: 'Smart Text, Readability & Client-Side Intelligence Utilities',
+    title: 'Rule-Based Text Analysis, Readability & Prompt Tools',
     paragraphs: [
-      'Modern text and content analysis should be fast, accurate, and completely private. Our Smart NLP and AI suite brings together deterministic statistical algorithms (n-gram keyword extraction, Flesch-Kincaid Grade Level, Gunning Fog index, and SMOG readability scoring) and local in-browser processing.',
-      'By executing entirely client-side inside your browser sandbox, every text summarization, keyword extraction, sentiment evaluation, and background removal task runs without server dependencies or cloud data transmission.'
+      'Modern text and content analysis should be fast, accurate, and completely private. These tools use deterministic, rule-based algorithms (n-gram keyword extraction, Flesch-Kincaid Grade Level, Gunning Fog index, and SMOG readability scoring) instead of an AI model, so the same text always gives the same result.',
+      'By executing entirely client-side inside your browser sandbox, every summary, keyword extraction and sentiment check runs without server dependencies or cloud data transmission.'
     ],
     highlights: ['Flesch-Kincaid, Gunning Fog & Readability Metrics', 'Client-Side In-Browser Execution', 'N-Gram & Frequency Extraction Algorithms', 'Zero Telemetry & 100% Confidential Copy']
   },
@@ -63,7 +63,7 @@ const categoryGuides: Record<string, { title: string; paragraphs: string[]; high
     title: 'Zero-Upload Security Architecture for Developers',
     paragraphs: [
       'Pasting production JSON payloads, database connection strings, JWT authorization tokens, or proprietary SQL queries into public cloud utilities represents a critical security and compliance hazard. NumanX Developer Tools eliminates this risk entirely through a zero-upload client-side architecture.',
-      'All formatting, AST parsing, regex evaluation, Base64 encoding/decoding, and cryptographic hashing (SHA-256, SHA-512, HMAC) execute inside an isolated browser sandbox. Your authentication keys, sensitive customer records, and system schemas never leave your machine, satisfying GDPR, SOC2, and HIPAA compliance mandates.'
+      'All formatting, AST parsing, regex evaluation, Base64 encoding/decoding, and cryptographic hashing (SHA-256, SHA-512, HMAC) execute inside an isolated browser sandbox. Your authentication keys, customer records and schemas never leave your machine, so no third party receives them.'
     ],
     highlights: ['100% Offline Zero-Upload JWT Debugger', 'Web Crypto API (SHA-256, SHA-512, HMAC)', 'AST-Based JSON, SQL & Code Formatters', 'RFC 3986 URI & UTF-8 Safe Binary Inspection']
   }
@@ -71,14 +71,14 @@ const categoryGuides: Record<string, { title: string; paragraphs: string[]; high
 
 const guide = categoryGuides[category.id];
 const heroCategory = category.id === 'ai-tools' 
-  ? { ...category, title: 'Smart Text, Readability & Local WebGPU AI Utilities' }
+  ? { ...category, title: 'Text & AI Tools' }
   : category;
 ---
 
 <MainLayout
   title={
     category.id === 'ai-tools'
-      ? 'Free AI Tools — Smart Text & Local WebGPU | NumanX'
+      ? 'Free Text Tools — Summarizer, Grammar & Readability | NumanX'
       : `Free ${heroCategory.title} & Online Utilities | NumanX Tools`
   }
   description={heroCategory.description}
