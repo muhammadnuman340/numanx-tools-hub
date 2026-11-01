@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import { hueForLabel } from '../data/categoryStyle';
 import { tools, categories } from '../data/tools';
 import ToolIcon from '../components/icons/ToolIcon.astro';
 
@@ -151,22 +152,20 @@ const popular = allItems.slice(0, 5);
         <div id="page-results" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {
             allItems.map((item) => (
-              <a
-                href={item.url}
-                class="search-page-card glass-card rounded-2xl p-5 hover:border-amber-500/30 hover:-translate-y-1 transition-all duration-300 group"
-              >
-                <div class="flex items-center gap-3 mb-3">
-                  <span class="w-8 h-8 rounded-lg bg-amber-600/10 flex items-center justify-center text-amber-400 shrink-0 group-hover:scale-110 transition-transform duration-200">
+              <a href={item.url} class="nx-card search-page-card" style={`--cat: ${hueForLabel(item.cat)}`}>
+                <span class="nx-card-top">
+                  <span class="nx-card-icon" aria-hidden="true">
                     <ToolIcon name={item.icon} />
                   </span>
-                  <div>
-                    <h3 class="text-sm font-semibold text-primary group-hover:text-white transition-colors">
-                      {item.name}
-                    </h3>
-                    <span class="text-[10px] text-dim">{item.cat}</span>
-                  </div>
-                </div>
-                <p class="text-xs text-muted leading-relaxed">{item.desc}</p>
+                </span>
+                <h3 class="nx-card-title">{item.name}</h3>
+                <span class="nx-card-desc">{item.desc}</span>
+                <span class="nx-card-foot">
+                  <span class="nx-card-cat">{String(item.cat).replace(/ Tools$/, '')}</span>
+                  <span class="nx-card-go">
+                    {item.url.startsWith('/tools/') ? 'Open' : 'Read'} <span aria-hidden="true">→</span>
+                  </span>
+                </span>
               </a>
             ))
           }
@@ -209,6 +208,7 @@ const popular = allItems.slice(0, 5);
 
 <script>
   import { getIconSvg } from '../lib/iconSvgs';
+  import { toolCardHtml } from '../lib/cardHtml';
   const searchData = [
     {
       name: 'Platform Dashboard',
@@ -367,18 +367,15 @@ const popular = allItems.slice(0, 5);
       empty.classList.add('hidden');
       results.innerHTML = filtered
         .map(
-          (item) => `
-        <a href="${item.url}" class="search-page-card glass-card rounded-2xl p-5 hover:border-amber-500/30 hover:-translate-y-1 transition-all duration-300 group">
-          <div class="flex items-center gap-3 mb-3">
-            <span class="w-8 h-8 rounded-lg bg-amber-600/10 flex items-center justify-center text-amber-400 shrink-0 group-hover:scale-110 transition-transform duration-200">${getIconSvg(item.icon)}</span>
-            <div>
-              <h3 class="text-sm font-semibold text-primary group-hover:text-white transition-colors">${item.name}</h3>
-              <span class="text-[10px] text-dim">${item.cat}</span>
-            </div>
-          </div>
-          <p class="text-xs text-muted leading-relaxed">${item.desc}</p>
-        </a>
-      `,
+          (item) =>
+            toolCardHtml({
+              url: item.url,
+              name: item.name,
+              desc: item.desc,
+              cat: item.searchCat || item.cat,
+              iconSvg: getIconSvg(item.icon),
+              extraClass: 'search-page-card',
+            }),
         )
         .join('');
     }

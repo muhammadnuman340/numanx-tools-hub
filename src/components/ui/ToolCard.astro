@@ -1,0 +1,34 @@
+---
+// One card for a tool, used in every tool list (styles: .nx-card in global.css).
+// Extra attributes (data-*, id…) pass through to the link, so filters keep working.
+import ToolIcon from '../icons/ToolIcon.astro';
+import { CATEGORY_STYLE } from '../../data/categoryStyle';
+import type { Tool } from '../../data/tools';
+
+interface Props {
+  tool: Tool;
+  /** Show a "New" / "Popular" tag */
+  badge?: boolean;
+  headingLevel?: 'h2' | 'h3' | 'h4';
+  class?: string;
+  [attr: string]: unknown;
+}
+
+const { tool, badge = false, headingLevel = 'h3', class: className, ...rest } = Astro.props;
+const style = CATEGORY_STYLE[tool.category] ?? CATEGORY_STYLE['utility-tools'];
+const Heading = headingLevel;
+const flag = badge ? (tool.isNew ? 'New' : tool.isPopular ? 'Popular' : null) : null;
+---
+
+<a href={tool.url} class:list={['nx-card', className]} style={`--cat: ${style.hue}`} {...rest}>
+  <span class="nx-card-top">
+    <span class="nx-card-icon" aria-hidden="true"><ToolIcon name={tool.icon} class="w-5 h-5" /></span>
+    {flag && <span class="nx-chip">{flag}</span>}
+  </span>
+  <Heading class="nx-card-title">{tool.name}</Heading>
+  <span class="nx-card-desc">{tool.description}</span>
+  <span class="nx-card-foot">
+    <span class="nx-card-cat">{style.label}</span>
+    <span class="nx-card-go">Open <span aria-hidden="true">→</span></span>
+  </span>
+</a>

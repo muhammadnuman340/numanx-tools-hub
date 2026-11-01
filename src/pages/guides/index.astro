@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+import PostCard from '../../components/ui/PostCard.astro';
 import AdUnit from '../../components/AdUnit.astro';
 
 const guideModules = import.meta.glob('./*.md', { eager: true });
@@ -125,44 +126,13 @@ const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
       <div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {
           guides.map((guide) => (
-            <a
-              href={'/guides/' + guide.slug + '/'}
-              class="group glass-card rounded-2xl p-6 hover:border-amber-500/40 hover:-translate-y-1 transition-all duration-300 block"
-            >
-              <div class="w-full aspect-video rounded-xl flex items-center justify-center mb-4 border border-zinc-800 bg-amber-600/20">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  style="stroke:var(--accent)"
-                  stroke-width="1"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="opacity-60"
-                >
-                  <>
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                    <line x1="16" y1="13" x2="8" y2="13" />
-                    <line x1="16" y1="17" x2="8" y2="17" />
-                  </>
-                </svg>
-              </div>
-              <span class="inline-flex px-2 py-0.5 rounded-full bg-amber-600/15 border border-amber-500/30 text-amber-300 text-[10px] font-medium mb-2.5">
-                {guide.frontmatter.category || 'General'}
-              </span>
-              <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors duration-200 leading-snug">
-                {guide.frontmatter.title}
-              </h3>
-              <p class="text-xs text-tertiary mt-2 leading-relaxed line-clamp-2">{guide.frontmatter.description}</p>
-              <div class="flex items-center gap-2 mt-3 text-[11px] text-dim">
-                <span>{guide.frontmatter.date}</span>
-                <span>·</span>
-                <span>{guide.frontmatter.readingTime || '5 min read'}</span>
-              </div>
-            </a>
+            <PostCard
+              url={'/guides/' + guide.slug + '/'}
+              title={guide.frontmatter.title}
+              desc={guide.frontmatter.description}
+              tag={guide.frontmatter.category || 'Guide'}
+              meta={guide.frontmatter.readingTime || '5 min read'}
+            />
           ))
         }
       </div>

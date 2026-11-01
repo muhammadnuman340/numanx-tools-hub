@@ -118,14 +118,12 @@ describe('NumanX Tools Hub - E2E Build Structural Validation', () => {
 
   // Tools Page assertions (13 assertions)
   describe('Tools Page (tools/index.astro)', () => {
-    it('should satisfy tool cards, category control bar, search kbd hints, and glowing spheres', () => {
+    it('should satisfy tool cards, category control bar, search kbd hints, and links to every tool', () => {
       const html = readHtml('dist/tools/index.html');
 
-      // Grid container & 3D classes
+      // Grid of tool cards (decoration classes are not tested: DESIGN.md removes them)
       expect(html).toContain('id="cards-container-tools"');
       expect(html).toContain('tool-card');
-      expect(html).toContain('card-spotlight');
-      expect(html).toContain('preserve-3d');
 
       // Control panel & search hints
       expect(html).toContain('placeholder="Search tools..."');
@@ -133,10 +131,9 @@ describe('NumanX Tools Hub - E2E Build Structural Validation', () => {
       expect(html).toContain('id="category-filters"');
       expect(html).toContain('category-btn');
 
-      // Glowing Spheres replacing initials text placeholder
-      expect(html).toContain('w-12 h-12');
-      expect(html).toContain('bg-zinc-950');
-      expect(html).toContain('bg-radial-gradient');
+      // Every tool is reachable from the directory
+      const toolLinks = new Set(html.match(/href="\/tools\/[a-z0-9-]+\/"/g) || []);
+      expect(toolLinks.size).toBeGreaterThanOrEqual(70);
 
       // Script elements
       expect(html).toContain('cards-container-tools');

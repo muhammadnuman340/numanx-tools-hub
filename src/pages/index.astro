@@ -1,11 +1,16 @@
 ---
-// Homepage (DESIGN.md §4.2, UI plan Phase 7): search first, categories as ledger rows,
-// how it works, latest posts, support bar, early-access form.
+// Homepage (DESIGN.md §4.2, UI plan Phase 7): search first, categories, how it works,
+// latest posts, support bar, early-access form.
 import MainLayout from '../layouts/MainLayout.astro';
 import MonetizationSlot from '../components/MonetizationSlot.astro';
+import ToolIcon from '../components/icons/ToolIcon.astro';
+import PostCard from '../components/ui/PostCard.astro';
+import { CATEGORY_STYLE } from '../data/categoryStyle';
+import { highlight } from '../lib/codeHighlight';
 import { tools, categories, type Tool, type ToolCategory } from '../data/tools';
 
 const toolCount = tools.length;
+const categoryCount = categories.filter((c) => c.count > 0).length;
 
 // Shown under the search box: the tools people come for most
 const POPULAR: [id: string, label: string][] = [
@@ -20,7 +25,7 @@ const popular = POPULAR.map(([id, label]) => ({ label, url: tools.find((t) => t.
   (p) => p.url,
 );
 
-// Category rows: image and cricket first (most searched), then the rest
+// Category cards: image and developer first (most searched), then the rest
 const CATEGORY_ORDER: ToolCategory[] = [
   'image-tools',
   'developer-tools',
@@ -29,15 +34,9 @@ const CATEGORY_ORDER: ToolCategory[] = [
   'creator-tools',
   'ai-tools',
 ];
-const SHORT_NAME: Record<ToolCategory, string> = {
-  'image-tools': 'image',
-  'developer-tools': 'developer',
-  'cricket-tools': 'cricket',
-  'utility-tools': 'utility',
-  'creator-tools': 'creator',
-  'ai-tools': 'AI',
-};
-// The four tools each row leads with (most-used first)
+// Each category has its own hue (shared with every tool card: src/data/categoryStyle.ts)
+const STYLE = CATEGORY_STYLE;
+// The four tools each card leads with (most-used first)
 const TOP: Record<ToolCategory, string[]> = {
   'image-tools': ['image-compressor', 'image-resizer', 'jpg-to-png', 'ai-background-remover'],
   'developer-tools': ['json-formatter', 'uuid-generator', 'base64-tool', 'regex-tester'],
@@ -46,11 +45,11 @@ const TOP: Record<ToolCategory, string[]> = {
   'creator-tools': ['qr-generator', 'hashtag-generator', 'youtube-title-generator', 'markdown-editor'],
   'ai-tools': ['ai-chat', 'ai-text-summarizer', 'ai-grammar-checker', 'prompt-generator'],
 };
-const categoryRows = CATEGORY_ORDER.map((id) => {
+const categoryCards = CATEGORY_ORDER.map((id) => {
   const info = categories.find((c) => c.id === id)!;
   const list = tools.filter((t) => t.category === id);
   const top = TOP[id].map((tid) => list.find((t) => t.id === tid)).filter(Boolean) as Tool[];
-  return { id, title: info.title, count: list.length, top, short: SHORT_NAME[id] };
+  return { id, title: info.title, count: list.length, top, ...STYLE[id] };
 });
 
 // Search index for the hero box (all tools, small fields only)
@@ -61,6 +60,10 @@ const searchIndex = tools.map((t) => ({
   c: categories.find((c) => c.id === t.category)?.title || '',
   k: t.keywords.join(' '),
 }));
+
+// Sample results beside the hero (what three tools give you)
+const sampleJson = highlight('{\n  "tool": "JSON Formatter",\n  "valid": true,\n  "keys": 3\n}', 'json');
+const urlOf = (id: string) => tools.find((t) => t.id === id)?.url || '/tools/';
 
 const blogPostModules = import.meta.glob('./blog/*.md', { eager: true });
 const blogPosts = Object.entries(blogPostModules)
@@ -73,6 +76,7 @@ const blogPosts = Object.entries(blogPostModules)
       url: `/blog/${slug}/`,
       time: fm.readingTime || '',
       date: String(fm.date || ''),
+      cat: String(fm.category || 'Guide').replace(/ Tools$/, ''),
     };
   })
   .sort((a, b) => b.date.localeCompare(a.date))
@@ -80,14 +84,17 @@ const blogPosts = Object.entries(blogPostModules)
 
 const steps = [
   {
+    icon: 'globe',
     title: 'Open a tool',
     desc: 'No account, no install. Every tool works on a phone or a laptop.',
   },
   {
+    icon: 'lock',
     title: 'Your files stay on your device',
     desc: 'Images, PDFs and text are processed by your browser. Nothing is uploaded to a server.',
   },
   {
+    icon: 'bolt',
     title: 'Download or copy the result',
     desc: 'No watermark and no sign-up wall. Close the tab and nothing is kept.',
   },
@@ -105,83 +112,132 @@ const description =
 >
   <main id="main-content" class="home relative">
     <!-- ── Hero: search is the main action ── -->
-    <section class="home-wrap pt-10 sm:pt-16 pb-10 sm:pb-14" aria-labelledby="home-title">
-      <p class="home-label">Free · No sign-up · Runs in your browser</p>
-      <h1 id="home-title" class="home-h1">
-        <span class="num">{toolCount}</span> free tools that run in your browser
-      </h1>
-      <p class="mt-4 max-w-[62ch] text-soft text-base sm:text-lg leading-relaxed">
-        Compress images, make QR codes, merge PDFs, format JSON or work out a cricket run rate. Nothing is uploaded
-        and there's nothing to install.
-      </p>
+    <section class="home-hero" aria-labelledby="home-title">
+      <div class="home-wrap home-hero-grid">
+        <div class="min-w-0">
+          <p class="home-label home-label-accent">
+            <span class="home-dot" aria-hidden="true"></span>Free · No sign-up · Runs in your browser
+          </p>
+          <h1 id="home-title" class="home-h1">
+            <span class="num home-h1-num">{toolCount}</span> free tools that run in your browser
+          </h1>
+          <p class="mt-4 max-w-[58ch] text-soft text-base sm:text-lg leading-relaxed">
+            Compress images, make QR codes, merge PDFs, format JSON or work out a cricket run rate. Nothing is uploaded
+            and there's nothing to install.
+          </p>
 
-      <form id="home-search-form" class="home-search mt-8" role="search" action="/search/" method="get">
-        <label for="home-search" class="sr-only">Search {toolCount} tools</label>
-        <svg
-          class="home-search-icon"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg
-        >
-        <input
-          id="home-search"
-          name="q"
-          type="search"
-          role="combobox"
-          aria-expanded="false"
-          aria-controls="home-search-results"
-          aria-autocomplete="list"
-          autocomplete="off"
-          spellcheck="false"
-          enterkeyhint="search"
-          placeholder='Try "compress", "NRR" or "json"'
-        />
-        <kbd class="home-search-kbd" aria-hidden="true">/</kbd>
-        <ul id="home-search-results" class="home-results hidden" role="listbox" aria-label="Matching tools"></ul>
-      </form>
-      <p id="home-search-status" class="sr-only" role="status" aria-live="polite"></p>
+          <form id="home-search-form" class="home-search mt-8" role="search" action="/search/" method="get">
+            <label for="home-search" class="sr-only">Search {toolCount} tools</label>
+            <svg
+              class="home-search-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              aria-hidden="true"
+              ><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg
+            >
+            <input
+              id="home-search"
+              name="q"
+              type="search"
+              role="combobox"
+              aria-expanded="false"
+              aria-controls="home-search-results"
+              aria-autocomplete="list"
+              autocomplete="off"
+              spellcheck="false"
+              enterkeyhint="search"
+              placeholder='Try "compress", "NRR" or "json"'
+            />
+            <kbd class="home-search-kbd" aria-hidden="true">/</kbd>
+            <ul id="home-search-results" class="home-results hidden" role="listbox" aria-label="Matching tools"></ul>
+          </form>
+          <p id="home-search-status" class="sr-only" role="status" aria-live="polite"></p>
 
-      <div class="mt-5 flex flex-wrap items-center gap-2">
-        <span class="home-label !mb-0 mr-1">Popular</span>
-        {
-          popular.map((t) => (
-            <a href={t.url} class="home-pill">
-              {t.label}
-            </a>
-          ))
-        }
+          <div class="mt-5 flex flex-wrap items-center gap-2">
+            <span class="home-label !mb-0 mr-1">Popular</span>
+            {
+              popular.map((t) => (
+                <a href={t.url} class="home-pill">
+                  {t.label}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Sample results: what three of the tools give you -->
+        <div class="home-samples" aria-label="Example results">
+          <a href={urlOf('image-compressor')} class="home-sample" style="--cat: 200">
+            <span class="home-sample-head"><span>Image Compressor</span><span class="num">example</span></span>
+            <span class="home-sample-file num">holiday-photo.jpg</span>
+            <span class="home-sample-sizes num">4.8 MB <span class="text-faint">→</span> <strong>1.1 MB</strong></span>
+            <span class="home-bar" aria-hidden="true"><span style="width: 23%"></span></span>
+          </a>
+          <a href={urlOf('json-formatter')} class="home-sample" style="--cat: 255">
+            <span class="home-sample-head"><span>JSON Formatter</span><span class="num">valid</span></span>
+            <pre class="home-sample-code"><code set:html={sampleJson} /></pre>
+          </a>
+          <a href={urlOf('cricket-target-calculator')} class="home-sample" style="--cat: 145">
+            <span class="home-sample-head"><span>Cricket Target</span><span class="num">T20</span></span>
+            <span class="home-sample-row num"><span>Need</span><strong>181 off 120</strong></span>
+            <span class="home-sample-row num"><span>Required rate</span><strong class="home-sample-big">9.05</strong></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Facts strip (counts come from the tool registry) -->
+      <div class="home-wrap">
+        <dl class="home-facts">
+          <div><dt>Tools</dt><dd class="num">{toolCount}</dd></div>
+          <div><dt>Categories</dt><dd class="num">{categoryCount}</dd></div>
+          <div><dt>Files uploaded</dt><dd class="num">0</dd></div>
+          <div><dt>Sign-up</dt><dd>None</dd></div>
+        </dl>
       </div>
     </section>
 
-    <!-- ── Categories as ledger rows ── -->
-    <section class="home-wrap pb-14" aria-labelledby="home-cats">
-      <div class="flex items-end justify-between gap-4 mb-4">
-        <h2 id="home-cats" class="home-h2">Tools by category</h2>
+    <!-- ── Categories ── -->
+    <section class="home-wrap pt-14 pb-14" aria-labelledby="home-cats">
+      <div class="flex items-end justify-between gap-4 mb-5">
+        <div>
+          <p class="home-label">Browse</p>
+          <h2 id="home-cats" class="home-h2">Tools by category</h2>
+        </div>
         <a href="/tools/" class="home-more">All {toolCount} tools →</a>
       </div>
-      <div class="home-ledger grid sm:grid-cols-2 lg:grid-cols-3">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {
-          categoryRows.map((cat) => (
-            <section class="home-cat" aria-labelledby={`cat-${cat.id}`}>
-              <h3 id={`cat-${cat.id}`} class="home-cat-head">
-                <a href={`/category/${cat.id}/`}>{cat.title}</a>
-                <span class="num text-faint">{cat.count}</span>
-              </h3>
+          categoryCards.map((cat) => (
+            <section class="home-cat" style={`--cat: ${cat.hue}`} aria-labelledby={`cat-${cat.id}`}>
+              <div class="home-cat-top">
+                <span class="home-cat-icon" aria-hidden="true">
+                  <ToolIcon name={cat.icon} class="w-5 h-5" />
+                </span>
+                <h3 id={`cat-${cat.id}`} class="home-cat-title">
+                  <a href={`/category/${cat.id}/`}>{cat.title}</a>
+                </h3>
+                <span class="home-cat-count num">{cat.count}</span>
+              </div>
               <ul class="home-cat-list">
                 {cat.top.map((t) => (
                   <li>
                     <a href={t.url} class="home-tool">
-                      <span class="home-tool-name">{t.name}</span>
-                      <span class="home-tool-desc">{t.description}</span>
+                      <span class="min-w-0">
+                        <span class="home-tool-name">{t.name}</span>
+                        <span class="home-tool-desc">{t.description}</span>
+                      </span>
+                      <span class="home-tool-arrow" aria-hidden="true">
+                        →
+                      </span>
                     </a>
                   </li>
                 ))}
               </ul>
-              <a href={`/category/${cat.id}/`} class="home-more mt-auto">
+              <a href={`/category/${cat.id}/`} class="home-cat-all">
                 All {cat.count} {cat.short} tools →
               </a>
             </section>
@@ -197,39 +253,46 @@ const description =
     </section>
 
     <!-- ── How it works ── -->
-    <section class="home-wrap pb-14" aria-labelledby="home-how">
-      <h2 id="home-how" class="home-h2 mb-4">How it works</h2>
-      <ol class="home-steps grid md:grid-cols-3">
-        {
-          steps.map((s, i) => (
-            <li class="home-step">
-              <span class="num home-step-no">{String(i + 1).padStart(2, '0')}</span>
-              <h3 class="text-base font-semibold text-fg mt-2">{s.title}</h3>
-              <p class="text-sm text-soft mt-1.5 leading-relaxed">{s.desc}</p>
-            </li>
-          ))
-        }
-      </ol>
+    <section class="home-band" aria-labelledby="home-how">
+      <div class="home-wrap py-14">
+        <p class="home-label">Private by design</p>
+        <h2 id="home-how" class="home-h2 mb-6">How it works</h2>
+        <ol class="grid gap-4 md:grid-cols-3">
+          {
+            steps.map((s, i) => (
+              <li class="home-step">
+                <span class="home-step-no num" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span class="home-step-icon" aria-hidden="true">
+                  <ToolIcon name={s.icon} class="w-5 h-5" />
+                </span>
+                <h3 class="text-base font-semibold text-fg mt-4">{s.title}</h3>
+                <p class="text-sm text-soft mt-1.5 leading-relaxed">{s.desc}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
     </section>
 
     <!-- ── Latest posts ── -->
     {
       blogPosts.length > 0 && (
-        <section class="home-wrap pb-10" aria-labelledby="home-blog">
-          <div class="flex items-end justify-between gap-4 mb-4">
-            <h2 id="home-blog" class="home-h2">From the blog</h2>
+        <section class="home-wrap pt-14 pb-10" aria-labelledby="home-blog">
+          <div class="flex items-end justify-between gap-4 mb-5">
+            <div>
+              <p class="home-label">Guides</p>
+              <h2 id="home-blog" class="home-h2">From the blog</h2>
+            </div>
             <a href="/blog/" class="home-more">
               All posts →
             </a>
           </div>
-          <ul class="home-posts">
+          <ul class="grid gap-4 md:grid-cols-3">
             {blogPosts.map((p) => (
               <li>
-                <a href={p.url} class="home-post">
-                  <span class="home-post-title">{p.title}</span>
-                  <span class="home-post-desc">{p.desc}</span>
-                  {p.time && <span class="num home-post-time">{p.time}</span>}
-                </a>
+                <PostCard url={p.url} title={p.title} desc={p.desc} tag={p.cat} meta={p.time} />
               </li>
             ))}
           </ul>
@@ -246,6 +309,7 @@ const description =
     <section class="home-wrap pt-4 pb-24" aria-labelledby="home-news">
       <div class="home-news">
         <div>
+          <p class="home-label home-label-accent">Newsletter</p>
           <h2 id="home-news" class="home-h2">Get new tools by email</h2>
           <p class="text-sm text-soft mt-1.5 max-w-[52ch]">
             A short email when new tools or guides go live, at most a couple a month. You confirm by email first and
@@ -288,26 +352,42 @@ const description =
     }
   }
   .home-label {
-    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
     font-family: var(--font-mono);
     font-size: 12px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--text-faint);
   }
+  .home-label-accent {
+    color: var(--accent);
+  }
+  .home-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 0 3px oklch(0.74 0.15 150 / 0.2);
+  }
   .home-h1 {
-    max-width: 18ch;
+    max-width: 16ch;
     font-size: var(--step-4);
     font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
     color: var(--text);
     text-wrap: balance;
   }
+  .home-h1-num {
+    color: var(--accent);
+  }
   .home-h2 {
-    font-size: var(--step-1);
-    font-weight: 700;
-    letter-spacing: -0.01em;
+    font-size: var(--step-2);
+    font-weight: 750;
+    letter-spacing: -0.015em;
     color: var(--text);
   }
   .num {
@@ -315,21 +395,64 @@ const description =
     font-variant-numeric: tabular-nums;
   }
 
+  /* ── Hero band: warm surface, technical dot grid fading out, soft amber light at the top ── */
+  .home-hero {
+    position: relative;
+    isolation: isolate;
+    padding-top: 40px;
+    border-bottom: 1px solid var(--line);
+    background:
+      radial-gradient(70% 60% at 15% 0%, oklch(0.8 0.15 75 / 0.13), transparent 70%),
+      linear-gradient(to bottom, oklch(0.19 0.016 75), var(--bg));
+  }
+  .home-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: radial-gradient(oklch(0.95 0.02 75 / 0.13) 1px, transparent 1.2px);
+    background-size: 22px 22px;
+    mask-image: radial-gradient(90% 80% at 30% 20%, #000 30%, transparent 85%);
+    -webkit-mask-image: radial-gradient(90% 80% at 30% 20%, #000 30%, transparent 85%);
+    pointer-events: none;
+  }
+  @media (min-width: 640px) {
+    .home-hero {
+      padding-top: 64px;
+    }
+  }
+  .home-hero-grid {
+    display: grid;
+    gap: 40px;
+    align-items: center;
+  }
+  @media (min-width: 1024px) {
+    .home-hero-grid {
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: 56px;
+    }
+  }
+
   /* Search box */
   .home-search {
     position: relative;
-    max-width: 720px;
+    max-width: 640px;
   }
   .home-search input {
     width: 100%;
-    height: 56px;
+    height: 58px;
     padding: 0 52px 0 50px;
     border-radius: 14px;
     background: var(--well);
     border: 1px solid var(--line-strong);
     color: var(--text);
     font-size: 1.0625rem;
-    transition: border-color 150ms;
+    box-shadow:
+      0 0 0 4px oklch(0.8 0.15 75 / 0.06),
+      0 12px 32px -12px rgb(0 0 0 / 0.6);
+    transition:
+      border-color 150ms,
+      box-shadow 150ms;
   }
   @media (max-width: 767px) {
     .home-search input {
@@ -342,6 +465,9 @@ const description =
   .home-search input:focus {
     outline: none;
     border-color: var(--accent);
+    box-shadow:
+      0 0 0 4px oklch(0.8 0.15 75 / 0.18),
+      0 12px 32px -12px rgb(0 0 0 / 0.6);
   }
   .home-search input::-webkit-search-cancel-button {
     display: none;
@@ -349,17 +475,17 @@ const description =
   .home-search-icon {
     position: absolute;
     left: 18px;
-    top: 28px;
+    top: 29px;
     width: 20px;
     height: 20px;
     transform: translateY(-50%);
-    color: var(--text-faint);
+    color: var(--accent);
     pointer-events: none;
   }
   .home-search-kbd {
     position: absolute;
     right: 16px;
-    top: 28px;
+    top: 29px;
     transform: translateY(-50%);
     min-width: 24px;
     height: 24px;
@@ -437,15 +563,18 @@ const description =
     padding: 4px 12px;
     border-radius: 999px;
     border: 1px solid var(--line-strong);
+    background: oklch(0.98 0.01 75 / 0.03);
     font-size: 0.875rem;
     color: var(--text-soft);
     transition:
       color 150ms,
-      border-color 150ms;
+      border-color 150ms,
+      background-color 150ms;
   }
   .home-pill:hover {
     color: var(--text);
     border-color: oklch(0.8 0.15 75 / 0.5);
+    background: oklch(0.8 0.15 75 / 0.1);
   }
   .home-more {
     display: inline-flex;
@@ -461,132 +590,347 @@ const description =
     text-underline-offset: 3px;
   }
 
-  /* Category ledger: hairline grid, no floating cards */
-  .home-ledger {
-    border-top: 1px solid var(--line);
-    border-left: 1px solid var(--line);
+  /* Sample result cards beside the hero */
+  .home-samples {
+    display: grid;
+    gap: 12px;
   }
-  .home-cat {
+  @media (max-width: 1023px) {
+    .home-samples {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+  }
+  /* Phones: one sample is enough, so the categories come sooner */
+  @media (max-width: 639px) {
+    .home-sample:nth-child(n + 2) {
+      display: none;
+    }
+  }
+  .home-sample {
+    --cat: 75;
     display: flex;
     flex-direction: column;
-    padding: 18px 20px 14px;
-    border-right: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    gap: 8px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: oklch(0.21 0.015 75 / 0.92);
+    border: 1px solid var(--line);
+    border-left: 3px solid oklch(0.75 0.12 var(--cat));
+    box-shadow: 0 18px 40px -24px rgb(0 0 0 / 0.8);
+    transition:
+      border-color 150ms,
+      transform 150ms;
   }
-  .home-cat-head {
+  @media (min-width: 1024px) {
+    .home-sample:nth-child(2) {
+      margin-left: 28px;
+    }
+  }
+  .home-sample:hover {
+    border-color: oklch(0.75 0.12 var(--cat) / 0.6);
+    border-left-color: oklch(0.75 0.12 var(--cat));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .home-sample:hover {
+      transform: translateY(-2px);
+    }
+  }
+  .home-sample-head {
     display: flex;
-    align-items: baseline;
     justify-content: space-between;
     gap: 12px;
-    font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: 0.8125rem;
     font-weight: 600;
+    color: var(--text);
+  }
+  .home-sample-head .num {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: oklch(0.82 0.1 var(--cat));
+  }
+  .home-sample-file {
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+  .home-sample-sizes {
+    font-size: 1.125rem;
+    color: var(--text-soft);
+  }
+  .home-sample-sizes strong {
+    color: var(--text);
+  }
+  .home-bar {
+    height: 6px;
+    border-radius: 6px;
+    background: oklch(0.98 0.01 75 / 0.08);
+    overflow: hidden;
+  }
+  .home-bar span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: oklch(0.75 0.12 var(--cat));
+  }
+  .home-sample-code {
+    margin: 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--well);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--code-text);
+    overflow-x: auto;
+  }
+  .home-sample-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.875rem;
+    color: var(--text-soft);
+  }
+  .home-sample-row strong {
+    color: var(--text);
+  }
+  .home-sample-big {
+    font-size: 1.5rem;
+    color: oklch(0.82 0.12 var(--cat)) !important;
+  }
+
+  /* Facts strip */
+  .home-facts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 44px;
+    border-top: 1px solid var(--line);
+  }
+  @media (min-width: 768px) {
+    .home-facts {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .home-facts > div {
+    padding: 16px 0 18px;
+  }
+  .home-facts > div + div {
+    padding-left: 20px;
+    border-left: 1px solid var(--line);
+  }
+  @media (max-width: 767px) {
+    .home-facts > div:nth-child(3) {
+      padding-left: 0;
+      border-left: 0;
+      border-top: 1px solid var(--line);
+    }
+    .home-facts > div:nth-child(4) {
+      border-top: 1px solid var(--line);
+    }
+  }
+  .home-facts dt {
+    font-family: var(--font-mono);
+    font-size: 11px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
+    color: var(--text-faint);
   }
-  .home-cat-head a {
+  .home-facts dd {
+    margin-top: 4px;
+    font-size: var(--step-2);
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  /* Category cards: own hue on the icon tile and top edge */
+  .home-cat {
+    --cat: 75;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 18px 18px 14px;
+    border-radius: 16px;
+    background:
+      linear-gradient(to bottom, oklch(0.75 0.12 var(--cat) / 0.07), transparent 120px),
+      var(--panel);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    transition:
+      border-color 150ms,
+      transform 150ms,
+      box-shadow 150ms;
+  }
+  .home-cat::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 3px;
+    background: oklch(0.75 0.12 var(--cat));
+  }
+  .home-cat:hover {
+    border-color: oklch(0.75 0.12 var(--cat) / 0.45);
+    box-shadow: 0 18px 40px -28px oklch(0.75 0.12 var(--cat) / 0.6);
+  }
+  .home-cat-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .home-cat-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 11px;
+    background: oklch(0.75 0.12 var(--cat) / 0.15);
+    border: 1px solid oklch(0.75 0.12 var(--cat) / 0.3);
+    color: oklch(0.85 0.11 var(--cat));
+  }
+  .home-cat-title {
+    flex: 1;
+    min-width: 0;
+    font-size: 1.0625rem;
+    font-weight: 700;
+  }
+  .home-cat-title a {
     display: inline-flex;
     align-items: center;
     min-height: 28px;
     color: var(--text);
   }
-  .home-cat-head a:hover {
-    color: var(--accent);
+  .home-cat-title a:hover {
+    color: oklch(0.85 0.11 var(--cat));
+  }
+  .home-cat-count {
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: 12px;
+    color: oklch(0.85 0.11 var(--cat));
+    background: oklch(0.75 0.12 var(--cat) / 0.12);
   }
   .home-cat-list {
-    margin: 10px 0 8px;
+    margin: 14px 0 10px;
   }
   .home-tool {
-    display: block;
-    padding: 8px 0;
-    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 -10px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    transition: background-color 150ms;
   }
-  .home-cat-list li:first-child .home-tool {
-    border-top: 0;
+  .home-tool:hover {
+    background: oklch(0.98 0.01 75 / 0.05);
   }
   .home-tool-name {
     display: block;
     font-weight: 600;
+    font-size: 0.9375rem;
     color: var(--text);
   }
   .home-tool-desc {
     display: block;
-    margin-top: 2px;
+    margin-top: 1px;
     font-size: 0.8125rem;
     color: var(--text-soft);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .home-tool:hover .home-tool-name {
-    color: var(--accent);
+  .home-tool-arrow {
+    flex-shrink: 0;
+    color: var(--text-faint);
+    transition:
+      color 150ms,
+      transform 150ms;
+  }
+  .home-tool:hover .home-tool-arrow {
+    color: oklch(0.85 0.11 var(--cat));
+    transform: translateX(2px);
+  }
+  .home-cat-all {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: oklch(0.85 0.11 var(--cat));
+  }
+  .home-cat-all:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
-  .home-steps {
-    border-top: 1px solid var(--line);
+  /* How it works: a slightly raised band */
+  .home-band {
+    background: oklch(0.18 0.013 75);
+    border-block: 1px solid var(--line);
   }
   .home-step {
-    padding: 18px 20px 18px 0;
-    border-bottom: 1px solid var(--line);
-  }
-  @media (min-width: 768px) {
-    .home-step {
-      border-bottom: 0;
-      padding-right: 32px;
-    }
-  }
-  .home-step-no {
-    font-size: 13px;
-    color: var(--accent);
-  }
-
-  .home-posts {
-    border-top: 1px solid var(--line);
-  }
-  .home-post {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 4px 16px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .home-post-title {
-    font-weight: 600;
-    color: var(--text);
-  }
-  .home-post:hover .home-post-title {
-    color: var(--accent);
-  }
-  .home-post-desc {
-    grid-column: 1;
-    font-size: 0.875rem;
-    color: var(--text-soft);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    position: relative;
+    padding: 20px;
+    border-radius: 16px;
+    background: var(--panel);
+    border: 1px solid var(--line);
     overflow: hidden;
   }
-  .home-post-time {
-    grid-column: 2;
-    grid-row: 1;
-    font-size: 12px;
-    color: var(--text-faint);
-    white-space: nowrap;
+  .home-step-no {
+    position: absolute;
+    top: 6px;
+    right: 14px;
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1;
+    color: oklch(0.8 0.15 75 / 0.1);
+  }
+  .home-step-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    background: oklch(0.8 0.15 75 / 0.14);
+    border: 1px solid oklch(0.8 0.15 75 / 0.28);
+    color: var(--accent);
   }
 
+  /* Newsletter: amber-tinted panel with the same dot grid */
   .home-news {
+    position: relative;
+    isolation: isolate;
     display: grid;
     gap: 16px;
     align-items: center;
-    padding: 20px;
-    border-radius: var(--radius-outer);
-    background: var(--panel);
-    border: 1px solid var(--line);
+    padding: 22px;
+    border-radius: 18px;
+    background:
+      radial-gradient(60% 120% at 100% 0%, oklch(0.8 0.15 75 / 0.14), transparent 70%),
+      var(--panel);
+    border: 1px solid oklch(0.8 0.15 75 / 0.25);
+    overflow: hidden;
+  }
+  .home-news::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: radial-gradient(oklch(0.95 0.02 75 / 0.1) 1px, transparent 1.2px);
+    background-size: 22px 22px;
+    mask-image: linear-gradient(to left, #000, transparent 70%);
+    -webkit-mask-image: linear-gradient(to left, #000, transparent 70%);
   }
   @media (min-width: 768px) {
     .home-news {
       grid-template-columns: 1fr auto;
-      padding: 24px 28px;
+      padding: 28px 32px;
     }
   }
 </style>

@@ -1,6 +1,7 @@
 ---
 // FILE: src/pages/category/[category].astro
 import MainLayout from '../../layouts/MainLayout.astro';
+import ToolCard from '../../components/ui/ToolCard.astro';
 import { categories, getToolsByCategory } from '../../data/tools';
 import type { ToolCategory } from '../../data/tools';
 import CategoryHero from '../../components/CategoryHero.astro';
@@ -99,25 +100,7 @@ const heroCategory = category.id === 'ai-tools'
           <h2 class="sr-only">All {category.title} tools</h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
             {categoryTools.map((tool) => (
-              <div class="bg-zinc-900/30 border border-zinc-800/80 p-5 rounded-2xl flex flex-col justify-between hover:border-amber-500/40 hover:bg-zinc-900/50 transition-all group">
-                <div>
-                  <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 rounded-xl bg-amber-600/10 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
-                      <ToolIcon name={tool.icon} />
-                    </div>
-                    <h3 class="text-base font-semibold text-primary group-hover:text-amber-300 transition-colors">
-                      {tool.name}
-                    </h3>
-                  </div>
-                  <p class="text-xs text-tertiary leading-relaxed">{tool.description}</p>
-                </div>
-                <a
-                  href={tool.url}
-                  class="mt-5 w-full bg-surface-2 hover:bg-amber-600 text-secondary hover:text-white text-xs font-medium py-2.5 rounded-xl border border-surface hover:border-amber-500 text-center transition-all"
-                >
-                  Open Tool
-                </a>
-              </div>
+              <ToolCard tool={tool} badge />
             ))}
           </div>
           </>

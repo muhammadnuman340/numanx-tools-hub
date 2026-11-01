@@ -1,0 +1,41 @@
+---
+// One card for a blog post, guide or comparison (styles: .nx-card in global.css).
+import { hueForLabel } from '../../data/categoryStyle';
+
+interface Props {
+  url: string;
+  title: string;
+  desc?: string;
+  /** Category or type shown as a tag; also picks the card colour */
+  tag?: string;
+  /** e.g. "5 min read" */
+  meta?: string;
+  cta?: string;
+  headingLevel?: 'h2' | 'h3' | 'h4';
+  class?: string;
+  [attr: string]: unknown;
+}
+
+const {
+  url,
+  title,
+  desc = '',
+  tag = 'Guide',
+  meta = '',
+  cta = 'Read',
+  headingLevel = 'h3',
+  class: className,
+  ...rest
+} = Astro.props;
+const Heading = headingLevel;
+---
+
+<a href={url} class:list={['nx-card nx-post-card', className]} style={`--cat: ${hueForLabel(tag)}`} {...rest}>
+  <span class="nx-card-meta">
+    <span class="nx-chip">{tag.replace(/ Tools$/, '')}</span>
+    {meta && <span class="num">{meta}</span>}
+  </span>
+  <Heading class="nx-card-title">{title}</Heading>
+  {desc && <span class="nx-card-desc nx-card-desc-3">{desc}</span>}
+  <span class="nx-card-go nx-card-cta">{cta} <span aria-hidden="true">→</span></span>
+</a>

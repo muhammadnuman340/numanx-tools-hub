@@ -1,6 +1,7 @@
 ---
 import HowToUse from './HowToUse.astro';
 import RelatedPosts from './RelatedPosts.astro';
+import ToolCard from './ui/ToolCard.astro';
 import MonetizationSlot from './MonetizationSlot.astro';
 import ProToolDocs from './ProToolDocs.astro';
 import AuthorCard from './AuthorCard.astro';
@@ -62,22 +63,20 @@ const nextTools = getRelatedTools(toolSlug, 3);
 {
   nextTools.length > 0 && (
     <section class="mt-10 max-w-5xl mx-auto" aria-labelledby="next-step-heading">
-      <div class="rounded-2xl border border-line bg-panel px-4 py-4 sm:px-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-        <div class="flex flex-wrap items-center gap-x-4 gap-y-2 min-w-0">
-          <h2 id="next-step-heading" class="font-mono text-[11px] uppercase tracking-wider text-faint">Next step</h2>
-          {nextTools.map((t) => (
-            <a href={t.url} class="inline-flex items-center gap-1 min-h-9 text-sm font-medium text-accent hover:text-fg transition-colors">
-              {t.name} <span aria-hidden="true">→</span>
-            </a>
-          ))}
-        </div>
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <h2 id="next-step-heading" class="text-xl font-bold tracking-tight text-fg">Next step</h2>
         <button
           type="button"
           data-open-feedback
-          class="self-start lg:self-auto inline-flex items-center min-h-9 px-3 rounded-lg border border-line text-soft hover:text-fg hover:border-line-strong text-xs font-medium transition-colors cursor-pointer"
+          class="inline-flex items-center min-h-9 px-3 rounded-lg border border-line text-soft hover:text-fg hover:border-line-strong text-xs font-medium transition-colors cursor-pointer"
         >
           Was this useful? Send feedback
         </button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {nextTools.map((t) => (
+          <ToolCard tool={t} />
+        ))}
       </div>
     </section>
   )
