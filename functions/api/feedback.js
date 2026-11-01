@@ -1,3 +1,5 @@
+import { postToSheet } from '../../src/lib/sheetWebhook.js';
+
 export async function onRequest(context) {
   const { request, env } = context;
 
@@ -39,21 +41,9 @@ export async function onRequest(context) {
       timestamp: new Date().toISOString(),
     };
 
-    let sheetStored = false;
-    const webhookUrl = env.FEEDBACK_WEBHOOK_URL;
-    if (webhookUrl) {
-      try {
-        const resp = await fetch(webhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          // The secret proves the request came from this site; it is never stored
-          body: JSON.stringify({ ...payload, secret: env.WEBHOOK_SECRET || '' }),
-        });
-        // Apps Script answers 200 even on errors, so read its reply
-        const out = await resp.json().catch(() => ({}));
-        sheetStored = resp.ok && out.success !== false;
-      } catch (_) {}
-    }
+    // Google Apps Script saves the feedback and sends the emails
+    const sheet = await postToSheet(env.FEEDBACK_WEBHOOK_URL, payload, env.WEBHOOK_SECRET);
+    const sheetStored = sheet.ok;
 
     let kvStored = false;
     try {
@@ -64,11 +54,23 @@ export async function onRequest(context) {
       }
     } catch (_) {}
 
+    // A slow script usually still delivers, so only a clear failure is reported to the visitor
+    if (!sheetStored && !kvStored && sheet.reason !== 'timeout') {
+      return new Response(
+        JSON.stringify({
+          error: 'Feedback could not be sent right now. Please try again later.',
+          delivery: sheet.reason,
+        }),
+        { status: 503, headers: { 'Content-Type': 'application/json' } },
+      );
+    }
+
     return new Response(
       JSON.stringify({
         success: true,
         message: 'Thank you for your feedback!',
         stored: sheetStored || kvStored,
+        delivery: sheet.reason,
       }),
       {
         status: 200,

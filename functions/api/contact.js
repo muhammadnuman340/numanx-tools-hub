@@ -1,3 +1,5 @@
+import { postToSheet } from '../../src/lib/sheetWebhook.js';
+
 // Human-readable labels for the contact form's subject <select> values
 const TOPIC_LABELS = {
   feedback: 'Feedback',
@@ -45,29 +47,9 @@ export async function onRequest(context) {
       timestamp: new Date().toISOString(),
     };
 
-    // Forward to Google Sheets webhook if configured with 4s timeout
-    let sheetStored = false;
-    const webhookUrl = env.CONTACT_WEBHOOK_URL;
-    if (webhookUrl) {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 4000);
-      try {
-        const resp = await fetch(webhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          // The secret proves the request came from this site; it is never stored
-          body: JSON.stringify({ ...payload, secret: env.WEBHOOK_SECRET || '' }),
-          signal: controller.signal,
-        });
-        // Apps Script answers 200 even on errors, so read its reply
-        const out = await resp.json().catch(() => ({}));
-        sheetStored = resp.ok && out.success !== false;
-      } catch (_) {
-        // webhook unavailable or timed out — fall back to KV
-      } finally {
-        clearTimeout(timeoutId);
-      }
-    }
+    // Google Apps Script saves the message and sends the emails
+    const sheet = await postToSheet(env.CONTACT_WEBHOOK_URL, payload, env.WEBHOOK_SECRET);
+    const sheetStored = sheet.ok;
 
     // Fallback: store in KV if bound
     let kvStored = false;
@@ -81,11 +63,23 @@ export async function onRequest(context) {
       // KV not available
     }
 
+    // A slow script usually still delivers, so only a clear failure is reported to the visitor
+    if (!sheetStored && !kvStored && sheet.reason !== 'timeout') {
+      return new Response(
+        JSON.stringify({
+          error: 'Your message could not be sent right now. Please email contact@numanxstudio.com instead.',
+          delivery: sheet.reason,
+        }),
+        { status: 503, headers: { 'Content-Type': 'application/json' } },
+      );
+    }
+
     return new Response(
       JSON.stringify({
         success: true,
         message: 'Your message has been sent. We will get back to you soon!',
         stored: sheetStored || kvStored,
+        delivery: sheet.reason,
       }),
       {
         status: 200,
