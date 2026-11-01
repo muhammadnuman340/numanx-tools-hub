@@ -303,7 +303,7 @@ const useCases = [
               <h2 class="text-[10px] font-semibold text-muted uppercase tracking-wider">Performance Dashboard</h2>
               <span
                 id="impact-badge"
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all hidden"
+                class="[&:not(.hidden)]:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all hidden"
               ></span>
             </div>
             <div class="grid grid-cols-2 gap-3">
@@ -901,7 +901,7 @@ const useCases = [
       const level = getBattingLevel(batSr);
       impactBadge.textContent = level.label;
       impactBadge.className =
-        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all ' +
+        '[&:not(.hidden)]:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all ' +
         level.color +
         ' ' +
         level.bg;
@@ -940,7 +940,7 @@ const useCases = [
       const bowlLabel = level.label.replace('🐐', '🎯').replace('⚡', '🎯').replace('⚠️', '⚠️');
       impactBadge.textContent = bowlLabel;
       impactBadge.className =
-        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all ' +
+        '[&:not(.hidden)]:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all ' +
         level.color +
         ' ' +
         level.bg;
