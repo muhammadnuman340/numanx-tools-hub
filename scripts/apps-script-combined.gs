@@ -28,6 +28,7 @@ const SITE_URL = 'https://toolshub.numanxstudio.com';
 const SHEET_ID = '';
 const BRAND_COLOR = '#b45309';
 
+// The contact form's "Subject" choices (value → label)
 const TOPIC_LABELS = {
   feedback: 'Feedback',
   bug: 'Bug Report',
@@ -35,6 +36,40 @@ const TOPIC_LABELS = {
   partnership: 'Business / Partnership',
   other: 'Other',
 };
+
+// Per topic: an emoji for your inbox, where the notification goes, and the reply the visitor gets.
+// To send a topic to a different inbox, change its `to` (e.g. partnerships to a business address).
+const TOPICS = {
+  'Business / Partnership': {
+    icon: '💼',
+    to: NOTIFICATION_EMAIL,
+    reply: 'Thanks for your interest in working with NumanX Tools Hub. Business and partnership messages are read first; expect a reply within 1–2 working days. If you have a deck, rate card or deadline, just reply to this email with it.',
+  },
+  'Bug Report': {
+    icon: '🐞',
+    to: NOTIFICATION_EMAIL,
+    reply: 'Thanks for reporting a bug — it helps everyone who uses the tool. If you haven’t already, reply with the tool’s page, your browser and device, and what you expected to happen. We’ll let you know when it’s fixed.',
+  },
+  'Tool Suggestion': {
+    icon: '💡',
+    to: NOTIFICATION_EMAIL,
+    reply: 'Thanks for the tool idea. Every suggestion goes on our list, and the most requested ones get built first. We’ll write back if we build it or have a question.',
+  },
+  Feedback: {
+    icon: '⭐',
+    to: NOTIFICATION_EMAIL,
+    reply: 'Thanks for your feedback. We read every message, and it decides what we fix and improve next.',
+  },
+  Other: {
+    icon: '📬',
+    to: NOTIFICATION_EMAIL,
+    reply: 'Thanks for getting in touch. We read every message and usually reply within 2–3 working days.',
+  },
+};
+
+function topicInfo(topic) {
+  return TOPICS[topic] || TOPICS.Other;
+}
 
 // Emails to visitors stop well before Gmail's daily limit, so your own notifications still go out
 const KEEP_FOR_NOTIFICATIONS = 15;
@@ -86,10 +121,10 @@ function emailHtml(title, bodyHtml, footerHtml) {
     </div>`;
 }
 
-function notifyOwner(subject, html, replyTo) {
+function notifyOwner(subject, html, replyTo, to) {
   try {
     MailApp.sendEmail({
-      to: NOTIFICATION_EMAIL,
+      to: isEmail(to) ? to : NOTIFICATION_EMAIL,
       subject: subject,
       htmlBody: html,
       replyTo: isEmail(replyTo) ? replyTo : undefined,
@@ -168,10 +203,11 @@ function handleContact(data) {
     site,
   ]);
 
+  const info = topicInfo(topic);
   notifyOwner(
-    `[${SITE_NAME}] ${topic} from ${data.name || 'Visitor'}`,
+    `${info.icon} [${SITE_NAME}] ${topic} from ${data.name || 'Visitor'}`,
     emailHtml(
-      `📬 ${esc(topic)} — ${SITE_NAME}`,
+      `${info.icon} ${esc(topic)} — ${SITE_NAME}`,
       `<p><strong>Site:</strong> <a href="https://${esc(site)}/">${esc(site)}</a></p>
        <p><strong>Topic:</strong> ${esc(topic)}</p>
        <p><strong>Name:</strong> ${esc(data.name) || 'Anonymous'}</p>
@@ -182,17 +218,18 @@ function handleContact(data) {
       `Hit <strong>Reply</strong> to answer ${esc(data.name) || 'the visitor'} directly.`,
     ),
     data.email,
+    info.to,
   );
 
   // The visitor's own message is not repeated, so the form can't be used to send someone arbitrary text
   emailVisitor(
     data.email,
-    `We got your message — ${SITE_NAME}`,
+    `We got your message (${topic}) — ${SITE_NAME}`,
     emailHtml(
       'Thanks for getting in touch',
       `<p>Hi ${esc(String(data.name || '').slice(0, 40)) || 'there'},</p>
-       <p>Your message about <strong>${esc(topic)}</strong> reached us. We read every message and usually reply within 2–3 working days.</p>
-       <p>If you need to add something, just reply to this email.</p>
+       <p>Your <strong>${esc(topic)}</strong> message reached us.</p>
+       <p>${info.reply}</p>
        <p>— ${SITE_NAME}</p>`,
       `You received this because this address was entered in the contact form on <a href="${SITE_URL}/contact/">${SITE_URL.replace('https://', '')}</a>. If that wasn’t you, ignore this email.`,
     ),
@@ -362,13 +399,17 @@ function testAllForms() {
   const visitor = (tag) => `${user}+${tag}${stamp}@${domain}`;
   const results = [];
 
-  results.push('Contact: ' + JSON.stringify(handleContact({
-    name: 'TEST Contact', email: visitor('contact'), subject: 'bug', topic: 'Bug Report',
-    message: 'TEST message from testAllForms(). <b>This should show as text, not bold.</b>',
-    site: SITE_URL.replace('https://', ''),
-  })));
+  // One contact message per topic, each from its own test address
+  Object.keys(TOPIC_LABELS).forEach((value) => {
+    const topic = TOPIC_LABELS[value];
+    results.push(`Contact (${topic}): ` + JSON.stringify(handleContact({
+      name: 'TEST Contact', email: visitor(value), subject: value, topic: topic,
+      message: `TEST ${topic} message from testAllForms(). <b>This should show as text, not bold.</b>`,
+      site: SITE_URL.replace('https://', ''),
+    })));
+  });
   results.push('Feedback: ' + JSON.stringify(handleFeedback({
-    rating: 5, name: 'TEST Feedback', email: visitor('feedback'), page: '/tools/run-rate-calculator/',
+    rating: 5, name: 'TEST Feedback', email: visitor('feedbackform'), page: '/tools/run-rate-calculator/',
     message: 'TEST feedback from testAllForms().', site: SITE_URL.replace('https://', ''),
   })));
   if (webAppUrl()) {
@@ -378,6 +419,6 @@ function testAllForms() {
   }
 
   Logger.log(results.join('\n'));
-  Logger.log('Check ' + NOTIFICATION_EMAIL + ' for up to 5 emails: contact (2), feedback (2), newsletter confirm (1). ' +
+  Logger.log('Check ' + NOTIFICATION_EMAIL + ' for up to 13 emails: contact 5 topics × 2, feedback (2), newsletter confirm (1). ' +
     'Click the confirm link to get the 6th: "New newsletter subscriber". Emails left today: ' + MailApp.getRemainingDailyQuota());
 }
