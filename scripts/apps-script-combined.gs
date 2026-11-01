@@ -10,7 +10,7 @@
  *                 after they click the link → email to you; every email has an unsubscribe link
  *
  * Setup (once):
- *   1. Paste this file into Code.gs and save.
+ *   1. Create a Google Sheet → Extensions → Apps Script → paste this file into Code.gs and save.
  *   2. Project Settings → Script properties → add WEBHOOK_SECRET with a long random value.
  *      Put the same value in Cloudflare Pages → Settings → Variables as WEBHOOK_SECRET.
  *   3. Run sendTestEmail() once and allow the permissions Google asks for.
@@ -23,7 +23,9 @@
 const NOTIFICATION_EMAIL = 'numanxstudio@gmail.com';
 const SITE_NAME = 'NumanX Tools Hub';
 const SITE_URL = 'https://toolshub.numanxstudio.com';
-const SHEET_ID = '1R1mJ3Hm2KOCRF3zlA3Qx1W3S-clDIsnkVStFctmeMNg';
+// Leave empty when the script is opened from the sheet (Extensions → Apps Script): it then uses
+// that sheet. Only a standalone script needs the sheet's ID here (the part of its URL after /d/).
+const SHEET_ID = '';
 const BRAND_COLOR = '#b45309';
 
 const TOPIC_LABELS = {
@@ -60,7 +62,8 @@ function isEmail(value) {
 
 /** Gets a tab by name, creating it with headers. New columns are added at the end of old tabs. */
 function getSheet(name, headers) {
-  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const ss = SHEET_ID ? SpreadsheetApp.openById(SHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
+  if (!ss) throw new Error('No sheet: open this script from the sheet (Extensions → Apps Script) or set SHEET_ID');
   let sheet = ss.getSheetByName(name);
   if (!sheet) {
     sheet = ss.insertSheet(name);
