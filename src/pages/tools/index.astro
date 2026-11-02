@@ -2,13 +2,14 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import { tools, categories as categoryInfos } from '../../data/tools';
 import MonetizationSlot from '../../components/MonetizationSlot.astro';
+import ToolCard from '../../components/ui/ToolCard.astro';
 
 const categoryMap: Record<string, string> = {
   'image-tools': 'Image Tools',
   'creator-tools': 'Creator Tools',
   'utility-tools': 'Utility Tools',
   'cricket-tools': 'Cricket Tools',
-  'ai-tools': 'AI Tools',
+  'ai-tools': 'Text & AI Tools',
   'developer-tools': 'Developer Tools',
 };
 
@@ -109,40 +110,9 @@ const categories = ['All', ...categoryInfos.map((c) => categoryMap[c.id] || c.ti
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 py-8 max-w-7xl mx-auto group-section preserve-3d"
       >
         {
-          tools.map((tool) => {
-            const initials = tool.name
-              .split(' ')
-              .map((w) => w[0])
-              .join('')
-              .slice(0, 2);
-            const displayCat = categoryMap[tool.category] || tool.category;
-            return (
-              <div
-                class="tool-card group card-spotlight bg-surface-1/80 border border-surface p-5 rounded-3xl flex flex-col justify-between hover:bg-amber-500/5 transition-all audio-trigger"
-                data-name={tool.name}
-                data-category={displayCat}
-              >
-                <div>
-                  <div class="flex items-center gap-3 mb-3">
-                    <div class="w-12 h-12 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center text-zinc-400 group-hover:scale-110 group-hover:bg-amber-500/10 group-hover:border-amber-500/20 group-hover:text-amber-400 transition-all relative overflow-hidden shadow-inner shrink-0">
-                      <span class="font-bold text-sm relative z-10 font-mono tracking-wider">{initials}</span>
-                      <span class="absolute inset-0 bg-radial-gradient from-amber-500/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                    <h3 class="text-base font-semibold text-primary group-hover:text-amber-300 transition-colors">
-                      {tool.name}
-                    </h3>
-                  </div>
-                  <p class="text-xs text-tertiary leading-relaxed">{tool.description}</p>
-                </div>
-                <a
-                  href={tool.url}
-                  class="mt-5 w-full bg-surface-2 hover:bg-surface-3 text-secondary hover:text-white text-xs font-semibold py-3 rounded-xl border border-surface-2 hover:border-amber-500/50 text-center transition-all group-hover:scale-[1.02] shadow-inner audio-trigger"
-                >
-                  Open Tool
-                </a>
-              </div>
-            );
-          })
+          tools.map((tool) => (
+            <ToolCard tool={tool} badge class="tool-card" data-name={tool.name} data-category={categoryMap[tool.category] || tool.category} />
+          ))
         }
 
         <div id="empty-state" class="hidden col-span-full text-center py-20">
@@ -241,7 +211,7 @@ const categories = ['All', ...categoryInfos.map((c) => categoryMap[c.id] || c.ti
       toolCards.forEach((card: any) => {
         const name = card.dataset.name.toLowerCase();
         const category = card.dataset.category;
-        const desc = card.querySelector('p').textContent.toLowerCase();
+        const desc = (card.querySelector('.nx-card-desc')?.textContent || '').toLowerCase();
 
         const matchesSearch = !query || name.includes(query) || desc.includes(query);
         const matchesCategory = activeCategory === 'All' || category === activeCategory;

@@ -1,3 +1,5 @@
+> **Superseded (1 November 2026):** this file describes the old glassmorphism design and no longer matches the site. Use [DESIGN.md](./DESIGN.md) for colours, type, layout, components and motion, and [PRODUCT.md](./PRODUCT.md) for copy and naming.
+
 # NumanX Tools — Comprehensive Design System & Component Matrix
 
 This is the definitive "Principal Architect" specification for the NumanX visual language. It dictates exactly how the "God-Tier Glassmorphism" aesthetic is implemented across Tailwind utility classes, accessibility states, and animation keyframes.

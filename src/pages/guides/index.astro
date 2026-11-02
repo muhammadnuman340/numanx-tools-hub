@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+import PostCard from '../../components/ui/PostCard.astro';
 import AdUnit from '../../components/AdUnit.astro';
 
 const guideModules = import.meta.glob('./*.md', { eager: true });
@@ -9,13 +10,11 @@ const guides = Object.entries(guideModules)
     slug: path.replace('./', '').replace('.md', ''),
   }))
   .sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
-const featured = guides[0];
-const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
 ---
 
 <MainLayout
   title="Guides - NumanX Tools | Step-by-Step Tutorials"
-  description="Step-by-step guides and tutorials for image optimization, password security, cricket analytics, and more from NumanX Tools."
+  description="Step-by-step guides from NumanX Tools: optimise images for the web, keep your passwords and accounts safe, and install the tools as an app that works offline."
   keywords="guides, tutorials, how-to, image optimization, password security, cricket guides, seo guides, web performance"
   canonical="https://toolshub.numanxstudio.com/guides/"
   breadcrumbs={[
@@ -25,26 +24,13 @@ const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
 >
   <main class="min-h-screen pt-8 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-12">
-        <div
-          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6"
-        >
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-          </span>
-          Guides
-        </div>
-        <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-none">
-          NumanX Tools
-          <span
-            class="block mt-2 text-amber-400"
-          >
-            Guides
-          </span>
-        </h1>
-        <p class="mt-6 text-tertiary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-          Step-by-step tutorials to help you get the most out of your tools.
+      <div class="mb-10 pt-6">
+        <p class="text-xs font-mono uppercase tracking-wider text-zinc-400 mb-3">{guides.length} guides</p>
+        <h1 class="text-[length:var(--step-3)] font-bold tracking-[-0.02em] leading-tight text-primary">Guides</h1>
+        <p class="mt-3 text-secondary text-lg max-w-[68ch] leading-relaxed">
+          Longer, step-by-step walkthroughs. Each one explains a topic from the start and points to the free tool
+          that does the job, such as the image compressor or password generator. For shorter tips and news, see the
+          <a href="/blog/" class="text-amber-400 hover:text-amber-300 underline underline-offset-2">blog</a>.
         </p>
       </div>
 
@@ -52,117 +38,17 @@ const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
         <AdUnit format="horizontal" />
       </div>
 
-      {
-        featured && (
-          <a
-            href={'/guides/' + featured.slug + '/'}
-            class="group block glass-card rounded-3xl hover:border-amber-500/40 hover:-translate-y-1 transition-all duration-300 p-6 md:p-10 mb-12 overflow-hidden"
-          >
-            <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
-              <div class="w-full md:w-[280px] shrink-0 aspect-video md:aspect-[4/3] rounded-xl flex items-center justify-center border border-zinc-800 overflow-hidden bg-amber-600/20">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="40"
-                  height="40"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  style="stroke:var(--accent)"
-                  stroke-width="1"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="opacity-60"
-                >
-                  <>
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                    <line x1="16" y1="13" x2="8" y2="13" />
-                    <line x1="16" y1="17" x2="8" y2="17" />
-                  </>
-                </svg>
-              </div>
-              <div class="flex-1 min-w-0">
-                <div class="flex items-center gap-3 mb-3">
-                  <span class="inline-flex px-2.5 py-0.5 rounded-full bg-amber-600/15 border border-amber-500/30 text-amber-300 text-xs font-medium">
-                    {featured.frontmatter.category}
-                  </span>
-                  <span class="text-xs text-dim">{featured.frontmatter.date}</span>
-                </div>
-                <h2 class="text-xl md:text-2xl font-bold text-white group-hover:text-amber-300 transition-colors duration-200 leading-snug">
-                  {featured.frontmatter.title}
-                </h2>
-                <p class="text-sm text-tertiary mt-2 leading-relaxed line-clamp-2">
-                  {featured.frontmatter.description}
-                </p>
-                <div class="flex items-center gap-3 mt-4 text-sm text-muted">
-                  <span>{featured.frontmatter.readingTime || '5 min read'}</span>
-                </div>
-                <span class="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-amber-400 group-hover:text-amber-300 transition-colors">
-                  Read Guide
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="group-hover:translate-x-1 transition-transform"
-                  >
-                    <>
-                      <line x1="5" y1="12" x2="19" y2="12" />
-                      <polyline points="12 5 19 12 12 19" />
-                    </>
-                  </svg>
-                </span>
-              </div>
-            </div>
-          </a>
-        )
-      }
-
       <div id="guides-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {
           guides.map((guide) => (
-            <a
-              href={'/guides/' + guide.slug + '/'}
-              class="group glass-card rounded-2xl p-6 hover:border-amber-500/40 hover:-translate-y-1 transition-all duration-300 block"
-            >
-              <div class="w-full aspect-video rounded-xl flex items-center justify-center mb-4 border border-zinc-800 bg-amber-600/20">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  style="stroke:var(--accent)"
-                  stroke-width="1"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="opacity-60"
-                >
-                  <>
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                    <line x1="16" y1="13" x2="8" y2="13" />
-                    <line x1="16" y1="17" x2="8" y2="17" />
-                  </>
-                </svg>
-              </div>
-              <span class="inline-flex px-2 py-0.5 rounded-full bg-amber-600/15 border border-amber-500/30 text-amber-300 text-[10px] font-medium mb-2.5">
-                {guide.frontmatter.category || 'General'}
-              </span>
-              <h3 class="text-base font-bold text-white group-hover:text-amber-300 transition-colors duration-200 leading-snug">
-                {guide.frontmatter.title}
-              </h3>
-              <p class="text-xs text-tertiary mt-2 leading-relaxed line-clamp-2">{guide.frontmatter.description}</p>
-              <div class="flex items-center gap-2 mt-3 text-[11px] text-dim">
-                <span>{guide.frontmatter.date}</span>
-                <span>·</span>
-                <span>{guide.frontmatter.readingTime || '5 min read'}</span>
-              </div>
-            </a>
+            <PostCard
+              url={'/guides/' + guide.slug + '/'}
+              title={guide.frontmatter.title}
+              desc={guide.frontmatter.summary || guide.frontmatter.description}
+              tag={guide.frontmatter.category || 'Guide'}
+              meta={guide.frontmatter.readingTime || '5 min read'}
+              headingLevel="h2"
+            />
           ))
         }
       </div>
@@ -171,17 +57,12 @@ const categories = [...new Set(guides.map((g) => g.frontmatter.category))];
         <AdUnit format="horizontal" />
       </div>
 
-      <div class="mt-16 bg-zinc-900/30 border border-zinc-800/80 p-8 md:p-10 rounded-2xl text-center">
-        <h2 class="text-2xl md:text-3xl font-black tracking-tight">
-          Need Help With
-          <span class="text-amber-400">
-            a Specific Tool?</span
-          >
-        </h2>
-        <p class="text-tertiary mt-3 max-w-md mx-auto text-sm">
-          Browse our library of free online tools or contact us with your questions.
+      <div class="mt-16 bg-surface-1 border border-surface p-8 md:p-10 rounded-xl">
+        <h2 class="text-2xl font-bold tracking-tight text-white">Need help with a specific tool?</h2>
+        <p class="text-secondary mt-3 max-w-[60ch] text-sm">
+          Every tool page has its own how-to and FAQ. You can also <a href="/contact/" class="text-amber-400 hover:text-amber-300 underline underline-offset-2">send a question</a>.
         </p>
-        <div class="mt-6 flex gap-3 justify-center">
+        <div class="mt-6 flex flex-wrap gap-3">
           <a
             href="/tools/"
             class="px-6 py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-accent-fg font-semibold text-sm active:scale-[0.97] transition-all duration-200"

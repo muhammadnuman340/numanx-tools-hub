@@ -6,6 +6,7 @@
  *
  * `title` + `gradient` are kept as props for compatibility; they now render as one plain name.
  * `badge` is shown only when it carries a fact (e.g. an ICC rule), not generic labels.
+ * `updated` (YYYY-MM-DD) shows a visible "Updated" date; set it when the page content was last reviewed.
  */
 import FavoriteButton from './FavoriteButton.astro';
 import ShareBar from './ShareBar.astro';
@@ -16,11 +17,15 @@ interface Props {
   desc: string;
   badge?: string;
   slug?: string;
+  updated?: string;
 }
-const { title, gradient = '', desc, badge = '', slug } = Astro.props;
+const { title, gradient = '', desc, badge = '', slug, updated } = Astro.props;
 const toolDisplayName = `${title} ${gradient}`.replace(/\s+/g, ' ').trim();
 const fact = badge.replace(/^[\s✦•·]+/, '').trim();
 const showFact = fact.length > 0 && !/^(client[- ]side|free online tool|100% client[- ]side)$/i.test(fact);
+const updatedLabel = updated
+  ? new Date(`${updated}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+  : '';
 ---
 
 <header class="tool-header mb-6 sm:mb-8">
@@ -46,7 +51,18 @@ const showFact = fact.length > 0 && !/^(client[- ]side|free online tool|100% cli
 
   <p class="mt-2 max-w-3xl text-soft text-sm sm:text-base leading-relaxed">{desc}</p>
 
-  {showFact && <p class="mt-2 font-mono text-[11px] uppercase tracking-wider text-faint">{fact}</p>}
+  {
+    (showFact || updated) && (
+      <p class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-faint">
+        {showFact && <span class="font-mono uppercase tracking-wider">{fact}</span>}
+        {updated && (
+          <span>
+            Updated <time datetime={updated}>{updatedLabel}</time>
+          </span>
+        )}
+      </p>
+    )
+  }
 
   <!-- Live status for screen readers and browser agents; tools update it via src/lib/toolStatus.ts -->
   <div id="tool-status" role="status" aria-live="polite" data-agent-status="ready" class="sr-only"></div>

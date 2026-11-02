@@ -10,9 +10,9 @@ layout: '../../layouts/BlogLayout.astro'
 
 Images often account for the largest percentage of bytes transferred during web page loads. Optimizing your images can lead to dramatic improvements in page load speeds, user engagement, and SEO rankings.
 
-> ⚡ **Optimize Web Images Instantly:** Convert PNG/JPG assets to high-efficiency WebP with our free [**PNG to WebP Converter**](/tools/png-to-webp/) and compress them with our [**Smart Image Compressor**](/tools/image-compressor/). 100% client-side, fast local processing, zero cloud uploads.
+> ⚡ **Optimize Web Images Instantly:** Convert PNG/JPG assets to high-efficiency WebP with our free [**PNG to WebP Converter**](/tools/png-to-webp/) and compress them with our [**Image Compressor**](/tools/image-compressor/). 100% client-side, fast local processing, zero cloud uploads.
 
-In this guide, we will explore the best practices for modern web image optimization and show you how to do it instantly in your browser using our [**PNG to WebP Converter**](/tools/png-to-webp/) and [**Smart Image Compressor**](/tools/image-compressor/).
+In this guide, we will explore the best practices for modern web image optimization and show you how to do it instantly in your browser using our [**PNG to WebP Converter**](/tools/png-to-webp/) and [**Image Compressor**](/tools/image-compressor/).
 
 ## 1. Choose the Right Format: Why WebP Reigns Supreme
 
@@ -29,13 +29,13 @@ Whenever possible, serve your web assets in `.webp` format.
 One of the most common web performance mistakes is serving a massive 4000x3000px image and scaling it down via CSS `width: 300px`. The browser still has to download, parse, and decode the entire high-resolution file.
 
 - **Check your layout**: Determine the maximum width the image will ever be displayed at on desktop (e.g., `800px` for a blog content width).
-- **Scale accordingly**: Resize the primary image to precisely those dimensions before uploading using our [**Smart Image Resizer**](/tools/image-resizer/).
+- **Scale accordingly**: Resize the primary image to precisely those dimensions before uploading using our [**Image Resizer**](/tools/image-resizer/).
 
 ## 3. Leverage Client-Side Tools
 
 You don't need expensive server-side processing pipelines or heavy design desktop software to optimize your images. Modern web browsers are incredibly powerful.
 
-Using tools like the [**Smart Image Compressor**](/tools/image-compressor/), [**PNG to WebP Converter**](/tools/png-to-webp/), and [**JPG to PNG Converter**](/tools/jpg-to-png/), you can process and convert your images with:
+Using tools like the [**Image Compressor**](/tools/image-compressor/), [**PNG to WebP Converter**](/tools/png-to-webp/), and [**JPG to PNG Converter**](/tools/jpg-to-png/), you can process and convert your images with:
 
 - **Zero Server Overhead**: Calculations run locally on your graphics device or CPU via the Canvas API.
 - **Complete Privacy**: Since no files are uploaded to an external server, your assets remain completely secure.

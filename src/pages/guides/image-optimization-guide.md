@@ -2,6 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'Complete Guide to Image Optimization'
 description: 'Learn how to optimize images for the web — choose formats, compress effectively, resize for different devices, and implement lazy loading for faster page speed.'
+summary: 'Pick a format, compress, resize and lazy-load images for faster pages.'
 date: '2026-06-01'
 author: 'Muhammad Numan Usmani'
 category: 'Image Tools'
@@ -28,7 +29,7 @@ This guide covers everything you need to know: format selection, compression tec
 | JPEG   | Photos, complex scenes       | Lossy               | No           | No        |
 | PNG    | Graphics, logos, screenshots | Lossless            | Yes          | No        |
 | WebP   | Modern web (all use cases)   | Both lossy/lossless | Yes          | Yes       |
-| AVIF   | Next-gen compression         | Superior to WebP    | Yes          | Yes       |
+| AVIF   | Newest web format            | Superior to WebP    | Yes          | Yes       |
 | SVG    | Icons, illustrations, logos  | Vector              | Yes          | Yes       |
 
 **Recommendation**: Use WebP as your primary format with JPEG/PNG fallback.
@@ -45,7 +46,7 @@ Reduces file size without removing data. Ideal for graphics and screenshots.
 
 ### Compression Workflow
 
-1. Upload your image to the **Smart Image Compressor**
+1. Upload your image to the **Image Compressor**
 2. Start with quality 80
 3. Preview the result side-by-side
 4. Download the optimized version
@@ -64,7 +65,7 @@ Common sizing mistakes:
 - Desktop: 1920px
 - Retina: 2x of each
 
-Use the **Smart Image Resizer** with social media presets to get perfect dimensions.
+Use the **Image Resizer** with social media presets to get perfect dimensions.
 
 ## Step 4: Implement Lazy Loading
 
@@ -87,7 +88,7 @@ Cloudflare, Cloudinary, and imgix offer automatic optimization including:
 
 ## Tools to Use
 
-- **[Smart Image Compressor](/tools/image-compressor/)** — Lossless compression with side-by-side preview
+- **[Image Compressor](/tools/image-compressor/)** — Lossless compression with side-by-side preview
 - **[JPG to PNG](/tools/jpg-to-png/)** — Format conversion
 - **[PNG to WebP](/tools/png-to-webp/)** — Modern format conversion
 - **[Image Resizer](/tools/image-resizer/)** — Responsive dimension presets

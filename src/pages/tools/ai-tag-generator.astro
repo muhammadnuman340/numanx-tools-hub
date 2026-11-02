@@ -43,7 +43,7 @@ const howToSteps = [
   },
   {
     title: 'Generate tags',
-    desc: 'Click the Generate Tags button and watch as the AI extracts the most relevant keywords',
+    desc: 'Click the Generate Tags button and the tool ranks the most relevant keywords',
   },
   {
     title: 'Copy and use',
@@ -72,9 +72,9 @@ const useCases = [
 
 const faqItems = [
   {
-    question: 'How does AI tag generation work?',
+    question: 'How does tag generation work?',
     answer:
-      'The AI Tag Generator analyzes your content by removing common stop words, counting word frequencies, and ranking the most significant terms. It then generates relevant single-word and multi-word tags, including hashtag variants. The tool also detects content categories (programming, food, etc.) to suggest contextually relevant tags.',
+      'The Tag Generator analyzes your content by removing common stop words, counting word frequencies, and ranking the most significant terms. It then generates relevant single-word and multi-word tags, including hashtag variants. The tool also detects content categories (programming, food, etc.) to suggest contextually relevant tags.',
   },
   {
     question: 'How many tags should I generate?',
@@ -89,10 +89,10 @@ const faqItems = [
 ];
 
 const schema = {
-  name: 'AI Tag Generator Pro',
-  applicationCategory: 'AI Tools',
+  name: 'Tag Generator',
+  applicationCategory: 'UtilitiesApplication',
   description:
-    'Generate relevant tags and hashtags from any content. AI-powered keyword extraction with category detection and relevance scoring.',
+    'Generate relevant tags and hashtags from any content. Frequency-based keyword extraction with category detection and relevance scoring.',
 };
 ---
 
@@ -105,15 +105,15 @@ const schema = {
   breadcrumbs={[
     { name: 'Home', url: '/' },
     { name: 'Tools', url: '/tools/' },
-    { name: 'AI Tag Generator', url: '/tools/ai-tag-generator/' },
+    { name: 'Tag Generator', url: '/tools/ai-tag-generator/' },
   ]}
 >
   <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
-        title="AI Tag"
+        title="Tag"
         gradient="Generator"
-        desc="Generate relevant tags, keywords, and hashtags from any content with AI-powered extraction and category detection."
+        desc="Generate relevant tags, keywords, and hashtags from any content with word-frequency extraction and category detection."
         badge="✦ Keyword-Based Tags"
         slug="ai-tag-generator"
       />
@@ -231,7 +231,7 @@ const schema = {
       </div>
       <section class="mt-20 max-w-3xl mx-auto">
         <div class="text-center mb-8">
-          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">AI Technology</span><h2
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Method</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
             How It <span class="text-amber-400"
@@ -240,7 +240,7 @@ const schema = {
           </h2>
         </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
           <p>
-            The AI Tag Generator processes your content in three steps. First, it removes common stop words (the, a, is,
+            The Tag Generator processes your content in three steps. First, it removes common stop words (the, a, is,
             etc.) and normalizes the remaining terms. Second, it counts word frequencies and bigram (two-word phrase)
             frequencies, ranking them by importance. Third, it generates both plain tags and hashtag variants while
             detecting the content's category.

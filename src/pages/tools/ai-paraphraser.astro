@@ -40,7 +40,7 @@ const howToSteps = [
   },
   {
     title: 'Click paraphrase',
-    desc: 'Hit the Paraphrase button and watch as the AI rewrites your text with intelligent synonym replacement',
+    desc: 'Hit the Paraphrase button and the tool rewrites your text by swapping words from its synonym dictionary',
   },
   {
     title: 'Review and copy',
@@ -69,9 +69,9 @@ const useCases = [
 
 const faqItems = [
   {
-    question: 'How does AI paraphrasing work?',
+    question: 'How does paraphrasing work?',
     answer:
-      'The AI Paraphraser uses a built-in synonym dictionary to intelligently replace words with suitable alternatives. Different modes apply different transformation rules — Standard replaces common words, Fluent restructures short phrases, Formal uses elevated vocabulary, and Creative applies more varied replacements for maximum originality.',
+      'The Paraphraser uses a built-in synonym dictionary to replace words with suitable alternatives. Different modes apply different transformation rules — Standard replaces common words, Fluent restructures short phrases, Formal uses elevated vocabulary, and Creative applies more varied replacements for maximum originality.',
   },
   {
     question: 'Which paraphrasing mode should I choose?',
@@ -86,15 +86,15 @@ const faqItems = [
 ];
 
 const schema = {
-  name: 'AI Paraphraser Pro',
-  applicationCategory: 'AI Tools',
+  name: 'Paraphraser',
+  applicationCategory: 'UtilitiesApplication',
   description:
-    'Paraphrase any text with four modes: Standard, Fluent, Formal, and Creative. AI-powered synonym replacement for content rewriting.',
+    'Paraphrase any text with four modes: Standard, Fluent, Formal, and Creative. Dictionary-based synonym replacement for content rewriting.',
 };
 ---
 
 <MainLayout
-  title="AI Paraphraser & Sentence Rewriter — Free | NumanX"
+  title="Paraphraser & Sentence Rewriter — Free, Private | NumanX"
   description="Paraphrase and rewrite text with fast client-side NLP dictionary heuristics. Choose from Standard, Fluent, Formal, and Creative modes with zero cloud uploads."
   keywords="ai paraphraser, sentence rewriter, client side paraphrasing tool, text rewriter, rewrite text free"
   toolSchema={schema}
@@ -102,15 +102,14 @@ const schema = {
   breadcrumbs={[
     { name: 'Home', url: '/' },
     { name: 'Tools', url: '/tools/' },
-    { name: 'AI Paraphraser', url: '/tools/ai-paraphraser/' },
+    { name: 'Paraphraser', url: '/tools/ai-paraphraser/' },
   ]}
 >
   <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
-        title="AI"
-        gradient="Paraphraser"
-        desc="Paraphrase your text in four different modes — Standard, Fluent, Formal, and Creative — using AI synonym replacement."
+        title="Paraphraser"
+        desc="Paraphrase your text in four different modes — Standard, Fluent, Formal, and Creative — using dictionary-based synonym replacement."
         badge="✦ Rule-Based Rewriting"
         slug="ai-paraphraser"
       />
@@ -241,14 +240,14 @@ const schema = {
     </div>
     <section class="mt-20 max-w-3xl mx-auto">
       <div class="text-center mb-8">
-        <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">AI Technology</span><h2
+        <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Method</span><h2
           class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
         >
           How It <span class="text-amber-400">Works</span>
         </h2>
       </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
         <p>
-          The AI Paraphraser uses a built-in synonym dictionary covering hundreds of common English words. Each mode
+          The Paraphraser uses a built-in synonym dictionary covering hundreds of common English words. Each mode
           applies different transformation rules: <strong class="text-primary">Standard</strong> replaces common words with
           contextually appropriate synonyms. <strong class="text-primary">Fluent</strong> restructures short phrases and reorders
           clauses. <strong class="text-primary">Formal</strong> elevates vocabulary and removes contractions. <strong

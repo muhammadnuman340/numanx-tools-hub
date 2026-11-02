@@ -13,7 +13,7 @@ image: '/images/blog/how-to-compress-images.svg'
 
 Image compression is one of the most important skills for anyone building websites or creating content. Large images slow down your site, hurt your SEO, and frustrate visitors.
 
-> ⚡ **Compress Images Instantly in Your Browser:** Reduce image file sizes by up to 85% with our free [**Smart Image Compressor**](/tools/image-compressor/). 100% private, zero uploads to external servers, and instant real-time quality preview.
+> ⚡ **Compress Images Instantly in Your Browser:** Reduce image file sizes by up to 85% with our free [**Image Compressor**](/tools/image-compressor/). 100% private, zero uploads to external servers, and instant real-time quality preview.
 
 But compression doesn't have to mean sacrificing quality. Here's how to compress images the right way.
 
@@ -42,7 +42,7 @@ The format you choose has a massive impact on file size.
 | JPEG   | Photos, complex images | Lossy, small files      |
 | PNG    | Graphics, transparency | Lossless, larger files  |
 | WebP   | Modern websites        | Both lossy and lossless |
-| AVIF   | Next-gen compression   | Superior to WebP        |
+| AVIF   | Newest web format      | Superior to WebP        |
 
 ## 2. Adjust Quality Settings
 
@@ -54,7 +54,7 @@ The easiest way to compress an image is to adjust its quality setting. Most tool
 - **50–70%** — Good balance of size and quality.
 - **20–40%** — Small files with visible quality loss.
 
-Use our [**Smart Image Compressor**](/tools/image-compressor/) to experiment with different quality levels and see the results in real time.
+Use our [**Image Compressor**](/tools/image-compressor/) to experiment with different quality levels and see the results in real time.
 
 ## 3. Resize Before Compressing
 
@@ -67,11 +67,11 @@ One of the biggest mistakes people make is compressing an image that's way too l
 - **Thumbnails** — 400–600px wide
 - **Social media** — Platform-specific (use presets)
 
-The [**Smart Image Resizer**](/tools/image-resizer/) includes presets for YouTube, Instagram, TikTok, and more.
+The [**Image Resizer**](/tools/image-resizer/) includes presets for YouTube, Instagram, TikTok, and more.
 
 ## 4. Use Modern Formats
 
-WebP reduces file size by 25–35% compared to PNG with equivalent quality. Convert your images with our [**PNG to WebP Converter**](/tools/png-to-webp/) or [**JPG to PNG Converter**](/tools/jpg-to-png/) for next-gen performance. AVIF can reduce file size by up to 50% compared to JPEG.
+WebP reduces file size by 25–35% compared to PNG with equivalent quality. Convert your images with our [**PNG to WebP Converter**](/tools/png-to-webp/) or [**JPG to PNG Converter**](/tools/jpg-to-png/) for faster pages. AVIF can reduce file size by up to 50% compared to JPEG.
 
 ### Browser Support (2026)
 

@@ -24,7 +24,7 @@ const faqItems = [
 const schema = {
   name: 'PDF Merger',
   applicationCategory: 'Utility Tools',
-  description: 'Merge multiple PDF files into a single document instantly and securely in your browser.',
+  description: 'Merge multiple PDF files into a single document and securely in your browser.',
   featureList: [
     'Merge unlimited PDFs',
     'Drag and drop reordering',
@@ -41,8 +41,8 @@ const benefits = [
   },
   {
     icon: '⚡',
-    title: 'Lightning Fast',
-    desc: 'Because there are no uploads or downloads, the merging process happens almost instantly using local processing power.',
+    title: 'No upload wait',
+    desc: 'There is no upload or download step: the files are merged on your device, so the time depends only on their size.',
   },
   {
     icon: '🔄',
@@ -75,7 +75,7 @@ const howToSteps = [
   {
     num: '4',
     title: 'Merge & Download',
-    desc: 'Click "Merge PDFs". The tool will combine them instantly and automatically trigger a download of the final document.',
+    desc: 'Click "Merge PDFs". The tool will combine them and automatically trigger a download of the final document.',
   },
 ];
 
@@ -100,7 +100,7 @@ const useCases = [
 
 <MainLayout
   title="Merge PDF Files Online — Free & Secure | NumanX"
-  description="Combine multiple PDF files into a single document instantly. 100% secure, offline, and free online PDF merger. No uploads required."
+  description="Combine multiple PDF files into a single document. 100% secure, offline, and free online PDF merger. No uploads required."
   keywords="merge pdf, combine pdf, pdf merger, join pdf files, secure pdf merge"
   toolSchema={schema}
   faq={faqItems}
@@ -121,7 +121,8 @@ const useCases = [
       <ToolHeader
         title="PDF"
         gradient="Merger"
-        desc="Combine multiple PDF files into one. 100% secure — processing happens locally on your device."
+        desc="PDF Merger combines several PDF files into one document in your browser. Add the files, drag them into the order you want, and download the merged PDF. It runs the pdf-lib library on your device, so contracts, invoices and other private documents are never uploaded to a server."
+        updated="2026-11-01"
         badge="✦ Secure Tool"
         slug="pdf-merger"
       />

@@ -86,12 +86,12 @@ const faqItems = [
   },
   {
     question: 'Is this tool free?',
-    answer: 'Yes! Like all tools on NumanX, the AI Prompt Generator is 100% free with no sign-ups or limits.',
+    answer: 'Yes! Like all tools on NumanX, the Prompt Generator is 100% free with no sign-ups or limits.',
   },
 ];
 
 const schema = {
-  name: 'AI Prompt Generator',
+  name: 'Prompt Generator',
   applicationCategory: 'AI Tools',
   description:
     'Create highly effective, optimized prompts for AI models using proven prompt engineering frameworks like Role-Task-Format and Chain of Thought.',
@@ -106,27 +106,27 @@ const schema = {
 ---
 
 <MainLayout
-  title="AI Prompt Generator for ChatGPT, Claude & Midjourney | NumanX"
+  title="Prompt Generator for ChatGPT, Claude & Midjourney | NumanX"
   description="Build high-performance prompts for ChatGPT, Claude and Midjourney with proven frameworks. Free, local and private."
   keywords="chatgpt prompt builder, midjourney prompt generator, claude system prompt maker, prompt engineering templates, ai prompt generator free"
   toolSchema={schema}
   faq={faqItems}
   howto={{
-    name: 'How to Generate AI Prompts',
-    description: 'Learn how to use our AI prompt generator to create optimized instructions for ChatGPT and Claude.',
+    name: 'How to Write Better AI Prompts',
+    description: 'Learn how to use our prompt generator to create optimized instructions for ChatGPT and Claude.',
     steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
     totalTime: 'PT1M',
   }}
   breadcrumbs={[
     { name: 'Home', url: '/' },
     { name: 'Tools', url: '/tools/' },
-    { name: 'AI Prompt Generator', url: '/tools/prompt-generator/' },
+    { name: 'Prompt Generator', url: '/tools/prompt-generator/' },
   ]}
 >
   <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
-        title="AI Prompt"
+        title="Prompt"
         gradient="Generator"
         desc="Stop guessing what to ask. Generate highly optimized, structured prompts for ChatGPT, Claude, and Midjourney in seconds."
         badge="✦ Prompt Engineering"
@@ -283,7 +283,7 @@ Example 2: Input -> Output"
 
       <ToolContentSections
         toolSlug="prompt-generator"
-        toolName="AI Prompt Generator"
+        toolName="Prompt Generator"
         category="AI Tools"
         {benefits}
         howToSteps={howToSteps}

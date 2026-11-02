@@ -17,3 +17,13 @@
 - [Age Calculator](https://toolshub.numanxstudio.com/tools/age-calculator/): Calculate chronological age in years, months, days, hours, and next birthday countdown.
 - [Password Generator](https://toolshub.numanxstudio.com/tools/password-generator/): Generate passwords using the browser's cryptographic random API, with additional memorable passphrase options and strength evaluation.
 - [Cricket Net Run Rate (NRR) & Run Rate Calculators](https://toolshub.numanxstudio.com/category/cricket-tools/): Tournament NRR calculation following ICC Clause 16.10.2 full-quota rules, cricket over arithmetic (balls/6), and playoff qualification scenarios.
+
+## Text & AI Tools
+Only the background remover and image upscaler run machine-learning models (in the browser). The text tools below are rule-based or statistical, not AI models; some URLs still start with /ai- for history.
+- [Text Summarizer](https://toolshub.numanxstudio.com/tools/ai-text-summarizer/): Extractive summary that keeps the highest-scoring sentences by word frequency; adjustable 10–90% length.
+- [Grammar Checker](https://toolshub.numanxstudio.com/tools/ai-grammar-checker/): Rule-based check for confused words, apostrophes, punctuation, double negatives and common misspellings in English.
+- [Paraphraser](https://toolshub.numanxstudio.com/tools/ai-paraphraser/): Dictionary-based synonym rewriting in Standard, Fluent, Formal and Creative modes.
+- [Sentiment Analyzer](https://toolshub.numanxstudio.com/tools/ai-sentiment-analyzer/): Lexicon-based positive, negative and neutral scoring with keyword breakdown.
+- [Command Assistant](https://toolshub.numanxstudio.com/tools/ai-chat/): Pattern-matching assistant that answers questions about the tools and runs text, number and date commands.
+- [Prompt Generator](https://toolshub.numanxstudio.com/tools/prompt-generator/): Template-based prompt builder (Role-Task-Format, Chain of Thought) for ChatGPT, Claude and Midjourney.
+- [AI Background Remover](https://toolshub.numanxstudio.com/tools/ai-background-remover/): In-browser segmentation model (@imgly/background-removal) that outputs a transparent PNG; the model downloads once on first use.

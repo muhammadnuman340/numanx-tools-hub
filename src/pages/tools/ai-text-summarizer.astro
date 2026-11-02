@@ -42,7 +42,7 @@ const howToSteps = [
   },
   {
     title: 'Generate summary',
-    desc: 'Click the summarize button and watch as the AI condenses your text into the most important points',
+    desc: 'Click the summarize button and the tool keeps the highest-scoring sentences',
   },
   {
     title: 'Copy & use',
@@ -71,9 +71,9 @@ const useCases = [
 
 const faqItems = [
   {
-    question: 'How does the AI summarizer work?',
+    question: 'How does the summarizer work?',
     answer:
-      'The AI summarizer uses advanced natural language processing to analyze your text, identify the most important sentences, and generate a concise summary. It evaluates each sentence for relevance and key information, then compiles the most significant points into a coherent summary.',
+      'The summarizer splits your text into sentences, scores each one by how often its important words appear across the whole text, and keeps the highest-scoring sentences in their original order. It is extractive: it picks your own sentences rather than writing new ones.',
   },
   {
     question: 'What compression ratio should I use?',
@@ -88,7 +88,7 @@ const faqItems = [
   {
     question: 'Can I summarize text in languages other than English?',
     answer:
-      'Yes, the AI summarizer supports multiple languages including Spanish, French, German, Italian, Portuguese, Dutch, and more. The summarization quality is highest for English, but other languages are well-supported.',
+      'Yes, the summarizer supports multiple languages including Spanish, French, German, Italian, Portuguese, Dutch, and more. The summarization quality is highest for English, but other languages are well-supported.',
   },
   {
     question: 'What is the maximum text length I can summarize?',
@@ -98,7 +98,7 @@ const faqItems = [
   {
     question: 'Does the summarizer preserve the original meaning?',
     answer:
-      'Yes, the AI is designed to extract the core meaning and most important information while discarding redundant or less critical details. It maintains the original context and tone.',
+      'It keeps your own sentences, so it extracts the core meaning and most important information while discarding redundant or less critical details. It maintains the original context and tone.',
   },
   {
     question: 'Can I use the summaries for commercial purposes?',
@@ -108,15 +108,15 @@ const faqItems = [
   {
     question: 'How accurate is the text summarization?',
     answer:
-      'The summarizer uses state-of-the-art extractive summarization techniques. Accuracy depends on text quality and structure, but for well-written content it consistently captures the key points with high precision.',
+      'The summarizer uses extractive summarization: it keeps your own sentences. Accuracy depends on text quality and structure, but for well-written content it consistently captures the key points with high precision.',
   },
 ];
 
 const schema = {
-  name: 'AI Text Summarizer',
-  applicationCategory: 'AI Tools',
+  name: 'Text Summarizer',
+  applicationCategory: 'UtilitiesApplication',
   description:
-    'Summarize long articles, documents, and text using extractive AI summarization. Reduce text length while preserving key meaning.',
+    'Summarize long articles, documents, and text using extractive summarization. Reduce text length while preserving key meaning.',
   featureList: [
     'Extractive sentence scoring',
     'Adjustable compression ratio',
@@ -128,29 +128,30 @@ const schema = {
 ---
 
 <MainLayout
-  title="AI Text Summarizer — Fast Extractive Algorithm | NumanX"
+  title="Text Summarizer — Free Extractive Summary Tool | NumanX"
   description="Summarize long articles and text using fast client-side extractive frequency algorithms. Adjust compression ratio with zero cloud uploads."
   keywords="ai text summarizer, extractive summarization, frequency text summary, article summarizer online, browser summarizer"
   toolSchema={schema}
   faq={faqItems}
   howto={{
-    name: 'How to Summarize Text with AI',
-    description: 'Learn how to use our AI text summarizer to condense long documents into concise, readable summaries',
+    name: 'How to Summarize Text',
+    description: 'Learn how to use our text summarizer to condense long documents into concise, readable summaries',
     steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
     totalTime: 'PT1M',
   }}
   breadcrumbs={[
     { name: 'Home', url: '/' },
     { name: 'Tools', url: '/tools/' },
-    { name: 'AI Text Summarizer', url: '/tools/ai-text-summarizer/' },
+    { name: 'Text Summarizer', url: '/tools/ai-text-summarizer/' },
   ]}
 >
   <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
-        title="AI Text"
+        title="Text"
         gradient="Summarizer"
-        desc="Summarize long articles, documents, and any text in seconds. Extract key sentences while preserving the original meaning."
+        desc="Text Summarizer shortens an article, report or essay by keeping its most important sentences. Paste the text, choose how much to keep (10–90%), and copy the summary. It scores sentences by word frequency rather than using an AI model, so the same text always gives the same summary, and it stays in your browser."
+        updated="2026-11-01"
         badge="✦ Extractive Summarization"
         slug="ai-text-summarizer"
       />
@@ -271,7 +272,7 @@ const schema = {
       </div>
       <section class="mt-20 max-w-3xl mx-auto">
         <div class="text-center mb-8">
-          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">AI Technology</span><h2
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Method</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
             How It <span class="text-amber-400"
@@ -280,7 +281,7 @@ const schema = {
           </h2>
         </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
           <p>
-            The AI Text Summarizer uses an <strong class="text-primary">extractive summarization</strong> algorithm that analyzes
+            The Text Summarizer uses an <strong class="text-primary">extractive summarization</strong> algorithm that analyzes
             your text at the sentence level. It first splits the text into individual sentences, then calculates a relevance
             score for each sentence based on word frequency analysis — words that appear more frequently across the document
             are considered more important.
@@ -298,7 +299,7 @@ const schema = {
       </section>
       <ToolContentSections
         toolSlug="ai-text-summarizer"
-        toolName="AI Text Summarizer"
+        toolName="Text Summarizer"
         category="AI Tools"
         {benefits}
         howToSteps={howToSteps}
@@ -315,7 +316,7 @@ const schema = {
             > Your Text?
           </h2>
           <p class="text-tertiary text-sm max-w-lg mx-auto mb-6">
-            Try our AI text summarizer now — no sign-up required, completely free, and your data never leaves your
+            Try our text summarizer now — no sign-up required, completely free, and your data never leaves your
             device.
           </p>
           <a

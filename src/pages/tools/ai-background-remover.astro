@@ -11,7 +11,7 @@ const faqItems = [
   },
   {
     question: 'Why does it take a moment to load the first time?',
-    answer: 'The tool needs to download the AI model weights (around 5-15MB) to run locally. Once downloaded, it is cached in your browser for instant future use.',
+    answer: 'The tool needs to download the AI model weights (around 5-15MB) to run locally. Once downloaded, it is cached in your browser and reused on later visits.',
   },
   {
     question: 'What image formats are supported?',
@@ -26,7 +26,7 @@ const faqItems = [
 const schema = {
   name: 'AI Background Remover',
   applicationCategory: 'Multimedia',
-  description: 'Instantly remove image backgrounds entirely in your browser using Edge AI.',
+  description: 'Remove image backgrounds entirely in your browser using Edge AI.',
   featureList: [
     '100% client-side processing (no uploads)',
     'High-accuracy background removal',
@@ -44,12 +44,12 @@ const benefits = [
   {
     icon: '⚡',
     title: 'Fast Offline Processing',
-    desc: 'Once the model is cached, background removal happens instantly, even if you lose your internet connection.',
+    desc: 'Once the model is cached, later photos are processed without downloading it again.',
   },
   {
     icon: '🎯',
     title: 'High Precision',
-    desc: 'Uses state-of-the-art neural networks to cleanly separate foreground subjects from complex backgrounds, handling hair and edges smoothly.',
+    desc: 'A segmentation model separates the subject from the background, including fine edges such as hair, which simple colour-based tools miss.',
   },
   {
     icon: '💸',
@@ -102,7 +102,7 @@ const useCases = [
 
 <MainLayout
   title="AI Background Remover — Free & 100% Private | NumanX"
-  description="Instantly remove image backgrounds entirely in your browser. Powered by Edge AI, ensuring absolute privacy as your photos never leave your device."
+  description="Remove image backgrounds entirely in your browser. Powered by Edge AI, ensuring absolute privacy as your photos never leave your device."
   keywords="ai background remover, remove background free, transparent png maker, private background removal"
   toolSchema={schema}
   faq={faqItems}
@@ -117,7 +117,8 @@ const useCases = [
       <ToolHeader
         title="AI Background"
         gradient="Remover"
-        desc="Instantly separate subjects from their backgrounds. Runs 100% in your browser for absolute privacy."
+        desc="AI Background Remover cuts the subject out of a photo and gives you a PNG with a transparent background. It runs a machine-learning segmentation model in your browser: the model downloads once on first use, then each photo is processed on your device and never uploaded."
+        updated="2026-11-01"
         badge="✦ Edge AI"
         slug="ai-background-remover"
       />

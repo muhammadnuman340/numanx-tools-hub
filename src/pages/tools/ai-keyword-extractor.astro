@@ -95,8 +95,8 @@ const faqItems = [
 ];
 
 const schema = {
-  name: 'AI Keyword Extractor',
-  applicationCategory: 'AI Tools',
+  name: 'Keyword Extractor',
+  applicationCategory: 'UtilitiesApplication',
   description:
     'Extract key terms, phrases, and topics from any text. Ranked by frequency with bigram detection and visual word cloud display.',
   featureList: [
@@ -116,21 +116,21 @@ const schema = {
   toolSchema={schema}
   faq={faqItems}
   howto={{
-    name: 'How to Extract Keywords with AI',
-    description: 'Learn how to use our AI keyword extractor to find the most important terms in any text',
+    name: 'How to Extract Keywords',
+    description: 'Learn how to use our keyword extractor to find the most important terms in any text',
     steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
     totalTime: 'PT1M',
   }}
   breadcrumbs={[
     { name: 'Home', url: '/' },
     { name: 'Tools', url: '/tools/' },
-    { name: 'AI Keyword Extractor', url: '/tools/ai-keyword-extractor/' },
+    { name: 'Keyword Extractor', url: '/tools/ai-keyword-extractor/' },
   ]}
 >
   <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
-        title="AI Keyword"
+        title="Keyword"
         gradient="Extractor"
         desc="Extract the most important keywords, phrases, and topics from any text. See ranked results with frequency data and a visual word cloud."
         badge="✦ Keyword Analysis"
@@ -255,7 +255,7 @@ const schema = {
       </div>
       <section class="mt-20 max-w-3xl mx-auto">
         <div class="text-center mb-8">
-          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">AI Technology</span><h2
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Method</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
             How It <span class="text-amber-400"
@@ -264,7 +264,7 @@ const schema = {
           </h2>
         </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
           <p>
-            The AI Keyword Extractor uses a <strong class="text-primary">statistical NLP approach</strong> to identify the
+            The Keyword Extractor uses a <strong class="text-primary">statistical NLP approach</strong> to identify the
             most meaningful terms in your text. The process begins with tokenization — splitting the text into individual
             words and contiguous word pairs (bigrams). A comprehensive stop word list then filters out common, low-information
             words to ensure only meaningful content words remain.
@@ -280,7 +280,7 @@ const schema = {
       </section>
       <ToolContentSections
         toolSlug="ai-keyword-extractor"
-        toolName="AI Keyword Extractor"
+        toolName="Keyword Extractor"
         category="AI Tools"
         {benefits}
         howToSteps={howToSteps}
@@ -297,7 +297,7 @@ const schema = {
             > Keywords?
           </h2>
           <p class="text-tertiary text-sm max-w-lg mx-auto mb-6">
-            Try our AI keyword extractor now — no sign-up required, completely free, and your data never leaves your
+            Try our keyword extractor now — no sign-up required, completely free, and your data never leaves your
             device.
           </p>
           <a

@@ -13,7 +13,7 @@ image: '/images/blog/how-to-resize-images-social-media.svg'
 
 Every social media platform has its own image dimension requirements. Posting the wrong size can lead to awkward cropping, stretched images, or low-quality thumbnails. This guide provides the exact dimensions for every major platform and shows you how to resize images quickly.
 
-> 🚀 **Resize for Any Platform Instantly:** Use our free [**Smart Image Resizer Pro**](/tools/image-resizer/) with 1-click presets for Instagram (1080×1080, 1080×1350), YouTube Thumbnails (1280×720), and TikTok / Reels (1080×1920) directly in your browser. Zero server latency.
+> 🚀 **Resize for Any Platform Instantly:** Use our free [**Image Resizer**](/tools/image-resizer/) with 1-click presets for Instagram (1080×1080, 1080×1350), YouTube Thumbnails (1280×720), and TikTok / Reels (1080×1920) directly in your browser. Zero server latency.
 
 ## Why Image Dimensions Matter
 
@@ -169,7 +169,7 @@ Resizing an image usually reduces quality. Here is how to maintain sharpness.
 | GIMP                 | Yes   | Custom               | Excellent |
 | Preview (Mac)        | No    | Basic                | Good      |
 
-Our **Smart Image Resizer** includes built-in presets for every platform: Instagram, TikTok, YouTube, Twitter, LinkedIn, Facebook, and Pinterest.
+Our **Image Resizer** includes built-in presets for every platform: Instagram, TikTok, YouTube, Twitter, LinkedIn, Facebook, and Pinterest.
 
 ## Frequently Asked Questions
 
@@ -179,7 +179,7 @@ Our **Smart Image Resizer** includes built-in presets for every platform: Instag
 
 ### How do I resize multiple images at once?
 
-Use our batch resize feature on the **Smart Image Resizer**. Upload up to 50 images, select a preset or custom dimensions, and download all resized images at once.
+Use our batch resize feature on the **Image Resizer**. Upload up to 50 images, select a preset or custom dimensions, and download all resized images at once.
 
 ### Does resizing reduce image quality?
 
@@ -187,12 +187,6 @@ Downscaling reduces quality only if not done properly. Using high-quality algori
 
 ## Conclusion
 
-Each social media platform has unique image requirements. By using the correct dimensions, you ensure your content looks professional and performs well. Bookmark this guide and use the **Smart Image Resizer** at NumanX Tools for quick, batch resizing with platform-specific presets.
+Each social media platform has unique image requirements. By using the correct dimensions, you ensure your content looks professional and performs well. Bookmark this guide and use the **Image Resizer** at NumanX Tools for quick, batch resizing with platform-specific presets.
 
-<div class="my-8 p-6 rounded-2xl border border-amber-500/30 text-center space-y-3 bg-amber-900/40">
-  <h3 class="text-lg font-bold text-white m-0">Resize Social Media Images Instantly</h3>
-  <p class="text-xs text-slate-300 max-w-lg mx-auto">Batch resize images with built-in Instagram, YouTube, TikTok, and Twitter aspect ratio presets locally in your browser.</p>
-  <a href="/tools/image-resizer/" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-accent-fg font-bold text-sm shadow-lg shadow-amber-900/40 transition-all">
-    <span>📐</span> Launch Smart Image Resizer Free &rarr;
-  </a>
-</div>
+**Try it:** [Image Resizer](/tools/image-resizer/) has Instagram, YouTube, TikTok and Twitter presets and runs in your browser.

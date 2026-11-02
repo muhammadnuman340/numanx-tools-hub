@@ -15,7 +15,7 @@ YouTube is more competitive than ever. With millions of creators uploading daily
 
 Here are the essential tools every YouTube creator should use in 2026.
 
-> 🎬 **Supercharge Your YouTube Production:** Resize thumbnails to exact 1280×720px dimensions with our free [**Smart Image Resizer**](/tools/image-resizer/) and generate trending video tags with our [**AI Hashtag Generator**](/tools/hashtag-generator/). 100% free with 0 server latency.
+> 🎬 **Speed Up Your YouTube Workflow:** Resize thumbnails to exact 1280×720px dimensions with our free [**Image Resizer**](/tools/image-resizer/) and generate trending video tags with our [**Hashtag Generator**](/tools/hashtag-generator/). 100% free with 0 server latency.
 
 ## 1. Thumbnail Creation Tools
 
@@ -28,11 +28,11 @@ Your thumbnail is the first thing viewers see. A great thumbnail can double your
 - Add text that's readable at small sizes
 - Keep it consistent with your brand
 
-Use the [**Smart Image Resizer**](/tools/image-resizer/) with the YouTube Thumbnail preset (1280×720px) to get the perfect dimensions every time.
+Use the [**Image Resizer**](/tools/image-resizer/) with the YouTube Thumbnail preset (1280×720px) to get the perfect dimensions every time.
 
 ### 2026 YouTube Image Resizer Comparison: NumanX vs Canva vs Photoshop
 
-| Feature & Specification | NumanX Smart Image Resizer | Canva Pro ($120/yr) | Adobe Photoshop ($240/yr) |
+| Feature & Specification | NumanX Image Resizer | Canva Pro ($120/yr) | Adobe Photoshop ($240/yr) |
 | :--- | :--- | :--- | :--- |
 | **Price / Subscription** | **$0.00 Forever Free** | $120 / year | $239.88 / year |
 | **YouTube Presets** | **1-Click 1280×720 & 1080×1920** | Template search needed | Manual Canvas Dimensions |
@@ -44,7 +44,7 @@ Use the [**Smart Image Resizer**](/tools/image-resizer/) with the YouTube Thumbn
 
 High-quality videos mean large file sizes. Before uploading, compress your video thumbnail and any overlay images to ensure fast loading.
 
-The [**Smart Image Compressor**](/tools/image-compressor/) helps you reduce image file sizes by up to 80% without visible quality loss — essential for channel art, thumbnails, and end screens.
+The [**Image Compressor**](/tools/image-compressor/) helps you reduce image file sizes by up to 80% without visible quality loss — essential for channel art, thumbnails, and end screens.
 
 ## 3. Hashtag and SEO Tools
 
@@ -57,7 +57,7 @@ YouTube's algorithm relies on keywords and hashtags to understand your content. 
 - Include your main keyword as a hashtag
 - Place them in your video description
 
-The [**AI Hashtag Generator**](/tools/hashtag-generator/) creates platform-optimized hashtags for YouTube, helping your videos reach the right audience.
+The [**Hashtag Generator**](/tools/hashtag-generator/) creates platform-optimized hashtags for YouTube, helping your videos reach the right audience.
 
 ## 4. Analytics and Insights Tools
 
@@ -98,7 +98,7 @@ Stay organized with a content calendar. Plan your uploads, track video ideas, an
 
 ### What size should YouTube thumbnails be?
 
-YouTube thumbnails should be 1280×720 pixels with a 16:9 aspect ratio. Use the YouTube preset in our [**Smart Image Resizer**](/tools/image-resizer/).
+YouTube thumbnails should be 1280×720 pixels with a 16:9 aspect ratio. Use the YouTube preset in our [**Image Resizer**](/tools/image-resizer/).
 
 ### How many hashtags should I use on YouTube?
 
@@ -112,15 +112,4 @@ Focus on keyword-rich titles, detailed descriptions, relevant hashtags, and high
 
 Success on YouTube requires a combination of great content and the right tools. From thumbnails to hashtags to format optimization — use every advantage available. Bookmark these tools and watch your channel grow.
 
-<div class="my-8 p-6 rounded-2xl border border-amber-500/30 text-center space-y-3 bg-amber-900/40">
-  <h3 class="text-lg font-bold text-white m-0">Boost Your YouTube Production Workflow</h3>
-  <p class="text-xs text-slate-300 max-w-lg mx-auto">Generate viral title hooks, optimize hashtag velocity, and format crisp 1280×720 thumbnails with 1-click tools.</p>
-  <div class="flex flex-wrap gap-3 justify-center">
-    <a href="/tools/youtube-title-generator/" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-accent-fg font-bold text-xs shadow-lg transition-all">
-      <span>🎬</span> YouTube Title Generator &rarr;
-    </a>
-    <a href="/tools/hashtag-generator/" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs border border-zinc-700 transition-all">
-      <span>#️⃣</span> AI Hashtag Generator &rarr;
-    </a>
-  </div>
-</div>
+**Try it:** [YouTube Title & Hook Generator](/tools/youtube-title-generator/) · [Hashtag Generator](/tools/hashtag-generator/)

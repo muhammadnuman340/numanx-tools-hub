@@ -1,6 +1,6 @@
 ---
 import { getRelatedTools } from '../data/tools';
-import ToolIcon from './icons/ToolIcon.astro';
+import ToolCard from './ui/ToolCard.astro';
 import MonetizationSlot from './MonetizationSlot.astro';
 
 interface Props {
@@ -13,30 +13,14 @@ const relatedTools = getRelatedTools(current);
 
 {
   relatedTools.length > 0 && (
-    <section class="mt-12">
-      <div class="border-t border-surface pt-10">
-        <h2 class="text-xl md:text-2xl font-black tracking-tight text-white mb-6">
-          Related
-          <span class="text-amber-400">Tools</span>
+    <section class="mt-12" aria-labelledby="related-tools-heading">
+      <div class="border-t border-line pt-10">
+        <h2 id="related-tools-heading" class="text-xl md:text-2xl font-bold tracking-tight text-fg mb-5">
+          Related tools
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {relatedTools.map((tool) => (
-            <a
-              href={tool.url}
-              class="group rounded-xl border border-surface bg-surface-1 p-4 hover:border-amber-500/40 hover:bg-surface-2 transition-all duration-300"
-            >
-              <div class="flex items-center gap-3">
-                <span class="w-9 h-9 rounded-lg bg-amber-600/10 flex items-center justify-center text-amber-400 shrink-0 group-hover:scale-110 transition-transform duration-200">
-                  <ToolIcon name={tool.icon} />
-                </span>
-                <div class="min-w-0">
-                  <h3 class="text-sm font-semibold text-primary group-hover:text-white transition-colors">
-                    {tool.name}
-                  </h3>
-                  <p class="text-xs text-muted mt-0.5">{tool.description}</p>
-                </div>
-              </div>
-            </a>
+            <ToolCard tool={tool} />
           ))}
         </div>
         <MonetizationSlot slotType="in-content-banner" class="mt-8" />

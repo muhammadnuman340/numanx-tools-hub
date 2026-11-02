@@ -95,8 +95,8 @@ const faqItems = [
 ];
 
 const schema = {
-  name: 'AI Grammar Checker',
-  applicationCategory: 'AI Tools',
+  name: 'Grammar Checker',
+  applicationCategory: 'UtilitiesApplication',
   description:
     'Check your writing for common grammar mistakes, confused words, punctuation errors, and misspellings with this free online grammar checker.',
   featureList: [
@@ -116,23 +116,24 @@ const schema = {
   toolSchema={schema}
   faq={faqItems}
   howto={{
-    name: 'How to Check Grammar with AI',
-    description: 'Learn how to use our AI grammar checker to detect and fix common writing mistakes',
+    name: 'How to Check Grammar',
+    description: 'Learn how to use our grammar checker to detect and fix common writing mistakes',
     steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
     totalTime: 'PT1M',
   }}
   breadcrumbs={[
     { name: 'Home', url: '/' },
     { name: 'Tools', url: '/tools/' },
-    { name: 'AI Grammar Checker', url: '/tools/ai-grammar-checker/' },
+    { name: 'Grammar Checker', url: '/tools/ai-grammar-checker/' },
   ]}
 >
   <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
-        title="AI Grammar"
+        title="Grammar"
         gradient="Checker"
-        desc="Catch grammar mistakes, confused words, punctuation errors, and common misspellings. Clean up your writing in seconds."
+        desc="Grammar Checker flags common mistakes in English writing: confused words such as their/there and your/you’re, apostrophe and punctuation errors, double negatives and frequent misspellings. It uses built-in rules, not an AI model, so treat it as a quick first pass for emails, posts and essays. Your text is checked in your browser."
+        updated="2026-11-01"
         badge="✦ Rule-Based Grammar"
         slug="ai-grammar-checker"
       />
@@ -246,7 +247,7 @@ const schema = {
       </div>
       <section class="mt-20 max-w-3xl mx-auto">
         <div class="text-center mb-8">
-          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">AI Technology</span><h2
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Method</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
             How It <span class="text-amber-400"
@@ -255,7 +256,7 @@ const schema = {
           </h2>
         </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
           <p>
-            The AI Grammar Checker uses a <strong class="text-primary">rule-based pattern matching</strong> engine to scan
+            The Grammar Checker uses a <strong class="text-primary">rule-based pattern matching</strong> engine to scan
             your text for common grammar mistakes. It maintains extensive dictionaries of confused word pairs (like their/there/they're,
             your/you're, its/it's), common misspellings, and grammar rule patterns.
           </p><p>
@@ -279,7 +280,7 @@ const schema = {
       </div>
       <ToolContentSections
         toolSlug="ai-grammar-checker"
-        toolName="AI Grammar Checker"
+        toolName="Grammar Checker"
         category="AI Tools"
         {benefits}
         howToSteps={howToSteps}
@@ -296,7 +297,7 @@ const schema = {
             > Your Grammar?
           </h2>
           <p class="text-tertiary text-sm max-w-lg mx-auto mb-6">
-            Try our AI grammar checker now — no sign-up required, completely free, and your data never leaves your
+            Try our grammar checker now — no sign-up required, completely free, and your data never leaves your
             device.
           </p>
           <a

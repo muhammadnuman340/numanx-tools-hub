@@ -169,7 +169,7 @@ Enter **rMQR (Rectangular Micro QR Code, ISO/IEC 23941)**:
 - **High Data Density:** Encodes URLs, serial numbers, and batch IDs with Reed-Solomon error correction (Levels M and H).
 - **Native Camera Scanning:** Read directly by modern iOS and Android vision camera stacks without third-party apps.
 
-You can generate both standard square QR codes and industrial rectangular rMQR codes directly in our free [**QR Code Generator Pro**](/tools/qr-generator/) with instant SVG/PNG export.
+You can generate both standard square QR codes and industrial rectangular rMQR codes directly in our free [**QR Code Generator**](/tools/qr-generator/) with instant SVG/PNG export.
 
 ## Frequently Asked Questions
 

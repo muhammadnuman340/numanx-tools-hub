@@ -22,52 +22,52 @@ const {
 
 const PARTNER_OFFERS: Record<string, { badge: string; title: string; desc: string; cta: string; href: string; accent: string }> = {
   creator: {
-    badge: 'Creator Growth Partner',
-    title: 'Boost Your YouTube Shorts & TikTok Views with VidIQ AI',
-    desc: 'Discover high-velocity viral keywords, daily video ideas, and real-time competitor tag audits.',
-    cta: 'Try VidIQ Free →',
+    badge: 'Partner link',
+    title: 'Research YouTube keywords with vidIQ',
+    desc: 'vidIQ suggests video ideas and keywords and shows the tags other channels use. It has a free plan.',
+    cta: 'Visit vidIQ',
     href: 'https://vidiq.com/?utm_source=numanx_tools',
-    accent: 'border-amber-500/40 bg-amber-950/30'
+    accent: 'border-surface bg-surface-1'
   },
   utility: {
-    badge: 'Security Recommendation',
-    title: 'Store Your Generated Passwords Safely in NordPass / 1Password',
-    desc: 'Zero-knowledge XChaCha20 encryption across all your desktop and mobile devices with automatic breach alerts.',
-    cta: 'Get Free Vault →',
+    badge: 'Partner link',
+    title: 'Keep your passwords in a password manager',
+    desc: 'A manager such as NordPass or 1Password stores strong passwords on all your devices, so you only remember one.',
+    cta: 'Visit NordPass',
     href: 'https://nordpass.com/?utm_source=numanx_tools',
-    accent: 'border-emerald-500/40 bg-emerald-950/30'
+    accent: 'border-surface bg-surface-1'
   },
   image: {
-    badge: 'Design & CDN Partner',
-    title: 'Design Thumbnails & Social Graphics in Seconds with Canva Pro',
-    desc: 'Pair NumanX high-efficiency WebP compression with studio-grade templates, background removal, and brand kits.',
-    cta: 'Launch Design Suite →',
+    badge: 'Partner link',
+    title: 'Design thumbnails and social posts in Canva',
+    desc: 'Canva has templates for thumbnails and posts. Export there, then compress or convert the file here.',
+    cta: 'Visit Canva',
     href: 'https://www.canva.com/?utm_source=numanx_tools',
-    accent: 'border-sky-500/40 bg-sky-950/30'
+    accent: 'border-surface bg-surface-1'
   },
   cricket: {
-    badge: 'Live Match Streaming & WWS Partner',
-    title: 'Stream Live PSL, IPL & ICC Tournaments Anywhere + Follow World Wonders & Sports',
-    desc: 'Unblock HD sports broadcasts globally with high-speed VPN protection and get deep cricket statistical breakdowns.',
-    cta: 'Explore Cricket Hub →',
+    badge: 'Sponsorship',
+    title: 'Sponsor the cricket calculators',
+    desc: 'Run a league, club or cricket brand? These tools are used by players and organisers. Email us about a sponsorship slot.',
+    cta: 'Email us',
     href: 'mailto:contact@numanxstudio.com?subject=Cricket%20Tool%20Sponsorship',
-    accent: 'border-emerald-500/40 bg-emerald-950/30'
+    accent: 'border-surface bg-surface-1'
   },
   ai: {
-    badge: 'AI Workflow Partner',
-    title: 'Scale Your Academic & Content Research with Pro AI Workspace Tools',
-    desc: 'Combine NumanX local browser NLP with automated citation management and long-document synthesis.',
-    cta: 'Explore AI Suite →',
+    badge: 'Partnership',
+    title: 'Build writing or research tools?',
+    desc: 'If your product helps students or writers, email us about featuring it next to the text tools.',
+    cta: 'Email us',
     href: 'mailto:contact@numanxstudio.com?subject=AI%20Tool%20Partnership',
-    accent: 'border-amber-500/40 bg-amber-950/30'
+    accent: 'border-surface bg-surface-1'
   },
   developer: {
-    badge: 'Cloud & Edge Partner',
-    title: 'Deploy High-Speed Web Apps & APIs on Hostinger Cloud / VPS',
-    desc: 'NVMe SSD storage, dedicated IPv4, automated Git deployments, and 99.9% uptime for full-stack developers.',
-    cta: 'Claim Developer Deal →',
+    badge: 'Partner link',
+    title: 'Host your web app or API on Hostinger',
+    desc: 'Shared hosting, cloud and VPS plans with Git deployment, for when your project needs a server.',
+    cta: 'Visit Hostinger',
     href: 'https://www.hostinger.com/?utm_source=numanx_tools',
-    accent: 'border-amber-500/40 bg-amber-950/30'
+    accent: 'border-surface bg-surface-1'
   }
 };
 
@@ -85,13 +85,10 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
 ---
 
 {slotType === 'post-tool-affiliate' && (
-  <aside aria-label="Recommended Tool Partner" class={`my-7 p-4 sm:p-5 rounded-xl border ${offer.accent} flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${className}`}>
+  <aside aria-label={`${offer.badge}: ${offer.title}`} class={`my-7 p-4 sm:p-5 rounded-xl border ${offer.accent} flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${className}`}>
     <div class="space-y-1">
       <div class="flex items-center gap-2">
-        <span class="text-xs font-semibold px-2.5 py-0.5 rounded-lg bg-zinc-900 text-amber-300 border border-zinc-700">
-          {offer.badge}
-        </span>
-        <span class="text-xs text-zinc-400"> keeps NumanX 100% free & zero-server</span>
+        <span class="text-xs font-mono uppercase tracking-wider text-zinc-400">{offer.badge}</span>
       </div>
       <h2 class="text-sm sm:text-base font-bold text-white m-0">{offer.title}</h2>
       <p class="text-xs text-zinc-300 m-0 max-w-xl">{offer.desc}</p>
@@ -100,9 +97,9 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
       href={offer.href}
       target="_blank"
       rel="sponsored noopener noreferrer"
-      class="shrink-0 px-4 py-2.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-accent-fg text-xs font-semibold transition no-underline shadow-lg hover:scale-105 active:scale-95"
+      class="shrink-0 inline-flex items-center min-h-10 px-4 rounded-lg border border-surface-2 bg-surface-2 hover:border-amber-500/40 hover:text-white text-secondary text-xs font-semibold transition-colors no-underline"
     >
-      {offer.cta}
+      {offer.cta} <span aria-hidden="true" class="ml-1">↗</span>
     </a>
   </aside>
 )}

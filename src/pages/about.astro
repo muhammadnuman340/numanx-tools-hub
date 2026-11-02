@@ -1,34 +1,37 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import Accordion from '../components/ui/Accordion.astro';
+import { tools } from '../data/tools';
+
+const toolCount = tools.length;
 
 const faqItems = [
   {
-    title: 'What is NumanX Studio?',
-    content:
-      'NumanX Studio is a digital innovation company founded by Muhammad Numan Usmani. We build NumanX Tools (free online utilities), NumanX Creator Hub (community platform), MatchPulse Cricket Analytics, Cricket Glory Game Universe, NumanX AI Platform, and the Future Operating Brain System.',
+    question: 'Who makes NumanX Tools?',
+    answer:
+      'NumanX Tools is built by Muhammad Numan Usmani, an IT student and creator, under NumanX Studio. NumanX Studio is the name for his projects: the tools site today, and planned products such as a creator hub and cricket analytics.',
   },
   {
-    title: 'What is the NumanX tagline?',
-    content:
-      'Our official tagline is "Build. Create. Analyze." — reflecting our mission to provide tools for creators, students, and businesses to build projects, create content, and analyze data.',
+    question: 'What is the NumanX tagline?',
+    answer:
+      '"Build. Create. Analyze." It describes what the tools are for: building projects, creating content and working out numbers.',
   },
   {
-    title: 'Is NumanX really free?',
-    content:
-      'Yes, completely free. No watermarks, no file limits, no daily caps, and no sign-up required. All tools run entirely in your browser — nothing is uploaded to any server.',
+    question: 'Is NumanX Tools free?',
+    answer:
+      'Yes. There are no watermarks, no daily caps and no sign-up. The tools run in your browser, so your files are not uploaded. The only things sent to a server are messages you send through the contact and feedback forms.',
   },
   {
-    title: 'What tools are coming next?',
-    content:
-      'The roadmap includes NumanX Creator Hub (Phase 2), MatchPulse Cricket Analytics (Phase 3), NumanX AI Platform (Phase 4), and the NumanX Operating Brain (Phase 5).',
+    question: 'What is coming next?',
+    answer:
+      'Planned next: NumanX Creator Hub, then MatchPulse Cricket Analytics, then an AI platform. None of these are live yet, and there are no fixed dates.',
   },
 ];
 ---
 
 <MainLayout
-  title="About NumanX Studio | Building Tools, AI & Cricket Analytics"
-  description="Learn about NumanX Studio, founded by Muhammad Numan Usmani, building creator tools, AI platforms, cricket analytics systems, and digital products."
+  title="About NumanX Tools | Built by Muhammad Numan Usmani"
+  description={`NumanX Tools is a set of ${toolCount} free browser tools for creators, students, developers and cricket fans, built by Muhammad Numan Usmani under NumanX Studio.`}
   keywords="numanx studio, numanx tools, muhammad numan usmani, free online tools, creator tools, cricket analytics, pakistan tech startup, made in pakistan software"
   canonical="https://toolshub.numanxstudio.com/about/"
   breadcrumbs={[
@@ -40,29 +43,17 @@ const faqItems = [
   <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <!-- Hero -->
-      <section class="text-center mb-16 pt-8 animate-[fadeInUp_0.6s_ease-out] group-section">
-        <div
-          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-surface bg-surface-1 text-tertiary text-xs font-semibold tracking-wider uppercase mb-8 audio-trigger"
-        >
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-          </span>
-          NumanX Studio
-        </div>
-        <h1 class="text-6xl sm:text-8xl font-black tracking-tighter leading-none reveal-text">
-          Build. Create.
-          <span
-            class="block mt-2 drop-shadow-[0_2px_12px_rgba(168,85,247,0.15)] text-amber-400"
-          >
-            Analyze.
-          </span>
+      <section class="mb-16 pt-8 max-w-3xl">
+        <p class="text-xs font-mono uppercase tracking-wider text-zinc-400 mb-4">About · NumanX Studio</p>
+        <h1 class="text-[length:var(--step-4)] font-bold tracking-[-0.02em] leading-[1.1] text-primary">
+          Muhammad Numan Usmani builds NumanX Tools: <span class="text-amber-400">{toolCount} free tools that run in your browser.</span>
         </h1>
-        <p class="mt-6 text-tertiary text-lg md:text-xl max-w-3xl mx-auto leading-[1.75] reveal-text">
-          NumanX Studio is a digital innovation company building powerful tools, AI platforms, cricket analytics, and
-          creator ecosystems for the next generation.
+        <p class="mt-6 text-secondary text-lg max-w-[68ch] leading-relaxed">
+          Compress images, merge PDFs, count words, format JSON or work out a cricket run rate. Your files stay on
+          your device, and there is no sign-up. NumanX Studio is the name for his projects; this tools site is the
+          first one that is live.
         </p>
-        <div class="mt-8 flex items-center justify-center gap-4 reveal">
+        <div class="mt-8 flex flex-wrap items-center gap-4">
           <a
             href="/tools/"
             class="group inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-accent-fg font-semibold text-sm px-6 py-3 rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.97] shadow-lg shadow-amber-900/30 audio-trigger"
@@ -119,13 +110,11 @@ const faqItems = [
               >
               <h2 class="text-3xl md:text-4xl font-black text-white mt-2">Muhammad Numan Usmani</h2>
               <p class="text-tertiary mt-2 max-w-xl leading-relaxed text-sm">
-                IT Student, Creator, and System Architect building the NumanX ecosystem — a unified platform of tools,
-                analytics, AI, and operating intelligence for creators and businesses worldwide.
+                IT student and creator. He designs, builds and maintains NumanX Tools.
               </p>
-              <p class="text-muted text-xs mt-3 leading-relaxed">
-                <span class="text-amber-400 font-semibold">NumanX Studio</span> is the parent organization behind NumanX
-                Tools, NumanX Creator Hub, MatchPulse Cricket Analytics, Cricket Glory Game Universe, NumanX AI Platform,
-                and the Future Operating Brain System.
+              <p class="text-zinc-400 text-xs mt-3 leading-relaxed">
+                <span class="text-amber-400 font-semibold">NumanX Studio</span> is the name for his projects. Live today:
+                NumanX Tools. Planned: NumanX Creator Hub and MatchPulse Cricket Analytics.
               </p>
               <div class="flex flex-wrap justify-center md:justify-start gap-2.5 mt-5">
                 <span class="px-3 py-1.5 rounded-lg bg-surface-2 border border-surface text-xs font-mono text-secondary"
@@ -135,10 +124,7 @@ const faqItems = [
                   >Creator</span
                 >
                 <span class="px-3 py-1.5 rounded-lg bg-surface-2 border border-surface text-xs font-mono text-secondary"
-                  >System Architect</span
-                >
-                <span class="px-3 py-1.5 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-xs font-mono text-emerald-400 font-medium"
-                  >Client-Side Architecture</span
+                  >Web developer</span
                 >
               </div>
               <div class="mt-4 flex items-center justify-center md:justify-start gap-3">
@@ -166,11 +152,11 @@ const faqItems = [
               </div>
               <div class="text-center">
                 <div class="text-xl font-black text-amber-400">2026</div>
-                <div class="text-[10px] text-muted mt-1 uppercase font-mono">Creator Hub</div>
+                <div class="text-[10px] text-muted mt-1 uppercase font-mono">{toolCount} Tools</div>
               </div>
               <div class="text-center">
-                <div class="text-xl font-black text-amber-400">2027+</div>
-                <div class="text-[10px] text-muted mt-1 uppercase font-mono">AI Ecosystem</div>
+                <div class="text-xl font-black text-amber-400">Next</div>
+                <div class="text-[10px] text-muted mt-1 uppercase font-mono">Creator Hub</div>
               </div>
             </div>
           </div>
@@ -196,7 +182,7 @@ const faqItems = [
             <div class="flex items-start gap-4 relative">
               <div class="absolute -left-[27px] top-1">
                 <div
-                  class="w-3.5 h-3.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)] animate-pulse flex items-center justify-center"
+                  class="w-3.5 h-3.5 rounded-full bg-emerald-400 flex items-center justify-center"
                 >
                   <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
                 </div>
@@ -212,7 +198,7 @@ const faqItems = [
             <div class="flex items-start gap-4 relative">
               <div class="absolute -left-[27px] top-1">
                 <div
-                  class="w-3.5 h-3.5 rounded-full bg-amber-500 shadow-[0_0_10px_rgba(168,85,247,0.8)] animate-pulse flex items-center justify-center"
+                  class="w-3.5 h-3.5 rounded-full bg-amber-500 flex items-center justify-center"
                 >
                   <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
                 </div>
@@ -251,7 +237,7 @@ const faqItems = [
                 <h3 class="text-[10px] font-semibold text-zinc-500 font-mono uppercase">Phase 4</h3>
                 <h4 class="text-sm font-semibold text-primary">AI Platform</h4>
                 <p class="text-[11px] text-muted mt-0.5 leading-relaxed">
-                  Direct content & graphics smart generation tools.
+                  Tools that use real AI models for writing and graphics.
                 </p>
               </div>
             </div>
@@ -349,51 +335,22 @@ const faqItems = [
       </div>
 
       <!-- Stats / Growth Metrics -->
-      <section class="mb-24 animate-[fadeInUp_0.6s_ease-out_0.45s_both]">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div
-            class="rounded-xl border border-surface bg-surface-1 p-6 text-center hover:border-amber-500/30 hover:-translate-y-0.5 transition-all duration-300 audio-trigger"
-          >
-            <div
-              class="text-3xl md:text-4xl font-black text-fg"
-            >
-              <span class="stat-counter" data-target="70">0</span>
-            </div>
-            <p class="text-sm text-tertiary mt-1">Tools Built</p>
-          </div>
-          <div
-            class="rounded-xl border border-surface bg-surface-1 p-6 text-center hover:border-amber-500/30 hover:-translate-y-0.5 transition-all duration-300 audio-trigger"
-          >
-            <div
-              class="text-3xl md:text-4xl font-black text-fg"
-            >
-              <span class="stat-counter" data-target="6">0</span>
-            </div>
-            <p class="text-sm text-tertiary mt-1">Core Categories</p>
-          </div>
-          <div
-            class="rounded-xl border border-surface bg-surface-1 p-6 text-center hover:border-amber-500/30 hover:-translate-y-0.5 transition-all duration-300 audio-trigger"
-          >
-            <div
-              class="text-3xl md:text-4xl font-black text-fg"
-            >
-              <span class="stat-counter" data-target="6">0</span>
-            </div>
-            <p class="text-sm text-tertiary mt-1">Ecosystem Products</p>
-          </div>
-          <div
-            class="rounded-xl border border-surface bg-surface-1 p-6 text-center hover:border-amber-500/30 hover:-translate-y-0.5 transition-all duration-300 audio-trigger"
-          >
-            <div
-              class="text-3xl md:text-4xl font-black text-fg"
-            >
-              <span class="stat-counter" data-target="100">0</span><span
-                class="text-amber-400">K+</span
-              >
-            </div>
-            <p class="text-sm text-tertiary mt-1">Growth Goal</p>
-          </div>
-        </div>
+      <section class="mb-24" aria-label="NumanX Tools in numbers">
+        <dl class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {
+            [
+              { value: String(toolCount), label: 'Free tools' },
+              { value: '6', label: 'Categories' },
+              { value: '0', label: 'Sign-ups needed' },
+              { value: '0', label: 'Files uploaded' },
+            ].map((s) => (
+              <div class="rounded-xl border border-surface bg-surface-1 p-6 text-center flex flex-col-reverse">
+                <dt class="text-sm text-secondary mt-1">{s.label}</dt>
+                <dd class="text-3xl md:text-4xl font-bold font-mono tabular-nums text-fg">{s.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
       </section>
 
       <!-- Values Grid -->
@@ -561,11 +518,7 @@ const faqItems = [
           <div class="relative">
             <h2 class="text-3xl md:text-4xl font-black tracking-tight">
               Join the NumanX
-              <span
-                class="block mt-2 drop-shadow-[0_2px_12px_rgba(168,85,247,0.15)] text-amber-400"
-              >
-                Journey
-              </span>
+              <span class="block mt-2 text-amber-400">Journey</span>
             </h2>
             <p class="mt-4 text-tertiary max-w-xl mx-auto leading-relaxed">
               Start using free tools today and be part of a growing ecosystem built for creators, by a creator. <span
@@ -626,71 +579,3 @@ const faqItems = [
     </div>
   </main>
 </MainLayout>
-
-<script>
-  const handleOnMouseMove = (e: MouseEvent, containerId: string) => {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    const cards = container.getElementsByClassName('card-spotlight');
-    for (const card of cards as any) {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-      if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -4;
-        const rotateY = ((x - centerX) / centerX) * 4;
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px) scale(1.02)`;
-        card.style.zIndex = '50';
-      } else {
-        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
-        card.style.zIndex = '1';
-      }
-    }
-  };
-
-  const initAboutPage = () => {
-    // 3D Tilt initialization
-    const container = document.getElementById('cards-container-about');
-    if (container) {
-      container.addEventListener('mousemove', (e) => handleOnMouseMove(e, 'cards-container-about'));
-      container.addEventListener('mouseleave', () => {
-        const cards = container.getElementsByClassName('card-spotlight');
-        for (const card of cards as any) {
-          card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
-          card.style.zIndex = '1';
-        }
-      });
-    }
-
-    // Counter animations
-    const counters = document.querySelectorAll('.stat-counter');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            const target = parseInt(el.dataset.target || '0');
-            let current = 0;
-            const step = Math.ceil(target / 40);
-            const interval = setInterval(() => {
-              current += step;
-              if (current >= target) {
-                current = target;
-                clearInterval(interval);
-              }
-              el.textContent = String(current);
-            }, 40);
-            observer.unobserve(el);
-          }
-        });
-      },
-      { threshold: 0.5 },
-    );
-    counters.forEach((c) => observer.observe(c));
-  };
-  document.addEventListener('astro:page-load', initAboutPage);
-</script>

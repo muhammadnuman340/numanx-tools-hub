@@ -7,12 +7,12 @@ import ToolContentSections from '../../components/ToolContentSections.astro';
 
 const faqItems = [
   {
-    question: 'What can the AI Chat Assistant do?',
+    question: 'What can the Command Assistant do?',
     answer:
       'It can answer questions about tools, SHA-256 hashing, color conversion (hex/rgb/hsl), BMI calculation, slug generation, binary/text conversion, ASCII lookup, dice rolling (d4d100), password strength analysis, Fibonacci sequences, prime checking with factorization, date info (day of week, leap year), random inspirational quotes, lottery number generation, text transformations (word count, JSON format, base64, case convert, URL encode/decode, ROT13, reverse text, Morse code, palindrome check), math calculations, number base conversions, date arithmetic, list operations, frequency analysis, number formatting, time conversion, timers, password/UUID generation, and more.',
   },
   {
-    question: 'Does the AI use an external API?',
+    question: 'Does the assistant use an external API or AI model?',
     answer:
       'No. All responses are generated locally in your browser using built-in logic. No data is ever sent to any server, ensuring complete privacy.',
   },
@@ -22,7 +22,7 @@ const faqItems = [
       "Yes. Your conversation is automatically saved in your browser's local storage. You can clear the conversation at any time using the Clear button above the chat.",
   },
   {
-    question: 'What kind of commands does the AI understand?',
+    question: 'What kind of commands does the assistant understand?',
     answer:
       "Try: 'calculate 2+3*4', 'rot13: hello', 'sort: banana, apple, cherry', 'frequency: hello world', 'spell 1234', 'roman 42', 'days until 2026-12-31', 'timer 5 minutes', 'morse encode: hello', 'convert 255 to binary', 'palindrome: racecar', 'count words in hello world', 'format json: {\"a\":1}', 'encode base64: hello', 'generate password 16', 'what tools do you have?', 'show ai tools', or just say hello!",
   },
@@ -57,10 +57,10 @@ const suggestions = [
 ];
 
 const schema = {
-  name: 'AI Chat Assistant',
-  applicationCategory: 'AI Tools',
+  name: 'Command Assistant',
+  applicationCategory: 'UtilitiesApplication',
   description:
-    'A full-page conversational AI assistant that helps with tools, transformations, and platform navigation  all running locally.',
+    'A command assistant that answers questions about the tools and runs text, number and date commands, all locally in your browser.',
 };
 ---
 
@@ -71,23 +71,23 @@ const schema = {
   toolSchema={schema}
   faq={faqItems}
   howto={{
-    name: 'How to Use AI Chat Assistant',
-    description: 'Step-by-step guide for using AI Chat Assistant.',
+    name: 'How to Use Command Assistant',
+    description: 'Step-by-step guide for using Command Assistant.',
     steps: [],
     totalTime: 'PT1M',
   }}
   breadcrumbs={[
     { name: 'Home', url: '/' },
     { name: 'Tools', url: '/tools/' },
-    { name: 'AI Chat Assistant', url: '/tools/ai-chat/' },
+    { name: 'Command Assistant', url: '/tools/ai-chat/' },
   ]}
 >
   <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
-        title="AI Chat"
+        title="Command"
         gradient="Assistant"
-        desc="Chat with a local AI assistant about tools, features, and tasks. All processing is private and runs entirely in your browser."
+        desc="Ask about tools or type a command like “calculate 2+3*4” or “rot13: hello”. It matches your request to built-in commands; nothing is sent to a server."
         badge=" New"
         slug="ai-chat"
       />
@@ -115,7 +115,7 @@ const schema = {
                 >
               </div>
               <div class="min-w-0">
-                <p class="text-sm font-bold text-primary">NumanX AI</p>
+                <p class="text-sm font-bold text-primary">NumanX Assistant</p>
                 <p class="text-xs text-muted truncate">Runs in your browser</p>
               </div>
             </div>
@@ -260,7 +260,7 @@ const schema = {
                 </div>
                 <div class="chat-bubble chat-bubble-bot" data-msg-index="welcome">
                   <div class="msg-content">
-                    Hi! I'm your NumanX AI assistant. I can answer questions about tools, help with text tasks, and guide
+                    Hi! I'm the NumanX command assistant. I can answer questions about tools, help with text tasks, and guide
                     you. Try some examples below!
                   </div>
                 </div>
@@ -376,7 +376,7 @@ const schema = {
       <!-- How It Works -->
       <section class="mt-20 max-w-3xl mx-auto">
         <div class="text-center mb-8">
-          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">AI Technology</span><h2
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Method</span><h2
             class="text-2xl md:text-3xl font-black tracking-tight text-white mt-1"
           >
             How It <span class="text-amber-400"
@@ -385,7 +385,7 @@ const schema = {
           </h2>
         </div><div class="space-y-4 text-sm text-tertiary leading-relaxed">
           <p>
-            The AI Chat Assistant uses intelligent pattern matching to understand your requests. It can recognize
+            The Command Assistant uses pattern matching to understand your requests. It can recognize
             greetings, tool-related questions, and specific commands like <strong class="text-primary">calculate</strong
             >, <strong class="text-primary">convert 255 to binary</strong>, <strong class="text-primary">rot13</strong>, <strong
               class="text-primary">sort</strong
@@ -637,7 +637,7 @@ const schema = {
   };
 
   let msgIndex = 0;
-  let context = { lastTopic: null, toolCount: null };
+  let context = { lastTopic: null, toolCount: null, userName: '', awaitingName: false };
 
   function escapeHtml(str) {
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -699,22 +699,22 @@ const schema = {
       keywords: ['convert', 'unit', 'length', 'mass', 'temp'],
     },
     {
-      name: 'AI Text Summarizer',
-      cat: 'AI Tools',
+      name: 'Text Summarizer',
+      cat: 'Text & AI Tools',
       desc: 'Summarize long text into concise summaries',
       url: '/tools/ai-text-summarizer/',
       keywords: ['summarize', 'summary', 'text', 'article'],
     },
     {
-      name: 'AI Grammar Checker',
-      cat: 'AI Tools',
+      name: 'Grammar Checker',
+      cat: 'Text & AI Tools',
       desc: 'Check grammar, spelling, punctuation',
       url: '/tools/ai-grammar-checker/',
       keywords: ['grammar', 'spelling', 'check', 'writing'],
     },
     {
-      name: 'AI Sentiment Analyzer',
-      cat: 'AI Tools',
+      name: 'Sentiment Analyzer',
+      cat: 'Text & AI Tools',
       desc: 'Analyze text sentiment',
       url: '/tools/ai-sentiment-analyzer/',
       keywords: ['sentiment', 'emotion', 'tone', 'positive', 'negative'],
@@ -762,29 +762,29 @@ const schema = {
       keywords: ['image', 'compress', 'optimize', 'size'],
     },
     {
-      name: 'AI Language Detector',
-      cat: 'AI Tools',
+      name: 'Language Detector',
+      cat: 'Text & AI Tools',
       desc: 'Detect language of any text',
       url: '/tools/ai-language-detector/',
       keywords: ['language', 'detect', 'identify'],
     },
     {
-      name: 'AI Readability Analyzer',
-      cat: 'AI Tools',
+      name: 'Readability Analyzer',
+      cat: 'Text & AI Tools',
       desc: 'Analyze text readability scores',
       url: '/tools/ai-readability-analyzer/',
       keywords: ['readability', 'flesch', 'score'],
     },
     {
-      name: 'AI Paraphraser',
-      cat: 'AI Tools',
+      name: 'Paraphraser',
+      cat: 'Text & AI Tools',
       desc: 'Rewrite text with different phrasing',
       url: '/tools/ai-paraphraser/',
       keywords: ['paraphrase', 'rewrite', 'rephrase'],
     },
     {
-      name: 'AI Tag Generator',
-      cat: 'AI Tools',
+      name: 'Tag Generator',
+      cat: 'Text & AI Tools',
       desc: 'Generate tags and hashtags from content',
       url: '/tools/ai-tag-generator/',
       keywords: ['tag', 'hashtag', 'keyword', 'seo'],
@@ -888,16 +888,16 @@ const schema = {
       keywords: ['countdown', 'timer', 'event'],
     },
     {
-      name: 'AI Chat Assistant',
-      cat: 'AI Tools',
-      desc: 'Chat with the AI assistant about tools and tasks',
+      name: 'Command Assistant',
+      cat: 'Text & AI Tools',
+      desc: 'Ask about tools and run quick commands',
       url: '/tools/ai-chat/',
       keywords: ['chat', 'assistant', 'conversation'],
     },
   ];
 
   const catColors = {
-    'AI Tools': 'text-amber-400',
+    'Text & AI Tools': 'text-amber-400',
     'Developer Tools': 'text-cyan-400',
     'Utility Tools': 'text-green-400',
     'Creator Tools': 'text-blue-400',
@@ -2109,9 +2109,34 @@ const schema = {
   // COMMAND PARSER
   //
 
+  /** Saves a name from a reply; returns the answer, or null when it doesn't look like a name. */
+  function saveName(raw) {
+    const name = String(raw)
+      .replace(/[.!]+$/, '')
+      .trim()
+      .split(/\s+/)
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ');
+    if (name.length < 2 || name.length > 30 || !/^[\p{L}][\p{L}' .-]*$/u.test(name)) return null;
+    try {
+      localStorage.setItem('nt_user_name', name);
+    } catch (e) {}
+    context.userName = name;
+    return 'Nice to meet you, **' + escapeHtml(name) + "**! I'll remember your name for our chat.";
+  }
+
   function processCommand(text) {
     const q = text.trim();
     const lq = q.toLowerCase();
+
+    // Right after "what's your name?", a short reply of one to three words is the name
+    if (context.awaitingName) {
+      context.awaitingName = false;
+      if (q.split(/\s+/).length <= 3 && !/[\d:=+*/#@]/.test(q)) {
+        const r = saveName(q);
+        if (r) return r;
+      }
+    }
 
     // Greetings
     if (/^(hi|hello|hey|howdy|sup|yo|good morning|good evening|good afternoon)[.!]*$/i.test(lq)) {
@@ -2121,8 +2146,8 @@ const schema = {
           ? 'Hey ' + userName + '! How can I help you today?'
           : 'Hello! How can I help you today? Try asking about tools or giving me a command!',
         userName
-          ? 'Hi ' + userName + "! I'm your NumanX AI assistant. What can I do for you?"
-          : "Hi there! I'm your NumanX AI assistant. What can I do for you?",
+          ? 'Hi ' + userName + "! I'm the NumanX command assistant. What can I do for you?"
+          : "Hi there! I'm the NumanX command assistant. What can I do for you?",
         userName
           ? 'Welcome back, ' +
             userName +
@@ -2169,7 +2194,7 @@ const schema = {
     const catMatch = lq.match(/(?:find|show|list|what)\s+(ai|image|utility|developer|creator|cricket)\s*(?:tools)?/);
     if (catMatch) {
       const catMap = {
-        ai: 'AI Tools',
+        ai: 'Text & AI Tools',
         image: 'Image Tools',
         utility: 'Utility Tools',
         developer: 'Developer Tools',
@@ -2207,12 +2232,12 @@ const schema = {
 
     // What's new
     if (/what'?s new|latest|recent/.test(lq)) {
-      return 'We recently added many new tools! Check out **AI Chat Assistant**, **Character Counter**, **BMI Calculator**, **SQL Formatter**, **JWT Decoder**, and more. Visit the [All Tools](/tools/) page to see everything.';
+      return 'We recently added many new tools! Check out **Command Assistant**, **Character Counter**, **BMI Calculator**, **SQL Formatter**, **JWT Decoder**, and more. Visit the [All Tools](/tools/) page to see everything.';
     }
 
     // Popular / best
     if (/popular|best|top|trending/.test(lq)) {
-      return 'Popular tools: **QR Generator**, **Image Compressor**, **Password Generator**, **AI Grammar Checker**, and **JSON Formatter**. Check them out!';
+      return 'Popular tools: **QR Generator**, **Image Compressor**, **Password Generator**, **Grammar Checker**, and **JSON Formatter**. Check them out!';
     }
 
     //  Commands with arguments
@@ -2592,17 +2617,11 @@ const schema = {
     m = lq.match(/^(?:lottery|lotto)\s*(?:\s+(\d+)(?:\s*\/\s*(\d+))?)?/i);
     if (m) return execLottery(m[1] ? +m[1] : 6, m[2] ? +m[2] : 49);
 
-    // Name capture: "my name is X" / "i'm X" / "call me X"
-    m = lq.match(/^(?:my name is|i am|i'm|call me)\s+(.+)/i);
+    // Name capture: "my name is X" / "i'm X" / "call me X" / "it's X" (keeps the capitals typed)
+    m = q.match(/^(?:my name is|my name's|i am|i'm|im|call me|it's|its|this is)\s+(.+)/i);
     if (m) {
-      const name = m[1].replace(/[.!]+$/, '').trim();
-      if (name.length > 1 && name.length < 30) {
-        try {
-          localStorage.setItem('nt_user_name', name);
-        } catch (e) {}
-        context.userName = name;
-        return 'Nice to meet you, **' + escapeHtml(name) + "**! I'll remember your name for our chat.";
-      }
+      const r = saveName(m[1]);
+      if (r) return r;
     }
 
     // Stats command
@@ -3011,8 +3030,8 @@ const schema = {
     var welcomeText = userName
       ? 'Hey ' +
         userName +
-        "! I'm your NumanX AI assistant. I can answer questions about tools, help with text tasks, and guide you. Try some examples below!"
-      : "Hi! I'm your NumanX AI assistant. I can answer questions about tools, help with text tasks, and guide you. Try some examples below!";
+        "! I'm the NumanX command assistant. I can answer questions about tools, help with text tasks, and guide you. Try some examples below!"
+      : "Hi! I'm the NumanX command assistant. I can answer questions about tools, help with text tasks, and guide you. Try some examples below!";
     addMessage(welcomeText, false);
     try {
       localStorage.removeItem(H_KEY);
@@ -3148,7 +3167,7 @@ const schema = {
         '# Chat Export\n\n' +
         msgs
           .map(function (m) {
-            return '### ' + (m.role === 'user' ? 'You' : 'NumanX AI') + ' (' + m.ts + ')\n\n' + m.text;
+            return '### ' + (m.role === 'user' ? 'You' : 'NumanX Assistant') + ' (' + m.ts + ')\n\n' + m.text;
           })
           .join('\n\n---\n\n');
       filename = 'chat-export.md';
@@ -3251,6 +3270,7 @@ const schema = {
         localStorage.setItem('nt_name_asked', '1');
         setTimeout(function () {
           addMessage("By the way, what's your name? I'd love to personalize our chat!", false);
+          context.awaitingName = true;
         }, 600);
       }
     } catch (e) {}
@@ -3430,11 +3450,11 @@ const schema = {
     var userName = getUserName();
     if (!userName) return;
     var firstMsg = containers.messages.querySelector('.chat-msg[data-role="bot"] .msg-content');
-    if (firstMsg && firstMsg.textContent.indexOf("Hi! I'm your NumanX AI assistant") !== -1) {
+    if (firstMsg && firstMsg.textContent.indexOf("Hi! I'm the NumanX command assistant") !== -1) {
       firstMsg.textContent =
         'Hey ' +
         userName +
-        "! I'm your NumanX AI assistant. I can answer questions about tools, help with text tasks, and guide you. Try some examples below!";
+        "! I'm the NumanX command assistant. I can answer questions about tools, help with text tasks, and guide you. Try some examples below!";
     }
   })();
 

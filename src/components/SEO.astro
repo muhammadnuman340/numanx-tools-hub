@@ -1,4 +1,6 @@
 ---
+import { usableOgImage, DEFAULT_OG_IMAGE } from '../lib/ogImage';
+
 interface Props {
   title?: string;
   description?: string;
@@ -57,7 +59,7 @@ const siteKeywords =
   'free tools, online tools, file converters, cricket calculators, word counter, qr generator, image compressor';
 const siteUrl = canonical || Astro.url.href;
 
-const ogImage = image || 'https://toolshub.numanxstudio.com/og-default-1200.png';
+const ogImage = usableOgImage(image) ?? DEFAULT_OG_IMAGE;
 
 const orgUrl = 'https://toolshub.numanxstudio.com';
 
