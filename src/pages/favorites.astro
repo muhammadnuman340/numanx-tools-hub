@@ -81,6 +81,8 @@ import { tools } from '../data/tools';
 <script>
   import { getIconSvg } from '../lib/iconSvgs';
   import { toolCardHtml } from '../lib/cardHtml';
+  import { migrateStoredSlugs } from '../lib/retiredSlugs';
+  migrateStoredSlugs();
   const allTools = [
     {
       id: 'qr-generator',
@@ -131,11 +133,11 @@ import { tools } from '../data/tools';
       cat: 'Cricket Tools',
     },
     {
-      id: 'strike-rate-calculator',
-      name: 'Strike Rate Calculator',
-      desc: 'Calculate batting and bowling strike rates in cricket.',
+      id: 'strike-rate-average-calculator',
+      name: 'Strike Rate & Average Calculator',
+      desc: 'Calculate batting average and batting or bowling strike rates in cricket.',
       icon: 'strikerate',
-      url: '/tools/strike-rate-calculator/',
+      url: '/tools/strike-rate-average-calculator/',
       cat: 'Cricket Tools',
     },
     {

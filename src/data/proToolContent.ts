@@ -207,26 +207,6 @@ export const PRO_TOOL_DOCS_REGISTRY: Record<string, ProToolDocEntry> = {
       'No registration or API quotas: unlimited hashtag generations directly in browser.'
     ]
   },
-  'strike-rate-calculator': {
-    title: 'ICC Cricket Batting & Bowling Strike Rate Formulations',
-    subtitle: 'Pacing Metrics, Boundary Percentages & WWS Mobile Stat Card Rendering',
-    standards: 'ICC Playing Conditions (Clause 16) & MCC Laws of Cricket (Law 16)',
-    formula: {
-      latex: '\\text{Batting SR} = \\left(\\frac{\\text{Runs}}{\\text{Balls Faced}}\\right) \\times 100, \\quad \\text{Bowling SR} = \\frac{\\text{Balls Bowled}}{\\text{Wickets Taken}}',
-      description: 'Batting strike rate represents runs scored per 100 legal balls; bowling strike rate measures average legal deliveries per wicket.'
-    },
-    technicalOverview: 'Modern white-ball cricket (T20 and ODI) relies on strike rate to assess scoring acceleration. This utility computes batting strike rate, balls-per-boundary, and boundary run contribution percentage. Furthermore, it integrates a client-side HTML5 Canvas generator that renders a 1080x1920 vertical stat card for YouTube Shorts and Instagram Reels.',
-    workedExample: {
-      input: 'Batsman scores 76 runs off 42 balls with 8 fours and 4 sixes.',
-      stepByStepCalculation: 'Batting SR = (76 / 42) * 100 = 180.95. Boundary runs = (8 * 4) + (4 * 6) = 32 + 24 = 56 runs. Boundary percentage = (56 / 76) * 100 = 73.68%.',
-      expectedOutput: 'SR: 180.95 | 56 Boundary Runs (73.7%) | Ready for 1080x1920 Stat Card Export.'
-    },
-    methodologyNotes: [
-      'WWS (World Wide Sports) stat cards render locally via 2D Canvas context without external font lag.',
-      'Supports custom batter names, opponent badges, and match summaries.',
-      'High-DPI 1080x1920 PNG export downloads straight from the browser on both desktop and mobile.'
-    ]
-  },
   'color-contrast-checker': {
     title: 'W3C WCAG 2.1 Relative Luminance & Contrast Ratio Formulations',
     subtitle: 'sRGB Linearization, Relative Luminance & Accessibility Conformance',

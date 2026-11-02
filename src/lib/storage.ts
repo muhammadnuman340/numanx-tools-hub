@@ -1,3 +1,5 @@
+import { mapSlugList, mapUsage } from './retiredSlugs';
+
 const FAVORITES_KEY = 'nt_favorites';
 const RECENTLY_USED_KEY = 'nt_recently_used';
 const SEARCH_HISTORY_KEY = 'nt_search_history';
@@ -5,7 +7,7 @@ const TOOL_USAGE_KEY = 'nt_tool_usage';
 
 export function getFavorites(): string[] {
   try {
-    return JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+    return mapSlugList(JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]'));
   } catch {
     return [];
   }
@@ -31,7 +33,7 @@ export function isFavorite(slug: string): boolean {
 
 export function addRecentlyUsed(slug: string): void {
   try {
-    let recent: string[] = JSON.parse(localStorage.getItem(RECENTLY_USED_KEY) || '[]');
+    let recent: string[] = mapSlugList(JSON.parse(localStorage.getItem(RECENTLY_USED_KEY) || '[]'));
     recent = recent.filter((id) => id !== slug);
     recent.unshift(slug);
     if (recent.length > 20) recent = recent.slice(0, 20);
@@ -41,7 +43,7 @@ export function addRecentlyUsed(slug: string): void {
 
 export function getRecentlyUsed(): string[] {
   try {
-    return JSON.parse(localStorage.getItem(RECENTLY_USED_KEY) || '[]');
+    return mapSlugList(JSON.parse(localStorage.getItem(RECENTLY_USED_KEY) || '[]'));
   } catch {
     return [];
   }
@@ -69,7 +71,7 @@ export function getSearchHistory(): string[] {
 
 export function trackToolUsage(slug: string): void {
   try {
-    const usage: Record<string, number> = JSON.parse(localStorage.getItem(TOOL_USAGE_KEY) || '{}');
+    const usage: Record<string, number> = mapUsage(JSON.parse(localStorage.getItem(TOOL_USAGE_KEY) || '{}'));
     usage[slug] = (usage[slug] || 0) + 1;
     localStorage.setItem(TOOL_USAGE_KEY, JSON.stringify(usage));
   } catch {}
@@ -77,7 +79,7 @@ export function trackToolUsage(slug: string): void {
 
 export function getToolUsage(): Record<string, number> {
   try {
-    return JSON.parse(localStorage.getItem(TOOL_USAGE_KEY) || '{}');
+    return mapUsage(JSON.parse(localStorage.getItem(TOOL_USAGE_KEY) || '{}'));
   } catch {
     return {};
   }

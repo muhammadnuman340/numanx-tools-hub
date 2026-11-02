@@ -169,19 +169,7 @@ export const tools: Tool[] = [
     url: '/tools/run-rate-calculator/',
     isFeatured: true,
     keywords: ['run rate', 'cricket', 'run rate calculator', 'cricket calculator', 'match analysis'],
-    relatedIds: ['strike-rate-calculator', 'age-calculator'],
-  },
-  {
-    id: 'strike-rate-calculator',
-    name: 'Strike Rate Calculator',
-    description: 'Calculate batting and bowling strike rates in cricket.',
-    longDescription:
-      'Calculate batting and bowling strike rates in cricket with impact rating, match influence score, and player presets.',
-    category: 'cricket-tools',
-    icon: 'strikerate',
-    url: '/tools/strike-rate-calculator/',
-    keywords: ['strike rate', 'cricket', 'batting', 'bowling', 'strike rate calculator'],
-    relatedIds: ['run-rate-calculator', 'age-calculator'],
+    relatedIds: ['strike-rate-average-calculator', 'age-calculator'],
   },
   {
     id: 'jpg-to-png',
@@ -549,7 +537,7 @@ export const tools: Tool[] = [
     url: '/tools/economy-rate-calculator/',
     isNew: true,
     keywords: ['economy rate', 'bowling economy', 'cricket economy', 'bowling average', 'cricket statistics'],
-    relatedIds: ['run-rate-calculator', 'strike-rate-calculator', 'cricket-over-calculator'],
+    relatedIds: ['run-rate-calculator', 'strike-rate-average-calculator', 'cricket-over-calculator'],
   },
   {
     id: 'cricket-over-calculator',
@@ -562,7 +550,7 @@ export const tools: Tool[] = [
     url: '/tools/cricket-over-calculator/',
     isNew: true,
     keywords: ['cricket over calculator', 'balls to overs', 'cricket overs', 'bowling figures', 'cricket math'],
-    relatedIds: ['run-rate-calculator', 'strike-rate-calculator', 'economy-rate-calculator'],
+    relatedIds: ['run-rate-calculator', 'strike-rate-average-calculator', 'economy-rate-calculator'],
   },
   {
     id: 'random-number-generator',
@@ -1045,7 +1033,7 @@ export const tools: Tool[] = [
     isFeatured: true,
     isPopular: true,
     keywords: ['net run rate calculator', 'cricket nrr', 'icc law 16.10.2', 'playoff scenario simulator', 'cricket standings'],
-    relatedIds: ['run-rate-calculator', 'strike-rate-calculator', 'cricket-target-calculator'],
+    relatedIds: ['run-rate-calculator', 'strike-rate-average-calculator', 'cricket-target-calculator'],
   },
   {
     id: 'pdf-merger',
@@ -1089,17 +1077,17 @@ export const tools: Tool[] = [
   },
   {
     id: 'strike-rate-average-calculator',
-    name: 'Batting Strike Rate & Average Calculator',
-    description: 'Calculate batting strike rate and averages with 1-click 1080x1920 mobile Shorts/Reels stat card export.',
+    name: 'Strike Rate & Average Calculator',
+    description: 'Calculate batting average and batting or bowling strike rate, compare players, and export a 1080x1920 stat card.',
     longDescription:
-      'Cricket batting statistics calculator computing strike rates, averages, and boundary percentages with high-res vertical social card export.',
+      'Cricket statistics calculator for batting average, batting and bowling strike rate, impact rating and aggression level, with a two-player comparison and a high-res vertical social card export.',
     category: 'cricket-tools',
     icon: 'trophy',
     url: '/tools/strike-rate-average-calculator/',
     isNew: true,
     isPopular: true,
-    keywords: ['strike rate calculator', 'batting average calculator', 'cricket stat card', 'wws stat card', 'cricket stats'],
-    relatedIds: ['strike-rate-calculator', 'run-rate-calculator', 'net-run-rate-calculator'],
+    keywords: ['strike rate calculator', 'strike rate', 'batting average calculator', 'batting', 'bowling strike rate', 'cricket stat card', 'wws stat card', 'cricket stats'],
+    relatedIds: ['run-rate-calculator', 'economy-rate-calculator', 'net-run-rate-calculator'],
   },
   {
     id: 'utm-builder',

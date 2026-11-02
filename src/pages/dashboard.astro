@@ -542,6 +542,9 @@ const roadmap = [
 </MainLayout>
 
 <script>
+  import { migrateStoredSlugs } from '../lib/retiredSlugs';
+  migrateStoredSlugs();
+
   // Dashboard tools data injected at build time
 
   function triggerToast(message: string, variant: 'success' | 'error' | 'info' | 'warning' = 'info') {

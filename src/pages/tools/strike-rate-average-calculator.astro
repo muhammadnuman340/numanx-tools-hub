@@ -14,17 +14,50 @@ const faqItems = [
   {
     question: 'How is cricket strike rate calculated?',
     answer:
-      'Batting strike rate = (Total Runs Scored ÷ Balls Faced) × 100. It measures the scoring speed per 100 deliveries faced.',
+      'Batting strike rate = (Total Runs Scored ÷ Balls Faced) × 100. It measures the scoring speed per 100 deliveries faced. For example, 85 runs off 55 balls = (85 ÷ 55) × 100 = 154.55.',
   },
   {
-    question: 'What is the 1080x1920 WWS Stat Card?',
+    question: 'What is the difference between batting and bowling strike rate?',
     answer:
-      'It is a high-resolution 1080×1920 vertical canvas graphic formatted specifically for YouTube Shorts, Instagram Reels, and TikTok clips, powered by World Wonders & Sports (WWS) × NumanX Tools.',
+      'Batting strike rate measures runs per 100 balls (higher is better). Bowling strike rate measures balls bowled per wicket (lower is better).',
+  },
+  {
+    question: 'What is a good strike rate in T20 cricket?',
+    answer: 'A strike rate of 120–130 is good, 130–150 is excellent, and 150+ is world-class in T20 cricket.',
+  },
+  {
+    question: 'What is a good strike rate in ODI cricket?',
+    answer:
+      'In ODIs, a strike rate of 85–100 is competitive, 100–110 is excellent, and 110+ is world-class. The longer format allows more time to build an innings.',
+  },
+  {
+    question: 'What is a good bowling strike rate?',
+    answer: 'In T20s, under 20 is excellent, 20–25 is good. In ODIs, under 35 is excellent.',
   },
   {
     question: 'What is considered a world-class T20 strike rate and average?',
     answer:
       'In T20 cricket, a batting average of 35+ combined with a strike rate of 140+ is considered elite and world-class.',
+  },
+  {
+    question: 'How is Impact Rating calculated?',
+    answer:
+      'Impact Rating combines strike rate and runs scored into a single 0–100 score. It normalizes SR against a baseline of 200 and weights it by total runs contribution.',
+  },
+  {
+    question: 'How does the aggression meter work?',
+    answer:
+      'The aggression meter maps strike rate to 5 levels: Defensive (<85), Steady (85–110), Aggressive (110–140), Very Aggressive (140–170), and Explosive (170+).',
+  },
+  {
+    question: "Can I compare two players' strike rates?",
+    answer:
+      'Yes. Use the Compare Two Players section below the calculator. Enter runs and balls for Player A and Player B to see a side-by-side strike rate comparison.',
+  },
+  {
+    question: 'What is the 1080x1920 WWS Stat Card?',
+    answer:
+      'It is a high-resolution 1080×1920 vertical canvas graphic formatted specifically for YouTube Shorts, Instagram Reels, and TikTok clips, powered by World Wonders & Sports (WWS) × NumanX Tools.',
   },
 ];
 
@@ -32,12 +65,14 @@ const sraSchema = {
   name: 'Strike Rate & Average Calculator',
   applicationCategory: 'Sports',
   description:
-    'Calculate cricket batting average, strike rate, and generate 1080x1920 vertical social media stat cards for Shorts & Reels.',
+    'Calculate cricket batting average, batting and bowling strike rate, impact rating and aggression level, compare two players, and generate 1080x1920 vertical stat cards for Shorts & Reels.',
   featureList: [
     'Batting average and strike rate combined calculation',
-    'Not-out innings handling for precise ICC averages',
+    'Not-out innings handling for precise averages',
+    'Bowling strike rate (balls per wicket) with performance tiers',
+    'Impact rating, match influence score and aggression meter',
+    'Player comparison with famous player presets',
     'One-click WWS 1080x1920 vertical Shorts/Reels stat card generator',
-    'Player comparison and performance tier benchmarks',
   ],
 };
 
@@ -45,7 +80,22 @@ const benefits = [
   {
     icon: '📊',
     title: 'Dual Metric Accuracy',
-    desc: 'Calculate both Batting Average and Strike Rate simultaneously with exact ICC decimal precision.',
+    desc: 'Calculate both Batting Average and Strike Rate simultaneously with exact decimal precision.',
+  },
+  {
+    icon: '🎯',
+    title: 'Bowling Strike Rate',
+    desc: 'Track how many balls a bowler needs per wicket. A lower bowling strike rate means consistent wicket-taking.',
+  },
+  {
+    icon: '📈',
+    title: 'Impact & Aggression',
+    desc: 'A 0–100 impact rating, a match influence score and a 5-level aggression meter built from runs and strike rate.',
+  },
+  {
+    icon: '⚖️',
+    title: 'Player Comparison',
+    desc: 'Compare two players side by side and see who scores faster at a glance.',
   },
   {
     icon: '📱',
@@ -57,18 +107,13 @@ const benefits = [
     title: 'Not-Out Handling',
     desc: 'Accurately separates total innings from dismissals so not-out finishes properly boost the batting average.',
   },
-  {
-    icon: '⚡',
-    title: 'Instant In-Browser',
-    desc: 'Generates cards locally via HTML5 Canvas with zero server uploads and zero lag.',
-  },
 ];
 
 const howToSteps = [
   {
     num: '1',
     title: 'Enter Player Information',
-    desc: 'Type the player name, tournament or series title, and select a preset or custom numbers.',
+    desc: 'Type the player name and tournament, or pick a famous player preset.',
   },
   {
     num: '2',
@@ -77,13 +122,13 @@ const howToSteps = [
   },
   {
     num: '3',
-    title: 'Review Average & Strike Rate',
-    desc: 'See the live calculated average, strike rate, and performance rating update instantly.',
+    title: 'Review Average, Strike Rate & Analysis',
+    desc: 'See the average, strike rate, performance tier, impact rating and aggression level update as you type. Add balls bowled and wickets for bowling strike rate.',
   },
   {
     num: '4',
-    title: 'Download Social Media Stat Card',
-    desc: 'Click the WWS export button to download a 1080×1920 PNG ready for YouTube Shorts and Reels.',
+    title: 'Compare or Export',
+    desc: 'Compare two players, copy or download the results, or export a 1080×1920 PNG stat card for YouTube Shorts and Reels.',
   },
 ];
 
@@ -91,7 +136,7 @@ const useCases = [
   {
     icon: '🎬',
     title: 'Cricket YouTubers & Creators',
-    desc: 'Create viral YouTube Shorts and Reels graphics highlighting player statistics in seconds.',
+    desc: 'Create YouTube Shorts and Reels graphics highlighting player statistics in seconds.',
   },
   {
     icon: '📈',
@@ -99,22 +144,39 @@ const useCases = [
     desc: 'Evaluate players using combined average and strike rate efficiency for fantasy cricket leagues.',
   },
   {
+    icon: '👨‍🏫',
+    title: 'Cricket Coaching & Training',
+    desc: 'Teach young players about strike rate, scoring rate management and batting efficiency across formats.',
+  },
+  {
     icon: '🏏',
     title: 'Player Performance Tracking',
     desc: 'Track club, school, or professional player progression across an entire season.',
   },
 ];
+
+const presets = [
+  { name: 'Babar Azam', runs: 72, balls: 50, emoji: '🇵🇰' },
+  { name: 'Virat Kohli', runs: 115, balls: 62, emoji: '🇮🇳' },
+  { name: 'AB de Villiers', runs: 133, balls: 57, emoji: '🇿🇦' },
+  { name: 'Andre Russell', runs: 48, balls: 19, emoji: '🏝️' },
+];
+
+const inputClass =
+  'w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-amber-500 text-sm font-mono font-bold';
+const secondaryBtn =
+  'inline-flex items-center justify-center gap-2 min-h-[44px] bg-surface-2 hover:bg-surface-3 border border-surface text-tertiary hover:text-white text-xs font-semibold px-5 rounded-xl transition-all active:scale-95';
 ---
 
 <MainLayout
-  title="Cricket Strike Rate & Average Calculator | NumanX"
-  description="Calculate cricket batting average and strike rate. Generate and download free 1080x1920 vertical social media stat cards for YouTube Shorts and Instagram Reels."
-  keywords="cricket batting average calculator, strike rate and average calculator, cricket strike rate, wws stat card maker, cricket shorts maker, reels cricket stats"
+  title="Cricket Strike Rate & Average Calculator — Batting & Bowling | NumanX"
+  description="Calculate cricket batting average plus batting and bowling strike rate, with impact rating, aggression meter and player comparison. Export free 1080x1920 stat cards for Shorts and Reels."
+  keywords="cricket batting average calculator, strike rate calculator, strike rate and average calculator, batting strike rate, bowling strike rate, impact rating, aggression meter, wws stat card maker, cricket shorts maker"
   toolSchema={sraSchema}
   faq={faqItems}
   howto={{
     name: 'How to Calculate Strike Rate and Batting Average',
-    description: 'Calculate batting stats and export a 1080x1920 social card in 4 easy steps.',
+    description: 'Calculate batting and bowling stats, compare players and export a 1080x1920 social card in 4 easy steps.',
     steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
     totalTime: 'PT1M',
   }}
@@ -129,8 +191,8 @@ const useCases = [
       <ToolHeader
         title="Strike Rate & Average"
         gradient="Calculator"
-        desc="Batting average is runs divided by dismissals; strike rate is runs per 100 balls faced. Enter a player’s total runs, balls faced and dismissals to get both, then export a 1080×1920 stat card for YouTube Shorts, Reels or Stories. All calculations run in your browser."
-        updated="2026-11-01"
+        desc="Batting average is runs divided by dismissals; batting strike rate is runs per 100 balls faced; bowling strike rate is balls bowled per wicket. Enter a player’s stats to get all three, plus an impact rating, aggression level and a two-player comparison, then export a 1080×1920 stat card for YouTube Shorts, Reels or Stories. All calculations run in your browser."
+        updated="2026-11-02"
         badge="✦ WWS Shorts Edition"
         slug="strike-rate-average-calculator"
       />
@@ -162,36 +224,40 @@ const useCases = [
             </div>
           </div>
 
+          <!-- Famous player presets: one innings each -->
+          <div>
+            <span class="text-[10px] uppercase font-semibold text-muted block mb-1.5">Famous Player Presets (one innings)</span>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {
+                presets.map((p) => (
+                  <button
+                    type="button"
+                    class="preset-btn flex flex-col items-center gap-1 min-h-[44px] rounded-xl py-2 px-1 text-[11px] font-medium border transition-all bg-zinc-950 border-surface text-tertiary hover:border-amber-500/40 hover:text-amber-300"
+                    data-name={p.name}
+                    data-runs={p.runs}
+                    data-balls={p.balls}
+                    aria-label={`Fill ${p.name}: ${p.runs} runs off ${p.balls} balls`}
+                  >
+                    <span class="text-sm" aria-hidden="true">{p.emoji}</span>
+                    <span>{p.name}</span>
+                  </button>
+                ))
+              }
+            </div>
+          </div>
+
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
             <div>
               <label for="total-runs" class="text-[10px] uppercase font-semibold text-muted block mb-1">Total Runs</label>
-              <input
-                id="total-runs"
-                type="number"
-                min="0"
-                value="568"
-                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-amber-500 text-sm font-mono font-bold"
-              />
+              <input id="total-runs" type="number" min="0" value="568" class={inputClass} />
             </div>
             <div>
               <label for="total-balls" class="text-[10px] uppercase font-semibold text-muted block mb-1">Balls Faced</label>
-              <input
-                id="total-balls"
-                type="number"
-                min="1"
-                value="398"
-                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-amber-500 text-sm font-mono font-bold"
-              />
+              <input id="total-balls" type="number" min="1" value="398" class={inputClass} />
             </div>
             <div>
               <label for="total-outs" class="text-[10px] uppercase font-semibold text-muted block mb-1">Dismissals (Out)</label>
-              <input
-                id="total-outs"
-                type="number"
-                min="0"
-                value="10"
-                class="w-full bg-zinc-950 text-white px-3.5 py-2.5 rounded-xl border border-surface focus:outline-none focus:border-amber-500 text-sm font-mono font-bold"
-              />
+              <input id="total-outs" type="number" min="0" value="10" class={inputClass} />
             </div>
           </div>
 
@@ -227,7 +293,186 @@ const useCases = [
             </button>
           </div>
         </div>
+
+        <!-- Batting analysis (from runs and balls above) -->
+        <section class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6 space-y-4" aria-labelledby="analysis-heading">
+          <div class="flex items-center justify-between gap-3 flex-wrap">
+            <h2 id="analysis-heading" class="text-xs font-bold text-white uppercase tracking-wider">Batting Analysis</h2>
+            <span id="tier-badge" class="text-xs font-semibold px-3 py-1 rounded-full border border-surface bg-zinc-950 text-muted">—</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div class="rounded-xl bg-zinc-950 border border-surface p-4">
+              <span class="text-[10px] font-semibold text-muted uppercase tracking-wider">Impact Rating</span>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span id="impact-rating" class="text-2xl font-black text-primary font-mono tabular-nums">0</span>
+                <span class="text-[10px] text-dim">/ 100</span>
+              </div>
+              <div class="mt-2 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                <div id="impact-bar" class="h-full rounded-full transition-all duration-700" style="width:0%"></div>
+              </div>
+              <span id="impact-desc" class="text-[10px] text-muted mt-1.5 block">Enter batting stats</span>
+            </div>
+            <div class="rounded-xl bg-zinc-950 border border-surface p-4">
+              <span class="text-[10px] font-semibold text-muted uppercase tracking-wider">Match Influence</span>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span id="influence-score" class="text-2xl font-black text-primary font-mono tabular-nums">0</span>
+                <span class="text-[10px] text-dim">/ 100</span>
+              </div>
+              <div class="mt-2 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                <div id="influence-bar" class="h-full rounded-full transition-all duration-700" style="width:0%"></div>
+              </div>
+              <span id="influence-desc" class="text-[10px] text-muted mt-1.5 block">Enter batting stats</span>
+            </div>
+          </div>
+
+          <!-- Aggression meter -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-[10px] font-semibold text-muted uppercase tracking-wider">Aggression Meter</h3>
+              <span id="aggression-label" class="text-xs font-bold font-mono text-primary">—</span>
+            </div>
+            <div class="flex items-center gap-0.5 h-3 rounded-full overflow-hidden" aria-hidden="true">
+              <div class="flex-1 h-full bg-zinc-800"></div>
+              <div class="flex-1 h-full bg-zinc-700"></div>
+              <div class="flex-1 h-full bg-zinc-600"></div>
+              <div class="flex-1 h-full bg-zinc-500"></div>
+              <div class="flex-1 h-full bg-zinc-400"></div>
+            </div>
+            <div class="relative h-5 mt-0.5" aria-hidden="true">
+              <div id="aggression-arrow" class="absolute top-0 -translate-x-1/2 text-xs text-amber-400 transition-all duration-700" style="left:0%">▲</div>
+            </div>
+            <div class="flex justify-between text-[9px] text-dim">
+              <span>Defensive</span>
+              <span>Steady</span>
+              <span>Aggressive</span>
+              <span class="hidden sm:inline">Very Aggressive</span>
+              <span>Explosive</span>
+            </div>
+          </div>
+
+          <!-- Performance meter -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-[10px] font-semibold text-muted uppercase tracking-wider">Performance Meter</h3>
+              <span id="meter-label" class="text-xs font-bold text-primary">—</span>
+            </div>
+            <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+              <div id="meter-fill" class="h-full rounded-full bg-amber-500 transition-all duration-700 ease-out" style="width:0%"></div>
+            </div>
+            <div class="flex justify-between text-[9px] text-dim mt-1">
+              <span>Poor</span>
+              <span>Average</span>
+              <span>Good</span>
+              <span>Explosive</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-center gap-2 flex-wrap pt-1">
+            <button id="copy-sr-btn" type="button" class={secondaryBtn}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              Copy Results
+            </button>
+            <button id="download-btn" type="button" class={secondaryBtn}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Download
+            </button>
+          </div>
+        </section>
+
+        <!-- Bowling strike rate -->
+        <section class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6 space-y-4" aria-labelledby="bowling-heading">
+          <h2 id="bowling-heading" class="text-xs font-bold text-white uppercase tracking-wider">Bowling Strike Rate</h2>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="bowl-balls" class="text-[10px] uppercase font-semibold text-muted block mb-1">Balls Bowled</label>
+              <input id="bowl-balls" type="number" min="0" placeholder="0" class={inputClass} />
+            </div>
+            <div>
+              <label for="bowl-wkts" class="text-[10px] uppercase font-semibold text-muted block mb-1">Wickets Taken</label>
+              <input id="bowl-wkts" type="number" min="0" placeholder="0" class={inputClass} />
+            </div>
+          </div>
+          <div class="p-4 rounded-xl bg-zinc-950 border border-surface text-center space-y-1">
+            <span class="text-[10px] uppercase font-bold tracking-wider text-muted">Bowling Strike Rate</span>
+            <div class="text-3xl font-black text-amber-400 font-mono tabular-nums" id="bowl-sr-output">0.00</div>
+            <p id="bowl-sr-feedback" class="text-xs text-muted pt-1">Enter stats to see performance tier</p>
+          </div>
+        </section>
+
+        <!-- Player comparison -->
+        <section class="bg-surface-1 border border-surface rounded-2xl p-5 md:p-6" aria-labelledby="compare-heading">
+          <h2 id="compare-heading" class="text-xs font-bold text-white uppercase tracking-wider mb-4">Compare Two Players</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {
+              (['a', 'b'] as const).map((p) => (
+                <div class="rounded-xl bg-zinc-950 border border-surface p-4">
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="w-6 h-6 rounded-full bg-surface-2 flex items-center justify-center text-[10px] font-bold text-amber-400">
+                      {p.toUpperCase()}
+                    </span>
+                    <span class="text-xs font-semibold text-secondary">Player {p.toUpperCase()}</span>
+                  </div>
+                  <div class="grid grid-cols-2 gap-2 mb-2">
+                    <div>
+                      <label for={`comp-${p}-runs`} class="text-[10px] font-semibold text-muted uppercase tracking-wider">Runs</label>
+                      <input id={`comp-${p}-runs`} type="number" min="0" placeholder="0" class={`${inputClass} mt-1`} />
+                    </div>
+                    <div>
+                      <label for={`comp-${p}-balls`} class="text-[10px] font-semibold text-muted uppercase tracking-wider">Balls</label>
+                      <input id={`comp-${p}-balls`} type="number" min="0" placeholder="0" class={`${inputClass} mt-1`} />
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-[10px] text-dim uppercase tracking-wider font-semibold">SR </span>
+                    <span id={`comp-${p}-sr`} class="text-sm font-black text-muted font-mono tabular-nums">0.00</span>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+          <p id="comp-text" class="mt-3 text-xs font-medium text-center text-secondary hidden" aria-live="polite"></p>
+        </section>
       </div>
+
+      <!-- Cricket knowledge -->
+      <section class="mt-16 max-w-3xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-black tracking-tight text-center mb-8">
+          Cricket
+          <span class="text-amber-400">Knowledge</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="rounded-xl border border-surface bg-surface-1 p-5">
+            <h3 class="text-sm font-semibold text-primary mb-1">What Is Strike Rate?</h3>
+            <p class="text-xs text-muted leading-relaxed">
+              Batting strike rate measures runs per 100 balls faced: (Runs ÷ Balls) × 100. A strike rate of 100 means
+              one run per ball. Bowling strike rate measures balls per wicket, so lower is better.
+            </p>
+          </div>
+          <div class="rounded-xl border border-surface bg-surface-1 p-5">
+            <h3 class="text-sm font-semibold text-primary mb-1">Average vs Strike Rate</h3>
+            <p class="text-xs text-muted leading-relaxed">
+              Average shows how many runs a batter makes before getting out; strike rate shows how fast they score.
+              Limited-overs teams look for both: a high average keeps the innings together, a high strike rate builds big
+              totals.
+            </p>
+          </div>
+          <div class="rounded-xl border border-surface bg-surface-1 p-5">
+            <h3 class="text-sm font-semibold text-primary mb-1">T20 Batting Strategy</h3>
+            <p class="text-xs text-muted leading-relaxed">
+              In T20s, a strike rate of 130+ is excellent and 150+ is world-class. Powerplay overs demand positive
+              intent, middle overs need smart rotation, and death overs need pure acceleration.
+            </p>
+          </div>
+          <div class="rounded-xl border border-surface bg-surface-1 p-5">
+            <h3 class="text-sm font-semibold text-primary mb-1">ODI &amp; Bowling Strategy</h3>
+            <p class="text-xs text-muted leading-relaxed">
+              In ODIs, a strike rate of 85–100 is competitive and 100+ is excellent. A bowling strike rate under 35 in
+              ODIs and under 20 in T20s is elite. Strike rates vary by format, conditions and match situation.
+            </p>
+          </div>
+        </div>
+      </section>
 
       <!-- FAQ Section -->
       <section class="mt-16">
@@ -244,7 +489,8 @@ const useCases = [
         hints={[
           { keys: '⌘K', label: 'Open search' },
           { keys: 'Tab', label: 'Next field' },
-          { keys: 'Enter', label: 'Update' },
+          { keys: 'Ctrl+D', label: 'Download results' },
+          { keys: 'Ctrl+Shift+C', label: 'Clear stats' },
         ]}
       />
 
@@ -263,17 +509,93 @@ const useCases = [
 
 <script>
   import { exportWWSStatCardPNG, parseWholeNumber } from '../../utils/cricketAnalytics.js';
-  import { checkField } from '../../lib/fieldError';
+  import { checkField, clearFieldError } from '../../lib/fieldError';
   import { setToolStatusSoon } from '../../lib/toolStatus';
 
-  const nameInput = document.getElementById('player-name') as HTMLInputElement | null;
-  const tourInput = document.getElementById('tournament-name') as HTMLInputElement | null;
-  const runsInput = document.getElementById('total-runs') as HTMLInputElement | null;
-  const ballsInput = document.getElementById('total-balls') as HTMLInputElement | null;
-  const outsInput = document.getElementById('total-outs') as HTMLInputElement | null;
+  const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T | null;
 
-  const avgDisplay = document.getElementById('bat-avg-display');
-  const srDisplay = document.getElementById('bat-sr-display');
+  const nameInput = $<HTMLInputElement>('player-name');
+  const tourInput = $<HTMLInputElement>('tournament-name');
+  const runsInput = $<HTMLInputElement>('total-runs');
+  const ballsInput = $<HTMLInputElement>('total-balls');
+  const outsInput = $<HTMLInputElement>('total-outs');
+  const bowlBalls = $<HTMLInputElement>('bowl-balls');
+  const bowlWkts = $<HTMLInputElement>('bowl-wkts');
+  const compARuns = $<HTMLInputElement>('comp-a-runs');
+  const compABalls = $<HTMLInputElement>('comp-a-balls');
+  const compBRuns = $<HTMLInputElement>('comp-b-runs');
+  const compBBalls = $<HTMLInputElement>('comp-b-balls');
+
+  const avgDisplay = $('bat-avg-display');
+  const srDisplay = $('bat-sr-display');
+  const tierBadge = $('tier-badge');
+  const impactRating = $('impact-rating');
+  const impactBar = $('impact-bar');
+  const impactDesc = $('impact-desc');
+  const influenceScore = $('influence-score');
+  const influenceBar = $('influence-bar');
+  const influenceDesc = $('influence-desc');
+  const aggressionLabel = $('aggression-label');
+  const aggressionArrow = $('aggression-arrow');
+  const meterLabel = $('meter-label');
+  const meterFill = $('meter-fill');
+  const bowlSrOutput = $('bowl-sr-output');
+  const bowlSrFeedback = $('bowl-sr-feedback');
+  const compASr = $('comp-a-sr');
+  const compBSr = $('comp-b-sr');
+  const compText = $('comp-text');
+
+  // Tier text colour: success / warning / danger tokens; the label always carries the meaning
+  type Tone = 'success' | 'warning' | 'danger';
+  const toneColor = (tone: Tone) => `var(--${tone})`;
+
+  function formatSR(value: number) {
+    if (isNaN(value) || !isFinite(value)) return '0.00';
+    return value.toFixed(2);
+  }
+
+  function getBattingLevel(sr: number): { label: string; tone: Tone; pct: number } {
+    if (sr >= 150) return { label: 'Explosive! 🔥', tone: 'success', pct: 100 };
+    if (sr >= 130) return { label: 'Excellent ⚡', tone: 'success', pct: 80 };
+    if (sr >= 110) return { label: 'Good', tone: 'success', pct: 60 };
+    if (sr >= 90) return { label: 'Average', tone: 'warning', pct: 40 };
+    if (sr >= 70) return { label: 'Below Average', tone: 'warning', pct: 25 };
+    return { label: 'Poor ⚠️', tone: 'danger', pct: 10 };
+  }
+
+  function getBowlingFeedback(sr: number): { label: string; tone: Tone } {
+    if (sr <= 15) return { label: 'World-Class! 🐐', tone: 'success' };
+    if (sr <= 20) return { label: 'Excellent! ⚡', tone: 'success' };
+    if (sr <= 25) return { label: 'Tight Bowling', tone: 'success' };
+    if (sr <= 30) return { label: 'Decent control', tone: 'warning' };
+    return { label: 'Needs improvement', tone: 'danger' };
+  }
+
+  // Impact Rating (0-100)
+  function calcImpactRating(sr: number, runs: number) {
+    if (sr <= 0 || runs <= 0) return 0;
+    const normalizedSR = Math.min(sr / 200, 1);
+    const runFactor = Math.min(runs / 100, 1);
+    return Math.round((normalizedSR * 0.6 + runFactor * 0.4) * 100);
+  }
+
+  // Match Influence Score (0-100)
+  function calcMatchInfluence(sr: number, runs: number, balls: number) {
+    if (sr <= 0 || runs <= 0 || balls <= 0) return 0;
+    const srFactor = Math.min(sr / 200, 1);
+    const rrFactor = Math.min(runs / Math.max(balls, 1) / 2, 1);
+    const volumeFactor = Math.min(runs / 80, 1);
+    return Math.round((srFactor * 0.4 + rrFactor * 0.35 + volumeFactor * 0.25) * 100);
+  }
+
+  function getAggression(sr: number) {
+    if (sr <= 0) return { level: '—', pct: 0 };
+    if (sr >= 170) return { level: 'Explosive', pct: 90 };
+    if (sr >= 140) return { level: 'Very Aggressive', pct: 70 };
+    if (sr >= 110) return { level: 'Aggressive', pct: 50 };
+    if (sr >= 85) return { level: 'Steady', pct: 30 };
+    return { level: 'Defensive', pct: 10 };
+  }
 
   function readStats(announce = false) {
     const runs = checkField(runsInput, parseWholeNumber(runsInput?.value, { label: 'Total runs' }), false);
@@ -284,7 +606,74 @@ const useCases = [
       if (announce) setToolStatusSoon('error', bad.error || '');
       return null;
     }
-    return { runs: runs.value, balls: balls.value, outs: outs.value };
+    return { runs: runs.value as number, balls: balls.value as number, outs: outs.value as number };
+  }
+
+  // Empty optional fields count as "not entered" (null); anything typed must be a whole number
+  function readCount(input: HTMLInputElement | null, label: string): number | null {
+    if (!input) return null;
+    if (!input.value.trim() && !input.validity?.badInput) {
+      clearFieldError(input);
+      return null;
+    }
+    const r = checkField(input, parseWholeNumber(input.value, { label }), false);
+    return r.ok ? (r.value as number) : null;
+  }
+
+  function setBar(bar: HTMLElement | null, value: number) {
+    if (!bar) return;
+    bar.style.width = value + '%';
+    bar.style.background = toneColor(value >= 70 ? 'success' : value >= 45 ? 'warning' : 'danger');
+  }
+
+  function resetAnalysis() {
+    if (tierBadge) {
+      tierBadge.textContent = '—';
+      tierBadge.style.color = '';
+    }
+    if (impactRating) impactRating.textContent = '0';
+    if (influenceScore) influenceScore.textContent = '0';
+    if (impactBar) impactBar.style.width = '0%';
+    if (influenceBar) influenceBar.style.width = '0%';
+    if (impactDesc) impactDesc.textContent = 'Enter batting stats';
+    if (influenceDesc) influenceDesc.textContent = 'Enter batting stats';
+    if (aggressionLabel) aggressionLabel.textContent = '—';
+    if (aggressionArrow) aggressionArrow.style.left = '0%';
+    if (meterLabel) {
+      meterLabel.textContent = '—';
+      meterLabel.style.color = '';
+    }
+    if (meterFill) meterFill.style.width = '0%';
+  }
+
+  function updateAnalysis(runs: number, balls: number, sr: number) {
+    const level = getBattingLevel(sr);
+    if (tierBadge) {
+      tierBadge.textContent = level.label;
+      tierBadge.style.color = toneColor(level.tone);
+    }
+    if (meterLabel) {
+      meterLabel.textContent = level.label;
+      meterLabel.style.color = toneColor(level.tone);
+    }
+    if (meterFill) meterFill.style.width = level.pct + '%';
+
+    const impact = calcImpactRating(sr, runs);
+    if (impactRating) impactRating.textContent = String(impact);
+    setBar(impactBar, impact);
+    if (impactDesc)
+      impactDesc.textContent = impact >= 70 ? 'High impact performance' : impact >= 45 ? 'Moderate impact' : 'Low impact';
+
+    const influence = calcMatchInfluence(sr, runs, balls);
+    if (influenceScore) influenceScore.textContent = String(influence);
+    setBar(influenceBar, influence);
+    if (influenceDesc)
+      influenceDesc.textContent =
+        influence >= 70 ? 'Match-winning influence' : influence >= 45 ? 'Contributing player' : 'Minor influence';
+
+    const aggro = getAggression(sr);
+    if (aggressionLabel) aggressionLabel.textContent = aggro.level;
+    if (aggressionArrow) aggressionArrow.style.left = aggro.pct + '%';
   }
 
   function updateStats(e?: Event) {
@@ -292,14 +681,17 @@ const useCases = [
     if (!stats) {
       if (avgDisplay) avgDisplay.textContent = '—';
       if (srDisplay) srDisplay.textContent = '—';
+      resetAnalysis();
       return;
     }
     // With no dismissals a batting average is undefined (never out)
     const avg = stats.outs > 0 ? (stats.runs / stats.outs).toFixed(2) : '—';
-    const sr = ((stats.runs / stats.balls) * 100).toFixed(2);
+    const srValue = (stats.runs / stats.balls) * 100;
+    const sr = srValue.toFixed(2);
 
     if (avgDisplay) avgDisplay.textContent = avg;
     if (srDisplay) srDisplay.textContent = sr;
+    updateAnalysis(stats.runs, stats.balls, srValue);
     if (e) {
       setToolStatusSoon(
         'complete',
@@ -308,25 +700,146 @@ const useCases = [
     }
   }
 
-  [runsInput, ballsInput, outsInput].forEach((el) => {
-    el?.addEventListener('input', updateStats);
+  function updateBowling(e?: Event) {
+    const b = readCount(bowlBalls, 'Balls bowled') ?? 0;
+    const w = readCount(bowlWkts, 'Wickets taken') ?? 0;
+    if (!bowlSrOutput || !bowlSrFeedback) return;
+    bowlSrFeedback.style.color = '';
+    if (b > 0 && w > 0) {
+      const sr = b / w;
+      const fb = getBowlingFeedback(sr);
+      bowlSrOutput.textContent = sr.toFixed(2);
+      bowlSrFeedback.textContent = fb.label;
+      bowlSrFeedback.style.color = toneColor(fb.tone);
+      if (e) setToolStatusSoon('complete', `Bowling strike rate ${sr.toFixed(2)}.`);
+    } else {
+      bowlSrOutput.textContent = '0.00';
+      bowlSrFeedback.textContent =
+        b > 0 && w === 0
+          ? 'No wickets yet: bowling strike rate needs at least 1 wicket'
+          : 'Enter stats to see performance tier';
+    }
+  }
+
+  function updateComparison() {
+    const aR = readCount(compARuns, 'Player A runs') ?? 0;
+    const aB = readCount(compABalls, 'Player A balls') ?? 0;
+    const bR = readCount(compBRuns, 'Player B runs') ?? 0;
+    const bB = readCount(compBBalls, 'Player B balls') ?? 0;
+    const aOk = aR > 0 && aB > 0;
+    const bOk = bR > 0 && bB > 0;
+    const aSr = aB > 0 ? (aR / aB) * 100 : 0;
+    const bSr = bB > 0 ? (bR / bB) * 100 : 0;
+
+    if (compASr) {
+      compASr.textContent = formatSR(aSr);
+      compASr.classList.toggle('text-white', aOk);
+      compASr.classList.toggle('text-muted', !aOk);
+    }
+    if (compBSr) {
+      compBSr.textContent = formatSR(bSr);
+      compBSr.classList.toggle('text-white', bOk);
+      compBSr.classList.toggle('text-muted', !bOk);
+    }
+    if (!compText) return;
+
+    let text = '';
+    if (aOk && bOk) {
+      if (aSr > bSr) text = `Player A leads with ${formatSR(aSr)} vs Player B's ${formatSR(bSr)}.`;
+      else if (bSr > aSr) text = `Player B leads with ${formatSR(bSr)} vs Player A's ${formatSR(aSr)}.`;
+      else text = `Both players have identical SR of ${formatSR(aSr)}.`;
+    } else if (aOk) {
+      text = `Player A: ${formatSR(aSr)}. Enter Player B's stats to compare.`;
+    } else if (bOk) {
+      text = `Player B: ${formatSR(bSr)}. Enter Player A's stats to compare.`;
+    }
+    compText.textContent = text;
+    compText.classList.toggle('hidden', !text);
+  }
+
+  [runsInput, ballsInput, outsInput].forEach((el) => el?.addEventListener('input', updateStats));
+  [bowlBalls, bowlWkts].forEach((el) => el?.addEventListener('input', updateBowling));
+  [compARuns, compABalls, compBRuns, compBBalls].forEach((el) => el?.addEventListener('input', updateComparison));
+
+  // Presets fill one innings (out once) and Player A in the comparison
+  document.querySelectorAll<HTMLButtonElement>('.preset-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const { name = '', runs = '', balls = '' } = btn.dataset;
+      if (nameInput) nameInput.value = name;
+      if (runsInput) runsInput.value = runs;
+      if (ballsInput) ballsInput.value = balls;
+      if (outsInput) outsInput.value = '1';
+      if (compARuns) compARuns.value = runs;
+      if (compABalls) compABalls.value = balls;
+      updateStats(new Event('input'));
+      updateComparison();
+    });
   });
 
-  document.getElementById('export-wws-card-btn')?.addEventListener('click', () => {
+  function toast(message: string, variant: 'success' | 'error' | 'info' | 'warning' = 'success') {
+    (window as any).__showToast?.({ message, variant });
+  }
+
+  function resultsText() {
+    const aggro = aggressionLabel?.textContent || '—';
+    return [
+      `Player: ${nameInput?.value.trim() || '—'}`,
+      `Batting Average: ${avgDisplay?.textContent}`,
+      `Batting SR: ${srDisplay?.textContent}`,
+      `Bowling SR: ${bowlSrOutput?.textContent}`,
+      `Impact Rating: ${impactRating?.textContent}/100`,
+      `Match Influence: ${influenceScore?.textContent}/100`,
+      `Aggression: ${aggro === '—' ? 'N/A' : aggro}`,
+      `Performance: ${meterLabel?.textContent || 'N/A'}`,
+    ].join(' | ');
+  }
+
+  $('copy-sr-btn')?.addEventListener('click', () => {
+    navigator.clipboard
+      .writeText(resultsText())
+      .then(() => toast('Results copied!'))
+      .catch(() => toast('Could not copy. Select the numbers and copy them by hand.', 'error'));
+  });
+
+  $('download-btn')?.addEventListener('click', () => {
+    const blob = new Blob([resultsText()], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'strike-rate-results.txt';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+      e.preventDefault();
+      [runsInput, ballsInput, outsInput, bowlBalls, bowlWkts, compARuns, compABalls, compBRuns, compBBalls].forEach(
+        (el) => {
+          if (el) el.value = '';
+        },
+      );
+      updateStats();
+      updateBowling();
+      updateComparison();
+      runsInput?.focus();
+    } else if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
+      e.preventDefault();
+      $('download-btn')?.click();
+    }
+  });
+
+  $('export-wws-card-btn')?.addEventListener('click', () => {
     const playerName = nameInput?.value?.trim() || 'Cricket Star';
     const tournament = tourInput?.value?.trim() || 'T20 Statistical Breakdown';
     const stats = readStats(true);
     if (!stats) return;
-    const { runs, balls } = stats;
-    const dismissals = stats.outs;
-
     exportWWSStatCardPNG({
       playerName,
       tournament,
-      runs,
-      balls,
-      dismissals,
-      brandTag: 'World Wonders & Sports (WWS) × NumanX Tools'
+      runs: stats.runs,
+      balls: stats.balls,
+      dismissals: stats.outs,
+      brandTag: 'World Wonders & Sports (WWS) × NumanX Tools',
     });
   });
 
