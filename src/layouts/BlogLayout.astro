@@ -107,11 +107,6 @@ const matchedTool = {
     { name: title, url: Astro.url.pathname },
   ]}
 >
-  <!-- Reading progress indicator -->
-  <div class="sticky top-[56px] left-0 w-full h-[2px] bg-white/[0.05] z-40">
-    <div id="progress-bar" class="h-full w-0 transition-all duration-75 bg-amber-500">
-    </div>
-  </div>
   <main class="min-h-screen pt-8 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-6xl mx-auto">
       <div class="flex gap-8">
@@ -408,7 +403,7 @@ const matchedTool = {
 </MainLayout>
 
 <script>
-  // Reading progress and copy link. Bound per page because the site uses ClientRouter.
+  // Copy link. Bound per page because the site uses ClientRouter.
   const COPY_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`;
   const DONE_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`;
 
@@ -416,17 +411,10 @@ const matchedTool = {
 
   function init() {
     cleanup?.();
-    const bar = document.getElementById('progress-bar');
     const btn = document.getElementById('copy-link-btn');
-    if (!bar && !btn) return;
+    if (!btn) return;
 
-    const onScroll = () => {
-      const el = document.documentElement;
-      const height = el.scrollHeight - el.clientHeight;
-      if (bar) bar.style.width = (height > 0 ? (el.scrollTop / height) * 100 : 0) + '%';
-    };
     const onCopy = async () => {
-      if (!btn) return;
       try {
         await navigator.clipboard.writeText(window.location.href);
         btn.innerHTML = DONE_ICON;
@@ -440,12 +428,9 @@ const matchedTool = {
       } catch {}
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    btn?.addEventListener('click', onCopy);
-    onScroll();
+    btn.addEventListener('click', onCopy);
     cleanup = () => {
-      window.removeEventListener('scroll', onScroll);
-      btn?.removeEventListener('click', onCopy);
+      btn.removeEventListener('click', onCopy);
       cleanup = null;
     };
   }
