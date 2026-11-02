@@ -40,6 +40,16 @@ const faqItems = [
       'In Test cricket, run rate is less critical. A rate of 3.5–4.0 is solid, while 4.5+ is aggressive. Building partnerships matters more than raw scoring rate.',
   },
   {
+    question: 'How do you calculate the required run rate for a chase?',
+    answer:
+      'Required Run Rate (RRR) = Runs Required ÷ Overs Remaining. For example, needing 65 runs from 7.0 overs = 65 ÷ 7 = 9.29 RPO. In the Target Chase tab, enter the target, total match overs, current runs and overs bowled to see the runs needed, balls left and the required rate.',
+  },
+  {
+    question: 'How is a cricket target calculated?',
+    answer:
+      'For an uninterrupted match, Target = 1st innings runs + 1. In rain-affected professional matches, the Duckworth-Lewis-Stern (DLS) method revises the target based on overs and wickets remaining.',
+  },
+  {
     question: 'Can this calculator handle partial overs?',
     answer:
       'Yes. Enter overs in the format overs.balls (e.g., 12.3 for 12 overs and 3 balls). The calculator converts balls to decimal overs automatically.',
@@ -47,12 +57,13 @@ const faqItems = [
 ];
 
 const rrSchema = {
-  name: 'Run Rate Calculator',
+  name: 'Run Rate & Target Calculator',
   applicationCategory: 'Sports',
   description:
-    'Calculate current and required run rates for T20, ODI, and Test matches. Chase difficulty, match pressure, and over-by-over projections.',
+    'Calculate current and required run rates and chase targets for T20, ODI, and Test matches. Chase difficulty, match pressure, and over-by-over projections.',
   featureList: [
     'Current run rate and required run rate calculator',
+    'Target chase: runs needed, balls left and required rate from overs bowled',
     'T20, ODI, and Test match format presets',
     'Chase difficulty meter with 5-level indicator',
     'Over-by-over run projection and winning pace',
@@ -102,7 +113,7 @@ const howToSteps = [
   {
     num: '2',
     title: 'Choose Calculation Mode',
-    desc: 'Switch between Current RR (runs scored / overs bowled) or Required RR (target calculation).',
+    desc: 'Switch between Current RR (runs scored / overs bowled), Required RR (target and overs remaining) or Target Chase (target, match overs and overs bowled).',
   },
   {
     num: '3',
@@ -141,30 +152,30 @@ const useCases = [
 ---
 
 <MainLayout
-  title="Cricket Run Rate Calculator — CRR, RRR & Target | NumanX"
-  description="Calculate cricket current run rate (CRR), required run rate (RRR), and target score predictions for T20, ODI, and Test matches with over-by-over pace analysis."
-  keywords="cricket run rate calculator, run rate calculator, current run rate, required run rate, target predictor, cricket target score, t20 run rate, odi run rate"
+  title="Cricket Run Rate & Target Calculator — CRR, RRR & Chase | NumanX"
+  description="Calculate cricket current run rate (CRR), required run rate (RRR) and chase targets: runs needed and balls left from the overs bowled, for T20, ODI and Test matches, with over-by-over pace analysis."
+  keywords="cricket run rate calculator, run rate calculator, cricket target calculator, chase calculator, current run rate, required run rate, target predictor, cricket target score, t20 run rate, odi run rate"
   toolSchema={rrSchema}
   faq={faqItems}
   howto={{
-    name: 'How to Calculate Cricket Run Rate',
-    description: 'Calculate current and required run rates for any cricket format in 4 steps.',
+    name: 'How to Calculate Cricket Run Rate and Chase Target',
+    description: 'Calculate current and required run rates and chase targets for any cricket format in 4 steps.',
     steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
     totalTime: 'PT1M',
   }}
   breadcrumbs={[
     { name: 'Home', url: '/' },
     { name: 'Tools', url: '/tools/' },
-    { name: 'Run Rate Calculator', url: '/tools/run-rate-calculator/' },
+    { name: 'Run Rate & Target Calculator', url: '/tools/run-rate-calculator/' },
   ]}
 >
   <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
-        title="Run Rate"
+        title="Run Rate & Target"
         gradient="Calculator"
-        desc="Run rate is the number of runs a team scores per over. Enter the score and overs bowled to get the current run rate, or the target and overs left to get the required run rate. It works for T20, ODI and Test matches and shows an over-by-over projection of the innings."
-        updated="2026-11-01"
+        desc="Run rate is the number of runs a team scores per over. Enter the score and overs bowled to get the current run rate, the target and overs left to get the required run rate, or use Target Chase to see how many runs are needed off how many balls. It works for T20, ODI and Test matches and shows an over-by-over projection of the innings."
+        updated="2026-11-02"
         badge="✦ Client-Side"
         slug="run-rate-calculator"
       />
@@ -194,22 +205,44 @@ const useCases = [
         </div>
 
         <!-- Tab Switcher -->
-        <div class="bg-zinc-950 p-1.5 rounded-xl border border-surface flex gap-2">
+        <div class="bg-zinc-950 p-1.5 rounded-xl border border-surface flex gap-2" role="tablist" aria-label="Calculation mode">
           <button
             id="tab-current"
-            class="flex-1 bg-amber-600 text-accent-fg text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="form-current"
+            data-tab="current"
+            class="rr-tab flex-1 bg-amber-600 text-accent-fg text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all"
             >Current RR</button
           >
           <button
             id="tab-required"
-            class="flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="form-required"
+            data-tab="required"
+            tabindex="-1"
+            class="rr-tab flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all"
             >Required RR</button
+          >
+          <button
+            id="tab-chase"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="form-chase"
+            data-tab="chase"
+            tabindex="-1"
+            class="rr-tab flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all"
+            >Target Chase</button
           >
         </div>
 
         <!-- Forms -->
         <div class="glass-card rounded-2xl p-5 md:p-6">
-          <div id="form-current" class="space-y-4">
+          <div id="form-current" class="space-y-4" role="tabpanel" aria-labelledby="tab-current">
             <div class="space-y-2">
               <label for="crr-runs" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
                 >Runs Scored</label
@@ -247,7 +280,7 @@ const useCases = [
             >
           </div>
 
-          <div id="form-required" class="space-y-4 hidden">
+          <div id="form-required" class="space-y-4 hidden" role="tabpanel" aria-labelledby="tab-required">
             <div class="grid grid-cols-2 gap-3">
               <div class="space-y-2">
                 <label for="rrr-target" class="text-[10px] font-semibold text-muted uppercase tracking-wider"
@@ -299,6 +332,37 @@ const useCases = [
               class="w-full text-accent-fg font-semibold py-3 rounded-xl transition-all shadow-lg shadow-amber-900/20 text-sm bg-amber-600"
               >Calculate Required RR</button
             >
+          </div>
+
+          <!-- Target chase: runs needed and balls left from the overs bowled -->
+          <div id="form-chase" class="space-y-4 hidden" role="tabpanel" aria-labelledby="tab-chase">
+            <div class="grid grid-cols-2 gap-3">
+              <div class="space-y-2">
+                <label for="chase-target" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Target to Win</label>
+                <input id="chase-target" type="number" min="1" step="1" value="180" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm font-mono" />
+              </div>
+              <div class="space-y-2">
+                <label for="chase-total-overs" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Total Match Overs</label>
+                <input id="chase-total-overs" type="number" inputmode="numeric" min="1" max="50" step="1" value="20" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm font-mono" />
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="space-y-2">
+                <label for="chase-current-runs" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Current Runs</label>
+                <input id="chase-current-runs" type="number" min="0" step="1" value="95" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm font-mono" />
+              </div>
+              <div class="space-y-2">
+                <label for="chase-current-overs" class="text-[10px] font-semibold text-muted uppercase tracking-wider">Overs Bowled (e.g. 11.2)</label>
+                <input id="chase-current-overs" type="text" inputmode="decimal" value="11.2" class="w-full bg-zinc-950 text-white placeholder-zinc-600 px-4 py-3 rounded-xl border border-surface focus:outline-none focus:border-amber-500 transition-all text-sm font-mono" />
+              </div>
+            </div>
+            <div class="p-5 rounded-xl bg-zinc-950 border border-surface text-center space-y-2" aria-live="polite">
+              <span class="text-[10px] uppercase font-bold tracking-wider text-muted">Required Equation</span>
+              <div class="text-xl sm:text-2xl font-black text-white" id="equation-display">
+                Need <span class="text-amber-400 font-mono">85 runs</span> in <span class="text-primary font-mono">52 balls</span>
+              </div>
+              <div class="text-2xl sm:text-3xl font-black text-success font-mono tabular-nums" id="chase-rrr-display">RRR: 9.81 RPO</div>
+            </div>
           </div>
         </div>
 
@@ -605,6 +669,7 @@ const useCases = [
 <script>
   import { parseOvers, parseWholeNumber, FORMAT_MAX_OVERS } from '../../utils/cricketAnalytics.js';
   import { checkField, clearFieldError } from '../../lib/fieldError';
+  import { setToolStatusSoon } from '../../lib/toolStatus';
 
   const crrRuns = document.getElementById('crr-runs');
   const crrOvers = document.getElementById('crr-overs');
@@ -869,28 +934,101 @@ const useCases = [
     }),
   );
 
-  // Tab switching
-  const tabCurrent = document.getElementById('tab-current');
-  const tabRequired = document.getElementById('tab-required');
-  const formCurrent = document.getElementById('form-current');
-  const formRequired = document.getElementById('form-required');
+  // ─── Target chase (live): runs needed and balls left from the overs bowled ───
+  const chaseTarget = document.getElementById('chase-target') as HTMLInputElement;
+  const chaseMatchOvers = document.getElementById('chase-total-overs') as HTMLInputElement;
+  const chaseRuns = document.getElementById('chase-current-runs') as HTMLInputElement;
+  const chaseOvers = document.getElementById('chase-current-overs') as HTMLInputElement;
+  const eqDisplay = document.getElementById('equation-display');
+  const chaseRrrDisplay = document.getElementById('chase-rrr-display');
 
-  tabCurrent.addEventListener('click', () => {
-    tabCurrent.className =
-      'flex-1 bg-amber-600 text-accent-fg text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all';
-    tabRequired.className =
-      'flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all';
-    formCurrent.classList.remove('hidden');
-    formRequired.classList.add('hidden');
+  function showChase(equation: string, rate: string) {
+    if (eqDisplay) eqDisplay.innerHTML = equation;
+    if (chaseRrrDisplay) chaseRrrDisplay.textContent = rate;
+  }
+
+  function updateChase(e?: Event) {
+    // Errors appear under the field being edited; announce only after a pause
+    const announce = Boolean(e);
+    const target = checkField(chaseTarget, parseWholeNumber(chaseTarget?.value, { min: 1, label: 'Target' }), false);
+    const matchOvers = checkField(
+      chaseMatchOvers,
+      parseWholeNumber(chaseMatchOvers?.value, { min: 1, max: FORMAT_MAX_OVERS.ODI, label: 'Total match overs' }),
+      false,
+    );
+    const runs = checkField(chaseRuns, parseWholeNumber(chaseRuns?.value, { label: 'Current runs' }), false);
+    const bowled = checkField(
+      chaseOvers,
+      parseOvers(chaseOvers?.value, {
+        maxOvers: matchOvers.ok ? matchOvers.value : FORMAT_MAX_OVERS.ODI,
+        allowZero: true,
+        label: 'Overs bowled',
+      }),
+      false,
+    );
+
+    if (!target.ok || !matchOvers.ok || !runs.ok || !bowled.ok) {
+      const firstError = [target, matchOvers, runs, bowled].find((r) => !r.ok) as { error?: string } | undefined;
+      showChase('<span class="text-muted">Fix the highlighted field</span>', 'RRR: —');
+      if (announce) setToolStatusSoon('error', firstError?.error || '');
+      return;
+    }
+
+    const runsNeeded = target.value - runs.value;
+    const ballsLeft = matchOvers.value * 6 - bowled.balls;
+
+    if (runsNeeded <= 0) {
+      showChase('<span class="text-success">Target reached — the chasing side has won</span>', 'RRR: —');
+    } else if (ballsLeft <= 0) {
+      // Scores level (one run short of the target) is a tie
+      const margin = runsNeeded - 1;
+      showChase(
+        `<span class="text-danger">No balls left — ${margin === 0 ? 'match tied' : `lost by ${margin} run${margin === 1 ? '' : 's'}`}</span>`,
+        'RRR: —',
+      );
+    } else {
+      const rrr = (runsNeeded / ballsLeft) * 6;
+      showChase(
+        `Need <span class="text-amber-400 font-mono">${runsNeeded} run${runsNeeded === 1 ? '' : 's'}</span> in <span class="text-primary font-mono">${ballsLeft} ball${ballsLeft === 1 ? '' : 's'}</span>`,
+        // More than 36 an over needs extras on top of six sixes
+        `RRR: ${rrr.toFixed(2)} RPO${rrr > 36 ? ' (more than six sixes an over)' : ''}`,
+      );
+    }
+    if (announce) setToolStatusSoon('complete', `${eqDisplay?.textContent?.trim()}. ${chaseRrrDisplay?.textContent}`);
+  }
+
+  [chaseTarget, chaseMatchOvers, chaseRuns, chaseOvers].forEach((el) => el?.addEventListener('input', updateChase));
+  updateChase();
+
+  // ─── Tab switching (also opens a tab from ?tab=current|required|target) ───
+  const TAB_ON = 'rr-tab flex-1 bg-amber-600 text-accent-fg text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all';
+  const TAB_OFF = 'rr-tab flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all';
+  const rrTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.rr-tab'));
+
+  function selectTab(name: string, focus = false) {
+    rrTabs.forEach((tab) => {
+      const on = tab.dataset.tab === name;
+      tab.className = on ? TAB_ON : TAB_OFF;
+      tab.setAttribute('aria-selected', String(on));
+      tab.tabIndex = on ? 0 : -1;
+      document.getElementById(tab.getAttribute('aria-controls') || '')?.classList.toggle('hidden', !on);
+      if (on && focus) tab.focus();
+    });
+  }
+
+  rrTabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => selectTab(tab.dataset.tab || 'current'));
+    tab.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      const next = rrTabs[(i + (e.key === 'ArrowRight' ? 1 : rrTabs.length - 1)) % rrTabs.length];
+      selectTab(next.dataset.tab || 'current', true);
+    });
   });
-  tabRequired.addEventListener('click', () => {
-    tabRequired.className =
-      'flex-1 bg-amber-600 text-accent-fg text-xs font-semibold py-2.5 rounded-lg shadow-sm transition-all';
-    tabCurrent.className =
-      'flex-1 text-tertiary hover:text-primary text-xs font-semibold py-2.5 rounded-lg transition-all';
-    formRequired.classList.remove('hidden');
-    formCurrent.classList.add('hidden');
-  });
+
+  const tabParam = new URLSearchParams(window.location.search).get('tab');
+  if (tabParam === 'target' || tabParam === 'chase') selectTab('chase');
+  else if (tabParam === 'required') selectTab('required');
 
   // Format presets
   presetBtns.forEach((btn) => {
@@ -905,6 +1043,11 @@ const useCases = [
       btn.classList.add('bg-amber-600/15', 'border-amber-500/50', 'text-amber-300');
       activeOvers = parseInt(btn.dataset.overs);
       updateOversHints();
+      // Target chase takes up to 50 match overs (limited-overs formats)
+      if (activeOvers <= FORMAT_MAX_OVERS.ODI && chaseMatchOvers) {
+        chaseMatchOvers.value = String(activeOvers);
+        updateChase();
+      }
       // Values that fit the old format may be too many overs for the new one
       if (currentRR > 0) {
         const values = checkCurrentForm();

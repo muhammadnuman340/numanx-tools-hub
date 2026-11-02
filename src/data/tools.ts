@@ -160,15 +160,15 @@ export const tools: Tool[] = [
   },
   {
     id: 'run-rate-calculator',
-    name: 'Run Rate Calculator',
-    description: 'Calculate cricket run rates and required run rates for matches.',
+    name: 'Run Rate & Target Calculator',
+    description: 'Calculate cricket run rates, required run rates and chase targets (runs needed off balls left).',
     longDescription:
-      'Calculate cricket target run rates, net run rates, and required over formulas with chase difficulty analysis.',
+      'Calculate current and required run rates and chase targets from the overs bowled, with chase difficulty, match pressure and over-by-over projections.',
     category: 'cricket-tools',
     icon: 'runrate',
     url: '/tools/run-rate-calculator/',
     isFeatured: true,
-    keywords: ['run rate', 'cricket', 'run rate calculator', 'cricket calculator', 'match analysis'],
+    keywords: ['run rate', 'cricket', 'run rate calculator', 'cricket target calculator', 'chase calculator', 'required run rate', 'cricket calculator', 'match analysis'],
     relatedIds: ['strike-rate-average-calculator', 'age-calculator'],
   },
   {
@@ -911,20 +911,7 @@ export const tools: Tool[] = [
     isNew: true,
     isPopular: true,
     keywords: ['cricket dls calculator', 'duckworth lewis calculator', 'dls par score', 'rain rule cricket', 'cricket target'],
-    relatedIds: ['cricket-target-calculator', 'net-run-rate-calculator', 'run-rate-calculator'],
-  },
-  {
-    id: 'cricket-target-calculator',
-    name: 'Cricket Target Calculator',
-    description: 'Project 20-over and 50-over chase targets and compute required run rates for remaining overs.',
-    longDescription:
-      'Real-time cricket chase simulator predicting target scores based on current run rate, wickets in hand, and required scoring acceleration.',
-    category: 'cricket-tools',
-    icon: 'trophy',
-    url: '/tools/cricket-target-calculator/',
-    isNew: true,
-    keywords: ['cricket target calculator', 'chase simulator', 'projected score', 'target predictor', 'ipl target calc'],
-    relatedIds: ['run-rate-calculator', 'cricket-dls-calculator', 'net-run-rate-calculator'],
+    relatedIds: ['run-rate-calculator', 'net-run-rate-calculator', 'strike-rate-average-calculator'],
   },
   {
     id: 'cron-parser',
@@ -1020,7 +1007,7 @@ export const tools: Tool[] = [
     isFeatured: true,
     isPopular: true,
     keywords: ['net run rate calculator', 'cricket nrr', 'icc law 16.10.2', 'playoff scenario simulator', 'cricket standings'],
-    relatedIds: ['run-rate-calculator', 'strike-rate-average-calculator', 'cricket-target-calculator'],
+    relatedIds: ['run-rate-calculator', 'strike-rate-average-calculator', 'cricket-dls-calculator'],
   },
   {
     id: 'pdf-merger',

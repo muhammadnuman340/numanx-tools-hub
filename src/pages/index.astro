@@ -40,7 +40,7 @@ const STYLE = CATEGORY_STYLE;
 const TOP: Record<ToolCategory, string[]> = {
   'image-tools': ['image-compressor', 'image-resizer', 'jpg-to-png', 'ai-background-remover'],
   'developer-tools': ['json-formatter', 'uuid-generator', 'base64-tool', 'regex-tester'],
-  'cricket-tools': ['net-run-rate-calculator', 'run-rate-calculator', 'cricket-dls-calculator', 'cricket-target-calculator'],
+  'cricket-tools': ['net-run-rate-calculator', 'run-rate-calculator', 'cricket-dls-calculator', 'strike-rate-average-calculator'],
   'utility-tools': ['word-counter', 'password-generator', 'pdf-merger', 'age-calculator'],
   'creator-tools': ['qr-generator', 'hashtag-generator', 'youtube-title-generator', 'markdown-editor'],
   'ai-tools': ['ai-chat', 'ai-text-summarizer', 'ai-grammar-checker', 'prompt-generator'],
@@ -181,7 +181,7 @@ const description =
             <span class="home-sample-head"><span>JSON Formatter</span><span class="num">valid</span></span>
             <pre class="home-sample-code"><code set:html={sampleJson} /></pre>
           </a>
-          <a href={urlOf('cricket-target-calculator')} class="home-sample" style="--cat: 145">
+          <a href={`${urlOf('run-rate-calculator')}?tab=target`} class="home-sample" style="--cat: 145">
             <span class="home-sample-head"><span>Cricket Target</span><span class="num">T20</span></span>
             <span class="home-sample-row num"><span>Need</span><strong>181 off 120</strong></span>
             <span class="home-sample-row num"><span>Required rate</span><strong class="home-sample-big">9.05</strong></span>
