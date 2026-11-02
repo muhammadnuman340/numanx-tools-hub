@@ -109,15 +109,15 @@ export const tools: Tool[] = [
   },
   {
     id: 'word-counter',
-    name: 'Word Counter',
-    description: 'Count words, characters, sentences, and paragraphs in your text.',
+    name: 'Word & Character Counter',
+    description: 'Count words and characters (with and without spaces), sentences, paragraphs and lines in your text.',
     longDescription:
-      'Advanced character, word, sentence, and paragraph counter with readability analysis and keyword density panel.',
+      'Word and character counter with lines, readability, keyword density, character frequency, and X, Instagram and SEO character limit bars.',
     category: 'utility-tools',
     icon: 'word',
     url: '/tools/word-counter/',
     isFeatured: true,
-    keywords: ['word counter', 'character count', 'text analyzer', 'readability', 'writing'],
+    keywords: ['word counter', 'character counter', 'character count', 'letter counter', 'text analyzer', 'readability', 'writing'],
     relatedIds: ['age-calculator', 'password-generator'],
   },
   {
@@ -279,19 +279,6 @@ export const tools: Tool[] = [
     relatedIds: ['jpg-to-png', 'image-compressor', 'png-to-webp'],
   },
   {
-    id: 'character-counter',
-    name: 'Character Counter',
-    description: 'Count characters, words, sentences, and paragraphs with precision.',
-    longDescription:
-      'Count characters (with/without spaces), words, sentences, paragraphs, and lines in real-time. Includes reading time and speaking time estimates.',
-    category: 'utility-tools',
-    icon: 'word',
-    url: '/tools/character-counter/',
-    isNew: true,
-    keywords: ['character counter', 'character count', 'word counter', 'letter counter', 'text analyzer'],
-    relatedIds: ['word-counter', 'json-formatter', 'age-calculator'],
-  },
-  {
     id: 'image-cropper',
     name: 'Image Cropper',
     description: 'Crop images to any dimension with customizable aspect ratios.',
@@ -341,7 +328,7 @@ export const tools: Tool[] = [
     url: '/tools/case-converter/',
     isNew: true,
     keywords: ['case converter', 'uppercase', 'lowercase', 'title case', 'sentence case', 'text converter'],
-    relatedIds: ['word-counter', 'character-counter', 'markdown-editor'],
+    relatedIds: ['word-counter', 'markdown-editor'],
   },
   {
     id: 'uuid-generator',
@@ -990,7 +977,7 @@ export const tools: Tool[] = [
     url: '/tools/instagram-line-break/',
     isNew: true,
     keywords: ['instagram line break', 'caption spacer', 'clean captions', 'instagram formatting', 'social line breaker'],
-    relatedIds: ['hashtag-generator', 'word-counter', 'character-counter'],
+    relatedIds: ['hashtag-generator', 'word-counter', 'markdown-editor'],
   },
   {
     id: 'markdown-to-pdf',
@@ -1018,7 +1005,7 @@ export const tools: Tool[] = [
     isNew: true,
     isPopular: true,
     keywords: ['meta tag generator', 'serp previewer', 'opengraph generator', 'twitter card maker', 'seo meta tags'],
-    relatedIds: ['json-formatter', 'character-counter', 'utm-builder'],
+    relatedIds: ['json-formatter', 'word-counter', 'utm-builder'],
   },
   {
     id: 'net-run-rate-calculator',

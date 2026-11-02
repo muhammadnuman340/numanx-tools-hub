@@ -115,7 +115,7 @@ Even with strong passwords, services you use can be breached.
 
 - **[Password Generator](/tools/password-generator/)** — Create ultra-secure passwords with entropy display
 - **[QR Generator](/tools/qr-generator/)** — Generate WiFi QR codes to share network access without revealing passwords
-- **[Character Counter](/tools/character-counter/)** — Check password length requirements
+- **[Word & Character Counter](/tools/word-counter/)** — Check password length requirements
 
 ## Frequently Asked Questions
 

@@ -13,7 +13,7 @@
 - [Image Resizer](https://toolshub.numanxstudio.com/tools/image-resizer/): Dimension presets for YouTube Thumbnails (1280x720), YouTube Banners, TikTok/Shorts (1080x1920), and Instagram.
 
 ## Flagship Text, Utility & Cricket Analytics Tools
-- [Word Counter](https://toolshub.numanxstudio.com/tools/word-counter/): Real-time word count, character count, per-paragraph breakdown, readability analysis, and keyword density statistics.
+- [Word & Character Counter](https://toolshub.numanxstudio.com/tools/word-counter/): Real-time word count, character count with and without spaces, line count, per-paragraph breakdown, readability analysis, keyword density, character frequency, and X, Instagram and SEO character limit bars.
 - [Age Calculator](https://toolshub.numanxstudio.com/tools/age-calculator/): Calculate chronological age in years, months, days, hours, and next birthday countdown.
 - [Password Generator](https://toolshub.numanxstudio.com/tools/password-generator/): Generate passwords using the browser's cryptographic random API, with additional memorable passphrase options and strength evaluation.
 - [Cricket Net Run Rate (NRR) & Run Rate Calculators](https://toolshub.numanxstudio.com/category/cricket-tools/): Tournament NRR calculation following ICC Clause 16.10.2 full-quota rules, cricket over arithmetic (balls/6), and playoff qualification scenarios.

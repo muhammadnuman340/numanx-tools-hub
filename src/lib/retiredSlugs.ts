@@ -5,6 +5,7 @@
  */
 export const RETIRED_SLUGS: Record<string, string> = {
   'strike-rate-calculator': 'strike-rate-average-calculator',
+  'character-counter': 'word-counter',
 };
 
 export function currentSlug(slug: string): string {
