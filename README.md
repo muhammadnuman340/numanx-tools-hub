@@ -10,7 +10,7 @@
 [![Pages](https://img.shields.io/badge/Static%20Pages-112-0EA5E9)](#)
 [![Privacy](https://img.shields.io/badge/Privacy-100%25%20Client--Side-10B981)](#)
 
-**70 free tools that run in your browser: files stay on your device, no sign-up**  
+**65 free tools that run in your browser: files stay on your device, no sign-up**  
 *Built for creators, developers, cricket analysts, and everyday internet users.*
 
 [Explore Live Production Platform](https://toolshub.numanxstudio.com) • [View Architecture](#-technical-architecture--feature-showcase) • [Developer Setup](#-quick-start-developer-commands)

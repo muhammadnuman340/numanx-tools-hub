@@ -3,7 +3,7 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import ToolHeader from '../../components/ToolHeader.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import Accordion from '../../components/ui/Accordion.astro';
-import ToolContentSections from '../../components/ToolContentSections.astro';
+import Tabs from '../../components/ui/Tabs.astro';
 
 const faqItems = [
   {
@@ -21,40 +21,78 @@ const faqItems = [
     answer:
       'There is no practical limit on the range. You can set any minimum and maximum values, including negative numbers. However, if you disable duplicates and the range is smaller than the count, the generator will return as many unique numbers as possible.',
   },
+  {
+    question: 'How do I shuffle a list or pick a random winner?',
+    answer:
+      "Open the List tab, enter one item per line, then click 'Shuffle' to randomize the whole list or 'Pick Random' to draw winners. Set the pick count to draw more than one.",
+  },
+  {
+    question: 'What is the Fisher-Yates shuffle algorithm?',
+    answer:
+      'The Fisher-Yates shuffle is a mathematically optimal algorithm for generating a random permutation of a finite sequence. It works by iterating through the array from the last element to the first, swapping each element with a randomly selected earlier element, ensuring every permutation is equally likely.',
+  },
+  {
+    question: 'Can I pick multiple random items at once?',
+    answer:
+      "Yes, use the 'Pick Random' button with the count input to specify how many random items you want selected from your list. The items are picked without replacement, so each item can only be selected once per pick.",
+  },
+  {
+    question: 'What happens if my list has empty lines?',
+    answer:
+      'Empty lines are automatically filtered out. Only non-empty lines are considered as list items. This makes it easy to paste multi-line content without worrying about trailing or extra blank lines.',
+  },
 ];
 const schema = {
-  name: 'Random Number Generator',
+  name: 'Random Number Generator & List Randomizer',
   applicationCategory: 'Utilities',
   description:
-    'Generate random numbers within a custom range. Set min, max, count, and toggle duplicates. Free online random number generator.',
-  featureList: ['Custom range support', 'Duplicate control', 'Multiple number generation', 'Copy to clipboard'],
+    'Generate random numbers within a custom range, or shuffle a list and pick random items with the Fisher-Yates shuffle. Free online random number generator and list randomizer.',
+  featureList: [
+    'Custom range support',
+    'Duplicate control',
+    'Multiple number generation with sorting',
+    'List shuffle (Fisher-Yates) and random item picker with custom pick count',
+    'Copy to clipboard and download as TXT, JSON, CSV or HTML',
+  ],
 };
+const howToSteps = [
+  { title: 'Choose Number or List', text: 'Use the Number tab for random numbers or the List tab to shuffle a list.' },
+  { title: 'Set Your Options', text: 'Enter min, max and count (and duplicates or sort order), or paste one item per line and set a pick count.' },
+  { title: 'Generate, Shuffle or Pick', text: "Click 'Generate', 'Shuffle' or 'Pick Random' to get the result." },
+  { title: 'Copy or Download', text: 'Copy the result or download it as a TXT, JSON, CSV or HTML file.' },
+];
+
+const inputCls =
+  'w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-400/50 focus:outline-none transition-all';
+const smallBtn =
+  'bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all';
 ---
 
 <MainLayout
-  title="Random Number Generator — Free & Instant | NumanX"
-  description="Generate random numbers within a custom range. Set min, max, count, and toggle duplicates. Free online random number generator."
-  keywords="random number generator, random number, number generator, random, rng"
+  title="Random Number Generator & List Randomizer — Free | NumanX"
+  description="Generate random numbers within a custom range, or shuffle a list and pick random giveaway winners with the Fisher-Yates shuffle. Set min, max, count and duplicates. Free and private."
+  keywords="random number generator, random number, number generator, rng, list randomizer, random list shuffler, giveaway winner picker, random item picker, fisher yates shuffle, random name picker"
   toolSchema={schema}
   faq={faqItems}
   howto={{
-    name: 'How to Use Random Number Generator',
-    description: 'Step-by-step guide for using Random Number Generator.',
-    steps: [],
+    name: 'How to Generate Random Numbers or Shuffle a List',
+    description: 'Generate random numbers or shuffle a list and pick random items in 4 steps.',
+    steps: howToSteps,
     totalTime: 'PT1M',
   }}
   breadcrumbs={[
     { name: 'Home', url: '/' },
     { name: 'Tools', url: '/tools/' },
-    { name: 'Random Number Generator', url: '/tools/random-number-generator/' },
+    { name: 'Random Number Generator & List Randomizer', url: '/tools/random-number-generator/' },
   ]}
 >
   <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-4xl mx-auto">
       <ToolHeader
-        title="Random"
-        gradient="Number"
-        desc="Generate random numbers within a custom range. Set min, max, count, and toggle duplicates."
+        title="Random Number Generator"
+        gradient="& List Randomizer"
+        desc="Generate random numbers within a custom range — set min, max, count, duplicates and sort order. Or switch to the List tab to shuffle a list or pick random winners with the Fisher-Yates shuffle."
+        updated="2026-11-02"
         badge="✦ New Tool"
         slug="random-number-generator"
       />
@@ -65,94 +103,182 @@ const schema = {
             class="absolute top-3 right-3 p-1.5 rounded-lg bg-surface-2 border border-surface text-tertiary hover:text-white hover:border-amber-500/40 transition-all text-xs"
             title="Fullscreen">⛶</button
           >
-          <div class="flex items-center gap-2 mb-3">
+          <div class="flex items-center gap-2 mb-3 min-h-[20px]">
             <span id="usage-badge" class="text-xs text-muted"></span>
           </div>
-          <div class="grid grid-cols-3 gap-3 mb-4">
-            <div>
-              <label class="block text-xs font-medium text-tertiary mb-1.5">Min</label><input
-                id="min-input"
-                type="number"
-                value="1"
-                class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-400/50 focus:outline-none transition-all" aria-label="Minimum value"
-              />
+
+          <Tabs
+            class="mb-5"
+            tabs={[
+              { id: 'number', label: 'Number' },
+              { id: 'list', label: 'List' },
+            ]}
+            activeTab="number"
+          />
+
+          <!-- ─── Number tab ─── -->
+          <div id="tabpanel-number" role="tabpanel" aria-labelledby="tab-number">
+            <div class="grid grid-cols-3 gap-3 mb-4">
+              <div>
+                <label for="min-input" class="block text-xs font-medium text-tertiary mb-1.5">Min</label><input
+                  id="min-input"
+                  type="number"
+                  value="1"
+                  class={inputCls}
+                />
+              </div>
+              <div>
+                <label for="max-input" class="block text-xs font-medium text-tertiary mb-1.5">Max</label><input
+                  id="max-input"
+                  type="number"
+                  value="100"
+                  class={inputCls}
+                />
+              </div>
+              <div>
+                <label for="count-input" class="block text-xs font-medium text-tertiary mb-1.5">Count</label><input
+                  id="count-input"
+                  type="number"
+                  min="1"
+                  value="1"
+                  class={inputCls}
+                />
+              </div>
             </div>
-            <div>
-              <label class="block text-xs font-medium text-tertiary mb-1.5">Max</label><input
-                id="max-input"
-                type="number"
-                value="100"
-                class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-400/50 focus:outline-none transition-all" aria-label="Maximum value"
-              />
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-tertiary mb-1.5">Count</label><input
-                id="count-input"
-                type="number"
-                min="1"
-                value="1"
-                class="w-full px-3 py-3 rounded-xl border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-400/50 focus:outline-none transition-all" aria-label="Number of values"
-              />
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-3 mb-4">
-            <label class="flex items-center gap-2 cursor-pointer"
-              ><input id="allow-dups" type="checkbox" checked class="accent-amber-500" /><span
-                class="text-xs text-tertiary">Allow duplicates</span
-              ></label
-            >
-            <div class="flex items-center gap-2 ml-auto">
-              <span class="text-xs text-tertiary font-medium">Sort:</span>
-              <select
-                id="sort-order"
-                class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5 focus:outline-none" aria-label="Sort order"
+            <div class="grid grid-cols-2 gap-3 mb-4">
+              <label class="flex items-center gap-2 cursor-pointer"
+                ><input id="allow-dups" type="checkbox" checked class="accent-amber-500" /><span
+                  class="text-xs text-tertiary">Allow duplicates</span
+                ></label
               >
-                <option value="none">None</option>
-                <option value="asc">Ascending</option>
-                <option value="desc">Descending</option>
-              </select>
+              <div class="flex items-center gap-2 ml-auto">
+                <span class="text-xs text-tertiary font-medium">Sort:</span>
+                <select
+                  id="sort-order"
+                  class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5 focus:outline-none"
+                  aria-label="Sort order"
+                >
+                  <option value="none">None</option>
+                  <option value="asc">Ascending</option>
+                  <option value="desc">Descending</option>
+                </select>
+              </div>
+            </div>
+            <button
+              id="generate-btn"
+              class="w-full text-accent-fg font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all bg-amber-400"
+              >Generate</button
+            >
+            <div id="results-area" class="mt-6 pt-6 border-t border-surface hidden">
+              <div class="flex items-center justify-between mb-3 gap-2 flex-wrap">
+                <span class="text-xs font-medium text-tertiary">Results</span>
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <select
+                    id="export-format"
+                    aria-label="Export file format"
+                    class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5 focus:outline-none"
+                  >
+                    <option value="txt">TXT</option>
+                    <option value="json">JSON</option>
+                    <option value="csv">CSV</option>
+                  </select>
+                  <button id="share-btn" class={smallBtn} title="Share">🔗</button>
+                  <button id="download-btn" class={smallBtn}>Download</button>
+                  <button id="clear-btn" class={smallBtn}>Clear</button>
+                  <button id="copy-btn" class={smallBtn}>Copy</button>
+                </div>
+              </div>
+              <div id="results-list" class="flex flex-wrap gap-2"></div>
             </div>
           </div>
-          <button
-            id="generate-btn"
-            class="w-full text-accent-fg font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 transition-all bg-amber-400"
-            >Generate</button
-          >
-          <div id="results-area" class="mt-6 pt-6 border-t border-surface hidden">
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-medium text-tertiary">Results</span>
-              <div class="flex items-center gap-1.5">
-                <select
-                  id="export-format" aria-label="Export file format"
-                  class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5 focus:outline-none"
-                >
-                  <option value="txt">TXT</option>
-                  <option value="json">JSON</option>
-                  <option value="csv">CSV</option>
-                </select>
+
+          <!-- ─── List tab ─── -->
+          <div id="tabpanel-list" role="tabpanel" aria-labelledby="tab-list" class="hidden">
+            <div class="flex items-center justify-between min-h-[32px] mb-2">
+              <label for="list-input" class="text-xs font-semibold text-zinc-300">Enter List (one item per line)</label>
+              <div class="flex items-center gap-0.5 bg-surface-2 p-0.5 rounded-lg border border-surface">
                 <button
-                  id="share-btn"
-                  class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
-                  title="Share">🔗</button
+                  type="button"
+                  aria-label="Decrease font size"
+                  class="list-font-dec px-2 py-0.5 rounded text-xs font-medium text-zinc-300 hover:text-white hover:bg-white/10 transition-all"
+                  >A−</button
                 >
                 <button
-                  id="download-btn"
-                  class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
-                  >Download</button
-                >
-                <button
-                  id="clear-btn"
-                  class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
-                  >Clear</button
-                >
-                <button
-                  id="copy-btn"
-                  class="bg-surface-2 hover:bg-zinc-700 text-tertiary hover:text-primary text-xs font-medium px-3 py-1.5 rounded-lg border border-surface-3 transition-all"
-                  >Copy</button
+                  type="button"
+                  aria-label="Increase font size"
+                  class="list-font-inc px-2 py-0.5 rounded text-xs font-medium text-zinc-300 hover:text-white hover:bg-white/10 transition-all"
+                  >A+</button
                 >
               </div>
             </div>
-            <div id="results-list" class="flex flex-wrap gap-2"></div>
+            <div
+              class="flex h-[220px] rounded-xl bg-black/40 border border-surface focus-within:border-amber-500 focus-within:ring-1 focus-within:ring-amber-500 transition-all overflow-hidden relative"
+            >
+              <div
+                id="list-line-nums"
+                class="w-12 shrink-0 h-full select-none overflow-hidden font-mono text-sm leading-6 text-right pr-3.5 py-3 text-zinc-500/80 bg-zinc-950/60 border-r border-white/5 whitespace-pre pointer-events-none tabular-nums"
+                style="line-height: 24px; font-size: 14px;"
+              >
+                1
+              </div>
+              <textarea
+                id="list-input"
+                class="flex-1 min-w-0 h-full bg-transparent text-zinc-100 placeholder:text-zinc-500 text-sm leading-6 px-4 py-3 focus:outline-none font-mono resize-none border-0 overflow-y-auto"
+                style="line-height: 24px; font-size: 14px;"
+                placeholder="Item 1
+Item 2
+Item 3"></textarea>
+            </div>
+            <div class="flex items-center justify-between mt-2 text-xs text-muted">
+              <span id="list-item-count">0 items</span>
+              <span id="list-reading-time"></span>
+            </div>
+            <div class="flex items-center gap-2 mt-3 mb-4">
+              <label for="pick-count" class="text-xs text-tertiary">Pick count:</label>
+              <input
+                id="pick-count"
+                type="number"
+                min="1"
+                value="1"
+                class="w-16 px-2 py-1.5 rounded-lg border border-surface-2 bg-surface-1 text-white text-sm focus:border-amber-400/50 focus:outline-none transition-all"
+              />
+            </div>
+            <p id="list-empty-msg" class="hidden text-xs font-medium text-danger mb-3" role="alert">
+              Add at least one item (one per line) first.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <button
+                id="list-shuffle-btn"
+                type="button"
+                class="text-accent-fg font-bold text-xs px-4 py-2 rounded-xl hover:opacity-90 transition-all bg-amber-400"
+                >Shuffle</button
+              >
+              <button id="list-pick-btn" type="button" class={`${smallBtn} px-4 py-2 rounded-xl`}>Pick Random</button>
+              <button id="list-copy-btn" type="button" class={`${smallBtn} px-4 py-2 rounded-xl`}>Copy</button>
+              <button id="list-download-btn" type="button" class={`${smallBtn} px-4 py-2 rounded-xl`}>Download</button>
+              <select
+                id="list-export-format"
+                aria-label="List export file format"
+                class="bg-surface-2 border border-surface text-xs text-tertiary rounded-lg px-2 py-1.5"
+              >
+                <option value="txt">TXT</option><option value="json">JSON</option><option value="csv">CSV</option><option
+                  value="html">HTML</option
+                >
+              </select>
+              <button id="list-clear-btn" type="button" class={`${smallBtn} px-4 py-2 rounded-xl`}>Clear</button>
+            </div>
+            <div id="list-results-area" class="mt-6 pt-6 border-t border-surface hidden">
+              <span class="text-xs font-medium text-tertiary mb-3 block">Results</span>
+              <ol id="list-results" class="space-y-1.5 list-decimal list-inside"></ol>
+              <div
+                id="list-letter-freq"
+                tabindex="0"
+                role="region"
+                aria-label="Character frequency breakdown"
+                class="mt-2 flex flex-wrap gap-1.5 hidden"
+              >
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -171,6 +297,12 @@ const schema = {
             numbers and drawing contest winners to statistical sampling and game development. With a customizable range
             and duplicate control, you can adapt the output to virtually any use case requiring unbiased, unpredictable
             numbers.
+          </p>
+          <p>
+            List randomization is essential for drawing winners, creating random groups, ordering items unbiasedly, and
+            conducting fair selections. The Fisher-Yates shuffle used in the List tab ensures that every possible
+            permutation of your list is equally likely. Whether you need a completely shuffled list or just a few random
+            picks, the List tab does both.
           </p>
         </div>
       </section>
@@ -296,23 +428,6 @@ const schema = {
     if (btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
 
-  // ─── Keyboard shortcuts ───
-  document.addEventListener('keydown', (e) => {
-    if (e.ctrlKey && e.key === 'Enter') {
-      e.preventDefault();
-      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
-      if (b) b.click();
-    }
-    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
-      e.preventDefault();
-      document.getElementById('clear-btn')?.click();
-    }
-    if (e.ctrlKey && (e.key === 'D' || e.key === 'd')) {
-      e.preventDefault();
-      document.getElementById('download-btn')?.click();
-    }
-  });
-
   // ─── Usage badge ───
   try {
     const u = JSON.parse(localStorage.getItem('nt_tool_usage') || '{}');
@@ -329,11 +444,26 @@ const schema = {
     navigator.clipboard.writeText(u).catch(() => {});
     if (typeof showToast === 'function') showToast('Link copied!');
   });
+</script>
 
-  // ─── Sound effects ───
+<script>
+  // ─── List tab (from the retired List Randomizer) and tab switching ───
+  const listInput = document.getElementById('list-input') as HTMLTextAreaElement;
+  const pickCount = document.getElementById('pick-count') as HTMLInputElement;
+  const listResultsArea = document.getElementById('list-results-area');
+  const listResults = document.getElementById('list-results');
+  const listEmptyMsg = document.getElementById('list-empty-msg');
+  const listItemCount = document.getElementById('list-item-count');
+
+  function toast(message: string, variant: 'success' | 'error' | 'info' | 'warning' = 'success') {
+    (window as any).__showToast?.({ message, variant });
+  }
+
+  // Short confirmation sound on copy (as on the old List Randomizer)
   function playPing() {
     try {
-      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const Ctx = window.AudioContext || (window as any).webkitAudioContext;
+      const a = new Ctx();
       const o = a.createOscillator();
       const g = a.createGain();
       o.connect(g);
@@ -343,7 +473,236 @@ const schema = {
       g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
       o.start();
       o.stop(a.currentTime + 0.12);
-    } catch (e) {}
+    } catch {}
   }
 
+  function getItems(): string[] {
+    return listInput.value.split('\n').filter((line) => line.trim() !== '');
+  }
+
+  // Fisher-Yates shuffle
+  function shuffle<T>(array: T[]): T[] {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function display(items: string[]) {
+    if (!listResults || !listResultsArea) return;
+    listResults.innerHTML = '';
+    items.forEach((item) => {
+      const li = document.createElement('li');
+      li.className = 'text-sm text-white font-mono bg-surface-2 border border-surface-3 rounded-lg px-3 py-2';
+      li.textContent = item;
+      listResults.appendChild(li);
+    });
+    listResultsArea.classList.remove('hidden');
+  }
+
+  // Empty list: show why nothing happened instead of failing silently
+  function itemsOrWarn(): string[] | null {
+    const items = getItems();
+    listEmptyMsg?.classList.toggle('hidden', items.length > 0);
+    if (items.length === 0) {
+      listInput.focus();
+      return null;
+    }
+    return items;
+  }
+
+  function resultItems(): string[] {
+    return [...(listResults?.querySelectorAll('li') || [])].map((li) => li.textContent || '');
+  }
+
+  document.getElementById('list-shuffle-btn')?.addEventListener('click', () => {
+    const items = itemsOrWarn();
+    if (items) display(shuffle(items));
+  });
+
+  document.getElementById('list-pick-btn')?.addEventListener('click', () => {
+    const items = itemsOrWarn();
+    if (!items) return;
+    const count = Math.min(parseInt(pickCount.value) || 1, items.length);
+    display(shuffle(items).slice(0, count));
+  });
+
+  document.getElementById('list-clear-btn')?.addEventListener('click', () => {
+    listInput.value = '';
+    listInput.dispatchEvent(new Event('input'));
+    if (listResults) listResults.innerHTML = '';
+    listResultsArea?.classList.add('hidden');
+    listEmptyMsg?.classList.add('hidden');
+  });
+
+  document.getElementById('list-copy-btn')?.addEventListener('click', () => {
+    const items = resultItems();
+    if (items.length === 0) return;
+    playPing();
+    navigator.clipboard
+      .writeText(items.join('\n'))
+      .then(() => toast('Copied!'))
+      .catch(() => toast('Could not copy. Select the results and copy them by hand.', 'error'));
+    const btn = document.getElementById('list-copy-btn');
+    if (btn) {
+      btn.textContent = 'Copied!';
+      setTimeout(() => (btn.textContent = 'Copy'), 2000);
+    }
+  });
+
+  document.getElementById('list-download-btn')?.addEventListener('click', () => {
+    const items = resultItems();
+    if (items.length === 0) return;
+    const fmt = (document.getElementById('list-export-format') as HTMLSelectElement)?.value || 'txt';
+    let content: string, filename: string, mime: string;
+    switch (fmt) {
+      case 'json':
+        content = JSON.stringify(items, null, 2);
+        filename = 'randomized-list.json';
+        mime = 'application/json';
+        break;
+      case 'csv':
+        content = 'Item\n' + items.map((i) => `"${i.replace(/"/g, '""')}"`).join('\n');
+        filename = 'randomized-list.csv';
+        mime = 'text/csv';
+        break;
+      case 'html':
+        content =
+          '<ol>' +
+          items
+            .map((i) => `<li>${i.replace(/[<>&]/g, (c) => (c === '<' ? '&lt;' : c === '>' ? '&gt;' : '&amp;'))}</li>`)
+            .join('') +
+          '</ol>';
+        filename = 'randomized-list.html';
+        mime = 'text/html';
+        break;
+      default:
+        content = items.join('\n');
+        filename = 'randomized-list.txt';
+        mime = 'text/plain';
+    }
+    const blob = new Blob([content], { type: mime });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  // Draft auto-save (same key as the old List Randomizer, so saved lists carry over)
+  const DRAFT_KEY = 'nt_draft_list-randomizer';
+  try {
+    const saved = localStorage.getItem(DRAFT_KEY);
+    if (saved && !listInput.value) listInput.value = saved;
+  } catch {}
+  let saveTimer: ReturnType<typeof setTimeout> | undefined;
+
+  // Line numbers, item count, reading time and letter frequency
+  const lineNums = document.getElementById('list-line-nums');
+  const readingTime = document.getElementById('list-reading-time');
+  const letterFreq = document.getElementById('list-letter-freq');
+
+  function onListInput() {
+    if (lineNums) lineNums.textContent = Array.from({ length: listInput.value.split('\n').length }, (_, i) => i + 1).join('\n');
+    const n = getItems().length;
+    if (listItemCount) listItemCount.textContent = `${n} item${n === 1 ? '' : 's'}`;
+    if (n > 0) listEmptyMsg?.classList.add('hidden');
+    const w = listInput.value.trim() ? listInput.value.trim().split(/\s+/).length : 0;
+    if (readingTime) readingTime.textContent = `${Math.max(1, Math.round(w / 200))}m read · ${Math.max(1, Math.round(w / 150))}m speak`;
+
+    const t = listInput.value.toLowerCase().replace(/[^a-z]/g, '');
+    if (letterFreq) {
+      letterFreq.classList.toggle('hidden', !t);
+      const f: Record<string, number> = {};
+      for (const c of t) f[c] = (f[c] || 0) + 1;
+      letterFreq.innerHTML = Object.entries(f)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8)
+        .map(
+          ([c, count]) =>
+            `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white/5 border border-white/5 text-xs font-mono"><strong class="text-amber-400 uppercase">${c}</strong><span class="text-zinc-400">${count}</span></span>`,
+        )
+        .join('');
+    }
+
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      try {
+        localStorage.setItem(DRAFT_KEY, listInput.value);
+      } catch {}
+    }, 500);
+  }
+  listInput.addEventListener('input', onListInput);
+  listInput.addEventListener('scroll', () => {
+    if (lineNums) lineNums.scrollTop = listInput.scrollTop;
+  });
+  onListInput();
+
+  // Font size (shared nt_fs setting, as on the old page)
+  const setListFontSize = (newSize: number) => {
+    const clamped = Math.max(10, Math.min(24, newSize));
+    const lineHeight = Math.round(clamped * 1.7) + 'px';
+    listInput.style.fontSize = clamped + 'px';
+    listInput.style.lineHeight = lineHeight;
+    if (lineNums) {
+      lineNums.style.fontSize = clamped + 'px';
+      lineNums.style.lineHeight = lineHeight;
+    }
+    try {
+      localStorage.setItem('nt_fs', String(clamped));
+    } catch {}
+  };
+  const currentFont = () => parseInt(getComputedStyle(listInput).fontSize) || 14;
+  document.querySelector('.list-font-inc')?.addEventListener('click', () => setListFontSize(currentFont() + 2));
+  document.querySelector('.list-font-dec')?.addEventListener('click', () => setListFontSize(currentFont() - 2));
+  try {
+    const s = localStorage.getItem('nt_fs');
+    if (s) setListFontSize(parseInt(s));
+  } catch {}
+
+  // ─── Tabs (also opens a tab from ?tab=number|list) ───
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[role="tab"][data-tab-id]'));
+  let activeTab = 'number';
+
+  function selectTab(id: string, focus = false) {
+    activeTab = id;
+    tabs.forEach((tab) => {
+      const on = tab.dataset.tabId === id;
+      tab.setAttribute('aria-selected', String(on));
+      tab.tabIndex = on ? 0 : -1;
+      tab.type = 'button';
+      document.getElementById(`tabpanel-${tab.dataset.tabId}`)?.classList.toggle('hidden', !on);
+      if (on && focus) tab.focus();
+    });
+  }
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => selectTab(tab.dataset.tabId || 'number'));
+    tab.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      selectTab(next.dataset.tabId || 'number', true);
+    });
+  });
+  selectTab(new URLSearchParams(window.location.search).get('tab') === 'list' ? 'list' : 'number');
+
+  // ─── Keyboard shortcuts act on the open tab ───
+  const ACTIONS: Record<string, { run: string; clear: string; download: string }> = {
+    number: { run: 'generate-btn', clear: 'clear-btn', download: 'download-btn' },
+    list: { run: 'list-shuffle-btn', clear: 'list-clear-btn', download: 'list-download-btn' },
+  };
+  document.addEventListener('keydown', (e) => {
+    if (!e.ctrlKey) return;
+    const ids = ACTIONS[activeTab];
+    let id = '';
+    if (e.key === 'Enter') id = ids.run;
+    else if (e.shiftKey && (e.key === 'C' || e.key === 'c')) id = ids.clear;
+    else if (!e.shiftKey && (e.key === 'D' || e.key === 'd')) id = ids.download;
+    if (!id) return;
+    e.preventDefault();
+    document.getElementById(id)?.click();
+  });
 </script>

@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import { tools } from '../data/tools';
 
 const mockMessages = [
   {
@@ -14,7 +15,7 @@ const mockMessages = [
   },
   {
     sender: 'ai',
-    text: 'We currently have 70 free browser tools including the Image Compressor, QR Code Generator, Prompt Generator, Word Counter, JSON Formatter, and specific Cricket Calculators. All processing runs 100% locally in your browser.',
+    text: `We currently have ${tools.length} free browser tools including the Image Compressor, QR Code Generator, Prompt Generator, Word Counter, JSON Formatter, and specific Cricket Calculators. All processing runs 100% locally in your browser.`,
     time: '10:03 AM',
   },
 ];

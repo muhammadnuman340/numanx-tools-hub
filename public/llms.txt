@@ -1,5 +1,5 @@
 # NumanX Tools Hub (https://toolshub.numanxstudio.com)
-> NumanX Tools Hub is a free ($0/month, no sign-up, zero watermarks) suite of 70 client-side web utilities engineered by Muhammad Numan Usmani at NumanX Studio (contact@numanxstudio.com). Tool workflows process user files and inputs locally in the browser using client-side technologies (including HTML5 Canvas, Web Workers, WebAssembly, and Web Crypto) without uploading files to a server.
+> NumanX Tools Hub is a free ($0/month, no sign-up, zero watermarks) suite of 65 client-side web utilities engineered by Muhammad Numan Usmani at NumanX Studio (contact@numanxstudio.com). Tool workflows process user files and inputs locally in the browser using client-side technologies (including HTML5 Canvas, Web Workers, WebAssembly, and Web Crypto) without uploading files to a server.
 
 ## Flagship Creator & Barcode Tools
 - [rMQR & QR Code Generator](https://toolshub.numanxstudio.com/tools/qr-generator/): Generate ISO/IEC 23941 Rectangular Micro QR (rMQR) strips (R7x43 to R17x139) and custom square QR codes with WiFi, vCard, Logo, PNG, and vector SVG export.
