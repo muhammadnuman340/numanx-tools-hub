@@ -2,6 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'Complete Guide to Password Security in 2026'
 description: 'Master password security — learn how to create strong passwords, use password managers, enable 2FA, and protect your online accounts from breaches.'
+summary: 'Strong passwords, password managers and two-factor sign-in, step by step.'
 date: '2026-06-02'
 author: 'Muhammad Numan Usmani'
 category: 'Security'

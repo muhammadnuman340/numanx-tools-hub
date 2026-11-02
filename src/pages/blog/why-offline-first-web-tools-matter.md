@@ -8,7 +8,7 @@ image: '/images/blog/why-offline-first-web-tools-matter.svg'
 layout: '../../layouts/BlogLayout.astro'
 ---
 
-In a world governed by cloud storage and continuous remote updates, a quiet revolution is happening in the web browser. More creators and developers are shifting toward **offline-first, client-side web tools**.
+Most web tools upload your files to a server. More creators and developers are shifting toward **offline-first, client-side web tools**.
 
 Let's explore why running tools locally on your computer is more secure, incredibly fast, and much more private.
 

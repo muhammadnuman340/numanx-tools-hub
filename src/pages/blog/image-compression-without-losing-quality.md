@@ -190,10 +190,4 @@ Yes. Our **Image Compressor** runs entirely in your browser using WebAssembly. I
 
 Image compression without quality loss is achievable with the right tools and settings. Focus on choosing the correct format, using quality settings in the 80–90% range, resizing before compressing, and leveraging modern formats like WebP. Use the **Image Compressor** at NumanX Tools to start compressing your images in seconds.
 
-<div class="my-8 p-6 rounded-2xl border border-amber-500/30 text-center space-y-3 bg-amber-900/40">
-  <h3 class="text-lg font-bold text-white m-0">Compress Images in Your Browser</h3>
-  <p class="text-xs text-slate-300 max-w-lg mx-auto">Optimize file sizes using client-side OffscreenCanvas Web Workers and visual-quality presets right inside your browser.</p>
-  <a href="/tools/image-compressor/" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-accent-fg font-bold text-sm shadow-lg shadow-amber-900/40 transition-all">
-    <span>⚡</span> Launch Image Compressor Free &rarr;
-  </a>
-</div>
+**Try it:** [Image Compressor](/tools/image-compressor/) has quality presets and shows the size before and after. Your images stay in your browser.

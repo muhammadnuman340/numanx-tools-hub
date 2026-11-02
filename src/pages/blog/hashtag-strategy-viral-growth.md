@@ -23,12 +23,9 @@ Modern social media recommendation engines (TikTok's Monolith, Instagram's Graph
 - **Velocity & Save-to-Impression Ratio:** Posts that accumulate high saves and shares within the first 45 minutes get pushed to non-follower Explore/FYP feeds.
 - **Keyword Saturation Avoidance:** Stuffing 30 generic tags like `#fyp` or `#viral` dilutes your content vector. High-performing creators use hyper-targeted semantic tags paired with 2–3 niche anchors.
 
-<div class="my-6 p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl">
+<div class="my-6 p-4 sm:p-5 rounded-xl bg-surface-1 border border-surface">
   <div class="flex items-center justify-between mb-3">
-    <span class="text-xs font-bold text-white flex items-center gap-2">
-      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-      Interactive Mini Hashtag Generator
-    </span>
+    <span class="text-xs font-mono uppercase tracking-wider text-amber-300">Quick hashtag ideas</span>
     <a href="/tools/hashtag-generator/" class="inline-flex items-center min-h-6 text-xs font-semibold text-amber-400 hover:text-amber-300 no-underline">Open the full tool →</a>
   </div>
   <div class="flex gap-2 mb-3">
@@ -36,12 +33,13 @@ Modern social media recommendation engines (TikTok's Monolith, Instagram's Graph
     <button type="button" id="mini-hashtag-btn" class="px-3.5 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-xs font-bold text-accent-fg transition">Generate</button>
   </div>
   <div id="mini-hashtag-results" class="text-xs font-mono p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-amber-300 min-h-[38px] flex items-center flex-wrap gap-1.5">
-    <span class="text-slate-500 font-sans text-[11px]">Type a niche keyword above to generate viral tags instantly...</span>
+    <span class="text-zinc-400 font-sans text-xs">Type a keyword above to see hashtag ideas.</span>
   </div>
 </div>
 
 <script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
+  // Runs where it sits (after the box); ClientRouter re-runs inline scripts on each visit.
+  (() => {
     const btn = document.getElementById('mini-hashtag-btn');
     const input = document.getElementById('mini-hashtag-input');
     const res = document.getElementById('mini-hashtag-results');
@@ -50,7 +48,7 @@ Modern social media recommendation engines (TikTok's Monolith, Instagram's Graph
     function gen() {
       const q = (input.value || '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
       if (!q) {
-        res.innerHTML = '<span class="text-slate-500 font-sans text-[11px]">Please enter a keyword first.</span>';
+        res.innerHTML = '<span class="text-zinc-400 font-sans text-xs">Type a keyword first.</span>';
         return;
       }
       const tags = [
@@ -58,19 +56,25 @@ Modern social media recommendation engines (TikTok's Monolith, Instagram's Graph
         '#' + q + '2026', '#' + q + 'growth', '#' + q + 'viral', '#' + q + 'daily',
         '#' + q + 'community', '#learn' + q
       ];
-      res.innerHTML = tags.map(t => '<span class="px-2 py-0.5 rounded bg-amber-950/80 border border-amber-500/30 text-amber-300 cursor-pointer hover:bg-amber-900 transition" title="Click to copy">' + t + '</span>').join(' ');
-      res.querySelectorAll('span').forEach(el => {
-        el.addEventListener('click', () => {
-          navigator.clipboard.writeText(el.innerText);
-          const orig = el.innerText;
-          el.innerText = 'Copied!';
-          setTimeout(() => el.innerText = orig, 1200);
+      res.innerHTML = tags.map(t => '<button type="button" data-tag="' + t + '" class="min-h-6 px-2 py-0.5 rounded bg-amber-950/80 border border-amber-500/30 text-amber-300 hover:bg-amber-900 transition" aria-label="Copy ' + t + '">' + t + '</button>').join(' ');
+      res.querySelectorAll('button').forEach(el => {
+        let timer;
+        el.addEventListener('click', async () => {
+          const tag = el.dataset.tag;
+          try {
+            await navigator.clipboard.writeText(tag);
+            el.textContent = 'Copied!';
+          } catch {
+            el.textContent = 'Copy failed';
+          }
+          clearTimeout(timer);
+          timer = setTimeout(() => { el.textContent = tag; }, 1200);
         });
       });
     }
     btn.addEventListener('click', gen);
     input.addEventListener('keydown', (e) => { if (e.key === 'Enter') gen(); });
-  });
+  })();
 </script>
 
 ## Why Hashtags Still Matter

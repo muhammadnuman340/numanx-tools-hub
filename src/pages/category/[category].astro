@@ -18,54 +18,61 @@ export async function getStaticPaths() {
 const { category } = Astro.props;
 const categoryTools = getToolsByCategory(category.id as ToolCategory);
 
-const categoryGuides: Record<string, { title: string; paragraphs: string[]; highlights: string[] }> = {
+// `meta` is the search snippet (140–160 characters). The short registry description stays for cards.
+const categoryGuides: Record<string, { meta: string; title: string; paragraphs: string[]; highlights: string[] }> = {
   'image-tools': {
-    title: 'Client-Side Canvas & WebAssembly Image Processing Guide',
+    meta: 'Free image tools that run in your browser: compress, resize, crop and convert JPG, PNG, WebP and SVG, remove backgrounds or upscale. No uploads, no sign-up.',
+    title: 'How the image tools work',
     paragraphs: [
-      'Image optimization on NumanX Tools operates exclusively within your local browser sandbox via HTML5 Canvas, OffscreenCanvas Web Workers, and WebAssembly decoders. Unlike legacy cloud image processors that upload your private photos, creative assets, and client documents to remote cloud storage, our tools perform pixel transformations, bilinear resampling, and quantization directly on your device GPU and CPU threads.',
-      'Formats such as WebP, adjustable JPEG quality and PNG metadata stripping cut file size while keeping images sharp; each tool shows the before and after size so you can judge the result. Because files stay in the browser as local blobs, there is no upload step to wait for.'
+      'Every image tool works on your device. The browser decodes the file, changes it with the Canvas API (and Web Workers where it helps) and gives you a new file to download. Nothing is uploaded.',
+      'The compressor and converters show the size before and after, so you can judge the result yourself. The first time you use them, the background remover downloads an AI model of about 5–15 MB and the upscaler one of about 900 KB; after that, they also run on your device.'
     ],
-    highlights: ['100% Client-Side Privacy (0 Server Uploads)', 'Hardware-Accelerated OffscreenCanvas Workers', 'High-DPI 4K Resizing & WebP Conversion', 'Batch Compression of up to 20 Images']
+    highlights: ['Files stay on your device', 'Before and after file sizes', 'Compress up to 20 images at once', 'Background remover and upscaler use real AI models']
   },
   'creator-tools': {
-    title: 'High-Velocity Creator Workflows & Barcode Architecture',
+    meta: 'Free creator tools: QR and rMQR codes, hashtags, YouTube titles, Instagram line breaks, UTM links, Markdown to PDF and countdowns. Runs in your browser.',
+    title: 'What the creator tools are for',
     paragraphs: [
-      'Content creators, digital publishers, and packaging engineers require ultra-fast, high-precision tools that seamlessly integrate with modern media workflows. Our creator suite combines barcode generation, including industrial ISO/IEC 23941 Rectangular Micro QR (rMQR) strips designed for narrow physical surfaces, with real-time markdown documentation compilers and viral hashtag metadata analyzers.',
-      'Whether you are building YouTube Shorts and TikTok discovery tags, encoding compact product labels, or authoring technical guides with KaTeX equations and Mermaid diagrams, every tool has keyboard shortcuts, clipboard integration, and zero subscription barriers.'
+      'These tools cover the small jobs around a post or video: a QR code for a poster, hashtags and a title for a Short, clean line breaks for an Instagram caption, or a tracked UTM link for a campaign.',
+      'The QR tool also makes rectangular micro QR (rMQR, ISO/IEC 23941) codes for narrow labels, with SVG export. The Markdown editor and Markdown to PDF converter run in the browser, so drafts stay on your device.'
     ],
-    highlights: ['ISO/IEC 23941 rMQR Slender Barcode Engine', 'TikTok FYP & YouTube Shorts Tag Extractors', 'Client-Side Markdown to Vector PDF', 'Live Interactive Canvas Previews']
+    highlights: ['Square QR and rMQR codes with SVG export', 'Hashtag and YouTube title ideas', 'Markdown editor and Markdown to PDF', 'No account or subscription']
   },
   'utility-tools': {
-    title: 'SI Measurement Standards & Cryptographic Entropy Guide',
+    meta: 'Free everyday tools: word and character counter, age, BMI and percentage calculators, unit converter, password generator, and PDF merge, split and convert.',
+    title: 'What the utility tools cover',
     paragraphs: [
-      'Precision utilities require rigorous adherence to international standards and robust mathematical algorithms. Our utility suite features high-precision unit conversions mapped directly against Bureau International des Poids et Mesures (BIPM) SI base factors, accurate age and date intervals accounting for leap centuries, and percentage increase/decrease financial calculators.',
-      'For security utilities, our password and passphrase engines employ the Web Cryptography API (crypto.getRandomValues) and the Electronic Frontier Foundation (EFF) 7,776-word Diceware lexicon to generate mathematically unpredictable passwords with over 64 bits of true entropy, guaranteeing resilience against offline dictionary and rainbow table attacks.'
+      'Counters, calculators and converters for everyday tasks: word and character counts, age and working days, percentages, BMI and unit conversions. The PDF merger, splitter and PDF to image converter work on the file in your browser.',
+      'The password generator uses the browser\'s cryptographic random number generator (crypto.getRandomValues), so passwords are not predictable and are never sent anywhere.'
     ],
-    highlights: ['BIPM Standard SI Conversion Factors', 'EFF 7,776-Word Diceware CSPRNG Passphrases', 'Calendar-Accurate Leap Year & Birthday Math', 'Zero-Tracking Local Storage Persistence']
+    highlights: ['Cryptographic random passwords', 'PDF merge, split and convert in the browser', 'Leap years handled in date maths', 'Nothing to install']
   },
   'cricket-tools': {
-    title: 'ICC Net Run Rate (Clause 16.10.2) & DLS Analytics Guide',
+    meta: 'Free cricket calculators: run rate, net run rate (NRR), DLS target, strike rate, economy, overs and batting average. NRR follows the ICC all-out rule.',
+    title: 'How the cricket calculators count',
     paragraphs: [
-      'Cricket tournament analytics demand mathematical accuracy that standard sports apps frequently omit. Our cricket suite is built in accordance with standard International Cricket Council (ICC) tournament conditions, specifically following ICC Clause 16.10.2: if a batting team is dismissed all out before completing their allotted overs, their run rate is calculated based on the maximum quota of overs (e.g., 20.0 or 50.0) rather than the fraction overs when the final wicket fell.',
-      'Featuring real-time Playoff Chase Solvers (determining the exact overs threshold or run margin required to leapfrog a tournament rival on Net Run Rate) and Duckworth-Lewis-Stern (DLS) Standard Edition rain par score estimates, this suite powers fans, analysts, and viral shorts creators with standard cricket statistical precision.'
+      'The net run rate calculator follows ICC playing condition 16.10.2: if a team is bowled out before its overs are used up, its run rate is worked out over the full quota (for example 20 or 50 overs), not the overs it actually faced.',
+      'The NRR calculator also works out how fast a team must chase, or by how much it must win, to pass a rival on net run rate. The DLS calculator uses the public Standard Edition model, not the official ICC software, so treat its targets as estimates.'
     ],
-    highlights: ['ICC Clause 16.10.2 All-Out Quota Enforcement', 'Live Playoff Qualification Scenario Solvers', 'Duckworth-Lewis-Stern (DLS) Par Curves', '1080×1920 Mobile Shorts Stat Card Exporters']
+    highlights: ['ICC 16.10.2 all-out rule in NRR', 'Chase target to pass a rival on NRR', 'DLS estimates (Standard Edition)', 'Strike rate, economy and averages']
   },
   'ai-tools': {
-    title: 'Rule-Based Text Analysis, Readability & Prompt Tools',
+    meta: 'Free text tools: summarize, check grammar and readability, find keywords, detect language and analyse sentiment. Rule-based, private, and run in your browser.',
+    title: 'How the text tools work',
     paragraphs: [
-      'Modern text and content analysis should be fast, accurate, and completely private. These tools use deterministic, rule-based algorithms (n-gram keyword extraction, Flesch-Kincaid Grade Level, Gunning Fog index, and SMOG readability scoring) instead of an AI model, so the same text always gives the same result.',
-      'By executing entirely client-side inside your browser sandbox, every summary, keyword extraction and sentiment check runs without server dependencies or cloud data transmission.'
+      'These tools use fixed rules, not an AI model: word-frequency scoring for summaries and keywords, word lists for sentiment, and standard formulas such as Flesch-Kincaid and Gunning Fog for readability. The same text always gives the same result.',
+      'Your text is processed in the browser and is not sent to a server.'
     ],
-    highlights: ['Flesch-Kincaid, Gunning Fog & Readability Metrics', 'Client-Side In-Browser Execution', 'N-Gram & Frequency Extraction Algorithms', 'Zero Telemetry & 100% Confidential Copy']
+    highlights: ['Rule-based, same result every time', 'Flesch-Kincaid and Gunning Fog scores', 'Keyword and frequency extraction', 'Text stays in your browser']
   },
   'developer-tools': {
-    title: 'Zero-Upload Security Architecture for Developers',
+    meta: 'Free developer tools: JSON, SQL, HTML and CSS formatters, JWT and Base64 decoders, regex tester, diff checker, hashes, cron and epoch converters. No uploads.',
+    title: 'Why the developer tools run locally',
     paragraphs: [
-      'Pasting production JSON payloads, database connection strings, JWT authorization tokens, or proprietary SQL queries into public cloud utilities represents a critical security and compliance hazard. NumanX Developer Tools eliminates this risk entirely through a zero-upload client-side architecture.',
-      'All formatting, AST parsing, regex evaluation, Base64 encoding/decoding, and cryptographic hashing (SHA-256, SHA-512, HMAC) execute inside an isolated browser sandbox. Your authentication keys, customer records and schemas never leave your machine, so no third party receives them.'
+      'Pasting a production JSON payload, a JWT or a SQL query into an online tool can leak it. These tools format, decode, test and hash in your browser, so the data is not sent to a server.',
+      'Hashes use the browser\'s Web Crypto API. The JWT decoder only reads the token; it does not verify signatures against your keys.'
     ],
-    highlights: ['100% Offline Zero-Upload JWT Debugger', 'Web Crypto API (SHA-256, SHA-512, HMAC)', 'AST-Based JSON, SQL & Code Formatters', 'RFC 3986 URI & UTF-8 Safe Binary Inspection']
+    highlights: ['Data stays in your browser', 'SHA-256 and other hashes via Web Crypto', 'JSON, SQL, HTML and CSS formatters', 'Regex tester and diff checker']
   }
 };
 
@@ -81,7 +88,7 @@ const heroCategory = category.id === 'ai-tools'
       ? 'Free Text Tools — Summarizer, Grammar & Readability | NumanX'
       : `Free ${heroCategory.title} & Online Utilities | NumanX Tools`
   }
-  description={heroCategory.description}
+  description={guide?.meta || heroCategory.description}
   keywords={`${heroCategory.title.toLowerCase()}, online tools, free ${heroCategory.title.toLowerCase()} tools, numanx tools`}
   noindex={categoryTools.length === 0}
   breadcrumbs={[
@@ -129,31 +136,26 @@ const heroCategory = category.id === 'ai-tools'
         )
       }
 
-      {/* Authoritative Category Guide & E-E-A-T Architecture Panel */}
       {guide && (
-        <section class="max-w-4xl mx-auto mb-16 rounded-2xl bg-slate-900/60 border border-slate-800/80 p-6 sm:p-8">
-          <div class="flex items-center gap-2 mb-4 text-xs font-mono text-amber-400 font-bold uppercase tracking-wider">
-            <span>Engineering Architecture &amp; Methodology</span>
-          </div>
-          <h2 class="text-2xl font-bold text-white mb-4">{guide.title}</h2>
-          <div class="space-y-4 text-sm text-slate-300 leading-relaxed">
+        <section class="max-w-[68ch] mb-16 border-t border-surface pt-8">
+          <h2 class="text-xl font-bold text-white mb-4">{guide.title}</h2>
+          <div class="space-y-4 text-base text-secondary leading-relaxed">
             {guide.paragraphs.map((p) => (
               <p>{p}</p>
             ))}
           </div>
-          <div class="mt-6 pt-6 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <ul class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
             {guide.highlights.map((h) => (
-              <div class="flex items-center gap-2 text-xs font-medium text-emerald-400">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <li class="flex items-start gap-2 text-sm text-secondary">
+                <span class="mt-2 w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" aria-hidden="true"></span>
                 <span>{h}</span>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
       )}
 
-      {/* Contextual Zero-CLS Monetization Slot Below Content */}
-      <div class="max-w-4xl mx-auto mb-12 space-y-4">
+      <div class="max-w-4xl mb-12 space-y-4">
         <MonetizationSlot
           slotType="post-tool-affiliate"
           category={category.id.replace('-tools', '')}

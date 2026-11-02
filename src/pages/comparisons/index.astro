@@ -14,7 +14,7 @@ const comparisons = Object.entries(comparisonModules)
 
 <MainLayout
   title="Comparisons - NumanX Tools | File Format & Tool Face-offs"
-  description="Side-by-side comparisons of image formats, tools, and technologies. Make informed decisions with data-driven comparisons from NumanX Tools."
+  description="Side-by-side comparisons from NumanX Tools, starting with WebP vs PNG vs JPG: file size, quality, transparency, browser support and when to use each one."
   keywords="comparisons, vs, format comparison, jpg vs png, webp vs png, tool comparison, image format comparison"
   canonical="https://toolshub.numanxstudio.com/comparisons/"
   breadcrumbs={[
@@ -24,22 +24,16 @@ const comparisons = Object.entries(comparisonModules)
 >
   <main class="min-h-screen pt-8 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-12">
-        <div
-          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700/50 bg-zinc-900/80 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6"
-        >
-          Comparisons
-        </div>
-        <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-none">
-          Format & Tool
-          <span
-            class="block mt-2 text-amber-400"
-          >
-            Comparisons
-          </span>
+      <div class="mb-10 pt-6">
+        <p class="text-xs font-mono uppercase tracking-wider text-zinc-400 mb-3">
+          {comparisons.length} {comparisons.length === 1 ? 'comparison' : 'comparisons'}
+        </p>
+        <h1 class="text-[length:var(--step-3)] font-bold tracking-[-0.02em] leading-tight text-primary">
+          Format and tool comparisons
         </h1>
-        <p class="mt-6 text-tertiary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-          Data-driven comparisons to help you choose the right format or tool for your needs.
+        <p class="mt-3 text-secondary text-lg max-w-[68ch] leading-relaxed">
+          Side-by-side comparisons for when you have to pick one option, such as which image format to save in. Each
+          one sets out the trade-offs in a table and ends with a plain recommendation you can try in a free tool.
         </p>
       </div>
 
@@ -53,7 +47,7 @@ const comparisons = Object.entries(comparisonModules)
             <PostCard
               url={'/comparisons/' + comparison.slug + '/'}
               title={comparison.frontmatter.title}
-              desc={comparison.frontmatter.description}
+              desc={comparison.frontmatter.summary || comparison.frontmatter.description}
               tag={(comparison.frontmatter.tags || [])[0] || 'Comparison'}
               meta="Comparison"
               cta="Compare"
@@ -67,17 +61,12 @@ const comparisons = Object.entries(comparisonModules)
         <AdUnit format="horizontal" />
       </div>
 
-      <div class="mt-16 bg-zinc-900/30 border border-zinc-800/80 p-8 md:p-10 rounded-2xl text-center">
-        <h2 class="text-2xl md:text-3xl font-black tracking-tight">
-          Try the Tools
-          <span class="text-amber-400">
-            Behind the Comparisons</span
-          >
-        </h2>
-        <p class="text-tertiary mt-3 max-w-md mx-auto text-sm">
-          Convert, compress, and compare formats yourself with our free online tools.
+      <div class="mt-16 bg-surface-1 border border-surface p-8 md:p-10 rounded-xl">
+        <h2 class="text-2xl font-bold tracking-tight text-white">Try the formats yourself</h2>
+        <p class="text-secondary mt-3 max-w-[60ch] text-sm">
+          Convert or compress one of your own images and compare the file sizes. Everything runs in your browser.
         </p>
-        <div class="mt-6 flex gap-3 justify-center flex-wrap">
+        <div class="mt-6 flex gap-3 flex-wrap">
           <a
             href="/tools/jpg-to-png/"
             class="px-6 py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-accent-fg font-semibold text-sm active:scale-[0.97] transition-all duration-200"

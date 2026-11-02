@@ -2,6 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'How to Use NumanX Tools as a Web App'
 description: 'Learn how to install the NumanX Tools PWA, work offline, protect your privacy and use keyboard shortcuts.'
+summary: 'Install the site as an app, use it offline and learn the shortcuts.'
 date: '2026-06-17'
 author: 'NumanX Studio'
 category: 'Platform'

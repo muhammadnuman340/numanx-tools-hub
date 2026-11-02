@@ -39,15 +39,19 @@ describe('NumanX Tools Hub - E2E Build Structural Validation', () => {
       expect(html).toContain('card-spotlight');
       expect(html).toContain('audio-trigger');
 
-      // GSAP class hooks
-      expect(html).toContain('reveal-text');
-      expect(html).toContain('reveal');
+      // H1 says who and what (UI plan phase 9)
+      expect(html).toMatch(/<h1[^>]*>\s*Muhammad Numan Usmani builds NumanX Tools/);
 
-      // Vertical Glowing Timeline details
+      // FAQ schema has real questions and answers
+      expect(html).toContain('"@type":"Question","name":"Who makes NumanX Tools?"');
+      expect(html).toContain('"acceptedAnswer":{"@type":"Answer","text":"');
+
+      // Roadmap timeline, without pulsing or glowing dots
       expect(html).toContain('Phase 1 — Live');
       expect(html).toContain('Phase 2 — Next');
       expect(html).toContain('bg-emerald-400');
-      expect(html).toContain('animate-pulse');
+      expect(html).not.toContain('animate-pulse');
+      expect(html).not.toContain('animate-ping');
 
       // Scripts presence
       expect(html).toContain('cards-container-about');

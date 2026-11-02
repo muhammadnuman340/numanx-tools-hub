@@ -2,6 +2,7 @@
 layout: ../../layouts/BlogLayout.astro
 title: 'WebP vs PNG vs JPG: Complete Format Comparison'
 description: 'Detailed comparison of WebP, PNG, and JPG image formats — compression, quality, transparency, browser support, and when to use each for optimal web performance.'
+summary: 'File size, quality, transparency and browser support, and when to use each.'
 date: '2026-06-03'
 author: 'Muhammad Numan Usmani'
 category: 'Image Tools'
