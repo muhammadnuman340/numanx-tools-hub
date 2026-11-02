@@ -1,6 +1,5 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import { tools } from '../data/tools';
 ---
 
 <MainLayout
@@ -82,130 +81,16 @@ import { tools } from '../data/tools';
   import { getIconSvg } from '../lib/iconSvgs';
   import { toolCardHtml } from '../lib/cardHtml';
   import { migrateStoredSlugs } from '../lib/retiredSlugs';
-  migrateStoredSlugs();
-  const allTools = [
-    {
-      id: 'qr-generator',
-      name: 'QR Generator',
-      desc: 'Generate QR codes from URLs, text, and messages instantly.',
-      icon: 'qr',
-      url: '/tools/qr-generator/',
-      cat: 'Creator Tools',
-    },
-    {
-      id: 'word-counter',
-      name: 'Word & Character Counter',
-      desc: 'Count words and characters (with and without spaces), sentences, paragraphs and lines.',
-      icon: 'word',
-      url: '/tools/word-counter/',
-      cat: 'Utility Tools',
-    },
-    {
-      id: 'age-calculator',
-      name: 'Age Calculator',
-      desc: 'Calculate exact age in years, months, days, hours, and minutes.',
-      icon: 'age',
-      url: '/tools/age-calculator/',
-      cat: 'Utility Tools',
-    },
-    {
-      id: 'password-generator',
-      name: 'Password Generator',
-      desc: 'Generate strong, secure passwords with custom length and options.',
-      icon: 'password',
-      url: '/tools/password-generator/',
-      cat: 'Utility Tools',
-    },
-    {
-      id: 'hashtag-generator',
-      name: 'Hashtag Generator',
-      desc: 'Generate trending hashtags for social media posts.',
-      icon: 'hashtag',
-      url: '/tools/hashtag-generator/',
-      cat: 'Creator Tools',
-    },
-    {
-      id: 'run-rate-calculator',
-      name: 'Run Rate & Target Calculator',
-      desc: 'Calculate cricket run rates, required run rates and chase targets.',
-      icon: 'runrate',
-      url: '/tools/run-rate-calculator/',
-      cat: 'Cricket Tools',
-    },
-    {
-      id: 'strike-rate-average-calculator',
-      name: 'Strike Rate & Average Calculator',
-      desc: 'Calculate batting average and batting or bowling strike rates in cricket.',
-      icon: 'strikerate',
-      url: '/tools/strike-rate-average-calculator/',
-      cat: 'Cricket Tools',
-    },
-    {
-      id: 'jpg-to-png',
-      name: 'JPG to PNG',
-      desc: 'Convert JPG images to PNG format with high quality preservation.',
-      icon: 'jpg2png',
-      url: '/tools/jpg-to-png/',
-      cat: 'Image Tools',
-    },
-    {
-      id: 'image-compressor',
-      name: 'Image Compressor',
-      desc: 'Compress images with visual quality presets and batch processing.',
-      icon: 'compress',
-      url: '/tools/image-compressor/',
-      cat: 'Image Tools',
-    },
-    {
-      id: 'png-to-webp',
-      name: 'PNG to WebP',
-      desc: 'Convert PNG images to WebP format for smaller file sizes.',
-      icon: 'webp',
-      url: '/tools/png-to-webp/',
-      cat: 'Image Tools',
-    },
-    {
-      id: 'image-resizer',
-      name: 'Image Resizer',
-      desc: 'Resize images to any dimension with aspect ratio lock and presets.',
-      icon: 'resize',
-      url: '/tools/image-resizer/',
-      cat: 'Image Tools',
-    },
-    {
-      id: 'unit-converter',
-      name: 'Unit Converter',
-      desc: 'Convert length, mass, volume, temperature, area, speed, time, and data units.',
-      icon: 'unit',
-      url: '/tools/unit-converter/',
-      cat: 'Utility Tools',
-    },
-    {
-      id: 'markdown-editor',
-      name: 'Markdown Editor & PDF Converter',
-      desc: 'Write and preview markdown in real-time, then export HTML, .md or PDF.',
-      icon: 'markdown',
-      url: '/tools/markdown-editor/',
-      cat: 'Creator Tools',
-    },
-    {
-      id: 'json-formatter',
-      name: 'JSON Formatter',
-      desc: 'Format, validate, and minify JSON data with syntax highlighting.',
-      icon: 'json',
-      url: '/tools/json-formatter/',
-      cat: 'Utility Tools',
-    },
-  ];
+  import { resolveFavoriteTools } from '../lib/favorites';
 
-  const grid = document.getElementById('favorites-grid');
-  const empty = document.getElementById('empty-favorites');
+  migrateStoredSlugs();
 
   function renderFavorites() {
+    const grid = document.getElementById('favorites-grid');
+    const empty = document.getElementById('empty-favorites');
     if (!grid || !empty) return;
     try {
-      const favSlugs: string[] = JSON.parse(localStorage.getItem('nt_favorites') || '[]');
-      const favTools = allTools.filter((t) => favSlugs.includes(t.id));
+      const favTools = resolveFavoriteTools();
 
       if (favTools.length === 0) {
         grid.innerHTML = '';
@@ -215,17 +100,24 @@ import { tools } from '../data/tools';
 
       empty.classList.add('hidden');
       grid.innerHTML = favTools
-        .map(
-          (tool) =>
-            toolCardHtml({ url: tool.url, name: tool.name, desc: tool.desc, cat: tool.cat, iconSvg: getIconSvg(tool.icon) }),
+        .map((tool) =>
+          toolCardHtml({
+            url: tool.url,
+            name: tool.name,
+            desc: tool.desc,
+            cat: tool.cat,
+            iconSvg: getIconSvg(tool.icon),
+          }),
         )
         .join('');
     } catch {
-      empty.classList.remove('hidden');
+      if (grid) grid.innerHTML = '';
+      empty?.classList.remove('hidden');
     }
   }
 
   renderFavorites();
+  document.addEventListener('astro:page-load', renderFavorites);
 
   window.addEventListener('storage', (e) => {
     if (e.key === 'nt_favorites') renderFavorites();
