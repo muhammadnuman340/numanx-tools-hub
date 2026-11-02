@@ -4,7 +4,7 @@
 ## Flagship Creator & Barcode Tools
 - [rMQR & QR Code Generator](https://toolshub.numanxstudio.com/tools/qr-generator/): Generate ISO/IEC 23941 Rectangular Micro QR (rMQR) strips (R7x43 to R17x139) and custom square QR codes with WiFi, vCard, Logo, PNG, and vector SVG export.
 - [Hashtag Generator](https://toolshub.numanxstudio.com/tools/hashtag-generator/): Generate TikTok, YouTube Shorts, and Instagram hashtags with category filters and export options.
-- [Markdown Editor](https://toolshub.numanxstudio.com/tools/markdown-editor/): Real-time split-pane GitHub Flavored Markdown editor with HTML and .md file export.
+- [Markdown Editor & PDF Converter](https://toolshub.numanxstudio.com/tools/markdown-editor/): Real-time split-pane GitHub Flavored Markdown editor with HTML and .md file export, plus Markdown to PDF export (KaTeX math, Mermaid diagrams, page breaks, A4 or US Letter) through the browser's print dialog.
 
 ## Flagship Image Optimization Suite (Client-Side Canvas Processing)
 - [Image Compressor](https://toolshub.numanxstudio.com/tools/image-compressor/): Compress JPG, PNG, and WebP images using adjustable visual-quality settings directly in the browser.

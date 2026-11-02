@@ -239,16 +239,16 @@ export const tools: Tool[] = [
   },
   {
     id: 'markdown-editor',
-    name: 'Markdown Editor',
-    description: 'Write and preview markdown in real-time with toolbar and HTML export.',
+    name: 'Markdown Editor & PDF Converter',
+    description: 'Write and preview markdown in real-time, then export HTML, .md or PDF.',
     longDescription:
-      'Live markdown editor with split-pane preview, formatting toolbar, syntax highlighting, and one-click HTML export.',
+      'Live markdown editor with split-pane preview, formatting toolbar and HTML export, plus Markdown to PDF export with LaTeX math, Mermaid diagrams, page breaks and print themes.',
     category: 'creator-tools',
     icon: 'markdown',
     url: '/tools/markdown-editor/',
     isFeatured: true,
     isNew: true,
-    keywords: ['markdown editor', 'markdown preview', 'md editor', 'rich text', 'html export'],
+    keywords: ['markdown editor', 'markdown preview', 'md editor', 'markdown to pdf', 'md to pdf', 'convert markdown pdf', 'rich text', 'html export'],
     relatedIds: ['word-counter', 'qr-generator', 'hashtag-generator'],
   },
   {
@@ -967,20 +967,6 @@ export const tools: Tool[] = [
     relatedIds: ['hashtag-generator', 'word-counter', 'markdown-editor'],
   },
   {
-    id: 'markdown-to-pdf',
-    name: 'Markdown to PDF Converter',
-    description: 'Render markdown into styled documents and export directly to vector PDF in your browser.',
-    longDescription:
-      'Client-side Markdown to PDF converter with live preview, syntax highlighting, custom page sizing, and zero server uploads.',
-    category: 'creator-tools',
-    icon: 'creator',
-    url: '/tools/markdown-to-pdf/',
-    isNew: true,
-    isFeatured: true,
-    keywords: ['markdown to pdf', 'md to pdf', 'convert markdown pdf', 'pdf exporter', 'markdown document'],
-    relatedIds: ['markdown-editor', 'pdf-merger', 'word-counter'],
-  },
-  {
     id: 'meta-tag-generator',
     name: 'Meta Tag Generator & SERP Previewer',
     description: 'Generate SEO meta tags with live Google Mobile SERP, OpenGraph, X Card, and AI citation previews.',
@@ -1021,7 +1007,7 @@ export const tools: Tool[] = [
     isNew: true,
     isPopular: true,
     keywords: ['pdf merger', 'combine pdfs', 'merge pdf online', 'free pdf joiner', 'join pdf files'],
-    relatedIds: ['pdf-splitter', 'pdf-to-image', 'markdown-to-pdf'],
+    relatedIds: ['pdf-splitter', 'pdf-to-image', 'markdown-editor'],
   },
   {
     id: 'pdf-splitter',
@@ -1034,7 +1020,7 @@ export const tools: Tool[] = [
     url: '/tools/pdf-splitter/',
     isNew: true,
     keywords: ['pdf splitter', 'extract pdf pages', 'split pdf online', 'separate pdf', 'pdf page extractor'],
-    relatedIds: ['pdf-merger', 'pdf-to-image', 'markdown-to-pdf'],
+    relatedIds: ['pdf-merger', 'pdf-to-image', 'markdown-editor'],
   },
   {
     id: 'pdf-to-image',

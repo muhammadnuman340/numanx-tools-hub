@@ -72,10 +72,11 @@ flowchart TD
 - **Auto-Fit Sizing Matrix**: Dynamically computes the most compact valid ISO rectangular matrix based on input text length and chosen error correction tier.
 - **Multi-Format Vector Export**: Pure client-side generation of high-DPI PNGs and crisp vector SVGs via `bwip-js/browser`.
 
-### 2. 📄 Client-Side Markdown to PDF Converter (`/tools/markdown-to-pdf/`)
+### 2. 📄 Client-Side Markdown to PDF Export (`/tools/markdown-editor/`)
 - **Mathematical Typography**: Built-in **KaTeX** math engine renders inline `$E = mc^2$` and block `$$\int f(x) dx$$` formulas with publishing-grade typography.
 - **Vector Diagrams**: Embeds **Mermaid.js** diagrams (`flowchart`, `sequenceDiagram`, `stateDiagram`) rendered directly into the PDF preview.
-- **Print Styles**: Native `@media print` CSS engine with custom margin controls, A4 / US Letter presets, page break inserters (`<div class="page-break"></div>`), and zero server transmission.
+- **Print Styles**: Native `@media print` CSS with A4 / US Letter presets, page break inserters (`<div class="page-break"></div>`), and zero server transmission of your document.
+- **Part of the Markdown Editor**: use the Export PDF button (or Ctrl+P) next to the live preview.
 
 ### 3. 🏏 ICC Cricket Analytics Suite (`/tools/net-run-rate-calculator/`)
 - **ICC Law 16.10.2 All-Out Enforcement**: Accurately handles the all-out rule by automatically counting the team's full allotted match quota (e.g., 20.0 or 50.0 overs) rather than fraction overs.
