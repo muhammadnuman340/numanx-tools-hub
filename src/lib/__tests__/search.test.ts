@@ -77,17 +77,75 @@ describe('search functionality', () => {
     expect(cricketEmpty.length).toBeGreaterThan(0);
     expect(cricketEmpty.every((i) => i.searchCat === 'Cricket Tools')).toBe(true);
 
-    // Blog category returns blog entries
+    // Blog category returns blog entries (14 blog posts)
     const blogEmpty = filterSearchResults('', 'Blog');
-    expect(blogEmpty.length).toBe(4);
+    expect(blogEmpty.length).toBe(14);
     expect(blogEmpty.every((i) => i.searchCat === 'Blog')).toBe(true);
+
+    // Case-insensitive category matching ('all' vs 'All')
+    const allLower = filterSearchResults('', 'all');
+    expect(allLower.length).toBe(allItems.length);
   });
 
-  it('every tool in tools.ts is present in the search index', () => {
+  it('searching by tool description', () => {
+    // "syntax highlighting" appears in JSON, HTML, CSS formatter descriptions
+    const descResults = filterSearchResults('syntax highlighting');
+    expect(descResults.length).toBeGreaterThan(0);
+    expect(descResults.some((i) => i.id === 'json-formatter')).toBe(true);
+
+    // "par scores" appears in DLS calculator description
+    const cricketDesc = filterSearchResults('par scores');
+    expect(cricketDesc.length).toBeGreaterThan(0);
+    expect(cricketDesc.some((i) => i.searchCat === 'Cricket Tools')).toBe(true);
+  });
+
+  it('empty search results for non-matching queries', () => {
+    // "zakat" has no matching tool or blog
+    const zakatResults = filterSearchResults('zakat');
+    expect(zakatResults).toEqual([]);
+
+    // random gibberish
+    const gibberishResults = filterSearchResults('xyznonexistentquery123');
+    expect(gibberishResults).toEqual([]);
+  });
+
+  it('no duplicate results in search index', () => {
+    const urls = allItems.map((i) => i.url);
+    const uniqueUrls = new Set(urls);
+    expect(uniqueUrls.size).toBe(urls.length);
+
+    const ids = allItems.map((i) => i.id).filter(Boolean);
+    const uniqueIds = new Set(ids);
+    expect(uniqueIds.size).toBe(ids.length);
+  });
+
+  it('all 65 tools appear in the searchable dataset', () => {
+    expect(tools.length).toBe(65);
     const toolIdsInIndex = new Set(allItems.map((i) => i.id).filter(Boolean));
     for (const tool of tools) {
       expect(toolIdsInIndex.has(tool.id)).toBe(true);
     }
-    expect(tools.length).toBe(65);
+
+    // Verify every tool has name, url, description, and valid category
+    const toolItems = allItems.filter((i) => i.url.startsWith('/tools/'));
+    expect(toolItems.length).toBe(65);
+    for (const item of toolItems) {
+      expect(item.name.length).toBeGreaterThan(0);
+      expect(item.desc.length).toBeGreaterThan(0);
+      expect(item.url).toMatch(/^\/tools\/[a-z0-9-]+\/$/);
+      expect(item.searchCat.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('preserves non-tool entries (Dashboard and all 14 blog posts)', () => {
+    const dashboard = allItems.find((i) => i.id === 'dashboard');
+    expect(dashboard).toBeDefined();
+    expect(dashboard?.url).toBe('/dashboard/');
+
+    const blogItems = allItems.filter((i) => i.searchCat === 'Blog');
+    expect(blogItems.length).toBe(14);
+    for (const blog of blogItems) {
+      expect(blog.url).toMatch(/^\/blog\/[a-z0-9-]+\/$/);
+    }
   });
 });
