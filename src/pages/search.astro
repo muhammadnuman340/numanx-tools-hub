@@ -209,155 +209,20 @@ const popular = allItems.slice(0, 5);
 <script>
   import { getIconSvg } from '../lib/iconSvgs';
   import { toolCardHtml } from '../lib/cardHtml';
-  const searchData = [
-    {
-      name: 'Platform Dashboard',
-      desc: 'Track live tool compilations, metrics, milestones, and development roadmap.',
-      cat: 'Utility',
-      searchCat: 'Utility Tools',
-      icon: 'utility',
-      url: '/dashboard/',
-    },
-    {
-      name: 'QR Generator',
-      desc: 'Generate QR codes from URLs, text, and messages instantly.',
-      cat: 'Generator',
-      searchCat: 'Creator Tools',
-      icon: 'qr',
-      url: '/tools/qr-generator/',
-    },
-    {
-      name: 'Word & Character Counter',
-      desc: 'Count words and characters (with and without spaces), sentences, paragraphs and lines.',
-      cat: 'Text',
-      searchCat: 'Utility Tools',
-      icon: 'word',
-      url: '/tools/word-counter/',
-    },
-    {
-      name: 'Age Calculator',
-      desc: 'Calculate exact age in years, months, days, hours, and minutes.',
-      cat: 'Calculator',
-      searchCat: 'Utility Tools',
-      icon: 'age',
-      url: '/tools/age-calculator/',
-    },
-    {
-      name: 'Password Generator',
-      desc: 'Generate strong, secure passwords with custom length and options.',
-      cat: 'Generator',
-      searchCat: 'Utility Tools',
-      icon: 'password',
-      url: '/tools/password-generator/',
-    },
-    {
-      name: 'Hashtag Generator',
-      desc: 'Generate trending hashtags for social media posts.',
-      cat: 'Generator',
-      searchCat: 'Creator Tools',
-      icon: 'hashtag',
-      url: '/tools/hashtag-generator/',
-    },
-    {
-      name: 'Run Rate & Target Calculator',
-      desc: 'Calculate cricket run rates, required run rates and chase targets.',
-      cat: 'Cricket',
-      searchCat: 'Cricket Tools',
-      icon: 'runrate',
-      url: '/tools/run-rate-calculator/',
-    },
-    {
-      name: 'Strike Rate & Average Calculator',
-      desc: 'Calculate batting average and batting or bowling strike rates in cricket.',
-      cat: 'Cricket',
-      searchCat: 'Cricket Tools',
-      icon: 'strikerate',
-      url: '/tools/strike-rate-average-calculator/',
-    },
-    {
-      name: 'JPG to PNG',
-      desc: 'Convert JPG images to PNG format with high quality preservation.',
-      cat: 'Image',
-      searchCat: 'Image Tools',
-      icon: 'jpg2png',
-      url: '/tools/jpg-to-png/',
-    },
-    {
-      name: 'Image Compressor',
-      desc: 'Compress images with visual quality presets and batch processing.',
-      cat: 'Image',
-      searchCat: 'Image Tools',
-      icon: 'compress',
-      url: '/tools/image-compressor/',
-    },
-    {
-      name: 'PNG to WebP',
-      desc: 'Convert PNG images to WebP format for smaller file sizes.',
-      cat: 'Image',
-      searchCat: 'Image Tools',
-      icon: 'webp',
-      url: '/tools/png-to-webp/',
-    },
-    {
-      name: 'Image Resizer',
-      desc: 'Resize images to any dimension with aspect ratio lock and presets.',
-      cat: 'Image',
-      searchCat: 'Image Tools',
-      icon: 'resize',
-      url: '/tools/image-resizer/',
-    },
-    {
-      name: 'Best AI Tools for Students',
-      desc: 'Top AI tools every student should use in 2026 for studying, writing, and research.',
-      cat: 'Blog',
-      searchCat: 'Blog',
-      icon: 'creator',
-      url: '/blog/best-ai-tools-for-students/',
-    },
-    {
-      name: 'Best Free Image Tools 2026',
-      desc: 'The best free image editing and conversion tools available online in 2026.',
-      cat: 'Blog',
-      searchCat: 'Blog',
-      icon: 'creator',
-      url: '/blog/best-free-image-tools-2026/',
-    },
-    {
-      name: 'Best YouTube Tools for Creators',
-      desc: 'Essential tools for YouTube creators to grow channels and edit videos.',
-      cat: 'Blog',
-      searchCat: 'Blog',
-      icon: 'creator',
-      url: '/blog/best-youtube-tools-for-creators/',
-    },
-    {
-      name: 'How to Compress Images',
-      desc: 'Learn how to compress images without losing quality using free online tools.',
-      cat: 'Blog',
-      searchCat: 'Blog',
-      icon: 'creator',
-      url: '/blog/how-to-compress-images/',
-    },
-  ];
+  import { buildSearchIndex, filterSearchResults } from '../lib/search';
 
-  const input = document.getElementById('search-page-input');
+  const searchData = buildSearchIndex();
+
+  const input = document.getElementById('search-page-input') as HTMLInputElement | null;
   const results = document.getElementById('page-results');
   const empty = document.getElementById('page-empty');
-  const catBtns = document.querySelectorAll('.page-cat-btn');
+  const catBtns = document.querySelectorAll<HTMLElement>('.page-cat-btn');
 
   let activeCat = 'All';
 
   function filter() {
-    const q = input.value.toLowerCase().trim();
-    const hasQuery = q.length > 0;
-
-    let filtered = searchData;
-    if (activeCat !== 'All') {
-      filtered = filtered.filter((item) => item.searchCat === activeCat);
-    }
-    if (hasQuery) {
-      filtered = filtered.filter((item) => item.name.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q));
-    }
+    if (!input || !results || !empty) return;
+    const filtered = filterSearchResults(input.value, activeCat, searchData);
 
     if (filtered.length === 0) {
       results.classList.add('hidden');
@@ -381,11 +246,11 @@ const popular = allItems.slice(0, 5);
     }
   }
 
-  input.addEventListener('input', filter);
+  input?.addEventListener('input', filter);
 
   // /search/?q=… (the homepage search box submits here when Enter is pressed with no pick)
   const initialQuery = new URLSearchParams(location.search).get('q');
-  if (initialQuery) {
+  if (initialQuery && input) {
     input.value = initialQuery;
     filter();
   }
@@ -398,7 +263,7 @@ const popular = allItems.slice(0, 5);
       });
       btn.classList.remove('bg-zinc-800/60', 'text-tertiary', 'hover:text-primary', 'hover:bg-zinc-800');
       btn.classList.add('bg-amber-600', 'text-accent-fg');
-      activeCat = btn.dataset.cat;
+      activeCat = btn.dataset.cat || 'All';
       filter();
     });
   });

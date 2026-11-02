@@ -104,7 +104,7 @@ export const tools: Tool[] = [
     url: '/tools/qr-generator/',
     isFeatured: true,
     isPopular: true,
-    keywords: ['qr', 'qr code', 'qr generator', 'barcode', 'scanner'],
+    keywords: ['qr', 'qr code', 'qr generator', 'barcode', 'scanner', 'vcard', 'wifi'],
     relatedIds: ['hashtag-generator', 'password-generator'],
   },
   {
@@ -168,7 +168,7 @@ export const tools: Tool[] = [
     icon: 'runrate',
     url: '/tools/run-rate-calculator/',
     isFeatured: true,
-    keywords: ['run rate', 'cricket', 'run rate calculator', 'cricket target calculator', 'chase calculator', 'required run rate', 'cricket calculator', 'match analysis'],
+    keywords: ['run rate', 'cricket', 'run rate calculator', 'cricket target calculator', 'chase calculator', 'required run rate', 'cricket calculator', 'match analysis', 'rrr'],
     relatedIds: ['strike-rate-average-calculator', 'age-calculator'],
   },
   {
