@@ -11,5 +11,10 @@ export default defineConfig({
   integrations: [],
   vite: {
     plugins: [tailwind()],
+    build: {
+      // Keep fonts as files: the CSP (public/_headers) has no data: in font-src,
+      // so inlined font subsets were blocked in the browser.
+      assetsInlineLimit: (filePath) => (/\.(woff2?|ttf|otf)$/i.test(filePath) ? false : undefined),
+    },
   },
 });
