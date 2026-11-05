@@ -5,24 +5,14 @@ import { tools } from '../data/tools';
 const mockMessages = [
   {
     sender: 'ai',
-    text: 'Welcome to the NumanX Assistant Prototype. How can I help you explore our tools, creator hub, or roadmap today?',
+    text: `Welcome to the NumanX Assistant Prototype. All ${tools.length} ecosystem tools run 100% locally in your browser with zero server data transfer. How can I help you today?`,
     time: '10:00 AM',
-  },
-  {
-    sender: 'user',
-    text: 'What tools are currently available in the NumanX Tools ecosystem?',
-    time: '10:02 AM',
-  },
-  {
-    sender: 'ai',
-    text: `We currently have ${tools.length} free browser tools including the Image Compressor, QR Code Generator, Prompt Generator, Word Counter, JSON Formatter, and specific Cricket Calculators. All processing runs 100% locally in your browser.`,
-    time: '10:03 AM',
   },
 ];
 ---
 
 <MainLayout
-  title="Platform Assistant Prototype - NumanX Studio"
+  title="Interactive Assistant — NumanX Studio"
   description="Interactive platform assistant prototype. Ask questions about NumanX Tools, Creator Hub, and ecosystem roadmap."
   keywords="assistant prototype, numanx assistant, platform assistant, numanx studio, interactive tools"
   canonical="https://toolshub.numanxstudio.com/chat/"
@@ -32,7 +22,23 @@ const mockMessages = [
     { name: 'Assistant Prototype', url: '/chat/' },
   ]}
 >
-  <main class="min-h-screen pt-16 pb-20 px-6 relative overflow-hidden bg-well">
+  <style>
+    :root {
+      --app-border: #272724;
+      --app-border-card: #34332f;
+      --app-rail: #0e0e0d;
+      --app-sidebar: #141412;
+      --app-bg: #181816;
+    }
+    .border-crisp {
+      border-color: var(--app-border) !important;
+    }
+    .border-card-crisp {
+      border-color: var(--app-border-card) !important;
+    }
+  </style>
+
+  <main id="main-content" class="min-h-screen pt-4 pb-16 px-2 sm:px-4 md:px-6 relative bg-[#0d0d0c] text-[#f2f1ea] overflow-hidden">
     <!-- Ambient Background Glows -->
     <div
       class="absolute top-[10%] left-[5%] w-[400px] h-[400px] rounded-full bg-amber-600/5 blur-[120px] pointer-events-none -z-10 animate-pulse"
@@ -48,305 +54,593 @@ const mockMessages = [
       class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[size:100%_4px,3px_100%] pointer-events-none opacity-20 -z-5"
     >
     </div>
+    
+    <!-- Top intro banner -->
+    <div id="cards-container-chat" class="max-w-7xl mx-auto mb-4 px-2 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-xs font-semibold text-zinc-300">Interactive Assistant Prototype</span>
+        <span class="text-zinc-600">·</span>
+        <span class="text-xs text-amber-400 font-medium">Online</span>
+      </div>
+      <div class="flex items-center gap-2 text-xs text-zinc-400">
+        <button id="btn-fullscreen-toggle" class="hover:text-white px-2 py-1 rounded border border-crisp bg-[#161614] flex items-center gap-1.5 transition-colors" title="Toggle full window">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+          <span class="hidden sm:inline">Expand Window</span>
+        </button>
+      </div>
+    </div>
 
-    <div class="max-w-4xl mx-auto">
-      <!-- Hero -->
-      <section class="text-center mb-10 pt-8 animate-[fadeInUp_0.6s_ease-out] group-section">
-        <div
-          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-surface bg-surface-1 text-tertiary text-xs font-semibold tracking-wider uppercase mb-6 audio-trigger"
-        >
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
-          Prototype Assistant v1.0
-        </div>
-        <h1 class="text-5xl md:text-7xl font-black tracking-tighter leading-none reveal-text">
-          Interactive
-          <span
-            class="block mt-2 drop-shadow-[0_2px_12px_rgba(234,88,12,0.15)] text-amber-400"
-          >
-            Assistant Prototype
-          </span>
-        </h1>
-        <p class="mt-4 text-tertiary text-sm md:text-base max-w-xl mx-auto leading-relaxed reveal-text">
-          Explore our client-side prototype. Ask anything about our productivity tools, cricket analytics, or
-          future roadmap.
-        </p>
-      </section>
+    <!-- THE UNIFIED DESKTOP CHROME WINDOW CONTAINER -->
+    <div id="desktop-window" class="card-spotlight max-w-7xl mx-auto rounded-2xl border border-crisp bg-[#181816] shadow-2xl overflow-hidden flex flex-col h-[780px] transition-all">
 
-      <!-- Chat Container Grid -->
-      <div id="cards-container-chat" class="w-full mb-12 group-section preserve-3d">
-        <!-- Chat Interface Box -->
-        <div
-          class="card-spotlight bg-page/90 border border-white/10 rounded-3xl p-6 shadow-2xl relative overflow-hidden min-h-[550px] flex flex-col justify-between transition-all duration-300"
-        >
-          <div
-            class="absolute inset-x-0 -top-px h-px bg-amber-500/50"
-          >
+      <!-- 1. TOP CHROME BROWSER BAR (Matching the browser bar from the uploaded screenshot) -->
+      <div id="chrome-browser-bar" class="bg-[#131b20] border-b border-[#26343c] shrink-0 text-zinc-300 select-none">
+        
+        <!-- Chrome Tabs Row -->
+        <div class="h-9 px-2 pt-1 flex items-center justify-between">
+          <div class="flex items-center gap-1 h-full">
+            <!-- Active Tab -->
+            <div class="h-full px-3 bg-[#1c272d] border-t-2 border-amber-400 rounded-t-lg flex items-center gap-2 text-xs font-medium text-white shadow-sm max-w-[240px]">
+              <span class="text-amber-400 text-xs">✦</span>
+              <span class="truncate">NumanX Tools — Anti-sycophancy</span>
+              <button class="hover:bg-zinc-700/50 rounded p-0.5 text-zinc-400 hover:text-white text-[10px]" title="Close tab" aria-label="Close tab">✕</button>
+            </div>
+
+            <!-- Inactive Tab 2 -->
+            <a href="/tools/svg-to-png/" class="h-full px-3 hover:bg-[#182126] rounded-t-lg flex items-center gap-2 text-xs text-zinc-400 hover:text-zinc-200 cursor-pointer max-w-[180px]">
+              <span class="text-zinc-500 text-xs">🖼️</span>
+              <span class="truncate">SVG to PNG Converter</span>
+            </a>
+
+            <!-- New Tab Button -->
+            <button class="w-6 h-6 rounded-md hover:bg-[#1c272d] text-zinc-400 hover:text-white flex items-center justify-center text-sm ml-1" title="New tab" aria-label="New tab">
+              +
+            </button>
           </div>
 
-          <!-- Top Bar -->
-          <div class="flex items-center justify-between pb-4 border-b border-white/5 relative z-10">
-            <div class="flex items-center gap-3">
-              <div
-                class="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 relative overflow-hidden"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="animate-pulse"
-                  ><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg
-                >
+          <!-- Windows Controls (Minimize, Maximize, Close) -->
+          <div class="flex items-center text-zinc-400">
+            <button class="w-9 h-7 flex items-center justify-center hover:bg-zinc-700/50 hover:text-white text-xs" title="Minimize" aria-label="Minimize">─</button>
+            <button id="btn-win-maximize" class="w-9 h-7 flex items-center justify-center hover:bg-zinc-700/50 hover:text-white text-xs" title="Maximize" aria-label="Maximize">□</button>
+            <button class="w-9 h-7 flex items-center justify-center hover:bg-red-600 hover:text-white text-xs" title="Close" aria-label="Close">✕</button>
+          </div>
+        </div>
+
+        <!-- Chrome Navigation & Omnibox URL Row -->
+        <div class="h-10 px-3 pb-1.5 flex items-center gap-3 bg-[#1c272d]">
+          <!-- Navigation Buttons: Back, Forward, Reload -->
+          <div class="flex items-center gap-1 text-zinc-400">
+            <button class="p-1 rounded hover:bg-zinc-700/50 hover:text-white disabled:opacity-30" disabled title="Back" aria-label="Back">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button class="p-1 rounded hover:bg-zinc-700/50 hover:text-white disabled:opacity-30" disabled title="Forward" aria-label="Forward">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <button id="btn-browser-reload" class="p-1 rounded hover:bg-zinc-700/50 hover:text-white" title="Reload" aria-label="Reload">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+            </button>
+          </div>
+
+          <!-- Omnibox / Address Bar -->
+          <div class="flex-1 h-7 rounded-full bg-[#10161a] border border-[#2a3a44] px-3 flex items-center justify-between text-xs text-zinc-300 shadow-inner">
+            <div class="flex items-center gap-2 min-w-0">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-400 shrink-0"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <span class="truncate font-mono text-[11px]">
+                <span class="text-zinc-500">https://</span><span class="text-white font-medium">toolshub.numanxstudio.com</span><span class="text-zinc-400">/chat/</span>
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2 text-zinc-500 shrink-0">
+              <button class="hover:text-amber-400" title="Bookmark page" aria-label="Bookmark page"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button>
+            </div>
+          </div>
+
+          <!-- Extension Icons & Profile Right Area -->
+          <div class="flex items-center gap-1.5 text-zinc-400 shrink-0">
+            <div class="hidden md:flex items-center gap-1 px-2 py-0.5 rounded-full border border-zinc-700 bg-zinc-800/80 text-[11px] text-zinc-200">
+              <span class="text-blue-400">✦</span>
+              <span class="font-medium text-[10px]">Ask Gemini</span>
+            </div>
+
+            <!-- Profile Avatar -->
+            <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 border border-zinc-600 flex items-center justify-center text-[10px] font-bold text-black" title="Muhammad Numan">
+              M
+            </div>
+
+            <button class="p-1 rounded hover:bg-zinc-700/50 hover:text-white" title="Chrome Menu" aria-label="Chrome Menu">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MAIN WEB CONTAINER: Far-Left Rail + App Sidebar + Workspace Area -->
+      <div class="flex-1 flex overflow-hidden relative">
+
+        <!-- 2. FAR-LEFT VERTICAL SIDE RAIL (Narrow Dock with 1px border) -->
+        <nav id="far-left-side-rail" aria-label="Workspace dock" class="w-12 bg-[#0e0e0d] border-r border-crisp flex flex-col justify-between items-center py-3 shrink-0 z-40 select-none">
+          
+          <!-- Top Action Icons -->
+          <div class="flex flex-col items-center gap-3 w-full">
+            <!-- Sidebar Toggle Icon (Working Collapse/Expand) -->
+            <button id="toggle-inner-sidebar-btn" class="w-8 h-8 rounded-lg border border-crisp bg-[#161614] hover:bg-[#20201c] hover:border-zinc-600 flex items-center justify-center text-zinc-400 hover:text-white transition-all shadow-sm" title="Toggle Sidebar" aria-label="Toggle Sidebar">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                <line x1="9" y1="3" x2="9" y2="21"></line>
+                <polyline points="14 9 11 12 14 15"></polyline>
+              </svg>
+            </button>
+
+            <!-- 4-Squares Grid Icon (Tools Hub Directory) -->
+            <a href="/tools/" class="w-8 h-8 rounded-lg hover:bg-[#1a1a17] hover:border hover:border-crisp flex items-center justify-center text-zinc-400 hover:text-white transition-all" title="All 65 Tools Hub Directory" aria-label="All 65 Tools Hub Directory">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+                <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+              </svg>
+            </a>
+
+            <!-- Orange / Claude Asterisk Starburst Icon (Active) -->
+            <button class="w-8 h-8 rounded-lg bg-[#241c18] border border-amber-500/40 flex items-center justify-center text-amber-400 hover:scale-105 transition-all shadow-sm" title="AI Assistants & Agents" aria-label="AI Assistants & Agents">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="2" x2="12" y2="22"></line>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                <line x1="19.07" y1="4.93" x2="4.93" y2="19.07"></line>
+              </svg>
+            </button>
+
+            <!-- Plus Action Icon -->
+            <button id="btn-new-chat-rail" class="w-8 h-8 rounded-lg hover:bg-[#1a1a17] hover:border hover:border-crisp flex items-center justify-center text-zinc-400 hover:text-white transition-all" title="New Conversation" aria-label="New Conversation">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Bottom System Icons -->
+          <div class="flex flex-col items-center gap-2.5 w-full">
+            <a href="/about/" class="w-8 h-8 rounded-lg hover:bg-[#1a1a17] text-zinc-500 hover:text-zinc-200 flex items-center justify-center" title="About NumanX Studio" aria-label="About NumanX Studio">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </a>
+            <div class="w-6 h-6 rounded-full bg-zinc-800 border border-crisp flex items-center justify-center text-[10px] font-semibold text-zinc-300">
+              M
+            </div>
+          </div>
+        </nav>
+
+        <!-- 3. INNER APP SIDEBAR (Collapsible with 1px border line) -->
+        <aside id="inner-app-sidebar" aria-label="Chat sidebar" class="w-64 bg-[#141412] border-r border-crisp flex flex-col justify-between shrink-0 transition-all duration-300 z-30 select-none">
+          
+          <!-- Top Title Bar -->
+          <div class="p-3 border-b border-crisp space-y-2.5">
+            <div class="flex items-center justify-between px-1">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-sm tracking-tight text-white flex items-center gap-1.5">
+                  <span>NumanX Tools</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-zinc-500"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </span>
               </div>
-              <div>
-                <h2 class="text-sm font-bold text-white font-mono tracking-tight">Assistant Prototype</h2>
-                <p class="text-[10px] text-emerald-400 flex items-center gap-1 font-mono uppercase">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-                  Online
-                </p>
+              <span class="text-[10px] text-amber-400 font-mono bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded">65 Tools</span>
+            </div>
+
+            <!-- + New Action Button -->
+            <button id="btn-new-chat-sidebar" class="w-full flex items-center justify-between px-3 py-2 rounded-lg border border-crisp bg-[#1a1a17] hover:bg-[#20201c] hover:border-zinc-700 text-xs font-medium text-zinc-200 transition-all">
+              <span class="flex items-center gap-2">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>New Conversation</span>
+              </span>
+              <span class="text-[9px] font-mono text-zinc-500 border border-crisp px-1 rounded">⌘K</span>
+            </button>
+
+            <!-- Search Bar -->
+            <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-crisp bg-[#10100f] text-xs text-zinc-400">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input id="sidebar-search-input" type="text" placeholder="Search prompts..." class="bg-transparent text-zinc-200 placeholder:text-zinc-600 focus:outline-none w-full text-xs" aria-label="Search prompts">
+            </div>
+          </div>
+
+          <!-- Navigation & Recents List -->
+          <div class="flex-1 overflow-y-auto px-2 py-3 space-y-4">
+            <!-- Recents Section -->
+            <div>
+              <div class="px-2 text-[10px] font-semibold text-zinc-500 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                <span>Recents</span>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="opacity-60"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </div>
+
+              <div class="space-y-0.5">
+                <!-- Active Selected Item (Pill style with crisp border) -->
+                <button class="w-full text-left flex items-center justify-between px-3 py-2 rounded-lg bg-[#272724] border border-crisp text-xs font-medium text-white shadow-sm">
+                  <span class="truncate">Anti-sycophancy prompt</span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"></span>
+                </button>
+
+                <button class="w-full text-left flex items-center justify-between px-3 py-2 rounded-lg text-xs text-zinc-400 hover:text-zinc-200 hover:bg-[#1a1a17] transition-all">
+                  <span class="truncate">Image Format Shared Engine</span>
+                </button>
+
+                <button class="w-full text-left flex items-center justify-between px-3 py-2 rounded-lg text-xs text-zinc-400 hover:text-zinc-200 hover:bg-[#1a1a17] transition-all">
+                  <span class="truncate">SQL to MS Access converter</span>
+                </button>
+
+                <button class="w-full text-left flex items-center justify-between px-3 py-2 rounded-lg text-xs text-zinc-400 hover:text-zinc-200 hover:bg-[#1a1a17] transition-all">
+                  <span class="truncate">Registry availability check</span>
+                </button>
+
+                <button class="w-full text-left flex items-center justify-between px-3 py-2 rounded-lg text-xs text-zinc-400 hover:text-zinc-200 hover:bg-[#1a1a17] transition-all">
+                  <span class="truncate">Attendance database ER model</span>
+                </button>
+
+                <button class="w-full text-left flex items-center justify-between px-3 py-2 rounded-lg text-xs text-zinc-400 hover:text-zinc-200 hover:bg-[#1a1a17] transition-all">
+                  <span class="truncate">WCMP codebase technical review</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- User Plan Footer with Border Top -->
+          <div class="p-3 border-t border-crisp bg-[#10100f] flex items-center justify-between text-xs">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 rounded-full bg-zinc-800 border border-crisp flex items-center justify-center font-bold text-[10px] text-zinc-300">
+                Mu
+              </div>
+              <span class="text-zinc-300 font-medium text-[11px]">Mu · Free Plan</span>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-zinc-500"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+
+            <button id="btn-clear-chat" class="px-2 py-1 rounded hover:bg-[#1f1f1c] border border-crisp text-zinc-400 hover:text-zinc-200 text-[10px] font-mono" title="Clear History" aria-label="Clear History">
+              CLEAR
+            </button>
+          </div>
+
+        </aside>
+
+        <!-- 4. MAIN WORKSPACE / CHAT AREA (With Claude crisp border lines) -->
+        <div class="flex-1 flex flex-col bg-[#181816] overflow-hidden relative">
+
+          <!-- Header Row with Border Bottom -->
+          <div class="h-12 border-b border-crisp px-4 sm:px-6 flex items-center justify-between shrink-0 bg-[#181816]/90 backdrop-blur z-20 select-none">
+            <div class="flex items-center gap-2">
+              <h1 class="text-xs font-semibold text-zinc-200">Anti-sycophancy prompt</h1>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-zinc-500"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </div>
 
             <div class="flex items-center gap-2">
-              <button
-                id="btn-clear-chat"
-                class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 text-[10px] font-mono text-zinc-400 hover:text-white transition-all audio-trigger"
-              >
-                CLEAR HISTORY
+              <div class="flex items-center text-xs text-zinc-400 gap-1.5 border border-crisp px-2.5 py-1 rounded-lg bg-[#141412]">
+                <span>Free plan</span>
+                <span class="text-zinc-600">·</span>
+                <span class="text-amber-400 font-medium">Local Engine</span>
+              </div>
+
+              <button id="btn-share-chat" class="p-1.5 rounded-lg border border-crisp text-zinc-400 hover:text-zinc-200 hover:bg-[#20201c]" title="Share link" aria-label="Share link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
               </button>
             </div>
           </div>
 
-          <!-- Message Thread -->
-          <div
-            id="chat-thread"
-            class="flex-1 overflow-y-auto my-4 space-y-4 pr-2 max-h-[360px] scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent relative z-10"
-          >
-            {
-              mockMessages.map((msg) => (
-                <div class={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
-                  <div
-                    class={`max-w-[80%] rounded-2xl p-4 text-xs leading-relaxed ${
-                      msg.sender === 'user'
-                        ? 'bg-amber-600/20 border border-amber-500/30 text-white rounded-tr-none'
-                        : 'bg-zinc-900/80 border border-zinc-800 text-zinc-300 rounded-tl-none'
-                    }`}
-                  >
+          <!-- Scrollable Message Body -->
+          <div id="chat-thread" class="flex-1 overflow-y-auto px-4 sm:px-8 md:px-14 py-6 space-y-6">
+            <div class="max-w-3xl mx-auto space-y-5">
+
+              <!-- Initial Welcome Message from Assistant -->
+              {mockMessages.map((msg) => (
+                <div class="flex flex-col items-start space-y-1">
+                  <div class="rounded-xl border border-card-crisp bg-[#1e1e1b] p-4 text-xs text-zinc-300 leading-relaxed max-w-[85%]">
                     <p>{msg.text}</p>
                   </div>
-                  <span class="text-[9px] text-zinc-550 mt-1 px-1 font-mono">{msg.time}</span>
+                  <span class="text-[9px] text-zinc-500 font-mono px-1">{msg.time}</span>
                 </div>
-              ))
-            }
-          </div>
+              ))}
 
-          <!-- Bottom Text Input Bar -->
-          <div class="pt-4 border-t border-white/5 relative z-10">
-            <form id="chat-form" class="flex items-center gap-3">
-              <button
-                type="button"
-                id="btn-voice-chat"
-                class="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/5 flex items-center justify-center text-zinc-400 hover:text-amber-400 hover:bg-amber-500/10 hover:border-amber-500/20 transition-all shrink-0 audio-trigger"
-                title="Voice Assistant"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  ><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path
-                    d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg
-                >
-              </button>
-
-              <div class="relative flex-1">
-                <input
-                  id="chat-input"
-                  type="text"
-                  placeholder="Type a message or command..."
-                  required
-                  class="w-full bg-well text-white placeholder-zinc-550 px-5 py-3.5 pr-12 rounded-2xl border border-white/10 focus:outline-none focus:border-amber-500/50 transition-all text-xs shadow-inner audio-trigger" aria-label="Chat message"
-                />
-                <button
-                  type="submit"
-                  class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl bg-amber-600 hover:bg-amber-500 text-accent-fg flex items-center justify-center transition-all hover:scale-105 active:scale-95 audio-trigger"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    ><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"
-                    ></polygon></svg
-                  >
-                </button>
+              <!-- Code Box with Crisp 1px Border Lines -->
+              <div class="rounded-xl border border-card-crisp bg-[#1c1c19] overflow-hidden shadow-sm">
+                <div class="flex items-center justify-between px-4 py-2 border-b border-crisp bg-[#151513] text-[11px] font-mono text-zinc-400">
+                  <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-amber-500/80"></span>
+                    custom-instructions.txt
+                  </span>
+                  <button id="copy-prompt-btn" class="hover:text-white transition-colors flex items-center gap-1" aria-label="Copy prompt">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <pre class="p-4 text-xs font-mono text-zinc-200 leading-relaxed overflow-x-auto whitespace-pre selection:bg-amber-500/30"><code>- Before praising, tell at least 3 real weaknesses in my code, plan, or writing.
+- If I'm wrong, tell me directly, even if I sound confident.
+- No opening praise, no flattery, no agreeing by default. Agree only when I'm actually right.
+- Point out risks, blind spots, and weak assumptions before I commit.
+- If I push back, hold your position unless I give a good reason or new information.
+- If you're unsure, say so instead of faking confidence.
+- Be blunt but not rude. Criticize the work, not me.
+- End every critique with a concrete, better alternative.</code></pre>
               </div>
-            </form>
+
+              <!-- Explanatory text -->
+              <p class="text-xs text-zinc-400">
+                Paste it at the start of a new chat, or into your custom instructions so it applies every time.
+              </p>
+
+              <!-- Inline Callout Card (Matching screenshot) -->
+              <div class="flex items-center justify-between px-4 py-3 rounded-xl border border-card-crisp bg-[#1e1e1b] hover:border-zinc-600 transition-all">
+                <div class="flex items-center gap-3">
+                  <div class="text-zinc-400 font-mono text-xs font-semibold bg-[#262622] px-2 py-1 rounded border border-crisp">
+                    &lt;/&gt;
+                  </div>
+                  <span class="text-xs font-medium text-zinc-200">
+                    Claude works directly with your codebase
+                  </span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <a href="/tools/" class="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-crisp bg-[#272724] hover:bg-[#32322e] text-xs font-medium text-zinc-100 transition-all">
+                    <span>Explore Tools</span>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </a>
+                  <button class="p-1 rounded hover:bg-[#2a2a26] text-zinc-500 hover:text-zinc-300" aria-label="Dismiss callout">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Action Reaction Bar -->
+              <div class="flex items-center gap-3 text-zinc-500 pt-1">
+                <button class="hover:text-zinc-300 p-1" title="Copy" aria-label="Copy message"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+                <button class="hover:text-zinc-300 p-1" title="Read aloud" aria-label="Read aloud"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>
+                <button class="hover:text-zinc-300 p-1" title="Good response" aria-label="Good response"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg></button>
+                <button class="hover:text-zinc-300 p-1" title="Bad response" aria-label="Bad response"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"></path></svg></button>
+                <button class="hover:text-zinc-300 p-1" title="Retry" aria-label="Retry response"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg></button>
+              </div>
+
+            </div>
           </div>
+
+          <!-- Bottom Input Capsule (Matching Claude screenshot) -->
+          <div class="px-4 sm:px-8 md:px-14 pb-4 pt-2 bg-[#181816] shrink-0">
+            <div class="max-w-3xl mx-auto space-y-2">
+              
+              <form id="chat-form" class="rounded-2xl border border-card-crisp bg-[#1f1f1c] focus-within:border-zinc-500 focus-within:ring-1 focus-within:ring-zinc-600 transition-all p-3 shadow-lg">
+                <textarea
+                  id="chat-input"
+                  rows="2"
+                  placeholder="Reply..."
+                  aria-label="Reply message"
+                  class="w-full bg-transparent text-sm text-zinc-100 placeholder:text-zinc-500 focus:outline-none resize-none leading-relaxed"
+                ></textarea>
+
+                <div class="flex items-center justify-between pt-2">
+                  <div class="flex items-center gap-1 text-zinc-400">
+                    <button type="button" class="p-1.5 rounded-lg hover:bg-[#2b2b27] hover:text-zinc-200 transition-colors" title="Add attachment" aria-label="Add attachment">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+                    <button type="button" id="btn-voice-chat" class="p-1.5 rounded-lg hover:bg-[#2b2b27] hover:text-zinc-200 transition-colors" title="Voice note" aria-label="Voice note">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                    </button>
+                    <a href="/search/" class="p-1.5 rounded-lg hover:bg-[#2b2b27] hover:text-zinc-200 transition-colors" title="Search all tools" aria-label="Search all tools">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </a>
+                  </div>
+
+                  <div class="flex items-center gap-2">
+                    <span class="text-[11px] text-zinc-500 font-mono hidden sm:inline">Sonnet 5.5</span>
+                    <button type="submit" id="send-btn" class="w-7 h-7 rounded-lg bg-zinc-700 hover:bg-zinc-600 text-zinc-300 flex items-center justify-center transition-all disabled:opacity-30 disabled:pointer-events-none" disabled aria-label="Send message">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+              <!-- Footer Disclaimer (Exact match from screenshot) -->
+              <div class="flex items-center justify-between text-[11px] text-zinc-500 px-1 select-none">
+                <span>Claude is AI and can make mistakes.</span>
+                <div class="flex items-center gap-2">
+                  <span class="hover:text-zinc-400 cursor-pointer">Sonnet 5.5 Medium</span>
+                  <span class="text-zinc-700">·</span>
+                  <span class="hover:text-zinc-400 cursor-pointer">Manual</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
+
       </div>
+
     </div>
+
   </main>
 </MainLayout>
 
 <script>
-  const handleOnMouseMove = (e: MouseEvent, containerId: string) => {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    const cards = container.getElementsByClassName('card-spotlight');
-    for (const card of cards as any) {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-      if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -3;
-        const rotateY = ((x - centerX) / centerX) * 3;
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(12px) scale(1.01)`;
-        card.style.zIndex = '50';
-      } else {
-        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
-        card.style.zIndex = '1';
-      }
-    }
-  };
-
-  const initChatPage = () => {
-    const container = document.getElementById('cards-container-chat');
-    if (container) {
-      container.addEventListener('mousemove', (e) => handleOnMouseMove(e, 'cards-container-chat'));
-      container.addEventListener('mouseleave', () => {
-        const cards = container.getElementsByClassName('card-spotlight');
-        for (const card of cards as any) {
-          card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)`;
-          card.style.zIndex = '1';
-        }
-      });
-    }
-
-    const form = document.getElementById('chat-form') as HTMLFormElement | null;
-    const input = document.getElementById('chat-input') as HTMLInputElement | null;
+  const initChatWorkspace = () => {
+    const chatInput = document.getElementById('chat-input') as HTMLTextAreaElement | null;
+    const sendBtn = document.getElementById('send-btn') as HTMLButtonElement | null;
+    const chatForm = document.getElementById('chat-form') as HTMLFormElement | null;
     const thread = document.getElementById('chat-thread');
+    const copyPromptBtn = document.getElementById('copy-prompt-btn');
+    const toggleInnerSidebarBtn = document.getElementById('toggle-inner-sidebar-btn');
+    const innerSidebar = document.getElementById('inner-app-sidebar');
     const clearBtn = document.getElementById('btn-clear-chat');
     const voiceBtn = document.getElementById('btn-voice-chat');
+    const newChatRail = document.getElementById('btn-new-chat-rail');
+    const newChatSidebar = document.getElementById('btn-new-chat-sidebar');
+    const shareBtn = document.getElementById('btn-share-chat');
+    const btnFullscreen = document.getElementById('btn-fullscreen-toggle');
+    const desktopWindow = document.getElementById('desktop-window');
 
-    const scrollToBottom = () => {
-      if (thread) {
+    // Input state & auto-resizing
+    chatInput?.addEventListener('input', () => {
+      if (sendBtn) {
+        sendBtn.disabled = !chatInput.value.trim();
+      }
+    });
+
+    // Enter to submit (Shift+Enter for newline)
+    chatInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        chatForm?.dispatchEvent(new Event('submit'));
+      }
+    });
+
+    // Working Sidebar Collapse / Expand
+    toggleInnerSidebarBtn?.addEventListener('click', () => {
+      if (!innerSidebar) return;
+      if (innerSidebar.classList.contains('w-64')) {
+        innerSidebar.classList.remove('w-64');
+        innerSidebar.classList.add('w-0', 'opacity-0', 'overflow-hidden');
+      } else {
+        innerSidebar.classList.remove('w-0', 'opacity-0', 'overflow-hidden');
+        innerSidebar.classList.add('w-64');
+      }
+    });
+
+    // Copy Prompt
+    copyPromptBtn?.addEventListener('click', () => {
+      const code = document.querySelector('pre code')?.textContent || '';
+      if (!code) return;
+      navigator.clipboard.writeText(code).then(() => {
+        copyPromptBtn.innerHTML = '<span>Copied!</span>';
+        setTimeout(() => {
+          copyPromptBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><span>Copy</span>';
+        }, 2000);
+      });
+    });
+
+    // Submit Chat Form
+    chatForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!chatInput || !thread) return;
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      // Append user bubble
+      const userBubble = document.createElement('div');
+      userBubble.className = 'flex flex-col items-end space-y-1';
+      userBubble.innerHTML = `
+        <div class="rounded-xl border border-amber-500/30 bg-amber-600/20 p-4 text-xs text-white leading-relaxed max-w-[85%]">
+          <p>${escapeHtml(text)}</p>
+        </div>
+        <span class="text-[9px] text-zinc-500 font-mono px-1">${time}</span>
+      `;
+      const wrapper = thread.querySelector(':scope > div') || thread;
+      wrapper.appendChild(userBubble);
+      chatInput.value = '';
+      if (sendBtn) sendBtn.disabled = true;
+      thread.scrollTop = thread.scrollHeight;
+
+      // Simulated AI response
+      setTimeout(() => {
+        const replyText = generateResponse(text);
+        const aiBubble = document.createElement('div');
+        aiBubble.className = 'flex flex-col items-start space-y-1';
+        aiBubble.innerHTML = `
+          <div class="rounded-xl border border-card-crisp bg-[#1e1e1b] p-4 text-xs text-zinc-300 leading-relaxed max-w-[85%]">
+            <p>${replyText}</p>
+          </div>
+          <span class="text-[9px] text-zinc-500 font-mono px-1">${time}</span>
+        `;
+        wrapper.appendChild(aiBubble);
         thread.scrollTop = thread.scrollHeight;
+      }, 700);
+    });
+
+    // Clear Chat
+    clearBtn?.addEventListener('click', () => {
+      if (!thread) return;
+      const wrapper = thread.querySelector(':scope > div');
+      if (wrapper) wrapper.innerHTML = '';
+    });
+
+    const resetChat = () => {
+      if (!thread) return;
+      const wrapper = thread.querySelector(':scope > div');
+      if (wrapper) {
+        wrapper.innerHTML = `
+          <div class="flex flex-col items-start space-y-1">
+            <div class="rounded-xl border border-card-crisp bg-[#1e1e1b] p-4 text-xs text-zinc-300 leading-relaxed max-w-[85%]">
+              <p>Started a fresh conversation session. How can I assist you with NumanX Tools?</p>
+            </div>
+            <span class="text-[9px] text-zinc-500 font-mono px-1">Just now</span>
+          </div>
+        `;
       }
     };
-    scrollToBottom();
+    newChatRail?.addEventListener('click', resetChat);
+    newChatSidebar?.addEventListener('click', resetChat);
 
-    if (form && input && thread) {
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const text = input.value.trim();
-        if (!text) return;
+    // Share link
+    shareBtn?.addEventListener('click', () => {
+      navigator.clipboard.writeText(window.location.href).catch(() => {});
+      if ((window as any).__showToast) {
+        (window as any).__showToast({ message: 'Chat URL copied to clipboard!', variant: 'success' });
+      }
+    });
 
-        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    // Fullscreen / Window Expansion
+    btnFullscreen?.addEventListener('click', () => {
+      if (!desktopWindow) return;
+      if (desktopWindow.classList.contains('h-[780px]')) {
+        desktopWindow.classList.remove('h-[780px]', 'max-w-7xl');
+        desktopWindow.classList.add('fixed', 'inset-2', 'z-[120]', 'h-[calc(100vh-16px)]');
+        btnFullscreen.innerHTML = '<span>Exit Window</span>';
+      } else {
+        desktopWindow.classList.add('h-[780px]', 'max-w-7xl');
+        desktopWindow.classList.remove('fixed', 'inset-2', 'z-[120]', 'h-[calc(100vh-16px)]');
+        btnFullscreen.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg><span class="hidden sm:inline">Expand Window</span>';
+      }
+    });
 
-        // Add user message bubble
-        const userMsg = document.createElement('div');
-        userMsg.className = 'flex flex-col items-end';
-        userMsg.innerHTML = `
-          <div class="max-w-[80%] rounded-2xl p-4 text-xs leading-relaxed bg-amber-600/20 border border-amber-500/30 text-white rounded-tr-none">
-            <p>${text}</p>
-          </div>
-          <span class="text-[9px] text-zinc-555 mt-1 px-1 font-mono">${time}</span>
-        `;
-        thread.appendChild(userMsg);
-        input.value = '';
-        scrollToBottom();
-
-        // Simulate AI response delay
-        setTimeout(() => {
-          const aiResponseText = getPrototypeResponse(text);
-          const aiMsg = document.createElement('div');
-          aiMsg.className = 'flex flex-col items-start';
-          aiMsg.innerHTML = `
-            <div class="max-w-[80%] rounded-2xl p-4 text-xs leading-relaxed bg-zinc-900/80 border border-zinc-800 text-zinc-300 rounded-tl-none">
-              <p>${aiResponseText}</p>
-            </div>
-            <span class="text-[9px] text-zinc-550 mt-1 px-1 font-mono">${time}</span>
-          `;
-          thread.appendChild(aiMsg);
-          scrollToBottom();
-          if (window.playTick) window.playTick();
-        }, 800);
-      });
-    }
-
-    if (clearBtn && thread) {
-      clearBtn.addEventListener('click', () => {
-        thread.innerHTML = '';
-      });
-    }
-
-    // Voice integration prototype
-    if (voiceBtn && input) {
-      voiceBtn.addEventListener('click', () => {
-        const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-        if (SpeechRecognition) {
-          const recognition = new SpeechRecognition();
-          recognition.onstart = () => {
-            voiceBtn.classList.add('text-amber-400', 'bg-white/10');
-            input.placeholder = 'Listening...';
-          };
-          recognition.onresult = (event: any) => {
-            const transcript = event.results[0][0].transcript;
-            input.value = transcript;
-          };
-          recognition.onend = () => {
-            voiceBtn.classList.remove('text-amber-400', 'bg-white/10');
-            input.placeholder = 'Type a message or command...';
-          };
-          try {
-            recognition.start();
-          } catch (e) {}
-        } else {
-          alert('Speech recognition is not supported in this browser.');
-        }
-      });
-    }
+    // Voice recognition
+    voiceBtn?.addEventListener('click', () => {
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      if (SpeechRecognition && chatInput) {
+        const recognition = new SpeechRecognition();
+        recognition.onstart = () => {
+          voiceBtn.classList.add('text-amber-400');
+          chatInput.placeholder = 'Listening...';
+        };
+        recognition.onresult = (event: any) => {
+          const transcript = event.results[0][0].transcript;
+          chatInput.value = transcript;
+          if (sendBtn) sendBtn.disabled = false;
+        };
+        recognition.onend = () => {
+          voiceBtn.classList.remove('text-amber-400');
+          chatInput.placeholder = 'Reply...';
+        };
+        recognition.start();
+      }
+    });
   };
 
-  const getPrototypeResponse = (input: string): string => {
-    const lower = input.toLowerCase();
-    if (lower.includes('hello') || lower.includes('hi')) {
-      return 'Hello! How can I assist you with the NumanX Tools Hub today?';
-    }
-    if (lower.includes('roadmap') || lower.includes('phases') || lower.includes('future')) {
-      return 'Our upcoming roadmap consists of: Phase 2 - NumanX Creator Hub, Phase 3 - MatchPulse Cricket Analytics, Phase 4 - Browser AI Integration, and Phase 5 - Unified NumanX Operating Brain.';
-    }
-    if (lower.includes('tools') || lower.includes('list')) {
-      return 'Current tools include: Image Compressor, QR Code Generator, Prompt Generator, Word Counter, JSON Formatter, Password Generator, and Cricket calculators.';
-    }
-    if (lower.includes('owner') || lower.includes('creator') || lower.includes('numan')) {
-      return 'NumanX Tools was architected and built by Muhammad Numan Usmani, an IT student and digital ecosystem builder.';
-    }
-    return 'This prototype is configured to respond to queries about NumanX Tools, Creator Hub, and general roadmap phases.';
-  };
+  function escapeHtml(str: string): string {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
 
-  document.addEventListener('astro:page-load', initChatPage);
+  function generateResponse(query: string): string {
+    const q = query.toLowerCase();
+    if (q.includes('hello') || q.includes('hi')) {
+      return 'Hello! I am your local NumanX Assistant. You can ask me about image format conversion, code utilities, cricket metrics, or platform features.';
+    }
+    if (q.includes('image') || q.includes('format') || q.includes('converter')) {
+      return 'Our image engine supports JPG to PNG, PNG to JPG (with white background fill for transparency), PNG to WebP, and SVG to PNG, all running 100% locally on HTML5 Canvas.';
+    }
+    if (q.includes('tool') || q.includes('65')) {
+      return 'NumanX Tools Hub features 65 client-side tools across 6 categories: Image Tools, Text & AI Tools, Creator Tools, Utility Tools, Cricket Tools, and Developer Tools.';
+    }
+    return `Understood. I am processing "${query}" using your client-side browser engine. All calculations and transformations remain strictly on your local device.`;
+  }
+
+  document.addEventListener('astro:page-load', initChatWorkspace);
 </script>
