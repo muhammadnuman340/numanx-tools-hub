@@ -298,14 +298,19 @@ const useCases = [
 </MainLayout>
 <script>
   import { initCodeHighlight } from '../../lib/codeHighlight';
+  import { convertImage } from '../../lib/image-format';
+  import type { ConversionResult } from '../../lib/image-format';
+
   initCodeHighlight();
-  const svgInput = document.getElementById('svg-input');
-  const widthInput = document.getElementById('width-input');
-  const heightInput = document.getElementById('height-input');
-  const convertBtn = document.getElementById('convert-btn');
-  const previewArea = document.getElementById('preview-area');
-  const previewImg = document.getElementById('preview-img');
-  const downloadLink = document.getElementById('download-link');
+  const svgInput = document.getElementById('svg-input') as HTMLTextAreaElement;
+  const widthInput = document.getElementById('width-input') as HTMLInputElement;
+  const heightInput = document.getElementById('height-input') as HTMLInputElement;
+  const convertBtn = document.getElementById('convert-btn') as HTMLButtonElement;
+  const previewArea = document.getElementById('preview-area') as HTMLElement;
+  const previewImg = document.getElementById('preview-img') as HTMLImageElement;
+  const downloadLink = document.getElementById('download-link') as HTMLAnchorElement;
+
+  let currentConvertedResult: ConversionResult | null = null;
 
   convertBtn.addEventListener('click', async () => {
     const svgCode = svgInput.value.trim();
@@ -315,67 +320,72 @@ const useCases = [
     const height = parseInt(heightInput.value) || 500;
 
     try {
-      const blob = new Blob([svgCode], { type: 'image/svg+xml;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
+      if (currentConvertedResult) {
+        currentConvertedResult.revoke();
+        currentConvertedResult = null;
+      }
 
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, width, height);
-        ctx.drawImage(img, 0, 0, width, height);
+      const result = await convertImage(svgCode, {
+        targetFormat: 'png',
+        width,
+        height,
+      });
 
-        const dataUrl = canvas.toDataURL('image/png');
-        previewImg.src = dataUrl;
-        downloadLink.href = dataUrl;
-        previewArea.classList.remove('hidden');
+      currentConvertedResult = result;
+      previewImg.src = result.objectUrl;
+      downloadLink.href = result.objectUrl;
+      downloadLink.download = result.filename;
+      previewArea.classList.remove('hidden');
 
-        URL.revokeObjectURL(url);
-      };
-      img.onerror = () => {
-        if ((window as any).__showToast) (window as any).__showToast({ message: 'Invalid SVG code', variant: 'error' });
-        URL.revokeObjectURL(url);
-      };
-      img.src = url;
-    } catch (e) {
-      if ((window as any).__showToast) (window as any).__showToast({ message: 'Conversion failed', variant: 'error' });
+      if ((window as any).__showToast) {
+        (window as any).__showToast({ message: 'SVG converted to PNG successfully!', variant: 'success' });
+      }
+    } catch (e: any) {
+      if ((window as any).__showToast) {
+        (window as any).__showToast({ message: e?.message || 'Invalid SVG code or conversion failed', variant: 'error' });
+      }
     }
   });
 
   document.getElementById('copy-btn')?.addEventListener('click', () => {
     const text =
-      document.getElementById('output-text')?.value || document.querySelector("[id$='result']")?.textContent || '';
+      (document.getElementById('output-text') as HTMLInputElement)?.value || document.querySelector("[id$='result']")?.textContent || '';
     if (!text) return;
     navigator.clipboard.writeText(text).catch(() => {});
     const btn = document.getElementById('copy-btn');
-    const span = btn.querySelector('span');
-    span.textContent = 'Copied!';
-    setTimeout(() => {
-      span.textContent = 'Copy';
-    }, 2000);
+    const span = btn?.querySelector('span');
+    if (span) {
+      span.textContent = 'Copied!';
+      setTimeout(() => {
+        span.textContent = 'Copy';
+      }, 2000);
+    }
   });
 
   function updateSVGStats() {
     const val = svgInput.value;
-    document.getElementById('char-count').textContent = val.length;
-    document.getElementById('word-count').textContent = val.trim() ? val.trim().split(/\s+/).length : 0;
-    document.getElementById('line-count').textContent = val ? val.split('\n').length : 0;
+    const charCount = document.getElementById('char-count');
+    const wordCount = document.getElementById('word-count');
+    const lineCount = document.getElementById('line-count');
+    if (charCount) charCount.textContent = String(val.length);
+    if (wordCount) wordCount.textContent = String(val.trim() ? val.trim().split(/\s+/).length : 0);
+    if (lineCount) lineCount.textContent = String(val ? val.split('\n').length : 0);
   }
   svgInput.addEventListener('input', updateSVGStats);
   updateSVGStats();
 
   // Fullscreen toggle
   document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
-    const card = document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
+    const card = document.getElementById('fullscreen-btn')?.closest("[class*='bg-surface-1']") as HTMLElement;
     if (!card) return;
     if (document.fullscreenElement) {
       document.exitFullscreen();
-      document.getElementById('fullscreen-btn').textContent = '⛶';
+      const btn = document.getElementById('fullscreen-btn');
+      if (btn) btn.textContent = '⛶';
     } else {
-      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
-      document.getElementById('fullscreen-btn').textContent = '✕';
+      (card as any).requestFullscreen?.() || (card as any).webkitRequestFullscreen?.();
+      const btn = document.getElementById('fullscreen-btn');
+      if (btn) btn.textContent = '✕';
     }
   });
   document.addEventListener('fullscreenchange', () => {
@@ -390,17 +400,17 @@ const useCases = [
     if (!input) return;
     try {
       const saved = localStorage.getItem(DRAFT_KEY);
-      if (saved && !input.value) {
-        input.value = saved;
+      if (saved && !(input as HTMLTextAreaElement).value) {
+        (input as HTMLTextAreaElement).value = saved;
         input.dispatchEvent(new Event('input'));
       }
     } catch (e) {}
-    let saveTimer;
+    let saveTimer: any;
     input.addEventListener('input', () => {
       clearTimeout(saveTimer);
       saveTimer = setTimeout(() => {
         try {
-          localStorage.setItem(DRAFT_KEY, input.value);
+          localStorage.setItem(DRAFT_KEY, (input as HTMLTextAreaElement).value);
         } catch (e) {}
       }, 500);
     });
@@ -443,16 +453,20 @@ const useCases = [
   document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key === 'Enter') {
       e.preventDefault();
-      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
+      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])") as HTMLElement;
       if (b) b.click();
     }
     if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
       e.preventDefault();
+      if (currentConvertedResult) {
+        currentConvertedResult.revoke();
+        currentConvertedResult = null;
+      }
       const clearBtn = document.getElementById('clear-btn') || document.querySelector("button[id*='clear']") || document.querySelector("button[id*='reset']");
-      if (clearBtn) clearBtn.click();
+      if (clearBtn) (clearBtn as HTMLElement).click();
       else {
         const inputs = document.querySelectorAll('textarea, input:not([type="radio"]):not([type="checkbox"])');
-        inputs.forEach(i => i.value = '');
+        inputs.forEach((i: any) => i.value = '');
         const evt = new Event('input', { bubbles: true });
         inputs.forEach(i => i.dispatchEvent(evt));
       }
@@ -474,9 +488,9 @@ const useCases = [
   document.getElementById('share-btn')?.addEventListener('click', () => {
     const u = window.location.origin + window.location.pathname;
     navigator.clipboard.writeText(u).catch(() => {});
-    if (typeof showToast === 'function') {
+    if (typeof (window as any).showToast === 'function') {
       if (typeof playPing === 'function') playPing();
-      showToast('Link copied!');
+      (window as any).showToast('Link copied!');
     }
   });
 
@@ -484,7 +498,8 @@ const useCases = [
   const rt = document.getElementById('svg-input');
   if (rt) {
     rt.addEventListener('input', () => {
-      const w = rt.value ? rt.value.trim().split(/\s+/).length : 0;
+      const val = (rt as HTMLTextAreaElement).value;
+      const w = val ? val.trim().split(/\s+/).length : 0;
       const e = document.getElementById('reading-time');
       if (e)
         e.textContent = Math.max(1, Math.round(w / 200)) + 'm read · ' + Math.max(1, Math.round(w / 150)) + 'm speak';
@@ -494,7 +509,7 @@ const useCases = [
 
   // Feature 6: Line numbers
   (function () {
-    const li = document.getElementById('svg-input');
+    const li = document.getElementById('svg-input') as HTMLTextAreaElement;
     if (li) {
       const ul = () => {
         const n = document.getElementById('line-nums');
@@ -512,7 +527,7 @@ const useCases = [
   // Feature 7: Sound effects
   function playPing() {
     try {
-      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const a = new ((window as any).AudioContext || (window as any).webkitAudioContext)();
       const o = a.createOscillator();
       const g = a.createGain();
       o.connect(g);
@@ -526,9 +541,10 @@ const useCases = [
   }
 
   // Feature 8: Export format - update download link
-  document.getElementById('export-format')?.addEventListener('change', function () {
+  document.getElementById('export-format')?.addEventListener('change', function (this: HTMLSelectElement) {
     const f = this.value;
-    const dl = document.getElementById('download-link');
+    const dl = document.getElementById('download-link') as HTMLAnchorElement;
+    if (!dl) return;
     if (f === 'txt') {
       dl.download = 'converted.txt';
       dl.textContent = 'Download TXT';
@@ -542,14 +558,14 @@ const useCases = [
       dl.download = 'converted.html';
       dl.textContent = 'Download HTML';
     } else {
-      dl.download = 'converted.png';
+      dl.download = currentConvertedResult ? currentConvertedResult.filename : 'converted.png';
       dl.textContent = 'Download PNG';
     }
   });
 
   // Feature 9: Letter frequency
   (function () {
-    const lf = document.getElementById('svg-input');
+    const lf = document.getElementById('svg-input') as HTMLTextAreaElement;
     if (lf) {
       lf.addEventListener('input', () => {
         const t = lf.value.toLowerCase().replace(/[^a-z]/g, '');
@@ -557,13 +573,13 @@ const useCases = [
           document.getElementById('letter-freq')?.classList.add('hidden');
           return;
         }
-        const f = {};
+        const f: Record<string, number> = {};
         for (const c of t) f[c] = (f[c] || 0) + 1;
         const s = Object.entries(f)
           .sort((a, b) => b[1] - a[1])
           .slice(0, 8);
-        const m = s[0] ? s[0][1] : 1;
         const el = document.getElementById('letter-freq');
+        if (!el) return;
         el.classList.remove('hidden');
         el.innerHTML = s
           .map(
@@ -574,5 +590,4 @@ const useCases = [
       });
     }
   })();
-
 </script>

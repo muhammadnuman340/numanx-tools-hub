@@ -375,41 +375,38 @@ const useCases = [
 </MainLayout>
 
 <script>
-  const dropzone = document.getElementById('dropzone');
-  const fileInput = document.getElementById('file-input');
-  const controlsSection = document.getElementById('controls-section');
-  const convertBtn = document.getElementById('convert-btn');
-  const convertBtnText = document.getElementById('convert-btn-text');
-  const resultSection = document.getElementById('result-section');
-  const qualitySlider = document.getElementById('quality-slider');
-  const qualityLabel = document.getElementById('quality-label');
-  const resultOriginal = document.getElementById('result-original');
-  const resultConverted = document.getElementById('result-converted');
-  const resultSaving = document.getElementById('result-saving');
-  const downloadLink = document.getElementById('download-link');
-  const previewImage = document.getElementById('preview-image');
-  const previewOriginalBtn = document.getElementById('preview-original-btn');
-  const previewConvertedBtn = document.getElementById('preview-converted-btn');
+  import { convertImage, validateImageFile, formatBytes } from '../../lib/image-format';
+  import type { ConversionResult } from '../../lib/image-format';
 
-  let currentFile = null;
-  let convertedBlobUrl = null;
-  let originalDataUrl = null;
-  let convertedSize = 0;
+  const dropzone = document.getElementById('dropzone') as HTMLElement;
+  const fileInput = document.getElementById('file-input') as HTMLInputElement;
+  const controlsSection = document.getElementById('controls-section') as HTMLElement;
+  const convertBtn = document.getElementById('convert-btn') as HTMLButtonElement;
+  const convertBtnText = document.getElementById('convert-btn-text') as HTMLElement;
+  const resultSection = document.getElementById('result-section') as HTMLElement;
+  const qualitySlider = document.getElementById('quality-slider') as HTMLInputElement;
+  const qualityLabel = document.getElementById('quality-label') as HTMLElement;
+  const resultOriginal = document.getElementById('result-original') as HTMLElement;
+  const resultConverted = document.getElementById('result-converted') as HTMLElement;
+  const resultSaving = document.getElementById('result-saving') as HTMLElement;
+  const downloadLink = document.getElementById('download-link') as HTMLAnchorElement;
+  const previewImage = document.getElementById('preview-image') as HTMLImageElement;
+  const previewOriginalBtn = document.getElementById('preview-original-btn') as HTMLButtonElement;
+  const previewConvertedBtn = document.getElementById('preview-converted-btn') as HTMLButtonElement;
 
-  function formatSize(bytes) {
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / 1048576).toFixed(1) + ' MB';
-  }
+  let currentFile: File | null = null;
+  let convertedResult: ConversionResult | null = null;
+  let originalBlobUrl: string | null = null;
 
   qualitySlider.addEventListener('input', () => {
     qualityLabel.textContent = qualitySlider.value + '%';
   });
 
-  function handleFile(file) {
-    if (!file.type.match(/^image\/png$/)) {
+  function handleFile(file: File) {
+    const validation = validateImageFile(file, ['png']);
+    if (!validation.valid) {
       if ((window as any).__showToast)
-        (window as any).__showToast({ message: 'Please select a PNG file.', variant: 'error' });
+        (window as any).__showToast({ message: validation.error || 'Please select a PNG file.', variant: 'error' });
       return;
     }
     currentFile = file;
@@ -433,84 +430,71 @@ const useCases = [
   dropzone.addEventListener('drop', (e) => {
     e.preventDefault();
     dropzone.classList.remove('border-amber-500/50', 'bg-surface-2');
-    if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+    if (e.dataTransfer && e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
   });
 
   fileInput.addEventListener('change', () => {
-    if (fileInput.files.length > 0) handleFile(fileInput.files[0]);
+    if (fileInput.files && fileInput.files.length > 0) handleFile(fileInput.files[0]);
     fileInput.value = '';
   });
 
-  convertBtn.addEventListener('click', () => {
+  convertBtn.addEventListener('click', async () => {
     if (!currentFile) return;
     convertBtnText.textContent = 'Converting...';
     convertBtn.disabled = true;
 
-    const quality = parseInt(qualitySlider.value) / 100;
-    const reader = new FileReader();
+    try {
+      const quality = parseInt(qualitySlider.value) / 100;
 
-    reader.onload = (e) => {
-      originalDataUrl = e.target.result;
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, 0, 0);
+      if (convertedResult) {
+        convertedResult.revoke();
+        convertedResult = null;
+      }
+      if (originalBlobUrl) {
+        URL.revokeObjectURL(originalBlobUrl);
+        originalBlobUrl = null;
+      }
 
-        canvas.toBlob(
-          (blob) => {
-            convertedBlobUrl = URL.createObjectURL(blob);
-            convertedSize = blob.size;
+      originalBlobUrl = URL.createObjectURL(currentFile);
+      convertedResult = await convertImage(currentFile, {
+        targetFormat: 'jpeg',
+        quality,
+        backgroundColor: '#FFFFFF',
+      });
 
-            resultOriginal.textContent = formatSize(currentFile.size);
-            resultConverted.textContent = formatSize(convertedSize);
+      resultOriginal.textContent = formatBytes(currentFile.size);
+      resultConverted.textContent = formatBytes(convertedResult.blob.size);
 
-            const saving = Math.round((1 - convertedSize / currentFile.size) * 100);
-            resultSaving.textContent = saving >= 0 ? `Save ${saving}%` : 'Larger than original';
+      const saving = convertedResult.savingsPercent ?? 0;
+      resultSaving.textContent = saving >= 0 ? `Save ${saving}%` : 'Larger than original';
 
-            downloadLink.href = convertedBlobUrl;
-            downloadLink.download = currentFile.name.replace(/\.[^.]+$/, '') + '.jpg';
+      downloadLink.href = convertedResult.objectUrl;
+      downloadLink.download = convertedResult.filename;
 
-            previewImage.src = convertedBlobUrl;
+      previewImage.src = convertedResult.objectUrl;
 
-            previewOriginalBtn.className =
-              'flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors';
-            previewConvertedBtn.className =
-              'flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors';
+      previewOriginalBtn.className =
+        'flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors';
+      previewConvertedBtn.className =
+        'flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors';
 
-            resultSection.classList.remove('hidden');
-            convertBtnText.textContent = 'Convert Again';
-            convertBtn.disabled = false;
+      resultSection.classList.remove('hidden');
+      convertBtnText.textContent = 'Convert Again';
+      convertBtn.disabled = false;
 
-            if ((window as any).__showToast)
-              (window as any).__showToast({ message: 'Conversion complete!', variant: 'success' });
-          },
-          'image/jpeg',
-          quality,
-        );
-      };
-      img.onerror = () => {
-        if ((window as any).__showToast) (window as any).__showToast({ message: 'Error decoding image.', variant: 'error' });
-        convertBtnText.textContent = 'Convert to JPG';
-        convertBtn.disabled = false;
-      };
-      img.src = e.target.result;
-    };
-    reader.onerror = () => {
-      if ((window as any).__showToast) (window as any).__showToast({ message: 'Error reading file.', variant: 'error' });
+      if ((window as any).__showToast)
+        (window as any).__showToast({ message: 'Conversion complete!', variant: 'success' });
+    } catch (err: any) {
+      if ((window as any).__showToast)
+        (window as any).__showToast({ message: 'Conversion failed: ' + (err?.message || 'Error'), variant: 'error' });
       convertBtnText.textContent = 'Convert to JPG';
       convertBtn.disabled = false;
-    };
-    reader.readAsDataURL(currentFile);
+    }
   });
 
   previewOriginalBtn.addEventListener('click', () => {
-    if (originalDataUrl) {
-      previewImage.src = originalDataUrl;
+    if (originalBlobUrl) {
+      previewImage.src = originalBlobUrl;
       previewOriginalBtn.className = 'flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors';
       previewConvertedBtn.className =
         'flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors';
@@ -518,8 +502,8 @@ const useCases = [
   });
 
   previewConvertedBtn.addEventListener('click', () => {
-    if (convertedBlobUrl) {
-      previewImage.src = convertedBlobUrl;
+    if (convertedResult && convertedResult.objectUrl) {
+      previewImage.src = convertedResult.objectUrl;
       previewConvertedBtn.className = 'flex-1 py-2 text-xs font-semibold text-tertiary bg-surface-1 transition-colors';
       previewOriginalBtn.className =
         'flex-1 py-2 text-xs font-semibold text-dim hover:text-secondary transition-colors';
@@ -528,22 +512,34 @@ const useCases = [
 
   document.getElementById('copy-btn')?.addEventListener('click', () => {
     const text =
-      document.getElementById('output-text')?.value || document.querySelector("[id$='result']")?.textContent || '';
+      (document.getElementById('output-text') as HTMLInputElement)?.value || document.querySelector("[id$='result']")?.textContent || '';
     if (!text) return;
     navigator.clipboard.writeText(text).catch(() => {});
     const btn = document.getElementById('copy-btn');
-    const span = btn.querySelector('span');
-    span.textContent = 'Copied!';
-    setTimeout(() => {
-      span.textContent = 'Copy';
-    }, 2000);
+    const span = btn?.querySelector('span');
+    if (span) {
+      span.textContent = 'Copied!';
+      setTimeout(() => {
+        span.textContent = 'Copy';
+      }, 2000);
+    }
   });
 
   document.getElementById('clear-btn')?.addEventListener('click', () => {
+    if (convertedResult) {
+      convertedResult.revoke();
+      convertedResult = null;
+    }
+    if (originalBlobUrl) {
+      URL.revokeObjectURL(originalBlobUrl);
+      originalBlobUrl = null;
+    }
+    currentFile = null;
+    controlsSection.classList.add('hidden');
+    resultSection.classList.add('hidden');
     document.querySelectorAll('textarea').forEach((t) => (t.value = ''));
-    document.querySelectorAll('input[type=text], input[type=number], input[type=file]').forEach((i) => {
-      if (i.type === 'file') i.value = '';
-      else i.value = '';
+    document.querySelectorAll('input[type=text], input[type=number], input[type=file]').forEach((i: any) => {
+      i.value = '';
     });
     document.querySelectorAll("[id$='result'], [id$='output'], [id$='preview']").forEach((el) => {
       if (el.tagName !== 'IMG' && el.tagName !== 'CANVAS') el.textContent = '';
@@ -553,14 +549,16 @@ const useCases = [
 
   // Fullscreen toggle
   document.getElementById('fullscreen-btn')?.addEventListener('click', () => {
-    const card = document.getElementById('fullscreen-btn').closest("[class*='bg-surface-1']");
+    const card = document.getElementById('fullscreen-btn')?.closest("[class*='bg-surface-1']") as HTMLElement;
     if (!card) return;
     if (document.fullscreenElement) {
       document.exitFullscreen();
-      document.getElementById('fullscreen-btn').textContent = '⛶';
+      const btn = document.getElementById('fullscreen-btn');
+      if (btn) btn.textContent = '⛶';
     } else {
-      card.requestFullscreen?.() || card.webkitRequestFullscreen?.();
-      document.getElementById('fullscreen-btn').textContent = '✕';
+      (card as any).requestFullscreen?.() || (card as any).webkitRequestFullscreen?.();
+      const btn = document.getElementById('fullscreen-btn');
+      if (btn) btn.textContent = '✕';
     }
   });
   document.addEventListener('fullscreenchange', () => {
@@ -570,7 +568,7 @@ const useCases = [
   document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key === 'Enter') {
       e.preventDefault();
-      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])");
+      const b = document.querySelector("button[id$='btn']:not([id*='full']):not([id*='paste']):not([id*='clear'])") as HTMLElement;
       if (b) b.click();
     }
     if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
@@ -590,14 +588,14 @@ const useCases = [
   document.getElementById('share-btn')?.addEventListener('click', () => {
     const u = window.location.origin + window.location.pathname;
     navigator.clipboard.writeText(u).catch(() => {});
-    if (typeof showToast === 'function') {
+    if (typeof (window as any).showToast === 'function') {
       if (typeof playPing === 'function') playPing();
-      showToast('Link copied!');
+      (window as any).showToast('Link copied!');
     }
   });
   function playPing() {
     try {
-      const a = new (window.AudioContext || window.webkitAudioContext)();
+      const a = new ((window as any).AudioContext || (window as any).webkitAudioContext)();
       const o = a.createOscillator();
       const g = a.createGain();
       o.connect(g);

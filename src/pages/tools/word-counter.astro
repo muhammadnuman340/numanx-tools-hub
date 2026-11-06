@@ -46,15 +46,37 @@ const faqItems = [
     answer:
       "Yes, the counter counts all characters including numbers, symbols, and punctuation. Words are sequences separated by spaces. Hyphenated words like 'well-known' count as a single word.",
   },
+  {
+    question: 'What counts as a sentence?',
+    answer:
+      'Sentences are counted by splitting text on periods, exclamation marks, and question marks. Each segment that contains at least one non-whitespace character counts as a sentence.',
+  },
+  {
+    question: 'How does character counting help with SEO?',
+    answer:
+      'Title tags should be 50-60 characters and meta descriptions 150-160 characters for optimal search display. The Social Media & SEO Limits panel shows how your text measures up.',
+  },
+  {
+    question: 'Why are character limits important on social media?',
+    answer:
+      'X (Twitter) has a 280-character limit, Instagram captions allow 2,200 characters, and LinkedIn posts have a 3,000-character limit. Staying within bounds ensures your full message is visible.',
+  },
+  {
+    question: 'Is my text stored or uploaded?',
+    answer:
+      "No. All processing happens entirely in your browser. Your text is never sent to any server. It is saved locally in your browser so you won't lose it if you refresh the page.",
+  },
 ];
 
 const wcSchema = {
-  name: 'Word Counter',
+  name: 'Word & Character Counter',
   applicationCategory: 'Utilities',
   description:
-    'Count words, characters, sentences, and paragraphs. Analyze keyword density, reading time, and speaking time.',
+    'Count words, characters with and without spaces, sentences, paragraphs and lines. Analyze keyword density, character frequency, reading time, speaking time and social media or SEO length limits.',
   featureList: [
-    'Real-time word, character, sentence, and paragraph count',
+    'Real-time word, character, sentence, paragraph, and line count',
+    'Social media and SEO character limit bars (X, Instagram, meta title, meta description)',
+    'Character frequency analysis',
     'Keyword density analysis for SEO optimization',
     'Reading time and speaking time estimation',
     'Live character count with and without spaces',
@@ -86,12 +108,12 @@ const benefits = [
   {
     icon: '🔍',
     title: 'Advanced Analysis',
-    desc: 'Track average word length, longest word, unique word count, and character counts with and without spaces for detailed text analysis.',
+    desc: 'Track average word length, longest word, unique words, words per sentence, line count and character frequency, plus character counts with and without spaces.',
   },
   {
-    icon: '🆓',
-    title: 'Completely Free',
-    desc: 'No sign-ups, no limits, no hidden charges. Analyze unlimited text with all features including keyword density and readability scoring.',
+    icon: '📱',
+    title: 'Social & SEO Limits',
+    desc: 'Live bars show your character count against the X (280), Instagram caption (2,200), meta title (60) and meta description (160) limits.',
   },
 ];
 
@@ -104,7 +126,7 @@ const howToSteps = [
   {
     num: '2',
     title: 'Review the Dashboard',
-    desc: 'Watch words, characters, sentences, and paragraphs count in real-time. Each stat updates as you add or remove text.',
+    desc: 'Watch words, characters (with and without spaces), sentences, and paragraphs count in real-time. Each stat updates as you add or remove text.',
   },
   {
     num: '3',
@@ -113,8 +135,8 @@ const howToSteps = [
   },
   {
     num: '4',
-    title: 'Check Readability',
-    desc: 'Use the readability meter and advanced stats to refine your writing. Adjust sentence length and word choice for better scores.',
+    title: 'Check Readability & Limits',
+    desc: 'Use the readability meter, the social media and SEO limit bars, and the character frequency panel to refine your writing.',
   },
 ];
 
@@ -143,30 +165,30 @@ const useCases = [
 ---
 
 <MainLayout
-  title="Text Count & Paragraph Word Counter Online | NumanX Tools"
-  description="Free online text count and paragraph word counter. Instantly count words in a paragraph, characters, sentences, Flesch readability, and social media limits."
-  keywords="paragraph word counter, word counter in a paragraph, text count, word counter, character counter, sentence counter, paragraph counter, reading time, keyword density"
+  title="Word & Character Counter — Paragraph Text Count Online | NumanX Tools"
+  description="Free word and character counter. Count words, characters with and without spaces, sentences and paragraphs, check X, Instagram and SEO character limits, and see Flesch readability."
+  keywords="word counter, character counter, character count in paragraph, paragraph word counter, word counter in a paragraph, text count, letter count, character limit calculator, social media limit checker, sentence counter, paragraph counter, reading time, keyword density"
   toolSchema={wcSchema}
   faq={faqItems}
   howto={{
-    name: 'How to Use Word Counter',
-    description: 'Count words, characters, sentences, and analyze keyword density and readability in 4 easy steps.',
+    name: 'How to Count Words and Characters',
+    description: 'Count words, characters, sentences, and check keyword density, readability and character limits in 4 easy steps.',
     steps: howToSteps.map((s) => ({ title: s.title, text: s.desc })),
     totalTime: 'PT1M',
   }}
   breadcrumbs={[
     { name: 'Home', url: '/' },
     { name: 'Tools', url: '/tools/' },
-    { name: 'Word Counter', url: '/tools/word-counter/' },
+    { name: 'Word & Character Counter', url: '/tools/word-counter/' },
   ]}
 >
   <main class="min-h-screen pt-6 sm:pt-8 pb-20 px-4 sm:px-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto">
       <ToolHeader
-        title="Word Counter"
-        gradient="Analytics"
-        desc="Word Counter counts words, characters, sentences and paragraphs as you type or paste. It also shows reading and speaking time, keyword density and a Flesch readability score, so you can check an essay, post or meta description against a length limit. Your text stays in your browser."
-        updated="2026-11-01"
+        title="Word & Character"
+        gradient="Counter"
+        desc="Word & Character Counter counts words, characters (with and without spaces), sentences, paragraphs and lines as you type or paste. It also shows reading and speaking time, keyword density, character frequency, a Flesch readability score and live X, Instagram and SEO limit bars, so you can check an essay, post or meta description against a length limit. Your text stays in your browser."
+        updated="2026-11-02"
         badge="✦ Client-Side"
         slug="word-counter"
       />
@@ -436,8 +458,57 @@ const useCases = [
                 <span id="speak-time" class="block text-lg font-bold text-secondary tabular-nums">0m</span>
                 <span class="text-xs text-zinc-400 font-medium">Speak Time</span>
               </div>
+              <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center">
+                <span id="avg-sent" class="block text-lg font-bold text-secondary tabular-nums">—</span>
+                <span class="text-xs text-zinc-400 font-medium">Words/Sentence</span>
+              </div>
+              <div class="bg-surface-1 border border-surface rounded-lg p-3 text-center">
+                <span id="line-count" class="block text-lg font-bold text-secondary tabular-nums">0</span>
+                <span class="text-xs text-zinc-400 font-medium">Lines</span>
+              </div>
             </div>
           </div>
+        </div>
+
+        <!-- ─── Social Media & SEO Limits ─── -->
+        <div class="bg-surface-1 border border-surface rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-sm leading-none">📱</span>
+            <h2 class="text-xs font-semibold text-secondary uppercase tracking-wider m-0">Social Media &amp; SEO Limits</h2>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {
+              [
+                { id: 'twitter', label: 'X / Twitter', max: 280 },
+                { id: 'ig', label: 'Instagram Caption', max: 2200 },
+                { id: 'meta-title', label: 'SEO Meta Title', max: 60 },
+                { id: 'meta-desc', label: 'SEO Meta Description', max: 160 },
+              ].map((l) => (
+                <div class="space-y-1.5">
+                  <div class="flex justify-between text-xs text-secondary">
+                    <span class="font-medium">{l.label}</span>
+                    <span id={`limit-${l.id}`} class="limit-count font-mono tabular-nums text-muted" data-max={l.max}>
+                      0 / {l.max.toLocaleString('en-US')}
+                    </span>
+                  </div>
+                  <div class="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+                    <div id={`bar-${l.id}`} class="bg-amber-500 h-1.5 rounded-full transition-all duration-300" style="width: 0%" />
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- ─── Character Frequency ─── -->
+        <div class="bg-surface-1 border border-surface rounded-xl p-4">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-sm leading-none">🔤</span>
+            <h2 class="text-xs font-semibold text-secondary uppercase tracking-wider m-0">Character Frequency</h2>
+            <span class="ml-auto text-xs text-zinc-400 font-medium">Top 15 letters &amp; digits</span>
+          </div>
+          <div id="freq-list" class="flex flex-wrap gap-1.5 min-h-[24px]"></div>
+          <p id="freq-empty" class="text-xs text-dim text-center py-6">Start typing to see character frequency…</p>
         </div>
       </div>
 
@@ -468,6 +539,12 @@ const useCases = [
             Writers, students, editors, SEO professionals, and content creators use word counters daily to polish their
             work and meet platform-specific requirements — from Twitter's 280-character limit to blog posts targeting
             1,500+ words.
+          </p>
+          <p>
+            A <strong class="text-primary">character counter</strong> matters just as much when a platform limits length
+            in characters rather than words: social media posts, SMS messages, meta titles and descriptions. The limit bars
+            above track the most common ones, and the <strong class="text-primary">character frequency</strong> panel shows
+            which letters and digits you use most.
           </p>
         </div>
       </section>
@@ -648,7 +725,7 @@ const useCases = [
 
       <ToolContentSections
         toolSlug="word-counter"
-        toolName="Word Counter"
+        toolName="Word & Character Counter"
         category="Utility Tools"
         {benefits}
         howToSteps={howToSteps}
@@ -723,6 +800,10 @@ const useCases = [
   const avgWordLen = $('avg-word-len');
   const longestWord = $('longest-word');
   const uniqueWords = $('unique-words');
+  const avgSent = $('avg-sent');
+  const lineCount = $('line-count');
+  const freqList = $('freq-list');
+  const freqEmpty = $('freq-empty');
   const keywordPanel = $('keyword-panel');
   const keywordList = $('keyword-list');
   const keywordEmpty = $('keyword-empty');
@@ -822,11 +903,45 @@ const useCases = [
       avgWordLen.textContent = (cns / wc).toFixed(1);
       longestWord.textContent = words.reduce((a, b) => (a.length >= b.length ? a : b)).substring(0, 18);
       uniqueWords.textContent = new Set(words.map((w) => w.toLowerCase())).size;
+      avgSent.textContent = sc > 0 ? (wc / sc).toFixed(1) : '—';
     } else {
       avgWordLen.textContent = '—';
       longestWord.textContent = '—';
       uniqueWords.textContent = '0';
+      avgSent.textContent = '—';
     }
+    lineCount.textContent = String(text.split(/\n/).length);
+
+    // Social media & SEO limits: over the limit turns the bar and count to the danger colour
+    document.querySelectorAll<HTMLElement>('.limit-count').forEach((el) => {
+      const max = Number(el.dataset.max);
+      const bar = $(el.id.replace('limit-', 'bar-'));
+      const over = cc > max;
+      el.textContent = `${cc.toLocaleString('en-US')} / ${max.toLocaleString('en-US')}${over ? ' (over)' : ''}`;
+      el.classList.toggle('text-danger', over);
+      el.classList.toggle('text-muted', !over);
+      if (bar) {
+        bar.style.width = `${Math.min(100, (cc / max) * 100)}%`;
+        bar.classList.toggle('bg-danger', over);
+        bar.classList.toggle('bg-amber-500', !over);
+      }
+    });
+
+    // Character frequency (letters and digits)
+    const charFreq: Record<string, number> = {};
+    for (const ch of text.toLowerCase()) {
+      if (/[a-z0-9]/.test(ch)) charFreq[ch] = (charFreq[ch] || 0) + 1;
+    }
+    const topChars = Object.entries(charFreq)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 15);
+    freqEmpty.classList.toggle('hidden', topChars.length > 0);
+    freqList.innerHTML = topChars
+      .map(
+        ([ch, count]) =>
+          `<span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-surface-1 border border-zinc-700/50 text-xs text-secondary"><span class="font-mono font-bold text-amber-400">"${ch}"</span><span class="text-tertiary tabular-nums">${count}</span></span>`,
+      )
+      .join('');
 
     // Keyword Density
     if (wc > 0) {
@@ -906,8 +1021,13 @@ const useCases = [
   $('target-word-goal')?.addEventListener('input', updateStats);
   $('reading-wpm-input')?.addEventListener('input', updateStats);
 
-  // Restore saved text
+  // Restore saved text (text saved by the old Character Counter page moves here once)
   try {
+    const oldCc = localStorage.getItem('nt_cc_text');
+    if (oldCc !== null) {
+      if (!localStorage.getItem('nt_wc_text')) localStorage.setItem('nt_wc_text', oldCc);
+      localStorage.removeItem('nt_cc_text');
+    }
     const saved = localStorage.getItem('nt_wc_text');
     if (saved) {
       textarea.value = saved;

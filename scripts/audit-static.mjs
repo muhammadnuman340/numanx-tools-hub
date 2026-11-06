@@ -180,10 +180,38 @@ if (fs.existsSync(distSitemap)) {
     }
   }
 
-  if (urls.length === 106 && urls.length === uniqueUrls.size && disallowedFound === 0) {
-    console.log(`✅ Single Sitemap Architecture verified (exactly 106 canonical URLs, 0 duplicates, 0 disallowed).`);
-  } else if (urls.length !== 106) {
-    console.error(`❌ Sitemap URL count mismatch: expected 106 URLs, found ${urls.length}.`);
+  // Derive expected sitemap count from single sources of truth:
+  // - Tools from src/data/tools.ts (65 tools after 5 duplicate merges)
+  // - Category landing pages from categories in src/data/tools.ts (6)
+  // - Fixed static routes: /, /tools/, /blog/, /guides/, /comparisons/, /recommended/, /about/, /contact/, /privacy-policy/, /terms-of-service/ (10)
+  // - Markdown posts: blog (16), guides (3), comparisons (1)
+  // Total: 65 tools + 16 static/categories + 20 markdown = 101 URLs
+  let toolCount = 65;
+  let categoryCount = 6;
+  try {
+    const { pathToFileURL } = await import('node:url');
+    const toolsFile = pathToFileURL(path.resolve('src/data/tools.ts')).href;
+    const { tools, categories } = await import(toolsFile);
+    toolCount = tools.length;
+    categoryCount = categories.length;
+  } catch {
+    const toolsDir = path.join(SRC_DIR, 'pages', 'tools');
+    if (fs.existsSync(toolsDir)) {
+      toolCount = fs.readdirSync(toolsDir).filter(f => f.endsWith('.astro') && f !== 'index.astro' && !f.startsWith('[')).length;
+    }
+  }
+
+  const countMd = (dir) => (fs.existsSync(dir) ? fs.readdirSync(dir).filter(f => f.endsWith('.md')).length : 0);
+  const blogCount = countMd(path.join(SRC_DIR, 'pages', 'blog'));
+  const guideCount = countMd(path.join(SRC_DIR, 'pages', 'guides'));
+  const compCount = countMd(path.join(SRC_DIR, 'pages', 'comparisons'));
+  const staticRouteCount = 10 + categoryCount; // 10 fixed static routes + category routes
+  const expectedUrlCount = toolCount + blogCount + guideCount + compCount + staticRouteCount;
+
+  if (urls.length === expectedUrlCount && urls.length === uniqueUrls.size && disallowedFound === 0) {
+    console.log(`✅ Single Sitemap Architecture verified (exactly ${expectedUrlCount} canonical URLs, 0 duplicates, 0 disallowed).`);
+  } else if (urls.length !== expectedUrlCount) {
+    console.error(`❌ Sitemap URL count mismatch: expected ${expectedUrlCount} URLs, found ${urls.length}.`);
     totalErrors++;
   }
 

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import * as fs from 'fs';
 import * as path from 'path';
+import { tools } from '../tools';
 
 // Helper to check content and assert
 const readHtml = (filePath: string) => {
@@ -128,7 +129,7 @@ describe('NumanX Tools Hub - E2E Build Structural Validation', () => {
       // Grid container: one linked card per tool, each with the data the filter script reads
       expect(html).toContain('id="cards-container-tools"');
       const cards = html.match(/<a href="\/tools\/[a-z0-9-]+\/"[^>]*class="[^"]*tool-card[^"]*"[^>]*data-name="[^"]+" data-category="[^"]+"/g) || [];
-      expect(cards.length).toBe(70);
+      expect(cards.length).toBe(tools.length);
 
       // Control panel & search hints
       expect(html).toContain('placeholder="Search tools..."');

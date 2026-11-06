@@ -1,10 +1,12 @@
 ---
-// CookieConsent.astro — Centralized Consent UI (Phase 5C.2B)
+// CookieConsent.astro — Centralized Consent UI (Phase 5C.2B / Fix D Mobile Layout)
 ---
 
 <!--
-  Compact consent bar (UI plan Phase 1): one line on desktop, fully inside the screen on phones.
-  Ids, aria labels and the consent script below are unchanged.
+  Compact responsive consent bar:
+  - Mobile: compact, safe-area-aware, dismissible, non-obstructing
+  - Desktop: single-line, elegant layout
+  Ids, aria labels, and consent storage contract are preserved.
 -->
 <div
   id="cookie-consent-banner"
@@ -13,20 +15,43 @@
   class="fixed bottom-0 left-0 w-full z-[99999] transform translate-y-full transition-transform duration-500 ease-in-out hidden"
   style="display: none;"
 >
-  <div class="mx-auto max-w-5xl px-3 sm:px-4 pt-2" style="padding-bottom: max(12px, env(safe-area-inset-bottom, 0px));">
+  <div class="mx-auto max-w-5xl px-2.5 sm:px-4 pt-1 sm:pt-2" style="padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));">
     <div
-      class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 bg-page border border-white/10 rounded-2xl px-4 py-3 shadow-2xl"
+      class="relative flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-5 bg-page/95 backdrop-blur-md border border-white/10 rounded-xl sm:rounded-2xl p-3 sm:px-4 sm:py-3 shadow-2xl"
     >
-      <p class="flex-1 min-w-0 text-[13px] leading-snug text-zinc-300">
+      <!-- Mobile quick dismiss button -->
+      <button
+        type="button"
+        id="btn-dismiss-cookies"
+        class="absolute top-2.5 right-2.5 w-8 h-8 flex items-center justify-center rounded-lg text-zinc-400 hover:text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 transition-colors sm:hidden cursor-pointer"
+        aria-label="Dismiss cookie notice"
+      >
+        <svg
+          class="w-4 h-4"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <p class="flex-1 min-w-0 text-xs sm:text-[13px] leading-relaxed sm:leading-snug text-zinc-300 pr-7 sm:pr-0">
         We use essential cookies to run the site. Choose "Accept all" to also allow optional analytics
         cookies.
-        <a href="/privacy-policy/" class="text-amber-300 hover:text-white underline underline-offset-4">Privacy policy</a>
+        <a href="/privacy-policy/" class="text-amber-300 hover:text-white underline underline-offset-4 whitespace-nowrap">Privacy policy</a>
       </p>
       <div class="grid grid-cols-2 gap-2 sm:flex sm:shrink-0">
         <button
           type="button"
           id="btn-decline-cookies"
-          class="min-h-11 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-white font-semibold text-sm transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-page cursor-pointer"
+          class="min-h-10 sm:min-h-11 px-3 sm:px-4 rounded-lg sm:rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-white font-semibold text-xs sm:text-sm transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-page cursor-pointer"
           aria-label="Allow essential cookies only and deny optional tracking"
         >
           Essential only
@@ -34,7 +59,7 @@
         <button
           type="button"
           id="btn-accept-cookies"
-          class="min-h-11 px-4 rounded-xl bg-amber-600 hover:bg-amber-500 text-accent-fg font-semibold text-sm transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-page cursor-pointer"
+          class="min-h-10 sm:min-h-11 px-3 sm:px-4 rounded-lg sm:rounded-xl bg-amber-600 hover:bg-amber-500 text-accent-fg font-semibold text-xs sm:text-sm transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-page cursor-pointer"
           aria-label="Accept all cookies and optional tracking"
         >
           Accept all
@@ -44,21 +69,52 @@
   </div>
 </div>
 
+<style is:global>
+  body.has-cookie-banner #main-content {
+    padding-bottom: max(7rem, calc(var(--cookie-banner-height, 140px) + 1.5rem)) !important;
+  }
+  @media (min-width: 640px) {
+    body.has-cookie-banner #main-content {
+      padding-bottom: max(8rem, calc(var(--cookie-banner-height, 68px) + 2rem)) !important;
+    }
+  }
+  body.has-cookie-banner #back-to-top {
+    bottom: calc(var(--cookie-banner-height, 140px) + 1rem) !important;
+    transition: bottom 0.3s ease, opacity 0.3s ease, transform 0.3s ease !important;
+  }
+  body.has-cookie-banner #ai-assistant {
+    bottom: calc(var(--cookie-banner-height, 140px) + 1rem) !important;
+    transition: bottom 0.3s ease !important;
+  }
+</style>
+
 <script>
   import { setConsent, hasConsentDecision, OPEN_SETTINGS_EVENT } from '../lib/consent';
+
+  function updateBannerHeight(banner: HTMLElement) {
+    const h = banner.offsetHeight;
+    if (h > 0) {
+      document.documentElement.style.setProperty('--cookie-banner-height', `${h}px`);
+    }
+  }
 
   function openBannerElement(banner: HTMLElement, focusTarget?: HTMLElement | null) {
     banner.style.display = 'block';
     banner.classList.remove('hidden');
+    document.body.classList.add('has-cookie-banner');
+
     // Ensure styles are applied before animating entrance
     requestAnimationFrame(() => {
       banner.classList.remove('translate-y-full');
+      updateBannerHeight(banner);
       focusTarget?.focus();
     });
   }
 
   function closeBannerElement(banner: HTMLElement) {
     banner.classList.add('translate-y-full');
+    document.body.classList.remove('has-cookie-banner');
+    document.documentElement.style.removeProperty('--cookie-banner-height');
     setTimeout(() => {
       banner.style.display = 'none';
       banner.classList.add('hidden');
@@ -69,6 +125,7 @@
     const banner = document.getElementById('cookie-consent-banner') as HTMLElement | null;
     const btnAccept = document.getElementById('btn-accept-cookies') as HTMLButtonElement | null;
     const btnDecline = document.getElementById('btn-decline-cookies') as HTMLButtonElement | null;
+    const btnDismiss = document.getElementById('btn-dismiss-cookies') as HTMLButtonElement | null;
 
     if (!banner || !btnAccept || !btnDecline) return;
 
@@ -77,6 +134,8 @@
         openBannerElement(banner, btnDecline);
       }, 500);
     } else {
+      document.body.classList.remove('has-cookie-banner');
+      document.documentElement.style.removeProperty('--cookie-banner-height');
       banner.style.display = 'none';
       banner.classList.add('hidden');
       banner.classList.add('translate-y-full');
@@ -91,16 +150,31 @@
       setConsent('essential');
       closeBannerElement(banner);
     };
+
+    if (btnDismiss) {
+      btnDismiss.onclick = () => {
+        setConsent('essential');
+        closeBannerElement(banner);
+      };
+    }
   }
 
   // Global handler for reopening cookie settings across page navigation
   if (typeof window !== 'undefined' && !(window as any).__nx_consent_init) {
     (window as any).__nx_consent_init = true;
+
     window.addEventListener(OPEN_SETTINGS_EVENT, () => {
       const banner = document.getElementById('cookie-consent-banner') as HTMLElement | null;
       const btnDecline = document.getElementById('btn-decline-cookies') as HTMLButtonElement | null;
       if (banner) {
         openBannerElement(banner, btnDecline);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      const banner = document.getElementById('cookie-consent-banner') as HTMLElement | null;
+      if (banner && document.body.classList.contains('has-cookie-banner')) {
+        updateBannerHeight(banner);
       }
     });
   }

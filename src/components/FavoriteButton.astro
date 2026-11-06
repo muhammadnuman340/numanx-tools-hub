@@ -35,6 +35,9 @@ const { slug, class: className } = Astro.props;
 </button>
 
 <script>
+  import { migrateStoredSlugs } from '../lib/retiredSlugs';
+  migrateStoredSlugs();
+
   // Buttons are replaced on every client-side navigation, so bind on astro:page-load
   // (fires on first load too) and mark each button once.
   const KEY = 'nt_favorites';

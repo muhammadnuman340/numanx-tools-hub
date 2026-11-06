@@ -3,3 +3,13 @@
 /tools/cricket-stat-tracker /tools/strike-rate-average-calculator/ 301
 /tools/text-summarizer/ /tools/ai-text-summarizer/ 301
 /tools/text-summarizer /tools/ai-text-summarizer/ 301
+/tools/strike-rate-calculator/ /tools/strike-rate-average-calculator/ 301
+/tools/strike-rate-calculator /tools/strike-rate-average-calculator/ 301
+/tools/character-counter/ /tools/word-counter/ 301
+/tools/character-counter /tools/word-counter/ 301
+/tools/cricket-target-calculator/ /tools/run-rate-calculator/?tab=target 301
+/tools/cricket-target-calculator /tools/run-rate-calculator/?tab=target 301
+/tools/markdown-to-pdf/ /tools/markdown-editor/ 301
+/tools/markdown-to-pdf /tools/markdown-editor/ 301
+/tools/list-randomizer/ /tools/random-number-generator/?tab=list 301
+/tools/list-randomizer /tools/random-number-generator/?tab=list 301
