@@ -118,7 +118,7 @@ export const PDF_TEMPLATES: Record<string, string> = {
 ---
 
 ## 1. System Overview
-The **NumanX Tools Hub** operates on a zero-server edge architecture. Calculations, barcode generation, and PDF document synthesis occur client-side without remote cloud latency.
+The **NumanX Tools Hub** processes tool input in your browser. Calculations, barcode generation, and PDF document synthesis occur client-side without remote cloud latency.
 
 ### Core Processing Pipeline
 \`\`\`mermaid
@@ -150,7 +150,7 @@ $$\\text{Target} = \\left\\lfloor S_1 \\times \\frac{R_2}{R_1} \\right\\rfloor +
 | :--- | :--- | :--- | :--- |
 | **Parsing Latency** | < 100ms | 38ms (V8 Engine) | **PASSED** |
 | **Vector Resolution** | 300 DPI | Lossless Vector SVG | **PASSED** |
-| **Privacy Leakage** | 0 bytes | 0 outgoing network calls | **COMPLIANT** |
+| **Document Upload** | 0 bytes | Libraries load from cdn.jsdelivr.net; your document is not sent | **NOT UPLOADED** |
 
 > **Security Note:** All cryptographic operations utilize \`window.crypto.getRandomValues()\` rather than insecure pseudorandom generators.
 `,
@@ -181,7 +181,7 @@ Welcome to the **NumanX Tools Hub** open-source repository.
 
 ## Features
 - **Zero Configuration**: Runs in any modern web browser.
-- **Privacy Guaranteed**: Data never leaves your machine.
+- **No Uploads**: Your Markdown is converted in your browser. The editor loads its libraries from cdn.jsdelivr.net.
 - **Free Browser Tools**: Barcodes, Cricket Analytics, Math, Text, and Media.
 
 ## Installation

@@ -8,6 +8,8 @@ import {
   enableGaTracking,
   getAnalyticsState,
   resetAnalyticsState,
+  normalizeTagId,
+  normalizeGaIds,
   type AnalyticsConfig,
 } from '../analyticsConsent';
 import {
@@ -269,6 +271,70 @@ describe('Central Analytics Consent Loader (Phase 5C.2C)', () => {
       expect(mockWindow['ga-disable-G-TEST12345']).toBe(true);
       // Verify cookie cleared
       expect(mockDocument.cookie).toContain('expires=Thu, 01 Jan 1970');
+    });
+  });
+
+  describe('Tag ID normalization', () => {
+    it('strips a stray prefix and whitespace from the GA ID', () => {
+      expect(normalizeTagId(': G-64JVWY8F6W', 'ga')).toBe('G-64JVWY8F6W');
+      expect(normalizeTagId('  g-abc12345 ', 'ga')).toBe('G-ABC12345');
+      expect(normalizeTagId('GTM-TBXFNLDB', 'gtm')).toBe('GTM-TBXFNLDB');
+    });
+
+    it('returns an empty string for missing or invalid IDs', () => {
+      expect(normalizeTagId(undefined, 'ga')).toBe('');
+      expect(normalizeTagId('', 'ga')).toBe('');
+      expect(normalizeTagId('not-an-id', 'ga')).toBe('');
+      expect(normalizeTagId('GTM-TBXFNLDB', 'ga')).toBe('');
+      expect(normalizeTagId('G-64JVWY8F6W', 'gtm')).toBe('');
+    });
+
+    it('loads gtag with the clean ID when the configured value has a prefix', () => {
+      setConsent('accepted', mockStorage);
+      loadAnalytics({ gaId: ': G-TEST12345' }, mockStorage);
+      expect(injectedScripts).toHaveLength(1);
+      expect(injectedScripts[0].src).toBe('https://www.googletagmanager.com/gtag/js?id=G-TEST12345');
+    });
+
+    it('loads nothing for an invalid GA ID even after consent', () => {
+      setConsent('accepted', mockStorage);
+      loadAnalytics({ gaId: 'garbage' }, mockStorage);
+      expect(injectedScripts).toHaveLength(0);
+    });
+
+    it('extracts every GA ID once, in order, ignoring junk and GTM IDs', () => {
+      expect(normalizeGaIds(': G-64JVWY8F6W G-SYQLJP44L7 G-64JVWY8F6W')).toEqual(['G-64JVWY8F6W', 'G-SYQLJP44L7']);
+      expect(normalizeGaIds('G-AAAA1111,g-bbbb2222')).toEqual(['G-AAAA1111', 'G-BBBB2222']);
+      expect(normalizeGaIds('GTM-TBXFNLDB nonsense')).toEqual([]);
+      expect(normalizeGaIds(undefined)).toEqual([]);
+    });
+
+    it('loads gtag.js once and configures each GA property after consent', () => {
+      setConsent('accepted', mockStorage);
+      loadAnalytics({ gaId: ': G-AAAA1111 G-BBBB2222' }, mockStorage);
+      expect(injectedScripts).toHaveLength(1);
+      expect(injectedScripts[0].src).toBe('https://www.googletagmanager.com/gtag/js?id=G-AAAA1111');
+      const configured = (mockWindow.dataLayer as IArguments[])
+        .filter((entry) => entry[0] === 'config')
+        .map((entry) => entry[1]);
+      expect(configured).toEqual(['G-AAAA1111', 'G-BBBB2222']);
+    });
+
+    it('loads nothing for multiple GA IDs without consent', () => {
+      loadAnalytics({ gaId: 'G-AAAA1111 G-BBBB2222' }, mockStorage);
+      expect(injectedScripts).toHaveLength(0);
+      expect(mockWindow.dataLayer).toBeUndefined();
+    });
+
+    it('sets ga-disable for every GA property on withdrawal', () => {
+      revokeAnalytics({ gaId: 'G-AAAA1111 G-BBBB2222' });
+      expect(mockWindow['ga-disable-G-AAAA1111']).toBe(true);
+      expect(mockWindow['ga-disable-G-BBBB2222']).toBe(true);
+    });
+
+    it('sets ga-disable for the clean ID when revoking with a prefixed value', () => {
+      revokeAnalytics({ gaId: ': G-TEST12345' });
+      expect(mockWindow['ga-disable-G-TEST12345']).toBe(true);
     });
   });
 

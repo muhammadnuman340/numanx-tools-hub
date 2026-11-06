@@ -1,6 +1,6 @@
 ---
 title: 'Why Offline-First Web Tools Matter'
-description: 'Explore the security and speed benefits of offline-first, client-side browser tools that keep your files safe and completely private.'
+description: 'Explore the security and speed benefits of offline-first, client-side browser tools that process your files on your own device.'
 category: 'Productivity'
 date: '2026-06-05'
 readingTime: '3 min read'
@@ -12,7 +12,7 @@ Most web tools upload your files to a server. More creators and developers are s
 
 Let's explore why running tools locally on your computer is more secure, incredibly fast, and much more private.
 
-## 1. Absolute Privacy: No File Uploads
+## 1. Privacy: No File Uploads
 
 With standard web utilities, when you want to compress an image, convert a JPG, or count lines of code, you must first upload the source file to their server. This poses significant risks:
 

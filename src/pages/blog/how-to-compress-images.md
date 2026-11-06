@@ -13,7 +13,7 @@ image: '/images/blog/how-to-compress-images.svg'
 
 Image compression is one of the most important skills for anyone building websites or creating content. Large images slow down your site, hurt your SEO, and frustrate visitors.
 
-> ⚡ **Compress Images Instantly in Your Browser:** Reduce image file sizes by up to 85% with our free [**Image Compressor**](/tools/image-compressor/). 100% private, zero uploads to external servers, and instant real-time quality preview.
+> ⚡ **Compress Images Instantly in Your Browser:** Reduce image file sizes by up to 85% with our free [**Image Compressor**](/tools/image-compressor/). Runs in your browser, your images are never uploaded, and you get an instant real-time quality preview.
 
 But compression doesn't have to mean sacrificing quality. Here's how to compress images the right way.
 

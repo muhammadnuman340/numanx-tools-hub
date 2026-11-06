@@ -128,7 +128,7 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
         <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
       </span>
-      <span><strong>Support NumanX Open-Source Utilities:</strong> 100% Free Forever with Zero Server Storage. Instant local support via <strong>NayaPay / JazzCash / Easypaisa / Payoneer</strong> or Crypto USDT.</span>
+      <span><strong>Support NumanX Open-Source Utilities:</strong> Free tools that run in your browser. Instant local support via <strong>NayaPay / JazzCash / Easypaisa / Payoneer</strong> or Crypto USDT.</span>
     </div>
     <button
       type="button"
@@ -153,7 +153,7 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
       </div>
 
       <p class="text-xs text-slate-400 m-0 leading-relaxed">
-        NumanX Tools Hub runs 100% in your browser with zero server data retention. Support open-source development directly via local Pakistani mobile accounts or global crypto:
+        NumanX Tools Hub tools run in your browser, and your files are not uploaded. Support open-source development directly via local Pakistani mobile accounts or global crypto:
       </p>
 
       <!-- Tab navigation -->
@@ -216,72 +216,63 @@ const dimensionClass = formatStyles[format] || formatStyles.horizontal;
       </div>
     </div>
   </dialog>
+)}
 
-  <script is:inline>
-    document.addEventListener('DOMContentLoaded', () => {
-      const modal = document.getElementById('numanx-tip-modal');
-      if (!modal) return;
+<script>
+  // Tip dialog. A bundled script runs once per page (an inline one inside the {slotType && …}
+  // block broke the ESLint parser); it does nothing on pages without the support bar.
+  function initTipModal(): void {
+    const modal = document.getElementById('numanx-tip-modal') as HTMLDialogElement | null;
+    if (!modal || modal.dataset.ready === 'true') return;
+    modal.dataset.ready = 'true';
 
-      document.querySelectorAll('.open-tip-modal-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          modal.showModal();
+    document.querySelectorAll<HTMLElement>('.open-tip-modal-btn').forEach((btn) => {
+      btn.addEventListener('click', () => modal.showModal());
+    });
+
+    document.getElementById('close-tip-modal-btn')?.addEventListener('click', () => modal.close());
+
+    modal.addEventListener('click', (e: MouseEvent) => {
+      const rect = modal.getBoundingClientRect();
+      const inDialog =
+        rect.top <= e.clientY &&
+        e.clientY <= rect.top + rect.height &&
+        rect.left <= e.clientX &&
+        e.clientX <= rect.left + rect.width;
+      if (!inDialog) modal.close();
+    });
+
+    const tabBtns = document.querySelectorAll<HTMLElement>('.tip-tab-btn');
+    const panels = document.querySelectorAll<HTMLElement>('.tip-tab-panel');
+    tabBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-target');
+        tabBtns.forEach((b) => {
+          b.classList.remove('bg-amber-600', 'text-accent-fg', 'shadow');
+          b.classList.add('text-slate-400');
         });
-      });
-
-      const closeBtn = document.getElementById('close-tip-modal-btn');
-      if (closeBtn) {
-        closeBtn.addEventListener('click', () => modal.close());
-      }
-
-      modal.addEventListener('click', (e) => {
-        const rect = modal.getBoundingClientRect();
-        const inDialog =
-          rect.top <= e.clientY &&
-          e.clientY <= rect.top + rect.height &&
-          rect.left <= e.clientX &&
-          e.clientX <= rect.left + rect.width;
-        if (!inDialog) {
-          modal.close();
-        }
-      });
-
-      const tabBtns = document.querySelectorAll('.tip-tab-btn');
-      const panels = document.querySelectorAll('.tip-tab-panel');
-      tabBtns.forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const target = btn.getAttribute('data-target');
-          tabBtns.forEach((b) => {
-            b.classList.remove('bg-amber-600', 'text-accent-fg', 'shadow');
-            b.classList.add('text-slate-400');
-          });
-          btn.classList.add('bg-amber-600', 'text-accent-fg', 'shadow');
-          btn.classList.remove('text-slate-400');
-
-          panels.forEach((p) => {
-            if (p.id === 'panel-' + target) {
-              p.classList.remove('hidden');
-            } else {
-              p.classList.add('hidden');
-            }
-          });
-        });
-      });
-
-      document.querySelectorAll('.copy-payment-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const text = btn.getAttribute('data-copy');
-          if (text) {
-            navigator.clipboard.writeText(text);
-            const orig = btn.innerText;
-            btn.innerText = 'Copied! ✓';
-            btn.classList.add('bg-emerald-600');
-            setTimeout(() => {
-              btn.innerText = orig;
-              btn.classList.remove('bg-emerald-600');
-            }, 1500);
-          }
-        });
+        btn.classList.add('bg-amber-600', 'text-accent-fg', 'shadow');
+        btn.classList.remove('text-slate-400');
+        panels.forEach((p) => p.classList.toggle('hidden', p.id !== 'panel-' + target));
       });
     });
-  </script>
-)}
+
+    document.querySelectorAll<HTMLElement>('.copy-payment-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-copy');
+        if (!text) return;
+        void navigator.clipboard.writeText(text);
+        const orig = btn.innerText;
+        btn.innerText = 'Copied! ✓';
+        btn.classList.add('bg-emerald-600');
+        setTimeout(() => {
+          btn.innerText = orig;
+          btn.classList.remove('bg-emerald-600');
+        }, 1500);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initTipModal);
+  else initTipModal();
+</script>

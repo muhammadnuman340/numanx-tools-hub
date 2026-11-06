@@ -13,7 +13,7 @@ image: '/images/blog/image-compression-without-losing-quality.svg'
 
 Large image files slow down websites, eat up storage, and frustrate users. But compression does not have to mean visible quality loss. This guide explains how to achieve dramatic file size reductions while keeping your images looking pristine.
 
-> ⚡ **Compress Images Instantly in Your Browser:** Optimize JPEG, PNG, and WebP file sizes with visual-quality presets directly in your browser with our free [**Image Compressor**](/tools/image-compressor/). 100% private, zero uploads to external servers, and instant real-time before/after quality preview.
+> ⚡ **Compress Images Instantly in Your Browser:** Optimize JPEG, PNG, and WebP file sizes with visual-quality presets directly in your browser with our free [**Image Compressor**](/tools/image-compressor/). Your images are never uploaded, and you get an instant real-time before/after quality preview.
 
 ## Understanding Compression Types
 
@@ -184,7 +184,7 @@ Aim for 60–80% file size reduction for photographs. Graphics can often be redu
 
 ### Can I compress images without uploading to a server?
 
-Yes. Our **Image Compressor** runs entirely in your browser using WebAssembly. Images never leave your device, making it completely private and secure.
+Yes. Our **Image Compressor** runs entirely in your browser using the Canvas API. Your images are never uploaded to a server.
 
 ## Conclusion
 

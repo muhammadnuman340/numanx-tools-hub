@@ -36,7 +36,7 @@ The [**Image Compressor**](/tools/image-compressor/) is a must-have in 2026. It 
 - **Adjustable Quality Slider**: Choose between Low, Medium, High, or exact custom compression levels. The tool recalculates the size in real-time.
 - **Batch Processing**: Need to compress an entire gallery? You can compress 50 images at once without your browser breaking a sweat.
 - **Before/After Split View**: Visually verify that your compressed image hasn't introduced unwanted artifacts before you download it.
-- **100% Browser-Based**: No uploads. This means zero wait time and complete privacy.
+- **100% Browser-Based**: No uploads. This means no upload wait, and your images stay on your device.
 
 Compare this to legacy tools that force you to wait in a server queue, limit your uploads to 10MB, and then make you download a ZIP file. Client-side compression is mathematically identical but infinitely faster.
 
@@ -96,7 +96,7 @@ The biggest change in image tooling over the last 3 years is where the processin
 2. **Speed**: Uploading a 20MB raw photo over a slow 4G connection takes time.
 3. **Bandwidth Costs**: Serving tens of thousands of image conversions server-side costs the tool platform money, which inevitably results in paywalls or daily upload limits.
 
-NumanX Tools uses an **Offline-First, Zero-Server** methodology. All processing executes in your browser's V8 Javascript engine using the HTML5 Canvas API and WASM pipelines.
+NumanX Tools uses an **Offline-First, In-Browser** approach. Image processing runs in your browser's JavaScript engine using the HTML5 Canvas API, and WebAssembly for the AI tools.
 
 - **Your images never leave your device.**
 - **No server uploads, no cloud storage.**

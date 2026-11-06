@@ -73,13 +73,13 @@ export const PRO_TOOL_CONTENT: Record<string, any> = {
 export const PRO_TOOL_DOCS_REGISTRY: Record<string, ProToolDocEntry> = {
   'net-run-rate-calculator': {
     title: 'ICC Net Run Rate (NRR) Mathematical Specification & Rules',
-    subtitle: 'Official ICC Law 16.10.2 All-Out Penalty and Base-6 Ball Notation',
+    subtitle: 'Follows the ICC all-out rule (Men’s ODI playing conditions, clause 16.10.2) and overs notation',
     standards: 'ICC Men’s and Women’s ODI & T20 Playing Conditions (Clause 16.10)',
     formula: {
       latex: 'NRR = \\left(\\frac{\\sum \\text{Runs Scored}}{\\sum \\text{Effective Overs Faced}}\\right) - \\left(\\frac{\\sum \\text{Runs Conceded}}{\\sum \\text{Effective Overs Bowled}}\\right)',
       description: 'The Net Run Rate is the total scoring rate of the team minus the total scoring rate conceded to opponents across all tournament matches.'
     },
-    technicalOverview: 'In cricket, overs are expressed as completed overs and balls (e.g., 17.3). For mathematical calculations, partial overs are converted to decimal fractions by dividing balls by 6 (e.g., 17 + 3/6 = 17.50). Crucially, under ICC Law 16.10.2, if a team is bowled out (all-out) in fewer than the allocated match overs, their runs are divided by the FULL quota of overs (e.g., 20.0 or 50.0).',
+    technicalOverview: 'In cricket, overs are expressed as completed overs and balls (e.g., 17.3). For mathematical calculations, partial overs are converted to decimal fractions by dividing balls by 6 (e.g., 17 + 3/6 = 17.50). Under the ICC Men’s ODI playing conditions (clause 16.10.2; T20 event conditions number it differently), if a team is bowled out (all-out) in fewer than the allocated match overs, their runs are divided by the FULL quota of overs (e.g., 20.0 or 50.0).',
     workedExample: {
       input: 'Team A scores 150 in 17.3 overs (All-Out). Team B scores 150 in 20.0 overs (Not Out). Max quota = 20 overs.',
       stepByStepCalculation: 'Because Team A was bowled out, Team A Effective Overs = 20.0 (not 17.5). Team A Scoring Rate = 150 / 20.0 = 7.5000 RPO. Team B Scoring Rate = 150 / 20.0 = 7.5000 RPO.',
@@ -113,7 +113,7 @@ export const PRO_TOOL_DOCS_REGISTRY: Record<string, ProToolDocEntry> = {
     },
     methodologyNotes: [
       '100% client-side vector synthesis via bwip-js running in the browser engine.',
-      'Zero server storage or external API calls ensuring complete serial data privacy.',
+      'No server storage or external API calls: the data you encode is not sent anywhere.',
       'Automatic Quiet Zone padding compliance (minimum 2 modules for rMQR, 4 modules for standard QR).'
     ],
     benchmarks: [
@@ -326,19 +326,19 @@ export function getProToolDoc(slug: string, toolName: string, category: string):
   return {
     title: `${toolName} — Technical Specifications & Methodology`,
     subtitle: `Client-Side In-Browser Processing & Algorithmic Architecture for ${category}`,
-    standards: 'W3C Web Standards & Modern Web APIs (Zero-Server Architecture)',
+    standards: 'W3C Web Standards & Modern Web APIs (In-Browser Processing)',
     formula: {
       latex: '\\text{Output} = f_{\\text{client}}(\\text{Input}, \\theta)',
-      description: 'Deterministic client-side transformation with zero remote server data transmission.'
+      description: 'Deterministic client-side transformation; your input is not sent to a server.'
     },
-    technicalOverview: `The ${toolName} operates 100% within your local browser runtime. Built on modern web standards (JavaScript ES2022, WebAssembly, and Canvas APIs), data never leaves your device memory. This ensures sub-millisecond execution times and total compliance with modern privacy regulations (GDPR, CCPA).`,
+    technicalOverview: `The ${toolName} runs in your browser using standard web APIs. Your input is processed on your device and is not sent to a server, so results appear without waiting on a network request.`,
     workedExample: {
       input: `Standard input data processed by ${toolName}.`,
       stepByStepCalculation: `Input is parsed in browser memory -> validated against specifications -> processed via local deterministic algorithms.`,
       expectedOutput: `Verified, high-precision output ready for one-click copy or file download.`
     },
     methodologyNotes: [
-      'No data is stored on remote servers or tracked across user sessions.',
+      'Your tool input is not stored on our servers.',
       'Offline support: works without an active internet connection once loaded.',
       'Accessible across desktop and mobile devices with keyboard shortcut navigation.'
     ]
