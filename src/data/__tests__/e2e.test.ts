@@ -79,7 +79,7 @@ describe('NumanX Tools Hub - E2E Build Structural Validation', () => {
       // Coordinates widget details
       expect(html).toContain('Contact Coordinates');
       expect(html).toContain('Location Coordinates');
-      expect(html).toContain('[24.8607° N, 67.0011° E]'); // Karachi GPS coordinates
+      expect(html).toContain('[30.1798° N, 66.9750° E]'); // Quetta GPS coordinates
       expect(html).toContain('bg-emerald-400');
 
       // Submit button details
