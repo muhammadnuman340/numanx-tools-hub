@@ -46,6 +46,43 @@ export function getExtensionForTarget(target: TargetFormat): string {
 }
 
 /**
+ * Sanitizes a filename to ensure it cannot break HTML markup, escape attribute quotes,
+ * or cause directory traversal.
+ */
+export function sanitizeFilename(filename: string): string {
+  if (typeof filename !== 'string') return 'image';
+  // Strip null bytes, control characters, and path separators
+  let clean = filename
+    .replace(/[\0-\x1F\x7F]/g, '')
+    .replace(/[/\\]/g, '_')
+    .replace(/["'<>`]/g, '')
+    .trim();
+
+  // Strip leading dots to prevent hidden files or traversal like ../
+  clean = clean.replace(/^\.+/, '');
+
+  // Truncate excessively long filenames to protect filesystem and DOM bounds
+  if (clean.length > 200) {
+    clean = clean.slice(0, 200);
+  }
+
+  return clean || 'image';
+}
+
+/**
+ * Escapes HTML characters for safe attribute or text interpolation.
+ */
+export function escapeAttr(str: string): string {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+/**
  * Resolves the image format from a given MIME type or file extension.
  */
 export function detectFormat(mimeType: string, filename = ''): ImageFormat | null {

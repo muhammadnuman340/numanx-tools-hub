@@ -591,7 +591,7 @@ const useCases = [
 </MainLayout>
 
 <script>
-  import { convertImage, validateImageFile, formatBytes, downloadBatch } from '../../lib/image-format';
+  import { convertImage, validateImageFile, formatBytes, downloadBatch, escapeAttr } from '../../lib/image-format';
   const dropzone = document.getElementById('dropzone');
   const fileInput = document.getElementById('file-input');
   const controlsSection = document.getElementById('controls-section');
@@ -676,7 +676,7 @@ const useCases = [
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" style="stroke:var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           </div>
           <div class="min-w-0">
-            <p class="text-sm font-medium text-primary truncate">${f.name}</p>
+            <p class="text-sm font-medium text-primary truncate">${escapeAttr(f.name)}</p>
             <p class="text-xs text-muted">${formatSize(f.size)}</p>
           </div>
         </div>
@@ -693,7 +693,7 @@ const useCases = [
       const img = new Image();
       img.onload = () => {
         const previewDiv = card.querySelector('.aspect-video');
-        previewDiv.innerHTML = `<img src="${e.target.result}" alt="${f.name}" class="w-full h-full object-contain" />`;
+        previewDiv.innerHTML = `<img src="${e.target.result}" alt="${escapeAttr(f.name)}" class="w-full h-full object-contain" />`;
         card.dataset.original = e.target.result;
         card.dataset.origSize = f.size;
         card.dataset.width = img.width;
@@ -789,7 +789,7 @@ const useCases = [
         const previewDiv = targetCard.querySelector('.aspect-video');
         previewDiv.innerHTML = `
           <div class="relative w-full h-full">
-            <img src="${result.objectUrl}" alt="${f.name}" class="w-full h-full object-contain converted-img" />
+            <img src="${result.objectUrl}" alt="${escapeAttr(f.name)}" class="w-full h-full object-contain converted-img" />
             <button class="toggle-before absolute top-2 right-2 bg-black/40 border border-surface-2 rounded-lg px-2 py-1 text-[10px] font-semibold text-secondary hover:text-white hover:border-amber-500/50 transition-all flex items-center gap-1">
               <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
               <span>Original</span>
@@ -823,7 +823,7 @@ const useCases = [
             <span class="flex items-center gap-1"><span class="text-dim">JPG:</span> ${formatBytes(origSize)}</span>
             <span class="flex items-center gap-1"><span class="text-amber-400">PNG:</span> ${formatBytes(result.size)}</span>
           </div>
-          <a href="${result.objectUrl}" download="${result.name}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-accent-fg text-xs font-semibold active:scale-95 transition-all duration-200 bg-amber-600">
+          <a href="${result.objectUrl}" download="${escapeAttr(result.name)}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-accent-fg text-xs font-semibold active:scale-95 transition-all duration-200 bg-amber-600">
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download PNG
           </a>
