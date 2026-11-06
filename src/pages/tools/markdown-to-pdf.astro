@@ -25,7 +25,7 @@ const faqItems = [
   {
     question: 'Are my private documents uploaded to any server?',
     answer:
-      'Never. NumanX Tools Hub enforces a strict zero-server privacy architecture. Your markdown text, math equations, and generated PDFs exist exclusively in your browser’s volatile memory.',
+      'Never. Your markdown text, math equations, and generated PDFs stay in your browser. The page only downloads its libraries from cdn.jsdelivr.net.',
   },
 ];
 
@@ -41,7 +41,7 @@ const mdPdfSchema = {
     'Native vector print output — crisp 300+ DPI selectable text and working links',
     'Page size selection (A4 and US Letter) with customizable margin presets',
     'Multiple document themes: GitHub Light, Academic Serif, and Modern Clean',
-    '100% in-browser processing — absolute privacy with zero cloud upload',
+    'Converted in your browser — your Markdown is not uploaded',
   ],
 };
 
@@ -463,7 +463,7 @@ const howToSteps = [
 ---
 
 ## 1. System Overview
-The **NumanX Tools Hub** operates on a zero-server edge architecture. Calculations, barcode generation, and PDF document synthesis occur client-side without remote cloud latency.
+The **NumanX Tools Hub** processes tool input in your browser. Calculations, barcode generation, and PDF document synthesis occur client-side without remote cloud latency.
 
 ### Core Processing Pipeline
 \`\`\`mermaid
@@ -495,7 +495,7 @@ $$\\text{Target} = \\left\\lfloor S_1 \\times \\frac{R_2}{R_1} \\right\\rfloor +
 | :--- | :--- | :--- | :--- |
 | **Parsing Latency** | < 100ms | 38ms (V8 Engine) | **PASSED** |
 | **Vector Resolution** | 300 DPI | Lossless Vector SVG | **PASSED** |
-| **Privacy Leakage** | 0 bytes | 0 outgoing network calls | **COMPLIANT** |
+| **Document Upload** | 0 bytes | Libraries load from cdn.jsdelivr.net; your document is not sent | **NOT UPLOADED** |
 
 > **Security Note:** All cryptographic operations utilize \`window.crypto.getRandomValues()\` rather than insecure pseudorandom generators.
 `,
@@ -519,14 +519,14 @@ $$\\Delta T = T_{\\text{network}} + T_{\\text{queue}} - T_{\\text{client}}$$
 <div class="page-break"></div>
 
 ### 3. Conclusion
-Client-side processing guarantees zero data leakage, continuous offline availability, and eliminates linear cloud hosting overheads.
+Client-side processing keeps your document on your device, allows offline use once loaded, and eliminates linear cloud hosting overheads.
 `,
     'readme': `# Project Documentation
 Welcome to the **NumanX Tools Hub** open-source repository.
 
 ## Features
 - **Zero Configuration**: Runs in any modern web browser.
-- **Privacy Guaranteed**: Data never leaves your machine.
+- **No Uploads**: Your Markdown is converted in your browser. The page loads its libraries from cdn.jsdelivr.net.
 - **100+ Free Tools**: Barcodes, Cricket Analytics, Math, Text, and Media.
 
 ## Installation
