@@ -5,6 +5,8 @@ import {
   sanitizeSvg,
   getMimeForTarget,
   getExtensionForTarget,
+  sanitizeFilename,
+  escapeAttr,
 } from '../validation';
 import {
   formatBytes,
@@ -140,6 +142,88 @@ describe('Shared Image Format Engine — Validation & Helpers', () => {
       expect(getOutputFilename('graphic.png', 'jpeg')).toBe('graphic.jpg');
       expect(getOutputFilename('vector.svg', 'png')).toBe('vector.png');
       expect(getOutputFilename('image', 'webp')).toBe('image.webp');
+    });
+
+    it('neutralizes quote breakout and attribute injection attempts', () => {
+      const malicious = 'photo" download="malicious.exe';
+      const output = getOutputFilename(malicious, 'png');
+      expect(output).not.toContain('"');
+      expect(output).toBe('photo download=malicious.png');
+    });
+
+    it('neutralizes script tags and HTML markup in original filenames', () => {
+      const malicious = '<img src=x onerror=alert(1)>.jpg';
+      const output = getOutputFilename(malicious, 'webp');
+      expect(output).not.toContain('<');
+      expect(output).not.toContain('>');
+      expect(output).toBe('img src=x onerror=alert(1).webp');
+    });
+
+    it('neutralizes path traversal attempts in original filenames', () => {
+      const malicious = '../../etc/passwd.png';
+      const output = getOutputFilename(malicious, 'jpeg');
+      expect(output).not.toContain('../');
+      expect(output).not.toContain('..\\');
+      expect(output).toBe('_.._etc_passwd.jpg');
+    });
+
+    it('preserves non-Latin and Unicode filenames', () => {
+      expect(getOutputFilename('日本語写真.jpg', 'png')).toBe('日本語写真.png');
+      expect(getOutputFilename('صورة_جميلة.png', 'webp')).toBe('صورة_جميلة.webp');
+      expect(getOutputFilename('résumé-photo.jpeg', 'png')).toBe('résumé-photo.png');
+      expect(getOutputFilename('icon🎨.svg', 'png')).toBe('icon🎨.png');
+    });
+
+    it('safely truncates excessively long filenames', () => {
+      const veryLong = 'a'.repeat(300) + '.png';
+      const output = getOutputFilename(veryLong, 'webp');
+      expect(output.length).toBeLessThanOrEqual(130);
+      expect(output.endsWith('.webp')).toBe(true);
+    });
+
+    it('protects Windows reserved system filenames', () => {
+      expect(getOutputFilename('con.png', 'jpeg')).toBe('con_converted.jpg');
+      expect(getOutputFilename('PRN.jpg', 'png')).toBe('PRN_converted.png');
+      expect(getOutputFilename('nul.webp', 'jpeg')).toBe('nul_converted.jpg');
+    });
+  });
+
+  describe('sanitizeFilename', () => {
+    it('strips quotes, angle brackets, and backticks', () => {
+      expect(sanitizeFilename('my"file\'name<test>`safe.png')).toBe('myfilename_testsafe.png'.replace('_', ''));
+    });
+
+    it('strips directory separators', () => {
+      expect(sanitizeFilename('path/to\\file.jpg')).toBe('path_to_file.jpg');
+    });
+
+    it('strips null bytes and control characters', () => {
+      expect(sanitizeFilename('test\0file\x1bname.png')).toBe('testfilename.png');
+    });
+
+    it('preserves ampersands in filename but escapes them via escapeAttr', () => {
+      const filename = sanitizeFilename('Tom & Jerry.png');
+      expect(filename).toBe('Tom & Jerry.png');
+      expect(escapeAttr(filename)).toBe('Tom &amp; Jerry.png');
+    });
+
+    it('defaults to image when given empty or only invalid characters', () => {
+      expect(sanitizeFilename('"""')).toBe('image');
+      expect(sanitizeFilename('   ')).toBe('image');
+      expect(sanitizeFilename('')).toBe('image');
+    });
+  });
+
+  describe('escapeAttr', () => {
+    it('escapes characters that can break attribute boundaries', () => {
+      expect(escapeAttr('hello" world')).toBe('hello&quot; world');
+      expect(escapeAttr("it's cool")).toBe('it&#039;s cool');
+      expect(escapeAttr('<tag> & "more"')).toBe('&lt;tag&gt; &amp; &quot;more&quot;');
+    });
+
+    it('handles non-string inputs safely', () => {
+      expect(escapeAttr(null as unknown as string)).toBe('');
+      expect(escapeAttr(undefined as unknown as string)).toBe('');
     });
   });
 

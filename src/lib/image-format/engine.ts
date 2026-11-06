@@ -4,7 +4,7 @@
  */
 
 import type { ConversionOptions, ConversionResult, TargetFormat } from './types';
-import { getMimeForTarget, getExtensionForTarget, sanitizeSvg } from './validation';
+import { getMimeForTarget, getExtensionForTarget, sanitizeSvg, sanitizeFilename } from './validation';
 
 /**
  * Converts bytes into a clean, human-readable string (B, KB, MB).
@@ -32,9 +32,17 @@ export function calculateSavings(
 
 /**
  * Generates the standardized output filename for converted images.
+ * Sanitizes input filename to prevent attribute boundary escape or path traversal.
  */
 export function getOutputFilename(originalName = 'image', targetFormat: TargetFormat): string {
-  const base = originalName.replace(/\.[^.]+$/, '') || 'image';
+  const safeName = sanitizeFilename(originalName);
+  let base = safeName.replace(/\.[^.]+$/, '') || 'image';
+  if (/^(con|prn|aux|nul|com[1-9]|lpt[1-9])$/i.test(base)) {
+    base = `${base}_converted`;
+  }
+  if (base.length > 120) {
+    base = base.slice(0, 120);
+  }
   const ext = getExtensionForTarget(targetFormat);
   return `${base}${ext}`;
 }
@@ -157,7 +165,8 @@ export function convertImage(
 
             const objectUrl = URL.createObjectURL(blob);
             const origSize = input instanceof Blob ? input.size : 0;
-            const savingsPercent = origSize > 0 ? calculateSavings(origSize, blob.size) : 0;
+            const savings = origSize > 0 ? calculateSavings(origSize, blob.size) : { percent: 0, isReduction: false };
+            const savingsPercent = savings.isReduction ? savings.percent : -savings.percent;
 
             resolve({
               blob,
