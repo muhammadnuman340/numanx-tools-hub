@@ -877,7 +877,7 @@ export const tools: Tool[] = [
     name: 'AI Background Remover',
     description: 'Remove backgrounds from images in your browser with zero server uploads.',
     longDescription:
-      'Client-side AI background removal using WebAssembly and neural models running directly in your browser. Complete privacy with zero image uploads.',
+      'Client-side AI background removal using WebAssembly and neural models running directly in your browser. Your images are not uploaded.',
     category: 'image-tools',
     icon: 'image',
     url: '/tools/ai-background-remover/',
@@ -903,7 +903,7 @@ export const tools: Tool[] = [
     name: 'Browser & Hardware Detector',
     description: 'Detect client browser engine, WebGPU/WebGL capabilities, screen resolution, and hardware concurrency.',
     longDescription:
-      'Instant browser diagnostics inspecting user agent, GPU renderer, viewport dimensions, color depth, and Web API support with 100% privacy.',
+      'Instant browser diagnostics inspecting user agent, GPU renderer, viewport dimensions, color depth, and Web API support. Results are shown only in your browser.',
     category: 'utility-tools',
     icon: 'cog',
     url: '/tools/browser-detector/',
@@ -967,9 +967,9 @@ export const tools: Tool[] = [
   {
     id: 'date-calculator',
     name: 'Business Days & Working Days Calculator',
-    description: 'Calculate exact calendar days and business days excluding weekends between dates. 100% private.',
+    description: 'Calculate exact calendar days and business days excluding weekends between dates. Runs in your browser.',
     longDescription:
-      'B2B working days and calendar interval calculator. Compute sprint durations, project notice periods, and add/subtract business days with zero tracking.',
+      'B2B working days and calendar interval calculator. Compute sprint durations, project notice periods, and add/subtract business days in your browser.',
     category: 'utility-tools',
     icon: 'clock',
     url: '/tools/date-calculator/',

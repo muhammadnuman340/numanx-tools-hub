@@ -32,6 +32,28 @@ let state: AnalyticsState = {
 };
 
 /**
+ * Pulls a clean tag ID out of a configured value, so a stray prefix such as
+ * ": G-ABC123" (seen in the production build setting) still works.
+ * Returns '' when no valid ID is found, so nothing loads for a bad value.
+ */
+export function normalizeTagId(raw: string | undefined, kind: 'ga' | 'gtm'): string {
+  if (!raw) return '';
+  const pattern = kind === 'ga' ? /\bG-[A-Z0-9]{4,20}\b/ : /\bGTM-[A-Z0-9]{4,20}\b/;
+  const match = raw.toUpperCase().match(pattern);
+  return match ? match[0] : '';
+}
+
+/**
+ * Pulls every valid GA4 ID out of a configured value (separated by spaces, commas
+ * or anything else), in order, without duplicates. Returns [] when none is valid.
+ */
+export function normalizeGaIds(raw: string | undefined): string[] {
+  if (!raw) return [];
+  const matches = raw.toUpperCase().match(/\bG-[A-Z0-9]{4,20}\b/g) || [];
+  return [...new Set(matches)];
+}
+
+/**
  * Returns a snapshot of current analytics loading state.
  */
 export function getAnalyticsState(): Readonly<AnalyticsState> {
@@ -158,11 +180,11 @@ export function loadAnalytics(
     return true;
   }
 
-  const gaId = config.gaId?.trim();
-  const gtmId = config.gtmId?.trim();
+  const gaIds = normalizeGaIds(config.gaId);
+  const gtmId = normalizeTagId(config.gtmId, 'gtm');
 
   // If no identifiers provided, mark loaded and return
-  if (!gaId && !gtmId) {
+  if (gaIds.length === 0 && !gtmId) {
     state.loaded = true;
     if (typeof window !== 'undefined') {
       (window as any).__nx_analytics_loaded = true;
@@ -175,10 +197,10 @@ export function loadAnalytics(
     const win = window as any;
     win.dataLayer = win.dataLayer || [];
 
-    // 4. Initialize GA4 if gaId is present
-    if (gaId && !state.gaInitialized) {
-      enableGaTracking(gaId);
-      injectScript(`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaId)}`, 'nx-ga-script');
+    // 4. Initialize GA4: one gtag.js load, one config per property
+    if (gaIds.length > 0 && !state.gaInitialized) {
+      gaIds.forEach((gaId) => enableGaTracking(gaId));
+      injectScript(`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaIds[0])}`, 'nx-ga-script');
 
       if (!win.gtag) {
         win.gtag = function () {
@@ -186,7 +208,7 @@ export function loadAnalytics(
         };
       }
       win.gtag('js', new Date());
-      win.gtag('config', gaId);
+      gaIds.forEach((gaId) => win.gtag('config', gaId));
       state.gaInitialized = true;
     }
 
@@ -209,7 +231,7 @@ export function loadAnalytics(
  * Prevents further tracking, sets ga-disable flags, and purges first-party GA cookies.
  */
 export function revokeAnalytics(config?: AnalyticsConfig): void {
-  disableGaTracking(config?.gaId);
+  normalizeGaIds(config?.gaId).forEach((gaId) => disableGaTracking(gaId));
   clearGaCookies();
   // We do not claim to magically unload already executed script code from browser memory,
   // but we prevent further execution, set ga-disable, and ensure no future scripts load.

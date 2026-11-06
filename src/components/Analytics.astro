@@ -13,16 +13,22 @@ interface Props {
   gtmId?: string;
 }
 
+// Both GA4 properties the site reports to. They are built in so every build path
+// has them; any ID in PUBLIC_GA_ID is added too (duplicates are dropped at load).
+const SITE_GA_IDS = ['G-64JVWY8F6W', 'G-SYQLJP44L7'];
+
 const {
   id,
   gaId = id || import.meta.env.PUBLIC_GA_ID || '',
   gtmId = import.meta.env.PUBLIC_GTM_ID || 'GTM-TBXFNLDB',
 } = Astro.props;
+
+const gaIds = [gaId, ...SITE_GA_IDS].filter(Boolean).join(' ');
 ---
 
 <div
   id="nx-analytics-config"
-  data-ga-id={gaId}
+  data-ga-id={gaIds}
   data-gtm-id={gtmId}
   class="hidden"
   aria-hidden="true"

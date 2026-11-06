@@ -35,7 +35,7 @@ const formulaExplanation = propFormulaExplanation || regEntry.formulaExplanation
 const formulaCode = propFormulaCode || regEntry.formulaCode || (doc.formula ? doc.formula.latex : undefined);
 
 const defaultSteps = [
-  { title: 'Input Ingestion', detail: 'Data or files are loaded strictly into browser volatile memory via local Web APIs with zero cloud uploads.' },
+  { title: 'Input Ingestion', detail: 'Data or files are loaded into your browser via local Web APIs; nothing is uploaded.' },
   { title: 'Local Validation & Lexing', detail: 'The local engine executes structural lexing, format validation, and arithmetic verification based on governing technical standards.' },
   { title: 'Hardware-Accelerated Execution', detail: 'Operations process using browser Web Workers, OffscreenCanvas, or Web Crypto primitives to prevent main-thread UI jank.' },
   { title: 'Ready to copy or download', detail: 'The result appears on the page, ready for one-click copy or file download.' }
@@ -45,7 +45,7 @@ const defaultUseCases = [
   { role: 'Software Developers & DevOps', scenario: 'Validate cryptographic tokens, format JSON configurations, or generate high-entropy keys within secure air-gapped workflows.' },
   { role: 'Digital Creators & Video Editors', scenario: 'Accelerate content publishing with optimized viral tags, custom QR packaging strips, and 1080×1920 social cards.' },
   { role: 'Students & Academic Researchers', scenario: 'Verify mathematical calculations, statistical ratios, and temporal durations with peer-verifiable precision.' },
-  { role: 'Privacy-Conscious Professionals', scenario: 'Process sensitive customer data and documents locally without risk of corporate data leaks or cloud retention.' }
+  { role: 'Privacy-Conscious Professionals', scenario: 'Process sensitive customer data and documents locally without uploading them to a cloud service.' }
 ];
 
 const defaultFaqs = [

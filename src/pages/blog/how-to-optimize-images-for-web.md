@@ -38,7 +38,7 @@ You don't need expensive server-side processing pipelines or heavy design deskto
 Using tools like the [**Image Compressor**](/tools/image-compressor/), [**PNG to WebP Converter**](/tools/png-to-webp/), and [**JPG to PNG Converter**](/tools/jpg-to-png/), you can process and convert your images with:
 
 - **Zero Server Overhead**: Calculations run locally on your graphics device or CPU via the Canvas API.
-- **Complete Privacy**: Since no files are uploaded to an external server, your assets remain completely secure.
+- **No Uploads**: Files are processed in your browser and never sent to a server.
 
 ## Summary
 
