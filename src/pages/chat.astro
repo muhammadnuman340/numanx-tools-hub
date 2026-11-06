@@ -455,6 +455,8 @@ const mockMessages = [
 </MainLayout>
 
 <script>
+  import { getPrototypeResponse, createMessageBubble } from '../lib/chatAssistant';
+
   const initChatWorkspace = () => {
     const chatInput = document.getElementById('chat-input') as HTMLTextAreaElement | null;
     const sendBtn = document.getElementById('send-btn') as HTMLButtonElement | null;
@@ -519,33 +521,16 @@ const mockMessages = [
 
       const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-      // Append user bubble
-      const userBubble = document.createElement('div');
-      userBubble.className = 'flex flex-col items-end space-y-1';
-      userBubble.innerHTML = `
-        <div class="rounded-xl border border-amber-500/30 bg-amber-600/20 p-4 text-xs text-white leading-relaxed max-w-[85%]">
-          <p>${escapeHtml(text)}</p>
-        </div>
-        <span class="text-[9px] text-zinc-500 font-mono px-1">${time}</span>
-      `;
+      // Messages are built with textContent, so typed text is never parsed as HTML
       const wrapper = thread.querySelector(':scope > div') || thread;
-      wrapper.appendChild(userBubble);
+      wrapper.appendChild(createMessageBubble(document, text, time, true));
       chatInput.value = '';
       if (sendBtn) sendBtn.disabled = true;
       thread.scrollTop = thread.scrollHeight;
 
       // Simulated AI response
       setTimeout(() => {
-        const replyText = generateResponse(text);
-        const aiBubble = document.createElement('div');
-        aiBubble.className = 'flex flex-col items-start space-y-1';
-        aiBubble.innerHTML = `
-          <div class="rounded-xl border border-card-crisp bg-[#1e1e1b] p-4 text-xs text-zinc-300 leading-relaxed max-w-[85%]">
-            <p>${replyText}</p>
-          </div>
-          <span class="text-[9px] text-zinc-500 font-mono px-1">${time}</span>
-        `;
-        wrapper.appendChild(aiBubble);
+        wrapper.appendChild(createMessageBubble(document, getPrototypeResponse(text), time, false));
         thread.scrollTop = thread.scrollHeight;
       }, 700);
     });
@@ -619,28 +604,6 @@ const mockMessages = [
     });
   };
 
-  function escapeHtml(str: string): string {
-    return str
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
-
-  function generateResponse(query: string): string {
-    const q = query.toLowerCase();
-    if (q.includes('hello') || q.includes('hi')) {
-      return 'Hello! I am your local NumanX Assistant. You can ask me about image format conversion, code utilities, cricket metrics, or platform features.';
-    }
-    if (q.includes('image') || q.includes('format') || q.includes('converter')) {
-      return 'Our image engine supports JPG to PNG, PNG to JPG (with white background fill for transparency), PNG to WebP, and SVG to PNG, all running 100% locally on HTML5 Canvas.';
-    }
-    if (q.includes('tool') || q.includes('65')) {
-      return 'NumanX Tools Hub features 65 client-side tools across 6 categories: Image Tools, Text & AI Tools, Creator Tools, Utility Tools, Cricket Tools, and Developer Tools.';
-    }
-    return `Understood. I am processing "${query}" using your client-side browser engine. All calculations and transformations remain strictly on your local device.`;
-  }
 
   document.addEventListener('astro:page-load', initChatWorkspace);
 </script>
