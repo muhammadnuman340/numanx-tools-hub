@@ -703,12 +703,17 @@ const useCases = [
 
     function inlineMd(text: string): string {
       let s = escapeHtml(text);
-      // Images
-      s = s.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="max-w-full rounded-lg my-2 border border-white/10" />');
-      // Links
-      s = s.replace(
-        /\[([^\]]+)\]\(([^)]+)\)/g,
-        '<a href="$2" class="text-amber-400 hover:text-amber-300 underline font-medium" target="_blank" rel="noopener noreferrer">$1</a>',
+      // Images: only web addresses and inline data images
+      s = s.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_m: string, alt: string, src: string) =>
+        /^(https?:|data:image\/)/i.test(src.trim())
+          ? `<img src="${src.trim()}" alt="${alt}" class="max-w-full rounded-lg my-2 border border-white/10" />`
+          : alt,
+      );
+      // Links: only web and mail addresses; other schemes (javascript:, data:) stay plain text
+      s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m: string, label: string, href: string) =>
+        /^(https?:|mailto:)/i.test(href.trim())
+          ? `<a href="${href.trim()}" class="text-amber-400 hover:text-amber-300 underline font-medium" target="_blank" rel="noopener noreferrer">${label}</a>`
+          : label,
       );
       // Bold+Italic
       s = s.replace(/\*\*\*(.+?)\*\*\*/g, '<strong class="text-white font-bold"><em class="text-zinc-100">$1</em></strong>');

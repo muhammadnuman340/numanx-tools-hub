@@ -680,7 +680,8 @@ const useCases = [
   let uploadedFiles = [];
   let selectedFormat = 'image/png';
   let aspectLocked = true;
-  let originalAspect = 1;
+  // 0 = not known yet; set from the first uploaded image
+  let originalAspect = 0;
   let activePreset = 'custom';
   let resizeResults = [];
 

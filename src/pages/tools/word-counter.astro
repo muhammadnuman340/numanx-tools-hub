@@ -843,6 +843,7 @@ const useCases = [
     charCount.textContent = cc;
     charNs.textContent = cns;
     sentenceCount.textContent = sc;
+    if (paragraphCount) paragraphCount.textContent = pc;
     const wpmInput = $('reading-wpm-input');
     const wpm = wpmInput && Number(wpmInput.value) > 0 ? Number(wpmInput.value) : 200;
     readTime.textContent = wc > 0 ? Math.ceil(wc / wpm) + 'm' : '0m';
