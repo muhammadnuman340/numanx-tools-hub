@@ -17,6 +17,7 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e": "node tests/e2e/run.mjs",
     "audit": "node scripts/audit-static.mjs",
     "audit:site:pro": "node scripts/audit-site.mjs",
     "audit:site:v4": "node tools/omega-audit-pro/scripts/audit-site.mjs",
