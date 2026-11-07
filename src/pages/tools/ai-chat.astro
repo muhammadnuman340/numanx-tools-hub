@@ -2822,10 +2822,13 @@ const schema = {
       blocks.push('<div class="chat-code">' + label + '<pre><code>' + body + '</code></pre></div>');
       return '\u0000' + (blocks.length - 1) + '\u0000';
     });
-    content = content.replace(
-      /\[([^\]]+)\]\(([^)]+)\)/g,
-      '<a href="$2" class="text-amber-400 underline-offset-2 hover:underline">$1</a>',
-    );
+    // Escape everything outside code blocks, so command output can never become HTML
+    content = escapeHtml(content);
+    // Links: only web and mail addresses; anything else (javascript:, data:) stays plain text
+    content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function (_m: string, label: string, href: string) {
+      if (!/^(https?:|mailto:)/i.test(href.trim())) return label;
+      return '<a href="' + href.trim() + '" class="text-amber-400 underline-offset-2 hover:underline">' + label + '</a>';
+    });
     content = content.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-primary">$1</strong>');
     content = content.replace(/`([^`]+)`/g, '<code class="chat-inline-code">$1</code>');
     // Horizontal rules
@@ -2959,7 +2962,8 @@ const schema = {
     const text = containers.input.value.trim();
     if (!text) return;
 
-    addMessage(escapeHtml(text), true);
+    // markdownToHtml escapes the text, so pass it as typed
+    addMessage(text, true);
     containers.input.value = '';
     containers.sendBtn.disabled = true;
     showTyping(true);
