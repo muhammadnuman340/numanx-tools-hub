@@ -5,9 +5,10 @@ import path from 'node:path';
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /** Opens a page with cookie consent set to "essential" (no banner, no analytics) and collects console errors. */
-export async function openPage(ctx, route, { width = 1280, height = 900 } = {}) {
+export async function openPage(ctx, route, { width = 1280, height = 900, beforeLoad } = {}) {
   const page = await ctx.browser.newPage();
   await page.setViewport({ width, height });
+  if (beforeLoad) await page.evaluateOnNewDocument(beforeLoad);
   await page.evaluateOnNewDocument(() => {
     try {
       localStorage.setItem('nx_cookie_consent', 'essential');
